@@ -38,9 +38,9 @@ class Full extends Component {
           leftIcon: <FontIcon>bookmark</FontIcon>,
         }, {
           component: Link,
-          to: '/page2',
-          active: isActive('/page2', pathname),
-          primaryText: 'Page 2',
+          to: '/jobStatus',
+          active: isActive('/jobStatus', pathname),
+          primaryText: 'Job Status',
           leftIcon: <FontIcon>donut_large</FontIcon>,
         }]}
       >
