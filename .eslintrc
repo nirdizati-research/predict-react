@@ -1,0 +1,30 @@
+{
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "browser": true
+  },
+  "plugins": ["react","import"],
+  "extends": [
+    "react-app",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "google",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
+  rules: {
+    "max-len": ["error", 120],
+    "require-jsdoc": "off",
+    "comma-dangle": "off",
+    "space-before-function-paren": ["error", {
+      "anonymous": "always",
+      "named": "never",
+      "asyncArrow": "ignore"
+    }]
+  }
+}

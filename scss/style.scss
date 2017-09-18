@@ -1,0 +1,22 @@
+@import 'globals';
+
+@include react-md-everything;
+
+// Custom styles
+@import "custom";
+
+// Material things
+body {
+  margin: 0;
+}
+
+.aos {
+  background: $md-orange-500;
+  color: #ffffff;
+}
+
+.code-block {
+  background: rgba(0, 0, 0, .06);
+  overflow-x: auto;
+  padding: 16px;
+}
