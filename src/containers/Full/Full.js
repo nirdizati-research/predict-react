@@ -32,9 +32,9 @@ class Full extends Component {
           leftIcon: <FontIcon>home</FontIcon>,
         }, {
           component: Link,
-          to: '/page1',
-          active: isActive('/page1', pathname),
-          primaryText: 'Page 1',
+          to: '/upload',
+          active: isActive('/upload', pathname),
+          primaryText: 'Upload',
           leftIcon: <FontIcon>bookmark</FontIcon>,
         }, {
           component: Link,
