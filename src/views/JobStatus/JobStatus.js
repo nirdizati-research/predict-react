@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import Button from 'react-md/lib/Buttons/Button';
@@ -24,7 +25,9 @@ class JobStatus extends Component {
   }
 }
 
-JobStatus.propTypes = {};
+JobStatus.propTypes = {
+  jobs: PropTypes.arrayOf(PropTypes.any).isRequired
+};
 
 const mapStateToProps = (state) => ({});
 
