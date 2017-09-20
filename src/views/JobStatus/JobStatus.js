@@ -5,14 +5,15 @@ import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import Button from 'react-md/lib/Buttons/Button';
 import {jobsRequested} from '../../actions/JobActions';
 import JobStatusTable from '../../components/JobStatusTable';
+import FetchState from '../../components/FetchState';
 
 class JobStatus extends Component {
   componentDidMount() {
     // Get only if empty
     // TODO move this check to somewhere else
-    // if (this.props.jobs === []) {
+    if (this.props.jobs === []) {
       this.props.onRequestJobs();
-    // }
+    }
   }
 
   render() {
@@ -25,7 +26,8 @@ class JobStatus extends Component {
               <p>
                 Lot's of logs below.
               </p>
-              <Button raised>Start sync status</Button> <Button raised>Stop sync status</Button>
+              <Button raised onClick={this.props.onRequestJobs}>Request current jobs</Button>
+              <FetchState fetchState={this.props.fetchState}/>
               <JobStatusTable jobs={this.props.jobs}/>
             </CardText>
           </Card>
@@ -38,10 +40,15 @@ class JobStatus extends Component {
 JobStatus.propTypes = {
   jobs: PropTypes.arrayOf(PropTypes.any).isRequired,
   onRequestJobs: PropTypes.func.isRequired,
+  fetchState: PropTypes.shape({
+    inFlight: PropTypes.bool.isRequired,
+    error: PropTypes.any
+  }).isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  jobs: state.jobs.jobs
+  jobs: state.jobs.jobs,
+  fetchState: state.jobs.fetchState
 });
 const mapDispatchToProps = (dispatch) => ({
   onRequestJobs: () => dispatch(jobsRequested())
