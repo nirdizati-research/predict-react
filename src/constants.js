@@ -3,12 +3,13 @@
  */
 
 const DEV_SERVER = 'http://localhost:8080';
-const HEROKU_SERVER = '';
+const PROD_SERVER = 'http://193.40.11.46';
 export let SERVER_URL = DEV_SERVER;
 
 export const chooseServer = () => {
-  if (process.env.NODE_ENV === 'production') {
-    SERVER_URL = HEROKU_SERVER;
-  }
+/*  if (process.env.NODE_ENV === 'production') {
+    SERVER_URL = PROD_SERVER;
+  }*/
+  return PROD_SERVER;
 };
 
