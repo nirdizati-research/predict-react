@@ -6,6 +6,7 @@ import '../public/css/style.css';
 // TODO automatically load all files in stories folder
 function loadStories() {
   require('../stories/JobStatusTable');
+  require('../stories/FetchState');
 }
 
 configure(loadStories, module);
