@@ -10,6 +10,6 @@ export const chooseServer = () => {
 /*  if (process.env.NODE_ENV === 'production') {
     SERVER_URL = PROD_SERVER;
   }*/
-  return PROD_SERVER;
+  SERVER_URL = PROD_SERVER;
 };
 

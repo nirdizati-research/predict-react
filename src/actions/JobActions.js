@@ -9,5 +9,5 @@ export const jobsRequested = createPayloadForwardingAction(JOBS_REQUESTED);
 export const JOBS_RETRIEVED = 'JOBS_RETRIEVED';
 export const jobsRetrieved = createPayloadForwardingAction(JOBS_RETRIEVED);
 
-export const JOBS_FAILED = 'PROTOTYPES_FAILED';
+export const JOBS_FAILED = 'JOBS_FAILED';
 export const jobsFailed = createPayloadForwardingAction(JOBS_FAILED);

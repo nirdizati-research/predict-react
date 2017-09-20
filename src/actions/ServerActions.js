@@ -1,5 +1,6 @@
 import {SERVER_URL} from '../constants';
 import jsonAjax from '../JSONAjaxRequest';
+import {jobsFailed, jobsRetrieved} from './JobActions';
 
 export const getJobs = () => (dispatch) => {
   jsonAjax(

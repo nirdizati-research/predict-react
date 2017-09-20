@@ -22,7 +22,7 @@ const jobs = (state = initialState, action) => {
       return {
         ...state,
         fetchState: {inFlight: false},
-        prototypes: action.payload
+        jobs: action.payload
       };
     }
 
