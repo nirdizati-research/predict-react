@@ -1,8 +1,10 @@
-import {getJobs} from '../actions/ServerActions';
+import {getJobs, getLogList} from '../actions/ServerActions';
 import {JOBS_REQUESTED} from '../actions/JobActions';
+import {LOG_LIST_REQUESTED} from '../actions/LogActions';
 
 const ACTION_TYPE_TO_SERVER_ACTION = {
-  [JOBS_REQUESTED]: getJobs
+  [JOBS_REQUESTED]: getJobs,
+  [LOG_LIST_REQUESTED]: getLogList
 };
 
 const serverMiddleware = (store) => (next) => (action) => {

@@ -7,6 +7,7 @@ import '../public/css/style.css';
 function loadStories() {
   require('../stories/JobStatusTable');
   require('../stories/FetchState');
+  require('../stories/LogListCard');
 }
 
 configure(loadStories, module);
