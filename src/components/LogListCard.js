@@ -5,16 +5,21 @@ import PropTypes from 'prop-types';
 import FetchState from './FetchState';
 
 const LogListCard = (props) => {
+  const selectChange = (value, _) => {
+    props.selectChange(value);
+  };
   return <Card className="md-block-centered">
     <CardTitle title="Log overview"/>
     <CardText>
       <p>Pick a log to see details</p>
       <SelectField
-        id="select-field-5"
+        id="log-name-select"
         placeholder="log.xes"
         className="md-cell"
         menuItems={props.logNames}
         position={SelectField.Positions.BELOW}
+        onChange={selectChange}
+        defaultValue={props.logNames[0]}
       />
       <FetchState fetchState={props.fetchState}/>
     </CardText>
@@ -28,5 +33,6 @@ LogListCard.propTypes = {
     inFlight: PropTypes.bool.isRequired,
     error: PropTypes.any
   }).isRequired,
+  selectChange: PropTypes.func.isRequired
 };
 export default LogListCard;

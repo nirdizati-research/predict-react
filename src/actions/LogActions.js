@@ -11,3 +11,19 @@ export const logListsRetrieved = createPayloadForwardingAction(LOG_LIST_RETRIEVE
 
 export const LOG_LIST_FAILED = 'LOG_LIST_FAILED';
 export const logListFailed = createPayloadForwardingAction(LOG_LIST_FAILED);
+
+export const LOG_TRACES_REQUESTED = 'LOG_TRACES_REQUESTED';
+export const logTracesRequested = (log) => (
+  {
+    type: LOG_TRACES_REQUESTED,
+    payload: {
+      log
+    }
+  }
+);
+
+export const LOG_TRACES_RETRIEVED = 'LOG_TRACES_RETRIEVED';
+export const logTracesRetrieved = createPayloadForwardingAction(LOG_TRACES_RETRIEVED);
+
+export const LOG_TRACES_FAILED = 'LOG_TRACES_FAILED';
+export const logTracesFailed = createPayloadForwardingAction(LOG_TRACES_FAILED);
