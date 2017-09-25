@@ -14,7 +14,8 @@ const createLogObjects = (logNames) => {
     return {
       name: name,
       fetchState: {inFlight: false},
-      visible: false
+      visible: false,
+      traces: {}
     };
   });
 };
@@ -36,16 +37,14 @@ const logs = (state = initialState, action) => {
         };
       }
 
-      case
-      LOG_LIST_REQUESTED: {
+      case LOG_LIST_REQUESTED: {
         return {
           ...state,
           fetchState: {inFlight: true},
         };
       }
 
-      case
-      LOG_LIST_RETRIEVED: {
+      case LOG_LIST_RETRIEVED: {
         return {
           ...state,
           fetchState: {inFlight: false},
@@ -53,8 +52,7 @@ const logs = (state = initialState, action) => {
         };
       }
 
-      case
-      LOG_LIST_FAILED: {
+      case LOG_LIST_FAILED: {
         return {
           ...state,
           fetchState: {inFlight: false, error: action.payload},

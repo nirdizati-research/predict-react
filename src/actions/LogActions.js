@@ -4,11 +4,11 @@
 import {createPayloadForwardingAction} from './index';
 
 export const CHANGE_VISIBLE_LOG = 'CHANGE_VISIBLE_LOG';
-export const changeVisibleLog = (log) => (
+export const changeVisibleLog = (name) => (
   {
     type: CHANGE_VISIBLE_LOG,
     payload: {
-      log
+      name
     }
   }
 );

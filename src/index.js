@@ -10,6 +10,7 @@ import {syncHistoryWithStore} from 'react-router-redux';
 import serverMiddleware from './middlewares/ServerMiddleware';
 import {chooseServer} from './constants';
 import WebFontLoader from 'webfontloader';
+import logMiddleware from './middlewares/LogMiddleware';
 
 WebFontLoader.load({
   google: {
@@ -24,7 +25,8 @@ let store = createStore(
   composeStoreEnhancers(
     applyMiddleware(
       thunk,
-      serverMiddleware
+      serverMiddleware,
+      logMiddleware
     )
   )
 );
