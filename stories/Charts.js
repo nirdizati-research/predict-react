@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import {storiesOf} from '@kadira/storybook';
-import NumberOfTracesCard from '../src/components/chart/NumberOfTracesCard';
+import LineChartCard from '../src/components/chart/LineChartCard';
 
 const fetchState = {inFlight: false};
 
@@ -16,12 +16,31 @@ const traces = {
   '2011-10-07': 83
 };
 
+const resources = {
+  '2011-10-01': 7,
+  '2011-10-03': 13,
+  '2011-10-04': 12,
+  '2011-10-05': 14,
+  '2011-10-06': 11,
+  '2011-10-07': 13,
+  '2011-10-08': 7,
+};
+
 storiesOf('Charts', module)
-  .add('Number of traces', () => {
+  .add('LineChartCard', () => {
       return (
         <div className="md-grid">
           <div className="md-cell md-cell--12">
-            <NumberOfTracesCard fetchState={fetchState} traces={traces}/>
+            <LineChartCard fetchState={fetchState}
+                           data={traces}
+                           cardTitle="Number of traces"
+                           chartTitle="Active traces"/>
+          </div>
+          <div className="md-cell md-cell--12">
+            <LineChartCard fetchState={fetchState}
+                           data={resources}
+                           cardTitle="Number of resources"
+                           chartTitle="Active traces"/>
           </div>
         </div>
       );

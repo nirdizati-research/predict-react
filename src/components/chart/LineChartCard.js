@@ -7,8 +7,8 @@ import PropTypes from 'prop-types';
 import FetchState from '../FetchState';
 import {Chart} from 'react-google-charts';
 
-const NumberOfTracesCard = (props) => {
-  const values = Object.keys(props.traces).map((key) => [new Date(key), props.traces[key]]);
+const LineChartCard = (props) => {
+  const values = Object.keys(props.data).map((key) => [new Date(key), props.data[key]]);
 
   const opts = {
     legend: 'none',
@@ -17,17 +17,28 @@ const NumberOfTracesCard = (props) => {
       title: 'Date'
     },
     vAxis: {
-      title: 'Active Traces'
+      title: props.chartTitle
     }
   };
+
+  const columns = [
+    {
+      type: 'date',
+      label: 'Date',
+    },
+    {
+      type: 'number',
+      label: props.chartTitle,
+    }];
   return <Card className="md-block-centered">
-    <CardTitle title="Number of traces"/>
+    <CardTitle title={props.cardTitle}/>
     <CardText>
       <Chart
         chartType="LineChart"
-        data={[['Date', 'Active Traces'], ...values]}
+        rows={values}
+        columns={columns}
         options={opts}
-        graph_id="LineChart"
+        graph_id={props.cardTitle}
         width="100%"
         height="400px"
         legend_toggle
@@ -37,11 +48,14 @@ const NumberOfTracesCard = (props) => {
   </Card>;
 };
 
-NumberOfTracesCard.propTypes = {
-  traces: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
+LineChartCard.propTypes = {
+  data: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
+  cardTitle: PropTypes.string.isRequired,
+  chartTitle: PropTypes.string.isRequired,
   fetchState: PropTypes.shape({
     inFlight: PropTypes.bool.isRequired,
     error: PropTypes.any
   }).isRequired,
 };
-export default NumberOfTracesCard;
+
+export default LineChartCard;
