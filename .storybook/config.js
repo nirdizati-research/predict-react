@@ -8,6 +8,7 @@ function loadStories() {
   require('../stories/JobStatusTable');
   require('../stories/FetchState');
   require('../stories/LogListCard');
+  require('../stories/Charts');
 }
 
 configure(loadStories, module);
