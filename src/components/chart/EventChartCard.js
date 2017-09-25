@@ -7,38 +7,50 @@ import PropTypes from 'prop-types';
 import FetchState from '../FetchState';
 import {Chart} from 'react-google-charts';
 
-const LineChartCard = (props) => {
-  const rows = Object.keys(props.data).map((key) => [new Date(key), props.data[key]]);
+// Custom compare because why not
+const compare = (a, b) =>{
+  if (a[1] > b[1]) {
+    return -1;
+  }
+  if (a[1] < b[1]) {
+    return 1;
+  }
+  return 0;
+};
 
+const EventChartCard = (props) => {
+  const rows = Object.keys(props.data).map((key) => [key, props.data[key]]);
+  rows.sort(compare);
+
+  const hTitle = 'Number of Executions';
+  const vTitle = 'Events';
   const opts = {
     legend: 'none',
     hAxis: {
-      format: 'dd-MM-yy',
-      title: 'Date'
+      title: hTitle
     },
     vAxis: {
-      title: props.chartTitle
+      title: vTitle
     }
   };
-
   const columns = [
     {
-      type: 'date',
-      label: 'Date',
+      type: 'string',
+      label: hTitle,
     },
     {
       type: 'number',
-      label: props.chartTitle,
+      label: vTitle,
     }];
   return <Card className="md-block-centered">
-    <CardTitle title={props.cardTitle} />
+    <CardTitle title="Event Occurrences"/>
     <CardText>
       <Chart
-        chartType="LineChart"
+        chartType="BarChart"
         rows={rows}
         columns={columns}
         options={opts}
-        graph_id={props.cardTitle}
+        graph_id={hTitle}
         width="100%"
         legend_toggle
       />
@@ -47,14 +59,12 @@ const LineChartCard = (props) => {
   </Card>;
 };
 
-LineChartCard.propTypes = {
+EventChartCard.propTypes = {
   data: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
-  cardTitle: PropTypes.string.isRequired,
-  chartTitle: PropTypes.string.isRequired,
   fetchState: PropTypes.shape({
     inFlight: PropTypes.bool.isRequired,
     error: PropTypes.any
   }).isRequired,
 };
 
-export default LineChartCard;
+export default EventChartCard;

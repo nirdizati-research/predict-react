@@ -11,7 +11,7 @@ const JobStatusTable = (props) => {
   return (<DataTable baseId="simple-pagination" plain>
     <TableHeader>
       <TableRow selectable={false}>
-        {headers.map(header => <TableColumn key={header}> {header}</TableColumn>)}
+        {headers.map((header) => <TableColumn key={header}> {header}</TableColumn>)}
       </TableRow>
     </TableHeader>
     <TableBody>

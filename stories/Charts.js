@@ -4,6 +4,7 @@
 import React from 'react';
 import {storiesOf} from '@kadira/storybook';
 import LineChartCard from '../src/components/chart/LineChartCard';
+import EventChartCard from '../src/components/chart/EventChartCard';
 
 const fetchState = {inFlight: false};
 
@@ -26,6 +27,15 @@ const resources = {
   '2011-10-08': 7,
 };
 
+const events = {
+  'W_Assessing_application': 4098,
+  'W_Calling _missing_information': 1647,
+  'W_Calling_after_offers': 4464,
+  'W_Check_for_fraud': 130,
+  'W_Filling_in application': 6117,
+  'W_Fixing_incoming_lead': 3588
+};
+
 storiesOf('Charts', module)
   .add('LineChartCard', () => {
       return (
@@ -41,6 +51,9 @@ storiesOf('Charts', module)
                            data={resources}
                            cardTitle="Number of resources"
                            chartTitle="Active traces"/>
+          </div>
+          <div className="md-cell md-cell--12">
+            <EventChartCard fetchState={fetchState} data={events}/>
           </div>
         </div>
       );
