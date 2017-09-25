@@ -3,6 +3,16 @@
  */
 import {createPayloadForwardingAction} from './index';
 
+export const CHANGE_VISIBLE_LOG = 'CHANGE_VISIBLE_LOG';
+export const changeVisibleLog = (log) => (
+  {
+    type: CHANGE_VISIBLE_LOG,
+    payload: {
+      log
+    }
+  }
+);
+
 export const LOG_LIST_REQUESTED = 'LOG_LIST_REQUESTED';
 export const logListRequested = createPayloadForwardingAction(LOG_LIST_REQUESTED);
 

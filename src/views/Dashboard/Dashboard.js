@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import LogListCard from '../../components/LogListCard';
 import PropTypes from 'prop-types';
-import {logListRequested, logTracesRequested} from '../../actions/LogActions';
+import {changeVisibleLog, logListRequested, logTracesRequested} from '../../actions/LogActions';
+import LineChartCard from '../../components/chart/LineChartCard';
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -18,7 +19,7 @@ class Dashboard extends Component {
       <div className="md-grid">
         <div className="md-cell md-cell--12">
           <LogListCard logNames={this.getLogNames()} fetchState={this.props.fetchState}
-                       selectChange={this.props.onRequestTraces}/>
+                       selectChange={this.props.onChangeVisible}/>
         </div>
       </div>
     );
@@ -38,7 +39,7 @@ Dashboard.propTypes = {
     error: PropTypes.any
   }).isRequired,
   onRequestLogList: PropTypes.func.isRequired,
-  onRequestTraces: PropTypes.func.isRequired,
+  onChangeVisible: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -49,7 +50,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onRequestLogList: () => dispatch(logListRequested()),
-  onRequestTraces: (log) => dispatch(logTracesRequested(log))
+  onChangeVisible: (log) => dispatch(changeVisibleLog(log))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
