@@ -10,15 +10,11 @@ class Dashboard extends Component {
     this.props.onRequestLogList();
   }
 
-  getLogNames() {
-    return this.props.logs.map((x) => x.name);
-  }
-
   render() {
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
-          <LogListCard logNames={this.getLogNames()} fetchState={this.props.fetchState}
+          <LogListCard logNames={this.props.logNames} fetchState={this.props.fetchState}
                        selectChange={this.props.onChangeVisible}/>
         </div>
       </div>
@@ -27,23 +23,25 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
-  logs: PropTypes.arrayOf(PropTypes.shape({
+  log: PropTypes.shape({
     name: PropTypes.string.isRequired,
     fetchState: PropTypes.shape({
       inFlight: PropTypes.bool.isRequired,
       error: PropTypes.any
     }).isRequired,
-  })).isRequired,
+  }),
   fetchState: PropTypes.shape({
     inFlight: PropTypes.bool.isRequired,
     error: PropTypes.any
   }).isRequired,
+  logNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   onRequestLogList: PropTypes.func.isRequired,
   onChangeVisible: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  logs: state.logs.logs,
+  log: state.logs.logs.filter((log) => log.visible)[0],
+  logNames: state.logs.logs.map((log) => log.name),
   fetchState: state.logs.fetchState
 
 });
