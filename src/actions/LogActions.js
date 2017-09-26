@@ -4,11 +4,11 @@
 import {createPayloadForwardingAction} from './index';
 
 export const CHANGE_VISIBLE_LOG = 'CHANGE_VISIBLE_LOG';
-export const changeVisibleLog = (name) => (
+export const changeVisibleLog = (logName) => (
   {
     type: CHANGE_VISIBLE_LOG,
     payload: {
-      name
+      logName
     }
   }
 );
@@ -22,18 +22,20 @@ export const logListsRetrieved = createPayloadForwardingAction(LOG_LIST_RETRIEVE
 export const LOG_LIST_FAILED = 'LOG_LIST_FAILED';
 export const logListFailed = createPayloadForwardingAction(LOG_LIST_FAILED);
 
-export const LOG_TRACES_REQUESTED = 'LOG_TRACES_REQUESTED';
-export const logTracesRequested = (log) => (
+export const LOG_INFO_REQUESTED = 'LOG_INFO_REQUESTED';
+export const logInfoRequested = (logName, infoType) => (
   {
-    type: LOG_TRACES_REQUESTED,
+    type: LOG_INFO_REQUESTED,
     payload: {
-      log
+      logName,
+      infoType
     }
   }
 );
 
-export const LOG_TRACES_RETRIEVED = 'LOG_TRACES_RETRIEVED';
-export const logTracesRetrieved = createPayloadForwardingAction(LOG_TRACES_RETRIEVED);
+export const LOG_INFO_RETRIEVED = 'LOG_INFO_RETRIEVED';
+export const logInfoRetrieved = createPayloadForwardingAction(LOG_INFO_RETRIEVED);
 
-export const LOG_TRACES_FAILED = 'LOG_TRACES_FAILED';
-export const logTracesFailed = createPayloadForwardingAction(LOG_TRACES_FAILED);
+export const LOG_INFO_FAILED = 'LOG_INFO_FAILED';
+export const logInfoFailed = createPayloadForwardingAction(LOG_INFO_FAILED);
+

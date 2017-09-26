@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import LogListCard from '../../components/LogListCard';
 import PropTypes from 'prop-types';
-import {changeVisibleLog, logListRequested, logTracesRequested} from '../../actions/LogActions';
+import {changeVisibleLog, logListRequested} from '../../actions/LogActions';
 import LineChartCard from '../../components/chart/LineChartCard';
 
 class Dashboard extends Component {
