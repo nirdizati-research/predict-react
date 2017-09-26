@@ -8,13 +8,17 @@ const checkIfNoTraces = (logName, state) => {
   return first !== undefined && Object.keys(first.traces).length === 0;
 };
 
+const infoPayload = (logName, infoType) => {
+  return {logName, infoType};
+};
+
 // Download logs for visible log if needed
 const logMiddleware = (store) => (next) => (action) => {
   if (action.type === CHANGE_VISIBLE_LOG) {
     if (checkIfNoTraces(action.payload.logName, store.getState())) {
-      store.dispatch(logInfoRequested(action.payload.logName, 'events'));
-      store.dispatch(logInfoRequested(action.payload.logName, 'resources'));
-      store.dispatch(logInfoRequested(action.payload.logName, 'traces'));
+      store.dispatch(logInfoRequested(infoPayload(action.payload.logName, 'events')));
+      store.dispatch(logInfoRequested(infoPayload(action.payload.logName, 'resources')));
+      store.dispatch(logInfoRequested(infoPayload(action.payload.logName, 'traces')));
     }
   }
   return next(action);

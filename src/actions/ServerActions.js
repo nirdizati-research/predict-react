@@ -15,7 +15,7 @@ export const getJobs = () => (dispatch) => {
 
 const checkIfChangeVisible = (dispatch, changeVisible, logList) => {
   if (changeVisible && logList[0]) {
-    dispatch(changeVisibleLog(logList[0]));
+    dispatch(changeVisibleLog({logName: logList[0]}));
   }
 };
 

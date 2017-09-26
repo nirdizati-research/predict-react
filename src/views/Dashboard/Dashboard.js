@@ -98,7 +98,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onRequestLogList: (changeVisible) => dispatch(logListRequested(changeVisible)),
-  onChangeVisible: (log) => dispatch(changeVisibleLog(log))
+  onChangeVisible: (logName) => dispatch(changeVisibleLog({logName}))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
