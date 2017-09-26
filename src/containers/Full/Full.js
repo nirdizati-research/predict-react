@@ -42,6 +42,12 @@ class Full extends Component {
           active: isActive('/jobStatus', pathname),
           primaryText: 'Job Status',
           leftIcon: <FontIcon>donut_large</FontIcon>,
+        }, {
+          component: Link,
+          to: '/regconfig',
+          active: isActive('/regconfig', pathname),
+          primaryText: 'Remaining time training',
+          leftIcon: <FontIcon>donut_large</FontIcon>,
         }]}
       >
         {children ? React.cloneElement(children, {key: pathname}) : null}

@@ -5,6 +5,7 @@ import Full from './containers/Full/';
 import Dashboard from './views/Dashboard/';
 import Upload from './views/Upload/Upload';
 import JobStatus from './views/JobStatus/JobStatus';
+import RemainingTimeTraining from './views/RemainingTimeTraining';
 
 export default (
   <Router history={hashHistory}>
@@ -13,6 +14,7 @@ export default (
       <Route path="dashboard" name="Dashboard" component={Dashboard}/>
       <Route path="upload" name="Upload" component={Upload}/>
       <Route path="jobStatus" name="Job status" component={JobStatus}/>
+      <Route path="regconfig" name="Remaining time training" component={RemainingTimeTraining}/>
     </Route>
   </Router>
 );
