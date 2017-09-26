@@ -1,10 +1,7 @@
 /**
  * Created by Tõnis Kasekamp on 25.09.2017.
  */
-import {
-  CHANGE_VISIBLE_LOG, changeVisibleLog, LOG_LIST_RETRIEVED,
-  logInfoRequested
-} from '../actions/LogActions';
+import {CHANGE_VISIBLE_LOG, logInfoRequested} from '../actions/LogActions';
 
 const checkIfNoTraces = (logName, state) => {
   const first = state.logs.logs.find((log) => log.name === logName);
@@ -19,10 +16,6 @@ const logMiddleware = (store) => (next) => (action) => {
       store.dispatch(logInfoRequested(action.payload.logName, 'resources'));
       store.dispatch(logInfoRequested(action.payload.logName, 'traces'));
     }
-  } else if (action.type === LOG_LIST_RETRIEVED) {
-    // Load data of first log
-    if (action.payload.length > 0)
-      store.dispatch(changeVisibleLog(action.payload[0]));
   }
   return next(action);
 };

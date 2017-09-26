@@ -19,7 +19,7 @@ const LogListCard = (props) => {
         menuItems={props.logNames}
         position={SelectField.Positions.BELOW}
         onChange={selectChange}
-        defaultValue={props.logNames[0]}
+        value={props.visibleLogName}
       />
       <FetchState fetchState={props.fetchState}/>
     </CardText>
@@ -29,6 +29,7 @@ const LogListCard = (props) => {
 
 LogListCard.propTypes = {
   logNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  visibleLogName: PropTypes.string.isRequired,
   fetchState: PropTypes.shape({
     inFlight: PropTypes.bool.isRequired,
     error: PropTypes.any

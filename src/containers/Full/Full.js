@@ -21,7 +21,7 @@ class Full extends Component {
         mobileDrawerType={NavigationDrawer.DrawerTypes.TEMPORARY_MINI}
         tabletDrawerType={NavigationDrawer.DrawerTypes.PERSISTENT_MINI}
         desktopDrawerType={NavigationDrawer.DrawerTypes.PERSISTENT_MINI}
-        toolbarTitle='Hello, World!'
+        toolbarTitle='Nirdizati training'
 
         defaultVisible={false}
         navItems={[{

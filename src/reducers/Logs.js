@@ -12,16 +12,23 @@ const initialState = {
   logs: []
 };
 
-const createLogObjects = (logNames) => {
+const dummy = (name) => {
+  return {
+    name: name,
+    fetchState: {inFlight: false},
+    visible: false,
+    events: {},
+    resources: {},
+    traces: {}
+  };
+};
+
+const mergeIncomingLogs = (logNames, existingLogs) => {
   return logNames.map((name) => {
-    return {
-      name: name,
-      fetchState: {inFlight: false},
-      visible: false,
-      events: {},
-      resources: {},
-      traces: {}
-    };
+    if (existingLogs.find((exLog) => exLog.name === name))
+      return existingLogs.find((exLog) => exLog.name === name);
+    else
+      return dummy(name);
   });
 };
 
@@ -94,7 +101,7 @@ const logs = (state = initialState, action) => {
         return {
           ...state,
           fetchState: {inFlight: false},
-          logs: createLogObjects(action.payload)
+          logs: mergeIncomingLogs(action.payload, state.logs)
         };
       }
 

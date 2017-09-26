@@ -1,7 +1,7 @@
 import {SERVER_URL} from '../constants';
 import jsonAjax from '../JSONAjaxRequest';
 import {jobsFailed, jobsRetrieved} from './JobActions';
-import {logListFailed, logListsRetrieved, logInfoRetrieved, logInfoFailed} from './LogActions';
+import {logListFailed, logListsRetrieved, logInfoRetrieved, logInfoFailed, changeVisibleLog} from './LogActions';
 
 export const getJobs = () => (dispatch) => {
   jsonAjax(
@@ -13,12 +13,21 @@ export const getJobs = () => (dispatch) => {
   );
 };
 
-export const getLogList = () => (dispatch) => {
+const checkIfChangeVisible = (dispatch, changeVisible, logList) => {
+  if (changeVisible && logList[0]) {
+    dispatch(changeVisibleLog(logList[0]));
+  }
+};
+
+export const getLogList = (changeVisible) => (dispatch) => {
   jsonAjax(
     SERVER_URL + '/logs/list',
     'GET',
     null,
-    (logList) => dispatch(logListsRetrieved(logList)),
+    (logList) => {
+      dispatch(logListsRetrieved(logList));
+      checkIfChangeVisible(dispatch, changeVisible, logList);
+    },
     ({error} = {}) => dispatch(logListFailed(error))
   );
 };

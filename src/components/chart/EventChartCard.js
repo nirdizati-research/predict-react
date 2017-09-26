@@ -20,6 +20,7 @@ const compare = (a, b) =>{
 
 const EventChartCard = (props) => {
   const rows = Object.keys(props.data).map((key) => [key, props.data[key]]);
+
   rows.sort(compare);
 
   const hTitle = 'Number of Executions';
