@@ -30,13 +30,32 @@ const clustering = [
   {
     label: 'None',
     value: 'None',
-    message: 'To not use clustering and train a single model'
+    message: 'No clustering and train a single model'
   },
   {
     label: 'Kmeans',
     value: 'kmeans',
     message: 'Assign traces to k-means clusters and train a model for each cluster'
   }
+];
+
+const regression = [
+  {
+    label: 'Linear',
+    value: 'linear'
+  },
+  {
+    label: 'Xboost',
+    value: 'xboost'
+  },
+  {
+    label: 'Random forest',
+    value: 'randomforest'
+  },
+  {
+    label: 'Lasso',
+    value: 'lasso'
+  },
 ];
 
 const labelCreator = (opt) => {
@@ -56,7 +75,8 @@ class RemainingTimeCard extends Component {
     this.state = {
       logName: '',
       encoding: [encoding[0].value],
-      clustering: [clustering[0].value]
+      clustering: [clustering[0].value],
+      regression: [regression[0].value]
     };
   }
 
@@ -74,12 +94,17 @@ class RemainingTimeCard extends Component {
       case 'clustering[]':
         this.setState({clustering: valList});
         break;
+      case 'regression[]':
+        this.setState({regression: valList});
+        break;
     }
   }
 
   render() {
     const encodingMethods = encoding.map((enc) => labelCreator(enc));
     const clusteringMethods = clustering.map((cl) => labelCreator(cl));
+    const regressionMethods = regression.map((cl) => labelCreator(cl));
+    const groupStyle = {height: 'auto'};
     return (
       <Card className="md-block-centered">
         <CardTitle title="Remaining time training">
@@ -93,12 +118,23 @@ class RemainingTimeCard extends Component {
             value={this.props.logNames[0]}
           /></CardTitle>
         <CardText>
-          <SelectionControlGroup type="checkbox" label="Encoding methods" name="encoding" id="encoding"
-                                 onChange={this.checkboxChange.bind(this)} controls={encodingMethods}
-                                 defaultValue={this.state.encoding[0]}/>
-          <SelectionControlGroup type="checkbox" label="Clustering methods" name="clustering" id="clustering"
-                                 onChange={this.checkboxChange.bind(this)} controls={clusteringMethods}
-                                 defaultValue={this.state.clustering[0]}/>
+          <div className="md-grid md-grid--no-spacing">
+            <div className="md-cell">
+              <SelectionControlGroup type="checkbox" label="Encoding methods" name="encoding" id="encoding"
+                                     onChange={this.checkboxChange.bind(this)} controls={encodingMethods}
+                                     defaultValue={this.state.encoding[0]} controlStyle={groupStyle}/>
+            </div>
+            <div className="md-cell">
+              <SelectionControlGroup type="checkbox" label="Clustering methods" name="clustering" id="clustering"
+                                     onChange={this.checkboxChange.bind(this)} controls={clusteringMethods}
+                                     defaultValue={this.state.clustering[0]} controlStyle={groupStyle}/>
+            </div>
+            <div className="md-cell">
+              <SelectionControlGroup type="checkbox" label="Regression methods" name="regression" id="regression"
+                                     onChange={this.checkboxChange.bind(this)} controls={regressionMethods}
+                                     defaultValue={this.state.regression[0]}/>
+            </div>
+          </div>
         </CardText>
       </Card>
     );
