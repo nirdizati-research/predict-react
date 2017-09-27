@@ -5,26 +5,84 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import SelectField from 'react-md/lib/SelectFields';
-import Checkbox from 'react-md/lib/SelectionControls/Checkbox';
+import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
+
+/* eslint-disable max-len */
+const encoding = [
+  {
+    label: 'Simple index',
+    value: 'simpleIndex',
+    message: 'Each feature corresponds to a position in the trace and the possible values for each feature are the event classes. Event attributes are discarded.'
+  },
+  {
+    label: 'Boolean',
+    value: 'boolean',
+    message: 'Features represent whether or not a particular event class has occurred in the trace.'
+  },
+  {
+    label: 'Frequency',
+    value: 'frequency',
+    message: 'Features represent the absolute frequency of each possible event class. Event attributes are discarded.'
+  }
+];
+
+const clustering = [
+  {
+    label: 'None',
+    value: 'None',
+    message: 'To not use clustering and train a single model'
+  },
+  {
+    label: 'Kmeans',
+    value: 'kmeans',
+    message: 'Assign traces to k-means clusters and train a model for each cluster'
+  }
+];
+
+const labelCreator = (opt) => {
+  return {
+    key: opt.value,
+    value: opt.value,
+    label: <div>{opt.label}
+      <div className="md-caption">{opt.message}</div>
+    </div>
+  };
+};
 
 class RemainingTimeCard extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      name: ''
+      logName: '',
+      encoding: [encoding[0].value],
+      clustering: [clustering[0].value]
     };
   }
 
   selectChange(value) {
-    this.setState({name: value});
+    this.setState({logName: value});
+  }
+
+  checkboxChange(value, event) {
+    // First val is ''
+    const valList = value.split(',').filter((val) => val !== '');
+    switch (event.target.name) {
+      case 'encoding[]':
+        this.setState({encoding: valList});
+        break;
+      case 'clustering[]':
+        this.setState({clustering: valList});
+        break;
+    }
   }
 
   render() {
+    const encodingMethods = encoding.map((enc) => labelCreator(enc));
+    const clusteringMethods = clustering.map((cl) => labelCreator(cl));
     return (
       <Card className="md-block-centered">
-        <CardTitle title="Log overview"/>
-        <CardText>
+        <CardTitle title="Remaining time training">
           <SelectField
             id="log-name-select"
             placeholder="log.xes"
@@ -33,31 +91,14 @@ class RemainingTimeCard extends Component {
             position={SelectField.Positions.BELOW}
             onChange={this.selectChange.bind(this)}
             value={this.props.logNames[0]}
-          />
-          <h3>Encoding methods</h3>
-          <p>Each feature corresponds to a position in the trace and the possible values for each feature are the event
-            classes. Event attributes are discarded.</p>
-          <Checkbox
-            id="simpleIndex"
-            name="simpleIndex"
-            label="Simple Index"
-            value="simpleIndex"
-            defaultChecked
-          />
-          <p>Features represent whether or not a particular event class has occurred in the trace.</p>
-          <Checkbox
-            id="boolean"
-            name="boolean"
-            label="Boolean"
-            value="boolean"
-          />
-          <p>Features represent the absolute frequency of each possible event class. Event attributes are discarded.</p>
-          <Checkbox
-            id="frequency"
-            name="frequency"
-            label="Frequency"
-            value="frequency"
-          />
+          /></CardTitle>
+        <CardText>
+          <SelectionControlGroup type="checkbox" label="Encoding methods" name="encoding" id="encoding"
+                                 onChange={this.checkboxChange.bind(this)} controls={encodingMethods}
+                                 defaultValue={this.state.encoding[0]}/>
+          <SelectionControlGroup type="checkbox" label="Clustering methods" name="clustering" id="clustering"
+                                 onChange={this.checkboxChange.bind(this)} controls={clusteringMethods}
+                                 defaultValue={this.state.clustering[0]}/>
         </CardText>
       </Card>
     );
