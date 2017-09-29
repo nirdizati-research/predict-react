@@ -6,11 +6,12 @@ import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import {applyMiddleware, compose, createStore} from 'redux';
 import reducers from './reducers';
-import {syncHistoryWithStore} from 'react-router-redux';
+import {routerMiddleware, syncHistoryWithStore} from 'react-router-redux';
 import serverMiddleware from './middlewares/ServerMiddleware';
 import {chooseServer} from './constants';
 import WebFontLoader from 'webfontloader';
 import logMiddleware from './middlewares/LogMiddleware';
+import trainingMiddleware from './middlewares/TrainingMiddleware';
 
 WebFontLoader.load({
   google: {
@@ -20,13 +21,16 @@ WebFontLoader.load({
 
 const composeStoreEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+const routerMiddle = routerMiddleware(hashHistory);
 let store = createStore(
   reducers,
   composeStoreEnhancers(
     applyMiddleware(
+      routerMiddle,
       thunk,
       serverMiddleware,
-      logMiddleware
+      logMiddleware,
+      trainingMiddleware
     )
   )
 );

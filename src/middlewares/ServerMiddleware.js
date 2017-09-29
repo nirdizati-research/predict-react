@@ -1,11 +1,12 @@
-import {getJobs, getLogInfo, getLogList} from '../actions/ServerActions';
-import {JOBS_REQUESTED} from '../actions/JobActions';
+import {getJobs, getLogInfo, getLogList, postTraining} from '../actions/ServerActions';
+import {JOBS_REQUESTED, TRAINING_SUBMITTED} from '../actions/JobActions';
 import {LOG_INFO_REQUESTED, LOG_LIST_REQUESTED} from '../actions/LogActions';
 
 const ACTION_TYPE_TO_SERVER_ACTION = {
   [JOBS_REQUESTED]: getJobs,
   [LOG_LIST_REQUESTED]: getLogList,
-  [LOG_INFO_REQUESTED]: getLogInfo
+  [LOG_INFO_REQUESTED]: getLogInfo,
+  [TRAINING_SUBMITTED]: postTraining
 };
 
 const serverMiddleware = (store) => (next) => (action) => {

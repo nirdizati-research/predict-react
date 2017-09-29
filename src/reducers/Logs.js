@@ -81,7 +81,7 @@ const logs = (state = initialState, action) => {
       case LOG_INFO_FAILED: {
         const logs = state.logs.map((log) => {
           if (log.name === action.payload.logName) {
-            return {...log, fetchState: {inFlight: false, error: action.error.payload}};
+            return {...log, fetchState: {inFlight: false, error: action.payload.error}};
           } else {
             return log;
           }

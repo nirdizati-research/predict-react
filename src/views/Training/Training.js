@@ -44,7 +44,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onRequestLogList: (changeVisible) => dispatch(logListRequested({changeVisible, requestInfo: false})),
-  onSubmitTraining: (endpoint, payload) => dispatch(submitTraining({endpoint, payload}))
+  onSubmitTraining: (endPoint, payload) => dispatch(submitTraining({endPoint, payload}))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Training);
