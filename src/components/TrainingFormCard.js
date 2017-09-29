@@ -92,7 +92,9 @@ class TrainingFormCard extends Component {
         && prevState.clustering.length !== 0
         && prevState.regression.length !== 0);
       case 'outcome':
-        return true;
+        return !(prevState.encoding.length !== 0
+        && prevState.clustering.length !== 0
+        && prevState.classification.length !== 0);
       default:
         break;
     }
@@ -132,7 +134,7 @@ class TrainingFormCard extends Component {
     let warning = null;
     if (this.state.displayWarning) {
       warning =
-        <p className="md-text md-text--error">Select at least one encoding, clustering and regression method!</p>;
+        <p className="md-text md-text--error">Select at least one from every option</p>;
     }
 
     const regressionFragment = this.state.predictionMethod === 'time' ?
