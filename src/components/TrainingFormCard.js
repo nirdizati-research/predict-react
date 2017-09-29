@@ -9,21 +9,10 @@ import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
 import {Button} from 'react-md/lib/Buttons/index';
 import FetchState from './FetchState';
 import {REG_TRAINING} from '../constants';
-import {clustering, encoding, regression} from '../reference';
+import {clusteringMethods, encodingMethods, regressionMethods, predictionMethods} from '../reference';
+import RemainingTimeFragment from './training/RemainingTimeFragment';
 
 const defaultPrefix = 1;
-
-const controlCreator = (optMap) => {
-  return optMap.map((opt) => {
-    return {
-      key: opt.value,
-      value: opt.value,
-      label: <div>{opt.label}
-        <div className="md-caption">{opt.message}</div>
-      </div>
-    };
-  });
-};
 
 class TrainingFormCard extends Component {
   constructor(props) {
@@ -31,10 +20,11 @@ class TrainingFormCard extends Component {
 
     this.state = {
       logName: this.props.logNames[0],
-      encoding: [encoding[0].value],
-      clustering: [clustering[0].value],
-      regression: [regression[0].value],
-      displayWarning: false
+      encoding: [encodingMethods[0].value],
+      clustering: [clusteringMethods[0].value],
+      regression: [regressionMethods[0].value],
+      displayWarning: false,
+      predictionMethod: predictionMethods[0].value
     };
   }
 
@@ -65,10 +55,23 @@ class TrainingFormCard extends Component {
   }
 
   displayWarningCheck(prevState) {
-    const good = prevState.encoding.length !== 0
-      && prevState.clustering.length !== 0
-      && prevState.regression.length !== 0;
-    return !good;
+    switch (prevState.predictionMethod) {
+      case 'time':
+        return !(prevState.encoding.length !== 0
+        && prevState.clustering.length !== 0
+        && prevState.regression.length !== 0);
+      case 'outcome':
+        return true;
+      default:
+        break;
+    }
+  }
+
+  onPredictionMethodChange(value) {
+    this.setState({predictionMethod: value});
+    this.setState((prevState, _) => {
+      return {displayWarning: this.displayWarningCheck(prevState)};
+    });
   }
 
   getSubmitPayload() {
@@ -86,17 +89,26 @@ class TrainingFormCard extends Component {
       this.props.onSubmit(REG_TRAINING, this.getSubmitPayload());
   }
 
-  render() {
-    const encodingMethods = controlCreator(encoding);
-    const clusteringMethods = controlCreator(clustering);
-    const regressionMethods = controlCreator(regression);
+  getPredictionOptions() {
+    switch (this.state.predictionMethod) {
+      case 'time':
+        return <RemainingTimeFragment regressionMethods={regressionMethods}
+                                      checkboxChange={this.checkboxChange.bind(this)}/>;
+      case 'outcome':
+        return null;
+      default:
+        break;
+    }
+  }
 
+  render() {
     let warning = null;
     if (this.state.displayWarning) {
       warning =
         <p className="md-text md-text--error">Select at least one encoding, clustering and regression method!</p>;
     }
     const groupStyle = {height: 'auto'};
+    const predictionOptions = this.getPredictionOptions();
     return (
       <Card className="md-block-centered">
         <CardTitle title="Training">
@@ -111,6 +123,11 @@ class TrainingFormCard extends Component {
           /></CardTitle>
         <CardText>
           <div className="md-grid md-grid--no-spacing">
+            <div className="md-cell md-cell--12">
+              <SelectionControlGroup id="prediction" name="prediction" type="radio" label="Prediction method"
+                                     defaultValue={this.state.predictionMethod} inline controls={predictionMethods}
+                                     onChange={this.onPredictionMethodChange.bind(this)}/>
+            </div>
             <div className="md-cell">
               <SelectionControlGroup type="checkbox" label="Encoding methods" name="encoding" id="encoding"
                                      onChange={this.checkboxChange.bind(this)} controls={encodingMethods}
@@ -121,12 +138,8 @@ class TrainingFormCard extends Component {
                                      onChange={this.checkboxChange.bind(this)} controls={clusteringMethods}
                                      defaultValue={this.state.clustering[0]} controlStyle={groupStyle}/>
             </div>
-            <div className="md-cell">
-              <SelectionControlGroup type="checkbox" label="Regression methods" name="regression" id="regression"
-                                     onChange={this.checkboxChange.bind(this)} controls={regressionMethods}
-                                     defaultValue={this.state.regression[0]}/>
-            </div>
-            <div className="md-cell md-cell--12 ">
+            {predictionOptions}
+            <div className="md-cell md-cell--12">
               {warning}
               <FetchState fetchState={this.props.fetchState}/>
               <Button raised primary swapTheming onClick={this.onSubmit.bind(this)}

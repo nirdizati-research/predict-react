@@ -1,6 +1,7 @@
 /**
  * Created by tonis.kasekamp on 9/29/17.
  */
+import React from 'react';
 /* eslint-disable max-len */
 const encoding = [
   {
@@ -52,4 +53,31 @@ const regression = [
   },
 ];
 
-export {encoding, clustering, regression};
+const predictions = [
+  {
+    label: 'Remaining time',
+    value: 'time'
+  },
+  {
+    label: 'Outcome',
+    value: 'outcome'
+  }
+];
+
+// Makes things for Selection Controls
+const controlCreator = (optMap) => {
+  return optMap.map((opt) => {
+    return {
+      key: opt.value,
+      value: opt.value,
+      label: <div>{opt.label}
+        <div className="md-caption">{opt.message}</div>
+      </div>
+    };
+  });
+};
+
+export const encodingMethods = controlCreator(encoding);
+export const clusteringMethods = controlCreator(clustering);
+export const regressionMethods = controlCreator(regression);
+export const predictionMethods = controlCreator(predictions);
