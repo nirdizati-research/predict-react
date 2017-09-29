@@ -9,9 +9,9 @@ class RemainingTimeTraining extends Component {
   componentDidMount() {
     // TODO refactor this
     if (this.props.logNames.length === 0) {
-      return this.props.onRequestLogList(true);
+      this.props.onRequestLogList(true);
     } else {
-      return this.props.onRequestLogList(false);
+      this.props.onRequestLogList(false);
     }
   }
 
@@ -43,7 +43,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onRequestLogList: (changeVisible) => dispatch(logListRequested(changeVisible)),
+  onRequestLogList: (changeVisible) => dispatch(logListRequested({changeVisible, requestInfo: false})),
   onSubmitTraining: (endpoint, payload) => dispatch(submitTraining({endpoint, payload}))
 });
 

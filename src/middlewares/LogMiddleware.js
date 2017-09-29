@@ -14,7 +14,7 @@ const infoPayload = (logName, infoType) => {
 
 // Download logs for visible log if needed
 const logMiddleware = (store) => (next) => (action) => {
-  if (action.type === CHANGE_VISIBLE_LOG) {
+  if (action.type === CHANGE_VISIBLE_LOG && action.payload.requestInfo) {
     if (checkIfNoTraces(action.payload.logName, store.getState())) {
       store.dispatch(logInfoRequested(infoPayload(action.payload.logName, 'events')));
       store.dispatch(logInfoRequested(infoPayload(action.payload.logName, 'resources')));

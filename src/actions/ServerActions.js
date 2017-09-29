@@ -13,20 +13,20 @@ export const getJobs = () => (dispatch) => {
   );
 };
 
-const checkIfChangeVisible = (dispatch, changeVisible, logList) => {
+const checkIfChangeVisible = (dispatch, changeVisible, requestInfo, logList) => {
   if (changeVisible && logList[0]) {
-    dispatch(changeVisibleLog({logName: logList[0]}));
+    dispatch(changeVisibleLog({logName: logList[0], requestInfo: requestInfo}));
   }
 };
 
-export const getLogList = (changeVisible) => (dispatch) => {
+export const getLogList = ({changeVisible, requestInfo}) => (dispatch) => {
   jsonAjax(
     SERVER_URL + '/logs/list',
     'GET',
     null,
     (logList) => {
       dispatch(logListsRetrieved(logList));
-      checkIfChangeVisible(dispatch, changeVisible, logList);
+      checkIfChangeVisible(dispatch, changeVisible, requestInfo, logList);
     },
     ({error} = {}) => dispatch(logListFailed(error))
   );
