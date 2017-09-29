@@ -3240,6 +3240,8 @@ svg.md-icon {
   align-items: flex-end;
   display: flex;
   width: 100%; }
+  .md-text-field-container--input-block .md-text-field-icon-container {
+    align-items: center; }
 
 .md-text-field-inline-indicator {
   position: absolute;
@@ -3630,3 +3632,6 @@ body {
   background: rgba(0, 0, 0, 0.06);
   overflow-x: auto;
   padding: 16px; }
+
+.buttons__group {
+  margin: 1em; }

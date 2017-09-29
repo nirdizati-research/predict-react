@@ -27,25 +27,29 @@ const defaultPrefix = 1;
 const defaultThreshold = 0;
 const groupStyle = {height: 'auto'};
 
+const initialState = (props) => {
+  return {
+    logName: props.logNames[0],
+    encoding: [encodingMethods[0].value],
+    clustering: [clusteringMethods[0].value],
+    classification: [classificationMethods[0].value],
+    regression: [regressionMethods[0].value],
+    displayWarning: false,
+    predictionMethod: predictionMethods[0].value,
+    rule: outcomeRuleControls[0].value,
+    threshold: {
+      value: thresholdControls[0].value,
+      threshold: defaultThreshold
+    }
+  };
+};
+
 class TrainingFormCard extends Component {
   constructor(props) {
     super(props);
 
     // TODO group to {} by prediction method
-    this.state = {
-      logName: this.props.logNames[0],
-      encoding: [encodingMethods[0].value],
-      clustering: [clusteringMethods[0].value],
-      classification: [],
-      regression: [regressionMethods[0].value],
-      displayWarning: false,
-      predictionMethod: predictionMethods[0].value,
-      rule: '',
-      threshold: {
-        value: thresholdControls[0].value,
-        threshold: defaultThreshold
-      }
-    };
+    this.state = initialState(this.props);
   }
 
   selectChange(value) {
@@ -116,6 +120,10 @@ class TrainingFormCard extends Component {
       this.props.onSubmit(REG_TRAINING, this.getSubmitPayload());
   }
 
+  onReset() {
+    this.setState(initialState(this.props));
+  }
+
   onThresholdChange(threshold) {
     this.setState({threshold});
   }
@@ -159,18 +167,18 @@ class TrainingFormCard extends Component {
           <div className="md-grid md-grid--no-spacing">
             <div className="md-cell md-cell--12">
               <SelectionControlGroup id="prediction" name="prediction" type="radio" label="Prediction method"
-                                     defaultValue={this.state.predictionMethod} inline controls={predictionMethods}
+                                     value={this.state.predictionMethod} inline controls={predictionMethods}
                                      onChange={this.onPredictionMethodChange.bind(this)}/>
             </div>
             <div className="md-cell">
               <SelectionControlGroup type="checkbox" label="Encoding methods" name="encoding" id="encoding"
                                      onChange={this.checkboxChange.bind(this)} controls={encodingMethods}
-                                     defaultValue={this.state.encoding[0]} controlStyle={groupStyle}/>
+                                     value={this.state.encoding.join(',')} controlStyle={groupStyle}/>
             </div>
             <div className="md-cell">
               <SelectionControlGroup type="checkbox" label="Clustering methods" name="clustering" id="clustering"
                                      onChange={this.checkboxChange.bind(this)} controls={clusteringMethods}
-                                     defaultValue={this.state.clustering[0]} controlStyle={groupStyle}/>
+                                     value={this.state.clustering.join(',')} controlStyle={groupStyle}/>
             </div>
             {regressionFragment}
             {classificationFragment}
@@ -180,7 +188,9 @@ class TrainingFormCard extends Component {
               {warning}
               <FetchState fetchState={this.props.fetchState}/>
               <Button raised primary swapTheming onClick={this.onSubmit.bind(this)}
-                      disabled={this.state.displayWarning}>Submit</Button>
+                      disabled={this.state.displayWarning} className="buttons__group">Submit</Button>
+              <Button raised secondary swapTheming onClick={this.onReset.bind(this)}
+                      className="buttons__group">Reset</Button>
             </div>
           </div>
 
