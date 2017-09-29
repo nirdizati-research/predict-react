@@ -12,15 +12,20 @@ import {REG_TRAINING} from '../constants';
 import {
   classificationMethods,
   clusteringMethods,
-  encodingMethods, outcomeRuleControls,
+  encodingMethods,
+  outcomeRuleControls,
   predictionMethods,
-  regressionMethods
+  regressionMethods,
+  thresholdControls
 } from '../reference';
 import RegressionMethods from './training/RegressionMethods';
 import ClassificationMethods from './training/ClassificationMethods';
 import OutcomeRules from './training/OutcomeRules';
+import Threshold from './training/Threshold';
 
 const defaultPrefix = 1;
+const defaultThreshold = 0;
+const groupStyle = {height: 'auto'};
 
 class TrainingFormCard extends Component {
   constructor(props) {
@@ -35,7 +40,11 @@ class TrainingFormCard extends Component {
       regression: [regressionMethods[0].value],
       displayWarning: false,
       predictionMethod: predictionMethods[0].value,
-      rule: ''
+      rule: '',
+      threshold: {
+        value: thresholdControls[0].value,
+        threshold: defaultThreshold
+      }
     };
   }
 
@@ -107,13 +116,17 @@ class TrainingFormCard extends Component {
       this.props.onSubmit(REG_TRAINING, this.getSubmitPayload());
   }
 
+  onThresholdChange(threshold) {
+    this.setState({threshold});
+  }
+
   render() {
     let warning = null;
     if (this.state.displayWarning) {
       warning =
         <p className="md-text md-text--error">Select at least one encoding, clustering and regression method!</p>;
     }
-    const groupStyle = {height: 'auto'};
+
     const regressionFragment = this.state.predictionMethod === 'time' ?
       <RegressionMethods regressionMethods={regressionMethods}
                          checkboxChange={this.checkboxChange.bind(this)}
@@ -127,6 +140,9 @@ class TrainingFormCard extends Component {
       <OutcomeRules checkboxChange={this.checkboxChange.bind(this)}
                     outcomeRuleControls={outcomeRuleControls}
                     value={this.state.rule}/> : null;
+    const thresholdFragment = this.state.predictionMethod === 'outcome' ?
+      <Threshold onChange={this.onThresholdChange.bind(this)} thresholdControls={thresholdControls}
+                 threshold={this.state.threshold}/> : null;
     return (
       <Card className="md-block-centered">
         <CardTitle title="Training">
@@ -159,6 +175,7 @@ class TrainingFormCard extends Component {
             {regressionFragment}
             {classificationFragment}
             {outcomeRuleFragment}
+            {thresholdFragment}
             <div className="md-cell md-cell--12">
               {warning}
               <FetchState fetchState={this.props.fetchState}/>

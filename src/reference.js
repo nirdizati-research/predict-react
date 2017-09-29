@@ -93,6 +93,19 @@ const regression = [
   },
 ];
 
+const threshold = [
+  {
+    label: 'Average',
+    value: 'default',
+    message: 'Average value from the created labels of the business rule'
+  },
+  {
+    label: 'Custom',
+    value: 'custom',
+    message: 'Threshold used is set by you'
+  }
+];
+
 // Makes things for Selection Controls
 const controlCreator = (optMap) => {
   return optMap.map((opt) => {
@@ -112,3 +125,4 @@ export const classificationMethods = controlCreator(classification);
 export const regressionMethods = controlCreator(regression);
 export const predictionMethods = controlCreator(predictions);
 export const outcomeRuleControls = controlCreator(outcomeRules);
+export const thresholdControls = controlCreator(threshold);
