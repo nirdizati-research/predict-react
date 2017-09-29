@@ -44,9 +44,9 @@ class Full extends Component {
           leftIcon: <FontIcon>donut_large</FontIcon>,
         }, {
           component: Link,
-          to: '/regconfig',
+          to: '/training',
           active: isActive('/regconfig', pathname),
-          primaryText: 'Remaining time training',
+          primaryText: 'Training',
           leftIcon: <FontIcon>donut_large</FontIcon>,
         }]}
       >

@@ -9,57 +9,7 @@ import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
 import {Button} from 'react-md/lib/Buttons/index';
 import FetchState from './FetchState';
 import {REG_TRAINING} from '../constants';
-
-/* eslint-disable max-len */
-const encoding = [
-  {
-    label: 'Simple index',
-    value: 'simpleIndex',
-    message: 'Each feature corresponds to a position in the trace and the possible values for each feature are the event classes. Event attributes are discarded.'
-  },
-  {
-    label: 'Boolean',
-    value: 'boolean',
-    message: 'Features represent whether or not a particular event class has occurred in the trace.'
-  },
-  {
-    label: 'Frequency',
-    value: 'frequency',
-    message: 'Features represent the absolute frequency of each possible event class. Event attributes are discarded.'
-  }
-];
-
-const clustering = [
-  {
-    label: 'None',
-    value: 'None',
-    message: 'No clustering and train a single model'
-  },
-  {
-    label: 'Kmeans',
-    value: 'kmeans',
-    message: 'Assign traces to k-means clusters and train a model for each cluster'
-  }
-];
-
-const regression = [
-  {
-    label: 'Linear',
-    value: 'linear'
-  },
-  {
-    label: 'Xboost',
-    value: 'xboost'
-  },
-  {
-    label: 'Random forest',
-    value: 'randomforest'
-  },
-  {
-    label: 'Lasso',
-    value: 'lasso'
-  },
-];
+import {clustering, encoding, regression} from '../reference';
 
 const defaultPrefix = 1;
 
@@ -75,7 +25,7 @@ const controlCreator = (optMap) => {
   });
 };
 
-class RemainingTimeCard extends Component {
+class TrainingFormCard extends Component {
   constructor(props) {
     super(props);
 
@@ -104,6 +54,8 @@ class RemainingTimeCard extends Component {
         break;
       case 'regression[]':
         this.setState({regression: valList});
+        break;
+      default:
         break;
     }
 
@@ -147,7 +99,7 @@ class RemainingTimeCard extends Component {
     const groupStyle = {height: 'auto'};
     return (
       <Card className="md-block-centered">
-        <CardTitle title="Remaining time training">
+        <CardTitle title="Training">
           <SelectField
             id="log-name-select"
             placeholder="log.xes"
@@ -188,7 +140,7 @@ class RemainingTimeCard extends Component {
   }
 }
 
-RemainingTimeCard.propTypes = {
+TrainingFormCard.propTypes = {
   logNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   fetchState: PropTypes.shape({
     inFlight: PropTypes.bool.isRequired,
@@ -198,4 +150,4 @@ RemainingTimeCard.propTypes = {
 };
 
 
-export default RemainingTimeCard;
+export default TrainingFormCard;
