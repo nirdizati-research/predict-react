@@ -7,6 +7,9 @@ import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import SelectField from 'react-md/lib/SelectFields';
 import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
 import {Button} from 'react-md/lib/Buttons/index';
+import FetchState from './FetchState';
+import {REG_TRAINING} from '../constants';
+
 /* eslint-disable max-len */
 const encoding = [
   {
@@ -58,14 +61,18 @@ const regression = [
   },
 ];
 
-const controlCreator = (opt) => {
-  return {
-    key: opt.value,
-    value: opt.value,
-    label: <div>{opt.label}
-      <div className="md-caption">{opt.message}</div>
-    </div>
-  };
+const defaultPrefix = 1;
+
+const controlCreator = (optMap) => {
+  return optMap.map((opt) => {
+    return {
+      key: opt.value,
+      value: opt.value,
+      label: <div>{opt.label}
+        <div className="md-caption">{opt.message}</div>
+      </div>
+    };
+  });
 };
 
 class RemainingTimeCard extends Component {
@@ -73,7 +80,7 @@ class RemainingTimeCard extends Component {
     super(props);
 
     this.state = {
-      logName: '',
+      logName: this.props.logNames[0],
       encoding: [encoding[0].value],
       clustering: [clustering[0].value],
       regression: [regression[0].value],
@@ -106,20 +113,31 @@ class RemainingTimeCard extends Component {
   }
 
   displayWarningCheck(prevState) {
-    const good = prevState.encoding.length !== 0 && prevState.clustering.length !== 0 && prevState.regression.length !== 0;
+    const good = prevState.encoding.length !== 0
+      && prevState.clustering.length !== 0
+      && prevState.regression.length !== 0;
     return !good;
   }
 
+  getSubmitPayload() {
+    return {
+      log: this.state.logName,
+      prefix: defaultPrefix,
+      encoding: this.state.encoding,
+      regression: this.state.regression,
+      clustering: this.state.clustering
+    };
+  }
+
   onSubmit() {
-    // this.setState({displayWarning: true});
     if (!this.state.displayWarning)
-      console.log("good");
+      this.props.onSubmit(REG_TRAINING, this.getSubmitPayload());
   }
 
   render() {
-    const encodingMethods = encoding.map((enc) => controlCreator(enc));
-    const clusteringMethods = clustering.map((cl) => controlCreator(cl));
-    const regressionMethods = regression.map((cl) => controlCreator(cl));
+    const encodingMethods = controlCreator(encoding);
+    const clusteringMethods = controlCreator(clustering);
+    const regressionMethods = controlCreator(regression);
 
     let warning = null;
     if (this.state.displayWarning) {
@@ -137,7 +155,7 @@ class RemainingTimeCard extends Component {
             menuItems={this.props.logNames}
             position={SelectField.Positions.BELOW}
             onChange={this.selectChange.bind(this)}
-            value={this.props.logNames[0]}
+            defaultValue={this.props.logNames[0]}
           /></CardTitle>
         <CardText>
           <div className="md-grid md-grid--no-spacing">
@@ -158,6 +176,7 @@ class RemainingTimeCard extends Component {
             </div>
             <div className="md-cell md-cell--12 ">
               {warning}
+              <FetchState fetchState={this.props.fetchState}/>
               <Button raised primary swapTheming onClick={this.onSubmit.bind(this)}
                       disabled={this.state.displayWarning}>Submit</Button>
             </div>
@@ -170,7 +189,12 @@ class RemainingTimeCard extends Component {
 }
 
 RemainingTimeCard.propTypes = {
-  logNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
+  logNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  fetchState: PropTypes.shape({
+    inFlight: PropTypes.bool.isRequired,
+    error: PropTypes.any
+  }).isRequired,
+  onSubmit: PropTypes.func.isRequired
 };
 
 

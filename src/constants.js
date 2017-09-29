@@ -13,3 +13,6 @@ export const chooseServer = () => {
   SERVER_URL = PROD_SERVER;
 };
 
+// POST endpoints
+export const REG_TRAINING = 'configer';
+export const REMAINING_TIME_TRAINING = 'classConfiger';
