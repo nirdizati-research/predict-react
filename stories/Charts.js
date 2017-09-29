@@ -5,6 +5,7 @@ import React from 'react';
 import {storiesOf} from '@kadira/storybook';
 import LineChartCard from '../src/components/chart/LineChartCard';
 import EventChartCard from '../src/components/chart/EventChartCard';
+import BubbleChartCard from '../src/components/chart/BubbleChartCard';
 
 const fetchState = {inFlight: false};
 
@@ -35,25 +36,40 @@ const events = {
   'W_Filling_in application': 6117,
   'W_Fixing_incoming_lead': 3588
 };
+const regressor = [
+  ['1', 321.16984512656944, 470.1483088530332, 'linear', -0.75205320910182749],
+  ['2', 218.33484913201886, 218.33484913201886, 'xboost', 0.10676014147290103]
+];
 
 storiesOf('Charts', module)
   .add('LineChartCard', () => {
+    return (
+      <div className="md-grid">
+        <div className="md-cell md-cell--12">
+          <LineChartCard fetchState={fetchState}
+                         data={traces}
+                         cardTitle="Number of traces"
+                         chartTitle="Active traces"/>
+        </div>
+        <div className="md-cell md-cell--12">
+          <LineChartCard fetchState={fetchState}
+                         data={resources}
+                         cardTitle="Number of resources"
+                         chartTitle="Active traces"/>
+        </div>
+        <div className="md-cell md-cell--12">
+          <EventChartCard fetchState={fetchState} data={events}/>
+        </div>
+      </div>
+    );
+  })
+  .add('BubbleChartCard', () => {
       return (
         <div className="md-grid">
           <div className="md-cell md-cell--12">
-            <LineChartCard fetchState={fetchState}
-                           data={traces}
-                           cardTitle="Number of traces"
-                           chartTitle="Active traces"/>
-          </div>
-          <div className="md-cell md-cell--12">
-            <LineChartCard fetchState={fetchState}
-                           data={resources}
-                           cardTitle="Number of resources"
-                           chartTitle="Active traces"/>
-          </div>
-          <div className="md-cell md-cell--12">
-            <EventChartCard fetchState={fetchState} data={events}/>
+            <BubbleChartCard fetchState={fetchState}
+                           data={regressor}
+                           cardTitle="Bubble chart by regressor"/>
           </div>
         </div>
       );
