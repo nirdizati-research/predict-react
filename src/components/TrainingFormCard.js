@@ -8,7 +8,7 @@ import SelectField from 'react-md/lib/SelectFields';
 import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
 import {Button} from 'react-md/lib/Buttons/index';
 import FetchState from './FetchState';
-import {REG_TRAINING} from '../constants';
+import {OUTCOME_TRAINING, REMAINING_TIME_TRAINING} from '../constants';
 import {
   classificationMethods,
   clusteringMethods,
@@ -52,10 +52,7 @@ class TrainingFormCard extends Component {
     this.state = initialState(this.props);
   }
 
-  selectChange(value) {
-    this.setState({logName: value});
-  }
-
+  // Change methods
   checkboxChange(value, event) {
     // First val is ''
     const valList = value.split(',').filter((val) => val !== '');
@@ -85,6 +82,21 @@ class TrainingFormCard extends Component {
     });
   }
 
+  onPredictionMethodChange(value) {
+    this.setState({predictionMethod: value});
+    this.setState((prevState, _) => {
+      return {displayWarning: this.displayWarningCheck(prevState)};
+    });
+  }
+
+  selectChange(value) {
+    this.setState({logName: value});
+  }
+
+  onThresholdChange(threshold) {
+    this.setState({threshold});
+  }
+
   displayWarningCheck(prevState) {
     switch (prevState.predictionMethod) {
       case 'time':
@@ -100,14 +112,21 @@ class TrainingFormCard extends Component {
     }
   }
 
-  onPredictionMethodChange(value) {
-    this.setState({predictionMethod: value});
-    this.setState((prevState, _) => {
-      return {displayWarning: this.displayWarningCheck(prevState)};
-    });
+  // On submit
+  onSubmit() {
+    switch (this.state.predictionMethod) {
+      case 'time':
+        this.props.onSubmit(REMAINING_TIME_TRAINING, this.getRemainingTimePayload());
+        break;
+      case 'outcome':
+        this.props.onSubmit(OUTCOME_TRAINING, this.getOutcomePayload());
+        break;
+      default:
+        break;
+    }
   }
 
-  getSubmitPayload() {
+  getRemainingTimePayload() {
     return {
       log: this.state.logName,
       prefix: defaultPrefix,
@@ -117,24 +136,32 @@ class TrainingFormCard extends Component {
     };
   }
 
-  onSubmit() {
-    if (!this.state.displayWarning)
-      this.props.onSubmit(REG_TRAINING, this.getSubmitPayload());
+  getOutcomePayload() {
+    let actualThreshold;
+    if (this.state.threshold.value === thresholdControls[0].value) {
+      actualThreshold = this.state.threshold.value;
+    } else {
+      actualThreshold = this.state.threshold.threshold;
+    }
+    return {
+      log: this.state.logName,
+      prefix: defaultPrefix,
+      encoding: this.state.encoding,
+      classification: this.state.classification,
+      clustering: this.state.clustering,
+      rule: this.state.rule,
+      threshold: actualThreshold
+    };
   }
 
   onReset() {
     this.setState(initialState(this.props));
   }
 
-  onThresholdChange(threshold) {
-    this.setState({threshold});
-  }
-
   render() {
     let warning = null;
     if (this.state.displayWarning) {
-      warning =
-        <p className="md-text md-text--error">Select at least one from every option</p>;
+      warning = <p className="md-text md-text--error">Select at least one from every option</p>;
     }
 
     const regressionFragment = this.state.predictionMethod === 'time' ?

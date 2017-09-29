@@ -14,5 +14,5 @@ export const chooseServer = () => {
 };
 
 // POST endpoints
-export const REG_TRAINING = 'configer';
-export const REMAINING_TIME_TRAINING = 'classConfiger';
+export const REMAINING_TIME_TRAINING = 'configer';
+export const OUTCOME_TRAINING = 'classConfiger';
