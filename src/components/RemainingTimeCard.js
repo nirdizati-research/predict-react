@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import SelectField from 'react-md/lib/SelectFields';
 import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
-
+import {Button} from 'react-md/lib/Buttons/index';
 /* eslint-disable max-len */
 const encoding = [
   {
@@ -58,7 +58,7 @@ const regression = [
   },
 ];
 
-const labelCreator = (opt) => {
+const controlCreator = (opt) => {
   return {
     key: opt.value,
     value: opt.value,
@@ -76,7 +76,8 @@ class RemainingTimeCard extends Component {
       logName: '',
       encoding: [encoding[0].value],
       clustering: [clustering[0].value],
-      regression: [regression[0].value]
+      regression: [regression[0].value],
+      displayWarning: false
     };
   }
 
@@ -98,12 +99,33 @@ class RemainingTimeCard extends Component {
         this.setState({regression: valList});
         break;
     }
+
+    this.setState((prevState, _) => {
+      return {displayWarning: this.displayWarningCheck(prevState)};
+    });
+  }
+
+  displayWarningCheck(prevState) {
+    const good = prevState.encoding.length !== 0 && prevState.clustering.length !== 0 && prevState.regression.length !== 0;
+    return !good;
+  }
+
+  onSubmit() {
+    // this.setState({displayWarning: true});
+    if (!this.state.displayWarning)
+      console.log("good");
   }
 
   render() {
-    const encodingMethods = encoding.map((enc) => labelCreator(enc));
-    const clusteringMethods = clustering.map((cl) => labelCreator(cl));
-    const regressionMethods = regression.map((cl) => labelCreator(cl));
+    const encodingMethods = encoding.map((enc) => controlCreator(enc));
+    const clusteringMethods = clustering.map((cl) => controlCreator(cl));
+    const regressionMethods = regression.map((cl) => controlCreator(cl));
+
+    let warning = null;
+    if (this.state.displayWarning) {
+      warning =
+        <p className="md-text md-text--error">Select at least one encoding, clustering and regression method!</p>;
+    }
     const groupStyle = {height: 'auto'};
     return (
       <Card className="md-block-centered">
@@ -134,7 +156,13 @@ class RemainingTimeCard extends Component {
                                      onChange={this.checkboxChange.bind(this)} controls={regressionMethods}
                                      defaultValue={this.state.regression[0]}/>
             </div>
+            <div className="md-cell md-cell--12 ">
+              {warning}
+              <Button raised primary swapTheming onClick={this.onSubmit.bind(this)}
+                      disabled={this.state.displayWarning}>Submit</Button>
+            </div>
           </div>
+
         </CardText>
       </Card>
     );
