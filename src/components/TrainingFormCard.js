@@ -9,8 +9,16 @@ import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
 import {Button} from 'react-md/lib/Buttons/index';
 import FetchState from './FetchState';
 import {REG_TRAINING} from '../constants';
-import {clusteringMethods, encodingMethods, regressionMethods, predictionMethods} from '../reference';
-import RemainingTimeFragment from './training/RemainingTimeFragment';
+import {
+  classificationMethods,
+  clusteringMethods,
+  encodingMethods, outcomeRuleControls,
+  predictionMethods,
+  regressionMethods
+} from '../reference';
+import RegressionMethods from './training/RegressionMethods';
+import ClassificationMethods from './training/ClassificationMethods';
+import OutcomeRules from './training/OutcomeRules';
 
 const defaultPrefix = 1;
 
@@ -18,13 +26,16 @@ class TrainingFormCard extends Component {
   constructor(props) {
     super(props);
 
+    // TODO group to {} by prediction method
     this.state = {
       logName: this.props.logNames[0],
       encoding: [encodingMethods[0].value],
       clustering: [clusteringMethods[0].value],
+      classification: [],
       regression: [regressionMethods[0].value],
       displayWarning: false,
-      predictionMethod: predictionMethods[0].value
+      predictionMethod: predictionMethods[0].value,
+      rule: ''
     };
   }
 
@@ -44,6 +55,13 @@ class TrainingFormCard extends Component {
         break;
       case 'regression[]':
         this.setState({regression: valList});
+        break;
+      case 'classification[]':
+        this.setState({classification: valList});
+        break;
+      case 'rule':
+        // not a list, but works
+        this.setState({rule: value});
         break;
       default:
         break;
@@ -89,18 +107,6 @@ class TrainingFormCard extends Component {
       this.props.onSubmit(REG_TRAINING, this.getSubmitPayload());
   }
 
-  getPredictionOptions() {
-    switch (this.state.predictionMethod) {
-      case 'time':
-        return <RemainingTimeFragment regressionMethods={regressionMethods}
-                                      checkboxChange={this.checkboxChange.bind(this)}/>;
-      case 'outcome':
-        return null;
-      default:
-        break;
-    }
-  }
-
   render() {
     let warning = null;
     if (this.state.displayWarning) {
@@ -108,7 +114,19 @@ class TrainingFormCard extends Component {
         <p className="md-text md-text--error">Select at least one encoding, clustering and regression method!</p>;
     }
     const groupStyle = {height: 'auto'};
-    const predictionOptions = this.getPredictionOptions();
+    const regressionFragment = this.state.predictionMethod === 'time' ?
+      <RegressionMethods regressionMethods={regressionMethods}
+                         checkboxChange={this.checkboxChange.bind(this)}
+                         value={this.state.regression.join(',')}/> : null;
+    // TODO refactor as 1 component in React 16.0
+    const classificationFragment = this.state.predictionMethod === 'outcome' ?
+      <ClassificationMethods classificationMethods={classificationMethods}
+                             checkboxChange={this.checkboxChange.bind(this)}
+                             value={this.state.classification.join(',')}/> : null;
+    const outcomeRuleFragment = this.state.predictionMethod === 'outcome' ?
+      <OutcomeRules checkboxChange={this.checkboxChange.bind(this)}
+                    outcomeRuleControls={outcomeRuleControls}
+                    value={this.state.rule}/> : null;
     return (
       <Card className="md-block-centered">
         <CardTitle title="Training">
@@ -138,7 +156,9 @@ class TrainingFormCard extends Component {
                                      onChange={this.checkboxChange.bind(this)} controls={clusteringMethods}
                                      defaultValue={this.state.clustering[0]} controlStyle={groupStyle}/>
             </div>
-            {predictionOptions}
+            {regressionFragment}
+            {classificationFragment}
+            {outcomeRuleFragment}
             <div className="md-cell md-cell--12">
               {warning}
               <FetchState fetchState={this.props.fetchState}/>
@@ -161,6 +181,5 @@ TrainingFormCard.propTypes = {
   }).isRequired,
   onSubmit: PropTypes.func.isRequired
 };
-
 
 export default TrainingFormCard;

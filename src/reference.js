@@ -3,6 +3,35 @@
  */
 import React from 'react';
 /* eslint-disable max-len */
+
+const clustering = [
+  {
+    label: 'None',
+    value: 'None',
+    message: 'No clustering and train a single model'
+  },
+  {
+    label: 'Kmeans',
+    value: 'kmeans',
+    message: 'Assign traces to k-means clusters and train a model for each cluster'
+  }
+];
+
+const classification = [
+  {
+    label: 'KNN',
+    value: 'KNN'
+  },
+  {
+    label: 'Decision tree',
+    value: 'DecisionTree'
+  },
+  {
+    label: 'Random forest',
+    value: 'RandomForest'
+  }
+];
+
 const encoding = [
   {
     label: 'Simple index',
@@ -21,16 +50,27 @@ const encoding = [
   }
 ];
 
-const clustering = [
+const outcomeRules = [
   {
-    label: 'None',
-    value: 'None',
-    message: 'No clustering and train a single model'
+    label: 'Remaining time',
+    value: 'remaining_time',
+    message: 'Fast/Slow'
   },
   {
-    label: 'Kmeans',
-    value: 'kmeans',
-    message: 'Assign traces to k-means clusters and train a model for each cluster'
+    label: 'Duration',
+    value: 'elapsed_time',
+    message: 'Fast/Slow'
+  }
+];
+
+const predictions = [
+  {
+    label: 'Remaining time',
+    value: 'time'
+  },
+  {
+    label: 'Outcome',
+    value: 'outcome'
   }
 ];
 
@@ -53,17 +93,6 @@ const regression = [
   },
 ];
 
-const predictions = [
-  {
-    label: 'Remaining time',
-    value: 'time'
-  },
-  {
-    label: 'Outcome',
-    value: 'outcome'
-  }
-];
-
 // Makes things for Selection Controls
 const controlCreator = (optMap) => {
   return optMap.map((opt) => {
@@ -79,5 +108,7 @@ const controlCreator = (optMap) => {
 
 export const encodingMethods = controlCreator(encoding);
 export const clusteringMethods = controlCreator(clustering);
+export const classificationMethods = controlCreator(classification);
 export const regressionMethods = controlCreator(regression);
 export const predictionMethods = controlCreator(predictions);
+export const outcomeRuleControls = controlCreator(outcomeRules);
