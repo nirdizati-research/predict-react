@@ -7,35 +7,35 @@ import PropTypes from 'prop-types';
 import FetchState from '../FetchState';
 import {Chart} from 'react-google-charts';
 
-const BubbleChartCard = (props) => {
-  // const rows = Object.keys(props.data).map((key) => [new Date(key), props.data[key]]);
+const opts = {
+  hAxis: {title: 'Mae'},
+  vAxis: {title: 'Rmse'},
+  bubble: {textStyle: {fontSize: 11}}
+};
+const columns = [
+  {
+    type: 'string',
+    label: 'ID',
+  },
+  {
+    type: 'number',
+    label: 'Mae',
+  },
+  {
+    type: 'number',
+    label: 'Rmse',
+  },
+  {
+    type: 'string',
+    label: 'Method',
+  },
+  {
+    type: 'number',
+    label: 'Rscore',
+  }
+];
 
-  const opts = {
-    hAxis: {title: 'Mae'},
-    vAxis: {title: 'Rmse'},
-    bubble: {textStyle: {fontSize: 11}}
-  };
-  const columns = [
-    {
-      type: 'string',
-      label: 'ID',
-    },
-    {
-      type: 'number',
-      label: 'Mae',
-    },
-    {
-      type: 'number',
-      label: 'Rmse',
-    },
-    {
-      type: 'string',
-      label: 'Method',
-    },
-    {
-      type: 'number',
-      label: 'Rscore',
-    }];
+const BubbleChartCard = (props) => {
   return <Card className="md-block-centered">
     <CardTitle title={props.cardTitle}/>
     <CardText>
