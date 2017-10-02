@@ -22,7 +22,7 @@ import ClassificationMethods from './training/ClassificationMethods';
 import OutcomeRules from './training/OutcomeRules';
 import Threshold from './training/Threshold';
 
-const defaultPrefix = 1;
+const defaultPrefix = 0;
 const defaultThreshold = 0;
 const groupStyle = {height: 'auto'};
 
