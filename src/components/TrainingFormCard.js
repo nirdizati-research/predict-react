@@ -8,7 +8,6 @@ import SelectField from 'react-md/lib/SelectFields';
 import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
 import {Button} from 'react-md/lib/Buttons/index';
 import FetchState from './FetchState';
-import {OUTCOME_TRAINING, REMAINING_TIME_TRAINING} from '../constants';
 import {
   classificationMethods,
   clusteringMethods,
@@ -116,10 +115,10 @@ class TrainingFormCard extends Component {
   onSubmit() {
     switch (this.state.predictionMethod) {
       case 'time':
-        this.props.onSubmit(REMAINING_TIME_TRAINING, this.getRemainingTimePayload());
+        this.props.onSubmit(this.getRemainingTimePayload());
         break;
       case 'outcome':
-        this.props.onSubmit(OUTCOME_TRAINING, this.getOutcomePayload());
+        this.props.onSubmit(this.getOutcomePayload());
         break;
       default:
         break;

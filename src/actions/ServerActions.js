@@ -42,9 +42,9 @@ export const getLogInfo = ({logName, infoType}) => (dispatch) => {
   );
 };
 
-export const postTraining = ({endPoint, payload}) => (dispatch) => {
+export const postTraining = (payload) => (dispatch) => {
   jsonAjax(
-    SERVER_URL + `/core_services/${endPoint}`,
+    SERVER_URL + `/core_services/training`,
     'POST',
     payload,
     () => dispatch(trainingSucceeded()),
