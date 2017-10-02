@@ -29,7 +29,6 @@ const JobStatusTable = (props) => {
         </TableRow>
       ))}
     </TableBody>
-
   </DataTable>);
 };
 
@@ -41,8 +40,8 @@ JobStatusTable.propTypes = {
     log: PropTypes.string.isRequired,
     timestamp: PropTypes.string.isRequired,
     prefix: PropTypes.number.isRequired,
-    rule: PropTypes.string.isRequired,
-    threshold: PropTypes.string.isRequired,
+    rule: PropTypes.string,
+    threshold: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     type: PropTypes.string.isRequired
   })).isRequired
 };
