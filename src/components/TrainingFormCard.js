@@ -128,6 +128,7 @@ class TrainingFormCard extends Component {
 
   getRemainingTimePayload() {
     return {
+      type: 'Regression',
       log: this.state.logName,
       prefix: defaultPrefix,
       encoding: this.state.encoding,
@@ -144,6 +145,7 @@ class TrainingFormCard extends Component {
       actualThreshold = this.state.threshold.threshold;
     }
     return {
+      type: 'Classification',
       log: this.state.logName,
       prefix: defaultPrefix,
       encoding: this.state.encoding,

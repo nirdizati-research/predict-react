@@ -6,7 +6,7 @@ import {DataTable, TableBody, TableColumn, TableHeader, TableRow} from 'react-md
 import PropTypes from 'prop-types';
 
 const JobStatusTable = (props) => {
-  const headers = ['__id__', 'Status', 'Run', 'Log', 'TimeStamp', 'Rule', 'Prefix', 'Threshold', '__version__', 'Type'];
+  const headers = ['uuid', 'Status', 'Type', 'Run', 'Log', 'TimeStamp', 'Rule', 'Prefix', 'Threshold'];
 
   return (<DataTable baseId="simple-pagination" plain>
     <TableHeader>
@@ -15,18 +15,17 @@ const JobStatusTable = (props) => {
       </TableRow>
     </TableHeader>
     <TableBody>
-      {props.jobs.map(({__id__, Status, Run, Log, TimeStamp, Rule, Prefix, Threshold, __version__, Type}) => (
-        <TableRow key={__id__} selectable={false}>
-          <TableColumn numeric>{__id__}</TableColumn>
-          <TableColumn>{Status}</TableColumn>
-          <TableColumn>{Run}</TableColumn>
-          <TableColumn>{Log}</TableColumn>
-          <TableColumn>{TimeStamp}</TableColumn>
-          <TableColumn>{Rule}</TableColumn>
-          <TableColumn>{Prefix}</TableColumn>
-          <TableColumn numeric>{Threshold}</TableColumn>
-          <TableColumn numeric>{__version__}</TableColumn>
-          <TableColumn>{Type}</TableColumn>
+      {props.jobs.map(({uuid, status, run, log, timestamp, rule, prefix, threshold, type}) => (
+        <TableRow key={uuid} selectable={false}>
+          <TableColumn>{uuid}</TableColumn>
+          <TableColumn>{status}</TableColumn>
+          <TableColumn>{type}</TableColumn>
+          <TableColumn>{run}</TableColumn>
+          <TableColumn>{log}</TableColumn>
+          <TableColumn>{timestamp}</TableColumn>
+          <TableColumn>{rule}</TableColumn>
+          <TableColumn numeric>{prefix}</TableColumn>
+          <TableColumn numeric>{threshold}</TableColumn>
         </TableRow>
       ))}
     </TableBody>
@@ -36,16 +35,15 @@ const JobStatusTable = (props) => {
 
 JobStatusTable.propTypes = {
   jobs: PropTypes.arrayOf(PropTypes.shape({
-    __id__: PropTypes.string.isRequired,
-    Status: PropTypes.string.isRequired,
-    Run: PropTypes.string.isRequired,
-    Log: PropTypes.string.isRequired,
-    TimeStamp: PropTypes.string.isRequired,
-    Prefix: PropTypes.string.isRequired,
-    Rule: PropTypes.string.isRequired,
-    Threshold: PropTypes.string.isRequired,
-    __version__: PropTypes.string.isRequired,
-    Type: PropTypes.string.isRequired
+    uuid: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+    run: PropTypes.string.isRequired,
+    log: PropTypes.string.isRequired,
+    timestamp: PropTypes.string.isRequired,
+    prefix: PropTypes.number.isRequired,
+    rule: PropTypes.string.isRequired,
+    threshold: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired
   })).isRequired
 };
 
