@@ -80,8 +80,8 @@ const regression = [
     value: 'linear'
   },
   {
-    label: 'Xboost',
-    value: 'xboost'
+    label: 'Xgboost',
+    value: 'xgboost'
   },
   {
     label: 'Random forest',
