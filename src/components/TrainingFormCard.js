@@ -100,12 +100,16 @@ class TrainingFormCard extends Component {
     switch (prevState.predictionMethod) {
       case 'time':
         return !(prevState.encoding.length !== 0
-        && prevState.clustering.length !== 0
-        && prevState.regression.length !== 0);
+          && prevState.clustering.length !== 0
+          && prevState.regression.length !== 0);
       case 'outcome':
         return !(prevState.encoding.length !== 0
-        && prevState.clustering.length !== 0
-        && prevState.classification.length !== 0);
+          && prevState.clustering.length !== 0
+          && prevState.classification.length !== 0);
+      case 'nextActivity':
+        return !(prevState.encoding.length !== 0
+          && prevState.clustering.length !== 0
+          && prevState.classification.length !== 0);
       default:
         break;
     }
@@ -119,6 +123,9 @@ class TrainingFormCard extends Component {
         break;
       case 'outcome':
         this.props.onSubmit(this.getOutcomePayload());
+        break;
+      case 'nextActivity':
+        this.props.onSubmit(this.getNextActivityPayload());
         break;
       default:
         break;
@@ -155,6 +162,18 @@ class TrainingFormCard extends Component {
     };
   }
 
+  getNextActivityPayload() {
+    // TODO type should be predictionMethod
+    return {
+      type: 'NextActivity',
+      log: this.state.logName,
+      prefix: defaultPrefix,
+      encoding: this.state.encoding,
+      classification: this.state.classification,
+      clustering: this.state.clustering
+    };
+  }
+
   onReset() {
     this.setState(initialState(this.props));
   }
@@ -170,10 +189,13 @@ class TrainingFormCard extends Component {
                          checkboxChange={this.checkboxChange.bind(this)}
                          value={this.state.regression.join(',')}/> : null;
     // TODO refactor as 1 component in React 16.0
-    const classificationFragment = this.state.predictionMethod === 'outcome' ?
-      <ClassificationMethods classificationMethods={classificationMethods}
-                             checkboxChange={this.checkboxChange.bind(this)}
-                             value={this.state.classification.join(',')}/> : null;
+    const classificationFragment =
+      (this.state.predictionMethod === 'outcome') ||
+      (this.state.predictionMethod === 'nextActivity') ?
+        <ClassificationMethods classificationMethods={classificationMethods}
+                               checkboxChange={this.checkboxChange.bind(this)}
+                               value={this.state.classification.join(',')}/> : null;
+
     const outcomeRuleFragment = this.state.predictionMethod === 'outcome' ?
       <OutcomeRules checkboxChange={this.checkboxChange.bind(this)}
                     outcomeRuleControls={outcomeRuleControls}
