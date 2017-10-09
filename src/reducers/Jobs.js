@@ -3,7 +3,6 @@
  */
 
 import {
-  JOB_RESULTS_FAILED,
   JOB_RESULTS_REQUESTED,
   JOB_RESULTS_RETRIEVED,
   JOBS_FAILED,
@@ -61,12 +60,6 @@ const jobs = (state = initialState, action) => {
       };
     }
 
-    case JOB_RESULTS_FAILED: {
-      return {
-        ...state,
-        fetchState: {inFlight: false, error: action.payload},
-      };
-    }
     default:
       return state;
   }

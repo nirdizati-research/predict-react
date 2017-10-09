@@ -26,6 +26,3 @@ export const jobResultsRequested = createPayloadForwardingAction(JOB_RESULTS_REQ
 
 export const JOB_RESULTS_RETRIEVED = 'JOB_RESULTS_RETRIEVED';
 export const jobResultsRetrieved = createPayloadForwardingAction(JOB_RESULTS_RETRIEVED);
-
-export const JOB_RESULTS_FAILED = 'JOB_RESULTS_FAILED';
-export const jobResultsFailed = createPayloadForwardingAction(JOB_RESULTS_FAILED);
