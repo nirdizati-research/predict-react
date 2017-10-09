@@ -37,6 +37,18 @@ const jobs = [
     'type': 'Regression',
     'regression': 'linear',
     'uuid': '82f9bf59-a15c-4b83-91af-9e1f714b9976'
+  },
+  {
+    'clustering': 'None',
+    'status': 'queued',
+    'run': 'KNN_simpleIndex_None',
+    'log': 'Production.xes',
+    'classification': 'KNN',
+    'encoding': 'simpleIndex',
+    'timestamp': 'Oct 09 2017 10:57:45',
+    'prefix': 0,
+    'type': 'NextActivity',
+    'uuid': '1830e0ff-ebac-4396-8f54-5f7ad9247132'
   }
 ];
 
