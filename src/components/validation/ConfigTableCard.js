@@ -21,16 +21,17 @@ class ConfigTableCard extends Component {
 
   onPredictionMethodChange(value) {
     this.setState({predictionMethod: value});
+    this.selectChange(value);
   }
 
   // TODO make predictionMethod and type match
   getTable() {
     switch (this.state.predictionMethod) {
-      case 'time':
+      case 'Regression':
         return <RegConfigTable jobs={this.props.jobs.filter((job) => job.type === 'Regression')}/>;
-      case 'outcome':
+      case 'Classification':
         return <ClassConfigTable jobs={this.props.jobs.filter((job) => job.type === 'Classification')}/>;
-      case 'nextActivity':
+      case 'NextActivity':
         return <RegConfigTable jobs={this.props.jobs.filter((job) => job.type === 'NextActivity')}/>;
       default:
         break;
