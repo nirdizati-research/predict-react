@@ -45,8 +45,14 @@ class Full extends Component {
         }, {
           component: Link,
           to: '/training',
-          active: isActive('/regconfig', pathname),
+          active: isActive('/training', pathname),
           primaryText: 'Training',
+          leftIcon: <FontIcon>donut_large</FontIcon>,
+        }, {
+          component: Link,
+          to: '/validation',
+          active: isActive('/validation', pathname),
+          primaryText: 'Validation',
           leftIcon: <FontIcon>donut_large</FontIcon>,
         }]}
       >
