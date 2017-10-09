@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import {predictionMethods} from '../../reference';
 import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
 import RegConfigTable from './RegConfigTable';
+import ClassConfigTable from './ClassConfigTable';
 
 
 class ConfigTableCard extends Component {
@@ -28,7 +29,7 @@ class ConfigTableCard extends Component {
       case 'time':
         return <RegConfigTable jobs={this.props.jobs.filter((job) => job.type === 'Regression')}/>;
       case 'outcome':
-        return null;
+        return <ClassConfigTable jobs={this.props.jobs.filter((job) => job.type === 'Classification')}/>;
       case 'nextActivity':
         return null;
       default:
