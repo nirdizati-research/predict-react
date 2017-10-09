@@ -6,8 +6,8 @@ import {DataTable, TableBody, TableColumn, TableHeader, TableRow} from 'react-md
 import PropTypes from 'prop-types';
 import {sliceUuid} from '../../helpers';
 
-const RegConfigTable = (props) => {
-  const headers = ['uuid', 'Status', 'Type', 'Run', 'Log', 'TimeStamp', 'Prefix'];
+const ClassConfigTable = (props) => {
+  const headers = ['uuid', 'Status', 'Type', 'Run', 'Log', 'TimeStamp', 'Rule', 'Prefix', 'Threshold'];
 
   return (<DataTable baseId="simple-pagination" plain>
     <TableHeader>
@@ -16,7 +16,7 @@ const RegConfigTable = (props) => {
       </TableRow>
     </TableHeader>
     <TableBody>
-      {props.jobs.map(({uuid, status, run, log, timestamp, prefix, type}) => (
+      {props.jobs.map(({uuid, status, run, log, timestamp, prefix, type, rule, threshold}) => (
         <TableRow key={uuid} selectable={false}>
           <TableColumn>{sliceUuid(uuid)}</TableColumn>
           <TableColumn>{status}</TableColumn>
@@ -24,14 +24,16 @@ const RegConfigTable = (props) => {
           <TableColumn>{run}</TableColumn>
           <TableColumn>{log}</TableColumn>
           <TableColumn>{timestamp}</TableColumn>
+          <TableColumn>{rule}</TableColumn>
           <TableColumn numeric>{prefix}</TableColumn>
+          <TableColumn numeric>{threshold}</TableColumn>
         </TableRow>
       ))}
     </TableBody>
   </DataTable>);
 };
 
-RegConfigTable.propTypes = {
+ClassConfigTable.propTypes = {
   jobs: PropTypes.arrayOf(PropTypes.shape({
     uuid: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
@@ -39,8 +41,10 @@ RegConfigTable.propTypes = {
     log: PropTypes.string.isRequired,
     timestamp: PropTypes.string.isRequired,
     prefix: PropTypes.number.isRequired,
+    rule: PropTypes.string,
+    threshold: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     type: PropTypes.string.isRequired
   })).isRequired
 };
 
-export default RegConfigTable;
+export default ClassConfigTable;
