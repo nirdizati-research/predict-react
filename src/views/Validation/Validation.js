@@ -74,7 +74,7 @@ Validation.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  jobs: state.jobs.jobs,
+  jobs: state.jobs.jobs.filter((job) => job.status === 'completed'),
   logNames: state.logs.logs.map((log) => log.name),
   fetchState: state.jobs.fetchState
 });
