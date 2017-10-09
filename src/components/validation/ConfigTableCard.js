@@ -21,7 +21,7 @@ class ConfigTableCard extends Component {
 
   onPredictionMethodChange(value) {
     this.setState({predictionMethod: value});
-    this.selectChange(value);
+    this.props.selectChange(value);
   }
 
   // TODO make predictionMethod and type match

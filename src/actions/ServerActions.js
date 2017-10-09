@@ -1,6 +1,9 @@
 import {SERVER_URL} from '../constants';
 import jsonAjax from '../JSONAjaxRequest';
-import {jobsFailed, jobsRetrieved, trainingFailed, trainingSucceeded} from './JobActions';
+import {
+  jobResultsFailed, jobResultsRetrieved, jobsFailed, jobsRetrieved, trainingFailed,
+  trainingSucceeded
+} from './JobActions';
 import {logListFailed, logListsRetrieved, logInfoRetrieved, logInfoFailed, changeVisibleLog} from './LogActions';
 
 export const getJobs = () => (dispatch) => {
@@ -10,6 +13,16 @@ export const getJobs = () => (dispatch) => {
     null,
     (jobs) => dispatch(jobsRetrieved(jobs)),
     ({error}) => dispatch(jobsFailed(error))
+  );
+};
+
+export const getJobResults = (log) => (dispatch) => {
+  jsonAjax(
+    SERVER_URL + `/core_services/jobs?log=${log}&status=completed`,
+    'GET',
+    null,
+    (jobs) => dispatch(jobResultsRetrieved(jobs)),
+    ({error} = {}) => dispatch(jobResultsFailed(error))
   );
 };
 
