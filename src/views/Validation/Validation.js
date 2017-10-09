@@ -2,13 +2,23 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {changeVisibleLog, logListRequested} from '../../actions/LogActions';
+import LogListCard from '../../components/LogListCard';
 
 class Validation extends Component {
-
+  componentDidMount() {
+    if (this.props.logNames.length === 0) {
+      return this.props.onRequestLogList(true);
+    } else {
+      return this.props.onRequestLogList(false);
+    }
+  }
   render() {
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
+          <LogListCard logNames={this.props.logNames} fetchState={this.props.fetchState}
+                       visibleLogName={''}
+                       selectChange={this.props.onChangeVisible}/>
         </div>
       </div>
     );
@@ -26,7 +36,7 @@ Validation.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  log: state.logs.logs.filter((log) => log.visible)[0],
+  jobs: state.jobs.jobs.filter((job) => job.name === 'Production.xes'),
   logNames: state.logs.logs.map((log) => log.name),
   fetchState: state.logs.fetchState
 });

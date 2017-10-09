@@ -105,15 +105,15 @@ class TrainingFormCard extends Component {
 
   displayWarningCheck(prevState) {
     switch (prevState.predictionMethod) {
-      case 'time':
+      case 'Regression':
         return !(prevState.encoding.length !== 0
         && prevState.clustering.length !== 0
         && prevState.regression.length !== 0);
-      case 'outcome':
+      case 'Classification':
         return !(prevState.encoding.length !== 0
         && prevState.clustering.length !== 0
         && prevState.classification.length !== 0);
-      case 'nextActivity':
+      case 'NextActivity':
         return !(prevState.encoding.length !== 0
         && prevState.clustering.length !== 0
         && prevState.classification.length !== 0);
@@ -125,13 +125,13 @@ class TrainingFormCard extends Component {
   // On submit
   onSubmit() {
     switch (this.state.predictionMethod) {
-      case 'time':
+      case 'Regression':
         this.props.onSubmit(this.getRemainingTimePayload());
         break;
-      case 'outcome':
+      case 'Classification':
         this.props.onSubmit(this.getOutcomePayload());
         break;
-      case 'nextActivity':
+      case 'NextActivity':
         this.props.onSubmit(this.getNextActivityPayload());
         break;
       default:
@@ -141,7 +141,7 @@ class TrainingFormCard extends Component {
 
   getRemainingTimePayload() {
     return {
-      type: 'Regression',
+      type: this.state.predictionMethod,
       log: this.state.logName,
       prefix: defaultPrefix,
       encoding: this.state.encoding,
@@ -158,7 +158,7 @@ class TrainingFormCard extends Component {
       actualThreshold = this.state.threshold.threshold;
     }
     return {
-      type: 'Classification',
+      type: this.state.predictionMethod,
       log: this.state.logName,
       prefix: defaultPrefix,
       encoding: this.state.encoding,
@@ -172,7 +172,7 @@ class TrainingFormCard extends Component {
   getNextActivityPayload() {
     // TODO type should be predictionMethod
     return {
-      type: 'NextActivity',
+      type: this.state.predictionMethod,
       log: this.state.logName,
       prefix: defaultPrefix,
       encoding: this.state.encoding,
@@ -190,24 +190,24 @@ class TrainingFormCard extends Component {
     if (this.state.displayWarning) {
       warning = <p className="md-text md-text--error">Select at least one from every option</p>;
     }
-
-    const regressionFragment = this.state.predictionMethod === 'time' ?
+    const regressionFragment = this.state.predictionMethod === 'Regression' ?
       <CheckboxGroup controls={regressionMethods} id="regression" label="Regression methods"
                      onChange={this.checkboxChange.bind(this)}
                      value={this.state.regression.join(',')}/> : null;
+
     // TODO refactor as 1 component in React 16.0
     const classificationFragment =
-      (this.state.predictionMethod === 'outcome') ||
-      (this.state.predictionMethod === 'nextActivity') ?
+      (this.state.predictionMethod === 'Classification') ||
+      (this.state.predictionMethod === 'NextActivity') ?
         <CheckboxGroup controls={classificationMethods} id="classification" label="Classification methods"
                        onChange={this.checkboxChange.bind(this)}
                        value={this.state.classification.join(',')}/> : null;
 
-    const outcomeRuleFragment = this.state.predictionMethod === 'outcome' ?
+    const outcomeRuleFragment = this.state.predictionMethod === 'Classification' ?
       <OutcomeRules checkboxChange={this.checkboxChange.bind(this)}
                     outcomeRuleControls={outcomeRuleControls}
                     value={this.state.rule}/> : null;
-    const thresholdFragment = this.state.predictionMethod === 'outcome' ?
+    const thresholdFragment = this.state.predictionMethod === 'Classification' ?
       <Threshold onChange={this.onThresholdChange.bind(this)} thresholdControls={thresholdControls}
                  threshold={this.state.threshold}/> : null;
     return (

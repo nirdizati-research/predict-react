@@ -66,15 +66,15 @@ const outcomeRules = [
 const predictions = [
   {
     label: 'Remaining time',
-    value: 'time'
+    value: 'Regression'
   },
   {
     label: 'Outcome',
-    value: 'outcome'
+    value: 'Classification'
   },
   {
     label: 'Next activity',
-    value: 'nextActivity'
+    value: 'NextActivity'
   },
 ];
 
