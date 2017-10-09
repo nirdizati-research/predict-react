@@ -31,7 +31,7 @@ class ConfigTableCard extends Component {
       case 'outcome':
         return <ClassConfigTable jobs={this.props.jobs.filter((job) => job.type === 'Classification')}/>;
       case 'nextActivity':
-        return null;
+        return <RegConfigTable jobs={this.props.jobs.filter((job) => job.type === 'NextActivity')}/>;
       default:
         break;
     }
