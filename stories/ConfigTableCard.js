@@ -25,6 +25,18 @@ const jobs = [
     'uuid': 'uuuuuuuuuuuuu2',
     'threshold': '2592000',
     'type': 'Classification'
+  },
+  {
+    'clustering': 'None',
+    'status': 'completed',
+    'run': 'linear_simpleIndex_None',
+    'log': 'Production.xes',
+    'encoding': 'simpleIndex',
+    'timestamp': 'Oct 09 2017 12:44:42',
+    'prefix': 0,
+    'type': 'Regression',
+    'regression': 'linear',
+    'uuid': '82f9bf59-a15c-4b83-91af-9e1f714b9976'
   }
 ];
 

@@ -6,6 +6,7 @@ import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import PropTypes from 'prop-types';
 import {predictionMethods} from '../../reference';
 import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
+import RegConfigTable from './RegConfigTable';
 
 
 class ConfigTableCard extends Component {
@@ -21,7 +22,22 @@ class ConfigTableCard extends Component {
     this.setState({predictionMethod: value});
   }
 
+  // TODO make predictionMethod and type match
+  getTable() {
+    switch (this.state.predictionMethod) {
+      case 'time':
+        return <RegConfigTable jobs={this.props.jobs.filter((job) => job.type === 'Regression')}/>;
+      case 'outcome':
+        return null;
+      case 'nextActivity':
+        return null;
+      default:
+        break;
+    }
+  }
+
   render() {
+    const table = this.getTable();
     return <Card className="md-block-centered">
       <CardTitle title="Configuration overview"/>
       <CardText>
@@ -30,6 +46,7 @@ class ConfigTableCard extends Component {
             <SelectionControlGroup id="prediction" name="prediction" type="radio" label="Prediction method"
                                    value={this.state.predictionMethod} inline controls={predictionMethods}
                                    onChange={this.onPredictionMethodChange.bind(this)}/>
+            {table}
           </div>
         </div>
       </CardText>
