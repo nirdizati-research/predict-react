@@ -130,3 +130,5 @@ export const regressionMethods = controlCreator(regression);
 export const predictionMethods = controlCreator(predictions);
 export const outcomeRuleControls = controlCreator(outcomeRules);
 export const thresholdControls = controlCreator(threshold);
+
+export const columnStyle = {paddingRight: '12px'};

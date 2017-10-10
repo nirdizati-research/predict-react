@@ -5,6 +5,7 @@ import React from 'react';
 import {DataTable, TableBody, TableColumn, TableHeader, TableRow} from 'react-md/lib/DataTables/index';
 import PropTypes from 'prop-types';
 import {sliceUuid} from '../../helpers';
+import {columnStyle} from '../../reference';
 
 const ClassConfigTable = (props) => {
   const headers = ['uuid', 'Status', 'Type', 'Run', 'Log', 'TimeStamp', 'Rule', 'Prefix', 'Threshold'];
@@ -12,21 +13,21 @@ const ClassConfigTable = (props) => {
   return (<DataTable baseId="simple-pagination" plain>
     <TableHeader>
       <TableRow selectable={false}>
-        {headers.map((header) => <TableColumn key={header}> {header}</TableColumn>)}
+        {headers.map((header) => <TableColumn key={header} style={columnStyle}> {header}</TableColumn>)}
       </TableRow>
     </TableHeader>
     <TableBody>
       {props.jobs.map(({uuid, status, run, log, timestamp, prefix, type, rule, threshold}) => (
         <TableRow key={uuid} selectable={false}>
-          <TableColumn>{sliceUuid(uuid)}</TableColumn>
-          <TableColumn>{status}</TableColumn>
-          <TableColumn>{type}</TableColumn>
-          <TableColumn>{run}</TableColumn>
-          <TableColumn>{log}</TableColumn>
-          <TableColumn>{timestamp}</TableColumn>
-          <TableColumn>{rule}</TableColumn>
-          <TableColumn numeric>{prefix}</TableColumn>
-          <TableColumn numeric>{threshold}</TableColumn>
+          <TableColumn style={columnStyle}>{sliceUuid(uuid)}</TableColumn>
+          <TableColumn style={columnStyle}>{status}</TableColumn>
+          <TableColumn style={columnStyle}>{type}</TableColumn>
+          <TableColumn style={columnStyle}>{run}</TableColumn>
+          <TableColumn style={columnStyle}>{log}</TableColumn>
+          <TableColumn style={columnStyle}>{timestamp}</TableColumn>
+          <TableColumn style={columnStyle}>{rule}</TableColumn>
+          <TableColumn style={columnStyle} numeric>{prefix}</TableColumn>
+          <TableColumn style={columnStyle} numeric>{threshold}</TableColumn>
         </TableRow>
       ))}
     </TableBody>
