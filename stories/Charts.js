@@ -6,6 +6,8 @@ import {storiesOf} from '@kadira/storybook';
 import LineChartCard from '../src/components/chart/LineChartCard';
 import EventChartCard from '../src/components/chart/EventChartCard';
 import BubbleChartCard from '../src/components/chart/BubbleChartCard';
+import ResultTableCard from '../src/components/validation/ResultTableCard';
+import {classColumns, regColumns} from '../src/components/validation/ColumnHelper';
 
 const fetchState = {inFlight: false};
 
@@ -41,6 +43,17 @@ const regressor = [
   ['2', 218.33484913201886, 218.33484913201886, 'xboost', 0.10676014147290103]
 ];
 
+const regressor2 = [
+  ['uuid123', 'linear', 321.16984512656944, 470.1483088530332, -0.75205320910182749],
+  ['uuid124', 'xboost', 218.33484913201886, 218.33484913201886, 0.10676014147290103]
+];
+
+const classData = [
+  ['uuid121', 'KNN_simpleIndex_None_clustering', 0.7152600170502984, 0.6232374506486181, 0.63384260739574716],
+  ['uuid122', 'DecisionTree_simpleIndex_kmeans_clustering', 0.933152664859982, 0.9165256627185561, 0.9605116926217754],
+  ['uuid123', 'KNN_boolean_None_clustering', 0.7300537412153782, 0.6408140814081408, 0.62917375812309062]
+]
+
 storiesOf('Charts', module)
   .add('LineChartCard', () => {
     return (
@@ -64,12 +77,30 @@ storiesOf('Charts', module)
     );
   })
   .add('BubbleChartCard', () => {
+    return (
+      <div className="md-grid">
+        <div className="md-cell md-cell--12">
+          <BubbleChartCard fetchState={fetchState}
+                           data={regressor}
+                           cardTitle="Bubble chart by regressor"/>
+        </div>
+      </div>
+    );
+  })
+  .add('ResultTableCard', () => {
       return (
         <div className="md-grid">
           <div className="md-cell md-cell--12">
-            <BubbleChartCard fetchState={fetchState}
-                           data={regressor}
-                           cardTitle="Bubble chart by regressor"/>
+            <ResultTableCard fetchState={fetchState}
+                             data={regressor2}
+                             cardTitle="Regressor results"
+                             columns={regColumns}/>
+          </div>
+          <div className="md-cell md-cell--12">
+            <ResultTableCard fetchState={fetchState}
+                             data={classData}
+                             cardTitle="Classification results"
+                             columns={classColumns}/>
           </div>
         </div>
       );
