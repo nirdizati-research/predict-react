@@ -8,16 +8,16 @@ export const classColumns = [
     label: 'uuid',
   },
   {
-    type: 'string',
-    label: 'run',
-  },
-  {
     type: 'number',
     label: 'fmeasure',
   },
   {
     type: 'number',
     label: 'acc',
+  },
+  {
+    type: 'string',
+    label: 'run',
   },
   {
     type: 'number',
@@ -31,16 +31,16 @@ export const regColumns = [
     label: 'uuid',
   },
   {
-    type: 'string',
-    label: 'run',
-  },
-  {
     type: 'number',
     label: 'mae',
   },
   {
     type: 'number',
     label: 'rmse',
+  },
+  {
+    type: 'string',
+    label: 'run',
   },
   {
     type: 'number',

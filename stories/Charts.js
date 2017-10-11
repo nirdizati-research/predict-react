@@ -39,20 +39,15 @@ const events = {
   'W_Fixing_incoming_lead': 3588
 };
 const regressor = [
-  ['1', 321.16984512656944, 470.1483088530332, 'linear', -0.75205320910182749],
-  ['2', 218.33484913201886, 218.33484913201886, 'xboost', 0.10676014147290103]
-];
-
-const regressor2 = [
-  ['uuid123', 'linear', 321.16984512656944, 470.1483088530332, -0.75205320910182749],
-  ['uuid124', 'xboost', 218.33484913201886, 218.33484913201886, 0.10676014147290103]
+  ['uuid121', 321.16984512656944, 470.1483088530332, 'linear', -0.75205320910182749],
+  ['uuid122', 218.33484913201886, 218.33484913201886, 'xboost', 0.10676014147290103]
 ];
 
 const classData = [
-  ['uuid121', 'KNN_simpleIndex_None_clustering', 0.7152600170502984, 0.6232374506486181, 0.63384260739574716],
-  ['uuid122', 'DecisionTree_simpleIndex_kmeans_clustering', 0.933152664859982, 0.9165256627185561, 0.9605116926217754],
-  ['uuid123', 'KNN_boolean_None_clustering', 0.7300537412153782, 0.6408140814081408, 0.62917375812309062]
-]
+  ['uuid121', 0.7152600170502984, 0.6232374506486181, 'KNN_simpleIndex_None_clustering', 0.63384260739574716],
+  ['uuid122', 0.933152664859982, 0.9165256627185561, 'DecisionTree_simpleIndex_kmeans_clustering', 0.9605116926217754],
+  ['uuid123', 0.7300537412153782, 0.6408140814081408, 'KNN_boolean_None_clustering', 0.62917375812309062]
+];
 
 storiesOf('Charts', module)
   .add('LineChartCard', () => {
@@ -82,7 +77,18 @@ storiesOf('Charts', module)
         <div className="md-cell md-cell--12">
           <BubbleChartCard fetchState={fetchState}
                            data={regressor}
+                           columns={regColumns}
+                           hTitle="Mae"
+                           vTitle="Rmse"
                            cardTitle="Bubble chart by regressor"/>
+        </div>
+        <div className="md-cell md-cell--12">
+          <BubbleChartCard fetchState={fetchState}
+                           data={classData}
+                           columns={classColumns}
+                           hTitle="fmeasure"
+                           vTitle="accuracy"
+                           cardTitle="Bubble chart by classificator"/>
         </div>
       </div>
     );
@@ -92,7 +98,7 @@ storiesOf('Charts', module)
         <div className="md-grid">
           <div className="md-cell md-cell--12">
             <ResultTableCard fetchState={fetchState}
-                             data={regressor2}
+                             data={regressor}
                              cardTitle="Regressor results"
                              columns={regColumns}/>
           </div>
