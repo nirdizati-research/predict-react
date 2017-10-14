@@ -23,4 +23,3 @@ export const logInfoRetrieved = createPayloadForwardingAction(LOG_INFO_RETRIEVED
 
 export const LOG_INFO_FAILED = 'LOG_INFO_FAILED';
 export const logInfoFailed = createPayloadForwardingAction(LOG_INFO_FAILED);
-
