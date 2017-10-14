@@ -6,7 +6,7 @@ import CircularProgress from 'react-md/lib/Progress/CircularProgress';
 import PropTypes from 'prop-types';
 
 const FetchState = (props) => {
-  let message = <div></div>;
+  let message = null;
   if (props.fetchState.inFlight) {
     message = <CircularProgress id="query-indeterminate-progress"/>;
   } else if (props.fetchState.error) {
