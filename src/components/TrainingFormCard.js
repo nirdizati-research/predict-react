@@ -17,10 +17,9 @@ import {
   regressionMethods,
   thresholdControls
 } from '../reference';
-import RegressionMethods from './training/RegressionMethods';
-import ClassificationMethods from './training/ClassificationMethods';
 import OutcomeRules from './training/OutcomeRules';
 import Threshold from './training/Threshold';
+import CheckboxGroup from './training/CheckboxGroup';
 
 const defaultPrefix = 0;
 const defaultThreshold = 0;
@@ -185,16 +184,16 @@ class TrainingFormCard extends Component {
     }
 
     const regressionFragment = this.state.predictionMethod === 'time' ?
-      <RegressionMethods regressionMethods={regressionMethods}
-                         checkboxChange={this.checkboxChange.bind(this)}
-                         value={this.state.regression.join(',')}/> : null;
+      <CheckboxGroup controls={regressionMethods} id="regression" label="Regression methods"
+                     onChange={this.checkboxChange.bind(this)}
+                     value={this.state.regression.join(',')}/> : null;
     // TODO refactor as 1 component in React 16.0
     const classificationFragment =
       (this.state.predictionMethod === 'outcome') ||
       (this.state.predictionMethod === 'nextActivity') ?
-        <ClassificationMethods classificationMethods={classificationMethods}
-                               checkboxChange={this.checkboxChange.bind(this)}
-                               value={this.state.classification.join(',')}/> : null;
+        <CheckboxGroup controls={classificationMethods} id="classification" label="Classification methods"
+                       onChange={this.checkboxChange.bind(this)}
+                       value={this.state.classification.join(',')}/> : null;
 
     const outcomeRuleFragment = this.state.predictionMethod === 'outcome' ?
       <OutcomeRules checkboxChange={this.checkboxChange.bind(this)}
