@@ -21,7 +21,7 @@ describe('Threshold', () => {
 
   it('renders', () => {
     expect(element).toBeDefined();
-    expect(element.find(SelectionControlGroup)).toBeDefined();
+    expect(element.find(SelectionControlGroup).length).toBe(1);
   });
 
   describe('default', () => {
@@ -42,7 +42,6 @@ describe('Threshold', () => {
 
     it('renders textfield', () => {
       expect(element.find(TextField).length).toBe(1);
-      expect(element.find(TextField)).toBeDefined();
     });
 
     it('submits on checkbox change', () => {

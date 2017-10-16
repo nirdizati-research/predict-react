@@ -18,8 +18,8 @@ describe('LogListCard', () => {
     const element = shallow(<LogListCard fetchState={fetchState} logNames={logNames} selectChange={selectChange}
                                          visibleLogName=''/>);
     expect(element).toBeDefined();
-    expect(element.find(FetchState)).toBeDefined();
-    expect(element.find(SelectField)).toBeDefined();
+    expect(element.find(FetchState).length).toBe(1);
+    expect(element.find(SelectField).length).toBe(1);
   });
 
   it('calls selectChange', () => {
