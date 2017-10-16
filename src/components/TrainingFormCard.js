@@ -212,7 +212,7 @@ class TrainingFormCard extends Component {
             menuItems={this.props.logNames}
             position={SelectField.Positions.BELOW}
             onChange={this.selectChange.bind(this)}
-            defaultValue={this.props.logNames[0]}
+            value={this.state.logName}
           /></CardTitle>
         <CardText>
           <div className="md-grid md-grid--no-spacing">
