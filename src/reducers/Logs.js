@@ -25,27 +25,17 @@ const dummy = (name) => {
 
 const mergeIncomingLogs = (logNames, existingLogs) => {
   return logNames.map((name) => {
-    if (existingLogs.find((exLog) => exLog.name === name))
-      return existingLogs.find((exLog) => exLog.name === name);
+    const log = (existingLogs.find((exLog) => exLog.name === name));
+    if (log)
+      return log;
     else
       return dummy(name);
   });
 };
 
 const addData = (log, data, infoType) => {
-  switch (infoType) {
-    case 'events': {
-      return {...log, events: data};
-    }
-    case 'resources': {
-      return {...log, resources: data};
-    }
-    case 'traces': {
-      return {...log, traces: data};
-    }
-    default:
-      return log;
-  }
+  log[infoType] = data;
+  return log;
 };
 
 const logs = (state = initialState, action) => {
