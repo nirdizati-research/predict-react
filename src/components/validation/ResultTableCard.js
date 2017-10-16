@@ -9,17 +9,23 @@ import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 const opts = {width: '100%'};
 
 const ResultTableCard = (props) => {
+  let chart = null;
+  if (props.data.length === 0) {
+    chart = <Chart
+      chartType="Table"
+      rows={props.data}
+      columns={props.columns}
+      options={opts}
+      width="100%"
+      height="auto"
+      legend_toggle
+    />;
+  }
+
   return <Card className="md-block-centered">
     <CardTitle title={props.cardTitle}/>
     <CardText>
-      <Chart
-        chartType="Table"
-        rows={props.data}
-        columns={props.columns}
-        options={opts}
-        width="100%"
-        legend_toggle
-      />
+      {chart}
     </CardText>
   </Card>;
 };

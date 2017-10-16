@@ -6,6 +6,9 @@ import LogListCard from '../../components/LogListCard';
 import ConfigTableCard from '../../components/validation/ConfigTableCard';
 import {predictionMethods} from '../../reference';
 import {jobResultsRequested} from '../../actions/JobActions';
+import BubbleChartCard from '../../components/chart/BubbleChartCard';
+import ResultTableCard from '../../components/validation/ResultTableCard';
+import {regColumns} from '../../components/validation/ColumnHelper';
 
 class Validation extends Component {
   constructor(props) {
@@ -34,6 +37,21 @@ class Validation extends Component {
     this.setState({predictionMethod: type});
   }
 
+  getDataTable() {
+    const jobs = this.props.jobs.filter((job) => job.type === this.state.predictionMethod);
+    switch (this.state.predictionMethod) {
+      case 'Regression':
+        const data = jobs.map((job) => [job.uuid, job.result.mae, job.result.rmse, job.run, job.result.rscore]);
+        return <ResultTableCard data={data} columns={regColumns} cardTitle="Regression data"/>;
+      case 'Classification':
+        return null;
+      case 'NextActivity':
+        return null;
+      default:
+        return null;
+    }
+  }
+
   render() {
     return (
       <div className="md-grid">
@@ -45,6 +63,9 @@ class Validation extends Component {
         <div className="md-cell md-cell--12">
           <ConfigTableCard jobs={this.props.jobs}
                            selectChange={this.onChangeType.bind(this)}/>
+        </div>
+        <div className="md-cell md-cell--12">
+          {this.getDataTable()}
         </div>
       </div>
     );
@@ -69,7 +90,15 @@ Validation.propTypes = {
     rule: PropTypes.string,
     threshold: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     type: PropTypes.string.isRequired,
-    result: PropTypes.object.isRequired
+    result: PropTypes.shape({
+      uuid: PropTypes.string.isRequired,
+      mae: PropTypes.number,
+      rmse: PropTypes.number,
+      rscore: PropTypes.number,
+      fmeasure: PropTypes.number,
+      acc: PropTypes.number,
+      auc: PropTypes.number,
+    }).isRequired
   })).isRequired,
 };
 
