@@ -6,7 +6,6 @@ import {storiesOf} from '@kadira/storybook';
 import JobStatusTable from '../src/components/JobStatusTable';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 
-
 const jobs = [
   {
     'status': 'Completed',
@@ -14,7 +13,7 @@ const jobs = [
     'log': 'test_bpi12_sorted.xes',
     'timestamp': 'Sep 13 2017 10:55:13',
     'rule': 'elapsed_time',
-    'prefix': '0',
+    'prefix': 0,
     'uuid': 'uuuuuuuuuuuuu',
     'threshold': '2592000',
     'type': 'Classification'
@@ -23,9 +22,9 @@ const jobs = [
     'status': 'Queued',
     'run': 'KNN_simpleIndex_Kmeans',
     'log': 'test_bpi12_sorted2.xes',
-    'timeStamp': 'Sep 13 2017 10:55:13',
+    'timestamp': 'Sep 13 2017 10:55:13',
     'rule': 'elapsed_time',
-    'prefix': '0',
+    'prefix': 0,
     'uuid': 'uuuuuuuuuuuuu2',
     'threshold': '2592000',
     'type': 'Classification'
