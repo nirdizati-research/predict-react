@@ -24,8 +24,8 @@ describe('LineChartCard', () => {
     const element = shallow(<LineChartCard fetchState={fetchState} cardTitle={cardTitle} chartTitle={chartTitle}
                                            data={traces}/>);
     expect(element).toBeDefined();
-    expect(element.find(FetchState)).toBeDefined();
-    expect(element.find(Chart)).toBeDefined();
+    expect(element.find(FetchState).length).toBe(1);
+    expect(element.find(Chart).length).toBe(1);
     expect(element.find(CardTitle).props().title).toBe(cardTitle);
   });
 

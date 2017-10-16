@@ -10,7 +10,7 @@ describe('OutcomeRules', () => {
                                           checkboxChange={jest.fn()}
                                           value={outcomeRuleControls[0].value}/>);
     expect(element).toBeDefined();
-    expect(element.find(SelectionControlGroup)).toBeDefined();
+    expect(element.find(SelectionControlGroup).length).toBe(1);
     expect(element.text()).toMatch(/Choose rule/);
   });
 });

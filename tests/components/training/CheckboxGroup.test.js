@@ -11,7 +11,7 @@ describe('CheckboxGroup', () => {
                                            onChange={jest.fn()}
                                            value={classificationMethods[0].value}/>);
     expect(element).toBeDefined();
-    expect(element.find(SelectionControlGroup)).toBeDefined();
+    expect(element.find(SelectionControlGroup).length).toBe(1);
   });
 
   it('renders regression methods', () => {
@@ -20,6 +20,6 @@ describe('CheckboxGroup', () => {
                                            onChange={jest.fn()}
                                            value={regressionMethods[0].value}/>);
     expect(element).toBeDefined();
-    expect(element.find(SelectionControlGroup)).toBeDefined();
+    expect(element.find(SelectionControlGroup).length).toBe(1);
   });
 });

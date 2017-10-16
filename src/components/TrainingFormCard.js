@@ -50,22 +50,30 @@ class TrainingFormCard extends Component {
     this.state = initialState(this.props);
   }
 
+  addOrRemove(list, value) {
+    const index = list.indexOf(value);
+    if (index > -1) {
+      return list.filter((val) => val !== value);
+    } else {
+      return [...list, value];
+    }
+  }
+
   // Change methods
-  checkboxChange(value, event) {
-    // First val is ''
-    const valList = value.split(',').filter((val) => val !== '');
+  checkboxChange(_, event) {
+    const value = event.target.value;
     switch (event.target.name) {
       case 'encoding[]':
-        this.setState({encoding: valList});
+        this.setState({encoding: this.addOrRemove(this.state.encoding, value)});
         break;
       case 'clustering[]':
-        this.setState({clustering: valList});
+        this.setState({clustering: this.addOrRemove(this.state.clustering, value)});
         break;
       case 'regression[]':
-        this.setState({regression: valList});
+        this.setState({regression: this.addOrRemove(this.state.regression, value)});
         break;
       case 'classification[]':
-        this.setState({classification: valList});
+        this.setState({classification: this.addOrRemove(this.state.classification, value)});
         break;
       case 'rule':
         // not a list, but works
@@ -99,16 +107,16 @@ class TrainingFormCard extends Component {
     switch (prevState.predictionMethod) {
       case 'time':
         return !(prevState.encoding.length !== 0
-          && prevState.clustering.length !== 0
-          && prevState.regression.length !== 0);
+        && prevState.clustering.length !== 0
+        && prevState.regression.length !== 0);
       case 'outcome':
         return !(prevState.encoding.length !== 0
-          && prevState.clustering.length !== 0
-          && prevState.classification.length !== 0);
+        && prevState.clustering.length !== 0
+        && prevState.classification.length !== 0);
       case 'nextActivity':
         return !(prevState.encoding.length !== 0
-          && prevState.clustering.length !== 0
-          && prevState.classification.length !== 0);
+        && prevState.clustering.length !== 0
+        && prevState.classification.length !== 0);
       default:
         break;
     }
@@ -212,7 +220,7 @@ class TrainingFormCard extends Component {
             menuItems={this.props.logNames}
             position={SelectField.Positions.BELOW}
             onChange={this.selectChange.bind(this)}
-            defaultValue={this.props.logNames[0]}
+            value={this.state.logName}
           /></CardTitle>
         <CardText>
           <div className="md-grid md-grid--no-spacing">

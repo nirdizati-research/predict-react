@@ -42,7 +42,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "lint": "eslint src/",
+    "lint": "eslint src/ tests/",
     "test": "react-scripts test --env=jsdom",
     "test-coverage": "npm run test -- --coverage",
     "eject": "react-scripts eject",

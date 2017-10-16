@@ -21,8 +21,8 @@ describe('EventChartCard', () => {
     const element = shallow(<EventChartCard fetchState={fetchState}
                                             data={events}/>);
     expect(element).toBeDefined();
-    expect(element.find(FetchState)).toBeDefined();
-    expect(element.find(Chart)).toBeDefined();
+    expect(element.find(FetchState).length).toBe(1);
+    expect(element.find(Chart).length).toBe(1);
   });
 
   it('maps and sorts data', () => {

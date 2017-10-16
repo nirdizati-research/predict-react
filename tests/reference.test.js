@@ -10,7 +10,6 @@ import {
 import {shallow} from 'enzyme';
 
 describe('Reference', () => {
-
   it('controlCreator maps', () => {
     expect(clusteringMethods[1].key).toBe('kmeans');
     expect(clusteringMethods[1].value).toBe('kmeans');
