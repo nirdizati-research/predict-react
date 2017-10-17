@@ -86,20 +86,20 @@ storiesOf('Charts', module)
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
-          <BubbleChartCard fetchState={fetchState}
-                           data={regressor}
-                           columns={regColumns}
-                           hTitle="Mae"
-                           vTitle="Rmse"
-                           cardTitle="Bubble chart by regressor"/>
+          <BubbleChartCard
+            data={regressor}
+            columns={regColumns}
+            hTitle="Mae"
+            vTitle="Rmse"
+            cardTitle="Bubble chart by regressor"/>
         </div>
         <div className="md-cell md-cell--12">
-          <BubbleChartCard fetchState={fetchState}
-                           data={classData}
-                           columns={classColumns}
-                           hTitle="fmeasure"
-                           vTitle="accuracy"
-                           cardTitle="Bubble chart by classificator"/>
+          <BubbleChartCard
+            data={classData}
+            columns={classColumns}
+            hTitle="fmeasure"
+            vTitle="accuracy"
+            cardTitle="Bubble chart by classificator"/>
         </div>
       </div>
     );

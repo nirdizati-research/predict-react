@@ -4,7 +4,6 @@
 import React from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import PropTypes from 'prop-types';
-import FetchState from '../FetchState';
 import {Chart} from 'react-google-charts';
 
 const BubbleChartCard = (props) => {
@@ -26,7 +25,6 @@ const BubbleChartCard = (props) => {
         width="100%"
         legend_toggle
       />
-      <FetchState fetchState={props.fetchState}/>
     </CardText>
   </Card>;
 };
@@ -34,10 +32,6 @@ const BubbleChartCard = (props) => {
 BubbleChartCard.propTypes = {
   data: PropTypes.arrayOf(PropTypes.any.isRequired).isRequired,
   cardTitle: PropTypes.string.isRequired,
-  fetchState: PropTypes.shape({
-    inFlight: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  }).isRequired,
   columns: PropTypes.arrayOf(PropTypes.shape({
     type: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired
