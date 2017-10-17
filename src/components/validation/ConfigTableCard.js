@@ -6,17 +6,17 @@ import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import PropTypes from 'prop-types';
 import RegConfigTable from './RegConfigTable';
 import ClassConfigTable from './ClassConfigTable';
+import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
 
 
 class ConfigTableCard extends Component {
-  // TODO make predictionMethod and type match
   getTable() {
     switch (this.props.predictionMethod) {
-      case 'Regression':
+      case REGRESSION:
         return <RegConfigTable jobs={this.props.jobs}/>;
-      case 'Classification':
+      case CLASSIFICATION:
         return <ClassConfigTable jobs={this.props.jobs}/>;
-      case 'NextActivity':
+      case NEXT_ACTIVITY:
         return <RegConfigTable jobs={this.props.jobs}/>;
       default:
         break;

@@ -8,6 +8,7 @@ import {TableRow} from 'react-md/lib/DataTables/index';
 import {TableColumn} from 'react-md';
 import RegConfigTable from '../../../src/components/validation/RegConfigTable';
 import ConfigTableCard from '../../../src/components/validation/ConfigTableCard';
+import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../../src/reference';
 
 
 const regJobs = [{
@@ -33,26 +34,29 @@ const classJobs = [{
 }];
 
 describe('ConfigTableCard', () => {
-  const element = shallow(<ConfigTableCard jobs={[]} predictionMethod='Classification'/>);
+  const element = shallow(<ConfigTableCard jobs={[]} predictionMethod={CLASSIFICATION}/>);
   it('renders', () => {
     expect(element).toBeDefined();
   });
+
   it('break works', () => {
     element.setProps({predictionMethod: 'AAA'});
     // only for test coverage
     expect(element).toBeDefined();
   });
+
   it('renders classification table', () => {
+    element.setProps({predictionMethod: CLASSIFICATION});
     expect(element.find(ClassConfigTable).length).toBe(1);
   });
 
   it('renders next activity table', () => {
-    element.setProps({predictionMethod: 'NextActivity'});
+    element.setProps({predictionMethod: NEXT_ACTIVITY});
     expect(element.find(RegConfigTable).length).toBe(1);
   });
 
   it('renders regression table', () => {
-    element.setProps({predictionMethod: 'Regression'});
+    element.setProps({predictionMethod: REGRESSION});
     expect(element.find(RegConfigTable).length).toBe(1);
   });
 });

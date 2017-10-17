@@ -5,6 +5,7 @@ import React from 'react';
 import {storiesOf} from '@kadira/storybook';
 import ValidationHeaderCard from '../src/components/validation/ValidationHeaderCard';
 import ConfigTableCard from '../src/components/validation/ConfigTableCard';
+import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../src/reference';
 
 const names = ['Log 1', 'log 2', 'something.xes', 'reallylongandboringnametotestlimits.xes'];
 
@@ -74,13 +75,13 @@ storiesOf('Validation', module)
   return (
     <div className="md-grid">
       <div className="md-cell md-cell--12">
-        <ConfigTableCard jobs={classJobs} predictionMethod='Classification'/>
+        <ConfigTableCard jobs={classJobs} predictionMethod={CLASSIFICATION}/>
       </div>
       <div className="md-cell md-cell--12">
-        <ConfigTableCard jobs={regJobs} predictionMethod='Regression'/>
+        <ConfigTableCard jobs={regJobs} predictionMethod={REGRESSION}/>
       </div>
       <div className="md-cell md-cell--12">
-        <ConfigTableCard jobs={nextActivityJobs} predictionMethod='NextActivity'/>
+        <ConfigTableCard jobs={nextActivityJobs} predictionMethod={NEXT_ACTIVITY}/>
       </div>
     </div>
   );

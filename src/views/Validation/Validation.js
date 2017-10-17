@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {logListRequested} from '../../actions/LogActions';
 import LogListCard from '../../components/LogListCard';
 import ConfigTableCard from '../../components/validation/ConfigTableCard';
-import {predictionMethods} from '../../reference';
+import {CLASSIFICATION, NEXT_ACTIVITY, predictionMethods, REGRESSION} from '../../reference';
 import {jobResultsRequested} from '../../actions/JobActions';
 import BubbleChartCard from '../../components/chart/BubbleChartCard';
 import ResultTableCard from '../../components/validation/ResultTableCard';
@@ -15,7 +15,7 @@ class Validation extends Component {
     super(props);
 
     this.state = {
-      predictionMethod: predictionMethods[0].value,
+      predictionMethod: REGRESSION,
       log: ''
     };
   }
@@ -40,12 +40,12 @@ class Validation extends Component {
   getDataTable() {
     const jobs = this.props.jobs.filter((job) => job.type === this.state.predictionMethod);
     switch (this.state.predictionMethod) {
-      case 'Regression':
+      case REGRESSION:
         const data = jobs.map((job) => [job.uuid, job.result.mae, job.result.rmse, job.run, job.result.rscore]);
         return <ResultTableCard data={data} columns={regColumns} cardTitle="Regression data"/>;
-      case 'Classification':
+      case CLASSIFICATION:
         return null;
-      case 'NextActivity':
+      case NEXT_ACTIVITY:
         return null;
       default:
         return null;

@@ -4,6 +4,7 @@ import FetchState from '../../../src/components/FetchState';
 import SelectField from 'react-md/lib/SelectFields';
 import ValidationHeaderCard from '../../../src/components/validation/ValidationHeaderCard';
 import {SelectionControlGroup} from 'react-md';
+import {CLASSIFICATION} from '../../../src/reference';
 
 const fetchState = {
   inFlight: false
@@ -35,7 +36,7 @@ describe('ValidationHeaderCard', () => {
   it('calls methodChange', () => {
     const element = shallow(<ValidationHeaderCard fetchState={fetchState} logNames={logNames}
                                                   logChange={logChange} methodChange={methodChange}/>);
-    element.find(SelectionControlGroup).at(0).simulate('change', 'Classification');
-    expect(methodChange).toHaveBeenCalledWith('Classification');
+    element.find(SelectionControlGroup).at(0).simulate('change', CLASSIFICATION);
+    expect(methodChange).toHaveBeenCalledWith(CLASSIFICATION);
   });
 });
