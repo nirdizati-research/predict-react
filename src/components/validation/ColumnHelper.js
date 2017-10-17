@@ -2,6 +2,17 @@
  * Created by tonis.kasekamp on 10/11/17.
  */
 
+const tableColumns = [
+  {
+    type: 'string',
+    label: 'uuid',
+  },
+  {
+    type: 'string',
+    label: 'run',
+  }
+];
+
 export const classColumns = [
   {
     type: 'string',
@@ -18,6 +29,21 @@ export const classColumns = [
   {
     type: 'string',
     label: 'run',
+  },
+  {
+    type: 'number',
+    label: 'auc',
+  }
+];
+export const classTableColumns = [
+  ...tableColumns,
+  {
+    type: 'number',
+    label: 'fmeasure',
+  },
+  {
+    type: 'number',
+    label: 'acc',
   },
   {
     type: 'number',
@@ -41,6 +67,22 @@ export const regColumns = [
   {
     type: 'string',
     label: 'run',
+  },
+  {
+    type: 'number',
+    label: 'rscore',
+  }
+];
+
+export const regTableColumns = [
+  ...tableColumns,
+  {
+    type: 'number',
+    label: 'mae',
+  },
+  {
+    type: 'number',
+    label: 'rmse',
   },
   {
     type: 'number',

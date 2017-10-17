@@ -8,6 +8,7 @@ import EventChartCard from '../src/components/chart/EventChartCard';
 import BubbleChartCard from '../src/components/chart/BubbleChartCard';
 import ResultTableCard from '../src/components/validation/ResultTableCard';
 import {classColumns, regColumns} from '../src/components/validation/ColumnHelper';
+import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../src/reference';
 
 const fetchState = {inFlight: false};
 
@@ -43,10 +44,20 @@ const regressor = [
   ['uuid122', 218.33484913201886, 218.33484913201886, 'xboost', 0.10676014147290103]
 ];
 
+const regTableData = [
+  ['uuid121', 'linear', 321.16984512656944, 470.1483088530332, -0.75205320910182749],
+  ['uuid122', 'xboost', 218.33484913201886, 218.33484913201886, 0.10676014147290103]
+];
 const classData = [
   ['uuid121', 0.7152600170502984, 0.6232374506486181, 'KNN_simpleIndex_None_clustering', 0.63384260739574716],
   ['uuid122', 0.933152664859982, 0.9165256627185561, 'DecisionTree_simpleIndex_kmeans_clustering', 0.9605116926217754],
   ['uuid123', 0.7300537412153782, 0.6408140814081408, 'KNN_boolean_None_clustering', 0.62917375812309062]
+];
+
+const classTableData = [
+  ['uuid121', 'KNN_simpleIndex_None_clustering', 0.7152600170502984, 0.6232374506486181, 0.63384260739574716],
+  ['uuid122', 'DecisionTree_simpleIndex_kmeans_clustering', 0.933152664859982, 0.9165256627185561, 0.9605116926217754],
+  ['uuid123', 'KNN_boolean_None_clustering', 0.7300537412153782, 0.6408140814081408, 0.62917375812309062]
 ];
 
 storiesOf('Charts', module)
@@ -98,15 +109,15 @@ storiesOf('Charts', module)
         <div className="md-grid">
           <div className="md-cell md-cell--12">
             <ResultTableCard fetchState={fetchState}
-                             data={regressor}
-                             cardTitle="Regressor results"
-                             columns={regColumns}/>
+                             data={classTableData} predictionMethod={CLASSIFICATION}/>
           </div>
           <div className="md-cell md-cell--12">
             <ResultTableCard fetchState={fetchState}
-                             data={classData}
-                             cardTitle="Classification results"
-                             columns={classColumns}/>
+                             data={regTableData} predictionMethod={REGRESSION}/>
+          </div>
+          <div className="md-cell md-cell--12">
+            <ResultTableCard fetchState={fetchState}
+                             data={regTableData} predictionMethod={NEXT_ACTIVITY}/>
           </div>
         </div>
       );
