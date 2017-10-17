@@ -39,12 +39,6 @@ describe('ConfigTableCard', () => {
     expect(element).toBeDefined();
   });
 
-  it('break works', () => {
-    element.setProps({predictionMethod: 'AAA'});
-    // only for test coverage
-    expect(element).toBeDefined();
-  });
-
   it('renders classification table', () => {
     element.setProps({predictionMethod: CLASSIFICATION});
     expect(element.find(ClassConfigTable).length).toBe(1);

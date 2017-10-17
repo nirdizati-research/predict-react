@@ -47,8 +47,6 @@ class Validation extends Component {
         return null;
       case NEXT_ACTIVITY:
         return null;
-      default:
-        return null;
     }
   }
 
