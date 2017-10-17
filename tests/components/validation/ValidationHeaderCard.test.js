@@ -35,7 +35,7 @@ describe('ValidationHeaderCard', () => {
   it('calls methodChange', () => {
     const element = shallow(<ValidationHeaderCard fetchState={fetchState} logNames={logNames}
                                                   logChange={logChange} methodChange={methodChange}/>);
-    element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: 'Classification'}});
+    element.find(SelectionControlGroup).at(0).simulate('change', 'Classification');
     expect(methodChange).toHaveBeenCalledWith('Classification');
   });
 });

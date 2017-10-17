@@ -4,35 +4,20 @@
 import React, {Component} from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import PropTypes from 'prop-types';
-import {predictionMethods} from '../../reference';
-import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
 import RegConfigTable from './RegConfigTable';
 import ClassConfigTable from './ClassConfigTable';
 
 
 class ConfigTableCard extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      predictionMethod: predictionMethods[0].value,
-    };
-  }
-
-  onPredictionMethodChange(value) {
-    this.setState({predictionMethod: value});
-    this.props.selectChange(value);
-  }
-
   // TODO make predictionMethod and type match
   getTable() {
-    switch (this.state.predictionMethod) {
+    switch (this.props.predictionMethod) {
       case 'Regression':
-        return <RegConfigTable jobs={this.props.jobs.filter((job) => job.type === 'Regression')}/>;
+        return <RegConfigTable jobs={this.props.jobs}/>;
       case 'Classification':
-        return <ClassConfigTable jobs={this.props.jobs.filter((job) => job.type === 'Classification')}/>;
+        return <ClassConfigTable jobs={this.props.jobs}/>;
       case 'NextActivity':
-        return <RegConfigTable jobs={this.props.jobs.filter((job) => job.type === 'NextActivity')}/>;
+        return <RegConfigTable jobs={this.props.jobs}/>;
       default:
         break;
     }
@@ -43,14 +28,7 @@ class ConfigTableCard extends Component {
     return <Card className="md-block-centered">
       <CardTitle title="Configuration overview"/>
       <CardText>
-        <div className="md-grid md-grid--no-spacing">
-          <div className="md-cell md-cell--12">
-            <SelectionControlGroup id="prediction" name="prediction" type="radio" label="Prediction method"
-                                   value={this.state.predictionMethod} inline controls={predictionMethods}
-                                   onChange={this.onPredictionMethodChange.bind(this)}/>
-            {table}
-          </div>
-        </div>
+        {table}
       </CardText>
     </Card>;
   }
@@ -69,6 +47,6 @@ ConfigTableCard.propTypes = {
     type: PropTypes.string.isRequired,
     result: PropTypes.object.isRequired
   })).isRequired,
-  selectChange: PropTypes.func.isRequired
+  predictionMethod: PropTypes.string.isRequired
 };
 export default ConfigTableCard;

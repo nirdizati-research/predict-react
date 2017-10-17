@@ -3,5 +3,5 @@
  */
 
 export const sliceUuid = (uuid) => {
-  return uuid.slice(-7);
+  return uuid.substring(0, 7);
 };

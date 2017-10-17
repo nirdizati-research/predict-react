@@ -16,7 +16,6 @@ function loadStories() {
   require('../stories/LogListCard');
   require('../stories/Charts');
   require('../stories/TrainingForm');
-  require('../stories/ConfigTableCard');
   require('../stories/Validation');
 }
 
