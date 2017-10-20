@@ -6,6 +6,7 @@ import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
 import {Button} from 'react-md/lib/Buttons/index';
 import CheckboxGroup from '../../src/components/training/CheckboxGroup';
 import {SelectField} from 'react-md';
+import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../src/reference';
 
 const fetchState = {inFlight: false};
 const logNames = ['Log1', 'Log2'];
@@ -57,7 +58,7 @@ describe('TrainingFormCard', () => {
     expect(shallowElement.find(SelectField).props().value).toBe(logNames[0]);
 
     const selectGroups = shallowElement.find(SelectionControlGroup);
-    expect(selectGroups.at(0).props().value).toBe('time');
+    expect(selectGroups.at(0).props().value).toBe(REGRESSION);
     expect(selectGroups.at(1).props().value).toBe('simpleIndex');
     expect(selectGroups.at(2).props().value).toBe('None');
 
@@ -79,14 +80,14 @@ describe('TrainingFormCard', () => {
     });
 
     it('Classification', () => {
-      element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: 'outcome'}});
+      element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: CLASSIFICATION}});
       element.find(Button).at(0).simulate('click');
 
       expect(onSubmit.mock.calls[0][0]).toEqual(classificatioPayload);
     });
 
     it('NextActivity', () => {
-      element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: 'nextActivity'}});
+      element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: NEXT_ACTIVITY}});
       element.find(Button).at(0).simulate('click');
 
       expect(onSubmit.mock.calls[0][0]).toEqual(nextActivityPayload);
@@ -103,17 +104,17 @@ describe('TrainingFormCard', () => {
     });
 
     it('works for outcome', () => {
-      element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: 'outcome'}});
+      element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: CLASSIFICATION}});
       const group = element.find(SelectionControlGroup).at(4);
       group.simulate('change', {target: {name: 'classification[]', value: 'KNN'}});
 
       element.find(Button).at(1).simulate('click');
-      expect(element.state().predictionMethod).toBe('time');
+      expect(element.state().predictionMethod).toBe(REGRESSION);
       expect(element.state().classification.length).toBe(1);
     });
 
     it('works for nextActivity', () => {
-      element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: 'nextActivity'}});
+      element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: NEXT_ACTIVITY}});
       const group = element.find(SelectionControlGroup).at(3);
       group.simulate('change', {target: {name: 'classification[]', value: 'KNN'}});
 
@@ -145,7 +146,7 @@ describe('TrainingFormCard', () => {
     });
 
     it('warns if no classification method', () => {
-      element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: 'outcome'}});
+      element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: CLASSIFICATION}});
       const group = element.find(SelectionControlGroup).at(4);
       group.simulate('change', {target: {name: 'classification[]', value: 'KNN'}});
       expect(element.find('.md-text--error').length).toBe(1);

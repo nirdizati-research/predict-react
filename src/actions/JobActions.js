@@ -20,3 +20,9 @@ export const trainingSucceeded = createPayloadForwardingAction(TRAINING_SUCCEEDE
 
 export const TRAINING_FAILED = 'TRAINING_FAILED';
 export const trainingFailed = createPayloadForwardingAction(TRAINING_FAILED);
+
+export const JOB_RESULTS_REQUESTED = 'JOB_RESULTS_REQUESTED';
+export const jobResultsRequested = createPayloadForwardingAction(JOB_RESULTS_REQUESTED);
+
+export const JOB_RESULTS_RETRIEVED = 'JOB_RESULTS_RETRIEVED';
+export const jobResultsRetrieved = createPayloadForwardingAction(JOB_RESULTS_RETRIEVED);

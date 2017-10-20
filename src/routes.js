@@ -6,6 +6,7 @@ import Dashboard from './views/Dashboard/';
 import Upload from './views/Upload/Upload';
 import JobStatus from './views/JobStatus/JobStatus';
 import Training from './views/Training/Training';
+import Validation from './views/Validation/Validation';
 
 export default (
   <Router history={hashHistory}>
@@ -15,6 +16,7 @@ export default (
       <Route path="upload" name="Upload" component={Upload}/>
       <Route path="jobStatus" name="Job status" component={JobStatus}/>
       <Route path="training" name="Training" component={Training}/>
+      <Route path="validation" name="Validation" component={Validation}/>
     </Route>
   </Router>
 );

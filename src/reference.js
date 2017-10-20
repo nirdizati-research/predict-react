@@ -4,6 +4,10 @@
 import React from 'react';
 /* eslint-disable max-len */
 
+export const CLASSIFICATION = 'Classification';
+export const REGRESSION = 'Regression';
+export const NEXT_ACTIVITY = 'NextActivity';
+
 const clustering = [
   {
     label: 'None',
@@ -66,15 +70,15 @@ const outcomeRules = [
 const predictions = [
   {
     label: 'Remaining time',
-    value: 'time'
+    value: REGRESSION
   },
   {
     label: 'Outcome',
-    value: 'outcome'
+    value: CLASSIFICATION
   },
   {
     label: 'Next activity',
-    value: 'nextActivity'
+    value: NEXT_ACTIVITY
   },
 ];
 
@@ -130,3 +134,5 @@ export const regressionMethods = controlCreator(regression);
 export const predictionMethods = controlCreator(predictions);
 export const outcomeRuleControls = controlCreator(outcomeRules);
 export const thresholdControls = controlCreator(threshold);
+
+export const columnStyle = {paddingRight: '12px'};
