@@ -2,17 +2,18 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {logListRequested} from '../../actions/LogActions';
-import LogListCard from '../../components/LogListCard';
 import ConfigTableCard from '../../components/validation/ConfigTableCard';
-import {predictionMethods} from '../../reference';
+import {REGRESSION} from '../../reference';
 import {jobResultsRequested} from '../../actions/JobActions';
+import ValidationHeaderCard from '../../components/validation/ValidationHeaderCard';
+import ResultWrapper from '../../components/validation/ResultWrapper';
 
 class Validation extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      predictionMethod: predictionMethods[0].value,
+      predictionMethod: REGRESSION,
       log: ''
     };
   }
@@ -38,14 +39,16 @@ class Validation extends Component {
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
-          <LogListCard logNames={this.props.logNames} fetchState={this.props.fetchState}
-                       visibleLogName={this.state.log}
-                       selectChange={this.onChangeLog.bind(this)}/>
+          <ValidationHeaderCard logNames={this.props.logNames} fetchState={this.props.fetchState}
+                                visibleLogName={this.state.log} methodChange={this.onChangeType.bind(this)}
+                                logChange={this.onChangeLog.bind(this)}/>
         </div>
         <div className="md-cell md-cell--12">
-          <ConfigTableCard jobs={this.props.jobs}
-                           selectChange={this.onChangeType.bind(this)}/>
+          <ConfigTableCard jobs={this.props.jobs} predictionMethod={this.state.predictionMethod}
+          />
         </div>
+        <ResultWrapper jobs={this.props.jobs.filter((job) => job.type === this.state.predictionMethod)}
+                       predictionMethod={this.state.predictionMethod}/>
       </div>
     );
   }
@@ -69,7 +72,15 @@ Validation.propTypes = {
     rule: PropTypes.string,
     threshold: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     type: PropTypes.string.isRequired,
-    result: PropTypes.object.isRequired
+    result: PropTypes.shape({
+      uuid: PropTypes.string.isRequired,
+      mae: PropTypes.number,
+      rmse: PropTypes.number,
+      rscore: PropTypes.number,
+      fmeasure: PropTypes.number,
+      acc: PropTypes.number,
+      auc: PropTypes.number,
+    }).isRequired
   })).isRequired,
 };
 

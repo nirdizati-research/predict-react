@@ -9,18 +9,18 @@ import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
 import {Button} from 'react-md/lib/Buttons/index';
 import FetchState from './FetchState';
 import {
+  CLASSIFICATION,
   classificationMethods,
   clusteringMethods,
-  encodingMethods,
+  encodingMethods, NEXT_ACTIVITY,
   outcomeRuleControls,
-  predictionMethods,
+  predictionMethods, REGRESSION,
   regressionMethods,
   thresholdControls
 } from '../reference';
-import RegressionMethods from './training/RegressionMethods';
-import ClassificationMethods from './training/ClassificationMethods';
 import OutcomeRules from './training/OutcomeRules';
 import Threshold from './training/Threshold';
+import CheckboxGroup from './training/CheckboxGroup';
 
 const defaultPrefix = 0;
 const defaultThreshold = 0;
@@ -34,7 +34,7 @@ const initialState = (props) => {
     classification: [classificationMethods[0].value],
     regression: [regressionMethods[0].value],
     displayWarning: false,
-    predictionMethod: predictionMethods[0].value,
+    predictionMethod: REGRESSION,
     rule: outcomeRuleControls[0].value,
     threshold: {
       value: thresholdControls[0].value,
@@ -51,28 +51,34 @@ class TrainingFormCard extends Component {
     this.state = initialState(this.props);
   }
 
+  addOrRemove(list, value) {
+    const index = list.indexOf(value);
+    if (index > -1) {
+      return list.filter((val) => val !== value);
+    } else {
+      return [...list, value];
+    }
+  }
+
   // Change methods
-  checkboxChange(value, event) {
-    // First val is ''
-    const valList = value.split(',').filter((val) => val !== '');
+  checkboxChange(_, event) {
+    const value = event.target.value;
     switch (event.target.name) {
       case 'encoding[]':
-        this.setState({encoding: valList});
+        this.setState({encoding: this.addOrRemove(this.state.encoding, value)});
         break;
       case 'clustering[]':
-        this.setState({clustering: valList});
+        this.setState({clustering: this.addOrRemove(this.state.clustering, value)});
         break;
       case 'regression[]':
-        this.setState({regression: valList});
+        this.setState({regression: this.addOrRemove(this.state.regression, value)});
         break;
       case 'classification[]':
-        this.setState({classification: valList});
+        this.setState({classification: this.addOrRemove(this.state.classification, value)});
         break;
       case 'rule':
         // not a list, but works
         this.setState({rule: value});
-        break;
-      default:
         break;
     }
 
@@ -98,36 +104,32 @@ class TrainingFormCard extends Component {
 
   displayWarningCheck(prevState) {
     switch (prevState.predictionMethod) {
-      case 'Regression':
+      case REGRESSION:
         return !(prevState.encoding.length !== 0
-          && prevState.clustering.length !== 0
-          && prevState.regression.length !== 0);
-      case 'Classification':
+        && prevState.clustering.length !== 0
+        && prevState.regression.length !== 0);
+      case CLASSIFICATION:
         return !(prevState.encoding.length !== 0
-          && prevState.clustering.length !== 0
-          && prevState.classification.length !== 0);
-      case 'NextActivity':
+        && prevState.clustering.length !== 0
+        && prevState.classification.length !== 0);
+      case NEXT_ACTIVITY:
         return !(prevState.encoding.length !== 0
-          && prevState.clustering.length !== 0
-          && prevState.classification.length !== 0);
-      default:
-        break;
+        && prevState.clustering.length !== 0
+        && prevState.classification.length !== 0);
     }
   }
 
   // On submit
   onSubmit() {
     switch (this.state.predictionMethod) {
-      case 'Regression':
+      case REGRESSION:
         this.props.onSubmit(this.getRemainingTimePayload());
         break;
-      case 'Classification':
+      case CLASSIFICATION:
         this.props.onSubmit(this.getOutcomePayload());
         break;
-      case 'NextActivity':
+      case NEXT_ACTIVITY:
         this.props.onSubmit(this.getNextActivityPayload());
-        break;
-      default:
         break;
     }
   }
@@ -183,24 +185,24 @@ class TrainingFormCard extends Component {
     if (this.state.displayWarning) {
       warning = <p className="md-text md-text--error">Select at least one from every option</p>;
     }
+    const regressionFragment = this.state.predictionMethod === REGRESSION ?
+      <CheckboxGroup controls={regressionMethods} id="regression" label="Regression methods"
+                     onChange={this.checkboxChange.bind(this)}
+                     value={this.state.regression.join(',')}/> : null;
 
-    const regressionFragment = this.state.predictionMethod === 'Regression' ?
-      <RegressionMethods regressionMethods={regressionMethods}
-                         checkboxChange={this.checkboxChange.bind(this)}
-                         value={this.state.regression.join(',')}/> : null;
     // TODO refactor as 1 component in React 16.0
     const classificationFragment =
-      (this.state.predictionMethod === 'Classification') ||
-      (this.state.predictionMethod === 'NextActivity') ?
-        <ClassificationMethods classificationMethods={classificationMethods}
-                               checkboxChange={this.checkboxChange.bind(this)}
-                               value={this.state.classification.join(',')}/> : null;
+      (this.state.predictionMethod === CLASSIFICATION) ||
+      (this.state.predictionMethod === NEXT_ACTIVITY) ?
+        <CheckboxGroup controls={classificationMethods} id="classification" label="Classification methods"
+                       onChange={this.checkboxChange.bind(this)}
+                       value={this.state.classification.join(',')}/> : null;
 
-    const outcomeRuleFragment = this.state.predictionMethod === 'Classification' ?
+    const outcomeRuleFragment = this.state.predictionMethod === CLASSIFICATION ?
       <OutcomeRules checkboxChange={this.checkboxChange.bind(this)}
                     outcomeRuleControls={outcomeRuleControls}
                     value={this.state.rule}/> : null;
-    const thresholdFragment = this.state.predictionMethod === 'Classification' ?
+    const thresholdFragment = this.state.predictionMethod === CLASSIFICATION ?
       <Threshold onChange={this.onThresholdChange.bind(this)} thresholdControls={thresholdControls}
                  threshold={this.state.threshold}/> : null;
     return (
@@ -213,7 +215,7 @@ class TrainingFormCard extends Component {
             menuItems={this.props.logNames}
             position={SelectField.Positions.BELOW}
             onChange={this.selectChange.bind(this)}
-            defaultValue={this.props.logNames[0]}
+            value={this.state.logName}
           /></CardTitle>
         <CardText>
           <div className="md-grid md-grid--no-spacing">

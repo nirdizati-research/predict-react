@@ -4,6 +4,10 @@
 import React from 'react';
 /* eslint-disable max-len */
 
+export const CLASSIFICATION = 'Classification';
+export const REGRESSION = 'Regression';
+export const NEXT_ACTIVITY = 'NextActivity';
+
 const clustering = [
   {
     label: 'None',
@@ -66,15 +70,15 @@ const outcomeRules = [
 const predictions = [
   {
     label: 'Remaining time',
-    value: 'Regression'
+    value: REGRESSION
   },
   {
     label: 'Outcome',
-    value: 'Classification'
+    value: CLASSIFICATION
   },
   {
     label: 'Next activity',
-    value: 'NextActivity'
+    value: NEXT_ACTIVITY
   },
 ];
 
