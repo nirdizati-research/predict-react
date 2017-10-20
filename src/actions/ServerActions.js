@@ -29,16 +29,6 @@ export const getJobResults = (log) => (dispatch) => {
   );
 };
 
-export const getJobResults = (log) => (dispatch) => {
-  jsonAjax(
-    SERVER_URL + `/core_services/jobs?log=${log}&status=completed`,
-    'GET',
-    null,
-    (jobs) => dispatch(jobResultsRetrieved(jobs)),
-    ({error} = {}) => dispatch(jobsFailed(error))
-  );
-};
-
 const checkIfChangeVisible = (dispatch, changeVisible, requestInfo, logList) => {
   if (changeVisible && logList[0]) {
     dispatch(changeVisibleLog({logName: logList[0], requestInfo}));

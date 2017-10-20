@@ -3,10 +3,8 @@
  */
 import React from 'react';
 import {shallow} from 'enzyme';
-import {CardTitle} from 'react-md';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../../src/reference';
 import ResultTableCard from '../../../src/components/validation/ResultTableCard';
-import {Chart} from 'react-google-charts';
 import ResultWrapper from '../../../src/components/validation/ResultWrapper';
 import BubbleChartCard from '../../../src/components/chart/BubbleChartCard';
 
