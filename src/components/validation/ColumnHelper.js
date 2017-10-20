@@ -28,7 +28,7 @@ export const classColumns = [
   },
   {
     type: 'string',
-    label: 'run',
+    label: 'method',
   },
   {
     type: 'number',
@@ -66,7 +66,7 @@ export const regColumns = [
   },
   {
     type: 'string',
-    label: 'run',
+    label: 'method',
   },
   {
     type: 'number',
