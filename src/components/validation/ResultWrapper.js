@@ -121,7 +121,7 @@ ResultWrapper.propTypes = {
     prefix: PropTypes.number.isRequired,
     rule: PropTypes.string,
     threshold: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    type: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]),
+    type: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
     result: PropTypes.shape({
       uuid: PropTypes.string.isRequired,
       mae: PropTypes.number,
@@ -132,7 +132,7 @@ ResultWrapper.propTypes = {
       auc: PropTypes.number,
     }).isRequired
   })).isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]),
+  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
 };
 
 export default ResultWrapper;

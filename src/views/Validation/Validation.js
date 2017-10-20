@@ -2,12 +2,11 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {logListRequested} from '../../actions/LogActions';
-import LogListCard from '../../components/LogListCard';
 import ConfigTableCard from '../../components/validation/ConfigTableCard';
-import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
+import {REGRESSION} from '../../reference';
 import {jobResultsRequested} from '../../actions/JobActions';
-import ResultTableCard from '../../components/validation/ResultTableCard';
-import {regColumns} from '../../components/validation/ColumnHelper';
+import ValidationHeaderCard from '../../components/validation/ValidationHeaderCard';
+import ResultWrapper from '../../components/validation/ResultWrapper';
 
 class Validation extends Component {
   constructor(props) {
@@ -36,34 +35,20 @@ class Validation extends Component {
     this.setState({predictionMethod: type});
   }
 
-  getDataTable() {
-    const jobs = this.props.jobs.filter((job) => job.type === this.state.predictionMethod);
-    const data = jobs.map((job) => [job.uuid, job.result.mae, job.result.rmse, job.run, job.result.rscore]);
-    switch (this.state.predictionMethod) {
-      case REGRESSION:
-        return <ResultTableCard data={data} columns={regColumns} cardTitle="Regression data"/>;
-      case CLASSIFICATION:
-        return null;
-      case NEXT_ACTIVITY:
-        return null;
-    }
-  }
-
   render() {
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
-          <LogListCard logNames={this.props.logNames} fetchState={this.props.fetchState}
-                       visibleLogName={this.state.log}
-                       selectChange={this.onChangeLog.bind(this)}/>
+          <ValidationHeaderCard logNames={this.props.logNames} fetchState={this.props.fetchState}
+                                visibleLogName={this.state.log} methodChange={this.onChangeType.bind(this)}
+                                logChange={this.onChangeLog.bind(this)}/>
         </div>
         <div className="md-cell md-cell--12">
-          <ConfigTableCard jobs={this.props.jobs}
-                           selectChange={this.onChangeType.bind(this)}/>
+          <ConfigTableCard jobs={this.props.jobs} predictionMethod={this.state.predictionMethod}
+          />
         </div>
-        <div className="md-cell md-cell--12">
-          {this.getDataTable()}
-        </div>
+        <ResultWrapper jobs={this.props.jobs.filter((job) => job.type === this.state.predictionMethod)}
+                       predictionMethod={this.state.predictionMethod}/>
       </div>
     );
   }
