@@ -29,7 +29,7 @@
     "react-autosuggest": "^9.0.1",
     "react-dom": "15.6.2",
     "react-google-charts": "^1.5.5",
-    "react-md": "^1.1.4",
+    "react-md": "^1.2.3",
     "react-redux": "^5.0.3",
     "react-router": "3.0.5",
     "react-router-dom": "^4.1.1",
