@@ -2,7 +2,7 @@
  * Created by Tõnis Kasekamp on 19.09.2017.
  */
 import React from 'react';
-import {storiesOf} from '@kadira/storybook';
+import {storiesOf} from '@storybook/react';
 import JobStatusTable from '../src/components/JobStatusTable';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 

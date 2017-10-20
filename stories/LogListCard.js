@@ -2,7 +2,7 @@
  * Created by Tõnis Kasekamp on 22.09.2017.
  */
 import React from 'react';
-import {storiesOf} from '@kadira/storybook';
+import {storiesOf} from '@storybook/react';
 import LogListCard from '../src/components/LogListCard';
 
 const names = ['Log 1', 'log 2', 'something.xes', 'reallylongandboringnametotestlimits.xes'];

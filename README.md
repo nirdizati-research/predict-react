@@ -3,5 +3,8 @@
 
 Because React is better than Angular!
 
+## Dependencies
+* [Storybook](https://github.com/storybooks/storybook)
+
 ## Thanks to
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).

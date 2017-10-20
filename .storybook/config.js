@@ -1,4 +1,4 @@
-import {configure} from '@kadira/storybook';
+import {configure} from '@storybook/react';
 // Link to the app CSS
 import '../public/css/style.css';
 import WebFontLoader from 'webfontloader';

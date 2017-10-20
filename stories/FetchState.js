@@ -2,7 +2,7 @@
  * Created by Tõnis Kasekamp on 20.09.2017.
  */
 import React from 'react';
-import {storiesOf} from '@kadira/storybook';
+import {storiesOf} from '@storybook/react';
 import FetchState from '../src/components/FetchState';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 

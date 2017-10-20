@@ -2,7 +2,7 @@
  * Created by tonis.kasekamp on 10/17/17.
  */
 import React from 'react';
-import {storiesOf} from '@kadira/storybook';
+import {storiesOf} from '@storybook/react';
 import ValidationHeaderCard from '../src/components/validation/ValidationHeaderCard';
 import ConfigTableCard from '../src/components/validation/ConfigTableCard';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../src/reference';

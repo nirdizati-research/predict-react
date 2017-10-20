@@ -2,7 +2,7 @@
  * Created by Tõnis Kasekamp on 25.09.2017.
  */
 import React from 'react';
-import {storiesOf} from '@kadira/storybook';
+import {storiesOf} from '@storybook/react';
 import LineChartCard from '../src/components/chart/LineChartCard';
 import EventChartCard from '../src/components/chart/EventChartCard';
 import BubbleChartCard from '../src/components/chart/BubbleChartCard';

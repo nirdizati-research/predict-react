@@ -2,7 +2,7 @@
  * Created by tonis.kasekamp on 9/29/17.
  */
 import React from 'react';
-import {storiesOf} from '@kadira/storybook';
+import {storiesOf} from '@storybook/react';
 import TrainingFormCard from '../src/components/TrainingFormCard';
 
 const names = ['Log 1', 'log 2', 'something.xes', 'reallylongandboringnametotestlimits.xes'];
