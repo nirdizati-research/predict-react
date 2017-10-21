@@ -36,7 +36,7 @@ const classColumns = [
     label: 'auc',
   }
 ];
-export const classTableColumns = [
+const classTableColumns = [
   ...tableColumns,
   {
     type: 'number',
@@ -75,7 +75,7 @@ const regColumns = [
   }
 ];
 
-export const regTableColumns = [
+const regTableColumns = [
   ...tableColumns,
   {
     type: 'number',
@@ -115,6 +115,18 @@ export const getTitles = (predictionMethod) => {
       return classTitles;
     case NEXT_ACTIVITY:
       return regTitles;
+    // no default
+  }
+};
+
+export const getTableHeader = (predictionMethod) => {
+  switch (predictionMethod) {
+    case REGRESSION:
+      return regTableColumns;
+    case CLASSIFICATION:
+      return classTableColumns;
+    case NEXT_ACTIVITY:
+      return regTableColumns;
     // no default
   }
 };

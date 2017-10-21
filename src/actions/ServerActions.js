@@ -24,7 +24,7 @@ export const getJobResults = (log) => (dispatch) => {
     'GET',
     null,
     (jobs) => dispatch(jobsRetrieved(jobs)),
-    ({error} = {}) => dispatch(jobsFailed(error))
+    ({error}) => dispatch(jobsFailed(error))
   );
 };
 

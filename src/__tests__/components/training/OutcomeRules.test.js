@@ -6,8 +6,7 @@ import OutcomeRules from '../../../components/training/OutcomeRules';
 
 describe('OutcomeRules', () => {
   it('renders', () => {
-    const element = shallow(<OutcomeRules outcomeRuleControls={outcomeRuleControls}
-                                          checkboxChange={jest.fn()}
+    const element = shallow(<OutcomeRules checkboxChange={jest.fn()}
                                           value={outcomeRuleControls[0].value}/>);
     expect(element).toBeDefined();
     expect(element.find(SelectionControlGroup).length).toBe(1);
