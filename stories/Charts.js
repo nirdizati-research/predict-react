@@ -7,7 +7,7 @@ import LineChartCard from '../src/components/chart/LineChartCard';
 import EventChartCard from '../src/components/chart/EventChartCard';
 import BubbleChartCard from '../src/components/chart/BubbleChartCard';
 import ResultTableCard from '../src/components/validation/ResultTableCard';
-import {classColumns, regColumns} from '../src/components/validation/ColumnHelper';
+import {getChartHeader} from '../src/components/validation/ColumnHelper';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../src/reference';
 
 const fetchState = {inFlight: false};
@@ -88,7 +88,7 @@ storiesOf('Charts', module)
         <div className="md-cell md-cell--12">
           <BubbleChartCard
             data={regressor}
-            columns={regColumns}
+            columns={getChartHeader(REGRESSION)}
             hTitle="Mae"
             vTitle="Rmse"
             cardTitle="Bubble chart by regressor"/>
@@ -96,7 +96,7 @@ storiesOf('Charts', module)
         <div className="md-cell md-cell--12">
           <BubbleChartCard
             data={classData}
-            columns={classColumns}
+            columns={getChartHeader(CLASSIFICATION)}
             hTitle="fmeasure"
             vTitle="accuracy"
             cardTitle="Bubble chart by classificator"/>

@@ -1,6 +1,7 @@
 /**
  * Created by tonis.kasekamp on 10/11/17.
  */
+import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
 
 const tableColumns = [
   {
@@ -13,7 +14,7 @@ const tableColumns = [
   }
 ];
 
-export const classColumns = [
+const classColumns = [
   {
     type: 'string',
     label: 'uuid',
@@ -51,7 +52,7 @@ export const classTableColumns = [
   }
 ];
 
-export const regColumns = [
+const regColumns = [
   {
     type: 'string',
     label: 'uuid',
@@ -89,3 +90,15 @@ export const regTableColumns = [
     label: 'rscore',
   }
 ];
+
+export const getChartHeader = (predictionMethod) => {
+  switch (predictionMethod) {
+    case REGRESSION:
+      return regColumns;
+    case CLASSIFICATION:
+      return classColumns;
+    case NEXT_ACTIVITY:
+      return regColumns;
+    // no default
+  }
+};
