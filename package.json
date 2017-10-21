@@ -18,16 +18,11 @@
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
     "gulp-sass": "^2.3.2",
-    "react-addons-test-utils": "~15.6.2",
-    "react-scripts": "1.0.14",
-    "react-test-renderer": "^16.0.0"
+    "react-scripts": "1.0.14"
   },
   "dependencies": {
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
-    "react-addons-css-transition-group": "15.6.2",
-    "react-addons-transition-group": "15.6.2",
-    "react-autosuggest": "^9.0.1",
     "react-dom": "16.0.0",
     "react-google-charts": "^1.5.5",
     "react-md": "^1.2.4",
