@@ -102,3 +102,19 @@ export const getChartHeader = (predictionMethod) => {
     // no default
   }
 };
+
+const desc = 'Bubble chart by ';
+const regTitles = ['regressor', 'clustering', 'encoding'].map((elem) => desc + elem);
+const classTitles = ['classifier', 'clustering', 'encoding'].map((elem) => desc + elem);
+
+export const getTitles = (predictionMethod) => {
+  switch (predictionMethod) {
+    case REGRESSION:
+      return regTitles;
+    case CLASSIFICATION:
+      return classTitles;
+    case NEXT_ACTIVITY:
+      return regTitles;
+    // no default
+  }
+};
