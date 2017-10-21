@@ -4,7 +4,6 @@
 
 import {
   JOB_RESULTS_REQUESTED,
-  JOB_RESULTS_RETRIEVED,
   JOBS_FAILED,
   JOBS_REQUESTED,
   JOBS_RETRIEVED
@@ -16,10 +15,12 @@ const initialState = {
 };
 
 const mergeIncomingJobs = (incoming, existing) => {
-  // Delete existing of this log and merge
-  const logName = incoming[0].log;
-  const cleaned = existing.filter((job) => job.log !== logName);
-  return [...cleaned, ...incoming];
+  // From https://stackoverflow.com/a/34963663
+  const a3 = existing.concat(incoming).reduce((acc, x) => {
+    acc[x.uuid] = Object.assign(acc[x.uuid] || {}, x);
+    return acc;
+  }, {});
+  return Object.keys(a3).map((key) => a3[key]);
 };
 
 const jobs = (state = initialState, action) => {
@@ -35,7 +36,7 @@ const jobs = (state = initialState, action) => {
       return {
         ...state,
         fetchState: {inFlight: false},
-        jobs: action.payload
+        jobs: mergeIncomingJobs(action.payload, state.jobs)
       };
     }
 
@@ -49,14 +50,6 @@ const jobs = (state = initialState, action) => {
       return {
         ...state,
         fetchState: {inFlight: true},
-      };
-    }
-
-    case JOB_RESULTS_RETRIEVED: {
-      return {
-        ...state,
-        fetchState: {inFlight: false},
-        jobs: mergeIncomingJobs(action.payload, state.jobs)
       };
     }
 

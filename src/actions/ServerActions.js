@@ -1,7 +1,6 @@
 import {SERVER_URL} from '../constants';
 import jsonAjax from '../JSONAjaxRequest';
 import {
-  jobResultsRetrieved,
   jobsFailed,
   jobsRetrieved,
   trainingFailed,
@@ -24,7 +23,7 @@ export const getJobResults = (log) => (dispatch) => {
     SERVER_URL + `/core_services/jobs?log=${log}&status=completed`,
     'GET',
     null,
-    (jobs) => dispatch(jobResultsRetrieved(jobs)),
+    (jobs) => dispatch(jobsRetrieved(jobs)),
     ({error} = {}) => dispatch(jobsFailed(error))
   );
 };

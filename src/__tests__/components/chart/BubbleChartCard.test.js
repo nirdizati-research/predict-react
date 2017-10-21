@@ -3,14 +3,15 @@ import {shallow} from 'enzyme';
 import {CardTitle} from 'react-md/lib/Cards/index';
 import {Chart} from 'react-google-charts';
 import BubbleChartCard from '../../../components/chart/BubbleChartCard';
-import {classColumns} from '../../../components/validation/ColumnHelper';
+import {getChartHeader} from '../../../components/validation/ColumnHelper';
+import {CLASSIFICATION} from '../../../reference';
 
 const traces = [[1, 2, 3, 4, 5]];
 const cardTitle = 'Card title';
 
 describe('BubbleChartCard', () => {
-  const element = shallow(<BubbleChartCard cardTitle={cardTitle} columns={classColumns} vTitle='v' hTitle='h'
-                                           data={traces}/>);
+  const element = shallow(<BubbleChartCard cardTitle={cardTitle} columns={getChartHeader(CLASSIFICATION)}
+                                           vTitle='v' hTitle='h' data={traces}/>);
   it('renders', () => {
     expect(element).toBeDefined();
     expect(element.find(Chart).length).toBe(1);

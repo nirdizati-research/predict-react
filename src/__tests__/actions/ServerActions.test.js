@@ -1,4 +1,4 @@
-import {getJobs, getLogInfo, getLogList, postTraining} from '../../actions/ServerActions';
+import {getJobResults, getJobs, getLogInfo, getLogList, postTraining} from '../../actions/ServerActions';
 import {jobsFailed, jobsRetrieved, trainingFailed, trainingSucceeded} from '../../actions/JobActions';
 import {
   changeVisibleLog,
@@ -70,6 +70,26 @@ describe('ServerActions', function () {
       standardError(mockXHR);
 
       getJobs()(dispatch);
+      mockXHR.onreadystatechange();
+
+      expect(dispatch.mock.calls[0][0]).toEqual(jobsFailed(error.error));
+    });
+  });
+
+  describe('getJobResults', () => {
+    it('dispatches jobsRetrieved on success', () => {
+      mockXHR.responseText = JSON.stringify(logs);
+
+      getJobResults()(dispatch);
+      mockXHR.onreadystatechange();
+
+      expect(dispatch.mock.calls[0][0]).toEqual(jobsRetrieved(logs));
+    });
+
+    it('dispatches jobsFailed on error', () => {
+      standardError(mockXHR);
+
+      getJobResults()(dispatch);
       mockXHR.onreadystatechange();
 
       expect(dispatch.mock.calls[0][0]).toEqual(jobsFailed(error.error));
