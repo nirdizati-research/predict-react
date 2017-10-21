@@ -80,6 +80,7 @@ class TrainingFormCard extends Component {
         // not a list, but works
         this.setState({rule: value});
         break;
+      // no default
     }
 
     this.setState((prevState, _) => {
@@ -116,6 +117,7 @@ class TrainingFormCard extends Component {
         return !(prevState.encoding.length !== 0
         && prevState.clustering.length !== 0
         && prevState.classification.length !== 0);
+      // no default
     }
   }
 
@@ -131,6 +133,7 @@ class TrainingFormCard extends Component {
       case NEXT_ACTIVITY:
         this.props.onSubmit(this.getNextActivityPayload());
         break;
+      // no default
     }
   }
 

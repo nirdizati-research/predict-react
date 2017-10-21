@@ -23,6 +23,7 @@ const ResultTableCard = (props) => {
     case NEXT_ACTIVITY:
       columns = regTableColumns;
       break;
+    // no default
   }
   let chart = null;
   if (props.data.length !== 0) {

@@ -4,7 +4,6 @@ import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import Button from 'react-md/lib/Buttons/Button';
 
 class Upload extends Component {
-
   render() {
     return (
       <div className="md-grid">

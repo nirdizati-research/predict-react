@@ -27,9 +27,9 @@ class Threshold extends Component {
 
   onChange(data) {
     // Don't push empty data
-    if (data.threshold === '')
+    if (data.threshold === '') {
       return;
-
+    }
     this.props.onChange({threshold: parseInt(data.threshold, 10), value: data.value});
   }
 

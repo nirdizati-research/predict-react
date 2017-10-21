@@ -18,6 +18,7 @@ class ConfigTableCard extends Component {
         return <ClassConfigTable jobs={this.props.jobs}/>;
       case NEXT_ACTIVITY:
         return <RegConfigTable jobs={this.props.jobs}/>;
+      // no default
     }
   }
 
@@ -42,9 +43,9 @@ ConfigTableCard.propTypes = {
     prefix: PropTypes.number.isRequired,
     rule: PropTypes.string,
     threshold: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    type: PropTypes.string.isRequired,
+    type: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
     result: PropTypes.object.isRequired
   })).isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]),
+  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
 };
 export default ConfigTableCard;

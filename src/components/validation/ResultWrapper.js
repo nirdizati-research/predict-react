@@ -21,6 +21,7 @@ const getChartHeader = (predictionMethod) => {
       return classColumns;
     case NEXT_ACTIVITY:
       return regColumns;
+    // no default
   }
 };
 
@@ -32,6 +33,7 @@ const getTitles = (predictionMethod) => {
       return classTitles;
     case NEXT_ACTIVITY:
       return regTitles;
+    // no default
   }
 };
 
@@ -51,6 +53,7 @@ const prepareData = (jobs, predictionMethod) => {
       return classMap(jobs);
     case NEXT_ACTIVITY:
       return regressionMap(jobs);
+    // no default
   }
 };
 

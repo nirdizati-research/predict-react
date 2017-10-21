@@ -1,23 +1,19 @@
 {
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    }
-  },
+
   "env": {
     "browser": true
   },
-  "plugins": ["react","import"],
+  "plugins": ["react", "import", "jsx-a11y"],
   "extends": [
     "react-app",
     "eslint:recommended",
     "plugin:react/recommended",
     "google",
     "plugin:import/errors",
-    "plugin:import/warnings"
+    "plugin:import/warnings",
+    "plugin:jsx-a11y/recommended"
   ],
-  rules: {
+  "rules": {
     "max-len": ["error", 120],
     "require-jsdoc": "off",
     "comma-dangle": "off",
@@ -25,6 +21,8 @@
       "anonymous": "always",
       "named": "never",
       "asyncArrow": "ignore"
-    }]
+    }],
+    "jsx-a11y/href-no-hash": "off",
+    "jsx-a11y/anchor-is-valid": ["warn", { "aspects": ["invalidHref"] }]
   }
 }

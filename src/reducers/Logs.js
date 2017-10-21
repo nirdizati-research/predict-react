@@ -26,10 +26,11 @@ const dummy = (name) => {
 const mergeIncomingLogs = (logNames, existingLogs) => {
   return logNames.map((name) => {
     const log = (existingLogs.find((exLog) => exLog.name === name));
-    if (log)
+    if (log) {
       return log;
-    else
+    } else {
       return dummy(name);
+    }
   });
 };
 
