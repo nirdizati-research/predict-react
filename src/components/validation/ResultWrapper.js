@@ -5,37 +5,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
 import ResultTableCard from './ResultTableCard';
-import {classColumns, regColumns} from './ColumnHelper';
+import {getChartHeader, getTitles} from './ColumnHelper';
 import BubbleChartCard from '../chart/BubbleChartCard';
 import {sliceUuid} from '../../helpers';
-
-const desc = 'Bubble chart by ';
-const regTitles = ['regressor', 'clustering', 'encoding'].map((elem) => desc + elem);
-const classTitles = ['classifier', 'clustering', 'encoding'].map((elem) => desc + elem);
-
-const getChartHeader = (predictionMethod) => {
-  switch (predictionMethod) {
-    case REGRESSION:
-      return regColumns;
-    case CLASSIFICATION:
-      return classColumns;
-    case NEXT_ACTIVITY:
-      return regColumns;
-    // no default
-  }
-};
-
-const getTitles = (predictionMethod) => {
-  switch (predictionMethod) {
-    case REGRESSION:
-      return regTitles;
-    case CLASSIFICATION:
-      return classTitles;
-    case NEXT_ACTIVITY:
-      return regTitles;
-    // no default
-  }
-};
 
 const regressionMap = (jobs) => {
   return jobs.map((job) => [sliceUuid(job.uuid), job.run, job.result.mae, job.result.rmse, job.result.rscore]);

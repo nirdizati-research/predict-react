@@ -6,6 +6,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {TextField} from 'react-md/lib/TextFields/index';
 import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
+import {thresholdControls} from '../../reference';
 
 const groupStyle = {height: 'auto'};
 
@@ -35,7 +36,7 @@ class Threshold extends Component {
 
   render() {
     let numSelection = null;
-    if (this.state.value !== this.props.thresholdControls[0].value) {
+    if (this.state.value !== thresholdControls[0].value) {
       numSelection = <TextField
         id="threshold"
         label="Threshold"
@@ -51,9 +52,9 @@ class Threshold extends Component {
     }
 
     return <div className="md-cell">
-      Select a threshold to distinguish "true" and "false" cases
+      Select a threshold to distinguish <code>true</code> and <code>false</code> cases
       <SelectionControlGroup type="radio" name="threshold" id="threshold"
-                             onChange={this.onCheckChange.bind(this)} controls={this.props.thresholdControls}
+                             onChange={this.onCheckChange.bind(this)} controls={thresholdControls}
                              value={this.state.value} controlStyle={groupStyle}/>
       {numSelection}
 
@@ -62,11 +63,6 @@ class Threshold extends Component {
 }
 
 Threshold.propTypes = {
-  thresholdControls: PropTypes.arrayOf(PropTypes.shape({
-    key: PropTypes.string.isRequired,
-    label: PropTypes.node.isRequired,
-    value: PropTypes.string.isRequired
-  })).isRequired,
   threshold: PropTypes.shape({
     threshold: PropTypes.number.isRequired,
     value: PropTypes.string.isRequired

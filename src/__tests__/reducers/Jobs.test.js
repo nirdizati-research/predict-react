@@ -2,7 +2,7 @@
  * Created by tonis.kasekamp on 10/16/17.
  */
 import jobs from '../../reducers/Jobs';
-import {jobsFailed, jobsRequested, jobsRetrieved} from '../../actions/JobActions';
+import {jobResultsRequested, jobsFailed, jobsRequested, jobsRetrieved} from '../../actions/JobActions';
 
 const initState = {fetchState: {inFlight: false}, jobs: []};
 describe('JobsReducer', () => {
@@ -16,10 +16,24 @@ describe('JobsReducer', () => {
   });
 
   it('adds jobs when request completed', () => {
-    const jobList = [{log: 'name'}];
+    const jobList = [{uuid: 'uuid', log: 'name'}];
     const state = jobs(undefined, jobsRequested());
     const state2 = jobs(state, jobsRetrieved(jobList));
     expect(state2).toEqual({fetchState: {inFlight: false}, jobs: jobList});
+  });
+
+  it('updates job list by uuid', () => {
+    const jobList = [{uuid: 'uuid1', log: 'name1', status: 'running'},
+      {uuid: 'uuid2', log: 'name2', status: 'running'},
+      {uuid: 'uuid3', log: 'name2', status: 'running'}];
+    const incoming = [{uuid: 'uuid2', log: 'name2', status: 'completed'}];
+    const state = jobs(undefined, jobResultsRequested());
+    state.jobs = jobList;
+    const state2 = jobs(state, jobsRetrieved(incoming));
+    expect(state2.jobs.length).toEqual(3);
+    expect(state2.jobs).toContainEqual(jobList[0]);
+    expect(state2.jobs).toContainEqual(jobList[2]);
+    expect(state2.jobs).toContainEqual(incoming[0]);
   });
 
   it('stores error message', () => {

@@ -2,7 +2,7 @@
  * Created by tonis.kasekamp on 10/17/17.
  */
 import React from 'react';
-import {shallow} from 'enzyme';
+import {mount} from 'enzyme';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../../reference';
 import ResultTableCard from '../../../components/validation/ResultTableCard';
 import ResultWrapper from '../../../components/validation/ResultWrapper';
@@ -67,7 +67,7 @@ const regJobs = [
 let element = null;
 describe('ResultWrapper', () => {
   beforeEach(() => {
-    element = shallow(<ResultWrapper jobs={classJobs} predictionMethod={CLASSIFICATION}/>);
+    element = mount(<ResultWrapper jobs={classJobs} predictionMethod={CLASSIFICATION}/>);
   });
 
   it('renders', () => {

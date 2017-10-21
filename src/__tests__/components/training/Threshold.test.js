@@ -14,9 +14,7 @@ let element = null;
 
 describe('Threshold', () => {
   beforeEach(() => {
-    element = shallow(<Threshold thresholdControls={thresholdControls}
-                                 onChange={onChange}
-                                 threshold={threshold}/>);
+    element = shallow(<Threshold onChange={onChange} threshold={threshold}/>);
   });
 
   it('renders', () => {

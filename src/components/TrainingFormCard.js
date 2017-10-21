@@ -107,16 +107,16 @@ class TrainingFormCard extends Component {
     switch (prevState.predictionMethod) {
       case REGRESSION:
         return !(prevState.encoding.length !== 0
-        && prevState.clustering.length !== 0
-        && prevState.regression.length !== 0);
+          && prevState.clustering.length !== 0
+          && prevState.regression.length !== 0);
       case CLASSIFICATION:
         return !(prevState.encoding.length !== 0
-        && prevState.clustering.length !== 0
-        && prevState.classification.length !== 0);
+          && prevState.clustering.length !== 0
+          && prevState.classification.length !== 0);
       case NEXT_ACTIVITY:
         return !(prevState.encoding.length !== 0
-        && prevState.clustering.length !== 0
-        && prevState.classification.length !== 0);
+          && prevState.clustering.length !== 0
+          && prevState.classification.length !== 0);
       // no default
     }
   }
@@ -125,10 +125,10 @@ class TrainingFormCard extends Component {
   onSubmit() {
     switch (this.state.predictionMethod) {
       case REGRESSION:
-        this.props.onSubmit(this.getRemainingTimePayload());
+        this.props.onSubmit(this.getRegressionPayload());
         break;
       case CLASSIFICATION:
-        this.props.onSubmit(this.getOutcomePayload());
+        this.props.onSubmit(this.getClassificationPayload());
         break;
       case NEXT_ACTIVITY:
         this.props.onSubmit(this.getNextActivityPayload());
@@ -137,18 +137,25 @@ class TrainingFormCard extends Component {
     }
   }
 
-  getRemainingTimePayload() {
+  getPayload() {
+    // TODO type should be predictionMethod
     return {
       type: this.state.predictionMethod,
       log: this.state.logName,
       prefix: defaultPrefix,
       encoding: this.state.encoding,
-      regression: this.state.regression,
       clustering: this.state.clustering
     };
   }
 
-  getOutcomePayload() {
+  getRegressionPayload() {
+    return {
+      ...this.getPayload(),
+      regression: this.state.regression,
+    };
+  }
+
+  getClassificationPayload() {
     let actualThreshold;
     if (this.state.threshold.value === thresholdControls[0].value) {
       actualThreshold = this.state.threshold.value;
@@ -156,26 +163,17 @@ class TrainingFormCard extends Component {
       actualThreshold = this.state.threshold.threshold;
     }
     return {
-      type: this.state.predictionMethod,
-      log: this.state.logName,
-      prefix: defaultPrefix,
-      encoding: this.state.encoding,
+      ...this.getPayload(),
       classification: this.state.classification,
-      clustering: this.state.clustering,
       rule: this.state.rule,
       threshold: actualThreshold
     };
   }
 
   getNextActivityPayload() {
-    // TODO type should be predictionMethod
     return {
-      type: this.state.predictionMethod,
-      log: this.state.logName,
-      prefix: defaultPrefix,
-      encoding: this.state.encoding,
+      ...this.getPayload(),
       classification: this.state.classification,
-      clustering: this.state.clustering
     };
   }
 
@@ -203,10 +201,9 @@ class TrainingFormCard extends Component {
 
     const outcomeRuleFragment = this.state.predictionMethod === CLASSIFICATION ?
       <OutcomeRules checkboxChange={this.checkboxChange.bind(this)}
-                    outcomeRuleControls={outcomeRuleControls}
                     value={this.state.rule}/> : null;
     const thresholdFragment = this.state.predictionMethod === CLASSIFICATION ?
-      <Threshold onChange={this.onThresholdChange.bind(this)} thresholdControls={thresholdControls}
+      <Threshold onChange={this.onThresholdChange.bind(this)}
                  threshold={this.state.threshold}/> : null;
     return (
       <Card className="md-block-centered">

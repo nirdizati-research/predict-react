@@ -6,27 +6,15 @@ import PropTypes from 'prop-types';
 import {Chart} from 'react-google-charts';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
-import {classTableColumns, regTableColumns} from './ColumnHelper';
+import {getTableHeader} from './ColumnHelper';
 
 const opts = {width: '100%'};
 
 const ResultTableCard = (props) => {
   const title = `${props.predictionMethod} results`;
-  let columns = null;
-  switch (props.predictionMethod) {
-    case REGRESSION:
-      columns = regTableColumns;
-      break;
-    case CLASSIFICATION:
-      columns = classTableColumns;
-      break;
-    case NEXT_ACTIVITY:
-      columns = regTableColumns;
-      break;
-    // no default
-  }
   let chart = null;
   if (props.data.length !== 0) {
+    const columns = getTableHeader(props.predictionMethod);
     chart = <Chart
       chartType="Table"
       rows={props.data}

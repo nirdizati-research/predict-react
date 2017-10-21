@@ -21,13 +21,13 @@ const regressionPayload = {
   'type': 'Regression'
 };
 
-const classificatioPayload = {
+const classificationPayload = {
   'classification': ['KNN'],
   'clustering': ['None'],
   'encoding': ['simpleIndex'],
   'log': 'Log1',
   'prefix': 0,
-  'rule': 'remaining_time',
+  'rule': 'elapsed_time',
   'threshold': 'default',
   'type': 'Classification'
 };
@@ -79,11 +79,24 @@ describe('TrainingFormCard', () => {
       expect(onSubmit.mock.calls[0][0]).toEqual(regressionPayload);
     });
 
-    it('Classification', () => {
+    it('Classification with original threshold', () => {
       element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: CLASSIFICATION}});
+      // Change rule
+      element.find(SelectionControlGroup).at(4).simulate('change', {target: {name: 'rule', value: 'elapsed_time'}});
       element.find(Button).at(0).simulate('click');
 
-      expect(onSubmit.mock.calls[0][0]).toEqual(classificatioPayload);
+      expect(onSubmit.mock.calls[0][0]).toEqual(classificationPayload);
+    });
+
+    it('Classification with custom threshold', () => {
+      element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: CLASSIFICATION}});
+      // Change threshold
+      element.find(SelectionControlGroup).at(5).simulate('change', {target: {name: 'random?', value: 'custom'}});
+      element.find(Button).at(0).simulate('click');
+
+      let payload = classificationPayload;
+      payload.threshold = 0;
+      expect(onSubmit.mock.calls[0][0]).toEqual(payload);
     });
 
     it('NextActivity', () => {
@@ -125,6 +138,7 @@ describe('TrainingFormCard', () => {
 
   describe('warning', () => {
     it('warns if no encoding method', () => {
+      element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: REGRESSION}});
       const encodingGroup = element.find(SelectionControlGroup).at(1);
       encodingGroup.simulate('change', {target: {name: 'encoding[]', value: 'simpleIndex'}});
 
@@ -139,8 +153,8 @@ describe('TrainingFormCard', () => {
     });
 
     it('warns if no regression method', () => {
-      const clusteringGroup = element.find(SelectionControlGroup).at(3);
-      clusteringGroup.simulate('change', {target: {name: 'regression[]', value: 'linear'}});
+      const regressionGroup = element.find(SelectionControlGroup).at(3);
+      regressionGroup.simulate('change', {target: {name: 'regression[]', value: 'linear'}});
 
       expect(element.find('.md-text--error').length).toBe(1);
     });
