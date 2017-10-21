@@ -101,17 +101,13 @@ const getCharts = (data, predictionMethod) => {
 
 const ResultWrapper = (props) => {
   const tableData = prepareData(props.jobs, props.predictionMethod);
-  let charts;
+  let charts = [];
   if (tableData.length > 0) {
     charts = getCharts(tableData, props.predictionMethod);
   }
-  return <div className="md-cell md-cell--12 md-grid--no-spacing">
-    <div className="md-cell md-cell--12">
+  return [<div className="md-cell md-cell--12" key="0">
       <ResultTableCard data={tableData} predictionMethod={props.predictionMethod}/>
-    </div>
-    {charts}
-
-  </div>;
+    </div>, ...charts];
 };
 
 ResultWrapper.propTypes = {
