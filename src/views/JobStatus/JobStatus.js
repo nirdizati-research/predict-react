@@ -24,7 +24,7 @@ class JobStatus extends Component {
             <CardTitle title="Job status"/>
             <CardText>
               <p>
-                Lot's of logs below.
+                Lots of logs below.
               </p>
               <Button raised onClick={this.props.onRequestJobs}>Request current jobs</Button>
               <FetchState fetchState={this.props.fetchState}/>

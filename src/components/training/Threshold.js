@@ -52,7 +52,7 @@ class Threshold extends Component {
     }
 
     return <div className="md-cell">
-      Select a threshold to distinguish 'true" and "false" cases
+      Select a threshold to distinguish <code>true</code> and <code>false</code> cases
       <SelectionControlGroup type="radio" name="threshold" id="threshold"
                              onChange={this.onCheckChange.bind(this)} controls={thresholdControls}
                              value={this.state.value} controlStyle={groupStyle}/>

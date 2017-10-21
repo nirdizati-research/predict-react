@@ -5,6 +5,7 @@
   "devDependencies": {
     "@storybook/react": "3.2.13",
     "babel-eslint": "^7.1.1",
+    "coveralls": "^3.0.0",
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.2",
     "eslint": "^4.9.0",
@@ -13,13 +14,13 @@
     "eslint-plugin-flowtype": "^2.39.1",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
-    "eslint-plugin-react": "^6.4.1",
+    "eslint-plugin-react": "^7.4.0",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
     "gulp-sass": "^2.3.2",
     "react-addons-test-utils": "~15.6.2",
     "react-scripts": "1.0.14",
-    "react-test-renderer": "^15.6.2"
+    "react-test-renderer": "^16.0.0"
   },
   "dependencies": {
     "prop-types": "^15.6.0",
@@ -29,12 +30,11 @@
     "react-autosuggest": "^9.0.1",
     "react-dom": "16.0.0",
     "react-google-charts": "^1.5.5",
-    "react-md": "^1.2.3",
+    "react-md": "^1.2.4",
     "react-redux": "^5.0.3",
-    "react-router": "3.0.5",
+    "react-router": "3.2.0",
     "react-router-dom": "^4.1.1",
     "react-router-redux": "^4.0.8",
-    "reactstrap": "4.5.0",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
     "webfontloader": "^1.6.27"
@@ -45,6 +45,7 @@
     "lint": "eslint src/",
     "test": "react-scripts test --env=jsdom",
     "test-coverage": "npm run test -- --coverage",
+    "test-coveralls": "npm run test -- --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public"
