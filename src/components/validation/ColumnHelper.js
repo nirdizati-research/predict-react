@@ -98,7 +98,7 @@ export const getChartHeader = (predictionMethod) => {
     case CLASSIFICATION:
       return classColumns;
     case NEXT_ACTIVITY:
-      return regColumns;
+      return classColumns;
     // no default
   }
 };
@@ -114,7 +114,7 @@ export const getTitles = (predictionMethod) => {
     case CLASSIFICATION:
       return classTitles;
     case NEXT_ACTIVITY:
-      return regTitles;
+      return classTitles;
     // no default
   }
 };
@@ -126,7 +126,7 @@ export const getTableHeader = (predictionMethod) => {
     case CLASSIFICATION:
       return classTableColumns;
     case NEXT_ACTIVITY:
-      return regTableColumns;
+      return classTableColumns;
     // no default
   }
 };

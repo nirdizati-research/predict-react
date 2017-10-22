@@ -44,8 +44,8 @@ class Validation extends Component {
                                 logChange={this.onChangeLog.bind(this)}/>
         </div>
         <div className="md-cell md-cell--12">
-          <ConfigTableCard jobs={this.props.jobs} predictionMethod={this.state.predictionMethod}
-          />
+          <ConfigTableCard jobs={this.props.jobs.filter((job) => job.type === this.state.predictionMethod)}
+                           predictionMethod={this.state.predictionMethod}/>
         </div>
         <ResultWrapper jobs={this.props.jobs.filter((job) => job.type === this.state.predictionMethod)}
                        predictionMethod={this.state.predictionMethod}/>
