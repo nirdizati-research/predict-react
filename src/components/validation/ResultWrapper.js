@@ -24,7 +24,7 @@ const prepareData = (jobs, predictionMethod) => {
     case CLASSIFICATION:
       return classMap(jobs);
     case NEXT_ACTIVITY:
-      return regressionMap(jobs);
+      return classMap(jobs);
     // no default
   }
 };

@@ -63,6 +63,10 @@ const regJobs = [
     }
   }];
 
+const classData = [
+  ['uuuuuuu', 'KNN_simpleIndex_Kmeans', 123, 111, 3],
+  ['uuuuuuu', 'KNN_simpleIndex_Kmeans', 1230, 1110, 30],
+];
 
 let element = null;
 describe('ResultWrapper', () => {
@@ -83,10 +87,6 @@ describe('ResultWrapper', () => {
   });
 
   it('supplies data for classification', () => {
-    const classData = [
-      ['uuuuuuu', 'KNN_simpleIndex_Kmeans', 123, 111, 3],
-      ['uuuuuuu', 'KNN_simpleIndex_Kmeans', 1230, 1110, 30],
-    ];
     expect(element.find(ResultTableCard).props().data).toEqual(classData);
     expect(element.find(ResultTableCard).props().predictionMethod).toMatch(CLASSIFICATION);
   });
@@ -99,9 +99,8 @@ describe('ResultWrapper', () => {
   });
 
   it('renders next activity table', () => {
-    element.setProps({predictionMethod: NEXT_ACTIVITY, jobs: regJobs});
-    const regData = [['82f9bf5', 'linear_simpleIndex_None', 11, 12, 13]];
-    expect(element.find(ResultTableCard).props().data).toEqual(regData);
+    element.setProps({predictionMethod: NEXT_ACTIVITY, jobs: classJobs});
+    expect(element.find(ResultTableCard).props().data).toEqual(classData);
     expect(element.find(ResultTableCard).props().predictionMethod).toMatch(NEXT_ACTIVITY);
   });
 
