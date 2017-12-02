@@ -30,13 +30,13 @@ export const getJobResults = (log) => (dispatch) => {
 
 const checkIfChangeVisible = (dispatch, changeVisible, requestInfo, logList) => {
   if (changeVisible && logList[0]) {
-    dispatch(changeVisibleLog({logName: logList[0], requestInfo}));
+    dispatch(changeVisibleLog({logId: logList[0].id, requestInfo}));
   }
 };
 
 export const getLogList = ({changeVisible, requestInfo}) => (dispatch) => {
   jsonAjax(
-    SERVER_URL + '/logs/list',
+    SERVER_URL + '/logs',
     'GET',
     null,
     (logList) => {
