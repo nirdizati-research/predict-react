@@ -26,7 +26,7 @@ class Dashboard extends Component {
   getLineChart(dataName, cardTitle) {
     if (this.props.log && Object.keys(this.props.log[dataName]).length !== 0) {
       return <LineChartCard fetchState={this.props.log.fetchState}
-                            data={this.props.log.traces}
+                            data={this.props.log[dataName]}
                             cardTitle={cardTitle}
                             chartTitle="Active traces"/>;
     } else {
@@ -44,8 +44,8 @@ class Dashboard extends Component {
   }
 
   render() {
-    const traceChart = this.getLineChart('traces', 'Number of traces');
-    const resourceChart = this.getLineChart('traces', 'Number of resources');
+    const executionChart = this.getLineChart('executions', 'Number of trace executions');
+    const resourceChart = this.getLineChart('resources', 'Number of resources');
     const eventChart = this.getEventChart();
     return (
       <div className="md-grid">
@@ -55,7 +55,7 @@ class Dashboard extends Component {
                        selectChange={this.props.onChangeVisible}/>
         </div>
         <div className="md-cell md-cell--12">
-          {traceChart}
+          {executionChart}
         </div>
         <div className="md-cell md-cell--12">
           {resourceChart}
@@ -74,7 +74,7 @@ Dashboard.propTypes = {
     name: PropTypes.string.isRequired,
     events: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
     resources: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
-    traces: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
+    executions: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
     visible: PropTypes.bool.isRequired,
     fetchState: PropTypes.shape({
       inFlight: PropTypes.bool.isRequired,

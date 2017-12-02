@@ -47,13 +47,13 @@ export const getLogList = ({changeVisible, requestInfo}) => (dispatch) => {
   );
 };
 
-export const getLogInfo = ({logName, infoType}) => (dispatch) => {
+export const getLogInfo = ({logId, infoType}) => (dispatch) => {
   jsonAjax(
-    SERVER_URL + `/logs/${infoType}?log=${logName}`,
+    SERVER_URL + `/logs/${logId}/${infoType}`,
     'GET',
     null,
-    (data) => dispatch(logInfoRetrieved({logName, infoType, data})),
-    ({error}) => dispatch(logInfoFailed({logName, error}))
+    (data) => dispatch(logInfoRetrieved({logId, infoType, data})),
+    ({error}) => dispatch(logInfoFailed({logId, error}))
   );
 };
 
