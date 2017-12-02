@@ -100,19 +100,19 @@ describe('ServerActions', function () {
     it('dispatches logInfoRetrieved on success', () => {
       mockXHR.responseText = JSON.stringify(logs);
 
-      getLogInfo({logName: 'name', infoType: 'events'})(dispatch);
+      getLogInfo({logId: 1, infoType: 'events'})(dispatch);
       mockXHR.onreadystatechange();
 
-      expect(dispatch.mock.calls[0][0]).toEqual(logInfoRetrieved({logName: 'name', infoType: 'events', data: logs}));
+      expect(dispatch.mock.calls[0][0]).toEqual(logInfoRetrieved({logId: 1, infoType: 'events', data: logs}));
     });
 
     it('dispatches logInfoFailed on error', () => {
       standardError(mockXHR);
 
-      getLogInfo({logName: 'name', infoType: 'events'})(dispatch);
+      getLogInfo({logId: 1, infoType: 'events'})(dispatch);
       mockXHR.onreadystatechange();
 
-      expect(dispatch.mock.calls[0][0]).toEqual(logInfoFailed({logName: 'name', error: error.error}));
+      expect(dispatch.mock.calls[0][0]).toEqual(logInfoFailed({logId: 1, error: error.error}));
     });
   });
 

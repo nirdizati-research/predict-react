@@ -28,7 +28,7 @@ class Dashboard extends Component {
       return <LineChartCard fetchState={this.props.log.fetchState}
                             data={this.props.log[dataName]}
                             cardTitle={cardTitle}
-                            chartTitle="Active traces"/>;
+                            chartTitle="Number by day"/>;
     } else {
       return null;
     }
@@ -36,16 +36,16 @@ class Dashboard extends Component {
 
   // Not DRY :/
   getEventChart() {
-    if (this.props.log && Object.keys(this.props.log.events).length !== 0) {
-      return <EventChartCard fetchState={this.props.log.fetchState} data={this.props.log.events}/>;
+    if (this.props.log && Object.keys(this.props.log.executions).length !== 0) {
+      return <EventChartCard fetchState={this.props.log.fetchState} data={this.props.log.executions}/>;
     } else {
       return null;
     }
   }
 
   render() {
-    const executionChart = this.getLineChart('executions', 'Number of trace executions');
-    const resourceChart = this.getLineChart('resources', 'Number of resources');
+    const executionChart = this.getLineChart('events', 'Number of events executed');
+    const resourceChart = this.getLineChart('resources', 'Number of resources used');
     const eventChart = this.getEventChart();
     return (
       <div className="md-grid">
