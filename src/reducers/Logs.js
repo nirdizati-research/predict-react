@@ -12,8 +12,9 @@ const initialState = {
   logs: []
 };
 
-const dummy = (name) => {
+const dummy = (id, name) => {
   return {
+    id: id,
     name: name,
     fetchState: {inFlight: false},
     visible: false,
@@ -23,13 +24,13 @@ const dummy = (name) => {
   };
 };
 
-const mergeIncomingLogs = (logNames, existingLogs) => {
-  return logNames.map((name) => {
-    const log = (existingLogs.find((exLog) => exLog.name === name));
+const mergeIncomingLogs = (logList, existingLogs) => {
+  return logList.map((newLog) => {
+    const log = (existingLogs.find((exLog) => exLog.id === newLog.id));
     if (log) {
       return log;
     } else {
-      return dummy(name);
+      return dummy(newLog.id, newLog.name);
     }
   });
 };
@@ -43,7 +44,7 @@ const logs = (state = initialState, action) => {
     switch (action.type) {
       case CHANGE_VISIBLE_LOG: {
         const resetLogs = state.logs.map((log) => {
-          if (log.name === action.payload.logName) {
+          if (log.id === action.payload.logId) {
             return {...log, visible: true};
           } else {
             return {...log, visible: false};
@@ -58,7 +59,7 @@ const logs = (state = initialState, action) => {
 
       case LOG_INFO_RETRIEVED: {
         const logs = state.logs.map((log) => {
-          if (log.name === action.payload.logName) {
+          if (log.id === action.payload.logId) {
             return addData(log, action.payload.data, action.payload.infoType);
           } else {
             return log;
@@ -71,7 +72,7 @@ const logs = (state = initialState, action) => {
       // Only fail. no inFlight for log itself
       case LOG_INFO_FAILED: {
         const logs = state.logs.map((log) => {
-          if (log.name === action.payload.logName) {
+          if (log.id === action.payload.logId) {
             return {...log, fetchState: {inFlight: false, error: action.payload.error}};
           } else {
             return log;

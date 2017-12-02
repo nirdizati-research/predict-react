@@ -14,7 +14,16 @@ import {
 
 const initState = {fetchState: {inFlight: false}, logs: []};
 describe('LogsReducer', () => {
-  const logNames = ['log1', 'log2'];
+  const logList = [
+    {
+      'id': 1,
+      'name': 'general_example.xes'
+    },
+    {
+      'id': 4,
+      'name': 'nonlocal.mxml.gz'
+    }
+  ];
 
   it('has nothing initially', () => {
     expect(logs(undefined, {})).toEqual(initState);
@@ -28,7 +37,7 @@ describe('LogsReducer', () => {
     });
 
     it('changes fetchState when request completed', () => {
-      const state2 = logs(stateWithRequest, logListsRetrieved(logNames));
+      const state2 = logs(stateWithRequest, logListsRetrieved(logList));
       expect(state2.fetchState).toEqual({inFlight: false});
     });
 
@@ -38,29 +47,29 @@ describe('LogsReducer', () => {
     });
 
     it('creates dummy when log not in store', () => {
-      const state2 = logs(stateWithRequest, logListsRetrieved(logNames));
+      const state2 = logs(stateWithRequest, logListsRetrieved(logList));
       const storeLogs = state2.logs;
 
       expect(storeLogs.length).toBe(2);
-      expect(storeLogs[0].name).toBe(logNames[0]);
+      expect(storeLogs[0].name).toBe(logList[0].name);
       expect(storeLogs[0].visible).toBe(false);
     });
 
     it('keeps original log if in store', () => {
-      const state = {fetchState: {inFlight: false}, logs: [{name: 'log1', visible: true}]};
-      const state2 = logs(state, logListsRetrieved(logNames));
+      const state = {fetchState: {inFlight: false}, logs: [{id: 1, name: 'general_example.xes', visible: true}]};
+      const state2 = logs(state, logListsRetrieved(logList));
       const storeLogs = state2.logs;
 
       expect(storeLogs.length).toBe(2);
-      expect(storeLogs[0].name).toBe(logNames[0]);
+      expect(storeLogs[0].name).toBe(logList[0].name);
       expect(storeLogs[0].visible).toBe(true);
     });
   });
 
   describe('logInfo', () => {
     const data = {key: 'value'};
-    const payload = {logName: 'log1', data, infoType: 'events'};
-    const stateWithLog = logs(undefined, logListsRetrieved(logNames));
+    const payload = {logId: 1, data, infoType: 'events'};
+    const stateWithLog = logs(undefined, logListsRetrieved(logList));
 
     it('does nothing when requesting', () => {
       const state = logs(undefined, logInfoRequested());
@@ -68,12 +77,12 @@ describe('LogsReducer', () => {
     });
 
     it('changes fetchState when request completed', () => {
-      const state2 = logs(stateWithLog, logInfoRetrieved(logNames));
+      const state2 = logs(stateWithLog, logInfoRetrieved(logList));
       expect(state2.logs[0].fetchState).toEqual({inFlight: false});
     });
 
     it('changes fetchState when request failed', () => {
-      const state2 = logs(stateWithLog, logInfoFailed({logName: 'log1', error: 'error'}));
+      const state2 = logs(stateWithLog, logInfoFailed({logId: 1, error: 'error'}));
       expect(state2.logs[0].fetchState).toEqual({inFlight: false, error: 'error'});
     });
 
@@ -96,9 +105,9 @@ describe('LogsReducer', () => {
   });
 
   describe('changeVisible', () => {
-    const stateWithLog = logs(undefined, logListsRetrieved(logNames));
+    const stateWithLog = logs(undefined, logListsRetrieved(logList));
     it('changes for specified log', () => {
-      const state = logs(stateWithLog, changeVisibleLog({logName: 'log1'}));
+      const state = logs(stateWithLog, changeVisibleLog({logId: 1}));
       expect(state.logs[0].visible).toBe(true);
       expect(state.logs[1].visible).toBe(false);
     });
