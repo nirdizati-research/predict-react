@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import FetchState from './FetchState';
 
 const LogListCard = (props) => {
+  const itemsWithLabel = props.logList.map(({id, name}) => ({value: id, label: name}));
   const selectChange = (value, _) => {
     props.selectChange(value);
   };
@@ -16,10 +17,10 @@ const LogListCard = (props) => {
         id="log-name-select"
         placeholder="log.xes"
         className="md-cell"
-        menuItems={props.logNames}
+        menuItems={itemsWithLabel}
         position={SelectField.Positions.BELOW}
         onChange={selectChange}
-        value={props.visibleLogName}
+        value={props.visibleLogId}
       />
       <FetchState fetchState={props.fetchState}/>
     </CardText>
@@ -28,8 +29,11 @@ const LogListCard = (props) => {
 
 
 LogListCard.propTypes = {
-  logNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  visibleLogName: PropTypes.string.isRequired,
+  logList: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired
+  })).isRequired,
+  visibleLogId: PropTypes.number.isRequired,
   fetchState: PropTypes.shape({
     inFlight: PropTypes.bool.isRequired,
     error: PropTypes.any
