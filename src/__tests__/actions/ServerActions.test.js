@@ -100,19 +100,19 @@ describe('ServerActions', function () {
     it('dispatches logInfoRetrieved on success', () => {
       mockXHR.responseText = JSON.stringify(logs);
 
-      getLogInfo({logName: 'name', infoType: 'events'})(dispatch);
+      getLogInfo({logId: 1, infoType: 'events'})(dispatch);
       mockXHR.onreadystatechange();
 
-      expect(dispatch.mock.calls[0][0]).toEqual(logInfoRetrieved({logName: 'name', infoType: 'events', data: logs}));
+      expect(dispatch.mock.calls[0][0]).toEqual(logInfoRetrieved({logId: 1, infoType: 'events', data: logs}));
     });
 
     it('dispatches logInfoFailed on error', () => {
       standardError(mockXHR);
 
-      getLogInfo({logName: 'name', infoType: 'events'})(dispatch);
+      getLogInfo({logId: 1, infoType: 'events'})(dispatch);
       mockXHR.onreadystatechange();
 
-      expect(dispatch.mock.calls[0][0]).toEqual(logInfoFailed({logName: 'name', error: error.error}));
+      expect(dispatch.mock.calls[0][0]).toEqual(logInfoFailed({logId: 1, error: error.error}));
     });
   });
 
@@ -139,17 +139,26 @@ describe('ServerActions', function () {
   describe('getLogList', () => {
     const callParams = {changeVisible: true, requestInfo: true};
     describe('on success', () => {
-      const logNames = ['log1', 'log2'];
+      const logList = [
+        {
+          'id': 1,
+          'name': 'general_example.xes'
+        },
+        {
+          'id': 4,
+          'name': 'nonlocal.mxml.gz'
+        }
+      ];
 
       beforeEach(() => {
-        mockXHR.responseText = JSON.stringify(logNames);
+        mockXHR.responseText = JSON.stringify(logList);
       });
 
       it('dispatches logListsRetrieved and changeVisibleLog', () => {
         getLogList(callParams)(dispatch);
         mockXHR.onreadystatechange();
-        expect(dispatch.mock.calls[0][0]).toEqual(logListsRetrieved(logNames));
-        expect(dispatch.mock.calls[1][0]).toEqual(changeVisibleLog({logName: 'log1', requestInfo: true}));
+        expect(dispatch.mock.calls[0][0]).toEqual(logListsRetrieved(logList));
+        expect(dispatch.mock.calls[1][0]).toEqual(changeVisibleLog({logId: 1, requestInfo: true}));
       });
 
       it('doesnt dispatch changeVisibleLog if not changeVisible', () => {

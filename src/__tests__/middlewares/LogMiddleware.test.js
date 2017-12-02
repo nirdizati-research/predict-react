@@ -24,9 +24,9 @@ describe('LogMiddleware', () => {
   });
 
   describe('change visible', () => {
-    const defaultRequest = {logName: 'Log1', requestInfo: true};
+    const defaultRequest = {logId: 1, requestInfo: true};
     it('does nothing if requestInfo is false', () => {
-      logMiddleware(store)(next)(changeVisibleLog({logName: 'Log1', requestInfo: false}));
+      logMiddleware(store)(next)(changeVisibleLog({logId: 1, requestInfo: false}));
 
       expect(store.dispatch.mock.calls.length).toEqual(0);
     });
@@ -37,9 +37,9 @@ describe('LogMiddleware', () => {
       expect(store.dispatch.mock.calls.length).toEqual(0);
     });
 
-    it('does nothing if log already has traces', () => {
+    it('does nothing if log already has events', () => {
       store.getState = jest.fn(() => {
-        return {logs: {logs: [{name: 'Log1', traces: [{}]}]}};
+        return {logs: {logs: [{id: 1, events: [{}]}]}};
       });
       logMiddleware(store)(next)(changeVisibleLog(defaultRequest));
 
@@ -48,13 +48,13 @@ describe('LogMiddleware', () => {
 
     it('requests all data types if needed', () => {
       store.getState = jest.fn(() => {
-        return {logs: {logs: [{name: 'Log1', traces: []}]}};
+        return {logs: {logs: [{id: 1, events: []}]}};
       });
       logMiddleware(store)(next)(changeVisibleLog(defaultRequest));
 
-      expect(store.dispatch.mock.calls[0][0]).toEqual(logInfoRequested({'infoType': 'events', 'logName': 'Log1'}));
-      expect(store.dispatch.mock.calls[1][0]).toEqual(logInfoRequested({'infoType': 'resources', 'logName': 'Log1'}));
-      expect(store.dispatch.mock.calls[2][0]).toEqual(logInfoRequested({'infoType': 'traces', 'logName': 'Log1'}));
+      expect(store.dispatch.mock.calls[0][0]).toEqual(logInfoRequested({'infoType': 'events', 'logId': 1}));
+      expect(store.dispatch.mock.calls[1][0]).toEqual(logInfoRequested({'infoType': 'resources', 'logId': 1}));
+      expect(store.dispatch.mock.calls[2][0]).toEqual(logInfoRequested({'infoType': 'executions', 'logId': 1}));
     });
   });
 });

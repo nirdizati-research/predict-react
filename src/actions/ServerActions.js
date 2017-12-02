@@ -30,13 +30,13 @@ export const getJobResults = (log) => (dispatch) => {
 
 const checkIfChangeVisible = (dispatch, changeVisible, requestInfo, logList) => {
   if (changeVisible && logList[0]) {
-    dispatch(changeVisibleLog({logName: logList[0], requestInfo}));
+    dispatch(changeVisibleLog({logId: logList[0].id, requestInfo}));
   }
 };
 
 export const getLogList = ({changeVisible, requestInfo}) => (dispatch) => {
   jsonAjax(
-    SERVER_URL + '/logs/list',
+    SERVER_URL + '/logs/',
     'GET',
     null,
     (logList) => {
@@ -47,13 +47,13 @@ export const getLogList = ({changeVisible, requestInfo}) => (dispatch) => {
   );
 };
 
-export const getLogInfo = ({logName, infoType}) => (dispatch) => {
+export const getLogInfo = ({logId, infoType}) => (dispatch) => {
   jsonAjax(
-    SERVER_URL + `/logs/${infoType}?log=${logName}`,
+    SERVER_URL + `/logs/${logId}/${infoType}`,
     'GET',
     null,
-    (data) => dispatch(logInfoRetrieved({logName, infoType, data})),
-    ({error}) => dispatch(logInfoFailed({logName, error}))
+    (data) => dispatch(logInfoRetrieved({logId, infoType, data})),
+    ({error}) => dispatch(logInfoFailed({logId, error}))
   );
 };
 
