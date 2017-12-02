@@ -36,7 +36,7 @@ const checkIfChangeVisible = (dispatch, changeVisible, requestInfo, logList) => 
 
 export const getLogList = ({changeVisible, requestInfo}) => (dispatch) => {
   jsonAjax(
-    SERVER_URL + '/logs',
+    SERVER_URL + '/logs/',
     'GET',
     null,
     (logList) => {

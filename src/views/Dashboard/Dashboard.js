@@ -8,18 +8,18 @@ import EventChartCard from '../../components/chart/EventChartCard';
 
 class Dashboard extends Component {
   componentDidMount() {
-    if (this.props.logNames.length === 0) {
+    if (this.props.logList.length === 0) {
       return this.props.onRequestLogList(true);
     } else {
       return this.props.onRequestLogList(false);
     }
   }
 
-  getVisibleLogName() {
+  getVisibleLogId() {
     if (this.props.log) {
-      return this.props.log.name;
+      return this.props.log.id;
     } else {
-      return '';
+      return 0;
     }
   }
 
@@ -50,8 +50,8 @@ class Dashboard extends Component {
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
-          <LogListCard logNames={this.props.logNames} fetchState={this.props.fetchState}
-                       visibleLogName={this.getVisibleLogName()}
+          <LogListCard logList={this.props.logList} fetchState={this.props.fetchState}
+                       visibleLogId={this.getVisibleLogId()}
                        selectChange={this.props.onChangeVisible}/>
         </div>
         <div className="md-cell md-cell--12">
@@ -70,6 +70,7 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   log: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     events: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
     resources: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
@@ -84,21 +85,24 @@ Dashboard.propTypes = {
     inFlight: PropTypes.bool.isRequired,
     error: PropTypes.any
   }).isRequired,
-  logNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  logList: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired
+  })).isRequired,
   onRequestLogList: PropTypes.func.isRequired,
   onChangeVisible: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   log: state.logs.logs.filter((log) => log.visible)[0],
-  logNames: state.logs.logs.map((log) => log.name),
+  logList: state.logs.logs.map((log) => ({id: log.id, name: log.name})),
   fetchState: state.logs.fetchState
 
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onRequestLogList: (changeVisible) => dispatch(logListRequested({changeVisible, requestInfo: true})),
-  onChangeVisible: (logName) => dispatch(changeVisibleLog({logName, requestInfo: true}))
+  onChangeVisible: (logId) => dispatch(changeVisibleLog({logId, requestInfo: true}))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
