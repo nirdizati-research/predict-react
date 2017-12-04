@@ -1065,6 +1065,8 @@ a.md-btn {
   transition-property: background, color; }
   .md-btn[disabled] * {
     pointer-events: none; }
+  .md-btn--tooltip {
+    overflow: visible; }
   .md-btn:focus {
     outline-style: none; }
   .md-btn .md-icon-separator {
@@ -1374,6 +1376,9 @@ tbody .md-table-row {
     padding-left: 16px; }
   .md-table-column .md-icon-separator {
     line-height: inherit; }
+
+.md-table-checkbox .md-selection-control-label {
+  display: block; }
 
 .md-table-checkbox .md-selection-control-container {
   margin-left: 12px;
@@ -3511,9 +3516,7 @@ svg.md-icon {
 @media screen and (min-width: 320px) {
   .md-tooltip {
     font-size: 14px;
-    height: 32px;
-    padding-left: 16px;
-    padding-right: 16px; }
+    padding: 9px 16px; }
     .md-tooltip--top {
       top: -24px; }
     .md-tooltip--right {
@@ -3526,9 +3529,7 @@ svg.md-icon {
 @media screen and (min-width: 1025px) {
   .md-tooltip {
     font-size: 10px;
-    height: 22px;
-    padding-left: 8px;
-    padding-right: 8px; }
+    padding: 6px 8px; }
     .md-tooltip--top {
       top: -14px; }
     .md-tooltip--right {
@@ -3549,10 +3550,9 @@ svg.md-icon {
   z-index: 1; }
 
 .md-tooltip {
-  align-items: center;
   background: #616161;
   color: #fff;
-  display: inline-flex;
+  display: block;
   font-weight: 500;
   opacity: 0.9;
   outline-style: none;
@@ -3635,3 +3635,19 @@ body {
 
 .buttons__group {
   margin: 1em; }
+
+.file-inputs__upload-form {
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 2em;
+  position: relative; }
+  .file-inputs__upload-form__progress {
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0; }
+  .file-inputs__upload-form__file-upload {
+    flex-shrink: 0; }
+  .file-inputs__upload-form__file-field {
+    flex-grow: 1;
+    margin-left: 8px; }
