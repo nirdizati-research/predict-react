@@ -3,16 +3,19 @@ import React, {PureComponent} from 'react';
 import {Button, CardActions, FileUpload, LinearProgress, Snackbar, TextField} from 'react-md';
 
 const API_ENDPOINT = 'http://localhost:8000';
-const FAKE_UPLOAD_ENDPOINT = '/logs/';
+const FAKE_UPLOAD_ENDPOINT = '/split/multiple';
 
 export default class UploadDouble extends PureComponent {
   state = {
     sending: false,
     toasts: [],
-    fileName: '',
-    progress: null,
+    fileNameTest: '',
+    fileNameTraining: '',
+    progressTest: null,
+    progressTraining: null,
     uploadProgress: undefined,
-    fileSize: 0,
+    fileSizeTest: 0,
+    fileSizeTraining: 0,
   };
 
   componentWillUnmount() {
@@ -32,9 +35,14 @@ export default class UploadDouble extends PureComponent {
     e.preventDefault();
 
     const data = new FormData(e.target);
-    const file = data.get('single');
-    if (!file || !file.name) {
-      this.addToast('A file is required.');
+    const testFile = data.get('testSet');
+    const trainingFile = data.get('trainingSet');
+    if (!testFile || !testFile.name) {
+      this.addToast('A test file is required.');
+      return;
+    }
+    else if (!trainingFile || !trainingFile.name) {
+      this.addToast('A training file is required.');
       return;
     }
 
@@ -70,7 +78,7 @@ export default class UploadDouble extends PureComponent {
     const chunk = result.value;
 
     if (result.done) {
-      this.addToast(`"${this.state.fileName}" successfully uploaded!`);
+      this.addToast(`"${this.state.fileNameTest}" and "${this.state.fileNameTraining}" successfully uploaded!`);
       this.setState({uploadProgress: 100});
       this.uploadProgressTimeout = setTimeout(() => {
         this.uploadProgressTimeout = null;
@@ -88,20 +96,36 @@ export default class UploadDouble extends PureComponent {
   };
 
 
-  handleProgress = (file, progress) => {
-    this.setState({progress});
+  handleTestProgress = (file, progress) => {
+    this.setState({progressTest: progress});
   };
 
-  handleLoad = ({name, size}) => {
+  handleTrainingProgress = (file, progress) => {
+    this.setState({progressTraining: progress});
+  };
+
+  handleTrainingLoad = ({name, size}) => {
     this.progressTimeout = setTimeout(() => {
       this.progressTimeout = null;
-      this.setState({progress: null});
+      this.setState({progressTraining: null});
     }, 500);
-    this.setState({fileName: name, fileSize: size});
+    this.setState({fileNameTraining: name, fileSizeTraining: size});
   };
 
-  handleLoadStart = () => {
-    this.setState({progress: 0});
+  handleTestLoad = ({name, size}) => {
+    this.progressTimeout = setTimeout(() => {
+      this.progressTimeout = null;
+      this.setState({progressTest: null});
+    }, 500);
+    this.setState({fileNameTest: name, fileSizeTest: size});
+  };
+
+  handleTestLoadStart = () => {
+    this.setState({progressTest: 0});
+  };
+
+  handleTrainingLoadStart = () => {
+    this.setState({progressTraining: 0});
   };
 
   addToast = (text) => {
@@ -115,29 +139,40 @@ export default class UploadDouble extends PureComponent {
   };
 
   handleReset = () => {
-    this.setState({fileName: ''});
+    this.setState({fileNameTest: '', fileNameTraining: ''});
   };
 
   render() {
     const {
       toasts,
-      fileName,
-      progress,
+      fileNameTest,
+      fileNameTraining,
+      progressTest,
+      progressTraining,
       sending,
       uploadProgress,
     } = this.state;
 
     let progressBar;
-    if (typeof progress === 'number') {
-      progressBar = (
+    let progressTestBar;
+    let progressTrainingBar;
+    if (typeof progressTest === 'number') {
+      progressTestBar = (
         <span className="file-inputs__upload-form__progress">
-          <LinearProgress id="file-upload-status" value={progress}/>
+          <LinearProgress id="file-upload-status-test" value={progressTest}/>
         </span>
       );
     } else if (sending || typeof uploadProgress === 'number') {
       progressBar = (
         <span className="file-inputs__upload-form__progress">
           <LinearProgress id="file-upload-server-status" query value={uploadProgress}/>
+        </span>
+      );
+    }
+    if (typeof progressTraining === 'number') {
+      progressTrainingBar = (
+        <span className="file-inputs__upload-form__progress">
+          <LinearProgress id="file-upload-status-training" value={progressTraining}/>
         </span>
       );
     }
@@ -152,30 +187,57 @@ export default class UploadDouble extends PureComponent {
         className="file-inputs__upload-form"
       >
         {progressBar}
-        <FileUpload
-          id="server-upload-file"
-          label="Choose file"
-          required
-          accept="image/*,video/*"
-          onLoad={this.handleLoad}
-          onLoadStart={this.handleLoadStart}
-          onProgress={this.handleProgress}
-          name="single"
-          className="file-inputs__upload-form__file-upload"
-          primary
-          iconBefore
-        />
-        <TextField
-          id="server-upload-file-field"
-          placeholder="No file chosen"
-          value={fileName}
-          className="file-inputs__upload-form__file-field"
-          readOnly
-          fullWidth={false}
-        />
+        <CardActions className="md-full-width">
+          {progressTestBar}
+          <FileUpload
+            id="server-upload-test"
+            label="Choose test set"
+            required
+            accept=".xes, .mxml, .gz"
+            onLoad={this.handleTestLoad}
+            onLoadStart={this.handleTestLoadStart}
+            onProgress={this.handleTestProgress}
+            name="testSet"
+            className="file-inputs__upload-form__file-upload"
+            primary
+            iconBefore
+          />
+          <TextField
+            id="server-upload-file-field-test"
+            placeholder="No file chosen"
+            value={fileNameTest}
+            className="file-inputs__upload-form__file-field"
+            readOnly
+            fullWidth={false}
+          />
+        </CardActions>
+        <CardActions className="md-full-width">
+          {progressTrainingBar}
+          <FileUpload
+            id="server-upload-training"
+            label="Choose training set"
+            required
+            accept=".xes, .mxml, .gz"
+            onLoad={this.handleTrainingLoad}
+            onLoadStart={this.handleTrainingLoadStart}
+            onProgress={this.handleTrainingProgress}
+            name="trainingSet"
+            className="file-inputs__upload-form__file-upload"
+            primary
+            iconBefore
+          />
+          <TextField
+            id="server-upload-file-field-training"
+            placeholder="No file chosen"
+            value={fileNameTraining}
+            className="file-inputs__upload-form__file-field"
+            readOnly
+            fullWidth={false}
+          />
+        </CardActions>
         <CardActions className="md-full-width">
           <Button type="reset" flat className="md-cell--right">Reset</Button>
-          <Button type="submit" flat primary disabled={!fileName || sending}>Submit</Button>
+          <Button type="submit" flat primary disabled={!(fileNameTest && fileNameTraining) || sending}>Submit</Button>
         </CardActions>
         <Snackbar id="file-upload-errors" toasts={toasts} onDismiss={this.dismiss}/>
       </form>
