@@ -1,9 +1,9 @@
 /* ServerUpload.jsx */
 import React, {PureComponent} from 'react';
 import {Button, CardActions, FileUpload, LinearProgress, Snackbar, TextField} from 'react-md';
+import {SERVER_URL} from '../../constants';
 
-const API_ENDPOINT = 'http://localhost:8000';
-const FAKE_UPLOAD_ENDPOINT = '/split/multiple';
+const UPLOAD_ENDPOINT = '/split/multiple';
 
 export default class UploadDouble extends PureComponent {
   state = {
@@ -46,7 +46,7 @@ export default class UploadDouble extends PureComponent {
       return;
     }
 
-    fetch(`${API_ENDPOINT}${FAKE_UPLOAD_ENDPOINT}`, {
+    fetch(`${SERVER_URL}${UPLOAD_ENDPOINT}`, {
       method: 'POST',
       body: data,
     }).then((response) => {
@@ -59,10 +59,6 @@ export default class UploadDouble extends PureComponent {
 
       return this.handleServerProgress(response.body.getReader());
     }).catch((error) => {
-      if (__DEV__) {
-        throw error;
-      }
-
       this.addToast(error.message);
     });
 
