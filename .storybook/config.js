@@ -17,6 +17,7 @@ function loadStories() {
   require('../stories/Charts');
   require('../stories/TrainingForm');
   require('../stories/Validation');
+  require('../stories/Upload');
 }
 
 configure(loadStories, module);
