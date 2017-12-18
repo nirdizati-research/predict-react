@@ -7,13 +7,14 @@ import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import FetchState from '../FetchState';
 import SelectField from 'react-md/lib/SelectFields/index';
 import Button from 'react-md/lib/Buttons/Button';
+import {CardActions} from 'react-md';
 
 class SplitFormCard extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      original_log: null,
+      original_log: 0,
       config: {}
     };
   }
@@ -33,17 +34,20 @@ class SplitFormCard extends Component {
       <Card className="md-block-centered">
         <CardTitle title="Create split"/>
         <CardText>
-          <p>Select log to create test set</p>
+          <p>Select log to create test set. There is no configuration yet, so just press ok.</p>
           <SelectField
             id="log-name-select"
             className="md-cell"
             menuItems={itemsWithLabel}
             position={SelectField.Positions.BELOW}
             onChange={this.selectChange.bind(this)}
+            value={this.state.original_log}
           />
           <FetchState fetchState={this.props.fetchState}/>
 
-          <Button raised primary swapTheming onClick={this.onSubmit.bind(this)}>Submit</Button>
+          <CardActions className="md-full-width">
+            <Button raised primary swapTheming onClick={this.onSubmit.bind(this)}>Submit</Button>
+          </CardActions>
         </CardText>
       </Card>);
   }

@@ -41,6 +41,10 @@ export const logList = [
   {
     'id': 4,
     'name': 'nonlocal.mxml.gz'
+  },
+  {
+    'id': 123,
+    'name': 'nonlocal2.mxml.gz'
   }
 ];
 
