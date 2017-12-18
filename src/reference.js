@@ -8,6 +8,9 @@ export const CLASSIFICATION = 'Classification';
 export const REGRESSION = 'Regression';
 export const NEXT_ACTIVITY = 'NextActivity';
 
+export const SPLIT_SINGLE = 'single';
+export const SPLIT_DOUBLE = 'double';
+
 const clustering = [
   {
     label: 'None',

@@ -13,8 +13,8 @@ export const splits = [
   {
     'id': 1,
     'originalLogName': 'Log.xes',
-    'testLogName': null,
-    'trainingLogName': null,
+    'testLogName': '',
+    'trainingLogName': '',
     'type': 'single',
     'config': {
       'value': 123,
@@ -23,7 +23,7 @@ export const splits = [
   },
   {
     'id': 2,
-    'originalLogName': null,
+    'originalLogName': '',
     'testLogName': 'TestLog.xes',
     'trainingLogName': 'TrainingLog.xes',
     'type': 'double',

@@ -5,6 +5,8 @@ import React from 'react';
 import {DataTable, TableBody, TableColumn, TableHeader, TableRow} from 'react-md/lib/DataTables/index';
 import PropTypes from 'prop-types';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
+import {SPLIT_SINGLE} from '../../reference';
+import {normalizeSplits} from '../../util/dataReducers';
 
 const SplitTableCard = (props) => {
   const headers = ['id', 'type', 'Log', 'Test log', 'Training log', 'Config'];
@@ -20,20 +22,26 @@ const SplitTableCard = (props) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {props.splits.map(({id, type, originalLogName, trainingLogName, testLogName, config}) => (
-              <TableRow key={id} selectable={false}>
-                <TableColumn numberic>{id}</TableColumn>
-                <TableColumn>{type}</TableColumn>
-                <TableColumn>{originalLogName}</TableColumn>
-                <TableColumn>{trainingLogName}</TableColumn>
-                <TableColumn>{testLogName}</TableColumn>
-                <TableColumn><code>{JSON.stringify(config, null, 2) }</code></TableColumn>
-              </TableRow>
-            ))}
+            {tableBody(props.splits)}
           </TableBody>
         </DataTable>
       </CardText>
     </Card>);
+};
+
+const tableBody = (splits) => {
+  return splits.map(({id, type, originalLogName, trainingLogName, testLogName, config}) => {
+    return (
+      <TableRow key={id} selectable={false}>
+        <TableColumn numberic>{id}</TableColumn>
+        <TableColumn>{type}</TableColumn>
+        <TableColumn>{originalLogName}</TableColumn>
+        <TableColumn>{trainingLogName}</TableColumn>
+        <TableColumn>{testLogName}</TableColumn>
+        <TableColumn><code>{JSON.stringify(config, null, 2)}</code></TableColumn>
+      </TableRow>
+    );
+  });
 };
 
 SplitTableCard.propTypes = {
