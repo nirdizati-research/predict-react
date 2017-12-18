@@ -18,6 +18,7 @@ function loadStories() {
   require('../stories/TrainingForm');
   require('../stories/Validation');
   require('../stories/Upload');
+  require('../stories/Split');
 }
 
 configure(loadStories, module);

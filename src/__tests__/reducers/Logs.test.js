@@ -11,20 +11,10 @@ import {
   logListRequested,
   logListsRetrieved
 } from '../../actions/LogActions';
+import {logList} from '../../../stories/Split';
 
 const initState = {fetchState: {inFlight: false}, logs: []};
 describe('LogsReducer', () => {
-  const logList = [
-    {
-      'id': 1,
-      'name': 'general_example.xes'
-    },
-    {
-      'id': 4,
-      'name': 'nonlocal.mxml.gz'
-    }
-  ];
-
   it('has nothing initially', () => {
     expect(logs(undefined, {})).toEqual(initState);
   });
@@ -50,7 +40,7 @@ describe('LogsReducer', () => {
       const state2 = logs(stateWithRequest, logListsRetrieved(logList));
       const storeLogs = state2.logs;
 
-      expect(storeLogs.length).toBe(2);
+      expect(storeLogs.length).toBe(3);
       expect(storeLogs[0].name).toBe(logList[0].name);
       expect(storeLogs[0].visible).toBe(false);
     });
@@ -60,7 +50,7 @@ describe('LogsReducer', () => {
       const state2 = logs(state, logListsRetrieved(logList));
       const storeLogs = state2.logs;
 
-      expect(storeLogs.length).toBe(2);
+      expect(storeLogs.length).toBe(3);
       expect(storeLogs[0].name).toBe(logList[0].name);
       expect(storeLogs[0].visible).toBe(true);
     });
