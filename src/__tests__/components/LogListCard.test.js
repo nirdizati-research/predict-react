@@ -3,21 +3,12 @@ import {shallow} from 'enzyme';
 import LogListCard from '../../components/LogListCard';
 import FetchState from '../../components/FetchState';
 import SelectField from 'react-md/lib/SelectFields';
+import {logList} from '../../../stories/Split';
 
 const fetchState = {
   inFlight: false
 };
 const selectChange = jest.fn();
-const logList = [
-  {
-    'id': 1,
-    'name': 'general_example.xes'
-  },
-  {
-    'id': 4,
-    'name': 'nonlocal.mxml.gz'
-  }
-];
 
 describe('LogListCard', () => {
   it('renders', () => {

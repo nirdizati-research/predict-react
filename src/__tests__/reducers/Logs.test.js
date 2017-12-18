@@ -11,20 +11,10 @@ import {
   logListRequested,
   logListsRetrieved
 } from '../../actions/LogActions';
+import {logList} from '../../../stories/Split';
 
 const initState = {fetchState: {inFlight: false}, logs: []};
 describe('LogsReducer', () => {
-  const logList = [
-    {
-      'id': 1,
-      'name': 'general_example.xes'
-    },
-    {
-      'id': 4,
-      'name': 'nonlocal.mxml.gz'
-    }
-  ];
-
   it('has nothing initially', () => {
     expect(logs(undefined, {})).toEqual(initState);
   });

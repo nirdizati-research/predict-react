@@ -3,11 +3,8 @@
  */
 import React from 'react';
 import {storiesOf} from '@storybook/react';
-import ValidationHeaderCard from '../src/components/validation/ValidationHeaderCard';
-import ConfigTableCard from '../src/components/validation/ConfigTableCard';
-import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../src/reference';
-import ResultWrapper from '../src/components/validation/ResultWrapper';
 import SplitTableCard from '../src/components/split/SplitTableCard';
+import SplitFormCard from '../src/components/split/SplitFormCard';
 
 export const splits = [
   {
@@ -36,6 +33,17 @@ export const splits = [
   }
 ];
 
+export const logList = [
+  {
+    'id': 1,
+    'name': 'general_example.xes'
+  },
+  {
+    'id': 4,
+    'name': 'nonlocal.mxml.gz'
+  }
+];
+
 
 storiesOf('Split', module)
   .add('SplitTableCard', () => {
@@ -47,4 +55,15 @@ storiesOf('Split', module)
         </div>
       );
     }
-  );
+  )
+  .add('SplitFormCard', () => {
+      return (
+        <div className="md-grid">
+          <div className="md-cell md-cell--12">
+            <SplitFormCard logs={logList} fetchState={{inFlight: false}} onSubmit={(_) => _}/>
+          </div>
+        </div>
+      );
+    }
+  )
+;

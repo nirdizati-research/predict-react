@@ -5,8 +5,6 @@ import React from 'react';
 import {DataTable, TableBody, TableColumn, TableHeader, TableRow} from 'react-md/lib/DataTables/index';
 import PropTypes from 'prop-types';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
-import {SPLIT_SINGLE} from '../../reference';
-import {normalizeSplits} from '../../util/dataReducers';
 
 const SplitTableCard = (props) => {
   const headers = ['id', 'type', 'Log', 'Test log', 'Training log', 'Config'];
