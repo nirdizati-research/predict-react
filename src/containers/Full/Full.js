@@ -38,6 +38,12 @@ class Full extends Component {
           leftIcon: <FontIcon>bookmark</FontIcon>,
         }, {
           component: Link,
+          to: '/split',
+          active: isActive('/split', pathname),
+          primaryText: 'Split',
+          leftIcon: <FontIcon>bookmark</FontIcon>,
+        }, {
+          component: Link,
           to: '/jobStatus',
           active: isActive('/jobStatus', pathname),
           primaryText: 'Job Status',

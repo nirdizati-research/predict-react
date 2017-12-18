@@ -40,7 +40,7 @@ describe('LogsReducer', () => {
       const state2 = logs(stateWithRequest, logListsRetrieved(logList));
       const storeLogs = state2.logs;
 
-      expect(storeLogs.length).toBe(2);
+      expect(storeLogs.length).toBe(3);
       expect(storeLogs[0].name).toBe(logList[0].name);
       expect(storeLogs[0].visible).toBe(false);
     });
@@ -50,7 +50,7 @@ describe('LogsReducer', () => {
       const state2 = logs(state, logListsRetrieved(logList));
       const storeLogs = state2.logs;
 
-      expect(storeLogs.length).toBe(2);
+      expect(storeLogs.length).toBe(3);
       expect(storeLogs[0].name).toBe(logList[0].name);
       expect(storeLogs[0].visible).toBe(true);
     });
