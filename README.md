@@ -5,7 +5,17 @@
 Because React is better than Angular!
 
 ## Dependencies
-* [Storybook](https://github.com/storybooks/storybook)
+* [Storybook](https://github.com/storybooks/storybook) for individual components.
 
 ## Thanks to
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). Look there for overall documentation.
+
+## Development help
+package.json contains all commands for this code.
+
+Run tests
+```
+npm run test
+```
+
+Heavily recommend [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi) and [Redux DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd) Chrome extensions as the make development much easier.
