@@ -11,15 +11,28 @@ export const normalizeSplits = (splits) => {
     let testLogName;
 
     if (split.type === SPLIT_SINGLE) {
-      originalLogName = split.originalLog.name;
+      originalLogName = split.original_log.name;
       trainingLogName = '';
       testLogName = '';
     } else {
       originalLogName = '';
-      trainingLogName = split.trainingLog.name;
-      testLogName = split.testLog.name;
+      trainingLogName = split.training_log.name;
+      testLogName = split.test_log.name;
     }
     return {id: split.id, config: split.config, type: split.type, originalLogName, trainingLogName, testLogName};
+  });
+};
+
+export const splitToString = (splits) => {
+  return splits.map((split) => {
+    let label;
+
+    if (split.type === SPLIT_SINGLE) {
+      label = `Split #${split.id} of log ${split.original_log.name}`;
+    } else {
+      label = `Split #${split.id} of logs ${split.training_log.name} and ${split.test_log.name}`;
+    }
+    return {value: split.id, label: label};
   });
 };
 

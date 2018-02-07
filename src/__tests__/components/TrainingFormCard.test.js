@@ -9,13 +9,13 @@ import {SelectField} from 'react-md';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
 
 const fetchState = {inFlight: false};
-const logNames = ['Log1', 'Log2'];
+const splitLabels = [{value: 1, label: 'Split #1'}, {value: 2, label: 'Split #2'}];
 const onSubmit = jest.fn();
 
 const regressionPayload = {
   'clustering': ['None'],
   'encoding': ['simpleIndex'],
-  'log': 'Log1',
+  'split_id': 1,
   'prefix': 0,
   'regression': ['linear'],
   'type': 'Regression'
@@ -25,7 +25,7 @@ const classificationPayload = {
   'classification': ['KNN'],
   'clustering': ['None'],
   'encoding': ['simpleIndex'],
-  'log': 'Log1',
+  'split_id': 1,
   'prefix': 0,
   'rule': 'elapsed_time',
   'threshold': 'default',
@@ -36,12 +36,13 @@ const nextActivityPayload = {
   'classification': ['KNN'],
   'clustering': ['None'],
   'encoding': ['simpleIndex'],
-  'log': 'Log1',
+  'split_id': 1,
   'prefix': 0,
   'type': 'NextActivity'
 };
-const shallowElement = shallow(<TrainingFormCard fetchState={fetchState} logNames={logNames} onSubmit={onSubmit}/>);
-const element = mount(<TrainingFormCard fetchState={fetchState} logNames={logNames} onSubmit={onSubmit}/>);
+const shallowElement = shallow(<TrainingFormCard fetchState={fetchState} splitLabels={splitLabels}
+                                                 onSubmit={onSubmit}/>);
+const element = mount(<TrainingFormCard fetchState={fetchState} splitLabels={splitLabels} onSubmit={onSubmit}/>);
 describe('TrainingFormCard', () => {
   afterEach(() => {
     onSubmit.mockClear();
@@ -55,7 +56,7 @@ describe('TrainingFormCard', () => {
   });
 
   it('default state is regression', () => {
-    expect(shallowElement.find(SelectField).props().value).toBe(logNames[0]);
+    expect(shallowElement.find(SelectField).props().value).toBe(splitLabels[0].value);
 
     const selectGroups = shallowElement.find(SelectionControlGroup);
     expect(selectGroups.at(0).props().value).toBe(REGRESSION);
@@ -68,8 +69,10 @@ describe('TrainingFormCard', () => {
   });
 
   it('changes log name', () => {
-    shallowElement.find(SelectField).simulate('change', 'Log2');
-    expect(shallowElement.state().logName).toBe('Log2');
+    shallowElement.find(SelectField).simulate('change', 'Split #2');
+    // In real condition split_id will be 2
+    // expect(shallowElement.state().split_id).toBe(2);
+    expect(shallowElement.state().split_id).toBe('Split #2');
   });
 
   describe('submit', () => {

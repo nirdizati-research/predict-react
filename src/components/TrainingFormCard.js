@@ -27,8 +27,9 @@ const defaultThreshold = 0;
 const groupStyle = {height: 'auto'};
 
 const initialState = (props) => {
+  const splitId = props.splitLabels[0] ? props.splitLabels[0].value : 0;
   return {
-    logName: props.logNames[0],
+    split_id: splitId,
     encoding: [encodingMethods[0].value],
     clustering: [clusteringMethods[0].value],
     classification: [classificationMethods[0].value],
@@ -95,8 +96,8 @@ class TrainingFormCard extends Component {
     });
   }
 
-  selectChange(value) {
-    this.setState({logName: value});
+  selectChange(value, _) {
+    this.setState({split_id: value});
   }
 
   onThresholdChange(threshold) {
@@ -141,7 +142,7 @@ class TrainingFormCard extends Component {
     // TODO type should be predictionMethod
     return {
       type: this.state.predictionMethod,
-      log: this.state.logName,
+      split_id: this.state.split_id,
       prefix: defaultPrefix,
       encoding: this.state.encoding,
       clustering: this.state.clustering
@@ -210,12 +211,12 @@ class TrainingFormCard extends Component {
         <CardTitle title="Training">
           <SelectField
             id="log-name-select"
-            placeholder="log.xes"
+            placeholder="Split id will be here"
             className="md-cell"
-            menuItems={this.props.logNames}
+            menuItems={this.props.splitLabels}
             position={SelectField.Positions.BELOW}
             onChange={this.selectChange.bind(this)}
-            value={this.state.logName}
+            value={this.state.split_id}
           /></CardTitle>
         <CardText>
           <div className="md-grid md-grid--no-spacing">
@@ -255,7 +256,10 @@ class TrainingFormCard extends Component {
 }
 
 TrainingFormCard.propTypes = {
-  logNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  splitLabels: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.number.isRequired,
+    label: PropTypes.string.isRequired
+  }).isRequired).isRequired,
   fetchState: PropTypes.shape({
     inFlight: PropTypes.bool.isRequired,
     error: PropTypes.any
