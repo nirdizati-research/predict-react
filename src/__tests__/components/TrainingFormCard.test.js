@@ -13,32 +13,38 @@ const splitLabels = [{value: 1, label: 'Split #1'}, {value: 2, label: 'Split #2'
 const onSubmit = jest.fn();
 
 const regressionPayload = {
-  'clustering': ['noCluster'],
-  'encoding': ['simpleIndex'],
+  'type': 'regression',
   'split_id': 1,
-  'prefix': 0,
-  'regression': ['linear'],
-  'type': 'regression'
+  'config': {
+    'clusterings': ['noCluster'],
+    'encodings': ['simpleIndex'],
+    'prefix_length': 0,
+    'methods': ['linear'],
+  }
 };
 
 const classificationPayload = {
-  'classification': ['knn'],
-  'clustering': ['noCluster'],
-  'encoding': ['simpleIndex'],
+  'type': 'classification',
   'split_id': 1,
-  'prefix': 0,
-  'rule': 'elapsed_time',
-  'threshold': 'default',
-  'type': 'classification'
+  'config': {
+    'clusterings': ['noCluster'],
+    'encodings': ['simpleIndex'],
+    'methods': ['knn'],
+    'prefix_length': 0,
+    'rule': 'elapsed_time',
+    'threshold': 'default'
+  }
 };
 
 const nextActivityPayload = {
-  'classification': ['knn'],
-  'clustering': ['noCluster'],
-  'encoding': ['simpleIndex'],
+  'type': 'nextActivity',
   'split_id': 1,
-  'prefix': 0,
-  'type': 'nextActivity'
+  'config': {
+    'methods': ['knn'],
+    'clusterings': ['noCluster'],
+    'encodings': ['simpleIndex'],
+    'prefix_length': 0,
+  }
 };
 const shallowElement = shallow(<TrainingFormCard fetchState={fetchState} splitLabels={splitLabels}
                                                  onSubmit={onSubmit}/>);
@@ -98,7 +104,7 @@ describe('TrainingFormCard', () => {
       element.find(Button).at(0).simulate('click');
 
       let payload = classificationPayload;
-      payload.threshold = 0;
+      payload.config.threshold = 0;
       expect(onSubmit.mock.calls[0][0]).toEqual(payload);
     });
 
@@ -113,10 +119,10 @@ describe('TrainingFormCard', () => {
   describe('reset', () => {
     it('works for default', () => {
       const encodingGroup = element.find(SelectionControlGroup).at(1);
-      encodingGroup.simulate('change', {target: {name: 'encoding[]', value: 'boolean'}});
+      encodingGroup.simulate('change', {target: {name: 'encodings[]', value: 'boolean'}});
 
       element.find(Button).at(1).simulate('click');
-      expect(element.state().encoding.length).toBe(1);
+      expect(element.state().encodings.length).toBe(1);
     });
 
     it('works for outcome', () => {
@@ -143,14 +149,14 @@ describe('TrainingFormCard', () => {
     it('warns if no encoding method', () => {
       element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: REGRESSION}});
       const encodingGroup = element.find(SelectionControlGroup).at(1);
-      encodingGroup.simulate('change', {target: {name: 'encoding[]', value: 'simpleIndex'}});
+      encodingGroup.simulate('change', {target: {name: 'encodings[]', value: 'simpleIndex'}});
 
       expect(element.find('.md-text--error').length).toBe(1);
     });
 
     it('warns if no clustering method', () => {
       const clusteringGroup = element.find(SelectionControlGroup).at(2);
-      clusteringGroup.simulate('change', {target: {name: 'clustering[]', value: 'noCluster'}});
+      clusteringGroup.simulate('change', {target: {name: 'clusterings[]', value: 'noCluster'}});
 
       expect(element.find('.md-text--error').length).toBe(1);
     });

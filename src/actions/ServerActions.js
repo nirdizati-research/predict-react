@@ -11,7 +11,7 @@ import {splitFailed, splitsFailed, splitsRetrieved, splitSucceeded} from './Spli
 
 export const getJobs = () => (dispatch) => {
   jsonAjax(
-    SERVER_URL + '/core_services/getConfStatus',
+    SERVER_URL + '/jobs/',
     'GET',
     null,
     (jobs) => dispatch(jobsRetrieved(jobs)),
@@ -60,7 +60,7 @@ export const getLogInfo = ({logId, infoType}) => (dispatch) => {
 
 export const postTraining = (payload) => (dispatch) => {
   jsonAjax(
-    SERVER_URL + `/core_services/training`,
+    SERVER_URL + `/jobs/multiple`,
     'POST',
     payload,
     () => dispatch(trainingSucceeded()),
