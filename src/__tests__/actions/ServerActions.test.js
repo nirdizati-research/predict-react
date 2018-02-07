@@ -1,4 +1,4 @@
-import {getJobResults, getJobs, getLogInfo, getLogList, postTraining} from '../../actions/ServerActions';
+import {getJobResults, getJobs, getLogInfo, getLogList, getSplits, postTraining} from '../../actions/ServerActions';
 import {jobsFailed, jobsRetrieved, trainingFailed, trainingSucceeded} from '../../actions/JobActions';
 import {
   changeVisibleLog,
@@ -7,6 +7,7 @@ import {
   logListFailed,
   logListsRetrieved
 } from '../../actions/LogActions';
+import {splitsFailed, splitsRetrieved} from '../../actions/SplitActions';
 
 // https://www.jstwister.com/post/unit-testing-beginners-guide-mock-http-and-files/
 
@@ -17,6 +18,7 @@ const standardError = (mockXHR) => {
 };
 
 const logs = [{log: 'name'}];
+const splits = [{type: 'single', config: 'like me'}];
 const createMockXHR = (responseJSON, status) => {
   const mockXHR = {
     open: jest.fn(),
@@ -183,6 +185,26 @@ describe('ServerActions', function () {
       mockXHR.onreadystatechange();
 
       expect(dispatch.mock.calls[0][0]).toEqual(logListFailed(error.error));
+    });
+  });
+
+  describe('getSplits', () => {
+    it('dispatches splitsRetrieved on success', () => {
+      mockXHR.responseText = JSON.stringify(splits);
+
+      getSplits()(dispatch);
+      mockXHR.onreadystatechange();
+
+      expect(dispatch.mock.calls[0][0]).toEqual(splitsRetrieved(splits));
+    });
+
+    it('dispatches splitsFailed on error', () => {
+      standardError(mockXHR);
+
+      getSplits()(dispatch);
+      mockXHR.onreadystatechange();
+
+      expect(dispatch.mock.calls[0][0]).toEqual(splitsFailed(error.error));
     });
   });
 });
