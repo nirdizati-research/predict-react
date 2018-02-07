@@ -3,7 +3,7 @@
  */
 import {SPLIT_SINGLE} from '../reference';
 
-
+// TODO use this in split table
 export const normalizeSplits = (splits) => {
   return splits.map((split) => {
     let originalLogName;

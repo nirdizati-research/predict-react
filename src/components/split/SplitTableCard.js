@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 
 const SplitTableCard = (props) => {
-  const headers = ['id', 'type', 'Log', 'Test log', 'Training log', 'Config'];
+  const headers = ['id', 'type', 'Log', 'Training log', 'Test log', 'Config'];
 
   return (
     <Card className="md-block-centered">
@@ -27,15 +27,16 @@ const SplitTableCard = (props) => {
     </Card>);
 };
 
+// TODO show names instead of pure JSON
 const tableBody = (splits) => {
-  return splits.map(({id, type, originalLogName, trainingLogName, testLogName, config}) => {
+  return splits.map(({id, type, original_log, training_log, test_log, config}) => {
     return (
       <TableRow key={id} selectable={false}>
-        <TableColumn numberic>{id}</TableColumn>
+        <TableColumn numeric>{id}</TableColumn>
         <TableColumn>{type}</TableColumn>
-        <TableColumn>{originalLogName}</TableColumn>
-        <TableColumn>{trainingLogName}</TableColumn>
-        <TableColumn>{testLogName}</TableColumn>
+        <TableColumn><code>{JSON.stringify(original_log, null, 2)}</code></TableColumn>
+        <TableColumn><code>{JSON.stringify(training_log, null, 2)}</code></TableColumn>
+        <TableColumn><code>{JSON.stringify(test_log, null, 2)}</code></TableColumn>
         <TableColumn><code>{JSON.stringify(config, null, 2)}</code></TableColumn>
       </TableRow>
     );
@@ -46,9 +47,18 @@ SplitTableCard.propTypes = {
   splits: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     type: PropTypes.oneOf(['single', 'double']).isRequired,
-    originalLogName: PropTypes.string,
-    trainingLogName: PropTypes.string,
-    testLogName: PropTypes.string,
+    original_log: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired
+    }),
+    training_log: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired
+    }),
+    test_log: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired
+    }),
     config: PropTypes.object.isRequired,
   })).isRequired
 };
