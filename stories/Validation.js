@@ -13,14 +13,14 @@ const names = ['Log 1', 'log 2', 'something.xes', 'reallylongandboringnametotest
 const classJobs = [
   {
     'status': 'completed',
-    'run': 'KNN_simpleIndex_Kmeans',
+    'run': 'knn_simpleIndex_Kmeans',
     'log': 'test_bpi12_sorted.xes',
     'timestamp': 'Sep 13 2017 10:55:13',
     'rule': 'elapsed_time',
     'prefix': 0,
     'uuid': 'uuuuuuuuuuuuu',
     'threshold': '2592000',
-    'type': 'Classification',
+    'type': 'classification',
     'result': {
       'uuid': 'uuuuuuuuuuuuu',
       'fmeasure': 123,
@@ -30,14 +30,14 @@ const classJobs = [
   },
   {
     'status': 'completed',
-    'run': 'KNN_boolean_None',
+    'run': 'knn_boolean_noCluster',
     'log': 'test_bpi12_sorted2.xes',
     'timestamp': 'Sep 13 2017 10:55:13',
     'rule': 'elapsed_time',
     'prefix': 0,
     'uuid': 'uuuuuuuuuuuuu2',
     'threshold': '2592000',
-    'type': 'Classification',
+    'type': 'classification',
     'result': {
       'uuid': 'uuuuuuuuuuuuu2',
       'fmeasure': 1230,
@@ -47,14 +47,14 @@ const classJobs = [
   }];
 const regJobs = [
   {
-    'clustering': 'None',
+    'clustering': 'noCluster',
     'status': 'completed',
-    'run': 'linear_simpleIndex_None',
+    'run': 'linear_simpleIndex_noCluster',
     'log': 'Production.xes',
     'encoding': 'simpleIndex',
     'timestamp': 'Oct 09 2017 12:44:42',
     'prefix': 0,
-    'type': 'Regression',
+    'type': 'regression',
     'regression': 'linear',
     'uuid': '82f9bf59-a15c-4b83-91af-9e1f714b9976',
     'result': {
@@ -66,15 +66,15 @@ const regJobs = [
   }];
 const nextActivityJobs = [
   {
-    'clustering': 'None',
+    'clustering': 'noCluster',
     'status': 'queued',
-    'run': 'KNN_simpleIndex_None',
+    'run': 'KNN_simpleIndex_noCluster',
     'log': 'Production.xes',
-    'classification': 'KNN',
+    'classification': 'knn',
     'encoding': 'simpleIndex',
     'timestamp': 'Oct 09 2017 10:57:45',
     'prefix': 0,
-    'type': 'NextActivity',
+    'type': 'nextActivity',
     'uuid': '1830e0ff-ebac-4396-8f54-5f7ad9247132',
     'result': {
       'uuid': '1830e0ff-ebac-4396-8f54-5f7ad9247132',

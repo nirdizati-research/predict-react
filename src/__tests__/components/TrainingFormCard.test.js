@@ -13,32 +13,32 @@ const splitLabels = [{value: 1, label: 'Split #1'}, {value: 2, label: 'Split #2'
 const onSubmit = jest.fn();
 
 const regressionPayload = {
-  'clustering': ['None'],
+  'clustering': ['noCluster'],
   'encoding': ['simpleIndex'],
   'split_id': 1,
   'prefix': 0,
   'regression': ['linear'],
-  'type': 'Regression'
+  'type': 'regression'
 };
 
 const classificationPayload = {
-  'classification': ['KNN'],
-  'clustering': ['None'],
+  'classification': ['knn'],
+  'clustering': ['noCluster'],
   'encoding': ['simpleIndex'],
   'split_id': 1,
   'prefix': 0,
   'rule': 'elapsed_time',
   'threshold': 'default',
-  'type': 'Classification'
+  'type': 'classification'
 };
 
 const nextActivityPayload = {
-  'classification': ['KNN'],
-  'clustering': ['None'],
+  'classification': ['knn'],
+  'clustering': ['noCluster'],
   'encoding': ['simpleIndex'],
   'split_id': 1,
   'prefix': 0,
-  'type': 'NextActivity'
+  'type': 'nextActivity'
 };
 const shallowElement = shallow(<TrainingFormCard fetchState={fetchState} splitLabels={splitLabels}
                                                  onSubmit={onSubmit}/>);
@@ -61,7 +61,7 @@ describe('TrainingFormCard', () => {
     const selectGroups = shallowElement.find(SelectionControlGroup);
     expect(selectGroups.at(0).props().value).toBe(REGRESSION);
     expect(selectGroups.at(1).props().value).toBe('simpleIndex');
-    expect(selectGroups.at(2).props().value).toBe('None');
+    expect(selectGroups.at(2).props().value).toBe('noCluster');
 
     expect(shallowElement.find(CheckboxGroup).props().value).toBe('linear');
     // no warning
@@ -122,7 +122,7 @@ describe('TrainingFormCard', () => {
     it('works for outcome', () => {
       element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: CLASSIFICATION}});
       const group = element.find(SelectionControlGroup).at(4);
-      group.simulate('change', {target: {name: 'classification[]', value: 'KNN'}});
+      group.simulate('change', {target: {name: 'classification[]', value: 'knn'}});
 
       element.find(Button).at(1).simulate('click');
       expect(element.state().predictionMethod).toBe(REGRESSION);
@@ -132,7 +132,7 @@ describe('TrainingFormCard', () => {
     it('works for nextActivity', () => {
       element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: NEXT_ACTIVITY}});
       const group = element.find(SelectionControlGroup).at(3);
-      group.simulate('change', {target: {name: 'classification[]', value: 'KNN'}});
+      group.simulate('change', {target: {name: 'classification[]', value: 'knn'}});
 
       element.find(Button).at(1).simulate('click');
       expect(element.state().classification.length).toBe(1);
@@ -150,7 +150,7 @@ describe('TrainingFormCard', () => {
 
     it('warns if no clustering method', () => {
       const clusteringGroup = element.find(SelectionControlGroup).at(2);
-      clusteringGroup.simulate('change', {target: {name: 'clustering[]', value: 'None'}});
+      clusteringGroup.simulate('change', {target: {name: 'clustering[]', value: 'noCluster'}});
 
       expect(element.find('.md-text--error').length).toBe(1);
     });
@@ -165,7 +165,7 @@ describe('TrainingFormCard', () => {
     it('warns if no classification method', () => {
       element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: CLASSIFICATION}});
       const group = element.find(SelectionControlGroup).at(4);
-      group.simulate('change', {target: {name: 'classification[]', value: 'KNN'}});
+      group.simulate('change', {target: {name: 'classification[]', value: 'knn'}});
       expect(element.find('.md-text--error').length).toBe(1);
     });
   });

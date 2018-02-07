@@ -4,9 +4,9 @@
 import React from 'react';
 /* eslint-disable max-len */
 
-export const CLASSIFICATION = 'Classification';
-export const REGRESSION = 'Regression';
-export const NEXT_ACTIVITY = 'NextActivity';
+export const CLASSIFICATION = 'classification';
+export const REGRESSION = 'regression';
+export const NEXT_ACTIVITY = 'nextActivity';
 
 export const SPLIT_SINGLE = 'single';
 export const SPLIT_DOUBLE = 'double';
@@ -14,11 +14,11 @@ export const SPLIT_DOUBLE = 'double';
 const clustering = [
   {
     label: 'None',
-    value: 'None',
+    value: 'noCluster',
     message: 'No clustering and train a single model'
   },
   {
-    label: 'Kmeans',
+    label: 'kmeans',
     value: 'kmeans',
     message: 'Assign traces to k-means clusters and train a model for each cluster'
   }
@@ -27,15 +27,15 @@ const clustering = [
 const classification = [
   {
     label: 'KNN',
-    value: 'KNN'
+    value: 'knn'
   },
   {
     label: 'Decision tree',
-    value: 'DecisionTree'
+    value: 'decisionTree'
   },
   {
     label: 'Random forest',
-    value: 'RandomForest'
+    value: 'randomForest'
   }
 ];
 
@@ -91,12 +91,8 @@ const regression = [
     value: 'linear'
   },
   {
-    label: 'Xgboost',
-    value: 'xgboost'
-  },
-  {
     label: 'Random forest',
-    value: 'randomforest'
+    value: 'randomForest'
   },
   {
     label: 'Lasso',

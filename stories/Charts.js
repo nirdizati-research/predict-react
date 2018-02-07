@@ -49,15 +49,15 @@ const regTableData = [
   ['uuid122', 'xboost', 218.33484913201886, 218.33484913201886, 0.10676014147290103]
 ];
 const classData = [
-  ['uuid121', 0.7152600170502984, 0.6232374506486181, 'KNN_simpleIndex_None_clustering', 0.63384260739574716],
-  ['uuid122', 0.933152664859982, 0.9165256627185561, 'DecisionTree_simpleIndex_kmeans_clustering', 0.9605116926217754],
-  ['uuid123', 0.7300537412153782, 0.6408140814081408, 'KNN_boolean_None_clustering', 0.62917375812309062]
+  ['uuid121', 0.7152600170502984, 0.6232374506486181, 'knn_simpleIndex_noCluster_clustering', 0.63384260739574716],
+  ['uuid122', 0.933152664859982, 0.9165256627185561, 'decisionTree_simpleIndex_kmeans_clustering', 0.9605116926217754],
+  ['uuid123', 0.7300537412153782, 0.6408140814081408, 'knn_boolean_noCluster_clustering', 0.62917375812309062]
 ];
 
 const classTableData = [
-  ['uuid121', 'KNN_simpleIndex_None_clustering', 0.7152600170502984, 0.6232374506486181, 0.63384260739574716],
-  ['uuid122', 'DecisionTree_simpleIndex_kmeans_clustering', 0.933152664859982, 0.9165256627185561, 0.9605116926217754],
-  ['uuid123', 'KNN_boolean_None_clustering', 0.7300537412153782, 0.6408140814081408, 0.62917375812309062]
+  ['uuid121', 'knn_simpleIndex_noCluster_clustering', 0.7152600170502984, 0.6232374506486181, 0.63384260739574716],
+  ['uuid122', 'decisionTree_simpleIndex_kmeans_clustering', 0.933152664859982, 0.9165256627185561, 0.9605116926217754],
+  ['uuid123', 'knn_boolean_noCluster_clustering', 0.7300537412153782, 0.6408140814081408, 0.62917375812309062]
 ];
 
 storiesOf('Charts', module)
