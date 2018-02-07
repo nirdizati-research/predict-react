@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {logListRequested} from '../actions/LogActions';
 import SplitFormCard from '../components/split/SplitFormCard';
 import SplitTableCard from '../components/split/SplitTableCard';
-import {splitsRequested} from '../actions/SplitActions';
+import {splitsRequested, submitSplit} from '../actions/SplitActions';
 
 class Split extends Component {
   componentDidMount() {
@@ -54,8 +54,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onRequestLogList: (changeVisible) => dispatch(logListRequested({changeVisible, requestInfo: false})),
   onRequestSplitList: () => dispatch(splitsRequested()),
-  onSubmitSplit: (payload) => {
-  }
+  onSubmitSplit: (payload) => dispatch(submitSplit(payload))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Split);

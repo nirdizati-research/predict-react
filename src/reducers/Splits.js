@@ -1,4 +1,8 @@
-import {SPLITS_FAILED, SPLITS_REQUESTED, SPLITS_RETRIEVED} from '../actions/SplitActions';
+import {
+  SPLIT_FAILED,
+  SPLIT_SUBMITTED, SPLIT_SUCCEEDED, SPLITS_FAILED, SPLITS_REQUESTED,
+  SPLITS_RETRIEVED
+} from '../actions/SplitActions';
 
 const initialState = {
   fetchState: {inFlight: false},
@@ -22,23 +26,27 @@ const splits = (state = initialState, action) => {
         ...state,
         fetchState: {inFlight: true},
       };
-    }
-
-    case SPLITS_RETRIEVED: {
+    } case SPLITS_RETRIEVED: {
       return {
         ...state,
         fetchState: {inFlight: false},
         splits: mergeIncomingSplits(action.payload, state.splits)
       };
-    }
-
-    case SPLITS_FAILED: {
+    } case SPLITS_FAILED: {
       return {
         ...state,
         fetchState: {inFlight: false, error: action.payload},
       };
+    } case SPLIT_SUBMITTED: {
+      return {...state, fetchState: {inFlight: true}};
+    } case SPLIT_SUCCEEDED: {
+      return {
+        splits: mergeIncomingSplits([action.payload], state.splits),
+        fetchState: {inFlight: false}
+      };
+    } case SPLIT_FAILED: {
+      return {...state, fetchState: {inFlight: false, error: action.payload}};
     }
-
     default:
       return state;
   }

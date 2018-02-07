@@ -3,10 +3,13 @@
  */
 
 import splits from '../../reducers/Splits';
-import {splitsFailed, splitsRequested, splitsRetrieved} from '../../actions/SplitActions';
+import {
+  splitFailed, splitsFailed, splitsRequested, splitsRetrieved, splitSucceeded,
+  submitSplit
+} from '../../actions/SplitActions';
 
 const initState = {fetchState: {inFlight: false}, splits: []};
-describe('SplitsReducer', () => {
+describe('SplitList', () => {
   it('has nothing initially', () => {
     expect(splits(undefined, {})).toEqual(initState);
   });
@@ -41,5 +44,24 @@ describe('SplitsReducer', () => {
     const state = splits(undefined, splitsRequested());
     const state2 = splits(state, splitsFailed('error'));
     expect(state2).toEqual({fetchState: {inFlight: false, error: 'error'}, splits: []});
+  });
+});
+
+describe('Split submitting', () => {
+  it('changes fetchState when submitted', () => {
+    const state = splits(undefined, submitSplit());
+    expect(state).toEqual({splits: [], fetchState: {inFlight: true}});
+  });
+
+  it('changes state when completed', () => {
+    const state = splits(undefined, submitSplit());
+    const state2 = splits(state, splitSucceeded({id: 1}));
+    expect(state2).toEqual({splits: [{id: 1}], fetchState: {inFlight: false}});
+  });
+
+  it('stores error message', () => {
+    const state = splits(undefined, submitSplit());
+    const state2 = splits(state, splitFailed('error'));
+    expect(state2).toEqual({splits: [], fetchState: {inFlight: false, error: 'error'}});
   });
 });

@@ -7,7 +7,7 @@ import {
   trainingSucceeded
 } from './JobActions';
 import {changeVisibleLog, logInfoFailed, logInfoRetrieved, logListFailed, logListsRetrieved} from './LogActions';
-import {splitsFailed, splitsRetrieved} from './SplitActions';
+import {splitFailed, splitsFailed, splitsRetrieved, splitSucceeded} from './SplitActions';
 
 export const getJobs = () => (dispatch) => {
   jsonAjax(
@@ -75,5 +75,15 @@ export const getSplits = () => (dispatch) => {
     null,
     (splits) => dispatch(splitsRetrieved(splits)),
     ({error}) => dispatch(splitsFailed(error))
+  );
+};
+
+export const postSplit = (payload) => (dispatch) => {
+  jsonAjax(
+    SERVER_URL + `/splits/`,
+    'POST',
+    payload,
+    (split) => dispatch(splitSucceeded(split)),
+    ({error}) => dispatch(splitFailed(error))
   );
 };

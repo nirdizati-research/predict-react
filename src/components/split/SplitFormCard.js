@@ -34,7 +34,8 @@ class SplitFormCard extends Component {
       <Card className="md-block-centered">
         <CardTitle title="Create split"/>
         <CardText>
-          <p>Select log to create test set. There is no configuration yet, so just press ok.</p>
+          <p>Select log to create test set. There is no configuration yet, so just press ok. The split table below will
+            be updated upon successful split.</p>
           <SelectField
             id="log-name-select"
             className="md-cell"
