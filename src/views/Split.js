@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {logListRequested} from '../actions/LogActions';
 import SplitFormCard from '../components/split/SplitFormCard';
 import SplitTableCard from '../components/split/SplitTableCard';
+import {splitsRequested} from '../actions/SplitActions';
 
 class Split extends Component {
   componentDidMount() {
@@ -13,6 +14,8 @@ class Split extends Component {
     } else {
       this.props.onRequestLogList(false);
     }
+    // Request on every page refresh. Not ideal
+    this.props.onRequestSplitList();
   }
 
   render() {
@@ -23,7 +26,7 @@ class Split extends Component {
                          onSubmit={this.props.onSubmitSplit}/>
         </div>
         <div className="md-cell md-cell--12">
-          <SplitTableCard splits={[]}/>
+          <SplitTableCard splits={this.props.splits}/>
         </div>
       </div>
     );
@@ -32,7 +35,9 @@ class Split extends Component {
 
 Split.propTypes = {
   logs: PropTypes.arrayOf(PropTypes.any).isRequired,
+  splits: PropTypes.arrayOf(PropTypes.any).isRequired,
   onRequestLogList: PropTypes.func.isRequired,
+  onRequestSplitList: PropTypes.func.isRequired,
   onSubmitSplit: PropTypes.func.isRequired,
   fetchState: PropTypes.shape({
     inFlight: PropTypes.bool.isRequired,
@@ -42,12 +47,13 @@ Split.propTypes = {
 
 const mapStateToProps = (state) => ({
   logs: state.logs.logs,
-  // TODO replace with real split
-  fetchState: {inFlight: false},
+  splits: state.splits.splits,
+  fetchState: state.splits.fetchState,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onRequestLogList: (changeVisible) => dispatch(logListRequested({changeVisible, requestInfo: false})),
+  onRequestSplitList: () => dispatch(splitsRequested()),
   onSubmitSplit: (payload) => {
   }
 });

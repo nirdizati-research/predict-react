@@ -9,9 +9,12 @@ import SplitFormCard from '../src/components/split/SplitFormCard';
 export const splits = [
   {
     'id': 1,
-    'originalLogName': 'Log.xes',
-    'testLogName': '',
-    'trainingLogName': '',
+    'original_log': {
+      'id': 1,
+      'name': 'general_example.xes'
+    },
+    'test_log': null,
+    'training_log': null,
     'type': 'single',
     'config': {
       'value': 123,
@@ -20,9 +23,15 @@ export const splits = [
   },
   {
     'id': 2,
-    'originalLogName': '',
-    'testLogName': 'TestLog.xes',
-    'trainingLogName': 'TrainingLog.xes',
+    'original_log': null,
+    'test_log': {
+      'id': 1,
+      'name': 'general_example.xes'
+    },
+    'training_log': {
+      'id': 2,
+      'name': 'general_example2.xes'
+    },
     'type': 'double',
     'config': {
       'value': 123,
