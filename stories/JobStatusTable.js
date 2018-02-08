@@ -8,26 +8,68 @@ import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 
 const jobs = [
   {
-    'status': 'Completed',
-    'run': 'knn_simpleIndex_kmeans',
-    'log': 'test_bpi12_sorted.xes',
-    'timestamp': 'Sep 13 2017 10:55:13',
-    'rule': 'elapsed_time',
-    'prefix': 0,
-    'uuid': 'uuuuuuuuuuuuu',
-    'threshold': '2592000',
-    'type': 'classification'
+    'id': 1,
+    'created_date': '2017-11-14T20:52:36.469000Z',
+    'modified_date': '2017-12-05T14:57:28.344216Z',
+    'config': {
+      'clustering': 'noCluster',
+      'method': 'randomForest',
+      'encoding': 'simpleIndex',
+      'rule': 'remaining_time',
+      'prefix_length': 1,
+      'threshold': 'default'
+    },
+    'status': 'completed',
+    'result': {
+      'f1score': 0.6666666666666666,
+      'acc': 0.5,
+      'auc': 0.5
+    },
+    'type': 'classification',
+    'split': {
+      'id': 1,
+      'config': {},
+      'original_log': {
+        'id': 1,
+        'name': 'general_example.xes'
+      },
+      'type': 'single',
+      'test_log': null,
+      'training_log': null
+    },
+    'error': ''
   },
   {
-    'status': 'Queued',
-    'run': 'knn_simpleIndex_kmeans',
-    'log': 'test_bpi12_sorted2.xes',
-    'timestamp': 'Sep 13 2017 10:55:13',
-    'rule': 'elapsed_time',
-    'prefix': 0,
-    'uuid': 'uuuuuuuuuuuuu2',
-    'threshold': '2592000',
-    'type': 'classification'
+    'id': 51,
+    'created_date': '2017-12-05T16:13:40.278339Z',
+    'modified_date': '2017-12-05T16:13:40.457762Z',
+    'config': {
+      'rule': 'remaining_time',
+      'prefix_length': 1,
+      'threshold': 'default',
+      'encoding': 'simpleIndex',
+      'clustering': 'noCluster',
+      'method': 'randomForest'
+    },
+    'status': 'completed',
+    'result': {
+      'f1score': 0.6666666666666666,
+      'acc': 0.5,
+      'auc': 0.5
+    },
+    'type': 'classification',
+    'split': {
+      'id': 1,
+      'config': {},
+      'original_log': {
+        'id': 1,
+        'name': 'general_example.xes'
+      },
+      'type': 'single',
+      'test_log': null,
+      'training_log': null
+    },
+    'error': ''
   }
 ];
 

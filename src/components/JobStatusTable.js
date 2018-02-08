@@ -4,9 +4,11 @@
 import React from 'react';
 import {DataTable, TableBody, TableColumn, TableHeader, TableRow} from 'react-md/lib/DataTables/index';
 import PropTypes from 'prop-types';
+import {splitToString} from '../util/dataReducers';
 
+/* eslint-disable camelcase */
 const JobStatusTable = (props) => {
-  const headers = ['uuid', 'Status', 'Type', 'Run', 'Log', 'TimeStamp', 'Rule', 'Prefix', 'Threshold'];
+  const headers = ['id', 'Type', 'Status', 'Created date', 'Modified date', 'Split', 'Error', 'Config'];
 
   return (<DataTable baseId="simple-pagination" plain>
     <TableHeader>
@@ -15,17 +17,16 @@ const JobStatusTable = (props) => {
       </TableRow>
     </TableHeader>
     <TableBody>
-      {props.jobs.map(({uuid, status, run, log, timestamp, rule, prefix, threshold, type}) => (
-        <TableRow key={uuid} selectable={false}>
-          <TableColumn>{uuid}</TableColumn>
+      {props.jobs.map(({id, type, status, created_date, modified_date, split, config, error}) => (
+        <TableRow key={id} selectable={false}>
+          <TableColumn numeric>{id}</TableColumn>
           <TableColumn>{status}</TableColumn>
           <TableColumn>{type}</TableColumn>
-          <TableColumn>{run}</TableColumn>
-          <TableColumn>{log}</TableColumn>
-          <TableColumn>{timestamp}</TableColumn>
-          <TableColumn>{rule}</TableColumn>
-          <TableColumn numeric>{prefix}</TableColumn>
-          <TableColumn numeric>{threshold}</TableColumn>
+          <TableColumn>{created_date}</TableColumn>
+          <TableColumn>{modified_date}</TableColumn>
+          <TableColumn>{splitToString(split)}</TableColumn>
+          <TableColumn>{error}</TableColumn>
+          <TableColumn grow><code>{JSON.stringify(config, null, 2)}</code></TableColumn>
         </TableRow>
       ))}
     </TableBody>
@@ -34,15 +35,14 @@ const JobStatusTable = (props) => {
 
 JobStatusTable.propTypes = {
   jobs: PropTypes.arrayOf(PropTypes.shape({
-    uuid: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    created_date: PropTypes.string.isRequired,
+    modified_date: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
-    run: PropTypes.string.isRequired,
-    log: PropTypes.string.isRequired,
-    timestamp: PropTypes.string.isRequired,
-    prefix: PropTypes.number.isRequired,
-    rule: PropTypes.string,
-    threshold: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    type: PropTypes.string.isRequired
+    type: PropTypes.string.isRequired,
+    split: PropTypes.any.isRequired,
+    config: PropTypes.any.isRequired,
+    error: PropTypes.any.isRequired
   })).isRequired
 };
 

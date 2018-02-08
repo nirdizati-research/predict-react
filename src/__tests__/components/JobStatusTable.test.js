@@ -13,15 +13,14 @@ describe('JobStatusTable', () => {
 
   it('renders jobs if present', () => {
     const jobs = [{
-      uuid: 'aa',
+      id: 1,
       status: 'aa',
-      run: 'aa',
-      log: 'aa',
-      timestamp: 'aa',
-      prefix: 0,
-      rule: 'aa',
-      threshold: 0,
-      type: 'aa'
+      modified_date: 'aa',
+      config: {},
+      split: {type: 'single', original_log: {name: 'name'}},
+      created_date: 'aa',
+      type: 'aa',
+      error: ''
     }];
     const element = shallow(<JobStatusTable jobs={jobs}/>);
     expect(element.find(TableRow).length).toBe(2);

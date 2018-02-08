@@ -1,7 +1,7 @@
 /**
  * Created by tonis.kasekamp on 10/17/17.
  */
-import {normalizeSplits, splitToString} from '../../util/dataReducers';
+import {normalizeSplits, splitsToString} from '../../util/dataReducers';
 
 const splits = [
   {
@@ -56,7 +56,7 @@ it('returns normalized split', () => {
 });
 
 describe('split to string', () => {
-  const stringLabels = splitToString(splits);
+  const stringLabels = splitsToString(splits);
 
   it('formats single split', () => {
     expect(stringLabels[0]).toEqual({value: 1, label: 'Split #1 of log log1'});

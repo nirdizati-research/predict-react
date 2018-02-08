@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import TrainingFormCard from '../../components/TrainingFormCard';
 import {submitTraining} from '../../actions/JobActions';
-import {splitToString} from '../../util/dataReducers';
+import {splitsToString} from '../../util/dataReducers';
 import {splitsRequested} from '../../actions/SplitActions';
 
 class Training extends Component {
@@ -38,7 +38,7 @@ Training.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  splitLabels: splitToString(state.splits.splits),
+  splitLabels: splitsToString(state.splits.splits),
   fetchState: state.training.fetchState,
 });
 

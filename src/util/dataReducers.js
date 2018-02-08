@@ -23,17 +23,20 @@ export const normalizeSplits = (splits) => {
   });
 };
 
-export const splitToString = (splits) => {
+export const splitsToString = (splits) => {
   return splits.map((split) => {
-    let label;
-
-    if (split.type === SPLIT_SINGLE) {
-      label = `Split #${split.id} of log ${split.original_log.name}`;
-    } else {
-      label = `Split #${split.id} of logs ${split.training_log.name} and ${split.test_log.name}`;
-    }
-    return {value: split.id, label: label};
+    return {value: split.id, label: splitToString(split)};
   });
+};
+
+export const splitToString = (split) => {
+  let label;
+  if (split.type === SPLIT_SINGLE) {
+    label = `Split #${split.id} of log ${split.original_log.name}`;
+  } else {
+    label = `Split #${split.id} of logs ${split.training_log.name} and ${split.test_log.name}`;
+  }
+  return label;
 };
 
 
