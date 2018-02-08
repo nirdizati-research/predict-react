@@ -1,7 +1,7 @@
 /**
  * Created by Tõnis Kasekamp on 18.12.2017.
  */
-import {SPLIT_SINGLE} from '../reference';
+import {REGRESSION, SPLIT_SINGLE} from '../reference';
 
 // TODO use this in split table
 export const normalizeSplits = (splits) => {
@@ -37,6 +37,41 @@ export const splitToString = (split) => {
     label = `Split #${split.id} of logs ${split.training_log.name} and ${split.test_log.name}`;
   }
   return label;
+};
+
+export const jobToConfigTable = (job) => {
+  if (job.type === REGRESSION) {
+    return {
+      id: job.id,
+      type: job.type,
+      created_date: job.created_date,
+      modified_date: job.modified_date,
+      splitName: splitToString(job.split),
+      run: toRun(job),
+      status: job.status,
+      prefix_length: job.config.prefix_length,
+      error: job.error
+    };
+  } else {
+    return {
+      id: job.id,
+      type: job.type,
+      created_date: job.created_date,
+      modified_date: job.modified_date,
+      splitName: splitToString(job.split),
+      run: toRun(job),
+      status: job.status,
+      prefix_length: job.config.prefix_length,
+      rule: job.config.rule,
+      threshold: job.config.threshold,
+      error: job.error
+    };
+  }
+};
+
+
+const toRun = (job) => {
+  return `Encoding: ${job.config.encoding}, method: ${job.config.method}, clustering: ${job.config.clustering}`;
 };
 
 

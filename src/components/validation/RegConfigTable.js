@@ -4,11 +4,11 @@
 import React from 'react';
 import {DataTable, TableBody, TableColumn, TableHeader, TableRow} from 'react-md/lib/DataTables/index';
 import PropTypes from 'prop-types';
-import {sliceUuid} from '../../helpers';
 import {columnStyle} from '../../reference';
 
+/* eslint-disable camelcase */
 const RegConfigTable = (props) => {
-  const headers = ['uuid', 'Status', 'Type', 'Run', 'Log', 'TimeStamp', 'Prefix'];
+  const headers = ['id', 'Status', 'Type', 'Run', 'Split', 'Created', 'Modified', 'Prefix length'];
 
   return (<DataTable baseId="simple-pagination" plain>
     <TableHeader>
@@ -17,15 +17,16 @@ const RegConfigTable = (props) => {
       </TableRow>
     </TableHeader>
     <TableBody>
-      {props.jobs.map(({uuid, status, run, log, timestamp, prefix, type}) => (
-        <TableRow key={uuid} selectable={false}>
-          <TableColumn style={columnStyle}>{sliceUuid(uuid)}</TableColumn>
+      {props.jobs.map(({id, status, run, splitName, created_date, modified_date, prefix_length, type}) => (
+        <TableRow key={id} selectable={false}>
+          <TableColumn style={columnStyle}>{id}</TableColumn>
           <TableColumn style={columnStyle}>{status}</TableColumn>
           <TableColumn style={columnStyle}>{type}</TableColumn>
           <TableColumn style={columnStyle}>{run}</TableColumn>
-          <TableColumn style={columnStyle}>{log}</TableColumn>
-          <TableColumn style={columnStyle}>{timestamp}</TableColumn>
-          <TableColumn style={columnStyle} numeric>{prefix}</TableColumn>
+          <TableColumn style={columnStyle}>{splitName}</TableColumn>
+          <TableColumn style={columnStyle}>{created_date}</TableColumn>
+          <TableColumn style={columnStyle}>{modified_date}</TableColumn>
+          <TableColumn style={columnStyle} numeric>{prefix_length}</TableColumn>
         </TableRow>
       ))}
     </TableBody>
@@ -34,12 +35,13 @@ const RegConfigTable = (props) => {
 
 RegConfigTable.propTypes = {
   jobs: PropTypes.arrayOf(PropTypes.shape({
-    uuid: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     status: PropTypes.string.isRequired,
     run: PropTypes.string.isRequired,
-    log: PropTypes.string.isRequired,
-    timestamp: PropTypes.string.isRequired,
-    prefix: PropTypes.number.isRequired,
+    splitName: PropTypes.string.isRequired,
+    created_date: PropTypes.string.isRequired,
+    modified_date: PropTypes.string.isRequired,
+    prefix_length: PropTypes.number.isRequired,
     type: PropTypes.string.isRequired
   })).isRequired
 };

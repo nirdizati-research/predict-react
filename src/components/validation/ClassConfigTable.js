@@ -4,11 +4,11 @@
 import React from 'react';
 import {DataTable, TableBody, TableColumn, TableHeader, TableRow} from 'react-md/lib/DataTables/index';
 import PropTypes from 'prop-types';
-import {sliceUuid} from '../../helpers';
 import {columnStyle} from '../../reference';
 
+/* eslint-disable camelcase */
 const ClassConfigTable = (props) => {
-  const headers = ['uuid', 'Status', 'Type', 'Run', 'Log', 'TimeStamp', 'Rule', 'Prefix', 'Threshold'];
+  const headers = ['id', 'Status', 'Type', 'Run', 'Split', 'Created', 'Modified', 'Rule', 'Prefix length', 'Threshold'];
 
   return (<DataTable baseId="simple-pagination" plain>
     <TableHeader>
@@ -17,17 +17,18 @@ const ClassConfigTable = (props) => {
       </TableRow>
     </TableHeader>
     <TableBody>
-      {props.jobs.map(({uuid, status, run, log, timestamp, prefix, type, rule, threshold}) => (
-        <TableRow key={uuid} selectable={false}>
-          <TableColumn style={columnStyle}>{sliceUuid(uuid)}</TableColumn>
-          <TableColumn style={columnStyle}>{status}</TableColumn>
-          <TableColumn style={columnStyle}>{type}</TableColumn>
-          <TableColumn style={columnStyle}>{run}</TableColumn>
-          <TableColumn style={columnStyle}>{log}</TableColumn>
-          <TableColumn style={columnStyle}>{timestamp}</TableColumn>
-          <TableColumn style={columnStyle}>{rule}</TableColumn>
-          <TableColumn style={columnStyle} numeric>{prefix}</TableColumn>
-          <TableColumn style={columnStyle} numeric>{threshold}</TableColumn>
+      {props.jobs.map((job) => (
+        <TableRow key={job.id} selectable={false}>
+          <TableColumn style={columnStyle}>{job.id}</TableColumn>
+          <TableColumn style={columnStyle}>{job.status}</TableColumn>
+          <TableColumn style={columnStyle}>{job.type}</TableColumn>
+          <TableColumn style={columnStyle}>{job.run}</TableColumn>
+          <TableColumn style={columnStyle}>{job.splitName}</TableColumn>
+          <TableColumn style={columnStyle}>{job.created_date}</TableColumn>
+          <TableColumn style={columnStyle}>{job.modified_date}</TableColumn>
+          <TableColumn style={columnStyle}>{job.rule}</TableColumn>
+          <TableColumn style={columnStyle} numeric>{job.prefix_length}</TableColumn>
+          <TableColumn style={columnStyle} numeric>{job.threshold}</TableColumn>
         </TableRow>
       ))}
     </TableBody>
@@ -36,15 +37,16 @@ const ClassConfigTable = (props) => {
 
 ClassConfigTable.propTypes = {
   jobs: PropTypes.arrayOf(PropTypes.shape({
-    uuid: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     status: PropTypes.string.isRequired,
     run: PropTypes.string.isRequired,
-    log: PropTypes.string.isRequired,
-    timestamp: PropTypes.string.isRequired,
-    prefix: PropTypes.number.isRequired,
+    splitName: PropTypes.string.isRequired,
+    created_date: PropTypes.string.isRequired,
+    modified_date: PropTypes.string.isRequired,
+    prefix_length: PropTypes.number.isRequired,
+    type: PropTypes.string.isRequired,
     rule: PropTypes.string,
-    threshold: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    type: PropTypes.string.isRequired
+    threshold: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   })).isRequired
 };
 
