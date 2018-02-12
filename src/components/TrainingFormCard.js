@@ -22,7 +22,7 @@ import OutcomeRules from './training/OutcomeRules';
 import Threshold from './training/Threshold';
 import CheckboxGroup from './training/CheckboxGroup';
 
-const defaultPrefix = 0;
+const defaultPrefix = 1;
 const defaultThreshold = 0;
 const groupStyle = {height: 'auto'};
 

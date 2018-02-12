@@ -69,9 +69,6 @@ export const jobToConfigTable = (job) => {
   }
 };
 
-
 const toRun = (job) => {
   return `Encoding: ${job.config.encoding}, method: ${job.config.method}, clustering: ${job.config.clustering}`;
 };
-
-

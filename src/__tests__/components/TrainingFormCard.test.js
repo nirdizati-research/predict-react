@@ -18,7 +18,7 @@ const regressionPayload = {
   'config': {
     'clusterings': ['noCluster'],
     'encodings': ['simpleIndex'],
-    'prefix_length': 0,
+    'prefix_length': 1,
     'methods': ['linear'],
   }
 };
@@ -30,7 +30,7 @@ const classificationPayload = {
     'clusterings': ['noCluster'],
     'encodings': ['simpleIndex'],
     'methods': ['knn'],
-    'prefix_length': 0,
+    'prefix_length': 1,
     'rule': 'elapsed_time',
     'threshold': 'default'
   }
@@ -43,7 +43,7 @@ const nextActivityPayload = {
     'methods': ['knn'],
     'clusterings': ['noCluster'],
     'encodings': ['simpleIndex'],
-    'prefix_length': 0,
+    'prefix_length': 1,
   }
 };
 const shallowElement = shallow(<TrainingFormCard fetchState={fetchState} splitLabels={splitLabels}

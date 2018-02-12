@@ -9,8 +9,8 @@ import ResultTableCard from '../../../components/validation/ResultTableCard';
 import {Chart} from 'react-google-charts';
 
 const data = [
-  ['uuid121', 'linear', 321.16984512656944, 470.1483088530332, -0.75205320910182749],
-  ['uuid122', 'xboost', 218.33484913201886, 218.33484913201886, 0.10676014147290103]
+  [1, 'linear', 321.16984512656944, 470.1483088530332, -0.75205320910182749],
+  [2, 'xboost', 218.33484913201886, 218.33484913201886, 0.10676014147290103]
 ];
 let element = null;
 describe('ResultTableCard', () => {
