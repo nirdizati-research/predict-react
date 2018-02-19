@@ -5,6 +5,7 @@ import React from 'react';
 import {DataTable, TableBody, TableColumn, TableHeader, TableRow} from 'react-md/lib/DataTables/index';
 import PropTypes from 'prop-types';
 import {splitToString} from '../util/dataReducers';
+import {jobPropType} from '../helpers';
 
 /* eslint-disable camelcase */
 const JobStatusTable = (props) => {
@@ -34,16 +35,7 @@ const JobStatusTable = (props) => {
 };
 
 JobStatusTable.propTypes = {
-  jobs: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    created_date: PropTypes.string.isRequired,
-    modified_date: PropTypes.string.isRequired,
-    status: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    split: PropTypes.any.isRequired,
-    config: PropTypes.any.isRequired,
-    error: PropTypes.any.isRequired
-  })).isRequired
+  jobs: PropTypes.arrayOf(jobPropType).isRequired
 };
 
 export default JobStatusTable;

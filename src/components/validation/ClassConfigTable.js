@@ -5,6 +5,7 @@ import React from 'react';
 import {DataTable, TableBody, TableColumn, TableHeader, TableRow} from 'react-md/lib/DataTables/index';
 import PropTypes from 'prop-types';
 import {columnStyle} from '../../reference';
+import {jobFlatPropType} from '../../helpers';
 
 /* eslint-disable camelcase */
 const ClassConfigTable = (props) => {
@@ -36,18 +37,7 @@ const ClassConfigTable = (props) => {
 };
 
 ClassConfigTable.propTypes = {
-  jobs: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    status: PropTypes.string.isRequired,
-    run: PropTypes.string.isRequired,
-    splitName: PropTypes.string.isRequired,
-    created_date: PropTypes.string.isRequired,
-    modified_date: PropTypes.string.isRequired,
-    prefix_length: PropTypes.number.isRequired,
-    type: PropTypes.string.isRequired,
-    rule: PropTypes.string,
-    threshold: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-  })).isRequired
+  jobs: PropTypes.arrayOf(jobFlatPropType).isRequired
 };
 
 export default ClassConfigTable;

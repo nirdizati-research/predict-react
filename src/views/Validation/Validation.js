@@ -7,6 +7,7 @@ import {REGRESSION} from '../../reference';
 import {jobResultsRequested} from '../../actions/JobActions';
 import ValidationHeaderCard from '../../components/validation/ValidationHeaderCard';
 import ResultWrapper from '../../components/validation/ResultWrapper';
+import {jobPropType} from '../../helpers';
 
 class Validation extends Component {
   constructor(props) {
@@ -62,26 +63,7 @@ Validation.propTypes = {
   logNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   onRequestLogList: PropTypes.func.isRequired,
   onRequestJobResults: PropTypes.func.isRequired,
-  jobs: PropTypes.arrayOf(PropTypes.shape({
-    uuid: PropTypes.string.isRequired,
-    status: PropTypes.string.isRequired,
-    run: PropTypes.string.isRequired,
-    log: PropTypes.string.isRequired,
-    timestamp: PropTypes.string.isRequired,
-    prefix: PropTypes.number.isRequired,
-    rule: PropTypes.string,
-    threshold: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    type: PropTypes.string.isRequired,
-    result: PropTypes.shape({
-      uuid: PropTypes.string.isRequired,
-      mae: PropTypes.number,
-      rmse: PropTypes.number,
-      rscore: PropTypes.number,
-      fmeasure: PropTypes.number,
-      acc: PropTypes.number,
-      auc: PropTypes.number,
-    }).isRequired
-  })).isRequired,
+  jobs: PropTypes.arrayOf(jobPropType).isRequired,
 };
 
 const mapStateToProps = (state) => ({

@@ -16,11 +16,15 @@ describe('JobStatusTable', () => {
       id: 1,
       status: 'aa',
       modified_date: 'aa',
-      config: {},
+      config: {
+        prefix_length: 1,
+        method: 'method'
+      },
       split: {type: 'single', original_log: {name: 'name'}},
       created_date: 'aa',
-      type: 'aa',
-      error: ''
+      type: 'classification',
+      error: '',
+      result: {}
     }];
     const element = shallow(<JobStatusTable jobs={jobs}/>);
     expect(element.find(TableRow).length).toBe(2);

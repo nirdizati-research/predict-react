@@ -6,6 +6,7 @@ import Button from 'react-md/lib/Buttons/Button';
 import {jobsRequested} from '../../actions/JobActions';
 import JobStatusTable from '../../components/JobStatusTable';
 import FetchState from '../../components/FetchState';
+import {jobPropType} from '../../helpers';
 
 class JobStatus extends Component {
   componentDidMount() {
@@ -38,7 +39,7 @@ class JobStatus extends Component {
 }
 
 JobStatus.propTypes = {
-  jobs: PropTypes.arrayOf(PropTypes.any).isRequired,
+  jobs: PropTypes.arrayOf(jobPropType).isRequired,
   onRequestJobs: PropTypes.func.isRequired,
   fetchState: PropTypes.shape({
     inFlight: PropTypes.bool.isRequired,

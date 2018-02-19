@@ -7,6 +7,8 @@ import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
 import ResultTableCard from './ResultTableCard';
 import {getChartHeader, getTitles} from './ColumnHelper';
 import BubbleChartCard from '../chart/BubbleChartCard';
+import JobStatus from '../../views/JobStatus/JobStatus';
+import {jobPropType} from '../../helpers';
 
 const shortRun = (config) => {
   return `${config.method}_${config.encoding}_${config.clustering}`;
@@ -87,30 +89,7 @@ const ResultWrapper = (props) => {
 };
 
 ResultWrapper.propTypes = {
-  jobs: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    status: PropTypes.string.isRequired,
-    split: PropTypes.any.isRequired,
-    type: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
-    config: PropTypes.shape({
-      prefix_length: PropTypes.number.isRequired,
-      threshold: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-      method: PropTypes.string.isRequired,
-      clustering: PropTypes.string,
-      encoding: PropTypes.string,
-      rule: PropTypes.string
-    }).isRequired,
-    created_date: PropTypes.string.isRequired,
-    modified_date: PropTypes.string.isRequired,
-    result: PropTypes.shape({
-      mae: PropTypes.number,
-      rmse: PropTypes.number,
-      rscore: PropTypes.number,
-      fmeasure: PropTypes.number,
-      acc: PropTypes.number,
-      auc: PropTypes.number,
-    }).isRequired
-  })).isRequired,
+  jobs: PropTypes.arrayOf(jobPropType).isRequired,
   predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
 };
 

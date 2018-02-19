@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import RegConfigTable from './RegConfigTable';
 import ClassConfigTable from './ClassConfigTable';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
+import {jobPropType} from '../../helpers';
 
 
 class ConfigTableCard extends Component {
@@ -34,18 +35,7 @@ class ConfigTableCard extends Component {
 }
 
 ConfigTableCard.propTypes = {
-  jobs: PropTypes.arrayOf(PropTypes.shape({
-    uuid: PropTypes.string.isRequired,
-    status: PropTypes.string.isRequired,
-    run: PropTypes.string.isRequired,
-    log: PropTypes.string.isRequired,
-    timestamp: PropTypes.string.isRequired,
-    prefix: PropTypes.number.isRequired,
-    rule: PropTypes.string,
-    threshold: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    type: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
-    result: PropTypes.object.isRequired
-  })).isRequired,
+  jobs: PropTypes.arrayOf(jobPropType).isRequired,
   predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
 };
 export default ConfigTableCard;

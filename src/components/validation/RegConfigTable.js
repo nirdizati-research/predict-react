@@ -5,6 +5,7 @@ import React from 'react';
 import {DataTable, TableBody, TableColumn, TableHeader, TableRow} from 'react-md/lib/DataTables/index';
 import PropTypes from 'prop-types';
 import {columnStyle} from '../../reference';
+import {jobFlatPropType} from '../../helpers';
 
 /* eslint-disable camelcase */
 const RegConfigTable = (props) => {
@@ -34,16 +35,7 @@ const RegConfigTable = (props) => {
 };
 
 RegConfigTable.propTypes = {
-  jobs: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    status: PropTypes.string.isRequired,
-    run: PropTypes.string.isRequired,
-    splitName: PropTypes.string.isRequired,
-    created_date: PropTypes.string.isRequired,
-    modified_date: PropTypes.string.isRequired,
-    prefix_length: PropTypes.number.isRequired,
-    type: PropTypes.string.isRequired
-  })).isRequired
+  jobs: PropTypes.arrayOf(jobFlatPropType).isRequired
 };
 
 export default RegConfigTable;
