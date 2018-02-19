@@ -11,7 +11,7 @@ import {predictionMethods} from '../../reference';
 
 const ValidationHeaderCard = (props) => {
   const selectChange = (value, _) => {
-    props.logChange(value);
+    props.splitChange(value);
   };
   const localMethodChange = (value, _) => {
     props.methodChange(value);
@@ -22,7 +22,7 @@ const ValidationHeaderCard = (props) => {
         id="log-name-select"
         placeholder="log.xes"
         className="md-cell"
-        menuItems={props.logNames}
+        menuItems={props.splitLabels}
         position={SelectField.Positions.BELOW}
         onChange={selectChange}
       /></CardTitle>
@@ -37,12 +37,15 @@ const ValidationHeaderCard = (props) => {
 
 
 ValidationHeaderCard.propTypes = {
-  logNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  splitLabels: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.number.isRequired,
+    label: PropTypes.string.isRequired
+  })).isRequired,
   fetchState: PropTypes.shape({
     inFlight: PropTypes.bool.isRequired,
     error: PropTypes.any
   }).isRequired,
   methodChange: PropTypes.func.isRequired,
-  logChange: PropTypes.func.isRequired
+  splitChange: PropTypes.func.isRequired
 };
 export default ValidationHeaderCard;

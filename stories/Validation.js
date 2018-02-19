@@ -9,8 +9,7 @@ import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../src/reference';
 import ResultWrapper from '../src/components/validation/ResultWrapper';
 import {jobToConfigTable} from '../src/util/dataReducers';
 
-const names = ['Log 1', 'log 2', 'something.xes', 'reallylongandboringnametotestlimits.xes'];
-
+const splitLabels = [{value: 1, label: 'Split #1'}, {value: 2, label: 'Split #2'}];
 const classJobs = [
   {
     'id': 1,
@@ -144,7 +143,7 @@ storiesOf('Validation', module)
       return (
         <div className="md-grid">
           <div className="md-cell md-cell--12">
-            <ValidationHeaderCard logNames={names} fetchState={{inFlight: false}} logChange={(_) => _}
+            <ValidationHeaderCard splitLabels={splitLabels} fetchState={{inFlight: false}} splitChange={(_) => _}
                                   methodChange={(_) => _}/>
           </div>
         </div>
