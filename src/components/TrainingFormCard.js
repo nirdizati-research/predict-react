@@ -12,15 +12,18 @@ import {
   CLASSIFICATION,
   classificationMethods,
   clusteringMethods,
-  encodingMethods, NEXT_ACTIVITY,
+  encodingMethods,
+  NEXT_ACTIVITY,
   outcomeRuleControls,
-  predictionMethods, REGRESSION,
+  predictionMethods,
+  REGRESSION,
   regressionMethods,
   thresholdControls
 } from '../reference';
 import OutcomeRules from './training/OutcomeRules';
 import Threshold from './training/Threshold';
 import CheckboxGroup from './training/CheckboxGroup';
+import {splitLabels} from '../helpers';
 
 const defaultPrefix = 1;
 const defaultThreshold = 0;
@@ -242,10 +245,7 @@ class TrainingFormCard extends Component {
 }
 
 TrainingFormCard.propTypes = {
-  splitLabels: PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.number.isRequired,
-    label: PropTypes.string.isRequired
-  }).isRequired).isRequired,
+  splitLabels: splitLabels,
   fetchState: PropTypes.shape({
     inFlight: PropTypes.bool.isRequired,
     error: PropTypes.any

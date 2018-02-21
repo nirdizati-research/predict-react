@@ -9,7 +9,7 @@ export const sliceUuid = (uuid) => {
   return uuid.substring(0, 7);
 };
 
-export let jobPropType = PropTypes.shape({
+export const jobPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   status: PropTypes.string.isRequired,
   split: PropTypes.any.isRequired,
@@ -34,7 +34,7 @@ export let jobPropType = PropTypes.shape({
   }).isRequired
 }).isRequired;
 
-export let jobFlatPropType = PropTypes.shape({
+export const jobFlatPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   status: PropTypes.string.isRequired,
   run: PropTypes.string.isRequired,
@@ -46,3 +46,8 @@ export let jobFlatPropType = PropTypes.shape({
   rule: PropTypes.string,
   threshold: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 }).isRequired;
+
+export const splitLabels = PropTypes.arrayOf(PropTypes.shape({
+  value: PropTypes.number.isRequired,
+  label: PropTypes.string.isRequired
+}).isRequired).isRequired;

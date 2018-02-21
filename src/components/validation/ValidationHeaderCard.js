@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import FetchState from './../FetchState';
 import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
 import {predictionMethods} from '../../reference';
+import {splitLabels} from '../../helpers';
 
 const ValidationHeaderCard = (props) => {
   const selectChange = (value, _) => {
@@ -37,10 +38,7 @@ const ValidationHeaderCard = (props) => {
 
 
 ValidationHeaderCard.propTypes = {
-  splitLabels: PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.number.isRequired,
-    label: PropTypes.string.isRequired
-  })).isRequired,
+  splitLabels: splitLabels,
   fetchState: PropTypes.shape({
     inFlight: PropTypes.bool.isRequired,
     error: PropTypes.any

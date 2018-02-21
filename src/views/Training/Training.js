@@ -5,6 +5,7 @@ import TrainingFormCard from '../../components/TrainingFormCard';
 import {submitTraining} from '../../actions/JobActions';
 import {splitsToString} from '../../util/dataReducers';
 import {splitsRequested} from '../../actions/SplitActions';
+import {splitLabels} from '../../helpers';
 
 class Training extends Component {
   componentDidMount() {
@@ -25,10 +26,7 @@ class Training extends Component {
 }
 
 Training.propTypes = {
-  splitLabels: PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.number.isRequired,
-    label: PropTypes.string.isRequired
-  }).isRequired).isRequired,
+  splitLabels: splitLabels,
   onRequestSplitList: PropTypes.func.isRequired,
   onSubmitTraining: PropTypes.func.isRequired,
   fetchState: PropTypes.shape({
