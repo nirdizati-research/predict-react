@@ -7,7 +7,6 @@ import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
 import ResultTableCard from './ResultTableCard';
 import {getChartHeader, getTitles} from './ColumnHelper';
 import BubbleChartCard from '../chart/BubbleChartCard';
-import JobStatus from '../../views/JobStatus/JobStatus';
 import {jobPropType} from '../../helpers';
 
 const shortRun = (config) => {
@@ -16,11 +15,11 @@ const shortRun = (config) => {
 
 
 const regressionMap = (jobs) => {
-  return jobs.map((job) => [job.id, shortRun(job.config), job.result.mae, job.result.rmse, job.result.rscore]);
+  return jobs.map((job) => [job.id + '', shortRun(job.config), job.result.mae, job.result.rmse, job.result.rscore]);
 };
 
 const classMap = (jobs) => {
-  return jobs.map((job) => [job.id, shortRun(job.config), job.result.f1score, job.result.acc, job.result.auc]);
+  return jobs.map((job) => [job.id+ '', shortRun(job.config), job.result.f1score, job.result.acc, job.result.auc]);
 };
 
 const prepareData = (jobs, predictionMethod) => {

@@ -15,12 +15,12 @@ class Validation extends Component {
 
     this.state = {
       predictionMethod: REGRESSION,
-      log: ''
+      splitId: ''
     };
   }
 
-  onChangeLog(logName) {
-    this.setState({log: logName});
+  onChangeSplit(splitId) {
+    this.setState({splitId: splitId});
   }
 
   componentDidMount() {
@@ -37,19 +37,20 @@ class Validation extends Component {
     // Only unique splits for selector
     const splitLabels = splitsToString(filterUnique(this.props.jobs.reduce(reducer, [])));
 
+    const jobs = this.props.jobs.filter((job) => (job.type === this.state.predictionMethod)
+      && (job.split.id === this.state.splitId));
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
           <ValidationHeaderCard splitLabels={splitLabels} fetchState={this.props.fetchState}
                                 visibleLogName={this.state.log} methodChange={this.onChangeType.bind(this)}
-                                splitChange={this.onChangeLog.bind(this)}/>
+                                splitChange={this.onChangeSplit.bind(this)}/>
         </div>
         <div className="md-cell md-cell--12">
-          <ConfigTableCard jobs={this.props.jobs.filter((job) => job.type === this.state.predictionMethod)}
+          <ConfigTableCard jobs={jobs}
                            predictionMethod={this.state.predictionMethod}/>
         </div>
-        <ResultWrapper jobs={this.props.jobs.filter((job) => job.type === this.state.predictionMethod)}
-                       predictionMethod={this.state.predictionMethod}/>
+        <ResultWrapper jobs={jobs} predictionMethod={this.state.predictionMethod}/>
       </div>
     );
   }

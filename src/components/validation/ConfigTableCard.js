@@ -8,17 +8,19 @@ import RegConfigTable from './RegConfigTable';
 import ClassConfigTable from './ClassConfigTable';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
 import {jobPropType} from '../../helpers';
+import {jobToConfigTable} from '../../util/dataReducers';
 
 
 class ConfigTableCard extends Component {
   getTable() {
+    const flatJobs = this.props.jobs.map(jobToConfigTable);
     switch (this.props.predictionMethod) {
       case REGRESSION:
-        return <RegConfigTable jobs={this.props.jobs}/>;
+        return <RegConfigTable jobs={flatJobs}/>;
       case CLASSIFICATION:
-        return <ClassConfigTable jobs={this.props.jobs}/>;
+        return <ClassConfigTable jobs={flatJobs}/>;
       case NEXT_ACTIVITY:
-        return <RegConfigTable jobs={this.props.jobs}/>;
+        return <RegConfigTable jobs={flatJobs}/>;
       // no default
     }
   }

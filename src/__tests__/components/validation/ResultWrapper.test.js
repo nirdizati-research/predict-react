@@ -105,8 +105,8 @@ const regJobs = [{
   'error': ''
 }];
 const classData = [
-  [1, 'knn_simpleIndex_kmeans', 123, 111, 3],
-  [3, 'knn_simpleIndex_kmeans', 1230, 1110, 30],
+  ['1', 'knn_simpleIndex_kmeans', 123, 111, 3],
+  ['3', 'knn_simpleIndex_kmeans', 1230, 1110, 30],
 ];
 
 let element = null;
@@ -134,7 +134,7 @@ describe('ResultWrapper', () => {
 
   it('supplies data for regression', () => {
     element.setProps({predictionMethod: REGRESSION, jobs: regJobs});
-    const regData = [[53, 'linear_simpleIndex_noCluster', 11, 12, 13]];
+    const regData = [['53', 'linear_simpleIndex_noCluster', 11, 12, 13]];
     expect(element.find(ResultTableCard).props().data).toEqual(regData);
     expect(element.find(ResultTableCard).props().predictionMethod).toMatch(REGRESSION);
   });
@@ -147,9 +147,9 @@ describe('ResultWrapper', () => {
 
   it('flips data for regression', () => {
     element.setProps({predictionMethod: REGRESSION, jobs: regJobs});
-    const chart1 = [[53, 11, 12, 'linear', 13]];
-    const chart2 = [[53, 11, 12, 'simpleIndex', 13]];
-    const chart3 = [[53, 11, 12, 'noCluster', 13]];
+    const chart1 = [['53', 11, 12, 'linear', 13]];
+    const chart2 = [['53', 11, 12, 'simpleIndex', 13]];
+    const chart3 = [['53', 11, 12, 'noCluster', 13]];
 
     expect(element.find(BubbleChartCard).at(0).props().data).toEqual(chart1);
     expect(element.find(BubbleChartCard).at(0).props().hTitle).toBe('mae');
