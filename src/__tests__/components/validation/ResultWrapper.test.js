@@ -10,62 +10,103 @@ import BubbleChartCard from '../../../components/chart/BubbleChartCard';
 
 const classJobs = [
   {
+    'id': 1,
+    'created_date': '2017-11-14T20:52:36.469000Z',
+    'modified_date': '2017-12-05T14:57:28.344216Z',
+    'config': {
+      'clustering': 'kmeans',
+      'method': 'knn',
+      'encoding': 'simpleIndex',
+      'rule': 'remaining_time',
+      'prefix_length': 1,
+      'threshold': 'default'
+    },
     'status': 'completed',
-    'run': 'KNN_simpleIndex_Kmeans',
-    'log': 'test_bpi12_sorted.xes',
-    'timestamp': 'Sep 13 2017 10:55:13',
-    'rule': 'elapsed_time',
-    'prefix': 0,
-    'uuid': 'uuuuuuuuuuuuu',
-    'threshold': '2592000',
-    'type': 'Classification',
     'result': {
-      'uuid': 'uuuuuuuuuuuuu',
-      'fmeasure': 123,
+      'f1score': 123,
       'acc': 111,
       'auc': 3
-    }
+    },
+    'type': 'classification',
+    'split': {
+      'id': 1,
+      'config': {},
+      'original_log': {
+        'id': 1,
+        'name': 'general_example.xes'
+      },
+      'type': 'single',
+      'test_log': null,
+      'training_log': null
+    },
+    'error': ''
   },
   {
+    'id': 3,
+    'created_date': '2017-11-14T20:52:36.469000Z',
+    'modified_date': '2017-12-05T14:57:28.344216Z',
+    'config': {
+      'clustering': 'kmeans',
+      'method': 'knn',
+      'encoding': 'simpleIndex',
+      'rule': 'remaining_time',
+      'prefix_length': 1,
+      'threshold': 'default'
+    },
     'status': 'completed',
-    'run': 'KNN_simpleIndex_Kmeans',
-    'log': 'test_bpi12_sorted2.xes',
-    'timestamp': 'Sep 13 2017 10:55:13',
-    'rule': 'elapsed_time',
-    'prefix': 0,
-    'uuid': 'uuuuuuuuuuuuu2',
-    'threshold': '2592000',
-    'type': 'Classification',
     'result': {
-      'uuid': 'uuuuuuuuuuuuu2',
-      'fmeasure': 1230,
+      'f1score': 1230,
       'acc': 1110,
       'auc': 30
-    }
-  }];
-const regJobs = [
-  {
-    'clustering': 'None',
-    'status': 'completed',
-    'run': 'linear_simpleIndex_None',
-    'log': 'Production.xes',
-    'encoding': 'simpleIndex',
-    'timestamp': 'Oct 09 2017 12:44:42',
-    'prefix': 0,
-    'type': 'Regression',
-    'regression': 'linear',
-    'uuid': '82f9bf59-a15c-4b83-91af-9e1f714b9976',
-    'result': {
-      'uuid': '82f9bf59-a15c-4b83-91af-9e1f714b9976',
-      'mae': 11,
-      'rmse': 12,
-      'rscore': 13
-    }
+    },
+    'type': 'classification',
+    'split': {
+      'id': 1,
+      'config': {},
+      'original_log': {
+        'id': 1,
+        'name': 'general_example.xes'
+      },
+      'type': 'single',
+      'test_log': null,
+      'training_log': null
+    },
+    'error': ''
   }];
 
+const regJobs = [{
+  'id': 53,
+  'created_date': '2018-02-07T22:47:32.146583Z',
+  'modified_date': '2018-02-07T22:47:32.149647Z',
+  'config': {
+    'prefix_length': 0,
+    'encoding': 'simpleIndex',
+    'clustering': 'noCluster',
+    'method': 'linear'
+  },
+  'status': 'created',
+  'result': {
+    'mae': 11,
+    'rmse': 12,
+    'rscore': 13
+  },
+  'type': 'regression',
+  'split': {
+    'id': 1,
+    'config': {},
+    'original_log': {
+      'id': 1,
+      'name': 'general_example.xes'
+    },
+    'type': 'single',
+    'test_log': null,
+    'training_log': null
+  },
+  'error': ''
+}];
 const classData = [
-  ['uuuuuuu', 'KNN_simpleIndex_Kmeans', 123, 111, 3],
-  ['uuuuuuu', 'KNN_simpleIndex_Kmeans', 1230, 1110, 30],
+  ['1', 'knn_simpleIndex_kmeans', 123, 111, 3],
+  ['3', 'knn_simpleIndex_kmeans', 1230, 1110, 30],
 ];
 
 let element = null;
@@ -93,7 +134,7 @@ describe('ResultWrapper', () => {
 
   it('supplies data for regression', () => {
     element.setProps({predictionMethod: REGRESSION, jobs: regJobs});
-    const regData = [['82f9bf5', 'linear_simpleIndex_None', 11, 12, 13]];
+    const regData = [['53', 'linear_simpleIndex_noCluster', 11, 12, 13]];
     expect(element.find(ResultTableCard).props().data).toEqual(regData);
     expect(element.find(ResultTableCard).props().predictionMethod).toMatch(REGRESSION);
   });
@@ -106,9 +147,9 @@ describe('ResultWrapper', () => {
 
   it('flips data for regression', () => {
     element.setProps({predictionMethod: REGRESSION, jobs: regJobs});
-    const chart1 = [['82f9bf5', 11, 12, 'linear', 13]];
-    const chart2 = [['82f9bf5', 11, 12, 'simpleIndex', 13]];
-    const chart3 = [['82f9bf5', 11, 12, 'None', 13]];
+    const chart1 = [['53', 11, 12, 'linear', 13]];
+    const chart2 = [['53', 11, 12, 'simpleIndex', 13]];
+    const chart3 = [['53', 11, 12, 'noCluster', 13]];
 
     expect(element.find(BubbleChartCard).at(0).props().data).toEqual(chart1);
     expect(element.find(BubbleChartCard).at(0).props().hTitle).toBe('mae');

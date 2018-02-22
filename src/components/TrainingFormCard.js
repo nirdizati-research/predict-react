@@ -12,25 +12,29 @@ import {
   CLASSIFICATION,
   classificationMethods,
   clusteringMethods,
-  encodingMethods, NEXT_ACTIVITY,
+  encodingMethods,
+  NEXT_ACTIVITY,
   outcomeRuleControls,
-  predictionMethods, REGRESSION,
+  predictionMethods,
+  REGRESSION,
   regressionMethods,
   thresholdControls
 } from '../reference';
 import OutcomeRules from './training/OutcomeRules';
 import Threshold from './training/Threshold';
 import CheckboxGroup from './training/CheckboxGroup';
+import {splitLabels} from '../helpers';
 
-const defaultPrefix = 0;
+const defaultPrefix = 1;
 const defaultThreshold = 0;
 const groupStyle = {height: 'auto'};
 
 const initialState = (props) => {
+  const splitId = props.splitLabels[0] ? props.splitLabels[0].value : 0;
   return {
-    logName: props.logNames[0],
-    encoding: [encodingMethods[0].value],
-    clustering: [clusteringMethods[0].value],
+    split_id: splitId,
+    encodings: [encodingMethods[0].value],
+    clusterings: [clusteringMethods[0].value],
     classification: [classificationMethods[0].value],
     regression: [regressionMethods[0].value],
     displayWarning: false,
@@ -64,11 +68,11 @@ class TrainingFormCard extends Component {
   checkboxChange(_, event) {
     const value = event.target.value;
     switch (event.target.name) {
-      case 'encoding[]':
-        this.setState({encoding: this.addOrRemove(this.state.encoding, value)});
+      case 'encodings[]':
+        this.setState({encodings: this.addOrRemove(this.state.encodings, value)});
         break;
-      case 'clustering[]':
-        this.setState({clustering: this.addOrRemove(this.state.clustering, value)});
+      case 'clusterings[]':
+        this.setState({clusterings: this.addOrRemove(this.state.clusterings, value)});
         break;
       case 'regression[]':
         this.setState({regression: this.addOrRemove(this.state.regression, value)});
@@ -95,8 +99,8 @@ class TrainingFormCard extends Component {
     });
   }
 
-  selectChange(value) {
-    this.setState({logName: value});
+  selectChange(value, _) {
+    this.setState({split_id: value});
   }
 
   onThresholdChange(threshold) {
@@ -106,16 +110,16 @@ class TrainingFormCard extends Component {
   displayWarningCheck(prevState) {
     switch (prevState.predictionMethod) {
       case REGRESSION:
-        return !(prevState.encoding.length !== 0
-          && prevState.clustering.length !== 0
+        return !(prevState.encodings.length !== 0
+          && prevState.clusterings.length !== 0
           && prevState.regression.length !== 0);
       case CLASSIFICATION:
-        return !(prevState.encoding.length !== 0
-          && prevState.clustering.length !== 0
+        return !(prevState.encodings.length !== 0
+          && prevState.clusterings.length !== 0
           && prevState.classification.length !== 0);
       case NEXT_ACTIVITY:
-        return !(prevState.encoding.length !== 0
-          && prevState.clustering.length !== 0
+        return !(prevState.encodings.length !== 0
+          && prevState.clusterings.length !== 0
           && prevState.classification.length !== 0);
       // no default
     }
@@ -125,33 +129,28 @@ class TrainingFormCard extends Component {
   onSubmit() {
     switch (this.state.predictionMethod) {
       case REGRESSION:
-        this.props.onSubmit(this.getRegressionPayload());
+        this.props.onSubmit(this.getWithMethods(this.state.regression));
         break;
       case CLASSIFICATION:
         this.props.onSubmit(this.getClassificationPayload());
         break;
       case NEXT_ACTIVITY:
-        this.props.onSubmit(this.getNextActivityPayload());
+        this.props.onSubmit(this.getWithMethods(this.state.classification));
         break;
       // no default
     }
   }
 
-  getPayload() {
-    // TODO type should be predictionMethod
+  getWithMethods(methods) {
     return {
       type: this.state.predictionMethod,
-      log: this.state.logName,
-      prefix: defaultPrefix,
-      encoding: this.state.encoding,
-      clustering: this.state.clustering
-    };
-  }
-
-  getRegressionPayload() {
-    return {
-      ...this.getPayload(),
-      regression: this.state.regression,
+      split_id: this.state.split_id,
+      config: {
+        prefix_length: defaultPrefix,
+        encodings: this.state.encodings,
+        clusterings: this.state.clusterings,
+        methods: methods
+      }
     };
   }
 
@@ -162,19 +161,10 @@ class TrainingFormCard extends Component {
     } else {
       actualThreshold = this.state.threshold.threshold;
     }
-    return {
-      ...this.getPayload(),
-      classification: this.state.classification,
-      rule: this.state.rule,
-      threshold: actualThreshold
-    };
-  }
-
-  getNextActivityPayload() {
-    return {
-      ...this.getPayload(),
-      classification: this.state.classification,
-    };
+    let payload = this.getWithMethods(this.state.classification);
+    payload.config.rule = this.state.rule;
+    payload.config.threshold = actualThreshold;
+    return payload;
   }
 
   onReset() {
@@ -210,12 +200,12 @@ class TrainingFormCard extends Component {
         <CardTitle title="Training">
           <SelectField
             id="log-name-select"
-            placeholder="log.xes"
+            placeholder="Split id will be here"
             className="md-cell"
-            menuItems={this.props.logNames}
+            menuItems={this.props.splitLabels}
             position={SelectField.Positions.BELOW}
             onChange={this.selectChange.bind(this)}
-            value={this.state.logName}
+            value={this.state.split_id}
           /></CardTitle>
         <CardText>
           <div className="md-grid md-grid--no-spacing">
@@ -225,14 +215,14 @@ class TrainingFormCard extends Component {
                                      onChange={this.onPredictionMethodChange.bind(this)}/>
             </div>
             <div className="md-cell">
-              <SelectionControlGroup type="checkbox" label="Encoding methods" name="encoding" id="encoding"
+              <SelectionControlGroup type="checkbox" label="Encoding methods" name="encodings" id="encodings"
                                      onChange={this.checkboxChange.bind(this)} controls={encodingMethods}
-                                     value={this.state.encoding.join(',')} controlStyle={groupStyle}/>
+                                     value={this.state.encodings.join(',')} controlStyle={groupStyle}/>
             </div>
             <div className="md-cell">
-              <SelectionControlGroup type="checkbox" label="Clustering methods" name="clustering" id="clustering"
+              <SelectionControlGroup type="checkbox" label="Clustering methods" name="clusterings" id="clusterings"
                                      onChange={this.checkboxChange.bind(this)} controls={clusteringMethods}
-                                     value={this.state.clustering.join(',')} controlStyle={groupStyle}/>
+                                     value={this.state.clusterings.join(',')} controlStyle={groupStyle}/>
             </div>
             {regressionFragment}
             {classificationFragment}
@@ -255,7 +245,7 @@ class TrainingFormCard extends Component {
 }
 
 TrainingFormCard.propTypes = {
-  logNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  splitLabels: splitLabels,
   fetchState: PropTypes.shape({
     inFlight: PropTypes.bool.isRequired,
     error: PropTypes.any

@@ -17,7 +17,7 @@ const initialState = {
 const mergeIncomingJobs = (incoming, existing) => {
   // From https://stackoverflow.com/a/34963663
   const a3 = existing.concat(incoming).reduce((acc, x) => {
-    acc[x.uuid] = Object.assign(acc[x.uuid] || {}, x);
+    acc[x.id] = Object.assign(acc[x.id] || {}, x);
     return acc;
   }, {});
   return Object.keys(a3).map((key) => a3[key]);

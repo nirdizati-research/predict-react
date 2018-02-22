@@ -7,14 +7,19 @@ import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
 import ResultTableCard from './ResultTableCard';
 import {getChartHeader, getTitles} from './ColumnHelper';
 import BubbleChartCard from '../chart/BubbleChartCard';
-import {sliceUuid} from '../../helpers';
+import {jobPropType} from '../../helpers';
+
+const shortRun = (config) => {
+  return `${config.method}_${config.encoding}_${config.clustering}`;
+};
+
 
 const regressionMap = (jobs) => {
-  return jobs.map((job) => [sliceUuid(job.uuid), job.run, job.result.mae, job.result.rmse, job.result.rscore]);
+  return jobs.map((job) => [job.id + '', shortRun(job.config), job.result.mae, job.result.rmse, job.result.rscore]);
 };
 
 const classMap = (jobs) => {
-  return jobs.map((job) => [sliceUuid(job.uuid), job.run, job.result.fmeasure, job.result.acc, job.result.auc]);
+  return jobs.map((job) => [job.id+ '', shortRun(job.config), job.result.f1score, job.result.acc, job.result.auc]);
 };
 
 const prepareData = (jobs, predictionMethod) => {
@@ -78,31 +83,12 @@ const ResultWrapper = (props) => {
     charts = getCharts(tableData, props.predictionMethod);
   }
   return [<div className="md-cell md-cell--12" key="0">
-      <ResultTableCard data={tableData} predictionMethod={props.predictionMethod}/>
-    </div>, ...charts];
+    <ResultTableCard data={tableData} predictionMethod={props.predictionMethod}/>
+  </div>, ...charts];
 };
 
 ResultWrapper.propTypes = {
-  jobs: PropTypes.arrayOf(PropTypes.shape({
-    uuid: PropTypes.string.isRequired,
-    status: PropTypes.string.isRequired,
-    run: PropTypes.string.isRequired,
-    log: PropTypes.string.isRequired,
-    timestamp: PropTypes.string.isRequired,
-    prefix: PropTypes.number.isRequired,
-    rule: PropTypes.string,
-    threshold: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    type: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
-    result: PropTypes.shape({
-      uuid: PropTypes.string.isRequired,
-      mae: PropTypes.number,
-      rmse: PropTypes.number,
-      rscore: PropTypes.number,
-      fmeasure: PropTypes.number,
-      acc: PropTypes.number,
-      auc: PropTypes.number,
-    }).isRequired
-  })).isRequired,
+  jobs: PropTypes.arrayOf(jobPropType).isRequired,
   predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
 };
 

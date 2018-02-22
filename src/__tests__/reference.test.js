@@ -14,7 +14,7 @@ describe('Reference', () => {
     expect(clusteringMethods[1].key).toBe('kmeans');
     expect(clusteringMethods[1].value).toBe('kmeans');
     const label = shallow(clusteringMethods[1].label);
-    expect(label.text()).toMatch(/Kmeans/);
+    expect(label.text()).toMatch(/kmeans/);
     expect(label.text()).toMatch(/Assign traces/);
   });
 
@@ -38,7 +38,7 @@ describe('Reference', () => {
     expect(predictionMethods.length).toBe(3);
   });
   it('contains 3 regressions', () => {
-    expect(regressionMethods.length).toBe(4);
+    expect(regressionMethods.length).toBe(3);
   });
 
   it('contains 3 thresholds', () => {

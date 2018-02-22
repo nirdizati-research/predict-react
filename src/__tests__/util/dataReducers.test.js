@@ -1,14 +1,14 @@
 /**
  * Created by tonis.kasekamp on 10/17/17.
  */
-import {normalizeSplits} from '../../util/dataReducers';
+import {normalizeSplits, splitsToString} from '../../util/dataReducers';
 
 const splits = [
   {
     'id': 1,
-    'originalLog': {'id': 1, 'name': 'log1'},
-    'testLog': null,
-    'trainingLog': null,
+    'original_log': {'id': 1, 'name': 'log1'},
+    'test_log': null,
+    'training_log': null,
     'type': 'single',
     'config': {
       'value': 123,
@@ -17,9 +17,9 @@ const splits = [
   },
   {
     'id': 2,
-    'originalLog': null,
-    'testLog': {'id': 2, 'name': 'log2'},
-    'trainingLog': {'id': 3, 'name': 'log3'},
+    'original_log': null,
+    'test_log': {'id': 2, 'name': 'log2'},
+    'training_log': {'id': 3, 'name': 'log3'},
     'type': 'double',
     'config': {
       'value': 123,
@@ -55,3 +55,14 @@ it('returns normalized split', () => {
   expect(normalizeSplits(splits)).toEqual(completeSplits);
 });
 
+describe('split to string', () => {
+  const stringLabels = splitsToString(splits);
+
+  it('formats single split', () => {
+    expect(stringLabels[0]).toEqual({value: 1, label: 'Split #1 of log log1'});
+  });
+
+  it('formats double split', () => {
+    expect(stringLabels[1]).toEqual({value: 2, label: 'Split #2 of logs log3 and log2'});
+  });
+});

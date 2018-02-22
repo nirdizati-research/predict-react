@@ -7,17 +7,20 @@ import PropTypes from 'prop-types';
 import RegConfigTable from './RegConfigTable';
 import ClassConfigTable from './ClassConfigTable';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
+import {jobPropType} from '../../helpers';
+import {jobToConfigTable} from '../../util/dataReducers';
 
 
 class ConfigTableCard extends Component {
   getTable() {
+    const flatJobs = this.props.jobs.map(jobToConfigTable);
     switch (this.props.predictionMethod) {
       case REGRESSION:
-        return <RegConfigTable jobs={this.props.jobs}/>;
+        return <RegConfigTable jobs={flatJobs}/>;
       case CLASSIFICATION:
-        return <ClassConfigTable jobs={this.props.jobs}/>;
+        return <ClassConfigTable jobs={flatJobs}/>;
       case NEXT_ACTIVITY:
-        return <RegConfigTable jobs={this.props.jobs}/>;
+        return <RegConfigTable jobs={flatJobs}/>;
       // no default
     }
   }
@@ -34,18 +37,7 @@ class ConfigTableCard extends Component {
 }
 
 ConfigTableCard.propTypes = {
-  jobs: PropTypes.arrayOf(PropTypes.shape({
-    uuid: PropTypes.string.isRequired,
-    status: PropTypes.string.isRequired,
-    run: PropTypes.string.isRequired,
-    log: PropTypes.string.isRequired,
-    timestamp: PropTypes.string.isRequired,
-    prefix: PropTypes.number.isRequired,
-    rule: PropTypes.string,
-    threshold: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    type: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
-    result: PropTypes.object.isRequired
-  })).isRequired,
+  jobs: PropTypes.arrayOf(jobPropType).isRequired,
   predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
 };
 export default ConfigTableCard;

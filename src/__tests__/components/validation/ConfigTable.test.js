@@ -9,27 +9,62 @@ import {TableColumn} from 'react-md';
 import RegConfigTable from '../../../components/validation/RegConfigTable';
 import ConfigTableCard from '../../../components/validation/ConfigTableCard';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../../reference';
+import {jobToConfigTable} from '../../../util/dataReducers';
 
 const regJobs = [{
-  uuid: '12345678',
-  status: 'aa',
-  run: 'aa',
-  log: 'aa',
-  timestamp: 'aa',
-  prefix: 0,
-  type: 'aa'
+  'id': 53,
+  'created_date': '2018-02-07T22:47:32.146583Z',
+  'modified_date': '2018-02-07T22:47:32.149647Z',
+  'config': {
+    'prefix_length': 0,
+    'encoding': 'simpleIndex',
+    'clustering': 'noCluster',
+    'method': 'linear'
+  },
+  'status': 'created',
+  'result': {},
+  'type': 'regression',
+  'split': {
+    'id': 1,
+    'config': {},
+    'original_log': {
+      'id': 1,
+      'name': 'general_example.xes'
+    },
+    'type': 'single',
+    'test_log': null,
+    'training_log': null
+  },
+  'error': ''
 }];
 
 const classJobs = [{
-  uuid: '12345678',
-  status: 'aa',
-  run: 'aa',
-  log: 'aa',
-  timestamp: 'aa',
-  prefix: 0,
-  rule: 'aa',
-  threshold: 0,
-  type: 'aa'
+  'id': 52,
+  'created_date': '2018-02-07T09:13:52.964154Z',
+  'modified_date': '2018-02-07T09:13:52.964256Z',
+  'config': {
+    'rule': 'remaining_time',
+    'prefix_length': 1,
+    'threshold': 'default',
+    'encoding': 'simpleIndex',
+    'clustering': 'noCluster',
+    'method': 'randomForest'
+  },
+  'status': 'created',
+  'result': {},
+  'type': 'classification',
+  'split': {
+    'id': 1,
+    'config': {},
+    'original_log': {
+      'id': 1,
+      'name': 'general_example.xes'
+    },
+    'type': 'single',
+    'test_log': null,
+    'training_log': null
+  },
+  'error': ''
 }];
 
 describe('ConfigTableCard', () => {
@@ -60,15 +95,13 @@ describe('ClassConfigTable', () => {
     expect(element).toBeDefined();
     // Header row
     expect(element.find(TableRow).length).toBe(1);
-    expect(element.find(TableColumn).length).toBe(9);
+    expect(element.find(TableColumn).length).toBe(10);
   });
 
   it('renders jobs if present', () => {
-    const element = mount(<ClassConfigTable jobs={classJobs}/>);
+    const element = mount(<ClassConfigTable jobs={classJobs.map(jobToConfigTable)}/>);
     expect(element.find(TableRow).length).toBe(2);
-    // uuid
-    expect(element.text()).toMatch(/1234567/);
-    expect(element.text()).not.toMatch(/12345678/);
+    expect(element.text()).toMatch(/Encoding: simpleIndex/);
   });
 });
 
@@ -78,14 +111,12 @@ describe('RegConfigTable', () => {
     expect(element).toBeDefined();
     // Header row
     expect(element.find(TableRow).length).toBe(1);
-    expect(element.find(TableColumn).length).toBe(7);
+    expect(element.find(TableColumn).length).toBe(8);
   });
 
   it('renders jobs if present', () => {
-    const element = mount(<RegConfigTable jobs={regJobs}/>);
+    const element = mount(<RegConfigTable jobs={regJobs.map(jobToConfigTable)}/>);
     expect(element.find(TableRow).length).toBe(2);
-    // uuid
-    expect(element.text()).toMatch(/1234567/);
-    expect(element.text()).not.toMatch(/12345678/);
+    expect(element.text()).toMatch(/Encoding: simpleIndex/);
   });
 });

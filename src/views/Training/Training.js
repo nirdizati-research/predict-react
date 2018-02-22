@@ -1,25 +1,23 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {logListRequested} from '../../actions/LogActions';
 import TrainingFormCard from '../../components/TrainingFormCard';
 import {submitTraining} from '../../actions/JobActions';
+import {splitsToString} from '../../util/dataReducers';
+import {splitsRequested} from '../../actions/SplitActions';
+import {splitLabels} from '../../helpers';
 
 class Training extends Component {
   componentDidMount() {
     // TODO refactor this
-    if (this.props.logNames.length === 0) {
-      this.props.onRequestLogList(true);
-    } else {
-      this.props.onRequestLogList(false);
-    }
+    this.props.onRequestSplitList();
   }
 
   render() {
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
-          <TrainingFormCard logNames={this.props.logNames} fetchState={this.props.fetchState}
+          <TrainingFormCard splitLabels={this.props.splitLabels} fetchState={this.props.fetchState}
                             onSubmit={this.props.onSubmitTraining}/>
         </div>
       </div>
@@ -28,8 +26,8 @@ class Training extends Component {
 }
 
 Training.propTypes = {
-  logNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  onRequestLogList: PropTypes.func.isRequired,
+  splitLabels: splitLabels,
+  onRequestSplitList: PropTypes.func.isRequired,
   onSubmitTraining: PropTypes.func.isRequired,
   fetchState: PropTypes.shape({
     inFlight: PropTypes.bool.isRequired,
@@ -38,12 +36,12 @@ Training.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  logNames: state.logs.logs.map((log) => log.name),
+  splitLabels: splitsToString(state.splits.splits),
   fetchState: state.training.fetchState,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onRequestLogList: (changeVisible) => dispatch(logListRequested({changeVisible, requestInfo: false})),
+  onRequestSplitList: () => dispatch(splitsRequested()),
   onSubmitTraining: (payload) => dispatch(submitTraining(payload))
 });
 

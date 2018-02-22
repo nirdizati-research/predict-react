@@ -7,82 +7,135 @@ import ValidationHeaderCard from '../src/components/validation/ValidationHeaderC
 import ConfigTableCard from '../src/components/validation/ConfigTableCard';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../src/reference';
 import ResultWrapper from '../src/components/validation/ResultWrapper';
+import {jobToConfigTable} from '../src/util/dataReducers';
 
-const names = ['Log 1', 'log 2', 'something.xes', 'reallylongandboringnametotestlimits.xes'];
-
+const splitLabels = [{value: 1, label: 'Split #1'}, {value: 2, label: 'Split #2'}];
 const classJobs = [
   {
+    'id': 1,
+    'created_date': '2017-11-14T20:52:36.469000Z',
+    'modified_date': '2017-12-05T14:57:28.344216Z',
+    'config': {
+      'clustering': 'noCluster',
+      'method': 'randomForest',
+      'encoding': 'simpleIndex',
+      'rule': 'remaining_time',
+      'prefix_length': 1,
+      'threshold': 'default'
+    },
     'status': 'completed',
-    'run': 'KNN_simpleIndex_Kmeans',
-    'log': 'test_bpi12_sorted.xes',
-    'timestamp': 'Sep 13 2017 10:55:13',
-    'rule': 'elapsed_time',
-    'prefix': 0,
-    'uuid': 'uuuuuuuuuuuuu',
-    'threshold': '2592000',
-    'type': 'Classification',
     'result': {
-      'uuid': 'uuuuuuuuuuuuu',
-      'fmeasure': 123,
-      'acc': 111,
-      'auc': 3
-    }
+      'f1score': 0.6666666666666666,
+      'acc': 0.5,
+      'auc': 0.5
+    },
+    'type': 'classification',
+    'split': {
+      'id': 1,
+      'config': {},
+      'original_log': {
+        'id': 1,
+        'name': 'general_example.xes'
+      },
+      'type': 'single',
+      'test_log': null,
+      'training_log': null
+    },
+    'error': ''
   },
   {
+    'id': 3,
+    'created_date': '2017-11-14T20:52:36.469000Z',
+    'modified_date': '2017-12-05T14:57:28.344216Z',
+    'config': {
+      'clustering': 'noCluster',
+      'method': 'randomForest',
+      'encoding': 'simpleIndex',
+      'rule': 'remaining_time',
+      'prefix_length': 1,
+      'threshold': 'default'
+    },
     'status': 'completed',
-    'run': 'KNN_boolean_None',
-    'log': 'test_bpi12_sorted2.xes',
-    'timestamp': 'Sep 13 2017 10:55:13',
-    'rule': 'elapsed_time',
-    'prefix': 0,
-    'uuid': 'uuuuuuuuuuuuu2',
-    'threshold': '2592000',
-    'type': 'Classification',
     'result': {
-      'uuid': 'uuuuuuuuuuuuu2',
-      'fmeasure': 1230,
-      'acc': 1110,
-      'auc': 30
-    }
+      'f1score': 0.766666666666666,
+      'acc': 0.3,
+      'auc': 0.2
+    },
+    'type': 'classification',
+    'split': {
+      'id': 1,
+      'config': {},
+      'original_log': {
+        'id': 1,
+        'name': 'general_example.xes'
+      },
+      'type': 'single',
+      'test_log': null,
+      'training_log': null
+    },
+    'error': ''
   }];
+
 const regJobs = [
   {
-    'clustering': 'None',
-    'status': 'completed',
-    'run': 'linear_simpleIndex_None',
-    'log': 'Production.xes',
-    'encoding': 'simpleIndex',
-    'timestamp': 'Oct 09 2017 12:44:42',
-    'prefix': 0,
-    'type': 'Regression',
-    'regression': 'linear',
-    'uuid': '82f9bf59-a15c-4b83-91af-9e1f714b9976',
-    'result': {
-      'uuid': '82f9bf59-a15c-4b83-91af-9e1f714b9976',
-      'mae': 1230,
-      'rmse': 1110,
-      'rscore': 30
-    }
+    'id': 53,
+    'created_date': '2018-02-07T22:47:32.146583Z',
+    'modified_date': '2018-02-07T22:47:32.149647Z',
+    'config': {
+      'prefix_length': 0,
+      'encoding': 'simpleIndex',
+      'clustering': 'noCluster',
+      'method': 'linear'
+    },
+    'status': 'created',
+    'result': {},
+    'type': 'regression',
+    'split': {
+      'id': 1,
+      'config': {},
+      'original_log': {
+        'id': 1,
+        'name': 'general_example.xes'
+      },
+      'type': 'single',
+      'test_log': null,
+      'training_log': null
+    },
+    'error': ''
   }];
 const nextActivityJobs = [
   {
-    'clustering': 'None',
-    'status': 'queued',
-    'run': 'KNN_simpleIndex_None',
-    'log': 'Production.xes',
-    'classification': 'KNN',
-    'encoding': 'simpleIndex',
-    'timestamp': 'Oct 09 2017 10:57:45',
-    'prefix': 0,
-    'type': 'NextActivity',
-    'uuid': '1830e0ff-ebac-4396-8f54-5f7ad9247132',
+    'id': 1,
+    'created_date': '2017-11-14T20:52:36.469000Z',
+    'modified_date': '2017-12-05T14:57:28.344216Z',
+    'config': {
+      'clustering': 'noCluster',
+      'method': 'randomForest',
+      'encoding': 'simpleIndex',
+      'rule': 'remaining_time',
+      'prefix_length': 1,
+      'threshold': 'default'
+    },
+    'status': 'completed',
     'result': {
-      'uuid': '1830e0ff-ebac-4396-8f54-5f7ad9247132',
-      'mae': 1230,
-      'rmse': 1110,
-      'rscore': 30
-    }
-  }
+      'f1score': 0.6666666666666666,
+      'acc': 0.5,
+      'auc': 0.5
+    },
+    'type': 'nextActivity',
+    'split': {
+      'id': 1,
+      'config': {},
+      'original_log': {
+        'id': 1,
+        'name': 'general_example.xes'
+      },
+      'type': 'single',
+      'test_log': null,
+      'training_log': null
+    },
+    'error': ''
+  },
 ];
 
 storiesOf('Validation', module)
@@ -90,39 +143,39 @@ storiesOf('Validation', module)
       return (
         <div className="md-grid">
           <div className="md-cell md-cell--12">
-            <ValidationHeaderCard logNames={names} fetchState={{inFlight: false}} logChange={(_) => _}
+            <ValidationHeaderCard splitLabels={splitLabels} fetchState={{inFlight: false}} splitChange={(_) => _}
                                   methodChange={(_) => _}/>
           </div>
         </div>
       );
     }
   ).add('ConfigTableCard', () => {
-      return (
-        <div className="md-grid">
-          <div className="md-cell md-cell--12">
-            <ConfigTableCard jobs={classJobs} predictionMethod={CLASSIFICATION}/>
-          </div>
-          <div className="md-cell md-cell--12">
-            <ConfigTableCard jobs={regJobs} predictionMethod={REGRESSION}/>
-          </div>
-          <div className="md-cell md-cell--12">
-            <ConfigTableCard jobs={nextActivityJobs} predictionMethod={NEXT_ACTIVITY}/>
-          </div>
+    return (
+      <div className="md-grid">
+        <div className="md-cell md-cell--12">
+          <ConfigTableCard jobs={classJobs.map(jobToConfigTable)} predictionMethod={CLASSIFICATION}/>
         </div>
-      );
-    }
-  ).add('ResultWrapper classification', () => {
-      return (
-        <div className="md-grid">
-          <ResultWrapper jobs={classJobs} predictionMethod={CLASSIFICATION}/>
+        <div className="md-cell md-cell--12">
+          <ConfigTableCard jobs={regJobs.map(jobToConfigTable)} predictionMethod={REGRESSION}/>
         </div>
-      );
-    }
-  ).add('ResultWrapper regression', () => {
-      return (
-        <div className="md-grid">
-          <ResultWrapper jobs={regJobs} predictionMethod={REGRESSION}/>
+        <div className="md-cell md-cell--12">
+          <ConfigTableCard jobs={nextActivityJobs.map(jobToConfigTable)} predictionMethod={NEXT_ACTIVITY}/>
         </div>
-      );
-    }
+      </div>
+    );
+  }
+).add('ResultWrapper classification', () => {
+    return (
+      <div className="md-grid">
+        <ResultWrapper jobs={classJobs} predictionMethod={CLASSIFICATION}/>
+      </div>
+    );
+  }
+).add('ResultWrapper regression', () => {
+    return (
+      <div className="md-grid">
+        <ResultWrapper jobs={regJobs} predictionMethod={REGRESSION}/>
+      </div>
+    );
+  }
 );

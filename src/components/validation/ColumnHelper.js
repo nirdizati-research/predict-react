@@ -6,7 +6,7 @@ import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
 const tableColumns = [
   {
     type: 'string',
-    label: 'uuid',
+    label: 'id',
   },
   {
     type: 'string',
@@ -17,7 +17,7 @@ const tableColumns = [
 const classColumns = [
   {
     type: 'string',
-    label: 'uuid',
+    label: 'id',
   },
   {
     type: 'number',
@@ -55,7 +55,7 @@ const classTableColumns = [
 const regColumns = [
   {
     type: 'string',
-    label: 'uuid',
+    label: 'id',
   },
   {
     type: 'number',

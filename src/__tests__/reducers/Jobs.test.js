@@ -16,17 +16,17 @@ describe('JobsReducer', () => {
   });
 
   it('adds jobs when request completed', () => {
-    const jobList = [{uuid: 'uuid', log: 'name'}];
+    const jobList = [{id: 1, log: 'name'}];
     const state = jobs(undefined, jobsRequested());
     const state2 = jobs(state, jobsRetrieved(jobList));
     expect(state2).toEqual({fetchState: {inFlight: false}, jobs: jobList});
   });
 
   it('updates job list by uuid', () => {
-    const jobList = [{uuid: 'uuid1', log: 'name1', status: 'running'},
-      {uuid: 'uuid2', log: 'name2', status: 'running'},
-      {uuid: 'uuid3', log: 'name2', status: 'running'}];
-    const incoming = [{uuid: 'uuid2', log: 'name2', status: 'completed'}];
+    const jobList = [{id: 1, log: 'name1', status: 'running'},
+      {id: 2, log: 'name2', status: 'running'},
+      {id: 3, log: 'name2', status: 'running'}];
+    const incoming = [{id: 2, log: 'name2', status: 'completed'}];
     const state = jobs(undefined, jobResultsRequested());
     state.jobs = jobList;
     const state2 = jobs(state, jobsRetrieved(incoming));
