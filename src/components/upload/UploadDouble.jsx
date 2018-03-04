@@ -3,7 +3,7 @@ import React, {PureComponent} from 'react';
 import {Button, CardActions, FileUpload, LinearProgress, Snackbar, TextField} from 'react-md';
 import {SERVER_URL} from '../../constants';
 
-const UPLOAD_ENDPOINT = '/split/multiple';
+const UPLOAD_ENDPOINT = '/splits/multiple';
 
 export default class UploadDouble extends PureComponent {
   state = {
