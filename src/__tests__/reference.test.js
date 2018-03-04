@@ -26,8 +26,8 @@ describe('Reference', () => {
     expect(classificationMethods.length).toBe(3);
   });
 
-  it('contains 3 encoding', () => {
-    expect(encodingMethods.length).toBe(3);
+  it('contains 5 encoding', () => {
+    expect(encodingMethods.length).toBe(5);
   });
 
   it('contains 3 outcomerules', () => {
