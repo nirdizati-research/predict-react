@@ -15,12 +15,28 @@ class Validation extends Component {
 
     this.state = {
       predictionMethod: REGRESSION,
-      splitId: ''
+      splitId: '',
+      prefixLengths: []
     };
+  }
+
+  addOrRemove(list, value) {
+    value = parseInt(value, 10);
+    const index = list.indexOf(value);
+    if (index > -1) {
+      return list.filter((val) => val !== value);
+    } else {
+      return [...list, value];
+    }
+  }
+
+  onChangePrefix(prefixLength) {
+    this.setState({prefixLengths: this.addOrRemove(this.state.prefixLengths, prefixLength)});
   }
 
   onChangeSplit(splitId) {
     this.setState({splitId: splitId});
+    this.populatePrefixLengths(this.props.jobs.filter((job) => job.split.id === splitId));
   }
 
   componentDidMount() {
@@ -33,24 +49,34 @@ class Validation extends Component {
     this.setState({predictionMethod: type});
   }
 
+  populatePrefixLengths(jobs) {
+    const lengths = jobs.map((job) => job.config.prefix_length);
+    this.setState({prefixLengths: [...new Set(lengths)]});
+  }
+
   render() {
     // Only unique splits for selector
     const splitLabels = splitsToString(filterUnique(this.props.jobs.reduce(reducer, [])));
 
     const jobs = this.props.jobs.filter((job) => (job.type === this.state.predictionMethod)
       && (job.split.id === this.state.splitId));
+
+    const prefixLengths = [...new Set(jobs.map((job) => job.config.prefix_length + ''))];
+
+    const jobsByPrefix = jobs.filter((job) => this.state.prefixLengths.includes(job.config.prefix_length));
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
           <ValidationHeaderCard splitLabels={splitLabels} fetchState={this.props.fetchState}
                                 visibleLogName={this.state.log} methodChange={this.onChangeType.bind(this)}
-                                splitChange={this.onChangeSplit.bind(this)}/>
+                                splitChange={this.onChangeSplit.bind(this)}
+                                prefixLengths={prefixLengths} prefixChange={this.onChangePrefix.bind(this)}/>
         </div>
         <div className="md-cell md-cell--12">
           <ConfigTableCard jobs={jobs}
                            predictionMethod={this.state.predictionMethod}/>
         </div>
-        <ResultWrapper jobs={jobs} predictionMethod={this.state.predictionMethod}/>
+        <ResultWrapper jobs={jobsByPrefix} predictionMethod={this.state.predictionMethod}/>
       </div>
     );
   }
