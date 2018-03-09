@@ -3,15 +3,23 @@
  */
 
 import {
+  FILTER_PREDICTION_METHOD_CHANGED,
+  FILTER_SPLIT_CHANGED,
   JOB_RESULTS_REQUESTED,
   JOBS_FAILED,
   JOBS_REQUESTED,
   JOBS_RETRIEVED
 } from '../actions/JobActions';
+import {CLASSIFICATION} from '../reference';
 
 const initialState = {
   fetchState: {inFlight: false},
-  jobs: []
+  jobs: [],
+  filteredJobs: [],
+  uniqueSplits: [],
+  predictionMethod: CLASSIFICATION,
+  prefixLengths: [],
+  splitId: -100
 };
 
 const mergeIncomingJobs = (incoming, existing) => {
@@ -21,6 +29,31 @@ const mergeIncomingJobs = (incoming, existing) => {
     return acc;
   }, {});
   return Object.keys(a3).map((key) => a3[key]);
+};
+
+const filterUnique = (splits) => {
+  const resArr = [];
+  splits.filter(function (item) {
+    const i = resArr.findIndex((split) => split.id === item.id);
+    if (i <= -1) {
+      resArr.push(item);
+    }
+    return null;
+  });
+  return resArr;
+};
+
+const reducer = (acc, job) => {
+  acc.push(job.split);
+  return acc;
+};
+
+const filterBySplit = (jobs, predictionMethod, splitId) => {
+  return filterByMethod(jobs.filter((job) => (job.split.id === splitId)), predictionMethod);
+};
+
+const filterByMethod = (jobs, predictionMethod) => {
+  return jobs.filter((job) => (job.type === predictionMethod) && (job.status === 'completed'));
 };
 
 const jobs = (state = initialState, action) => {
@@ -33,10 +66,13 @@ const jobs = (state = initialState, action) => {
     }
 
     case JOBS_RETRIEVED: {
+      const jobs = mergeIncomingJobs(action.payload, state.jobs);
+      const uniqueSplits = filterUnique(jobs.filter((job) => job.status === 'completed').reduce(reducer, []));
       return {
         ...state,
         fetchState: {inFlight: false},
-        jobs: mergeIncomingJobs(action.payload, state.jobs)
+        jobs: jobs,
+        uniqueSplits: uniqueSplits
       };
     }
 
@@ -50,6 +86,20 @@ const jobs = (state = initialState, action) => {
       return {
         ...state,
         fetchState: {inFlight: true},
+      };
+    }
+    case FILTER_SPLIT_CHANGED: {
+      const filteredJobs = filterBySplit(state.jobs, state.predictionMethod, action.payload.splitId);
+      const prefixLengths = [...new Set(filteredJobs.map((job) => job.config.prefix_length + ''))];
+      return {
+        ...state, filteredJobs: filteredJobs, prefixLengths: prefixLengths, splitId: action.payload.splitId
+      };
+    }
+    case FILTER_PREDICTION_METHOD_CHANGED: {
+      const filteredJobs = filterBySplit(state.jobs, action.payload.method, state.splitId);
+      const prefixLengths = [...new Set(filteredJobs.map((job) => job.config.prefix_length + ''))];
+      return {
+        ...state, filteredJobs: filteredJobs, prefixLengths: prefixLengths, predictionMethod: action.payload.method
       };
     }
 

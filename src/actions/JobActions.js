@@ -23,3 +23,6 @@ export const trainingFailed = createPayloadForwardingAction(TRAINING_FAILED);
 
 export const JOB_RESULTS_REQUESTED = 'JOB_RESULTS_REQUESTED';
 export const jobResultsRequested = createPayloadForwardingAction(JOB_RESULTS_REQUESTED);
+
+export const FILTER_SPLIT_CHANGED = 'FILTER_SPLIT_CHANGED';
+export const FILTER_PREDICTION_METHOD_CHANGED = 'FILTER_PREDICTION_METHOD_CHANGED';
