@@ -10,7 +10,7 @@ import BubbleChartCard from '../chart/BubbleChartCard';
 import {jobPropType} from '../../helpers';
 
 const shortRun = (config) => {
-  return `${config.method}_${config.encoding}_${config.clustering}`;
+  return `${config.method}_${config.encoding}_${config.clustering}_prefix_${config.prefix_length}`;
 };
 
 

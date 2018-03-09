@@ -11,12 +11,25 @@ import {predictionMethods} from '../../reference';
 import {splitLabels} from '../../helpers';
 
 const ValidationHeaderCard = (props) => {
+  const prefixControls = props.prefixLengths.map((prefix) => ({label: prefix, value: prefix}));
+
+  const defaultValue = ',' + props.prefixLengths.join(',');
+
+  const checkBoxChange = (value, event) => {
+    props.prefixChange(event.target.value);
+  };
+
+  const checkies = props.prefixLengths.length > 0 ?
+    <SelectionControlGroup type="checkbox" label="Prefix lengths" name="prefixLengths" id="prefixLengths"
+                           onChange={checkBoxChange} controls={prefixControls}
+                           defaultValue={defaultValue} /> : null;
   const selectChange = (value, _) => {
     props.splitChange(value);
   };
   const localMethodChange = (value, _) => {
     props.methodChange(value);
   };
+
   return <Card className="md-block-centered">
     <CardTitle title="Validation selection">
       <SelectField
@@ -31,6 +44,9 @@ const ValidationHeaderCard = (props) => {
       <SelectionControlGroup id="prediction" name="prediction" type="radio" label="Prediction method"
                              inline controls={predictionMethods}
                              onChange={localMethodChange}/>
+      <div className="md-cell">
+        {checkies}
+      </div>
       <FetchState fetchState={props.fetchState}/>
     </CardText>
   </Card>;
@@ -44,6 +60,8 @@ ValidationHeaderCard.propTypes = {
     error: PropTypes.any
   }).isRequired,
   methodChange: PropTypes.func.isRequired,
-  splitChange: PropTypes.func.isRequired
+  splitChange: PropTypes.func.isRequired,
+  prefixLengths: PropTypes.arrayOf(PropTypes.string).isRequired,
+  prefixChange: PropTypes.func.isRequired
 };
 export default ValidationHeaderCard;

@@ -54,6 +54,16 @@ const encoding = [
     label: 'Frequency',
     value: 'frequency',
     message: 'Features represent the absolute frequency of each possible event class. Event attributes are discarded.'
+  },
+  {
+    label: 'Complex',
+    value: 'complex',
+    message: 'Simple index encoding with event attributes'
+  },
+  {
+    label: 'Last payload',
+    value: 'lastPayload',
+    message: 'Simple index encoding with event attributes for only the last considered event in trace.'
   }
 ];
 
