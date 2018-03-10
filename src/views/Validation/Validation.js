@@ -3,7 +3,10 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import ConfigTableCard from '../../components/validation/ConfigTableCard';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
-import {FILTER_PREDICTION_METHOD_CHANGED, FILTER_SPLIT_CHANGED, jobsRequested} from '../../actions/JobActions';
+import {
+  FILTER_PREDICTION_METHOD_CHANGED, FILTER_PREFIX_LENGTH_CHANGED, FILTER_SPLIT_CHANGED,
+  jobsRequested
+} from '../../actions/JobActions';
 import ValidationHeaderCard from '../../components/validation/ValidationHeaderCard';
 import ResultWrapper from '../../components/validation/ResultWrapper';
 import {jobPropType} from '../../helpers';
@@ -11,6 +14,7 @@ import {splitsToString} from '../../util/dataReducers';
 
 class Validation extends Component {
   onChangePrefix(prefixLength) {
+    this.props.onPrefixChange(prefixLength);
   }
 
   onChangeSplit(splitId) {
@@ -30,7 +34,6 @@ class Validation extends Component {
   render() {
     // Only unique splits for selector
     const splitLabels = splitsToString(this.props.uniqueSplits);
-    // console.log(splitLabels)
     const prefixStrings = this.props.prefixLengths.map((p) => p+'');
 
     return (
@@ -39,7 +42,9 @@ class Validation extends Component {
           <ValidationHeaderCard splitLabels={splitLabels} fetchState={this.props.fetchState}
                                 methodChange={this.onChangeMethod.bind(this)}
                                 splitChange={this.onChangeSplit.bind(this)}
-                                prefixLengths={prefixStrings} prefixChange={this.onChangePrefix.bind(this)}/>
+                                prefixLengths={prefixStrings}
+                                selectedPrefixes={this.props.selectedPrefixes}
+                                prefixChange={this.onChangePrefix.bind(this)}/>
         </div>
         <div className="md-cell md-cell--12">
           <ConfigTableCard jobs={this.props.jobs}
@@ -59,6 +64,7 @@ Validation.propTypes = {
   onRequestJobs: PropTypes.func.isRequired,
   onSplitChange: PropTypes.func.isRequired,
   onMethodChange: PropTypes.func.isRequired,
+  onPrefixChange: PropTypes.func.isRequired,
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
   predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
   splitId: PropTypes.number.isRequired,
@@ -73,12 +79,14 @@ const mapStateToProps = (state) => ({
   splitId: state.jobs.splitId,
   predictionMethod: state.jobs.predictionMethod,
   prefixLengths: state.jobs.prefixLengths,
+  selectedPrefixes: state.jobs.selectedPrefixes
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onRequestJobs: () => dispatch(jobsRequested()),
-  onSplitChange: (splitId) => dispatch({type: FILTER_SPLIT_CHANGED, splitId: splitId}),
-  onMethodChange: (method) => dispatch({type: FILTER_PREDICTION_METHOD_CHANGED, method: method})
+  onSplitChange: (splitId) => dispatch({type: FILTER_SPLIT_CHANGED, splitId}),
+  onMethodChange: (method) => dispatch({type: FILTER_PREDICTION_METHOD_CHANGED, method}),
+  onPrefixChange: (prefixLength) => dispatch({type: FILTER_PREFIX_LENGTH_CHANGED, prefixLength})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Validation);

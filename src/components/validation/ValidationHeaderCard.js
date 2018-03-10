@@ -13,7 +13,7 @@ import {splitLabels} from '../../helpers';
 const ValidationHeaderCard = (props) => {
   const prefixControls = props.prefixLengths.map((prefix) => ({label: prefix, value: prefix}));
 
-  const defaultValue = ',' + props.prefixLengths.join(',');
+  const defaultValue = ',' + props.selectedPrefixes.join(',');
 
   const checkBoxChange = (value, event) => {
     props.prefixChange(event.target.value);
@@ -62,6 +62,7 @@ ValidationHeaderCard.propTypes = {
   methodChange: PropTypes.func.isRequired,
   splitChange: PropTypes.func.isRequired,
   prefixLengths: PropTypes.arrayOf(PropTypes.string).isRequired,
-  prefixChange: PropTypes.func.isRequired
+  prefixChange: PropTypes.func.isRequired,
+  selectedPrefixes: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 export default ValidationHeaderCard;

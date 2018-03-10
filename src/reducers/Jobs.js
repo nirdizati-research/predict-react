@@ -10,15 +10,16 @@ import {
   JOBS_REQUESTED,
   JOBS_RETRIEVED
 } from '../actions/JobActions';
-import {CLASSIFICATION} from '../reference';
+import {CLASSIFICATION, REGRESSION} from '../reference';
 
 const initialState = {
   fetchState: {inFlight: false},
   jobs: [],
   filteredJobs: [],
   uniqueSplits: [],
-  predictionMethod: CLASSIFICATION,
+  predictionMethod: REGRESSION,
   prefixLengths: [],
+  selectedPrefixes: [],
   splitId: -100
 };
 
@@ -104,22 +105,24 @@ const jobs = (state = initialState, action) => {
       const filteredJobs = filterBySplit(state.jobs, state.predictionMethod, action.splitId);
       const prefixLengths = prefixSet(filteredJobs);
       return {
-        ...state, filteredJobs: filteredJobs, prefixLengths: prefixLengths, splitId: action.splitId
+        ...state, filteredJobs: filteredJobs, prefixLengths: prefixLengths,
+        splitId: action.splitId, selectedPrefixes: prefixLengths
       };
     }
     case FILTER_PREDICTION_METHOD_CHANGED: {
       const filteredJobs = filterBySplit(state.jobs, action.method, state.splitId);
       const prefixLengths = prefixSet(filteredJobs);
       return {
-        ...state, filteredJobs: filteredJobs, prefixLengths: prefixLengths, predictionMethod: action.method
+        ...state, filteredJobs, prefixLengths: prefixLengths,
+        predictionMethod: action.method, selectedPrefixes: prefixLengths
       };
     }
     case FILTER_PREFIX_LENGTH_CHANGED: {
-      const prefixLengths = addOrRemove(state.prefixLengths, action.prefixLength);
+      const selectedPrefixes = addOrRemove(state.selectedPrefixes, action.prefixLength);
       const filteredJobs = filterBySplit(state.jobs, state.predictionMethod, state.splitId)
-        .filter((job) => prefixLengths.includes(job.config.prefix_length));
+        .filter((job) => selectedPrefixes.includes(job.config.prefix_length));
       return {
-        ...state, prefixLengths: prefixLengths, filteredJobs: filteredJobs
+        ...state, selectedPrefixes: selectedPrefixes, filteredJobs
       };
     }
 

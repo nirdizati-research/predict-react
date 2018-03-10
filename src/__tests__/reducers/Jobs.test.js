@@ -136,7 +136,7 @@ describe('Validation filter', () => {
     });
 
     it('has CLASSIFICATION method', () => {
-      expect(state).toMatchObject({predictionMethod: CLASSIFICATION});
+      expect(state).toMatchObject({predictionMethod: REGRESSION});
     });
 
     it('has no prefix lengths', () => {
@@ -146,11 +146,11 @@ describe('Validation filter', () => {
 
   describe('when FILTER_SPLIT_CHANGED', () => {
     it('adds to filtered job list', () => {
-      expect(state2.filteredJobs.length).toEqual(2);
+      expect(state2.filteredJobs.length).toEqual(1);
     });
 
     it('populates prefix list', () => {
-      expect(state2.prefixLengths).toEqual([2, 4]);
+      expect(state2.prefixLengths).toEqual([2]);
     });
 
     it('sets splitId', () => {
@@ -169,22 +169,26 @@ describe('Validation filter', () => {
       let state3 = jobs(state2, {type: FILTER_SPLIT_CHANGED, splitId: 2});
       state3 = jobs(state3, {type: FILTER_PREDICTION_METHOD_CHANGED, method: REGRESSION});
       expect(state3.prefixLengths).toEqual([1]);
+      expect(state3.selectedPrefixes).toEqual([1]);
     });
   });
 
   describe('when FILTER_PREFIX_LENGTH_CHANGED', () => {
     it('removes from jobs', () => {
-      const state3 = jobs(state2, {type: FILTER_PREFIX_LENGTH_CHANGED, prefixLength: '4'});
-      expect(state3.prefixLengths).toEqual([2]);
+      let state3 = jobs(state2, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
+      state3 = jobs(state3, {type: FILTER_PREFIX_LENGTH_CHANGED, prefixLength: '4'});
+      expect(state3.prefixLengths).toEqual([2, 4]);
+      expect(state3.selectedPrefixes).toEqual([2]);
       expect(state3.filteredJobs.length).toEqual(1);
       expect(state3.filteredJobs[0].id).toEqual(2);
     });
 
     it('removes and adds back to jobs', () => {
-      const state3 = jobs(state2, {type: FILTER_PREFIX_LENGTH_CHANGED, prefixLength: '4'});
+      let state3 = jobs(state2, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
+      state3 = jobs(state3, {type: FILTER_PREFIX_LENGTH_CHANGED, prefixLength: '4'});
       const state4 = jobs(state3, {type: FILTER_PREFIX_LENGTH_CHANGED, prefixLength: '4'});
       expect(state4.filteredJobs.length).toEqual(2);
-      expect(state4.prefixLengths).toEqual([2, 4]);
+      expect(state4.selectedPrefixes).toEqual([2, 4]);
     });
   });
 });
