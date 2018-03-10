@@ -49,7 +49,11 @@ const classTableColumns = [
   {
     type: 'number',
     label: 'auc',
-  }
+  },
+  {
+    type: 'string',
+    label: 'Prefix length',
+  },
 ];
 
 const regColumns = [
@@ -88,7 +92,11 @@ const regTableColumns = [
   {
     type: 'number',
     label: 'rscore',
-  }
+  },
+  {
+    type: 'string',
+    label: 'Prefix length',
+  },
 ];
 
 export const getChartHeader = (predictionMethod) => {
@@ -99,6 +107,18 @@ export const getChartHeader = (predictionMethod) => {
       return classColumns;
     case NEXT_ACTIVITY:
       return classColumns;
+    // no default
+  }
+};
+
+export const getPrefixChartHeader = (predictionMethod) => {
+  switch (predictionMethod) {
+    case REGRESSION:
+      return prefixColumnsReg;
+    case CLASSIFICATION:
+      return prefixColumnsClass;
+    case NEXT_ACTIVITY:
+      return prefixColumnsClass;
     // no default
   }
 };
@@ -130,3 +150,49 @@ export const getTableHeader = (predictionMethod) => {
     // no default
   }
 };
+
+const prefixColumnsClass = [
+  {
+    type: 'string',
+    label: 'id',
+  },
+  {
+    type: 'number',
+    label: 'fmeasure',
+  },
+  {
+    type: 'number',
+    label: 'acc',
+  },
+  {
+    type: 'string',
+    label: 'Prefix length',
+  },
+  {
+    type: 'number',
+    label: 'auc',
+  }
+];
+
+const prefixColumnsReg = [
+  {
+    type: 'string',
+    label: 'id',
+  },
+  {
+    type: 'number',
+    label: 'mae',
+  },
+  {
+    type: 'number',
+    label: 'rmse',
+  },
+  {
+    type: 'string',
+    label: 'Prefix length',
+  },
+  {
+    type: 'number',
+    label: 'rscore',
+  }
+];

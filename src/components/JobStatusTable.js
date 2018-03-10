@@ -11,6 +11,7 @@ import {jobPropType} from '../helpers';
 const JobStatusTable = (props) => {
   const headers = ['id', 'Type', 'Status', 'Created date', 'Modified date', 'Split', 'Error', 'Config'];
 
+  const jobs = props.jobs.reverse();
   return (<DataTable baseId="simple-pagination" plain>
     <TableHeader>
       <TableRow selectable={false}>
@@ -18,7 +19,7 @@ const JobStatusTable = (props) => {
       </TableRow>
     </TableHeader>
     <TableBody>
-      {props.jobs.map(({id, type, status, created_date, modified_date, split, config, error}) => (
+      {jobs.map(({id, type, status, created_date, modified_date, split, config, error}) => (
         <TableRow key={id} selectable={false}>
           <TableColumn numeric>{id}</TableColumn>
           <TableColumn>{status}</TableColumn>

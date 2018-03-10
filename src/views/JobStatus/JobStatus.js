@@ -15,6 +15,15 @@ class JobStatus extends Component {
     if (this.props.jobs === []) {
       this.props.onRequestJobs();
     }
+
+    const intervalId = setInterval(() => {
+      this.props.onRequestJobs();
+    }, 10000);
+    this.setState({intervalId: intervalId});
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.intervalId);
   }
 
   render() {
