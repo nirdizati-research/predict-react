@@ -101,21 +101,21 @@ const jobs = (state = initialState, action) => {
       };
     }
     case FILTER_SPLIT_CHANGED: {
-      const filteredJobs = filterBySplit(state.jobs, state.predictionMethod, action.payload.splitId);
+      const filteredJobs = filterBySplit(state.jobs, state.predictionMethod, action.splitId);
       const prefixLengths = prefixSet(filteredJobs);
       return {
-        ...state, filteredJobs: filteredJobs, prefixLengths: prefixLengths, splitId: action.payload.splitId
+        ...state, filteredJobs: filteredJobs, prefixLengths: prefixLengths, splitId: action.splitId
       };
     }
     case FILTER_PREDICTION_METHOD_CHANGED: {
-      const filteredJobs = filterBySplit(state.jobs, action.payload.method, state.splitId);
+      const filteredJobs = filterBySplit(state.jobs, action.method, state.splitId);
       const prefixLengths = prefixSet(filteredJobs);
       return {
-        ...state, filteredJobs: filteredJobs, prefixLengths: prefixLengths, predictionMethod: action.payload.method
+        ...state, filteredJobs: filteredJobs, prefixLengths: prefixLengths, predictionMethod: action.method
       };
     }
     case FILTER_PREFIX_LENGTH_CHANGED: {
-      const prefixLengths = addOrRemove(state.prefixLengths, action.payload.prefixLength);
+      const prefixLengths = addOrRemove(state.prefixLengths, action.prefixLength);
       const filteredJobs = filterBySplit(state.jobs, state.predictionMethod, state.splitId)
         .filter((job) => prefixLengths.includes(job.config.prefix_length));
       return {
