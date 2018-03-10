@@ -5,7 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
 import ResultTableCard from './ResultTableCard';
-import {getChartHeader, getTitles} from './ColumnHelper';
+import {getChartHeader, getPrefixChartHeader, getTitles} from './ColumnHelper';
 import BubbleChartCard from '../chart/BubbleChartCard';
 import {jobPropType} from '../../helpers';
 
@@ -15,11 +15,13 @@ const shortRun = (config) => {
 
 
 const regressionMap = (jobs) => {
-  return jobs.map((job) => [job.id + '', shortRun(job.config), job.result.mae, job.result.rmse, job.result.rscore]);
+  return jobs.map((job) => [job.id + '', shortRun(job.config),
+    job.result.mae, job.result.rmse, job.result.rscore, job.config.prefix_length + '']);
 };
 
 const classMap = (jobs) => {
-  return jobs.map((job) => [job.id+ '', shortRun(job.config), job.result.f1score, job.result.acc, job.result.auc]);
+  return jobs.map((job) => [job.id + '', shortRun(job.config),
+    job.result.f1score, job.result.acc, job.result.auc, job.config.prefix_length + '']);
 };
 
 const prepareData = (jobs, predictionMethod) => {
@@ -42,6 +44,14 @@ const createChartData = (data) => {
       [row[0], row[2], row[3], runSplit[0], row[4]],
       [row[0], row[2], row[3], runSplit[1], row[4]],
       [row[0], row[2], row[3], runSplit[2], row[4]]
+    ];
+  });
+};
+
+const createChartDataNEWBETTER = (data) => {
+  return data.map((row) => {
+    return [
+      [row[0], row[2], row[3], row[5], row[4]],
     ];
   });
 };
@@ -72,7 +82,13 @@ const getCharts = (data, predictionMethod) => {
                        columns={headers}
                        hTitle={headers[1].label}
                        vTitle={headers[2].label}
-                       cardTitle={titles[2]}/></div>
+                       cardTitle={titles[2]}/></div>,
+    <div className="md-cell md-cell--12" key="4">
+      <BubbleChartCard data={filterData(createChartDataNEWBETTER(data), 0)}
+                       columns={getPrefixChartHeader(predictionMethod)}
+                       hTitle={headers[1].label}
+                       vTitle={headers[2].label}
+                       cardTitle="Accuracy by prefix length"/></div>
   ];
 };
 

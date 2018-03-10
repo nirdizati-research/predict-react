@@ -34,7 +34,7 @@ class Validation extends Component {
   render() {
     // Only unique splits for selector
     const splitLabels = splitsToString(this.props.uniqueSplits);
-    const prefixStrings = this.props.prefixLengths.map((p) => p+'');
+    const prefixStrings = this.props.prefixLengths.map((p) => p + '');
 
     return (
       <div className="md-grid">
@@ -69,7 +69,8 @@ Validation.propTypes = {
   predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
   splitId: PropTypes.number.isRequired,
   uniqueSplits: PropTypes.arrayOf(PropTypes.any).isRequired,
-  prefixLengths: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired
+  prefixLengths: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+  selectedPrefixes: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired
 };
 
 const mapStateToProps = (state) => ({

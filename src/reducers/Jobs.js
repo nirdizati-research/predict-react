@@ -10,7 +10,7 @@ import {
   JOBS_REQUESTED,
   JOBS_RETRIEVED
 } from '../actions/JobActions';
-import {CLASSIFICATION, REGRESSION} from '../reference';
+import {REGRESSION} from '../reference';
 
 const initialState = {
   fetchState: {inFlight: false},

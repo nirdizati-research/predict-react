@@ -9,6 +9,7 @@ import BubbleChartCard from '../src/components/chart/BubbleChartCard';
 import ResultTableCard from '../src/components/validation/ResultTableCard';
 import {getChartHeader} from '../src/components/validation/ColumnHelper';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../src/reference';
+import ScatterChartCard from '../src/components/chart/ScatterChartCard';
 
 const fetchState = {inFlight: false};
 
@@ -60,6 +61,34 @@ const classTableData = [
   ['uuid123', 'knn_boolean_noCluster_clustering', 0.7300537412153782, 0.6408140814081408, 0.62917375812309062]
 ];
 
+const someData = [
+  ['uuid121', 321.16984512656944, 470.1483088530332, '1', -0.75205320910182749],
+  ['uuid122', 218.33484913201886, 218.33484913201886, '2', 0.10676014147290103]
+];
+
+const someColumns = [
+  {
+    type: 'string',
+    label: 'id',
+  },
+  {
+    type: 'number',
+    label: 'fmeasure',
+  },
+  {
+    type: 'number',
+    label: 'acc',
+  },
+  {
+    type: 'string',
+    label: 'Prefix length',
+  },
+  {
+    type: 'number',
+    label: 'auc',
+  }
+];
+
 storiesOf('Charts', module)
   .add('LineChartCard', () => {
     return (
@@ -97,6 +126,29 @@ storiesOf('Charts', module)
           <BubbleChartCard
             data={classData}
             columns={getChartHeader(CLASSIFICATION)}
+            hTitle="fmeasure"
+            vTitle="accuracy"
+            cardTitle="Bubble chart by classificator"/>
+        </div>
+        <div className="md-cell md-cell--12">
+          <BubbleChartCard
+            data={someData}
+            columns={someColumns}
+            hTitle="fmeasure"
+            vTitle="accuracy"
+            cardTitle="Bubble chart by prefix length"/>
+        </div>
+      </div>
+    );
+  })
+  .add('ScatterChartCard', () => {
+    return (
+      <div className="md-grid">
+
+        <div className="md-cell md-cell--12">
+          <ScatterChartCard
+            data={newData2}
+            columns={newColumns2}
             hTitle="fmeasure"
             vTitle="accuracy"
             cardTitle="Bubble chart by classificator"/>
