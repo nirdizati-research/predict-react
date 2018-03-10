@@ -93,7 +93,9 @@ const regJobs = [{
   'type': 'regression',
   'split': {
     'id': 1,
-    'config': {},
+    'config': {
+      'prefix_length': 2
+    },
     'original_log': {
       'id': 1,
       'name': 'general_example.xes'
@@ -105,8 +107,8 @@ const regJobs = [{
   'error': ''
 }];
 const classData = [
-  ['1', 'knn_simpleIndex_kmeans', 123, 111, 3],
-  ['3', 'knn_simpleIndex_kmeans', 1230, 1110, 30],
+  ['1', 'knn_simpleIndex_kmeans_prefix_1', 123, 111, 3],
+  ['3', 'knn_simpleIndex_kmeans_prefix_1', 1230, 1110, 30],
 ];
 
 let element = null;
@@ -134,7 +136,7 @@ describe('ResultWrapper', () => {
 
   it('supplies data for regression', () => {
     element.setProps({predictionMethod: REGRESSION, jobs: regJobs});
-    const regData = [['53', 'linear_simpleIndex_noCluster', 11, 12, 13]];
+    const regData = [['53', 'linear_simpleIndex_noCluster_prefix_0', 11, 12, 13]];
     expect(element.find(ResultTableCard).props().data).toEqual(regData);
     expect(element.find(ResultTableCard).props().predictionMethod).toMatch(REGRESSION);
   });
