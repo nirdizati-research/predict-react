@@ -10,7 +10,15 @@ const BubbleChartCard = (props) => {
   const opts = {
     hAxis: {title: props.hTitle},
     vAxis: {title: props.vTitle},
-    bubble: {textStyle: {fontSize: 11}}
+    bubble: {textStyle: {fontSize: 11}},
+    series: {
+      0: { pointShape: 'circle' },
+      1: { pointShape: 'triangle' },
+      2: { pointShape: 'square' },
+      3: { pointShape: 'diamond' },
+      4: { pointShape: 'star' },
+      5: { pointShape: 'polygon' }
+    }
   };
 
   return <Card className="md-block-centered">
