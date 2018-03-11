@@ -107,8 +107,8 @@ const regJobs = [{
   'error': ''
 }];
 const classData = [
-  ['1', 'knn_simpleIndex_kmeans_prefix_1', 123, 111, 3, '1'],
-  ['3', 'knn_simpleIndex_kmeans_prefix_1', 1230, 1110, 30, '1'],
+  ['1', 'knn_simpleIndex_kmeans_prefix_1', 123, 111, 3, '1', 0, 0, 0, 0, 0, 0],
+  ['3', 'knn_simpleIndex_kmeans_prefix_1', 1230, 1110, 30, '1', 0, 0, 0, 0, 0, 0],
 ];
 
 let element = null;

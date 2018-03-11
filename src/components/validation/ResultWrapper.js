@@ -20,8 +20,16 @@ const regressionMap = (jobs) => {
 };
 
 const classMap = (jobs) => {
-  return jobs.map((job) => [job.id + '', shortRun(job.config),
-    job.result.f1score, job.result.acc, job.result.auc, job.config.prefix_length + '']);
+  return jobs.map((job) => {
+    const recall = job.result.recall || 0;
+    const precision = job.result.precision || 0;
+    const truePositive = job.result.true_positive || 0;
+    const trueNegative = job.result.true_negative || 0;
+    const falsePositive = job.result.false_positive || 0;
+    const falseNegative = job.result.false_negative || 0;
+    return [job.id + '', shortRun(job.config), job.result.f1score, job.result.acc, job.result.auc,
+      job.config.prefix_length + '', precision, recall, truePositive, trueNegative, falsePositive, falseNegative];
+  });
 };
 
 const prepareData = (jobs, predictionMethod) => {

@@ -27,7 +27,13 @@ const classJobs = [
     'result': {
       'f1score': 0.6666666666666666,
       'acc': 0.5,
-      'auc': 0.5
+      'auc': 0.5,
+      'false_negative': 0,
+      'false_positive': 1,
+      'true_positive': 1,
+      'true_negative': 0,
+      'precision': 3,
+      'recall': 0
     },
     'type': 'classification',
     'split': {
@@ -88,7 +94,11 @@ const regJobs = [
       'method': 'linear'
     },
     'status': 'created',
-    'result': {},
+    'result': {
+      'mae': 1,
+      'rmse': 2,
+      'rscore': 3
+    },
     'type': 'regression',
     'split': {
       'id': 1,
@@ -120,7 +130,13 @@ const nextActivityJobs = [
     'result': {
       'f1score': 0.6666666666666666,
       'acc': 0.5,
-      'auc': 0.5
+      'auc': 0.5,
+      'false_negative': 0,
+      'false_positive': 1,
+      'true_positive': 1,
+      'true_negative': 0,
+      'precision': 3,
+      'recall': 0
     },
     'type': 'nextActivity',
     'split': {
@@ -144,7 +160,8 @@ storiesOf('Validation', module)
         <div className="md-grid">
           <div className="md-cell md-cell--12">
             <ValidationHeaderCard splitLabels={splitLabels} fetchState={{inFlight: false}} splitChange={(_) => _}
-                                  methodChange={(_) => _}/>
+                                  methodChange={(_) => _} selectedPrefixes={['2']}
+                                  prefixLengths={['1', '2']} prefixChange={(_) => _}/>
           </div>
         </div>
       );

@@ -9,7 +9,6 @@ import BubbleChartCard from '../src/components/chart/BubbleChartCard';
 import ResultTableCard from '../src/components/validation/ResultTableCard';
 import {getChartHeader} from '../src/components/validation/ColumnHelper';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../src/reference';
-import ScatterChartCard from '../src/components/chart/ScatterChartCard';
 
 const fetchState = {inFlight: false};
 
@@ -137,21 +136,6 @@ storiesOf('Charts', module)
             hTitle="fmeasure"
             vTitle="accuracy"
             cardTitle="Bubble chart by prefix length"/>
-        </div>
-      </div>
-    );
-  })
-  .add('ScatterChartCard', () => {
-    return (
-      <div className="md-grid">
-
-        <div className="md-cell md-cell--12">
-          <ScatterChartCard
-            data={newData2}
-            columns={newColumns2}
-            hTitle="fmeasure"
-            vTitle="accuracy"
-            cardTitle="Bubble chart by classificator"/>
         </div>
       </div>
     );
