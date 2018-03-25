@@ -73,25 +73,25 @@ const getCharts = (data, predictionMethod) => {
   const chartDatas = createChartData(data);
   const titles = getTitles(predictionMethod);
   return [
-    <div className="md-cell md-cell--12" key="1">
+    <div className="md-cell md-cell--6" key="1">
       <BubbleChartCard data={filterData(chartDatas, 0)}
                        columns={headers}
                        hTitle={headers[1].label}
                        vTitle={headers[2].label}
                        cardTitle={titles[0]}/></div>,
-    <div className="md-cell md-cell--12" key="2">
+    <div className="md-cell md-cell--6" key="2">
       <BubbleChartCard data={filterData(chartDatas, 1)}
                        columns={headers}
                        hTitle={headers[1].label}
                        vTitle={headers[2].label}
                        cardTitle={titles[1]}/></div>,
-    <div className="md-cell md-cell--12" key="3">
+    <div className="md-cell md-cell--6" key="3">
       <BubbleChartCard data={filterData(chartDatas, 2)}
                        columns={headers}
                        hTitle={headers[1].label}
                        vTitle={headers[2].label}
                        cardTitle={titles[2]}/></div>,
-    <div className="md-cell md-cell--12" key="4">
+    <div className="md-cell md-cell--6" key="4">
       <BubbleChartCard data={filterData(createChartDataNEWBETTER(data), 0)}
                        columns={getPrefixChartHeader(predictionMethod)}
                        hTitle={headers[1].label}
