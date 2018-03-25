@@ -220,12 +220,12 @@ class TrainingFormCard extends Component {
                                      value={this.state.predictionMethod} inline controls={predictionMethods}
                                      onChange={this.onPredictionMethodChange.bind(this)}/>
             </div>
-            <div className="md-cell">
+            <div className="md-cell md-cell--3">
               <SelectionControlGroup type="checkbox" label="Encoding methods" name="encodings" id="encodings"
                                      onChange={this.checkboxChange.bind(this)} controls={encodingMethods}
                                      value={this.state.encodings.join(',')} controlStyle={groupStyle}/>
             </div>
-            <div className="md-cell">
+            <div className="md-cell md-cell--3">
               <SelectionControlGroup type="checkbox" label="Clustering methods" name="clusterings" id="clusterings"
                                      onChange={this.checkboxChange.bind(this)} controls={clusteringMethods}
                                      value={this.state.clusterings.join(',')} controlStyle={groupStyle}/>
@@ -234,7 +234,7 @@ class TrainingFormCard extends Component {
             {classificationFragment}
             {outcomeRuleFragment}
             {thresholdFragment}
-            <div className="md-cell">
+            <div className="md-cell md-cell--3">
               <legend className="md-subheading-1">Prefix length</legend>
               <div className="md-selection-control-container md-caption">How many events in a trace to consider.
                 Raise number at your own caution because this too high a number will cause errors.</div>
