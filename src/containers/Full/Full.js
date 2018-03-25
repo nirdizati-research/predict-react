@@ -35,31 +35,31 @@ class Full extends Component {
           to: '/upload',
           active: isActive('/upload', pathname),
           primaryText: 'Upload',
-          leftIcon: <FontIcon>bookmark</FontIcon>,
+          leftIcon: <FontIcon>backup</FontIcon>,
         }, {
           component: Link,
           to: '/split',
           active: isActive('/split', pathname),
           primaryText: 'Split',
-          leftIcon: <FontIcon>bookmark</FontIcon>,
+          leftIcon: <FontIcon>swap_horiz</FontIcon>,
         }, {
           component: Link,
           to: '/jobStatus',
           active: isActive('/jobStatus', pathname),
           primaryText: 'Job Status',
-          leftIcon: <FontIcon>donut_large</FontIcon>,
+          leftIcon: <FontIcon>list</FontIcon>,
         }, {
           component: Link,
           to: '/training',
           active: isActive('/training', pathname),
           primaryText: 'Training',
-          leftIcon: <FontIcon>donut_large</FontIcon>,
+          leftIcon: <FontIcon>build</FontIcon>,
         }, {
           component: Link,
           to: '/validation',
           active: isActive('/validation', pathname),
           primaryText: 'Validation',
-          leftIcon: <FontIcon>donut_large</FontIcon>,
+          leftIcon: <FontIcon>insert_chart</FontIcon>,
         }]}
       >
         {children ? React.cloneElement(children, {key: pathname}) : null}
