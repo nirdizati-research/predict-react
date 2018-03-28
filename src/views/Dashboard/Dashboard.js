@@ -46,10 +46,24 @@ class Dashboard extends Component {
     }
   }
 
+  getEventInTraceChart() {
+    if (this.props.log && Object.keys(this.props.log.eventsInTrace).length !== 0) {
+      return <BarChartCard fetchState={this.props.log.fetchState}
+                           data={this.props.log.eventsInTrace}
+                           cardTitle="Number of events in trace"
+                           hTitle="Number of events"
+                           chartTitle="Traces"
+                           description="This chart can be used to estimate the prefix_length"/>;
+    } else {
+      return null;
+    }
+  }
+
   render() {
     const executionChart = this.getLineChart('events', 'Number of events executed');
     const resourceChart = this.getLineChart('resources', 'Number of resources used');
     const eventChart = this.getEventChart();
+    const eventsInTraceChart = this.getEventInTraceChart();
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
@@ -66,6 +80,9 @@ class Dashboard extends Component {
         <div className="md-cell md-cell--12">
           {eventChart}
         </div>
+        <div className="md-cell md-cell--12">
+          {eventsInTraceChart}
+        </div>
       </div>
     );
   }
@@ -78,6 +95,7 @@ Dashboard.propTypes = {
     events: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
     resources: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
     executions: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
+    eventsInTrace: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
     visible: PropTypes.bool.isRequired,
     fetchState: PropTypes.shape({
       inFlight: PropTypes.bool.isRequired,

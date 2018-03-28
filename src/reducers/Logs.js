@@ -20,7 +20,8 @@ const dummy = (id, name) => {
     visible: false,
     events: {},
     resources: {},
-    executions: {}
+    executions: {},
+    eventsInTrace: {}
   };
 };
 

@@ -22,9 +22,6 @@ const BarChartCard = (props) => {
   const rows = Object.keys(props.data).map((key) => [key, props.data[key]]);
 
   rows.sort(compare);
-
-  // const hTitle = 'Number of Executions';
-  // const vTitle = 'Events';
   const opts = {
     legend: 'none',
     hAxis: {
@@ -46,6 +43,7 @@ const BarChartCard = (props) => {
   return <Card className="md-block-centered">
     <CardTitle title={props.cardTitle}/>
     <CardText>
+      {props.description}
       <Chart
         chartType="BarChart"
         rows={rows}
@@ -65,6 +63,7 @@ BarChartCard.propTypes = {
   cardTitle: PropTypes.string.isRequired,
   chartTitle: PropTypes.string.isRequired,
   hTitle: PropTypes.string.isRequired,
+  description: PropTypes.string,
   fetchState: PropTypes.shape({
     inFlight: PropTypes.bool.isRequired,
     error: PropTypes.any

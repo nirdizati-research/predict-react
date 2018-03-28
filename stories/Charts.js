@@ -31,7 +31,7 @@ const resources = {
   '2011-10-08': 7,
 };
 
-const events_in_trace = {
+const eventsInTrace = {
   '1': 5,
   '2': 5,
   '3': 9,
@@ -120,6 +120,14 @@ storiesOf('Charts', module)
                         cardTitle="Event Occurrences"
                         hTitle="Number of Executions"
                         chartTitle="Events"/>
+        </div>
+        <div className="md-cell md-cell--12">
+          <BarChartCard fetchState={fetchState}
+                        data={eventsInTrace}
+                        cardTitle="Number of events in trace"
+                        hTitle="Number of events"
+                        chartTitle="Event count"
+                        description="This chart can be used to estimate the prefix_length"/>
         </div>
       </div>
     );

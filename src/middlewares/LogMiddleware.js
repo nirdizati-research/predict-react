@@ -19,6 +19,7 @@ const logMiddleware = (store) => (next) => (action) => {
       store.dispatch(logInfoRequested(infoPayload(action.payload.logId, 'events')));
       store.dispatch(logInfoRequested(infoPayload(action.payload.logId, 'resources')));
       store.dispatch(logInfoRequested(infoPayload(action.payload.logId, 'executions')));
+      store.dispatch(logInfoRequested(infoPayload(action.payload.logId, 'eventsInTrace')));
     }
   }
   return next(action);
