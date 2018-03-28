@@ -5,10 +5,6 @@ import PropTypes from 'prop-types';
  * Created by tonis.kasekamp on 10/9/17.
  */
 
-export const sliceUuid = (uuid) => {
-  return uuid.substring(0, 7);
-};
-
 export const jobPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   status: PropTypes.string.isRequired,

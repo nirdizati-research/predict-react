@@ -6,7 +6,8 @@ import {
 
 const initialState = {
   fetchState: {inFlight: false},
-  splits: []
+  splits: [],
+  selectedSplitId: 0
 };
 
 // TODO refactor with jobs
