@@ -77,10 +77,10 @@ class Dashboard extends Component {
         <div className="md-cell md-cell--12">
           {resourceChart}
         </div>
-        <div className="md-cell md-cell--12">
+        <div className="md-cell md-cell--6">
           {eventChart}
         </div>
-        <div className="md-cell md-cell--12">
+        <div className="md-cell md-cell--6">
           {eventsInTraceChart}
         </div>
       </div>
