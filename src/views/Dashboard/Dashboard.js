@@ -4,7 +4,7 @@ import LogListCard from '../../components/LogListCard';
 import PropTypes from 'prop-types';
 import {changeVisibleLog, logListRequested} from '../../actions/LogActions';
 import LineChartCard from '../../components/chart/LineChartCard';
-import EventChartCard from '../../components/chart/EventChartCard';
+import BarChartCard from '../../components/chart/BarChartCard';
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -37,7 +37,10 @@ class Dashboard extends Component {
   // Not DRY :/
   getEventChart() {
     if (this.props.log && Object.keys(this.props.log.executions).length !== 0) {
-      return <EventChartCard fetchState={this.props.log.fetchState} data={this.props.log.executions}/>;
+      return <BarChartCard fetchState={this.props.log.fetchState} data={this.props.log.executions}
+                           cardTitle="Event Occurrences"
+                           hTitle="Number of Executions"
+                           chartTitle="Events"/>;
     } else {
       return null;
     }

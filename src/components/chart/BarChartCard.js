@@ -18,40 +18,40 @@ const compare = (a, b) =>{
   return 0;
 };
 
-const EventChartCard = (props) => {
+const BarChartCard = (props) => {
   const rows = Object.keys(props.data).map((key) => [key, props.data[key]]);
 
   rows.sort(compare);
 
-  const hTitle = 'Number of Executions';
-  const vTitle = 'Events';
+  // const hTitle = 'Number of Executions';
+  // const vTitle = 'Events';
   const opts = {
     legend: 'none',
     hAxis: {
-      title: hTitle
+      title: props.hTitle
     },
     vAxis: {
-      title: vTitle
+      title: props.chartTitle
     }
   };
   const columns = [
     {
       type: 'string',
-      label: hTitle,
+      label: props.hTitle,
     },
     {
       type: 'number',
-      label: vTitle,
+      label: props.chartTitle,
     }];
   return <Card className="md-block-centered">
-    <CardTitle title="Event Occurrences"/>
+    <CardTitle title={props.cardTitle}/>
     <CardText>
       <Chart
         chartType="BarChart"
         rows={rows}
         columns={columns}
         options={opts}
-        graph_id={hTitle}
+        graph_id={props.hTitle}
         width="100%"
         legend_toggle
       />
@@ -60,12 +60,15 @@ const EventChartCard = (props) => {
   </Card>;
 };
 
-EventChartCard.propTypes = {
+BarChartCard.propTypes = {
   data: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
+  cardTitle: PropTypes.string.isRequired,
+  chartTitle: PropTypes.string.isRequired,
+  hTitle: PropTypes.string.isRequired,
   fetchState: PropTypes.shape({
     inFlight: PropTypes.bool.isRequired,
     error: PropTypes.any
   }).isRequired,
 };
 
-export default EventChartCard;
+export default BarChartCard;
