@@ -21,38 +21,62 @@ const classColumns = [
   },
   {
     type: 'number',
-    label: 'fmeasure',
+    label: 'F1 score',
   },
   {
     type: 'number',
-    label: 'acc',
+    label: 'Accuracy',
   },
   {
     type: 'string',
-    label: 'method',
+    label: 'Method',
   },
   {
     type: 'number',
-    label: 'auc',
+    label: 'AUC',
   }
 ];
 const classTableColumns = [
   ...tableColumns,
   {
     type: 'number',
-    label: 'fmeasure',
+    label: 'F1 score',
   },
   {
     type: 'number',
-    label: 'acc',
+    label: 'Accuracy',
   },
   {
     type: 'number',
-    label: 'auc',
+    label: 'AUC',
   },
   {
     type: 'string',
     label: 'Prefix length',
+  },
+  {
+    type: 'number',
+    label: 'Precision',
+  },
+  {
+    type: 'number',
+    label: 'Recall',
+  },
+  {
+    type: 'number',
+    label: 'True positive',
+  },
+  {
+    type: 'number',
+    label: 'True negative',
+  },
+  {
+    type: 'number',
+    label: 'False positive',
+  },
+  {
+    type: 'number',
+    label: 'False negative',
   },
 ];
 
@@ -158,11 +182,11 @@ const prefixColumnsClass = [
   },
   {
     type: 'number',
-    label: 'fmeasure',
+    label: 'F1 score',
   },
   {
     type: 'number',
-    label: 'acc',
+    label: 'Accuracy',
   },
   {
     type: 'string',
@@ -170,7 +194,7 @@ const prefixColumnsClass = [
   },
   {
     type: 'number',
-    label: 'auc',
+    label: 'AUC',
   }
 ];
 

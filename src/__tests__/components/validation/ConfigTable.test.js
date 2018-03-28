@@ -101,7 +101,7 @@ describe('ClassConfigTable', () => {
   it('renders jobs if present', () => {
     const element = mount(<ClassConfigTable jobs={classJobs.map(jobToConfigTable)}/>);
     expect(element.find(TableRow).length).toBe(2);
-    expect(element.text()).toMatch(/Encoding: simpleIndex/);
+    expect(element.text()).toMatch(/simpleIndex, randomForest/);
   });
 });
 
@@ -117,6 +117,6 @@ describe('RegConfigTable', () => {
   it('renders jobs if present', () => {
     const element = mount(<RegConfigTable jobs={regJobs.map(jobToConfigTable)}/>);
     expect(element.find(TableRow).length).toBe(2);
-    expect(element.text()).toMatch(/Encoding: simpleIndex/);
+    expect(element.text()).toMatch(/simpleIndex, linear/);
   });
 });

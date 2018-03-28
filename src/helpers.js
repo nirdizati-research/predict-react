@@ -31,6 +31,12 @@ export const jobPropType = PropTypes.shape({
     fmeasure: PropTypes.number,
     acc: PropTypes.number,
     auc: PropTypes.number,
+    true_positive: PropTypes.number,
+    true_negative: PropTypes.number,
+    false_positive: PropTypes.number,
+    false_negative: PropTypes.number,
+    precision: PropTypes.number,
+    recall: PropTypes.number
   }).isRequired
 }).isRequired;
 

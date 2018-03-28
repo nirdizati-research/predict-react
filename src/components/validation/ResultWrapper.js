@@ -20,8 +20,16 @@ const regressionMap = (jobs) => {
 };
 
 const classMap = (jobs) => {
-  return jobs.map((job) => [job.id + '', shortRun(job.config),
-    job.result.f1score, job.result.acc, job.result.auc, job.config.prefix_length + '']);
+  return jobs.map((job) => {
+    const recall = job.result.recall || 0;
+    const precision = job.result.precision || 0;
+    const truePositive = job.result.true_positive || 0;
+    const trueNegative = job.result.true_negative || 0;
+    const falsePositive = job.result.false_positive || 0;
+    const falseNegative = job.result.false_negative || 0;
+    return [job.id + '', shortRun(job.config), job.result.f1score, job.result.acc, job.result.auc,
+      job.config.prefix_length + '', precision, recall, truePositive, trueNegative, falsePositive, falseNegative];
+  });
 };
 
 const prepareData = (jobs, predictionMethod) => {
@@ -65,25 +73,25 @@ const getCharts = (data, predictionMethod) => {
   const chartDatas = createChartData(data);
   const titles = getTitles(predictionMethod);
   return [
-    <div className="md-cell md-cell--12" key="1">
+    <div className="md-cell md-cell--6" key="1">
       <BubbleChartCard data={filterData(chartDatas, 0)}
                        columns={headers}
                        hTitle={headers[1].label}
                        vTitle={headers[2].label}
                        cardTitle={titles[0]}/></div>,
-    <div className="md-cell md-cell--12" key="2">
+    <div className="md-cell md-cell--6" key="2">
       <BubbleChartCard data={filterData(chartDatas, 1)}
                        columns={headers}
                        hTitle={headers[1].label}
                        vTitle={headers[2].label}
                        cardTitle={titles[1]}/></div>,
-    <div className="md-cell md-cell--12" key="3">
+    <div className="md-cell md-cell--6" key="3">
       <BubbleChartCard data={filterData(chartDatas, 2)}
                        columns={headers}
                        hTitle={headers[1].label}
                        vTitle={headers[2].label}
                        cardTitle={titles[2]}/></div>,
-    <div className="md-cell md-cell--12" key="4">
+    <div className="md-cell md-cell--6" key="4">
       <BubbleChartCard data={filterData(createChartDataNEWBETTER(data), 0)}
                        columns={getPrefixChartHeader(predictionMethod)}
                        hTitle={headers[1].label}

@@ -32,20 +32,22 @@ export const splitsToString = (splits) => {
 export const splitToString = (split) => {
   let label;
   if (split.type === SPLIT_SINGLE) {
-    label = `Split #${split.id} of log ${split.original_log.name}`;
+    label = `Split #${split.id}, ${split.original_log.name}`;
   } else {
-    label = `Split #${split.id} of logs ${split.training_log.name} and ${split.test_log.name}`;
+    label = `Split #${split.id}, logs ${split.training_log.name} and ${split.test_log.name}`;
   }
   return label;
 };
 
 export const jobToConfigTable = (job) => {
+  const createdDate = new Date(job.created_date).toLocaleString();
+  const modifiedDate = new Date(job.modified_date).toLocaleString();
   if (job.type === REGRESSION) {
     return {
       id: job.id,
       type: job.type,
-      created_date: job.created_date,
-      modified_date: job.modified_date,
+      created_date: createdDate,
+      modified_date: modifiedDate,
       splitName: splitToString(job.split),
       run: toRun(job),
       status: job.status,
@@ -56,8 +58,8 @@ export const jobToConfigTable = (job) => {
     return {
       id: job.id,
       type: job.type,
-      created_date: job.created_date,
-      modified_date: job.modified_date,
+      created_date: createdDate,
+      modified_date: modifiedDate,
       splitName: splitToString(job.split),
       run: toRun(job),
       status: job.status,
@@ -70,5 +72,5 @@ export const jobToConfigTable = (job) => {
 };
 
 const toRun = (job) => {
-  return `Encoding: ${job.config.encoding}, method: ${job.config.method}, clustering: ${job.config.clustering}`;
+  return `${job.config.encoding}, ${job.config.method}, ${job.config.clustering}`;
 };

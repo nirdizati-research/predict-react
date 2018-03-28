@@ -7,7 +7,7 @@ import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
 import {outcomeRuleControls} from '../../reference';
 
 const OutcomeRules = (props) => {
-  return <div className="md-cell">
+  return <div className="md-cell md-cell--3">
     <p>Choose rule to label traces as true or false</p>
     <SelectionControlGroup type="radio" name="rule" id="rule"
                            onChange={props.checkboxChange} controls={outcomeRuleControls}
