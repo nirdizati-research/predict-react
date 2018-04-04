@@ -11,7 +11,7 @@ const LogMetricsCard = (props) => {
           Maximum number of events in trace
         </div>
         <div className="md-cell md-cell--3 md-text-right">
-          3
+          {props.log.properties.maxEventsInLog}
         </div>
       </div>
     </CardText>

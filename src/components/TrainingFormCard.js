@@ -103,6 +103,7 @@ class TrainingFormCard extends Component {
 
   selectChange(value, _) {
     this.setState({split_id: value});
+    this.props.onSplitChange(value);
   }
 
   onThresholdChange(threshold) {
@@ -271,7 +272,8 @@ TrainingFormCard.propTypes = {
     inFlight: PropTypes.bool.isRequired,
     error: PropTypes.any
   }).isRequired,
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  onSplitChange: PropTypes.func.isRequired
 };
 
 export default TrainingFormCard;

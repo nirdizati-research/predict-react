@@ -148,8 +148,8 @@ export const getPrefixChartHeader = (predictionMethod) => {
 };
 
 const desc = 'Bubble chart by ';
-const regTitles = ['regressor', 'clustering', 'encoding'].map((elem) => desc + elem);
-const classTitles = ['classifier', 'clustering', 'encoding'].map((elem) => desc + elem);
+const regTitles = ['regressor', 'encoding', 'clustering'].map((elem) => desc + elem);
+const classTitles = ['classifier', 'encoding', 'clustering'].map((elem) => desc + elem);
 
 export const getTitles = (predictionMethod) => {
   switch (predictionMethod) {

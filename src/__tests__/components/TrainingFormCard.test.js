@@ -11,6 +11,7 @@ import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
 const fetchState = {inFlight: false};
 const splitLabels = [{value: 1, label: 'Split #1'}, {value: 2, label: 'Split #2'}];
 const onSubmit = jest.fn();
+const onSplitChange = jest.fn();
 
 const regressionPayload = {
   'type': 'regression',
@@ -47,8 +48,9 @@ const nextActivityPayload = {
   }
 };
 const shallowElement = shallow(<TrainingFormCard fetchState={fetchState} splitLabels={splitLabels}
-                                                 onSubmit={onSubmit}/>);
-const element = mount(<TrainingFormCard fetchState={fetchState} splitLabels={splitLabels} onSubmit={onSubmit}/>);
+                                                 onSubmit={onSubmit} onSplitChange={onSplitChange}/>);
+const element = mount(<TrainingFormCard fetchState={fetchState} splitLabels={splitLabels} onSubmit={onSubmit}
+                                        onSplitChange={onSplitChange}/>);
 describe('TrainingFormCard', () => {
   afterEach(() => {
     onSubmit.mockClear();
@@ -79,6 +81,7 @@ describe('TrainingFormCard', () => {
     // In real condition split_id will be 2
     // expect(shallowElement.state().split_id).toBe(2);
     expect(shallowElement.state().split_id).toBe('Split #2');
+    expect(onSplitChange.mock.calls[0][0]).toEqual('Split #2');
   });
 
   describe('submit', () => {
