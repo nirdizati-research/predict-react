@@ -29,15 +29,16 @@ const SplitTableCard = (props) => {
 };
 
 // TODO show names instead of pure JSON
+/* eslint-disable camelcase */
 const tableBody = (splits) => {
   return splits.map(({id, type, original_log, training_log, test_log, config}) => {
     return (
       <TableRow key={id} selectable={false}>
         <TableColumn numeric>{id}</TableColumn>
         <TableColumn>{type}</TableColumn>
-        <TableColumn><code>{JSON.stringify(original_log, null, 2)}</code></TableColumn>
-        <TableColumn><code>{JSON.stringify(training_log, null, 2)}</code></TableColumn>
-        <TableColumn><code>{JSON.stringify(test_log, null, 2)}</code></TableColumn>
+        <TableColumn>{original_log ? original_log.name : null}</TableColumn>
+        <TableColumn>{training_log ? training_log.name : null}</TableColumn>
+        <TableColumn>{test_log ? test_log.name : null}</TableColumn>
         <TableColumn><code>{JSON.stringify(config, null, 2)}</code></TableColumn>
       </TableRow>
     );
