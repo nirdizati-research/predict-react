@@ -6,6 +6,7 @@ import {changeVisibleLog, logListRequested} from '../../actions/LogActions';
 import LineChartCard from '../../components/chart/LineChartCard';
 import BarChartCard from '../../components/chart/BarChartCard';
 import {logPropType} from '../../helpers';
+import LogMetricsCard from '../../components/training/LogMetricsCard';
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -66,6 +67,9 @@ class Dashboard extends Component {
         </div>
         <div className="md-cell md-cell--6">
           {eventChart}
+        </div>
+        <div className="md-cell md-cell--6">
+          {this.props.log ? <LogMetricsCard log={this.props.log}/> : null}
         </div>
       </div>
     );
