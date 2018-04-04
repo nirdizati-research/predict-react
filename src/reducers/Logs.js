@@ -2,26 +2,20 @@
  * Created by Tõnis Kasekamp on 22.09.2017.
  */
 
-import {
-  CHANGE_VISIBLE_LOG, LOG_INFO_FAILED, LOG_INFO_RETRIEVED, LOG_LIST_FAILED, LOG_LIST_REQUESTED,
-  LOG_LIST_RETRIEVED
-} from '../actions/LogActions';
+import {CHANGE_VISIBLE_LOG, LOG_LIST_FAILED, LOG_LIST_REQUESTED, LOG_LIST_RETRIEVED} from '../actions/LogActions';
 
 const initialState = {
   fetchState: {inFlight: false},
   logs: []
 };
 
-const dummy = (id, name) => {
+const dummy = (id, name, properties) => {
   return {
     id: id,
     name: name,
     fetchState: {inFlight: false},
     visible: false,
-    events: {},
-    resources: {},
-    executions: {},
-    eventsInTrace: {}
+    properties: properties
   };
 };
 
@@ -31,14 +25,9 @@ const mergeIncomingLogs = (logList, existingLogs) => {
     if (log) {
       return log;
     } else {
-      return dummy(newLog.id, newLog.name);
+      return dummy(newLog.id, newLog.name, newLog.properties);
     }
   });
-};
-
-const addData = (log, data, infoType) => {
-  log[infoType] = data;
-  return log;
 };
 
 const logs = (state = initialState, action) => {
@@ -56,31 +45,6 @@ const logs = (state = initialState, action) => {
           ...state,
           logs: resetLogs
         };
-      }
-
-      case LOG_INFO_RETRIEVED: {
-        const logs = state.logs.map((log) => {
-          if (log.id === action.payload.logId) {
-            return addData(log, action.payload.data, action.payload.infoType);
-          } else {
-            return log;
-          }
-        });
-
-        return {...state, logs};
-      }
-
-      // Only fail. no inFlight for log itself
-      case LOG_INFO_FAILED: {
-        const logs = state.logs.map((log) => {
-          if (log.id === action.payload.logId) {
-            return {...log, fetchState: {inFlight: false, error: action.payload.error}};
-          } else {
-            return log;
-          }
-        });
-
-        return {...state, logs};
       }
 
       case LOG_LIST_REQUESTED: {

@@ -4,9 +4,6 @@
 import logs from '../../reducers/Logs';
 import {
   changeVisibleLog,
-  logInfoFailed,
-  logInfoRequested,
-  logInfoRetrieved,
   logListFailed,
   logListRequested,
   logListsRetrieved
@@ -53,44 +50,6 @@ describe('LogsReducer', () => {
       expect(storeLogs.length).toBe(3);
       expect(storeLogs[0].name).toBe(logList[0].name);
       expect(storeLogs[0].visible).toBe(true);
-    });
-  });
-
-  describe('logInfo', () => {
-    const data = {key: 'value'};
-    const payload = {logId: 1, data, infoType: 'events'};
-    const stateWithLog = logs(undefined, logListsRetrieved(logList));
-
-    it('does nothing when requesting', () => {
-      const state = logs(undefined, logInfoRequested());
-      expect(state).toEqual(initState);
-    });
-
-    it('changes fetchState when request completed', () => {
-      const state2 = logs(stateWithLog, logInfoRetrieved(logList));
-      expect(state2.logs[0].fetchState).toEqual({inFlight: false});
-    });
-
-    it('changes fetchState when request failed', () => {
-      const state2 = logs(stateWithLog, logInfoFailed({logId: 1, error: 'error'}));
-      expect(state2.logs[0].fetchState).toEqual({inFlight: false, error: 'error'});
-    });
-
-    it('adds events to log', () => {
-      const state2 = logs(stateWithLog, logInfoRetrieved(payload));
-      expect(state2.logs[0].events).toEqual(data);
-    });
-
-    it('adds resources to log', () => {
-      payload.infoType = 'resources';
-      const state2 = logs(stateWithLog, logInfoRetrieved(payload));
-      expect(state2.logs[0].resources).toEqual(data);
-    });
-
-    it('adds traces to log', () => {
-      payload.infoType = 'traces';
-      const state2 = logs(stateWithLog, logInfoRetrieved(payload));
-      expect(state2.logs[0].traces).toEqual(data);
     });
   });
 

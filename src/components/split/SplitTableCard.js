@@ -5,6 +5,7 @@ import React from 'react';
 import {DataTable, TableBody, TableColumn, TableHeader, TableRow} from 'react-md/lib/DataTables/index';
 import PropTypes from 'prop-types';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
+import {logPropType} from '../../helpers';
 
 const SplitTableCard = (props) => {
   const headers = ['id', 'type', 'Log', 'Training log', 'Test log', 'Config'];
@@ -47,18 +48,9 @@ SplitTableCard.propTypes = {
   splits: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     type: PropTypes.oneOf(['single', 'double']).isRequired,
-    original_log: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired
-    }),
-    training_log: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired
-    }),
-    test_log: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired
-    }),
+    original_log: logPropType,
+    training_log: logPropType,
+    test_log: logPropType,
     config: PropTypes.object.isRequired,
   })).isRequired
 };

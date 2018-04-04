@@ -53,3 +53,14 @@ export const splitLabels = PropTypes.arrayOf(PropTypes.shape({
   value: PropTypes.number.isRequired,
   label: PropTypes.string.isRequired
 }).isRequired).isRequired;
+
+export const logPropType = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  properties: PropTypes.shape({
+    events: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
+    resources: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
+    executions: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
+    maxEventsInLog: PropTypes.number.isRequired,
+  }).isRequired
+});
