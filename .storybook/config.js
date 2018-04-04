@@ -19,6 +19,7 @@ function loadStories() {
   require('../stories/Validation');
   require('../stories/Upload');
   require('../stories/Split');
+  require('../stories/Logs');
 }
 
 configure(loadStories, module);

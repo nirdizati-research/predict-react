@@ -3,7 +3,6 @@
   "version": "0.2.0",
   "private": true,
   "author": "Tõnis Kasekamp",
-  "homepage": "https://tkasekamp.github.io/predict-react",
   "devDependencies": {
     "@storybook/react": "3.2.13",
     "coveralls": "^3.0.0",
@@ -17,7 +16,6 @@
     "react-scripts": "1.0.15"
   },
   "dependencies": {
-    "gh-pages": "^1.1.0",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dom": "16.0.0",
@@ -40,8 +38,6 @@
     "test-coveralls": "npm run test -- --coverage --coverageReporters=lcov && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "build-storybook": "build-storybook -s public"
   }
 }

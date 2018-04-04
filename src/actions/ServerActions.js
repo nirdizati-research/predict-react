@@ -48,6 +48,8 @@ export const getLogList = ({changeVisible, requestInfo}) => (dispatch) => {
   );
 };
 
+// Legacy endpoint
+// Not used
 export const getLogInfo = ({logId, infoType}) => (dispatch) => {
   jsonAjax(
     SERVER_URL + `/logs/${logId}/${infoType}`,

@@ -10,7 +10,6 @@ import {routerMiddleware, syncHistoryWithStore} from 'react-router-redux';
 import serverMiddleware from './middlewares/ServerMiddleware';
 import {chooseServer} from './constants';
 import WebFontLoader from 'webfontloader';
-import logMiddleware from './middlewares/LogMiddleware';
 import trainingMiddleware from './middlewares/TrainingMiddleware';
 
 WebFontLoader.load({
@@ -29,7 +28,6 @@ let store = createStore(
       routerMiddle,
       thunk,
       serverMiddleware,
-      logMiddleware,
       trainingMiddleware
     )
   )

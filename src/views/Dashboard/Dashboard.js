@@ -4,7 +4,9 @@ import LogListCard from '../../components/LogListCard';
 import PropTypes from 'prop-types';
 import {changeVisibleLog, logListRequested} from '../../actions/LogActions';
 import LineChartCard from '../../components/chart/LineChartCard';
-import EventChartCard from '../../components/chart/EventChartCard';
+import BarChartCard from '../../components/chart/BarChartCard';
+import {logPropType} from '../../helpers';
+import LogMetricsCard from '../../components/training/LogMetricsCard';
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -24,9 +26,9 @@ class Dashboard extends Component {
   }
 
   getLineChart(dataName, cardTitle) {
-    if (this.props.log && Object.keys(this.props.log[dataName]).length !== 0) {
+    if (this.props.log && Object.keys(this.props.log.properties[dataName]).length !== 0) {
       return <LineChartCard fetchState={this.props.log.fetchState}
-                            data={this.props.log[dataName]}
+                            data={this.props.log.properties[dataName]}
                             cardTitle={cardTitle}
                             chartTitle="Number by day"/>;
     } else {
@@ -36,8 +38,11 @@ class Dashboard extends Component {
 
   // Not DRY :/
   getEventChart() {
-    if (this.props.log && Object.keys(this.props.log.executions).length !== 0) {
-      return <EventChartCard fetchState={this.props.log.fetchState} data={this.props.log.executions}/>;
+    if (this.props.log && Object.keys(this.props.log.properties.executions).length !== 0) {
+      return <BarChartCard fetchState={this.props.log.fetchState} data={this.props.log.properties.executions}
+                           cardTitle="Event Occurrences"
+                           hTitle="Number of Executions"
+                           chartTitle="Events"/>;
     } else {
       return null;
     }
@@ -60,8 +65,11 @@ class Dashboard extends Component {
         <div className="md-cell md-cell--12">
           {resourceChart}
         </div>
-        <div className="md-cell md-cell--12">
+        <div className="md-cell md-cell--6">
           {eventChart}
+        </div>
+        <div className="md-cell md-cell--6">
+          {this.props.log ? <LogMetricsCard log={this.props.log}/> : null}
         </div>
       </div>
     );
@@ -69,18 +77,7 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
-  log: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    events: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
-    resources: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
-    executions: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
-    visible: PropTypes.bool.isRequired,
-    fetchState: PropTypes.shape({
-      inFlight: PropTypes.bool.isRequired,
-      error: PropTypes.any
-    }).isRequired,
-  }),
+  log: logPropType,
   fetchState: PropTypes.shape({
     inFlight: PropTypes.bool.isRequired,
     error: PropTypes.any

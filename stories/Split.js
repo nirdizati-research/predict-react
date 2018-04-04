@@ -11,7 +11,14 @@ export const splits = [
     'id': 1,
     'original_log': {
       'id': 1,
-      'name': 'general_example.xes'
+      'name': 'general_example.xes',
+      'properties':
+        {
+          'events': {},
+          'resources': {},
+          'executions': {},
+          'maxEventsInLog': 1
+        }
     },
     'test_log': null,
     'training_log': null,
@@ -26,11 +33,25 @@ export const splits = [
     'original_log': null,
     'test_log': {
       'id': 1,
-      'name': 'general_example.xes'
+      'name': 'general_example.xes',
+      'properties':
+        {
+          'events': {},
+          'resources': {},
+          'executions': {},
+          'maxEventsInLog': 1
+        }
     },
     'training_log': {
       'id': 2,
-      'name': 'general_example2.xes'
+      'name': 'general_example2.xes',
+      'properties':
+        {
+          'events': {},
+          'resources': {},
+          'executions': {},
+          'maxEventsInLog': 1
+        }
     },
     'type': 'double',
     'config': {
@@ -45,15 +66,36 @@ export const splits = [
 export const logList = [
   {
     'id': 1,
-    'name': 'general_example.xes'
+    'name': 'general_example.xes',
+    'properties':
+      {
+        'events': {},
+        'resources': {},
+        'executions': {},
+        'maxEventsInLog': 1
+      }
   },
   {
     'id': 4,
-    'name': 'nonlocal.mxml.gz'
+    'name': 'nonlocal.mxml.gz',
+    'properties':
+      {
+        'events': {},
+        'resources': {},
+        'executions': {},
+        'maxEventsInLog': 1
+      }
   },
   {
     'id': 123,
-    'name': 'nonlocal2.mxml.gz'
+    'name': 'nonlocal2.mxml.gz',
+    'properties':
+      {
+        'events': {},
+        'resources': {},
+        'executions': {},
+        'maxEventsInLog': 1
+      }
   }
 ];
 

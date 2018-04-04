@@ -19,3 +19,7 @@ npm run test
 ```
 
 Heavily recommend [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi) and [Redux DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd) Chrome extensions as the make development much easier.
+
+# Deployment
+
+To deploy to the wonderful UT servers, I recommend to build the app first with `npm run build`. Then copy the content to the server and serve with `node server.js`.

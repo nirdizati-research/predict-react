@@ -4,11 +4,11 @@
 import React from 'react';
 import {storiesOf} from '@storybook/react';
 import LineChartCard from '../src/components/chart/LineChartCard';
-import EventChartCard from '../src/components/chart/EventChartCard';
 import BubbleChartCard from '../src/components/chart/BubbleChartCard';
 import ResultTableCard from '../src/components/validation/ResultTableCard';
 import {getChartHeader} from '../src/components/validation/ColumnHelper';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../src/reference';
+import BarChartCard from '../src/components/chart/BarChartCard';
 
 const fetchState = {inFlight: false};
 
@@ -29,6 +29,15 @@ const resources = {
   '2011-10-06': 11,
   '2011-10-07': 13,
   '2011-10-08': 7,
+};
+
+const eventsInTrace = {
+  '1': 5,
+  '2': 5,
+  '3': 9,
+  '4': 5,
+  '5': 13,
+  '6': 5
 };
 
 const events = {
@@ -104,8 +113,21 @@ storiesOf('Charts', module)
                          cardTitle="Number of resources"
                          chartTitle="Active traces"/>
         </div>
+
         <div className="md-cell md-cell--12">
-          <EventChartCard fetchState={fetchState} data={events}/>
+          <BarChartCard fetchState={fetchState}
+                        data={events}
+                        cardTitle="Event Occurrences"
+                        hTitle="Number of Executions"
+                        chartTitle="Events"/>
+        </div>
+        <div className="md-cell md-cell--12">
+          <BarChartCard fetchState={fetchState}
+                        data={eventsInTrace}
+                        cardTitle="Number of events in trace"
+                        hTitle="Number of events"
+                        chartTitle="Event count"
+                        description="This chart can be used to estimate the prefix_length"/>
         </div>
       </div>
     );

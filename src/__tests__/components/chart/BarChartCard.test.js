@@ -2,7 +2,7 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import {Chart} from 'react-google-charts';
 import FetchState from '../../../components/FetchState';
-import EventChartCard from '../../../components/chart/EventChartCard';
+import BarChartCard from '../../../components/chart/BarChartCard';
 
 const fetchState = {
   inFlight: false
@@ -18,16 +18,16 @@ const events = {
 
 describe('EventChartCard', () => {
   it('renders', () => {
-    const element = shallow(<EventChartCard fetchState={fetchState}
-                                            data={events}/>);
+    const element = shallow(<BarChartCard fetchState={fetchState} data={events} cardTitle="title"
+                                          chartTitle='chart title' hTitle='hTitle'/>);
     expect(element).toBeDefined();
     expect(element.find(FetchState).length).toBe(1);
     expect(element.find(Chart).length).toBe(1);
   });
 
   it('maps and sorts data', () => {
-    const element = shallow(<EventChartCard fetchState={fetchState}
-                                            data={events}/>);
+    const element = shallow(<BarChartCard fetchState={fetchState} data={events} cardTitle="title"
+                                          chartTitle='chart title' hTitle='hTitle'/>);
     const chartProps = element.find(Chart).props();
 
     expect(chartProps.rows.length).toBe(6);
