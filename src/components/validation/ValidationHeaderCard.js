@@ -39,6 +39,7 @@ const ValidationHeaderCard = (props) => {
         menuItems={props.splitLabels}
         position={SelectField.Positions.BELOW}
         onChange={selectChange}
+        value={props.selectedSplitId}
       /></CardTitle>
     <CardText>
       <SelectionControlGroup id="prediction" name="prediction" type="radio" label="Prediction method"
@@ -64,5 +65,6 @@ ValidationHeaderCard.propTypes = {
   prefixLengths: PropTypes.arrayOf(PropTypes.string).isRequired,
   prefixChange: PropTypes.func.isRequired,
   selectedPrefixes: PropTypes.arrayOf(PropTypes.number).isRequired,
+  selectedSplitId: PropTypes.number.isRequired
 };
 export default ValidationHeaderCard;

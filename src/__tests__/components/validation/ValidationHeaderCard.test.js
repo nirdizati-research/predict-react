@@ -18,7 +18,8 @@ describe('ValidationHeaderCard', () => {
     const element = shallow(<ValidationHeaderCard fetchState={fetchState} splitLabels={splitLabels}
                                                   splitChange={splitChange} methodChange={methodChange}
                                                   prefixLengths={[]} selectedPrefixes={[]}
-                                                  prefixChange={jest.fn()}/>);
+                                                  prefixChange={jest.fn()}
+                                                  selectedSplitId={1}/>);
     expect(element).toBeDefined();
     expect(element.find(FetchState).length).toBe(1);
     expect(element.find(SelectField).length).toBe(1);
@@ -29,7 +30,8 @@ describe('ValidationHeaderCard', () => {
     const element = shallow(<ValidationHeaderCard fetchState={fetchState} splitLabels={splitLabels}
                                                   splitChange={splitChange} methodChange={methodChange}
                                                   prefixLengths={[]} selectedPrefixes={[]}
-                                                  prefixChange={jest.fn()}/>);
+                                                  prefixChange={jest.fn()}
+                                                  selectedSplitId={1}/>);
     element.find(SelectField).simulate('change', 'Log2');
     expect(splitChange).toHaveBeenCalledWith('Log2');
   });
@@ -38,7 +40,8 @@ describe('ValidationHeaderCard', () => {
     const element = shallow(<ValidationHeaderCard fetchState={fetchState} splitLabels={splitLabels}
                                                   splitChange={splitChange} methodChange={methodChange}
                                                   prefixLengths={[]} selectedPrefixes={[]}
-                                                  prefixChange={jest.fn()}/>);
+                                                  prefixChange={jest.fn()}
+                                                  selectedSplitId={1}/>);
     element.find(SelectionControlGroup).at(0).simulate('change', CLASSIFICATION);
     expect(methodChange).toHaveBeenCalledWith(CLASSIFICATION);
   });
