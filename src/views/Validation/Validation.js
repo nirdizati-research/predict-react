@@ -44,7 +44,8 @@ class Validation extends Component {
                                 splitChange={this.onChangeSplit.bind(this)}
                                 prefixLengths={prefixStrings}
                                 selectedPrefixes={this.props.selectedPrefixes}
-                                prefixChange={this.onChangePrefix.bind(this)}/>
+                                prefixChange={this.onChangePrefix.bind(this)}
+                                selectedSplitId={this.props.splitId}/>
         </div>
         <div className="md-cell md-cell--12">
           <ConfigTableCard jobs={this.props.jobs}

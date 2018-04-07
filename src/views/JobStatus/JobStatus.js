@@ -34,7 +34,8 @@ class JobStatus extends Component {
             <CardTitle title="Job status"/>
             <CardText>
               <p>
-                Lots of logs below.
+                Lots of logs below. Only displays jobs that are not completed.
+                See results on the validation page.
               </p>
               <Button raised onClick={this.props.onRequestJobs}>Request current jobs</Button>
               <FetchState fetchState={this.props.fetchState}/>
@@ -57,7 +58,7 @@ JobStatus.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  jobs: state.jobs.jobs,
+  jobs: state.jobs.jobs.filter((job) => job.status !== 'completed'),
   fetchState: state.jobs.fetchState
 });
 const mapDispatchToProps = (dispatch) => ({

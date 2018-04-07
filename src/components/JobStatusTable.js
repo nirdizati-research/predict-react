@@ -24,8 +24,8 @@ const JobStatusTable = (props) => {
           <TableColumn numeric>{id}</TableColumn>
           <TableColumn>{status}</TableColumn>
           <TableColumn>{type}</TableColumn>
-          <TableColumn>{created_date}</TableColumn>
-          <TableColumn>{modified_date}</TableColumn>
+          <TableColumn>{new Date(created_date).toLocaleString()}</TableColumn>
+          <TableColumn>{new Date(modified_date).toLocaleString()}</TableColumn>
           <TableColumn>{splitToString(split)}</TableColumn>
           <TableColumn>{error}</TableColumn>
           <TableColumn grow><code>{JSON.stringify(config, null, 2)}</code></TableColumn>

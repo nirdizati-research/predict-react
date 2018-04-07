@@ -22,7 +22,7 @@ const ValidationHeaderCard = (props) => {
   const checkies = props.prefixLengths.length > 0 ?
     <SelectionControlGroup type="checkbox" label="Prefix lengths" name="prefixLengths" id="prefixLengths"
                            onChange={checkBoxChange} controls={prefixControls} inline
-                           defaultValue={defaultValue} /> : null;
+                           value={defaultValue} /> : null;
   const selectChange = (value, _) => {
     props.splitChange(value);
   };
@@ -39,6 +39,7 @@ const ValidationHeaderCard = (props) => {
         menuItems={props.splitLabels}
         position={SelectField.Positions.BELOW}
         onChange={selectChange}
+        value={props.selectedSplitId}
       /></CardTitle>
     <CardText>
       <SelectionControlGroup id="prediction" name="prediction" type="radio" label="Prediction method"
@@ -64,5 +65,6 @@ ValidationHeaderCard.propTypes = {
   prefixLengths: PropTypes.arrayOf(PropTypes.string).isRequired,
   prefixChange: PropTypes.func.isRequired,
   selectedPrefixes: PropTypes.arrayOf(PropTypes.number).isRequired,
+  selectedSplitId: PropTypes.number.isRequired
 };
 export default ValidationHeaderCard;

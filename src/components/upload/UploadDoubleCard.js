@@ -7,6 +7,7 @@ const UploadDoubleCard = () => {
     <CardTitle title="Upload"/>
     <CardText>
       Upload two log files.
+      Log parameters for the charts will be calculated during the upload and this process may take time. Remain patient!
       <UploadDouble/>
     </CardText>
   </Card>;
