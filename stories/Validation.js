@@ -170,13 +170,13 @@ storiesOf('Validation', module)
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
-          <ConfigTableCard jobs={classJobs.map(jobToConfigTable)} predictionMethod={CLASSIFICATION}/>
+          <ConfigTableCard jobs={classJobs} predictionMethod={CLASSIFICATION}/>
         </div>
         <div className="md-cell md-cell--12">
-          <ConfigTableCard jobs={regJobs.map(jobToConfigTable)} predictionMethod={REGRESSION}/>
+          <ConfigTableCard jobs={regJobs} predictionMethod={REGRESSION}/>
         </div>
         <div className="md-cell md-cell--12">
-          <ConfigTableCard jobs={nextActivityJobs.map(jobToConfigTable)} predictionMethod={NEXT_ACTIVITY}/>
+          <ConfigTableCard jobs={nextActivityJobs} predictionMethod={NEXT_ACTIVITY}/>
         </div>
       </div>
     );
