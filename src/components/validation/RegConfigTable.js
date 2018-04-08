@@ -11,15 +11,16 @@ import {jobFlatPropType} from '../../helpers';
 const RegConfigTable = (props) => {
   const headers = ['id', 'Status', 'Type', 'Run', 'Split', 'Created', 'Modified', 'Prefix length'];
 
-  return (<DataTable baseId="simple-pagination" plain>
+
+  return (<DataTable baseId="simple-pagination" selectable>
     <TableHeader>
-      <TableRow selectable={false}>
+      <TableRow>
         {headers.map((header) => <TableColumn key={header} style={columnStyle}> {header}</TableColumn>)}
       </TableRow>
     </TableHeader>
     <TableBody>
       {props.jobs.map(({id, status, run, splitName, created_date, modified_date, prefix_length, type}) => (
-        <TableRow key={id} selectable={false}>
+        <TableRow key={id}>
           <TableColumn style={columnStyle}>{id}</TableColumn>
           <TableColumn style={columnStyle}>{status}</TableColumn>
           <TableColumn style={columnStyle}>{type}</TableColumn>
