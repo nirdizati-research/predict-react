@@ -16,11 +16,11 @@ class ConfigTableCard extends Component {
     const flatJobs = this.props.jobs.map(jobToConfigTable);
     switch (this.props.predictionMethod) {
       case REGRESSION:
-        return <RegConfigTable jobs={flatJobs}/>;
+        return <RegConfigTable jobs={flatJobs} handleRowToggle={this.props.handleRowToggle}/>;
       case CLASSIFICATION:
-        return <ClassConfigTable jobs={flatJobs}/>;
+        return <ClassConfigTable jobs={flatJobs} handleRowToggle={this.props.handleRowToggle}/>;
       case NEXT_ACTIVITY:
-        return <RegConfigTable jobs={flatJobs}/>;
+        return <RegConfigTable jobs={flatJobs} handleRowToggle={this.props.handleRowToggle}/>;
       // no default
     }
   }
@@ -39,5 +39,6 @@ class ConfigTableCard extends Component {
 ConfigTableCard.propTypes = {
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
   predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
+  handleRowToggle: PropTypes.func.isRequired
 };
 export default ConfigTableCard;

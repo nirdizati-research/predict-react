@@ -11,15 +11,20 @@ import {jobFlatPropType} from '../../helpers';
 const ClassConfigTable = (props) => {
   const headers = ['id', 'Status', 'Type', 'Run', 'Split', 'Created', 'Modified', 'Rule', 'Prefix length', 'Threshold'];
 
-  return (<DataTable baseId="simple-pagination" plain>
+  // const a1 = (aa, ab, ac, ad) => {
+  //   console.log(aa,ab,ac)
+  //   console.log("job id", props.jobs[aa].id)
+  //   console.log(ad.target)
+  // };
+  return (<DataTable baseId="simple-pagination" selectable onRowToggle={props.handleRowToggle}>
     <TableHeader>
-      <TableRow selectable={false}>
+      <TableRow>
         {headers.map((header) => <TableColumn key={header} style={columnStyle}> {header}</TableColumn>)}
       </TableRow>
     </TableHeader>
     <TableBody>
       {props.jobs.map((job) => (
-        <TableRow key={job.id} selectable={false}>
+        <TableRow key={job.id} selected={job.selected}>
           <TableColumn style={columnStyle}>{job.id}</TableColumn>
           <TableColumn style={columnStyle}>{job.status}</TableColumn>
           <TableColumn style={columnStyle}>{job.type}</TableColumn>
@@ -37,7 +42,8 @@ const ClassConfigTable = (props) => {
 };
 
 ClassConfigTable.propTypes = {
-  jobs: PropTypes.arrayOf(jobFlatPropType).isRequired
+  jobs: PropTypes.arrayOf(jobFlatPropType).isRequired,
+  handleRowToggle: PropTypes.func.isRequired
 };
 
 export default ClassConfigTable;

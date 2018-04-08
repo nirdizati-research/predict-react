@@ -123,6 +123,25 @@ const threshold = [
   }
 ];
 
+export const splitTypes = [
+  {
+    label: 'Sequential order',
+    value: 'split_sequential'
+  },
+  {
+    label: 'Temporal order',
+    value: 'split_temporal'
+  },
+  {
+    label: 'Random order',
+    value: 'split_random'
+  },
+  {
+    label: 'Strict temporal order',
+    value: 'split_strict_temporal'
+  },
+];
+
 // Makes things for Selection Controls
 const controlCreator = (optMap) => {
   return optMap.map((opt) => {
