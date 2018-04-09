@@ -13,12 +13,6 @@ import {jobPropType} from '../../helpers';
 import {splitsToString} from '../../util/dataReducers';
 
 class Validation extends Component {
-  constructor() {
-    super();
-    this.state = {
-      selectedRows: []
-    };
-  }
   onChangePrefix(prefixLength) {
     this.props.onPrefixChange(prefixLength);
   }
@@ -35,17 +29,6 @@ class Validation extends Component {
 
   onChangeMethod(method) {
     this.props.onMethodChange(method);
-  }
-
-  handleRowToggle(row, selected, count) {
-    let selectedRows = this.state.selectedRows.slice();
-    if (row === 0) {
-      selectedRows = selectedRows.map(() => selected);
-    } else {
-      selectedRows[row - 1] = selected;
-    }
-
-    this.setState({selectedRows});
   }
 
   render() {
@@ -65,7 +48,7 @@ class Validation extends Component {
                                 selectedSplitId={this.props.splitId}/>
         </div>
         <div className="md-cell md-cell--12">
-          <ConfigTableCard jobs={this.props.jobs} handleRowToggle={this.handleRowToggle.bind(this)}
+          <ConfigTableCard jobs={this.props.jobs}
                            predictionMethod={this.props.predictionMethod}/>
         </div>
         <ResultWrapper jobs={this.props.jobs} predictionMethod={this.props.predictionMethod}/>
