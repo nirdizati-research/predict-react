@@ -3,8 +3,10 @@
  */
 import React from 'react';
 import {storiesOf} from '@storybook/react';
-import SplitTableCard from '../src/components/split/SplitTableCard';
 import SplitFormCard from '../src/components/split/SplitFormCard';
+import {SPLIT_DOUBLE, SPLIT_SINGLE} from '../src/reference';
+import DoubleSplitTableCard from '../src/components/split/DoubleSplitTableCard';
+import SingleSplitTableCard from '../src/components/split/SingleSplitTableCard';
 
 export const splits = [
   {
@@ -105,7 +107,10 @@ storiesOf('Split', module)
       return (
         <div className="md-grid">
           <div className="md-cell md-cell--12">
-            <SplitTableCard splits={splits}/>
+            <SingleSplitTableCard splits={splits.filter((split) => split.type === SPLIT_SINGLE)}/>
+          </div>
+          <div className="md-cell md-cell--12">
+            <DoubleSplitTableCard splits={splits.filter((split) => split.type === SPLIT_DOUBLE)}/>
           </div>
         </div>
       );

@@ -7,13 +7,14 @@ import PropTypes from 'prop-types';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import {logPropType} from '../../helpers';
 
-const SplitTableCard = (props) => {
-  const headers = ['id', 'type', 'Log', 'Training log', 'Test log', 'Config'];
+const SingleSplitTableCard = (props) => {
+  const headers = ['id', 'Log', 'Split type', 'Test set %'];
 
   return (
     <Card className="md-block-centered">
       <CardTitle title="Splits overview"/>
       <CardText>
+        Split created via configuration above
         <DataTable baseId="simple-pagination" plain>
           <TableHeader>
             <TableRow selectable={false}>
@@ -28,24 +29,21 @@ const SplitTableCard = (props) => {
     </Card>);
 };
 
-// TODO show names instead of pure JSON
 /* eslint-disable camelcase */
 const tableBody = (splits) => {
-  return splits.map(({id, type, original_log, training_log, test_log, config}) => {
+  return splits.map(({id, original_log, config}) => {
     return (
       <TableRow key={id} selectable={false}>
         <TableColumn numeric>{id}</TableColumn>
-        <TableColumn>{type}</TableColumn>
-        <TableColumn>{original_log ? original_log.name : null}</TableColumn>
-        <TableColumn>{training_log ? training_log.name : null}</TableColumn>
-        <TableColumn>{test_log ? test_log.name : null}</TableColumn>
-        <TableColumn><pre>{JSON.stringify(config, null, 2)}</pre></TableColumn>
+        <TableColumn>{original_log.name}</TableColumn>
+        <TableColumn>{config.split_type}</TableColumn>
+        <TableColumn numeric>{config.test_size}</TableColumn>
       </TableRow>
     );
   });
 };
 
-SplitTableCard.propTypes = {
+SingleSplitTableCard.propTypes = {
   splits: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     type: PropTypes.oneOf(['single', 'double']).isRequired,
@@ -56,4 +54,4 @@ SplitTableCard.propTypes = {
   })).isRequired
 };
 
-export default SplitTableCard;
+export default SingleSplitTableCard;

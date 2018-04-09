@@ -3,8 +3,10 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {logListRequested} from '../actions/LogActions';
 import SplitFormCard from '../components/split/SplitFormCard';
-import SplitTableCard from '../components/split/SplitTableCard';
 import {splitsRequested, submitSplit} from '../actions/SplitActions';
+import {SPLIT_DOUBLE, SPLIT_SINGLE} from '../reference';
+import SingleSplitTableCard from '../components/split/SingleSplitTableCard';
+import DoubleSplitTableCard from '../components/split/DoubleSplitTableCard';
 
 class Split extends Component {
   componentDidMount() {
@@ -26,7 +28,10 @@ class Split extends Component {
                          onSubmit={this.props.onSubmitSplit}/>
         </div>
         <div className="md-cell md-cell--12">
-          <SplitTableCard splits={this.props.splits}/>
+          <SingleSplitTableCard splits={this.props.splits.filter((split) => split.type === SPLIT_SINGLE)}/>
+        </div>
+        <div className="md-cell md-cell--12">
+          <DoubleSplitTableCard splits={this.props.splits.filter((split) => split.type === SPLIT_DOUBLE)}/>
         </div>
       </div>
     );
