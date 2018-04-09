@@ -39,7 +39,7 @@ const tableBody = (splits) => {
         <TableColumn>{original_log ? original_log.name : null}</TableColumn>
         <TableColumn>{training_log ? training_log.name : null}</TableColumn>
         <TableColumn>{test_log ? test_log.name : null}</TableColumn>
-        <TableColumn><code>{JSON.stringify(config, null, 2)}</code></TableColumn>
+        <TableColumn><pre>{JSON.stringify(config, null, 2)}</pre></TableColumn>
       </TableRow>
     );
   });
