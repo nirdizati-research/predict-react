@@ -15,7 +15,9 @@ import {
   encodingMethods,
   NEXT_ACTIVITY,
   outcomeRuleControls,
+  paddingControls,
   predictionMethods,
+  prefixTypeControls,
   REGRESSION,
   regressionMethods,
   thresholdControls
@@ -24,7 +26,7 @@ import OutcomeRules from './training/OutcomeRules';
 import Threshold from './training/Threshold';
 import CheckboxGroup from './training/CheckboxGroup';
 import {splitLabels} from '../helpers';
-import {TextField} from 'react-md/lib/TextFields/index';
+import PrefixSelector from './training/PrefixSelector';
 
 const defaultPrefix = 1;
 const defaultThreshold = 0;
@@ -38,7 +40,11 @@ const initialState = (props) => {
     clusterings: [clusteringMethods[0].value],
     classification: [classificationMethods[0].value],
     regression: [regressionMethods[0].value],
-    prefix_length: defaultPrefix,
+    prefix: {
+      padding: paddingControls[0].value,
+      type: prefixTypeControls[0].value,
+      prefix_length: defaultPrefix,
+    },
     displayWarning: false,
     predictionMethod: REGRESSION,
     rule: outcomeRuleControls[0].value,
@@ -110,8 +116,8 @@ class TrainingFormCard extends Component {
     this.setState({threshold});
   }
 
-  onPrefixChange(prefixLength) {
-    this.setState({prefix_length: parseInt(prefixLength, 10)});
+  onPrefixChange(prefix) {
+    this.setState({prefix: prefix});
   }
 
   displayWarningCheck(prevState) {
@@ -153,7 +159,7 @@ class TrainingFormCard extends Component {
       type: this.state.predictionMethod,
       split_id: this.state.split_id,
       config: {
-        prefix_length: this.state.prefix_length || defaultPrefix,
+        prefix_length: this.state.prefix.prefix_length || defaultPrefix,
         encodings: this.state.encodings,
         clusterings: this.state.clusterings,
         methods: methods
@@ -226,6 +232,7 @@ class TrainingFormCard extends Component {
                                      onChange={this.checkboxChange.bind(this)} controls={encodingMethods}
                                      value={this.state.encodings.join(',')} controlStyle={groupStyle}/>
             </div>
+            <PrefixSelector prefix={this.state.prefix} onChange={this.onPrefixChange.bind(this)}/>
             <div className="md-cell md-cell--3">
               <SelectionControlGroup type="checkbox" label="Clustering methods" name="clusterings" id="clusterings"
                                      onChange={this.checkboxChange.bind(this)} controls={clusteringMethods}
@@ -235,21 +242,6 @@ class TrainingFormCard extends Component {
             {classificationFragment}
             {outcomeRuleFragment}
             {thresholdFragment}
-            <div className="md-cell md-cell--3">
-              <legend className="md-subheading-1">Prefix length</legend>
-              <div className="md-selection-control-container md-caption">How many events in a trace to consider.
-                Raise number at your own caution because this too high a number will cause errors.</div>
-              <TextField
-                id="prefixLength"
-                label="Prefix length"
-                type="number"
-                defaultValue={defaultPrefix}
-                onChange={this.onPrefixChange.bind(this)}
-                min={0}
-                className="md-cell"
-                required
-              />
-            </div>
             <div className="md-cell md-cell--12">
               {warning}
               <FetchState fetchState={this.props.fetchState}/>
