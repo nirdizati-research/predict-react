@@ -6,7 +6,6 @@ import {submitTraining} from '../../actions/JobActions';
 import {splitsToString} from '../../util/dataReducers';
 import {splitsRequested} from '../../actions/SplitActions';
 import {splitLabels} from '../../helpers';
-import LogMetricsCard from '../../components/training/LogMetricsCard';
 import {SPLIT_SINGLE} from '../../reference';
 
 class Training extends Component {
@@ -14,7 +13,7 @@ class Training extends Component {
     super();
 
     this.state = {
-      logs: []
+      maxEventsInLog: 0
     };
   }
 
@@ -31,7 +30,15 @@ class Training extends Component {
     } else {
       logs = [split.training_log, split.test_log];
     }
-    this.setState({logs});
+    this.getMaxEvents(logs);
+  }
+
+  getMaxEvents(logs) {
+    const arr = logs.map((log) => log.properties.maxEventsInLog);
+    const max = arr.reduce(function (a, b) {
+      return Math.max(a, b);
+    });
+    this.setState({maxEventsInLog: max});
   }
 
   render() {
@@ -39,10 +46,9 @@ class Training extends Component {
       <div className="md-grid">
         <div className="md-cell md-cell--12">
           <TrainingFormCard splitLabels={this.props.splitLabels} fetchState={this.props.fetchState}
+                            maxEventsInLog={this.state.maxEventsInLog}
                             onSubmit={this.props.onSubmitTraining} onSplitChange={this.onSplitChange.bind(this)}/>
         </div>
-        {this.state.logs.map((log) => <div key={log.id} className="md-cell md-cell--6"><LogMetricsCard log={log}/>
-        </div>)}
       </div>
     );
   }

@@ -47,10 +47,10 @@ const nextActivityPayload = {
     'prefix_length': 1,
   }
 };
-const shallowElement = shallow(<TrainingFormCard fetchState={fetchState} splitLabels={splitLabels}
+const shallowElement = shallow(<TrainingFormCard fetchState={fetchState} splitLabels={splitLabels} maxEventsInLog={10}
                                                  onSubmit={onSubmit} onSplitChange={onSplitChange}/>);
 const element = mount(<TrainingFormCard fetchState={fetchState} splitLabels={splitLabels} onSubmit={onSubmit}
-                                        onSplitChange={onSplitChange}/>);
+                                        onSplitChange={onSplitChange} maxEventsInLog={10}/>);
 describe('TrainingFormCard', () => {
   afterEach(() => {
     onSubmit.mockClear();
@@ -103,7 +103,7 @@ describe('TrainingFormCard', () => {
     it('Classification with custom threshold', () => {
       element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: CLASSIFICATION}});
       // Change threshold
-      element.find(SelectionControlGroup).at(5).simulate('change', {target: {name: 'random?', value: 'custom'}});
+      element.find(SelectionControlGroup).at(7).simulate('change', {target: {name: 'random?', value: 'custom'}});
       element.find(Button).at(0).simulate('click');
 
       let payload = classificationPayload;

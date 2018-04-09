@@ -5,11 +5,13 @@ import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
 import {paddingControls, prefixTypeControls} from '../../reference';
 
 const groupStyle = {height: 'auto'};
+
 /* eslint-disable camelcase */
 class PrefixSelector extends Component {
   constructor(props) {
     super(props);
     this.state = this.props.prefix;
+    this.state.error = false;
   }
 
   onPaddingChange(padding) {
@@ -24,6 +26,7 @@ class PrefixSelector extends Component {
 
   onPrefixChange(prefix_length) {
     this.setState({prefix_length});
+    this.errorCheck(prefix_length);
     this.onChange();
   }
 
@@ -35,6 +38,18 @@ class PrefixSelector extends Component {
     this.props.onChange({...this.state, prefix_length: parseInt(this.state.prefix_length, 10)});
   }
 
+  errorCheck(prefix_length) {
+    if (prefix_length === '') {
+      return;
+    }
+    const pref = parseInt(prefix_length, 10);
+    if (pref > this.props.maxEventsInLog) {
+      this.setState({error: true});
+    } else {
+      this.setState({error: false});
+    }
+  }
+
   render() {
     return <div className="md-cell md-cell--3">
       <SelectionControlGroup type="radio" name="padding" id="padding" label="Encoded log padding"
@@ -43,7 +58,7 @@ class PrefixSelector extends Component {
       <SelectionControlGroup type="radio" name="type" id="type" label="Prefix generation type"
                              onChange={this.onTypeChange.bind(this)} controls={prefixTypeControls}
                              value={this.state.type} controlStyle={groupStyle}/>
-      <p> How many events in a trace to consider.
+      <p> How many events in a trace to consider. The max for this log is {this.props.maxEventsInLog}.
         Raise number at your own caution because this too high a number will cause errors.</p>
       <TextField
         id="prefixLength"
@@ -52,9 +67,11 @@ class PrefixSelector extends Component {
         value={this.state.prefix_length}
         onChange={this.onPrefixChange.bind(this)}
         min={0}
-        max={10}
-        className="md-cell"
+        max={this.props.maxEventsInLog}
+        className="md-cell md-cell--12"
         required
+        error={this.state.error}
+        errorText={`Can't be greater than log maximum prefix length ${this.props.maxEventsInLog}`}
       />
     </div>;
   }
@@ -66,6 +83,7 @@ PrefixSelector.propTypes = {
     type: PropTypes.string.isRequired,
     prefix_length: PropTypes.number.isRequired
   }).isRequired,
+  maxEventsInLog: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired
 };
 

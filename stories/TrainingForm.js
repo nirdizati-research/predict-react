@@ -13,15 +13,15 @@ storiesOf('TrainingFormCard', module)
         <div className="md-grid">
           <div className="md-cell md-cell--12">
             <TrainingFormCard splitLabels={splitsToString(splits)} fetchState={{inFlight: false}} onSubmit={(_) => _}
-                              onSplitChange={(_) => _}/>
+                              onSplitChange={(_) => _} maxEventsInLog={10}/>
           </div>
           <div className="md-cell md-cell--12">
             <TrainingFormCard splitLabels={splitsToString(splits)} fetchState={{inFlight: true}} onSubmit={(_) => _}
-                              onSplitChange={(_) => _}/>
+                              onSplitChange={(_) => _} maxEventsInLog={10}/>
           </div>
           <div className="md-cell md-cell--12">
             <TrainingFormCard splitLabels={splitsToString([])} fetchState={{inFlight: false, error: 'oh shit'}}
-                              onSubmit={(_) => _} onSplitChange={(_) => _}/>
+                              onSubmit={(_) => _} onSplitChange={(_) => _} maxEventsInLog={10}/>
           </div>
         </div>
       );
