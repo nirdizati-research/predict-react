@@ -30,18 +30,20 @@ const LineChartCard = (props) => {
       type: 'number',
       label: props.chartTitle,
     }];
+
+  const chart = <Chart
+    chartType="LineChart"
+    rows={rows}
+    columns={columns}
+    options={opts}
+    graph_id={props.cardTitle}
+    width="100%"
+    legend_toggle
+  />;
   return <Card className="md-block-centered">
-    <CardTitle title={props.cardTitle} />
+    <CardTitle title={props.cardTitle}/>
     <CardText>
-      <Chart
-        chartType="LineChart"
-        rows={rows}
-        columns={columns}
-        options={opts}
-        graph_id={props.cardTitle}
-        width="100%"
-        legend_toggle
-      />
+      {rows.length < 2 ? 'Chart cannot be shown. Metrics not available.' : chart}
       <FetchState fetchState={props.fetchState}/>
     </CardText>
   </Card>;
