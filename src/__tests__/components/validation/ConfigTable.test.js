@@ -95,13 +95,13 @@ describe('ClassConfigTable', () => {
     expect(element).toBeDefined();
     // Header row
     expect(element.find(TableRow).length).toBe(1);
-    expect(element.find(TableColumn).length).toBe(10);
+    expect(element.find(TableColumn).length).toBe(9);
   });
 
   it('renders jobs if present', () => {
     const element = mount(<ClassConfigTable jobs={classJobs.map(jobToConfigTable)}/>);
     expect(element.find(TableRow).length).toBe(2);
-    expect(element.text()).toMatch(/simpleIndex, randomForest/);
+    expect(element.text()).toMatch(/classification/);
   });
 });
 
@@ -111,12 +111,12 @@ describe('RegConfigTable', () => {
     expect(element).toBeDefined();
     // Header row
     expect(element.find(TableRow).length).toBe(1);
-    expect(element.find(TableColumn).length).toBe(8);
+    expect(element.find(TableColumn).length).toBe(7);
   });
 
   it('renders jobs if present', () => {
     const element = mount(<RegConfigTable jobs={regJobs.map(jobToConfigTable)}/>);
     expect(element.find(TableRow).length).toBe(2);
-    expect(element.text()).toMatch(/simpleIndex, linear/);
+    expect(element.text()).toMatch(/regression/);
   });
 });

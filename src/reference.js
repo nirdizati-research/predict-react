@@ -142,6 +142,31 @@ export const splitTypes = [
   },
 ];
 
+const padding = [
+  {
+    label: 'No padding',
+    value: 'no_padding',
+    message: 'Traces with less than prefix_length will be discarded'
+  },
+  {
+    label: 'With 0 padding',
+    value: 'with_0_padding',
+    message: 'Traces with less than prefix_length will be padded with 0'
+  }
+];
+
+const prefixTypes = [
+  {
+    label: 'Only this prefix',
+    value: 'only'
+  },
+  {
+    label: 'Up to the prefix',
+    value: 'up_to',
+    message: 'Run jobs from 1 to this value'
+  },
+];
+
 // Makes things for Selection Controls
 const controlCreator = (optMap) => {
   return optMap.map((opt) => {
@@ -162,5 +187,7 @@ export const regressionMethods = controlCreator(regression);
 export const predictionMethods = controlCreator(predictions);
 export const outcomeRuleControls = controlCreator(outcomeRules);
 export const thresholdControls = controlCreator(threshold);
+export const paddingControls = controlCreator(padding);
+export const prefixTypeControls = controlCreator(prefixTypes);
 
 export const columnStyle = {paddingRight: '12px'};

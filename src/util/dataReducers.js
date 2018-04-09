@@ -71,6 +71,32 @@ export const jobToConfigTable = (job) => {
   }
 };
 
+export const jobToValidationTable = (job) => {
+  if (job.type === REGRESSION) {
+    return {
+      id: job.id,
+      type: job.type,
+      encoding: job.config.encoding,
+      clustering: job.config.clustering,
+      method: job.config.method,
+      splitName: splitToString(job.split),
+      prefix_length: job.config.prefix_length
+    };
+  } else {
+    return {
+      id: job.id,
+      type: job.type,
+      encoding: job.config.encoding,
+      clustering: job.config.clustering,
+      method: job.config.method,
+      splitName: splitToString(job.split),
+      prefix_length: job.config.prefix_length,
+      rule: job.config.rule,
+      threshold: job.config.threshold
+    };
+  }
+};
+
 const toRun = (job) => {
   return `${job.config.encoding}, ${job.config.method}, ${job.config.clustering}`;
 };

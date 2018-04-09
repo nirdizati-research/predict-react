@@ -28,7 +28,7 @@ const JobStatusTable = (props) => {
           <TableColumn>{new Date(modified_date).toLocaleString()}</TableColumn>
           <TableColumn>{splitToString(split)}</TableColumn>
           <TableColumn>{error}</TableColumn>
-          <TableColumn grow><code>{JSON.stringify(config, null, 2)}</code></TableColumn>
+          <TableColumn grow><pre>{JSON.stringify(config, null, 2)}</pre></TableColumn>
         </TableRow>
       ))}
     </TableBody>

@@ -8,19 +8,19 @@ import RegConfigTable from './RegConfigTable';
 import ClassConfigTable from './ClassConfigTable';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
 import {jobPropType} from '../../helpers';
-import {jobToConfigTable} from '../../util/dataReducers';
+import {jobToValidationTable} from '../../util/dataReducers';
 
 
 class ConfigTableCard extends Component {
   getTable() {
-    const flatJobs = this.props.jobs.map(jobToConfigTable);
+    const flatJobs = this.props.jobs.map(jobToValidationTable);
     switch (this.props.predictionMethod) {
       case REGRESSION:
-        return <RegConfigTable jobs={flatJobs} handleRowToggle={this.props.handleRowToggle}/>;
+        return <RegConfigTable jobs={flatJobs}/>;
       case CLASSIFICATION:
-        return <ClassConfigTable jobs={flatJobs} handleRowToggle={this.props.handleRowToggle}/>;
+        return <ClassConfigTable jobs={flatJobs}/>;
       case NEXT_ACTIVITY:
-        return <RegConfigTable jobs={flatJobs} handleRowToggle={this.props.handleRowToggle}/>;
+        return <RegConfigTable jobs={flatJobs}/>;
       // no default
     }
   }
@@ -38,7 +38,6 @@ class ConfigTableCard extends Component {
 
 ConfigTableCard.propTypes = {
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
-  handleRowToggle: PropTypes.func.isRequired
+  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired
 };
 export default ConfigTableCard;

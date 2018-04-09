@@ -115,6 +115,12 @@ storiesOf('Charts', module)
         </div>
 
         <div className="md-cell md-cell--12">
+          <LineChartCard fetchState={fetchState}
+                         data={{}}
+                         cardTitle="Number of resources empty"
+                         chartTitle="Empty chart"/>
+        </div>
+        <div className="md-cell md-cell--12">
           <BarChartCard fetchState={fetchState}
                         data={events}
                         cardTitle="Event Occurrences"

@@ -9,26 +9,25 @@ import {jobFlatPropType} from '../../helpers';
 
 /* eslint-disable camelcase */
 const RegConfigTable = (props) => {
-  const headers = ['id', 'Status', 'Type', 'Run', 'Split', 'Created', 'Modified', 'Prefix length'];
+  const headers = ['id', 'Type', 'Encoding', 'Clustering', 'Method', 'Prefix length', 'Split'];
 
 
-  return (<DataTable baseId="simple-pagination" selectable>
+  return (<DataTable baseId="simple-pagination" plain>
     <TableHeader>
       <TableRow>
         {headers.map((header) => <TableColumn key={header} style={columnStyle}> {header}</TableColumn>)}
       </TableRow>
     </TableHeader>
     <TableBody>
-      {props.jobs.map(({id, status, run, splitName, created_date, modified_date, prefix_length, type}) => (
+      {props.jobs.map(({id, encoding, clustering, method, splitName, prefix_length, type}) => (
         <TableRow key={id}>
           <TableColumn style={columnStyle}>{id}</TableColumn>
-          <TableColumn style={columnStyle}>{status}</TableColumn>
           <TableColumn style={columnStyle}>{type}</TableColumn>
-          <TableColumn style={columnStyle}>{run}</TableColumn>
-          <TableColumn style={columnStyle}>{splitName}</TableColumn>
-          <TableColumn style={columnStyle}>{created_date}</TableColumn>
-          <TableColumn style={columnStyle}>{modified_date}</TableColumn>
+          <TableColumn style={columnStyle}>{encoding}</TableColumn>
+          <TableColumn style={columnStyle}>{clustering}</TableColumn>
+          <TableColumn style={columnStyle}>{method}</TableColumn>
           <TableColumn style={columnStyle} numeric>{prefix_length}</TableColumn>
+          <TableColumn style={columnStyle} grow>{splitName}</TableColumn>
         </TableRow>
       ))}
     </TableBody>
