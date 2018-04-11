@@ -33,7 +33,7 @@ const ClassificationKnn = (props) => {
     required
   />;
 
-  return <div>
+  return <div className="md-cell md-cell--4">
     <h4>KNeighborsClassifier <Button icon primary href={URL} tooltipLabel="Link to documentation">help</Button></h4>
     {weights}
     {nNeighbors}

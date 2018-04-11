@@ -5,6 +5,7 @@ import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import ClassificationKnn from '../src/components/advanced/ClassificationKnn';
 import {CLASSIFICATION} from '../src/reference';
 import AdvancedConfiguration from '../src/components/advanced/AdvancedConfiguration';
+import ClassificationDecisionTree from '../src/components/advanced/ClassificationDecisionTree';
 
 storiesOf('Advanced configuration', module)
   .add('classification', () => {
@@ -13,8 +14,13 @@ storiesOf('Advanced configuration', module)
           <div className="md-cell md-cell--12">
             <Card className="md-block-centered">
               <CardText>
-                <div className="md-cell md-cell--3">
+                <div className="md-grid">
+                <div className="md-cell md-cell--4">
                   <ClassificationKnn predictionMethod={CLASSIFICATION} onChange={console.log}/>
+                </div>
+                <div className="md-cell md-cell--4">
+                  <ClassificationDecisionTree predictionMethod={CLASSIFICATION} onChange={console.log}/>
+                </div>
                 </div>
               </CardText>
             </Card>
@@ -30,10 +36,8 @@ storiesOf('Advanced configuration', module)
             <Card className="md-block-centered">
               <CardTitle title="Classification"/>
               <CardText>
-                <div className="md-cell md-cell--12">
-                  <AdvancedConfiguration predictionMethod={CLASSIFICATION} classification={['knn']} regression={[]}
+                  <AdvancedConfiguration predictionMethod={CLASSIFICATION} classification={['knn', 'decisionTree']} regression={[]}
                                          onChange={console.log}/>
-                </div>
               </CardText>
             </Card>
           </div>

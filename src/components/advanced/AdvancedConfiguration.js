@@ -2,23 +2,24 @@ import React from 'react';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
 import PropTypes from 'prop-types';
 import ClassificationKnn from './ClassificationKnn';
+import ClassificationDecisionTree from './ClassificationDecisionTree';
 
 
 const AdvancedConfiguration = (props) => {
-  const classKnn = () => <ClassificationKnn key='knn' onChange={props.onChange} predictionMethod={CLASSIFICATION}/>;
-
   const classConfigMap = {
-    'classification.knn': classKnn
+    'classification.knn': <ClassificationKnn key='knn' onChange={props.onChange} predictionMethod={CLASSIFICATION}/>,
+    'classification.decisionTree': <ClassificationDecisionTree onChange={props.onChange}
+                                                               predictionMethod={CLASSIFICATION}/>
   };
 
   const regressionConfigMap = {
-    'regression.knn': classKnn
+    'regression.knn': null
   };
 
   const configMapper = (methods, confMap) => methods.map((method) => {
       const configName = `${props.predictionMethod}.${method}`;
 
-      return confMap[configName]();
+      return confMap[configName];
     }
   );
 
@@ -30,7 +31,7 @@ const AdvancedConfiguration = (props) => {
     }
   };
 
-  return <div className="md-cell md-cell--12">
+  return <div className="md-grid md-grid--no-spacing">
     {configs()}
   </div>;
 };

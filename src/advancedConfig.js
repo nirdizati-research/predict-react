@@ -23,3 +23,25 @@ export const classificationKnnWeights = [
     label: 'distance'
   }
 ];
+
+export const classificationDecisionTreeCriterion = [
+  {
+    value: 'gini',
+    label: 'gini'
+  },
+  {
+    value: 'entropy',
+    label: 'entropy'
+  }
+];
+
+export const classificationDecisionTreeSplitter = [
+  {
+    value: 'best',
+    label: 'best'
+  },
+  {
+    value: 'random',
+    label: 'random'
+  }
+];
