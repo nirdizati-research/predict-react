@@ -16,7 +16,7 @@ const ClassificationKnn = (props) => {
   const weights = <SelectField
     id="weights"
     label="KNN weights"
-    className="md-cell md-cell--12"
+    className="md-cell md-cell--6"
     menuItems={classificationKnnWeights}
     position={SelectField.Positions.BELOW}
     onChange={props.onChange.bind(this, methodConfig, 'weights')}
@@ -29,7 +29,7 @@ const ClassificationKnn = (props) => {
     defaultValue={defaults.n_neighbors}
     onChange={props.onChange.bind(this, methodConfig, 'n_neighbors')}
     min={0}
-    className="md-cell md-cell--12"
+    className="md-cell md-cell--6"
     required
   />;
 
@@ -42,7 +42,6 @@ const ClassificationKnn = (props) => {
 
 ClassificationKnn.propTypes = {
   onChange: PropTypes.func.isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
-
+  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired
 };
 export default ClassificationKnn;
