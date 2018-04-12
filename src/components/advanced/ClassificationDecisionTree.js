@@ -7,6 +7,7 @@ import {
   classificationDecisionTreeCriterion, classificationDecisionTreeSplitter,
   classificationKnnWeights
 } from '../../advancedConfig';
+import GenericConfiguration from './GenericConfiguration';
 
 const defaults = {
   'criterion': 'gini',
@@ -22,7 +23,7 @@ const ClassificationDecisionTree = (props) => {
   const criterion = <SelectField
     id="criterion"
     label="criterion"
-    className="md-cell md-cell--6"
+    className="md-cell md-cell--4"
     menuItems={classificationDecisionTreeCriterion}
     position={SelectField.Positions.BELOW}
     onChange={props.onChange.bind(this, methodConfig, 'criterion')}
@@ -31,7 +32,7 @@ const ClassificationDecisionTree = (props) => {
   const splitter = <SelectField
     id="splitter"
     label="splitter"
-    className="md-cell md-cell--6"
+    className="md-cell md-cell--4"
     menuItems={classificationDecisionTreeSplitter}
     position={SelectField.Positions.BELOW}
     onChange={props.onChange.bind(this, methodConfig, 'splitter')}
@@ -44,7 +45,7 @@ const ClassificationDecisionTree = (props) => {
     defaultValue={defaults.max_depth}
     onChange={props.onChange.bind(this, methodConfig, 'max_depth')}
     min={0}
-    className="md-cell md-cell--6"
+    className="md-cell md-cell--4"
   />;
   const minSamplesSplit = <TextField
     id="min_samples_split"
@@ -53,7 +54,7 @@ const ClassificationDecisionTree = (props) => {
     defaultValue={defaults.min_samples_split}
     onChange={props.onChange.bind(this, methodConfig, 'min_samples_split')}
     min={0}
-    className="md-cell md-cell--6"
+    className="md-cell md-cell--4"
     required
   />;
   const minSamplesLeaf = <TextField
@@ -63,18 +64,17 @@ const ClassificationDecisionTree = (props) => {
     defaultValue={defaults.min_samples_leaf}
     onChange={props.onChange.bind(this, methodConfig, 'min_samples_leaf')}
     min={0}
-    className="md-cell md-cell--6"
+    className="md-cell md-cell--4"
     required
   />;
 
-  return <div className="md-cell md-cell--4">
-    <h4>DecisionTreeClassifier <Button icon primary href={URL} tooltipLabel="Link to documentation">help</Button></h4>
+  return <GenericConfiguration panelLabel="DecisionTreeClassifier" documentationUrl={URL}>
     {criterion}
     {splitter}
     {maxDepth}
     {minSamplesSplit}
     {minSamplesLeaf}
-  </div>;
+  </GenericConfiguration>;
 };
 
 ClassificationDecisionTree.propTypes = {

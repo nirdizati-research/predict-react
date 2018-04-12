@@ -35,7 +35,7 @@ const ClassificationKnn = (props) => {
     required
   />;
 
-  return <GenericConfiguration onChange={props.onChange} panelLabel="KNeighborsClassifier" documentationUrl={URL}>
+  return <GenericConfiguration panelLabel="KNeighborsClassifier" documentationUrl={URL}>
     {weights}
     {nNeighbors}
   </GenericConfiguration>;

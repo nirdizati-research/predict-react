@@ -10,14 +10,13 @@ const CustomFooter = (url) => (
   </footer>
 );
 const GenericConfiguration = (props) => {
-  return <ExpansionPanel label={props.panelLabel} secondaryLabel="Advanced configuration"
-                         footer={CustomFooter(props.documentationUrl)} contentClassName="md-grid">
+  return <ExpansionPanel label={props.panelLabel} footer={CustomFooter(props.documentationUrl)}
+                         contentClassName="md-grid">
     {props.children}
   </ExpansionPanel>;
 };
 
 GenericConfiguration.propTypes = {
-  onChange: PropTypes.func.isRequired,
   panelLabel: PropTypes.string.isRequired,
   documentationUrl: PropTypes.string.isRequired,
   children: PropTypes.any
