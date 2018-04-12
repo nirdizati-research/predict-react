@@ -14,6 +14,7 @@ storiesOf('Advanced configuration', module)
           <div className="md-cell md-cell--12">
             <Card className="md-block-centered">
               <CardText>
+                <ClassificationKnn predictionMethod={CLASSIFICATION} onChange={console.log}/>
                 <div className="md-grid">
                 <div className="md-cell md-cell--4">
                   <ClassificationKnn predictionMethod={CLASSIFICATION} onChange={console.log}/>

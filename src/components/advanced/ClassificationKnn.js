@@ -4,11 +4,18 @@ import {TextField, Button} from 'react-md/lib/index';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
 import SelectField from 'react-md/lib/SelectFields/index';
 import {classificationKnnWeights} from '../../advancedConfig';
+import {ExpansionPanel} from 'react-md/lib/ExpansionPanels/index';
 
 const defaults = {
   n_neighbors: 10,
   weights: 'uniform'
 };
+
+const CustomFooter = () => (
+  <footer style={{padding: 24}}>
+    <Button raised secondary href={URL}>Documentation</Button>
+  </footer>
+);
 const URL = 'http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html';
 const ClassificationKnn = (props) => {
   const methodConfig = `${props.predictionMethod}.knn`;
@@ -33,11 +40,11 @@ const ClassificationKnn = (props) => {
     required
   />;
 
-  return <div className="md-cell md-cell--4">
-    <h4>KNeighborsClassifier <Button icon primary href={URL} tooltipLabel="Link to documentation">help</Button></h4>
+  return <ExpansionPanel label="KNeighborsClassifier" secondaryLabel="Advanced configuration" footer={<CustomFooter/>}
+                         contentClassName="md-grid">
     {weights}
     {nNeighbors}
-  </div>;
+  </ExpansionPanel>;
 };
 
 ClassificationKnn.propTypes = {
