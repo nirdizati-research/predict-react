@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Button, TextField} from 'react-md/lib/index';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
 import SelectField from 'react-md/lib/SelectFields/index';
-import {classificationKnnWeights} from '../../advancedConfig';
+import {classificationKnnWeights} from './advancedConfig';
 
 const defaults = {
   n_neighbors: 10,
@@ -17,7 +17,7 @@ const ClassificationKnn = (props) => {
     key="weights"
     id="weights"
     label="KNN weights"
-    className="md-cell md-cell--4"
+    className="md-cell md-cell--3"
     menuItems={classificationKnnWeights}
     position={SelectField.Positions.BELOW}
     onChange={props.onChange.bind(this, {methodConfig, key: 'weights'})}
@@ -31,7 +31,7 @@ const ClassificationKnn = (props) => {
     defaultValue={defaults.n_neighbors}
     onChange={props.onChange.bind(this, {methodConfig, key: 'n_neighbors', isNumber: true})}
     min={0}
-    className="md-cell md-cell--4"
+    className="md-cell md-cell--3"
     required
   />;
 

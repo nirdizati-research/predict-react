@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {TextField} from 'react-md/lib/index';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
 import SelectField from 'react-md/lib/SelectFields/index';
-import {classificationDecisionTreeCriterion, classificationDecisionTreeSplitter} from '../../advancedConfig';
+import {classificationDecisionTreeCriterion, classificationDecisionTreeSplitter} from './advancedConfig';
 
 const defaults = {
   'criterion': 'gini',
@@ -19,7 +19,7 @@ const ClassificationDecisionTree = (props) => {
     key="criterion"
     id="criterion"
     label="criterion"
-    className="md-cell md-cell--4"
+    className="md-cell md-cell--3"
     menuItems={classificationDecisionTreeCriterion}
     position={SelectField.Positions.BELOW}
     onChange={props.onChange.bind(this, {methodConfig, key: 'criterion'})}
@@ -29,7 +29,7 @@ const ClassificationDecisionTree = (props) => {
     key="splitter"
     id="splitter"
     label="splitter"
-    className="md-cell md-cell--4"
+    className="md-cell md-cell--3"
     menuItems={classificationDecisionTreeSplitter}
     position={SelectField.Positions.BELOW}
     onChange={props.onChange.bind(this, {methodConfig, key: 'splitter'})}
@@ -43,7 +43,7 @@ const ClassificationDecisionTree = (props) => {
     defaultValue={defaults.max_depth}
     onChange={props.onChange.bind(this, {methodConfig, key: 'max_depth', isNumber: true})}
     min={0}
-    className="md-cell md-cell--4"
+    className="md-cell md-cell--3"
   />;
   const minSamplesSplit = <TextField
     key="min_samples_split"
@@ -53,7 +53,7 @@ const ClassificationDecisionTree = (props) => {
     defaultValue={defaults.min_samples_split}
     onChange={props.onChange.bind(this, {methodConfig, key: 'min_samples_split', isNumber: true})}
     min={0}
-    className="md-cell md-cell--4"
+    className="md-cell md-cell--3"
     required
   />;
   const minSamplesLeaf = <TextField
@@ -64,7 +64,7 @@ const ClassificationDecisionTree = (props) => {
     defaultValue={defaults.min_samples_leaf}
     onChange={props.onChange.bind(this, {methodConfig, key: 'min_samples_leaf', isNumber: true})}
     min={0}
-    className="md-cell md-cell--4"
+    className="md-cell md-cell--3"
     required
   />;
 

@@ -3,17 +3,20 @@ import PropTypes from 'prop-types';
 import {TextField} from 'react-md/lib/index';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
 import SelectField from 'react-md/lib/SelectFields/index';
-import {classificationDecisionTreeCriterion} from './advancedConfig';
+import {
+  classificationDecisionTreeCriterion, classificationDecisionTreeSplitter,
+  regressionRFCriterion
+} from './advancedConfig';
 
 const defaults = {
   'n_estimators': 10,
-  'criterion': 'gini',
+  'criterion': 'mse',
   'max_depth': null,
   'min_samples_split': 2,
   'min_samples_leaf': 1
 };
-const ClassificationRandomForest = (props) => {
-  const methodConfig = `${props.predictionMethod}.decisionTree`;
+const RegressionRandomForest = (props) => {
+  const methodConfig = `regression.randomForest`;
 
   const nEstimators = <TextField
     key="n_estimators"
@@ -23,15 +26,15 @@ const ClassificationRandomForest = (props) => {
     defaultValue={defaults.n_estimators}
     onChange={props.onChange.bind(this, {methodConfig, key: 'n_estimators', isNumber: true})}
     min={0}
-    className="md-cell md-cell--4"
+    className="md-cell md-cell--3"
   />;
 
   const criterion = <SelectField
     key="criterion"
     id="criterion"
     label="criterion"
-    className="md-cell md-cell--4"
-    menuItems={classificationDecisionTreeCriterion}
+    className="md-cell md-cell--3"
+    menuItems={regressionRFCriterion}
     position={SelectField.Positions.BELOW}
     onChange={props.onChange.bind(this, {methodConfig, key: 'criterion'})}
     defaultValue={defaults.criterion}
@@ -72,8 +75,7 @@ const ClassificationRandomForest = (props) => {
   return [nEstimators, criterion, maxDepth, minSamplesSplit, minSamplesLeaf];
 };
 
-ClassificationRandomForest.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired
+RegressionRandomForest.propTypes = {
+  onChange: PropTypes.func.isRequired
 };
-export default ClassificationRandomForest;
+export default RegressionRandomForest;

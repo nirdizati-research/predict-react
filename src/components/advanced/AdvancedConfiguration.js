@@ -6,11 +6,17 @@ import ClassificationDecisionTree from './ClassificationDecisionTree';
 import {ExpansionList} from 'react-md';
 import GenericConfiguration from './GenericConfiguration';
 import ClassificationRandomForest from './ClassificationRandomForest';
+import RegressionRandomForest from './RegressionRandomForest';
+import RegressionLasso from './RegressionLasso';
+import RegressionLinear from './RegressionLinear';
 
 const knnUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html';
 const decisionTreeUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html';
 const classRandomForest = 'http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html';
 
+const regressorRF = 'http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html';
+const regressorLasso = 'http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Lasso.html';
+const regressorLinear = 'http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html';
 const AdvancedConfiguration = (props) => {
   const makeExpander = (panelLabel, url, component) => {
     return <GenericConfiguration key={panelLabel} panelLabel={panelLabel}
@@ -40,7 +46,12 @@ const AdvancedConfiguration = (props) => {
   };
 
   const regressionConfigMap = {
-    'regression.knn': null
+    'regression.lasso': makeExpander('Lasso', regressorLasso,
+      <RegressionLasso onChange={props.onChange} {...props}/>),
+    'regression.linear': makeExpander('LinearRegression', regressorLinear,
+      <RegressionLinear onChange={props.onChange} {...props}/>),
+    'regression.randomForest': makeExpander('RandomForestRegressor', regressorRF,
+      <RegressionRandomForest onChange={props.onChange} {...props}/>)
   };
 
 
@@ -53,8 +64,7 @@ const AdvancedConfiguration = (props) => {
 
   const configs = () => {
     if (props.predictionMethod === REGRESSION) {
-      return [];
-      // return configMapper(props.regression, regressionConfigMap);
+      return configMapper(props.regression, regressionConfigMap);
     } else {
       return configMapper(props.classification, classConfigMap);
     }
