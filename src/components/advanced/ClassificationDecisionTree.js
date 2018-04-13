@@ -1,13 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {TextField, Button} from 'react-md/lib/index';
+import {TextField} from 'react-md/lib/index';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
 import SelectField from 'react-md/lib/SelectFields/index';
-import {
-  classificationDecisionTreeCriterion, classificationDecisionTreeSplitter,
-  classificationKnnWeights
-} from '../../advancedConfig';
-import GenericConfiguration from './GenericConfiguration';
+import {classificationDecisionTreeCriterion, classificationDecisionTreeSplitter} from '../../advancedConfig';
 
 const defaults = {
   'criterion': 'gini',
@@ -16,7 +12,6 @@ const defaults = {
   'min_samples_split': 2,
   'min_samples_leaf': 1
 };
-const URL = 'http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html#sklearn.tree.DecisionTreeClassifier';
 const ClassificationDecisionTree = (props) => {
   const methodConfig = `${props.predictionMethod}.decisionTree`;
 
@@ -68,13 +63,7 @@ const ClassificationDecisionTree = (props) => {
     required
   />;
 
-  return <GenericConfiguration panelLabel="DecisionTreeClassifier" documentationUrl={URL}>
-    {criterion}
-    {splitter}
-    {maxDepth}
-    {minSamplesSplit}
-    {minSamplesLeaf}
-  </GenericConfiguration>;
+  return [criterion, splitter, maxDepth, minSamplesSplit, minSamplesLeaf];
 };
 
 ClassificationDecisionTree.propTypes = {

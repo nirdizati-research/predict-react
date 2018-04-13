@@ -1,24 +1,32 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {Button} from 'react-md/lib/index';
 import {ExpansionPanel} from 'react-md/lib/ExpansionPanels/index';
 
 
-const CustomFooter = (url) => (
+const customFooter = (url) => (
   <footer style={{padding: 24}}>
     <Button flat secondary href={url}>Documentation</Button>
   </footer>
 );
-const GenericConfiguration = (props) => {
-  return <ExpansionPanel label={props.panelLabel} footer={CustomFooter(props.documentationUrl)}
-                         contentClassName="md-grid">
-    {props.children}
-  </ExpansionPanel>;
-};
 
-GenericConfiguration.propTypes = {
-  panelLabel: PropTypes.string.isRequired,
-  documentationUrl: PropTypes.string.isRequired,
-  children: PropTypes.any
-};
-export default GenericConfiguration;
+export default class GenericConfiguration extends PureComponent {
+  static propTypes = {
+    // Notice these three props. They are injected via the `ExpansionList` component
+    // and are required to get correct styling and keyboard accessibility.
+    focused: PropTypes.bool,
+    overflown: PropTypes.bool,
+    columnWidths: PropTypes.arrayOf(PropTypes.number),
+    panelLabel: PropTypes.string.isRequired,
+    documentationUrl: PropTypes.string.isRequired,
+    children: PropTypes.any
+  };
+
+  render() {
+    return <ExpansionPanel label={this.props.panelLabel} footer={customFooter(this.props.documentationUrl)}
+                           contentClassName="md-grid" {...this.props}>
+      {this.props.children}
+    </ExpansionPanel>;
+  }
+}
+

@@ -4,14 +4,12 @@ import {Button, TextField} from 'react-md/lib/index';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
 import SelectField from 'react-md/lib/SelectFields/index';
 import {classificationKnnWeights} from '../../advancedConfig';
-import GenericConfiguration from './GenericConfiguration';
 
 const defaults = {
   n_neighbors: 10,
   weights: 'uniform'
 };
 
-const URL = 'http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html';
 const ClassificationKnn = (props) => {
   const methodConfig = `${props.predictionMethod}.knn`;
 
@@ -35,10 +33,7 @@ const ClassificationKnn = (props) => {
     required
   />;
 
-  return <GenericConfiguration panelLabel="KNeighborsClassifier" documentationUrl={URL}>
-    {weights}
-    {nNeighbors}
-  </GenericConfiguration>;
+  return [weights, nNeighbors];
 };
 
 ClassificationKnn.propTypes = {

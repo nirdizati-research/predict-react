@@ -14,16 +14,10 @@ storiesOf('Advanced configuration', module)
           <div className="md-cell md-cell--12">
             <Card className="md-block-centered">
               <CardText>
-                <ClassificationKnn predictionMethod={CLASSIFICATION} onChange={console.log}/>
-                <div className="md-grid">
-                <div className="md-cell md-cell--4">
-                  <ClassificationKnn predictionMethod={CLASSIFICATION} onChange={console.log}/>
-                </div>
-                <div className="md-cell md-cell--4">
-                  <ClassificationDecisionTree predictionMethod={CLASSIFICATION} onChange={console.log}/>
-                </div>
-                </div>
+                Some text above
               </CardText>
+              <ClassificationKnn predictionMethod={CLASSIFICATION} onChange={console.log}/>
+              <ClassificationDecisionTree predictionMethod={CLASSIFICATION} onChange={console.log}/>
             </Card>
           </div>
         </div>
@@ -37,9 +31,10 @@ storiesOf('Advanced configuration', module)
             <Card className="md-block-centered">
               <CardTitle title="Classification"/>
               <CardText>
-                  <AdvancedConfiguration predictionMethod={CLASSIFICATION} classification={['knn', 'decisionTree']} regression={[]}
-                                         onChange={console.log}/>
+                Some text above
               </CardText>
+              <AdvancedConfiguration predictionMethod={CLASSIFICATION} classification={['knn', 'decisionTree']}
+                                     regression={[]} onChange={console.log}/>
             </Card>
           </div>
         </div>

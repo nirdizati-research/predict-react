@@ -27,6 +27,8 @@ import Threshold from './training/Threshold';
 import CheckboxGroup from './training/CheckboxGroup';
 import {splitLabels} from '../helpers';
 import PrefixSelector from './training/PrefixSelector';
+import {ExpansionPanel, Slider} from 'react-md/lib/index';
+import AdvancedConfiguration from './advanced/AdvancedConfiguration';
 
 const defaultPrefix = 1;
 const defaultThreshold = 0;
@@ -243,6 +245,12 @@ class TrainingFormCard extends Component {
             {classificationFragment}
             {outcomeRuleFragment}
             {thresholdFragment}
+          </div>
+        </CardText>
+        <AdvancedConfiguration classification={this.state.classification} regression={this.state.regression}
+                               onChange={console.log} predictionMethod={this.state.predictionMethod}/>
+        <CardText>
+          <div className="md-grid md-grid--no-spacing">
             <div className="md-cell md-cell--12">
               {warning}
               <FetchState fetchState={this.props.fetchState}/>
@@ -252,7 +260,6 @@ class TrainingFormCard extends Component {
                       className="buttons__group">Reset</Button>
             </div>
           </div>
-
         </CardText>
       </Card>
     );
