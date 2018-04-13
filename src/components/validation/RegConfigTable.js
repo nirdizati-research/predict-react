@@ -9,8 +9,8 @@ import {jobFlatPropType} from '../../helpers';
 
 /* eslint-disable camelcase */
 const RegConfigTable = (props) => {
-  const headers = ['id', 'Type', 'Encoding', 'Clustering', 'Method', 'Prefix length', 'Split'];
-
+  const headers =
+    ['id', 'Type', 'Encoding', 'Clustering', 'Method', 'Prefix length', 'Advanced configuration', 'Split'];
 
   return (<DataTable baseId="simple-pagination" plain>
     <TableHeader>
@@ -19,7 +19,7 @@ const RegConfigTable = (props) => {
       </TableRow>
     </TableHeader>
     <TableBody>
-      {props.jobs.map(({id, encoding, clustering, method, splitName, prefix_length, type}) => (
+      {props.jobs.map(({id, encoding, clustering, method, splitName, prefix_length, type, advanced}) => (
         <TableRow key={id}>
           <TableColumn style={columnStyle}>{id}</TableColumn>
           <TableColumn style={columnStyle}>{type}</TableColumn>
@@ -27,6 +27,9 @@ const RegConfigTable = (props) => {
           <TableColumn style={columnStyle}>{clustering}</TableColumn>
           <TableColumn style={columnStyle}>{method}</TableColumn>
           <TableColumn style={columnStyle} numeric>{prefix_length}</TableColumn>
+          <TableColumn style={columnStyle}>
+            <pre>{JSON.stringify(advanced, null, 1)}</pre>
+          </TableColumn>
           <TableColumn style={columnStyle} grow>{splitName}</TableColumn>
         </TableRow>
       ))}

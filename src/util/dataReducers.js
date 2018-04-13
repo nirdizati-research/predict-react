@@ -80,7 +80,8 @@ export const jobToValidationTable = (job) => {
       clustering: job.config.clustering,
       method: job.config.method,
       splitName: splitToString(job.split),
-      prefix_length: job.config.prefix_length
+      prefix_length: job.config.prefix_length,
+      advanced: job.config[`${REGRESSION}.${job.config.method}`]
     };
   } else {
     return {
@@ -92,7 +93,8 @@ export const jobToValidationTable = (job) => {
       splitName: splitToString(job.split),
       prefix_length: job.config.prefix_length,
       rule: job.config.rule,
-      threshold: job.config.threshold
+      threshold: job.config.threshold,
+      advanced: job.config[`${job.type}.${job.config.method}`]
     };
   }
 };

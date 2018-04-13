@@ -21,7 +21,14 @@ const classJobs = [
       'encoding': 'simpleIndex',
       'rule': 'remaining_time',
       'prefix_length': 1,
-      'threshold': 'default'
+      'threshold': 'default',
+      'classification.randomForest': {
+        'n_estimators': 10,
+        'criterion': 'gini',
+        'max_depth': null,
+        'min_samples_split': 2,
+        'min_samples_leaf': 1
+      }
     },
     'status': 'completed',
     'result': {
@@ -59,7 +66,14 @@ const classJobs = [
       'encoding': 'simpleIndex',
       'rule': 'remaining_time',
       'prefix_length': 1,
-      'threshold': 'default'
+      'threshold': 'default',
+      'classification.randomForest': {
+        'n_estimators': 10,
+        'criterion': 'gini',
+        'max_depth': null,
+        'min_samples_split': 2,
+        'min_samples_leaf': 1
+      }
     },
     'status': 'completed',
     'result': {
@@ -91,7 +105,12 @@ const regJobs = [
       'prefix_length': 0,
       'encoding': 'simpleIndex',
       'clustering': 'noCluster',
-      'method': 'linear'
+      'method': 'linear',
+      'regression.linear': {
+        'fit_intercept': true,
+        'normalize': false,
+        'copy_X': true
+      }
     },
     'status': 'created',
     'result': {
@@ -124,7 +143,14 @@ const nextActivityJobs = [
       'encoding': 'simpleIndex',
       'rule': 'remaining_time',
       'prefix_length': 1,
-      'threshold': 'default'
+      'threshold': 'default',
+      'nextActivity.randomForest': {
+        'n_estimators': 10,
+        'criterion': 'gini',
+        'max_depth': null,
+        'min_samples_split': 2,
+        'min_samples_leaf': 1
+      }
     },
     'status': 'completed',
     'result': {
