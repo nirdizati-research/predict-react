@@ -1,18 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Checkbox, TextField} from 'react-md/lib/index';
-import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
-import SelectField from 'react-md/lib/SelectFields/index';
-import {
-  classificationDecisionTreeCriterion, classificationDecisionTreeSplitter,
-  regressionRFCriterion
-} from './advancedConfig';
+import {Checkbox} from 'react-md/lib/index';
 
 const defaults = {
   'fit_intercept': true,
   'normalize': false,
   'copy_X': true
 };
+/* eslint-disable no-invalid-this */
 const RegressionLinear = (props) => {
   const methodConfig = `regression.linear`;
 

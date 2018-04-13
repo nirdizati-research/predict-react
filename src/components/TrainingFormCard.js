@@ -27,7 +27,6 @@ import Threshold from './training/Threshold';
 import CheckboxGroup from './training/CheckboxGroup';
 import {splitLabels} from '../helpers';
 import PrefixSelector from './training/PrefixSelector';
-import {ExpansionPanel, Slider} from 'react-md/lib/index';
 import AdvancedConfiguration from './advanced/AdvancedConfiguration';
 
 const defaultPrefix = 1;
@@ -131,7 +130,7 @@ class TrainingFormCard extends Component {
   }
 
   onPredictionMethodChange(value) {
-    this.setState({predictionMethod: value,...initialAdvancedConfiguration()});
+    this.setState({predictionMethod: value, ...initialAdvancedConfiguration()});
     this.setState((prevState, _) => {
       return {displayWarning: this.displayWarningCheck(prevState)};
     });

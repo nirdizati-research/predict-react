@@ -12,6 +12,7 @@ const defaults = {
   'min_samples_split': 2,
   'min_samples_leaf': 1
 };
+/* eslint-disable no-invalid-this */
 const ClassificationRandomForest = (props) => {
   const methodConfig = `${props.predictionMethod}.decisionTree`;
 

@@ -12,7 +12,8 @@ import RegressionLinear from './RegressionLinear';
 
 const knnUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html';
 const decisionTreeUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html';
-const classRandomForest = 'http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html';
+const classRandomForest =
+  'http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html';
 
 const regressorRF = 'http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html';
 const regressorLasso = 'http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Lasso.html';

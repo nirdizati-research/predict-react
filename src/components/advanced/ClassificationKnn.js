@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Button, TextField} from 'react-md/lib/index';
+import {TextField} from 'react-md/lib/index';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
 import SelectField from 'react-md/lib/SelectFields/index';
 import {classificationKnnWeights} from './advancedConfig';
@@ -9,7 +9,7 @@ const defaults = {
   n_neighbors: 10,
   weights: 'uniform'
 };
-
+/* eslint-disable no-invalid-this */
 const ClassificationKnn = (props) => {
   const methodConfig = `${props.predictionMethod}.knn`;
 

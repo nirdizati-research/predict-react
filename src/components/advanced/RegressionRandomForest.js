@@ -1,12 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {TextField} from 'react-md/lib/index';
-import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
 import SelectField from 'react-md/lib/SelectFields/index';
-import {
-  classificationDecisionTreeCriterion, classificationDecisionTreeSplitter,
-  regressionRFCriterion
-} from './advancedConfig';
+import {regressionRFCriterion} from './advancedConfig';
 
 const defaults = {
   'n_estimators': 10,
@@ -15,6 +11,7 @@ const defaults = {
   'min_samples_split': 2,
   'min_samples_leaf': 1
 };
+/* eslint-disable no-invalid-this */
 const RegressionRandomForest = (props) => {
   const methodConfig = `regression.randomForest`;
 

@@ -21,6 +21,15 @@ const regressionPayload = {
     'encodings': ['simpleIndex'],
     'prefix_length': 1,
     'methods': ['linear'],
+    'classification.decisionTree': {},
+    'classification.knn': {},
+    'classification.randomForest': {},
+    'nextActivity.decisionTree': {},
+    'nextActivity.knn': {},
+    'nextActivity.randomForest': {},
+    'regression.lasso': {},
+    'regression.linear': {},
+    'regression.randomForest': {},
   }
 };
 
@@ -33,7 +42,16 @@ const classificationPayload = {
     'methods': ['knn'],
     'prefix_length': 1,
     'rule': 'elapsed_time',
-    'threshold': 'default'
+    'threshold': 'default',
+    'classification.decisionTree': {},
+    'classification.knn': {},
+    'classification.randomForest': {},
+    'nextActivity.decisionTree': {},
+    'nextActivity.knn': {},
+    'nextActivity.randomForest': {},
+    'regression.lasso': {},
+    'regression.linear': {},
+    'regression.randomForest': {},
   }
 };
 
@@ -45,6 +63,15 @@ const nextActivityPayload = {
     'clusterings': ['noCluster'],
     'encodings': ['simpleIndex'],
     'prefix_length': 1,
+    'classification.decisionTree': {},
+    'classification.knn': {},
+    'classification.randomForest': {},
+    'nextActivity.decisionTree': {},
+    'nextActivity.knn': {},
+    'nextActivity.randomForest': {},
+    'regression.lasso': {},
+    'regression.linear': {},
+    'regression.randomForest': {},
   }
 };
 const shallowElement = shallow(<TrainingFormCard fetchState={fetchState} splitLabels={splitLabels} maxEventsInLog={10}

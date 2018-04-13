@@ -15,7 +15,7 @@ export default class GenericConfiguration extends PureComponent {
     // Notice these three props. They are injected via the `ExpansionList` component
     // and are required to get correct styling and keyboard accessibility.
     focused: PropTypes.bool,
-    overflown: PropTypes.bool,
+    overflown: PropTypes.any,
     columnWidths: PropTypes.arrayOf(PropTypes.number),
     panelLabel: PropTypes.string.isRequired,
     documentationUrl: PropTypes.string.isRequired,

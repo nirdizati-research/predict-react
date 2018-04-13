@@ -1,12 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Checkbox, TextField} from 'react-md/lib/index';
-import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
-import SelectField from 'react-md/lib/SelectFields/index';
-import {
-  classificationDecisionTreeCriterion, classificationDecisionTreeSplitter,
-  regressionRFCriterion
-} from './advancedConfig';
 
 const defaults = {
   'alpha': 1.0,
@@ -14,6 +8,7 @@ const defaults = {
   'normalize': false,
   'copy_X': true
 };
+/* eslint-disable no-invalid-this */
 const RegressionLasso = (props) => {
   const methodConfig = `regression.lasso`;
 
