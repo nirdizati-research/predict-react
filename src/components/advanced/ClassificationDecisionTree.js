@@ -16,6 +16,7 @@ const ClassificationDecisionTree = (props) => {
   const methodConfig = `${props.predictionMethod}.decisionTree`;
 
   const criterion = <SelectField
+    key="criterion"
     id="criterion"
     label="criterion"
     className="md-cell md-cell--4"
@@ -25,6 +26,7 @@ const ClassificationDecisionTree = (props) => {
     defaultValue={defaults.criterion}
   />;
   const splitter = <SelectField
+    key="splitter"
     id="splitter"
     label="splitter"
     className="md-cell md-cell--4"
@@ -34,6 +36,7 @@ const ClassificationDecisionTree = (props) => {
     defaultValue={defaults.splitter}
   />;
   const maxDepth = <TextField
+    key="max_depth"
     id="max_depth"
     label="max_depth"
     type="number"
@@ -43,6 +46,7 @@ const ClassificationDecisionTree = (props) => {
     className="md-cell md-cell--4"
   />;
   const minSamplesSplit = <TextField
+    key="min_samples_split"
     id="min_samples_split"
     label="min_samples_split"
     type="number"
@@ -53,6 +57,7 @@ const ClassificationDecisionTree = (props) => {
     required
   />;
   const minSamplesLeaf = <TextField
+    key="min_samples_leaf"
     id="min_samples_leaf"
     label="min_samples_leaf"
     type="number"

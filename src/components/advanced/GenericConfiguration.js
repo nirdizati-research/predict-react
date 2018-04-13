@@ -23,8 +23,10 @@ export default class GenericConfiguration extends PureComponent {
   };
 
   render() {
-    return <ExpansionPanel label={this.props.panelLabel} footer={customFooter(this.props.documentationUrl)}
-                           contentClassName="md-grid" {...this.props}>
+    const {panelLabel, documentationUrl, ...remProps} = this.props;
+    return <ExpansionPanel key={panelLabel} label={panelLabel}
+                           footer={customFooter(documentationUrl)}
+                           contentClassName="md-grid" {...remProps}>
       {this.props.children}
     </ExpansionPanel>;
   }

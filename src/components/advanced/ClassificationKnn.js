@@ -14,6 +14,7 @@ const ClassificationKnn = (props) => {
   const methodConfig = `${props.predictionMethod}.knn`;
 
   const weights = <SelectField
+    key="weights"
     id="weights"
     label="KNN weights"
     className="md-cell md-cell--4"
@@ -23,6 +24,7 @@ const ClassificationKnn = (props) => {
     defaultValue={defaults.weights}
   />;
   const nNeighbors = <TextField
+    key="n_neighbors"
     id="n_neighbors"
     label="n_neighbors"
     type="number"
