@@ -20,7 +20,7 @@ const ClassificationKnn = (props) => {
     className="md-cell md-cell--4"
     menuItems={classificationKnnWeights}
     position={SelectField.Positions.BELOW}
-    onChange={props.onChange.bind(this, methodConfig, 'weights')}
+    onChange={props.onChange.bind(this, {methodConfig, key: 'weights'})}
     defaultValue={defaults.weights}
   />;
   const nNeighbors = <TextField
@@ -29,7 +29,7 @@ const ClassificationKnn = (props) => {
     label="n_neighbors"
     type="number"
     defaultValue={defaults.n_neighbors}
-    onChange={props.onChange.bind(this, methodConfig, 'n_neighbors')}
+    onChange={props.onChange.bind(this, {methodConfig, key: 'n_neighbors', isNumber: true})}
     min={0}
     className="md-cell md-cell--4"
     required

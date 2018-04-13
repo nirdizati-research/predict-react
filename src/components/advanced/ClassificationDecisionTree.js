@@ -22,7 +22,7 @@ const ClassificationDecisionTree = (props) => {
     className="md-cell md-cell--4"
     menuItems={classificationDecisionTreeCriterion}
     position={SelectField.Positions.BELOW}
-    onChange={props.onChange.bind(this, methodConfig, 'criterion')}
+    onChange={props.onChange.bind(this, {methodConfig, key: 'criterion'})}
     defaultValue={defaults.criterion}
   />;
   const splitter = <SelectField
@@ -32,7 +32,7 @@ const ClassificationDecisionTree = (props) => {
     className="md-cell md-cell--4"
     menuItems={classificationDecisionTreeSplitter}
     position={SelectField.Positions.BELOW}
-    onChange={props.onChange.bind(this, methodConfig, 'splitter')}
+    onChange={props.onChange.bind(this, {methodConfig, key: 'splitter'})}
     defaultValue={defaults.splitter}
   />;
   const maxDepth = <TextField
@@ -41,7 +41,7 @@ const ClassificationDecisionTree = (props) => {
     label="max_depth"
     type="number"
     defaultValue={defaults.max_depth}
-    onChange={props.onChange.bind(this, methodConfig, 'max_depth')}
+    onChange={props.onChange.bind(this, {methodConfig, key: 'max_depth', isNumber: true})}
     min={0}
     className="md-cell md-cell--4"
   />;
@@ -51,7 +51,7 @@ const ClassificationDecisionTree = (props) => {
     label="min_samples_split"
     type="number"
     defaultValue={defaults.min_samples_split}
-    onChange={props.onChange.bind(this, methodConfig, 'min_samples_split')}
+    onChange={props.onChange.bind(this, {methodConfig, key: 'min_samples_split', isNumber: true})}
     min={0}
     className="md-cell md-cell--4"
     required
@@ -62,7 +62,7 @@ const ClassificationDecisionTree = (props) => {
     label="min_samples_leaf"
     type="number"
     defaultValue={defaults.min_samples_leaf}
-    onChange={props.onChange.bind(this, methodConfig, 'min_samples_leaf')}
+    onChange={props.onChange.bind(this, {methodConfig, key: 'min_samples_leaf', isNumber: true})}
     min={0}
     className="md-cell md-cell--4"
     required

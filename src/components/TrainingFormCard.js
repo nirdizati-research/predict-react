@@ -57,12 +57,38 @@ const initialState = (props) => {
   };
 };
 
+const initialAdvancedConfiguration = () => {
+  return {
+    [`${CLASSIFICATION}.knn`]: {},
+    [`${CLASSIFICATION}.randomForest`]: {},
+    [`${CLASSIFICATION}.decisionTree`]: {},
+    [`${NEXT_ACTIVITY}.knn`]: {},
+    [`${NEXT_ACTIVITY}.randomForest`]: {},
+    [`${NEXT_ACTIVITY}.decisionTree`]: {},
+    [`${REGRESSION}.randomForest`]: {},
+    [`${REGRESSION}.lasso`]: {},
+    [`${REGRESSION}.linear`]: {}
+  };
+};
+
 class TrainingFormCard extends Component {
   constructor(props) {
     super(props);
 
     // TODO group to {} by prediction method
-    this.state = initialState(this.props);
+    this.state = {...initialState(this.props), ...initialAdvancedConfiguration()};
+  }
+
+  advanceConfigChange({methodConfig, key, isNumber}, value) {
+    // Only the changed values are put in config. Otherwise merged with config in backend
+    // classification.knn weights distance
+    const config = this.state[methodConfig];
+    if ((isNumber)) {
+      // for some reason, value can be "". Don't know, dont care
+      value = parseInt(value, 10);
+    }
+    config[key] = value;
+    this.setState({[methodConfig]: config});
   }
 
   addOrRemove(list, value) {
@@ -103,7 +129,7 @@ class TrainingFormCard extends Component {
   }
 
   onPredictionMethodChange(value) {
-    this.setState({predictionMethod: value});
+    this.setState({predictionMethod: value,...initialAdvancedConfiguration()});
     this.setState((prevState, _) => {
       return {displayWarning: this.displayWarningCheck(prevState)};
     });
@@ -164,7 +190,16 @@ class TrainingFormCard extends Component {
         prefix_length: this.state.prefix.prefix_length || defaultPrefix,
         encodings: this.state.encodings,
         clusterings: this.state.clusterings,
-        methods: methods
+        methods: methods,
+        [`${CLASSIFICATION}.knn`]: this.state[`${CLASSIFICATION}.knn`],
+        [`${CLASSIFICATION}.randomForest`]: this.state[`${CLASSIFICATION}.randomForest`],
+        [`${CLASSIFICATION}.decisionTree`]: this.state[`${CLASSIFICATION}.decisionTree`],
+        [`${NEXT_ACTIVITY}.knn`]: this.state[`${NEXT_ACTIVITY}.knn`],
+        [`${NEXT_ACTIVITY}.randomForest`]: this.state[`${NEXT_ACTIVITY}.randomForest`],
+        [`${NEXT_ACTIVITY}.decisionTree`]: this.state[`${NEXT_ACTIVITY}.decisionTree`],
+        [`${REGRESSION}.randomForest`]: this.state[`${REGRESSION}.randomForest`],
+        [`${REGRESSION}.lasso`]: this.state[`${REGRESSION}.lasso`],
+        [`${REGRESSION}.linear`]: this.state[`${REGRESSION}.linear`]
       }
     };
   }
@@ -183,7 +218,7 @@ class TrainingFormCard extends Component {
   }
 
   onReset() {
-    this.setState(initialState(this.props));
+    this.setState({...initialState(this.props), ...initialAdvancedConfiguration()});
   }
 
   render() {
@@ -248,7 +283,8 @@ class TrainingFormCard extends Component {
           </div>
         </CardText>
         <AdvancedConfiguration classification={this.state.classification} regression={this.state.regression}
-                               onChange={console.log} predictionMethod={this.state.predictionMethod}/>
+                               onChange={this.advanceConfigChange.bind(this)}
+                               predictionMethod={this.state.predictionMethod}/>
         <CardText>
           <div className="md-grid md-grid--no-spacing">
             <div className="md-cell md-cell--12">
