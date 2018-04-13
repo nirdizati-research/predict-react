@@ -6,7 +6,7 @@ import {ExpansionPanel} from 'react-md/lib/ExpansionPanels/index';
 
 const customFooter = (url) => (
   <footer style={{padding: 24}}>
-    <Button flat secondary href={url}>Documentation</Button>
+    <Button flat secondary href={url} target="_blank">Documentation</Button>
   </footer>
 );
 

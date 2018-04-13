@@ -3,9 +3,10 @@ import {storiesOf} from '@storybook/react';
 import FetchState from '../src/components/FetchState';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import ClassificationKnn from '../src/components/advanced/ClassificationKnn';
-import {CLASSIFICATION} from '../src/reference';
+import {CLASSIFICATION, NEXT_ACTIVITY} from '../src/reference';
 import AdvancedConfiguration from '../src/components/advanced/AdvancedConfiguration';
 import ClassificationDecisionTree from '../src/components/advanced/ClassificationDecisionTree';
+import ClassificationRandomForest from '../src/components/advanced/ClassificationRandomForest';
 
 storiesOf('Advanced configuration', module)
   .add('classification', () => {
@@ -18,6 +19,7 @@ storiesOf('Advanced configuration', module)
               </CardText>
               <ClassificationKnn predictionMethod={CLASSIFICATION} onChange={console.log}/>
               <ClassificationDecisionTree predictionMethod={CLASSIFICATION} onChange={console.log}/>
+              <ClassificationRandomForest predictionMethod={CLASSIFICATION} onChange={console.log}/>
             </Card>
           </div>
         </div>
@@ -33,7 +35,18 @@ storiesOf('Advanced configuration', module)
               <CardText>
                 Some text above
               </CardText>
-              <AdvancedConfiguration predictionMethod={CLASSIFICATION} classification={['knn', 'decisionTree']}
+              <AdvancedConfiguration predictionMethod={CLASSIFICATION} classification={['knn', 'decisionTree', 'randomForest']}
+                                     regression={[]} onChange={console.log}/>
+            </Card>
+          </div>
+
+          <div className="md-cell md-cell--12">
+            <Card className="md-block-centered">
+              <CardTitle title="Next Activity"/>
+              <CardText>
+                Some text above
+              </CardText>
+              <AdvancedConfiguration predictionMethod={NEXT_ACTIVITY} classification={['knn', 'decisionTree', 'randomForest']}
                                      regression={[]} onChange={console.log}/>
             </Card>
           </div>

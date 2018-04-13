@@ -5,10 +5,11 @@ import ClassificationKnn from './ClassificationKnn';
 import ClassificationDecisionTree from './ClassificationDecisionTree';
 import {ExpansionList} from 'react-md';
 import GenericConfiguration from './GenericConfiguration';
+import ClassificationRandomForest from './ClassificationRandomForest';
 
 const knnUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html';
-const decisionTreeUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html#sklearn.tree.DecisionTreeClassifier';
-
+const decisionTreeUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html';
+const classRandomForest = 'http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html';
 
 const AdvancedConfiguration = (props) => {
   const makeExpander = (panelLabel, url, component) => {
@@ -23,7 +24,19 @@ const AdvancedConfiguration = (props) => {
       predictionMethod={CLASSIFICATION}/>),
     'classification.decisionTree': makeExpander('DecisionTreeClassifier', decisionTreeUrl,
       <ClassificationDecisionTree onChange={props.onChange}
-                                  predictionMethod={CLASSIFICATION} {...props}/>)
+                                  predictionMethod={CLASSIFICATION} {...props}/>),
+    'classification.randomForest': makeExpander('RandomForestClassifier', classRandomForest,
+      <ClassificationRandomForest onChange={props.onChange}
+                                  predictionMethod={CLASSIFICATION} {...props}/>),
+    'nextActivity.knn': makeExpander('KNeighborsClassifier', knnUrl, <ClassificationKnn
+      onChange={props.onChange}
+      predictionMethod={NEXT_ACTIVITY}/>),
+    'nextActivity.decisionTree': makeExpander('DecisionTreeClassifier', decisionTreeUrl,
+      <ClassificationDecisionTree onChange={props.onChange}
+                                  predictionMethod={NEXT_ACTIVITY} {...props}/>),
+    'nextActivity.randomForest': makeExpander('RandomForestClassifier', classRandomForest,
+      <ClassificationRandomForest onChange={props.onChange}
+                                  predictionMethod={NEXT_ACTIVITY} {...props}/>)
   };
 
   const regressionConfigMap = {
