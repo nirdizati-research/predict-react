@@ -12,6 +12,7 @@ export const jobPropType = PropTypes.shape({
   type: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
   config: PropTypes.shape({
     prefix_length: PropTypes.number.isRequired,
+    padding: PropTypes.string.isRequired,
     threshold: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     method: PropTypes.string.isRequired,
     clustering: PropTypes.string,

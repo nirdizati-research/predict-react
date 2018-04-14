@@ -188,7 +188,7 @@ class TrainingFormCard extends Component {
       type: this.state.predictionMethod,
       split_id: this.state.split_id,
       config: {
-        prefix_length: this.state.prefix.prefix_length || defaultPrefix,
+        prefix: this.state.prefix,
         encodings: this.state.encodings,
         clusterings: this.state.clusterings,
         methods: methods,

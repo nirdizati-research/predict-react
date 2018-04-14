@@ -18,7 +18,8 @@ describe('JobStatusTable', () => {
       modified_date: 'aa',
       config: {
         prefix_length: 1,
-        method: 'method'
+        method: 'method',
+        padding: 'no_padding'
       },
       split: {type: 'single', original_log: {name: 'name'}},
       created_date: 'aa',

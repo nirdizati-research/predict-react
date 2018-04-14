@@ -19,7 +19,8 @@ const classJobs = [
       'encoding': 'simpleIndex',
       'rule': 'remaining_time',
       'prefix_length': 1,
-      'threshold': 'default'
+      'threshold': 'default',
+      'padding': 'no_padding'
     },
     'status': 'completed',
     'result': {
@@ -51,7 +52,8 @@ const classJobs = [
       'encoding': 'simpleIndex',
       'rule': 'remaining_time',
       'prefix_length': 1,
-      'threshold': 'default'
+      'threshold': 'default',
+      'padding': 'zero_padding'
     },
     'status': 'completed',
     'result': {
@@ -82,7 +84,8 @@ const regJobs = [{
     'prefix_length': 0,
     'encoding': 'simpleIndex',
     'clustering': 'noCluster',
-    'method': 'linear'
+    'method': 'linear',
+    'padding': 'no_padding'
   },
   'status': 'created',
   'result': {

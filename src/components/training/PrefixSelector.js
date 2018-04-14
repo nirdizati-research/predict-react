@@ -10,8 +10,7 @@ const groupStyle = {height: 'auto'};
 class PrefixSelector extends Component {
   constructor(props) {
     super(props);
-    this.state = this.props.prefix;
-    this.state.error = false;
+    this.state = {...this.props.prefix, error: false};
   }
 
   onPaddingChange(padding) {
@@ -35,7 +34,11 @@ class PrefixSelector extends Component {
     if (this.state.prefix_length === '') {
       return;
     }
-    this.props.onChange({...this.state, prefix_length: parseInt(this.state.prefix_length, 10)});
+    this.props.onChange({
+      padding: this.state.padding,
+      type: this.state.type,
+      prefix_length: parseInt(this.state.prefix_length, 10)
+    });
   }
 
   errorCheck(prefix_length) {
