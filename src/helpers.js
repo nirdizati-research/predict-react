@@ -12,7 +12,7 @@ export const jobPropType = PropTypes.shape({
   type: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
   config: PropTypes.shape({
     prefix_length: PropTypes.number.isRequired,
-    padding: PropTypes.string.isRequired,
+    padding: PropTypes.string,
     threshold: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     method: PropTypes.string.isRequired,
     clustering: PropTypes.string,
@@ -39,14 +39,12 @@ export const jobPropType = PropTypes.shape({
 
 export const jobFlatPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
-  status: PropTypes.string.isRequired,
-  run: PropTypes.string.isRequired,
   splitName: PropTypes.string.isRequired,
-  created_date: PropTypes.string.isRequired,
-  modified_date: PropTypes.string.isRequired,
   prefix_length: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
   rule: PropTypes.string,
+  padding: PropTypes.string,
+  advanced: PropTypes.objectOf(PropTypes.any).isRequired,
   threshold: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 }).isRequired;
 

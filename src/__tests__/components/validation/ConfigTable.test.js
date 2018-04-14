@@ -9,7 +9,7 @@ import {TableColumn} from 'react-md';
 import RegConfigTable from '../../../components/validation/RegConfigTable';
 import ConfigTableCard from '../../../components/validation/ConfigTableCard';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../../reference';
-import {jobToConfigTable} from '../../../util/dataReducers';
+import {jobToValidationTable} from '../../../util/dataReducers';
 
 const regJobs = [{
   'id': 53,
@@ -19,7 +19,9 @@ const regJobs = [{
     'prefix_length': 0,
     'encoding': 'simpleIndex',
     'clustering': 'noCluster',
-    'method': 'linear'
+    'method': 'linear',
+    'padding': 'zero_padding',
+    'regression.linear': {}
   },
   'status': 'created',
   'result': {},
@@ -48,7 +50,9 @@ const classJobs = [{
     'threshold': 'default',
     'encoding': 'simpleIndex',
     'clustering': 'noCluster',
-    'method': 'randomForest'
+    'method': 'randomForest',
+    'padding': 'zero_padding',
+    'classification.randomForest': {}
   },
   'status': 'created',
   'result': {},
@@ -95,11 +99,11 @@ describe('ClassConfigTable', () => {
     expect(element).toBeDefined();
     // Header row
     expect(element.find(TableRow).length).toBe(1);
-    expect(element.find(TableColumn).length).toBe(10);
+    expect(element.find(TableColumn).length).toBe(11);
   });
 
   it('renders jobs if present', () => {
-    const element = mount(<ClassConfigTable jobs={classJobs.map(jobToConfigTable)}/>);
+    const element = mount(<ClassConfigTable jobs={classJobs.map(jobToValidationTable)}/>);
     expect(element.find(TableRow).length).toBe(2);
     expect(element.text()).toMatch(/classification/);
   });
@@ -111,11 +115,11 @@ describe('RegConfigTable', () => {
     expect(element).toBeDefined();
     // Header row
     expect(element.find(TableRow).length).toBe(1);
-    expect(element.find(TableColumn).length).toBe(8);
+    expect(element.find(TableColumn).length).toBe(9);
   });
 
   it('renders jobs if present', () => {
-    const element = mount(<RegConfigTable jobs={regJobs.map(jobToConfigTable)}/>);
+    const element = mount(<RegConfigTable jobs={regJobs.map(jobToValidationTable)}/>);
     expect(element.find(TableRow).length).toBe(2);
     expect(element.text()).toMatch(/regression/);
   });

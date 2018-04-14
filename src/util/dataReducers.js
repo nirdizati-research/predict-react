@@ -81,6 +81,7 @@ export const jobToValidationTable = (job) => {
       method: job.config.method,
       splitName: splitToString(job.split),
       prefix_length: job.config.prefix_length,
+      padding: job.config.padding,
       advanced: job.config[`${REGRESSION}.${job.config.method}`]
     };
   } else {
@@ -94,6 +95,7 @@ export const jobToValidationTable = (job) => {
       prefix_length: job.config.prefix_length,
       rule: job.config.rule,
       threshold: job.config.threshold,
+      padding: job.config.padding,
       advanced: job.config[`${job.type}.${job.config.method}`]
     };
   }
