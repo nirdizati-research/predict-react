@@ -46,15 +46,11 @@ export const log = {
       '2011-01-23': 1,
       '2011-01-24': 1
     },
-    'executions': {
-      'check ticket': 9,
-      'decide': 9,
-      'examine casually': 6,
-      'examine thoroughly': 3,
-      'pay compensation': 3,
-      'register request': 6,
-      'reinitiate request': 3,
-      'reject request': 3
+    'newTraces': {
+      '2010-12-30': 4,
+      '2010-12-31': 1,
+      '2011-01-05': 2,
+      '2011-01-24': 1
     },
     'maxEventsInLog': 13
   }

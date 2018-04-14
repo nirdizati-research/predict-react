@@ -8,6 +8,7 @@ import {Chart} from 'react-google-charts';
 
 const BubbleChartCard = (props) => {
   const opts = {
+    legend: {position: 'top'},
     hAxis: {title: props.hTitle},
     vAxis: {title: props.vTitle},
     bubble: {textStyle: {fontSize: 11}}

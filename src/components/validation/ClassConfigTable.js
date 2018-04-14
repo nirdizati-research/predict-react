@@ -8,6 +8,7 @@ import {columnStyle} from '../../reference';
 import {jobFlatPropType} from '../../helpers';
 
 /* eslint-disable camelcase */
+/* eslint-disable max-len */
 const ClassConfigTable = (props) => {
   const headers = ['id', 'Type', 'Encoding', 'Clustering', 'Method', 'Rule', 'Threshold', 'Prefix length', 'Advanced configuration', 'Split'];
 

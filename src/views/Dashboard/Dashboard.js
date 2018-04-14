@@ -37,6 +37,7 @@ class Dashboard extends Component {
   render() {
     const executionChart = this.getLineChart('events', 'Number of events executed');
     const resourceChart = this.getLineChart('resources', 'Number of resources used');
+    const newTracesChart = this.getLineChart('newTraces', 'Number of new traces');
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
@@ -49,6 +50,9 @@ class Dashboard extends Component {
         </div>
         <div className="md-cell md-cell--12">
           {resourceChart}
+        </div>
+        <div className="md-cell md-cell--12">
+          {newTracesChart}
         </div>
       </div>
     );
