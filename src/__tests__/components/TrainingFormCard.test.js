@@ -19,7 +19,11 @@ const regressionPayload = {
   'config': {
     'clusterings': ['noCluster'],
     'encodings': ['simpleIndex'],
-    'prefix_length': 1,
+    'prefix': {
+      'padding': 'no_padding',
+      'prefix_length': 1,
+      'type': 'only',
+    },
     'methods': ['linear'],
     'classification.decisionTree': {},
     'classification.knn': {},
@@ -40,7 +44,11 @@ const classificationPayload = {
     'clusterings': ['noCluster'],
     'encodings': ['simpleIndex'],
     'methods': ['knn'],
-    'prefix_length': 1,
+    'prefix': {
+      'padding': 'no_padding',
+      'prefix_length': 1,
+      'type': 'only',
+    },
     'rule': 'elapsed_time',
     'threshold': 'default',
     'classification.decisionTree': {},
@@ -62,7 +70,11 @@ const nextActivityPayload = {
     'methods': ['knn'],
     'clusterings': ['noCluster'],
     'encodings': ['simpleIndex'],
-    'prefix_length': 1,
+    'prefix': {
+      'padding': 'no_padding',
+      'prefix_length': 1,
+      'type': 'only',
+    },
     'classification.decisionTree': {},
     'classification.knn': {},
     'classification.randomForest': {},

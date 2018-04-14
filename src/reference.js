@@ -48,12 +48,12 @@ const encoding = [
   {
     label: 'Boolean',
     value: 'boolean',
-    message: 'Features represent whether or not a particular event class has occurred in the trace.'
+    message: 'Features represent whether or not a particular event class has occurred in the trace. Does not support 0 padding.'
   },
   {
     label: 'Frequency',
     value: 'frequency',
-    message: 'Features represent the absolute frequency of each possible event class. Event attributes are discarded.'
+    message: 'Features represent the absolute frequency of each possible event class. Event attributes are discarded. Does not support 0 padding.'
   },
   {
     label: 'Complex',
@@ -150,7 +150,7 @@ const padding = [
   },
   {
     label: 'With 0 padding',
-    value: 'with_0_padding',
+    value: 'zero_padding',
     message: 'Traces with less than prefix_length will be padded with 0'
   }
 ];
