@@ -60,7 +60,7 @@ export const logPropType = PropTypes.shape({
   properties: PropTypes.shape({
     events: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
     resources: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
-    executions: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
+    newTraces: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
     maxEventsInLog: PropTypes.number.isRequired,
   }).isRequired
 });

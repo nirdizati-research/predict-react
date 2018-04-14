@@ -8,8 +8,9 @@ import {columnStyle} from '../../reference';
 import {jobFlatPropType} from '../../helpers';
 
 /* eslint-disable camelcase */
+/* eslint-disable max-len */
 const ClassConfigTable = (props) => {
-  const headers = ['id', 'Type', 'Encoding', 'Clustering', 'Method', 'Rule', 'Threshold', 'Prefix length', 'Split'];
+  const headers = ['id', 'Type', 'Encoding', 'Clustering', 'Method', 'Rule', 'Threshold', 'Prefix length', 'Advanced configuration', 'Split'];
 
   return (<DataTable baseId="simple-pagination" plain>
     <TableHeader>
@@ -28,6 +29,9 @@ const ClassConfigTable = (props) => {
           <TableColumn style={columnStyle}>{job.rule}</TableColumn>
           <TableColumn style={columnStyle} numeric>{job.threshold}</TableColumn>
           <TableColumn style={columnStyle} numeric>{job.prefix_length}</TableColumn>
+          <TableColumn style={columnStyle}>
+            <pre>{JSON.stringify(job.advanced, null, 1)}</pre>
+          </TableColumn>
           <TableColumn style={columnStyle} grow>{job.splitName}</TableColumn>
 
         </TableRow>

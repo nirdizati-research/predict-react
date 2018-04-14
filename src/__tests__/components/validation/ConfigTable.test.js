@@ -95,7 +95,7 @@ describe('ClassConfigTable', () => {
     expect(element).toBeDefined();
     // Header row
     expect(element.find(TableRow).length).toBe(1);
-    expect(element.find(TableColumn).length).toBe(9);
+    expect(element.find(TableColumn).length).toBe(10);
   });
 
   it('renders jobs if present', () => {
@@ -111,7 +111,7 @@ describe('RegConfigTable', () => {
     expect(element).toBeDefined();
     // Header row
     expect(element.find(TableRow).length).toBe(1);
-    expect(element.find(TableColumn).length).toBe(7);
+    expect(element.find(TableColumn).length).toBe(8);
   });
 
   it('renders jobs if present', () => {
