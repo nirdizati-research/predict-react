@@ -8,7 +8,7 @@ import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
 import {getTableHeader} from './ColumnHelper';
 
-const opts = {width: '100%'};
+const opts = {width: '100%', page: 'enable'};
 
 const ResultTableCard = (props) => {
   const title = `${props.predictionMethod} results`;
