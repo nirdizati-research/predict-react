@@ -148,6 +148,9 @@ export const makeTable = (jobs, metricName) => {
 };
 
 export const makeLabels = (jobs) => {
+  if (jobs.length === 0) {
+    return [];
+  }
   return Object.keys(jobs[0].result).map((metric) => {
     return {label: metric, value: metric};
   });

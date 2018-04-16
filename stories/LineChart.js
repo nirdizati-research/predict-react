@@ -155,7 +155,10 @@ storiesOf('Controlled Charts', module)
       return (
         <div className="md-grid">
           <div className="md-cell md-cell--12">
-            <ControlledLineChartCard jobs={regJobs} predictionMethod={REGRESSION}/>
+            <ControlledLineChartCard jobs={regJobs}/>
+          </div>
+          <div className="md-cell md-cell--12">
+            <ControlledLineChartCard jobs={[]}/>
           </div>
         </div>
       );

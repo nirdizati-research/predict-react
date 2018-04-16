@@ -3,7 +3,6 @@ import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import PropTypes from 'prop-types';
 import {Chart} from 'react-google-charts';
 import {jobPropType} from '../../helpers';
-import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
 import {makeLabels, makeTable} from '../../util/dataReducers';
 import SelectField from 'react-md/lib/SelectFields/index';
 
@@ -13,9 +12,10 @@ class ControlledLineChartCard extends Component {
     super(props);
 
     const labels = makeLabels(this.props.jobs);
+    const metricName = labels.length > 0 ? labels[0].label : null;
     this.state = {
       jobs: this.props.jobs,
-      metricName: labels[0].label || '',
+      metricName,
       labels
     };
   }
@@ -63,15 +63,14 @@ class ControlledLineChartCard extends Component {
       <CardTitle title={`Prefix length by ${this.state.metricName}`}/>
       <CardText>
         {this.getSelector()}
-        {chart}
+        {rows.length === 0 ? 'No data' : chart}
       </CardText>
     </Card>;
   }
 }
 
 ControlledLineChartCard.propTypes = {
-  jobs: PropTypes.arrayOf(jobPropType).isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
+  jobs: PropTypes.arrayOf(jobPropType).isRequired
 };
 
 export default ControlledLineChartCard;
