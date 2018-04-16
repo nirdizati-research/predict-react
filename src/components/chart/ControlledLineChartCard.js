@@ -5,6 +5,7 @@ import {Chart} from 'react-google-charts';
 import {jobPropType} from '../../helpers';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
 import {makeLabels, makeTable} from '../../util/dataReducers';
+import SelectField from 'react-md/lib/SelectFields/index';
 
 
 class ControlledLineChartCard extends Component {
@@ -17,6 +18,21 @@ class ControlledLineChartCard extends Component {
       metricName: labels[0].label || '',
       labels
     };
+  }
+
+  selectChange(value) {
+    this.setState({metricName: value});
+  }
+  getSelector() {
+    return <SelectField
+      id="metric-select"
+      placeholder="Metric name"
+      className="md-cell"
+      menuItems={this.state.labels}
+      position={SelectField.Positions.BELOW}
+      onChange={this.selectChange.bind(this)}
+      value={this.state.metricName}
+    />;
   }
 
   render() {
@@ -46,6 +62,7 @@ class ControlledLineChartCard extends Component {
     return <Card className="md-block-centered">
       <CardTitle title={`Prefix length by ${this.state.metricName}`}/>
       <CardText>
+        {this.getSelector()}
         {chart}
       </CardText>
     </Card>;
