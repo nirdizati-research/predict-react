@@ -102,5 +102,47 @@ export const jobToValidationTable = (job) => {
 };
 
 const toRun = (job) => {
-  return `${job.config.encoding}, ${job.config.method}, ${job.config.clustering}`;
+  return `${job.config.encoding}_${job.config.method}_${job.config.clustering}`;
 };
+
+const toLineObject = (job, metricName) => {
+  const metric = job.result[metricName];
+  return {run: toRun(job), prefix_length: job.config.prefix_length, metric};
+};
+
+const uniqEs6 = (arrArg) => {
+  return arrArg.filter((elem, pos, arr) => {
+    return arr.indexOf(elem) === pos;
+  });
+};
+
+const uniqueJobRuns = (lineObjects) => {
+  const runs = lineObjects.map((ob) => ob.run);
+  return uniqEs6(runs);
+};
+
+const uniquePrefixes = (lineObjects) => {
+  const runs = lineObjects.map((ob) => ob.prefix_length);
+  return uniqEs6(runs);
+};
+
+const makeEmptyPrefixRows = (uniqPrefs, columnSize) => {
+  return uniqPrefs.map((u) => [u, ...Array.from({length: columnSize}, _ => null)]);
+};
+
+export const makeTable = (jobs, metricName) => {
+  const lineObjects = jobs.map((job) => toLineObject(job, metricName));
+  const uniqueRuns = uniqueJobRuns(lineObjects);
+  const header = ['Prefix length', ...uniqueRuns];
+  const uniquePrefs = uniquePrefixes(lineObjects);
+  const prefixRows = makeEmptyPrefixRows(uniquePrefs, uniqueRuns.length);
+  // empty shell ready
+  let dataTable = [header, ...prefixRows];
+
+  for (let ob of lineObjects) {
+    const column = dataTable[0].findIndex((el) => el === ob.run);
+    const row = uniquePrefs.findIndex((el) => el === ob.prefix_length) + 1;
+    dataTable[row][column] = ob.metric;
+  }
+  return dataTable;
+}

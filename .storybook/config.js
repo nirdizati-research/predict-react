@@ -12,6 +12,7 @@ WebFontLoader.load({
 // TODO automatically load all files in stories folder
 function loadStories() {
   require('../stories/Advanced');
+  require('../stories/LineChart');
   require('../stories/JobStatusTable');
   require('../stories/FetchState');
   require('../stories/LogListCard');
