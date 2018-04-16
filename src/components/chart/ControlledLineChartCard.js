@@ -5,24 +5,35 @@ import {Chart} from 'react-google-charts';
 import {jobPropType} from '../../helpers';
 import {makeLabels, makeTable} from '../../util/dataReducers';
 import SelectField from 'react-md/lib/SelectFields/index';
+import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
 
-
+/* eslint-disable no-unused-vars */
 class ControlledLineChartCard extends Component {
   constructor(props) {
     super(props);
 
     const labels = makeLabels(this.props.jobs);
     const metricName = labels.length > 0 ? labels[0].label : null;
-    this.state = {
-      jobs: this.props.jobs,
-      metricName,
-      labels
+    this.state = {metricName, labels,
+      predictionMethod: this.props.predictionMethod
     };
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.predictionMethod !== this.state.predictionMethod) {
+      const labels = makeLabels(this.props.jobs);
+      const metricName = labels.length > 0 ? labels[0].label : null;
+      nextState.labels = labels;
+      nextState.metricName = metricName;
+      nextState.predictionMethod = nextProps.predictionMethod;
+    }
+    return true;
   }
 
   selectChange(value) {
     this.setState({metricName: value});
   }
+
   getSelector() {
     return <SelectField
       id="metric-select"
@@ -36,17 +47,18 @@ class ControlledLineChartCard extends Component {
   }
 
   render() {
-    const data = makeTable(this.state.jobs, this.state.metricName);
+    const data = makeTable(this.props.jobs, this.state.metricName);
     const columns = data[0].map((label) => {
       return {type: 'number', label};
     });
-    const [header, ...rows] = data;
+    const [_, ...rows] = data;
     const opts = {
       vAxis: {
         title: this.state.metricName
       },
       hAxis: {
-        title: 'Prefix length'
+        title: 'Prefix length',
+        minValue: 0
       },
     };
 
@@ -70,7 +82,8 @@ class ControlledLineChartCard extends Component {
 }
 
 ControlledLineChartCard.propTypes = {
-  jobs: PropTypes.arrayOf(jobPropType).isRequired
+  jobs: PropTypes.arrayOf(jobPropType).isRequired,
+  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
 };
 
 export default ControlledLineChartCard;

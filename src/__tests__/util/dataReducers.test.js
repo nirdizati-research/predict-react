@@ -68,6 +68,7 @@ describe('split to string', () => {
   });
 });
 
+/* eslint-disable max-len */
 describe('generates data for prefix chart', () => {
   it('generates stuff', () => {
     const table = makeTable(regJobs, 'rmse');

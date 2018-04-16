@@ -127,7 +127,7 @@ const uniquePrefixes = (lineObjects) => {
 };
 
 const makeEmptyPrefixRows = (uniqPrefs, columnSize) => {
-  return uniqPrefs.map((u) => [u, ...Array.from({length: columnSize}, _ => null)]);
+  return uniqPrefs.map((u) => [u, ...Array.from({length: columnSize}, (_) => null)]);
 };
 
 export const makeTable = (jobs, metricName) => {

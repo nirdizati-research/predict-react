@@ -8,6 +8,7 @@ import ResultTableCard from './ResultTableCard';
 import {getChartHeader, getPrefixChartHeader, getTitles} from './ColumnHelper';
 import BubbleChartCard from '../chart/BubbleChartCard';
 import {jobPropType} from '../../helpers';
+import ControlledLineChartCard from '../chart/ControlledLineChartCard';
 
 const shortRun = (config) => {
   return `${config.method}_${config.encoding}_${config.clustering}`;
@@ -103,12 +104,16 @@ const getCharts = (data, predictionMethod) => {
 const ResultWrapper = (props) => {
   const tableData = prepareData(props.jobs, props.predictionMethod);
   let charts = [];
+  let prefixChart;
   if (tableData.length > 0) {
     charts = getCharts(tableData, props.predictionMethod);
   }
+  if (props.jobs.length > 0) {
+    prefixChart = <ControlledLineChartCard jobs={props.jobs} predictionMethod={props.predictionMethod}/>;
+  }
   return [<div className="md-cell md-cell--12" key="0">
     <ResultTableCard data={tableData} predictionMethod={props.predictionMethod}/>
-  </div>, ...charts];
+  </div>, <div className="md-cell md-cell--12" key="023">{prefixChart}</div>, ...charts];
 };
 
 ResultWrapper.propTypes = {

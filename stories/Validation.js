@@ -65,7 +65,7 @@ const classJobs = [
       'method': 'randomForest',
       'encoding': 'simpleIndex',
       'rule': 'remaining_time',
-      'prefix_length': 1,
+      'prefix_length': 3,
       'threshold': 'default',
       'classification.randomForest': {
         'n_estimators': 10,
@@ -79,7 +79,13 @@ const classJobs = [
     'result': {
       'f1score': 0.766666666666666,
       'acc': 0.3,
-      'auc': 0.2
+      'auc': 0.2,
+      'false_negative': 0,
+      'false_positive': 1,
+      'true_positive': 1,
+      'true_negative': 0,
+      'precision': 3,
+      'recall': 0
     },
     'type': 'classification',
     'split': {
