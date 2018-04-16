@@ -19,15 +19,12 @@ class ControlledLineChartCard extends Component {
     };
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.predictionMethod !== this.state.predictionMethod) {
+  componentDidUpdate(prevProps) {
+    if (prevProps.predictionMethod !== this.props.predictionMethod) {
       const labels = makeLabels(this.props.jobs);
       const metricName = labels.length > 0 ? labels[0].label : null;
-      nextState.labels = labels;
-      nextState.metricName = metricName;
-      nextState.predictionMethod = nextProps.predictionMethod;
+      this.setState({labels, metricName, predictionMethod: this.props.predictionMethod});
     }
-    return true;
   }
 
   selectChange(value) {
