@@ -77,19 +77,19 @@ describe('ConfigTableCard', () => {
     expect(element).toBeDefined();
   });
 
-  it('renders classification table', () => {
+  it('does not render classification table', () => {
     element.setProps({predictionMethod: CLASSIFICATION});
-    expect(element.find(ClassConfigTable).length).toBe(1);
+    expect(element.find(ClassConfigTable).length).toBe(0);
   });
 
-  it('renders next activity table', () => {
+  it('does not render next activity table', () => {
     element.setProps({predictionMethod: NEXT_ACTIVITY});
-    expect(element.find(RegConfigTable).length).toBe(1);
+    expect(element.find(RegConfigTable).length).toBe(0);
   });
 
-  it('renders regression table', () => {
+  it('does not render regression table', () => {
     element.setProps({predictionMethod: REGRESSION});
-    expect(element.find(RegConfigTable).length).toBe(1);
+    expect(element.find(RegConfigTable).length).toBe(0);
   });
 });
 

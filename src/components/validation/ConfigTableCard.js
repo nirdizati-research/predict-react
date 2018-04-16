@@ -26,7 +26,7 @@ class ConfigTableCard extends Component {
   }
 
   render() {
-    const table = this.getTable();
+    const table = this.props.jobs.length > 0 ? this.getTable() : null;
     return <Card className="md-block-centered">
       <CardTitle title="Configuration overview"/>
       <CardText>
