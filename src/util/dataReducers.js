@@ -145,4 +145,10 @@ export const makeTable = (jobs, metricName) => {
     dataTable[row][column] = ob.metric;
   }
   return dataTable;
-}
+};
+
+export const makeLabels = (jobs) => {
+  return Object.keys(jobs[0].result).map((metric) => {
+    return {label: metric, value: metric};
+  });
+};

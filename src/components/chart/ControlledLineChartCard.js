@@ -4,16 +4,18 @@ import PropTypes from 'prop-types';
 import {Chart} from 'react-google-charts';
 import {jobPropType} from '../../helpers';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
-import {makeTable} from '../../util/dataReducers';
+import {makeLabels, makeTable} from '../../util/dataReducers';
 
 
 class ControlledLineChartCard extends Component {
   constructor(props) {
     super(props);
 
+    const labels = makeLabels(this.props.jobs);
     this.state = {
       jobs: this.props.jobs,
-      metricName: 'rmse'
+      metricName: labels[0].label || '',
+      labels
     };
   }
 

@@ -1,7 +1,7 @@
 /**
  * Created by tonis.kasekamp on 10/17/17.
  */
-import {makeTable, normalizeSplits, splitsToString} from '../../util/dataReducers';
+import {makeLabels, makeTable, normalizeSplits, splitsToString} from '../../util/dataReducers';
 import {regJobs} from '../../../stories/LineChart';
 
 const splits = [
@@ -78,5 +78,22 @@ describe('generates data for prefix chart', () => {
       [5, null, null, 171.19102930552305]
     ];
     expect(table).toEqual(actualTable);
+  });
+
+  it('makes selectId labels from results', () => {
+    const labels = makeLabels(regJobs);
+    expect(labels.length).toEqual(3);
+    expect(labels).toEqual([{
+      label: 'rmse',
+      value: 'rmse'
+    },
+      {
+        label: 'mae',
+        value: 'mae'
+      },
+      {
+        label: 'rscore',
+        value: 'rscore'
+      }]);
   });
 });
