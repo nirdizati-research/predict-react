@@ -171,6 +171,15 @@ describe('Validation filter', () => {
       expect(state3.prefixLengths).toEqual([1]);
       expect(state3.selectedPrefixes).toEqual([1]);
     });
+
+    it('resets filter options', () => {
+      let state3 = jobs(state2, {type: FILTER_SPLIT_CHANGED, splitId: 2});
+      state3 = jobs(state3, {type: FILTER_PREDICTION_METHOD_CHANGED, method: REGRESSION});
+      expect(state3.classification.length).toEqual(3);
+      expect(state3.regression.length).toEqual(3);
+      expect(state3.clusterings.length).toEqual(2);
+      expect(state3.encodings.length).toEqual(5);
+    });
   });
 
   describe('when FILTER_PREFIX_LENGTH_CHANGED', () => {

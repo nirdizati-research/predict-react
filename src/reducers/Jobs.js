@@ -11,7 +11,11 @@ import {
   JOBS_REQUESTED,
   JOBS_RETRIEVED
 } from '../actions/JobActions';
-import {REGRESSION} from '../reference';
+import {
+  BOOLEAN, COMPLEX, DECISION_TREE, FREQUENCY, KMEANS, KNN, LASSO, LAST_PAYLOAD, LINEAR, NO_CLUSTER, RANDOM_FOREST,
+  REGRESSION,
+  SIMPLE_INDEX
+} from '../reference';
 
 const initialState = {
   fetchState: {inFlight: false},
@@ -22,6 +26,13 @@ const initialState = {
   prefixLengths: [],
   selectedPrefixes: [],
   splitId: -100
+};
+
+const initialFilters = {
+  encodings: [SIMPLE_INDEX, BOOLEAN, FREQUENCY, COMPLEX, LAST_PAYLOAD],
+  clusterings: [NO_CLUSTER, KMEANS],
+  classification: [KNN, DECISION_TREE, RANDOM_FOREST],
+  regression: [LINEAR, LASSO, RANDOM_FOREST]
 };
 
 const mergeIncomingJobs = (incoming, existing) => {
@@ -77,7 +88,7 @@ const applyFilters = (jobs, splitId, predictionMethod) => {
   return jobs.filter(filterBySplit(splitId)).filter(filterByMethod(predictionMethod));
 };
 
-const jobs = (state = initialState, action) => {
+const jobs = (state = {...initialState, ...initialFilters}, action) => {
   switch (action.type) {
     case JOBS_REQUESTED: {
       return {
