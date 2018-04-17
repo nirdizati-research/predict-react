@@ -157,9 +157,6 @@ storiesOf('Controlled Charts', module)
           <div className="md-cell md-cell--12">
             <ControlledLineChartCard jobs={regJobs} predictionMethod={REGRESSION}/>
           </div>
-          <div className="md-cell md-cell--12">
-            <ControlledLineChartCard jobs={[]} predictionMethod={CLASSIFICATION}/>
-          </div>
         </div>
       );
     }

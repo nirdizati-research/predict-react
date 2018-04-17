@@ -3,11 +3,12 @@
  */
 import jobs from '../../reducers/Jobs';
 import {
+  FILTER_OPTION_CHANGED,
   FILTER_PREDICTION_METHOD_CHANGED, FILTER_PREFIX_LENGTH_CHANGED,
   FILTER_SPLIT_CHANGED, jobResultsRequested, jobsFailed, jobsRequested,
   jobsRetrieved
 } from '../../actions/JobActions';
-import {CLASSIFICATION, REGRESSION} from '../../reference';
+import {CLASSIFICATION, NO_CLUSTER, RANDOM_FOREST, REGRESSION, SIMPLE_INDEX} from '../../reference';
 
 const jobList = [
   {
@@ -16,6 +17,9 @@ const jobList = [
     type: CLASSIFICATION,
     config: {
       prefix_length: 2,
+      encoding: SIMPLE_INDEX,
+      method: RANDOM_FOREST,
+      clustering: NO_CLUSTER
     },
     split: {
       id: 1
@@ -27,6 +31,9 @@ const jobList = [
     type: CLASSIFICATION,
     config: {
       prefix_length: 2,
+      encoding: SIMPLE_INDEX,
+      method: RANDOM_FOREST,
+      clustering: NO_CLUSTER
     },
     split: {
       id: 1
@@ -38,6 +45,9 @@ const jobList = [
     type: REGRESSION,
     config: {
       prefix_length: 1,
+      encoding: SIMPLE_INDEX,
+      method: RANDOM_FOREST,
+      clustering: NO_CLUSTER
     },
     split: {
       id: 2
@@ -49,6 +59,9 @@ const jobList = [
     type: CLASSIFICATION,
     config: {
       prefix_length: 5,
+      encoding: SIMPLE_INDEX,
+      method: RANDOM_FOREST,
+      clustering: NO_CLUSTER
     },
     split: {
       id: 4
@@ -60,6 +73,9 @@ const jobList = [
     type: CLASSIFICATION,
     config: {
       prefix_length: 4,
+      encoding: SIMPLE_INDEX,
+      method: RANDOM_FOREST,
+      clustering: NO_CLUSTER
     },
     split: {
       id: 1
@@ -71,6 +87,9 @@ const jobList = [
     type: REGRESSION,
     config: {
       prefix_length: 2,
+      encoding: SIMPLE_INDEX,
+      method: RANDOM_FOREST,
+      clustering: NO_CLUSTER
     },
     split: {
       id: 1
@@ -171,6 +190,15 @@ describe('Validation filter', () => {
       expect(state3.prefixLengths).toEqual([1]);
       expect(state3.selectedPrefixes).toEqual([1]);
     });
+
+    it('resets filter options', () => {
+      let state3 = jobs(state2, {type: FILTER_SPLIT_CHANGED, splitId: 2});
+      state3 = jobs(state3, {type: FILTER_PREDICTION_METHOD_CHANGED, method: REGRESSION});
+      expect(state3.classification.length).toEqual(3);
+      expect(state3.regression.length).toEqual(3);
+      expect(state3.clusterings.length).toEqual(2);
+      expect(state3.encodings.length).toEqual(5);
+    });
   });
 
   describe('when FILTER_PREFIX_LENGTH_CHANGED', () => {
@@ -189,6 +217,27 @@ describe('Validation filter', () => {
       const state4 = jobs(state3, {type: FILTER_PREFIX_LENGTH_CHANGED, prefixLength: '4'});
       expect(state4.filteredJobs.length).toEqual(2);
       expect(state4.selectedPrefixes).toEqual([2, 4]);
+    });
+  });
+
+  describe('when FILTER_OPTION_CHANGED', () => {
+    it('changes for encoding method', () => {
+      let state3 = jobs(state2, {
+        type: FILTER_OPTION_CHANGED,
+        payload: {value: SIMPLE_INDEX, name: 'encodings[]'}
+      });
+      expect(state3.filteredJobs.length).toEqual(0);
+      expect(state3.encodings.length).toEqual(4);
+    });
+
+    it('resets when prediction method changes', () => {
+      let state3 = jobs(state2, {
+        type: FILTER_OPTION_CHANGED,
+        payload: {value: SIMPLE_INDEX, name: 'encodings[]'}
+      });
+      state3 = jobs(state3, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
+      expect(state3.filteredJobs.length).toEqual(2);
+      expect(state3.encodings.length).toEqual(5);
     });
   });
 });

@@ -7,7 +7,14 @@ import SelectField from 'react-md/lib/SelectFields';
 import PropTypes from 'prop-types';
 import FetchState from './../FetchState';
 import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
-import {predictionMethods} from '../../reference';
+import {
+  classificationMethods,
+  clustering,
+  encoding,
+  predictionMethods,
+  REGRESSION,
+  regressionMethods
+} from '../../reference';
 import {splitLabels} from '../../helpers';
 
 const ValidationHeaderCard = (props) => {
@@ -22,13 +29,22 @@ const ValidationHeaderCard = (props) => {
   const checkies = props.prefixLengths.length > 0 ?
     <SelectionControlGroup type="checkbox" label="Prefix lengths" name="prefixLengths" id="prefixLengths"
                            onChange={checkBoxChange} controls={prefixControls} inline
-                           value={defaultValue} /> : null;
+                           value={defaultValue}/> : null;
   const selectChange = (value, _) => {
     props.splitChange(value);
   };
   const localMethodChange = (value, _) => {
     props.methodChange(value);
   };
+
+  // terrible use of if else shorthand
+  const methods = props.predictionMethod === REGRESSION ?
+    <SelectionControlGroup type="checkbox" controls={regressionMethods} id="regression" name='regression'
+                           label="Regression methods" onChange={props.filterOptionChange} inline
+                           value={props.filterOptions.regression.join(',')}/> :
+    <SelectionControlGroup type="checkbox" controls={classificationMethods} id="classification" name='classification'
+                           label="Classification methods" onChange={props.filterOptionChange} inline
+                           value={props.filterOptions.classification.join(',')}/>;
 
   return <Card className="md-block-centered">
     <CardTitle title="Validation selection">
@@ -42,9 +58,22 @@ const ValidationHeaderCard = (props) => {
         value={props.selectedSplitId}
       /></CardTitle>
     <CardText>
-      <SelectionControlGroup id="prediction" name="prediction" type="radio" label="Prediction method"
-                             inline controls={predictionMethods}
-                             onChange={localMethodChange}/>
+      <div className="md-grid md-grid--no-spacing">
+        <div className="md-cell md-cell--6">
+          <SelectionControlGroup id="prediction" name="prediction" type="radio" label="Prediction method"
+                                 inline controls={predictionMethods}
+                                 onChange={localMethodChange}/>
+          <SelectionControlGroup type="checkbox" label="Encoding methods" name="encodings" id="encodings"
+                                 onChange={props.filterOptionChange} controls={encoding} inline
+                                 value={props.filterOptions.encodings.join(',')}/>
+        </div>
+        <div className="md-cell md-cell--6">
+          <SelectionControlGroup type="checkbox" label="Clustering methods" name="clusterings" id="clusterings"
+                                 onChange={props.filterOptionChange} controls={clustering} inline
+                                 value={props.filterOptions.clusterings.join(',')}/>
+          {methods}
+        </div>
+      </div>
       <div className="md-cell">
         {checkies}
       </div>
@@ -65,6 +94,14 @@ ValidationHeaderCard.propTypes = {
   prefixLengths: PropTypes.arrayOf(PropTypes.string).isRequired,
   prefixChange: PropTypes.func.isRequired,
   selectedPrefixes: PropTypes.arrayOf(PropTypes.number).isRequired,
-  selectedSplitId: PropTypes.number.isRequired
+  selectedSplitId: PropTypes.number.isRequired,
+  filterOptionChange: PropTypes.func.isRequired,
+  filterOptions: PropTypes.shape({
+    encodings: PropTypes.arrayOf(PropTypes.string).isRequired,
+    clusterings: PropTypes.arrayOf(PropTypes.string).isRequired,
+    classification: PropTypes.arrayOf(PropTypes.string).isRequired,
+    regression: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }).isRequired,
+  predictionMethod: PropTypes.string.isRequired
 };
 export default ValidationHeaderCard;

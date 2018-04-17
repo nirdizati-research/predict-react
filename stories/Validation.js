@@ -8,6 +8,7 @@ import ConfigTableCard from '../src/components/validation/ConfigTableCard';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../src/reference';
 import ResultWrapper from '../src/components/validation/ResultWrapper';
 import {jobToConfigTable} from '../src/util/dataReducers';
+import PropTypes from 'prop-types';
 
 const splitLabels = [{value: 1, label: 'Split #1'}, {value: 2, label: 'Split #2'}];
 const classJobs = [
@@ -186,14 +187,22 @@ const nextActivityJobs = [
   },
 ];
 
+const filterOptions = {
+  encodings: [],
+  clusterings: [],
+  classification: [],
+  regression: [],
+};
+
 storiesOf('Validation', module)
   .add('ValidationHeaderCard', () => {
       return (
         <div className="md-grid">
           <div className="md-cell md-cell--12">
             <ValidationHeaderCard splitLabels={splitLabels} fetchState={{inFlight: false}} splitChange={(_) => _}
-                                  methodChange={(_) => _} selectedPrefixes={['2']}
-                                  prefixLengths={['1', '2']} prefixChange={(_) => _}/>
+                                  methodChange={(_) => _} selectedPrefixes={['2']} filterOptions={filterOptions}
+                                  prefixLengths={['1', '2']} prefixChange={(_) => _} filterOptionChange={console.log}
+                                  predictionMethod={REGRESSION}/>
           </div>
         </div>
       );

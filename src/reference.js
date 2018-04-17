@@ -10,16 +10,33 @@ export const NEXT_ACTIVITY = 'nextActivity';
 
 export const SPLIT_SINGLE = 'single';
 export const SPLIT_DOUBLE = 'double';
+// clustering
+export const NO_CLUSTER = 'noCluster';
+export const KMEANS = 'kmeans';
+// classification methods
+export const KNN = 'knn';
+export const DECISION_TREE = 'decisionTree';
+export const RANDOM_FOREST = 'randomForest';
+// regression methods
+export const LINEAR = 'linear';
+export const LASSO = 'lasso';
+// encoding methods
+export const SIMPLE_INDEX = 'simpleIndex';
+export const BOOLEAN = 'boolean';
+export const FREQUENCY = 'frequency';
+export const COMPLEX = 'complex';
+export const LAST_PAYLOAD = 'lastPayload';
 
-const clustering = [
+// Using these options directly means the message is not shown
+export const clustering = [
   {
     label: 'None',
-    value: 'noCluster',
+    value: NO_CLUSTER,
     message: 'No clustering and train a single model'
   },
   {
-    label: 'kmeans',
-    value: 'kmeans',
+    label: KMEANS,
+    value: KMEANS,
     message: 'Assign traces to k-means clusters and train a model for each cluster'
   }
 ];
@@ -27,42 +44,42 @@ const clustering = [
 const classification = [
   {
     label: 'KNN',
-    value: 'knn'
+    value: KNN
   },
   {
     label: 'Decision tree',
-    value: 'decisionTree'
+    value: DECISION_TREE
   },
   {
     label: 'Random forest',
-    value: 'randomForest'
+    value: RANDOM_FOREST
   }
 ];
 
-const encoding = [
+export const encoding = [
   {
     label: 'Simple index',
-    value: 'simpleIndex',
+    value: SIMPLE_INDEX,
     message: 'Each feature corresponds to a position in the trace and the possible values for each feature are the event classes. Event attributes are discarded.'
   },
   {
     label: 'Boolean',
-    value: 'boolean',
+    value: BOOLEAN,
     message: 'Features represent whether or not a particular event class has occurred in the trace. Does not support 0 padding.'
   },
   {
     label: 'Frequency',
-    value: 'frequency',
+    value: FREQUENCY,
     message: 'Features represent the absolute frequency of each possible event class. Event attributes are discarded. Does not support 0 padding.'
   },
   {
     label: 'Complex',
-    value: 'complex',
+    value: COMPLEX,
     message: 'Simple index encoding with event attributes'
   },
   {
     label: 'Last payload',
-    value: 'lastPayload',
+    value: LAST_PAYLOAD,
     message: 'Simple index encoding with event attributes for only the last considered event in trace.'
   }
 ];
@@ -98,15 +115,15 @@ const predictions = [
 const regression = [
   {
     label: 'Linear',
-    value: 'linear'
+    value: LINEAR
   },
   {
     label: 'Random forest',
-    value: 'randomForest'
+    value: RANDOM_FOREST
   },
   {
     label: 'Lasso',
-    value: 'lasso'
+    value: LASSO
   },
 ];
 

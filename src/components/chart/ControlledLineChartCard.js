@@ -55,8 +55,9 @@ class ControlledLineChartCard extends Component {
       },
       hAxis: {
         title: 'Prefix length',
-        minValue: 0
+        minValue: rows[0][0]
       },
+      interpolateNulls: true
     };
 
     const chart = <Chart

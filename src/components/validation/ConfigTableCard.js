@@ -20,7 +20,7 @@ class ConfigTableCard extends Component {
       case CLASSIFICATION:
         return <ClassConfigTable jobs={flatJobs}/>;
       case NEXT_ACTIVITY:
-        return <RegConfigTable jobs={flatJobs}/>;
+        return <ClassConfigTable jobs={flatJobs}/>;
       // no default
     }
   }

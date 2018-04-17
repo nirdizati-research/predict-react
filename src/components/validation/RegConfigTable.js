@@ -33,7 +33,7 @@ class RegConfigTable extends PureComponent {
         {this.state.slicedData.map(
           ({id, encoding, clustering, method, splitName, prefix_length, type, advanced, padding}) => (
             <TableRow key={id}>
-              <TableColumn style={columnStyle}>{id}§</TableColumn>
+              <TableColumn style={columnStyle}>{id}</TableColumn>
               <TableColumn style={columnStyle}>{type}</TableColumn>
               <TableColumn style={columnStyle}>{encoding}</TableColumn>
               <TableColumn style={columnStyle}>{clustering}</TableColumn>
