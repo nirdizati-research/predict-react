@@ -39,10 +39,10 @@ const ValidationHeaderCard = (props) => {
 
   // terrible use of if else shorthand
   const methods = props.predictionMethod === REGRESSION ?
-    <SelectionControlGroup type="checkbox" controls={regressionMethods} id="regression" name='as'
+    <SelectionControlGroup type="checkbox" controls={regressionMethods} id="regression" name='regression'
                            label="Regression methods" onChange={props.filterOptionChange} inline
                            value={props.filterOptions.regression.join(',')}/> :
-    <SelectionControlGroup type="checkbox" controls={classificationMethods} id="classification" name='asd'
+    <SelectionControlGroup type="checkbox" controls={classificationMethods} id="classification" name='classification'
                            label="Classification methods" onChange={props.filterOptionChange} inline
                            value={props.filterOptions.classification.join(',')}/>;
 

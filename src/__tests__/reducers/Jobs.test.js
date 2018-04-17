@@ -224,7 +224,7 @@ describe('Validation filter', () => {
     it('changes for encoding method', () => {
       let state3 = jobs(state2, {
         type: FILTER_OPTION_CHANGED,
-        event: {target: {value: SIMPLE_INDEX, name: 'encodings[]'}}
+        payload: {value: SIMPLE_INDEX, name: 'encodings[]'}
       });
       expect(state3.filteredJobs.length).toEqual(0);
       expect(state3.encodings.length).toEqual(4);
@@ -233,7 +233,7 @@ describe('Validation filter', () => {
     it('resets when prediction method changes', () => {
       let state3 = jobs(state2, {
         type: FILTER_OPTION_CHANGED,
-        event: {target: {value: SIMPLE_INDEX, name: 'encodings[]'}}
+        payload: {value: SIMPLE_INDEX, name: 'encodings[]'}
       });
       state3 = jobs(state3, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
       expect(state3.filteredJobs.length).toEqual(2);

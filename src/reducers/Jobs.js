@@ -110,7 +110,7 @@ const applyFilters = (jobs, splitId, predictionMethod, encodings, clusterings, c
     .filter(filterByAllElse(encodings, clusterings, classification, regression, predictionMethod));
 };
 
-const checkboxChange = ({target}, state) => {
+const checkboxChange = (target, state) => {
   const value = target.value;
   switch (target.name) {
     case 'encodings[]':
@@ -184,7 +184,7 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
     }
 
     case FILTER_OPTION_CHANGED: {
-      state = checkboxChange(action.event, state);
+      state = checkboxChange(action.payload, state);
       const filteredJobs = applyFilters(state.jobs, state.splitId, state.predictionMethod, state.encodings, state.clusterings, state.classification, state.regression);
       return {
         ...state, filteredJobs
