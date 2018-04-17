@@ -27,8 +27,8 @@ export const FREQUENCY = 'frequency';
 export const COMPLEX = 'complex';
 export const LAST_PAYLOAD = 'lastPayload';
 
-
-const clustering = [
+// Using these options directly means the message is not shown
+export const clustering = [
   {
     label: 'None',
     value: NO_CLUSTER,
@@ -56,7 +56,7 @@ const classification = [
   }
 ];
 
-const encoding = [
+export const encoding = [
   {
     label: 'Simple index',
     value: SIMPLE_INDEX,

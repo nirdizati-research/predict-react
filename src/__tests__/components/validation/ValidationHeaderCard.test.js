@@ -13,25 +13,34 @@ const splitChange = jest.fn();
 const methodChange = jest.fn();
 const splitLabels = [{value: 1, label: 'Split #1'}, {value: 2, label: 'Split #2'}];
 
+const filterOptions = {
+  encodings: [],
+  clusterings: [],
+  classification: [],
+  regression: [],
+};
+
 describe('ValidationHeaderCard', () => {
   it('renders', () => {
     const element = shallow(<ValidationHeaderCard fetchState={fetchState} splitLabels={splitLabels}
                                                   splitChange={splitChange} methodChange={methodChange}
                                                   prefixLengths={[]} selectedPrefixes={[]}
-                                                  prefixChange={jest.fn()}
-                                                  selectedSplitId={1}/>);
+                                                  filterOptionChange={jest.fn()}
+                                                  prefixChange={jest.fn()} filterOptions={filterOptions}
+                                                  selectedSplitId={1} predictionMethod={CLASSIFICATION}/> );
     expect(element).toBeDefined();
     expect(element.find(FetchState).length).toBe(1);
     expect(element.find(SelectField).length).toBe(1);
-    expect(element.find(SelectionControlGroup).length).toBe(1);
+    expect(element.find(SelectionControlGroup).length).toBe(4);
   });
 
   it('calls selectChange', () => {
     const element = shallow(<ValidationHeaderCard fetchState={fetchState} splitLabels={splitLabels}
                                                   splitChange={splitChange} methodChange={methodChange}
                                                   prefixLengths={[]} selectedPrefixes={[]}
-                                                  prefixChange={jest.fn()}
-                                                  selectedSplitId={1}/>);
+                                                  filterOptionChange={jest.fn()}
+                                                  prefixChange={jest.fn()} filterOptions={filterOptions}
+                                                  selectedSplitId={1} predictionMethod={CLASSIFICATION}/>);
     element.find(SelectField).simulate('change', 'Log2');
     expect(splitChange).toHaveBeenCalledWith('Log2');
   });
@@ -40,8 +49,9 @@ describe('ValidationHeaderCard', () => {
     const element = shallow(<ValidationHeaderCard fetchState={fetchState} splitLabels={splitLabels}
                                                   splitChange={splitChange} methodChange={methodChange}
                                                   prefixLengths={[]} selectedPrefixes={[]}
-                                                  prefixChange={jest.fn()}
-                                                  selectedSplitId={1}/>);
+                                                  filterOptionChange={jest.fn()}
+                                                  prefixChange={jest.fn()} filterOptions={filterOptions}
+                                                  selectedSplitId={1} predictionMethod={CLASSIFICATION}/>);
     element.find(SelectionControlGroup).at(0).simulate('change', CLASSIFICATION);
     expect(methodChange).toHaveBeenCalledWith(CLASSIFICATION);
   });
