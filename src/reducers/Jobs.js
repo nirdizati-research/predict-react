@@ -3,7 +3,8 @@
  */
 
 import {
-  FILTER_PREDICTION_METHOD_CHANGED, FILTER_PREFIX_LENGTH_CHANGED,
+  FILTER_PREDICTION_METHOD_CHANGED,
+  FILTER_PREFIX_LENGTH_CHANGED,
   FILTER_SPLIT_CHANGED,
   JOB_RESULTS_REQUESTED,
   JOBS_FAILED,
@@ -49,14 +50,17 @@ const reducer = (acc, job) => {
   return acc;
 };
 
-const filterBySplit = (jobs, predictionMethod, splitId) => {
-  return filterByMethod(jobs.filter((job) => (job.split.id === splitId)), predictionMethod);
+const filterBySplit = (splitId) => (job) => {
+  return job.split.id === splitId;
 };
 
-const filterByMethod = (jobs, predictionMethod) => {
-  return jobs.filter((job) => (job.type === predictionMethod) && (job.status === 'completed'));
+const filterByMethod = (predictionMethod) => (job) => {
+  return (job.type === predictionMethod) && (job.status === 'completed');
 };
 
+const filterByPrefix = (selectedPrefixes) => (job) => {
+  return selectedPrefixes.includes(job.config.prefix_length);
+};
 const addOrRemove = (list, value) => {
   value = parseInt(value, 10);
   const index = list.indexOf(value);
@@ -68,6 +72,10 @@ const addOrRemove = (list, value) => {
 };
 
 const prefixSet = (filteredJobs) => [...new Set(filteredJobs.map((job) => job.config.prefix_length))];
+
+const applyFilters = (jobs, splitId, predictionMethod) => {
+  return jobs.filter(filterBySplit(splitId)).filter(filterByMethod(predictionMethod));
+};
 
 const jobs = (state = initialState, action) => {
   switch (action.type) {
@@ -102,27 +110,27 @@ const jobs = (state = initialState, action) => {
       };
     }
     case FILTER_SPLIT_CHANGED: {
-      const filteredJobs = filterBySplit(state.jobs, state.predictionMethod, action.splitId);
+      const filteredJobs = applyFilters(state.jobs, action.splitId, state.predictionMethod);
       const prefixLengths = prefixSet(filteredJobs);
       return {
-        ...state, filteredJobs: filteredJobs, prefixLengths: prefixLengths,
+        ...state, filteredJobs, prefixLengths,
         splitId: action.splitId, selectedPrefixes: prefixLengths
       };
     }
     case FILTER_PREDICTION_METHOD_CHANGED: {
-      const filteredJobs = filterBySplit(state.jobs, action.method, state.splitId);
+      const filteredJobs = applyFilters(state.jobs, state.splitId, action.method);
       const prefixLengths = prefixSet(filteredJobs);
       return {
-        ...state, filteredJobs, prefixLengths: prefixLengths,
+        ...state, filteredJobs, prefixLengths,
         predictionMethod: action.method, selectedPrefixes: prefixLengths
       };
     }
     case FILTER_PREFIX_LENGTH_CHANGED: {
       const selectedPrefixes = addOrRemove(state.selectedPrefixes, action.prefixLength);
-      const filteredJobs = filterBySplit(state.jobs, state.predictionMethod, state.splitId)
-        .filter((job) => selectedPrefixes.includes(job.config.prefix_length));
+      const filteredJobs = applyFilters(state.jobs, state.splitId, state.predictionMethod)
+        .filter(filterByPrefix(selectedPrefixes));
       return {
-        ...state, selectedPrefixes: selectedPrefixes, filteredJobs
+        ...state, selectedPrefixes, filteredJobs
       };
     }
 
