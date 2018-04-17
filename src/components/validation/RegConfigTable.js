@@ -19,6 +19,11 @@ class RegConfigTable extends PureComponent {
     this.setState({slicedData: this.props.jobs.slice(start, start + rowsPerPage)});
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.jobs.length !== this.props.jobs.length) {
+      this.setState({slicedData: this.props.jobs.slice(0, 10)});
+    }
+  }
 
   render() {
     const headers =
