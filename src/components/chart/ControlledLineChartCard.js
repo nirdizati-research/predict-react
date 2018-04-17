@@ -57,6 +57,7 @@ class ControlledLineChartCard extends Component {
         title: 'Prefix length',
         minValue: rows[0][0]
       },
+      interpolateNulls: true
     };
 
     const chart = <Chart
