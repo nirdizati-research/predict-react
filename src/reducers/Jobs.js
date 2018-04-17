@@ -3,6 +3,7 @@
  */
 
 import {
+  FILTER_OPTION_CHANGED,
   FILTER_PREDICTION_METHOD_CHANGED,
   FILTER_PREFIX_LENGTH_CHANGED,
   FILTER_SPLIT_CHANGED,
@@ -16,6 +17,8 @@ import {
   REGRESSION,
   SIMPLE_INDEX
 } from '../reference';
+
+/* eslint-disable max-len */
 
 const initialState = {
   fetchState: {inFlight: false},
@@ -72,6 +75,15 @@ const filterByMethod = (predictionMethod) => (job) => {
 const filterByPrefix = (selectedPrefixes) => (job) => {
   return selectedPrefixes.includes(job.config.prefix_length);
 };
+
+const filterByAllElse = (encodings, clusterings, classification, regression, predictionMethod) => (job) => {
+  const firstHalf = encodings.includes(job.config.encoding) && clusterings.includes(job.config.clustering);
+  if (predictionMethod === REGRESSION) {
+    return firstHalf && regression.includes(job.config.method);
+  } else {
+    return firstHalf && classification.includes(job.config.method);
+  }
+};
 const addOrRemove = (list, value) => {
   value = parseInt(value, 10);
   const index = list.indexOf(value);
@@ -82,10 +94,36 @@ const addOrRemove = (list, value) => {
   }
 };
 
+const addOrRemoveString = (list, value) => {
+  const index = list.indexOf(value);
+  if (index > -1) {
+    return list.filter((val) => val !== value);
+  } else {
+    return [...list, value];
+  }
+};
+
 const prefixSet = (filteredJobs) => [...new Set(filteredJobs.map((job) => job.config.prefix_length))];
 
-const applyFilters = (jobs, splitId, predictionMethod) => {
-  return jobs.filter(filterBySplit(splitId)).filter(filterByMethod(predictionMethod));
+const applyFilters = (jobs, splitId, predictionMethod, encodings, clusterings, classification, regression) => {
+  return jobs.filter(filterBySplit(splitId)).filter(filterByMethod(predictionMethod))
+    .filter(filterByAllElse(encodings, clusterings, classification, regression, predictionMethod));
+};
+
+const checkboxChange = ({target}, state) => {
+  const value = target.value;
+  switch (target.name) {
+    case 'encodings[]':
+      return {...state, encodings: addOrRemoveString(state.encodings, value)};
+    case 'clusterings[]':
+      return {...state, clusterings: addOrRemoveString(state.clusterings, value)};
+    case 'regression[]':
+      return {...state, regression: addOrRemoveString(state.regression, value)};
+    case 'classification[]':
+      return {...state, classification: addOrRemoveString(state.classification, value)};
+    // no default
+  }
+  return state;
 };
 
 const jobs = (state = {...initialState, ...initialFilters}, action) => {
@@ -121,7 +159,7 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
       };
     }
     case FILTER_SPLIT_CHANGED: {
-      const filteredJobs = applyFilters(state.jobs, action.splitId, state.predictionMethod);
+      const filteredJobs = applyFilters(state.jobs, action.splitId, state.predictionMethod, state.encodings, state.clusterings, state.classification, state.regression);
       const prefixLengths = prefixSet(filteredJobs);
       return {
         ...state, filteredJobs, prefixLengths,
@@ -129,19 +167,27 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
       };
     }
     case FILTER_PREDICTION_METHOD_CHANGED: {
-      const filteredJobs = applyFilters(state.jobs, state.splitId, action.method);
+      const filteredJobs = applyFilters(state.jobs, state.splitId, action.method, initialFilters.encodings, initialFilters.clusterings, initialFilters.classification, initialFilters.regression);
       const prefixLengths = prefixSet(filteredJobs);
       return {
-        ...state, filteredJobs, prefixLengths,
+        ...state, filteredJobs, prefixLengths, ...initialFilters,
         predictionMethod: action.method, selectedPrefixes: prefixLengths
       };
     }
     case FILTER_PREFIX_LENGTH_CHANGED: {
       const selectedPrefixes = addOrRemove(state.selectedPrefixes, action.prefixLength);
-      const filteredJobs = applyFilters(state.jobs, state.splitId, state.predictionMethod)
+      const filteredJobs = applyFilters(state.jobs, state.splitId, state.predictionMethod, state.encodings, state.clusterings, state.classification, state.regression)
         .filter(filterByPrefix(selectedPrefixes));
       return {
         ...state, selectedPrefixes, filteredJobs
+      };
+    }
+
+    case FILTER_OPTION_CHANGED: {
+      state = checkboxChange(action.event, state);
+      const filteredJobs = applyFilters(state.jobs, state.splitId, state.predictionMethod, state.encodings, state.clusterings, state.classification, state.regression);
+      return {
+        ...state, filteredJobs
       };
     }
 
