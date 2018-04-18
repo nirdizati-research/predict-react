@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import SelectField from 'react-md/lib/SelectFields';
-import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
+import {SelectionControl, SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
 import {Button} from 'react-md/lib/Buttons/index';
 import FetchState from './FetchState';
 import {
@@ -52,7 +52,8 @@ const initialState = (props) => {
     threshold: {
       value: thresholdControls[0].value,
       threshold: defaultThreshold
-    }
+    },
+    create_models: false
   };
 };
 
@@ -120,6 +121,9 @@ class TrainingFormCard extends Component {
       case 'rule':
         // not a list, but works
         this.setState({rule: value});
+        break;
+      case 'create_models':
+        this.setState({create_models: !this.state.create_models});
         break;
       // no default
     }
@@ -192,6 +196,7 @@ class TrainingFormCard extends Component {
         encodings: this.state.encodings,
         clusterings: this.state.clusterings,
         methods: methods,
+        create_models: this.state.create_models,
         [`${CLASSIFICATION}.knn`]: this.state[`${CLASSIFICATION}.knn`],
         [`${CLASSIFICATION}.randomForest`]: this.state[`${CLASSIFICATION}.randomForest`],
         [`${CLASSIFICATION}.decisionTree`]: this.state[`${CLASSIFICATION}.decisionTree`],
@@ -286,8 +291,15 @@ class TrainingFormCard extends Component {
         <AdvancedConfiguration classification={this.state.classification} regression={this.state.regression}
                                onChange={this.advanceConfigChange.bind(this)}
                                predictionMethod={this.state.predictionMethod}/>
+
         <CardText>
           <div className="md-grid md-grid--no-spacing">
+            <div className="md-cell md-cell--12">
+              <SelectionControl id="create_models" name="create_models"
+                        label="Create and save models for runtime prediction"
+                                type="switch" value={this.state.create_models}
+                        onChange={this.checkboxChange.bind(this)}/>
+            </div>
             <div className="md-cell md-cell--12">
               {warning}
               <FetchState fetchState={this.props.fetchState}/>
