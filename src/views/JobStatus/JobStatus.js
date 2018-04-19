@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import Button from 'react-md/lib/Buttons/Button';
-import {jobsRequested} from '../../actions/JobActions';
+import {JOB_DELETE_REQUESTED, jobsRequested} from '../../actions/JobActions';
 import JobStatusTable from '../../components/JobStatusTable';
 import FetchState from '../../components/FetchState';
 import {jobPropType} from '../../helpers';
@@ -15,7 +15,8 @@ class JobStatus extends Component {
 
     this.state = {
       showCompleted: false,
-      fetchJobs: true
+      fetchJobs: true,
+      showDeleteButton: false
     };
   }
 
@@ -45,6 +46,9 @@ class JobStatus extends Component {
       case 'showCompleted':
         this.setState({showCompleted: !this.state.showCompleted});
         break;
+      case 'showDeleteButton':
+        this.setState({showDeleteButton: !this.state.showDeleteButton});
+        break;
       case 'fetchJobs': {
         if (this.state.fetchJobs) {
           clearInterval(this.state.intervalId);
@@ -69,8 +73,9 @@ class JobStatus extends Component {
             <CardText>
               <p>
                 Lots of logs below. See job results on the validation page.
+                Currently running jobs cannot be deleted. Do not try.
               </p>
-              <Button raised onClick={this.props.onRequestJobs}>Request jobs</Button>
+              <Button raised onClick={this.props.onRequestJobs}>Refresh list</Button>
               <Checkbox id="fetchJobs" name="fetchJobs"
                         label="Automatically fetch jobs" inline
                         checked={this.state.fetchJobs}
@@ -79,8 +84,13 @@ class JobStatus extends Component {
                         label="Show completed jobs" inline
                         checked={this.state.showCompleted}
                         onChange={this.checkboxChange.bind(this)}/>
+              <Checkbox id="showDeleteButton" name="showDeleteButton"
+                        label="Show delete button" inline
+                        checked={this.state.showDeleteButton}
+                        onChange={this.checkboxChange.bind(this)}/>
               <FetchState fetchState={this.props.fetchState}/>
-              <JobStatusTable jobs={jobs}/>
+              <JobStatusTable jobs={jobs} showDeleteButton={this.state.showDeleteButton}
+                              onDelete={this.props.onDelete}/>
             </CardText>
           </Card>
         </div>
@@ -92,6 +102,7 @@ class JobStatus extends Component {
 JobStatus.propTypes = {
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
   onRequestJobs: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
   fetchState: PropTypes.shape({
     inFlight: PropTypes.bool.isRequired,
     error: PropTypes.any
@@ -103,7 +114,8 @@ const mapStateToProps = (state) => ({
   fetchState: state.jobs.fetchState
 });
 const mapDispatchToProps = (dispatch) => ({
-  onRequestJobs: () => dispatch(jobsRequested())
+  onRequestJobs: () => dispatch(jobsRequested()),
+  onDelete: (id) => dispatch({type: JOB_DELETE_REQUESTED, payload: {id}})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(JobStatus);

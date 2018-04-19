@@ -155,7 +155,7 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
     }
 
     case JOB_DELETED: {
-      const jobs = removeById(state.jobs, action.payload.id);
+      const jobs = removeById(state.jobs, action.id);
       const uniqueSplits = filterUnique(jobs.filter((job) => job.status === 'completed').reduce(reducer, []));
       return {
         ...state, jobs, uniqueSplits

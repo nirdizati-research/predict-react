@@ -138,7 +138,7 @@ describe('JobsReducer', () => {
   it('removes from list on delete', () => {
     const jobList = [{id: 1, log: 'name'}];
     const state2 = jobs(undefined, jobsRetrieved(jobList));
-    const state3 = jobs(state2, {type: JOB_DELETED, payload: {id: 1}});
+    const state3 = jobs(state2, {type: JOB_DELETED, id: 1});
     expect(state3).toMatchObject({uniqueSplits: [], jobs: []});
   });
 });

@@ -1,6 +1,7 @@
 import {SERVER_URL} from '../constants';
 import jsonAjax from '../JSONAjaxRequest';
 import {
+  JOB_DELETED,
   jobsFailed,
   jobsRetrieved,
   trainingFailed,
@@ -87,5 +88,15 @@ export const postSplit = (payload) => (dispatch) => {
     payload,
     (split) => dispatch(splitSucceeded(split)),
     ({error}) => dispatch(splitFailed(error))
+  );
+};
+
+export const deleteJob = ({id}) => (dispatch) => {
+  jsonAjax(
+    SERVER_URL + `/jobs/${id}`,
+    'DELETE',
+    null,
+    () => dispatch({type: JOB_DELETED, id: id}),
+    ({error}) => {}
   );
 };
