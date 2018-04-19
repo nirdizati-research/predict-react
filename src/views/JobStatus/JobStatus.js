@@ -7,14 +7,15 @@ import {jobsRequested} from '../../actions/JobActions';
 import JobStatusTable from '../../components/JobStatusTable';
 import FetchState from '../../components/FetchState';
 import {jobPropType} from '../../helpers';
-import {SelectionControl} from 'react-md/lib/SelectionControls/index';
+import {Checkbox} from 'react-md/lib/SelectionControls/index';
 
 class JobStatus extends Component {
   constructor() {
     super();
 
     this.state = {
-      showCompleted: false
+      showCompleted: false,
+      fetchJobs: true
     };
   }
 
@@ -25,6 +26,10 @@ class JobStatus extends Component {
       this.props.onRequestJobs();
     }
 
+    this.createInterval();
+  }
+
+  createInterval() {
     const intervalId = setInterval(() => {
       this.props.onRequestJobs();
     }, 10000);
@@ -36,11 +41,19 @@ class JobStatus extends Component {
   }
 
   checkboxChange(_, event) {
-    // const value = event.target.value;
     switch (event.target.name) {
       case 'showCompleted':
         this.setState({showCompleted: !this.state.showCompleted});
         break;
+      case 'fetchJobs': {
+        if (this.state.fetchJobs) {
+          clearInterval(this.state.intervalId);
+        } else {
+          this.createInterval();
+        }
+        this.setState({fetchJobs: !this.state.fetchJobs});
+        break;
+      }
       // no default
     }
   }
@@ -55,14 +68,17 @@ class JobStatus extends Component {
             <CardTitle title="Job status"/>
             <CardText>
               <p>
-                Lots of logs below. Only displays jobs that are not completed.
-                See results on the validation page.
+                Lots of logs below. See job results on the validation page.
               </p>
-              <Button raised onClick={this.props.onRequestJobs} inline>Request current jobs</Button>
-              <SelectionControl id="showCompleted" name="showCompleted"
-                                label="Show completed jobs" inline
-                                type="switch" value={this.state.showCompleted}
-                                onChange={this.checkboxChange.bind(this)}/>
+              <Button raised onClick={this.props.onRequestJobs}>Request jobs</Button>
+              <Checkbox id="fetchJobs" name="fetchJobs"
+                        label="Automatically fetch jobs" inline
+                        checked={this.state.fetchJobs}
+                        onChange={this.checkboxChange.bind(this)}/>
+              <Checkbox id="showCompleted" name="showCompleted"
+                        label="Show completed jobs" inline
+                        checked={this.state.showCompleted}
+                        onChange={this.checkboxChange.bind(this)}/>
               <FetchState fetchState={this.props.fetchState}/>
               <JobStatusTable jobs={jobs}/>
             </CardText>
