@@ -28,6 +28,7 @@ import CheckboxGroup from './training/CheckboxGroup';
 import {splitLabels} from '../helpers';
 import PrefixSelector from './training/PrefixSelector';
 import AdvancedConfiguration from './advanced/AdvancedConfiguration';
+import {classificationMetrics, regressionMetrics} from './advanced/advancedConfig';
 
 const defaultPrefix = 1;
 const defaultThreshold = 0;
@@ -52,6 +53,11 @@ const initialState = (props) => {
     threshold: {
       value: thresholdControls[0].value,
       threshold: defaultThreshold
+    },
+    hyperopt: {
+      use_hyperopt: false,
+      max_evals: 10,
+      performance_metric: 'mse'
     },
     create_models: false,
     add_elapsed_time: true
@@ -138,7 +144,13 @@ class TrainingFormCard extends Component {
   }
 
   onPredictionMethodChange(value) {
-    this.setState({predictionMethod: value, ...initialAdvancedConfiguration()});
+    // Following is a terrible hack for an uncontrolled component
+    /* eslint-disable camelcase */
+    const performance_metric = value === REGRESSION ? regressionMetrics[0].value : classificationMetrics[0].value;
+    this.setState({
+      predictionMethod: value,
+      hyperopt: {...this.state.hyperopt, performance_metric}, ...initialAdvancedConfiguration()
+    });
     this.setState((prevState, _) => {
       return {displayWarning: this.displayWarningCheck(prevState)};
     });
@@ -202,6 +214,7 @@ class TrainingFormCard extends Component {
         methods: methods,
         create_models: this.state.create_models,
         add_elapsed_time: this.state.add_elapsed_time,
+        hyperopt: this.state.hyperopt,
         [`${CLASSIFICATION}.knn`]: this.state[`${CLASSIFICATION}.knn`],
         [`${CLASSIFICATION}.randomForest`]: this.state[`${CLASSIFICATION}.randomForest`],
         [`${CLASSIFICATION}.decisionTree`]: this.state[`${CLASSIFICATION}.decisionTree`],
