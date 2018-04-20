@@ -6,7 +6,7 @@ import {
   FILTER_OPTION_CHANGED,
   FILTER_PREDICTION_METHOD_CHANGED,
   FILTER_PREFIX_LENGTH_CHANGED,
-  FILTER_SPLIT_CHANGED,
+  FILTER_SPLIT_CHANGED, JOB_DELETED,
   JOB_RESULTS_REQUESTED,
   JOBS_FAILED,
   JOBS_REQUESTED,
@@ -103,6 +103,10 @@ const addOrRemoveString = (list, value) => {
   }
 };
 
+const removeById = (list, value) => {
+  return list.filter((val) => val.id !== value);
+};
+
 const prefixSet = (filteredJobs) => [...new Set(filteredJobs.map((job) => job.config.prefix_length))];
 
 const applyFilters = (jobs, splitId, predictionMethod, encodings, clusterings, classification, regression) => {
@@ -139,10 +143,7 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
       const jobs = mergeIncomingJobs(action.payload, state.jobs);
       const uniqueSplits = filterUnique(jobs.filter((job) => job.status === 'completed').reduce(reducer, []));
       return {
-        ...state,
-        fetchState: {inFlight: false},
-        jobs: jobs,
-        uniqueSplits: uniqueSplits
+        ...state, fetchState: {inFlight: false}, jobs, uniqueSplits
       };
     }
 
@@ -150,6 +151,14 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
       return {
         ...state,
         fetchState: {inFlight: false, error: action.payload},
+      };
+    }
+
+    case JOB_DELETED: {
+      const jobs = removeById(state.jobs, action.id);
+      const uniqueSplits = filterUnique(jobs.filter((job) => job.status === 'completed').reduce(reducer, []));
+      return {
+        ...state, jobs, uniqueSplits
       };
     }
     case JOB_RESULTS_REQUESTED: {

@@ -5,7 +5,7 @@ import jobs from '../../reducers/Jobs';
 import {
   FILTER_OPTION_CHANGED,
   FILTER_PREDICTION_METHOD_CHANGED, FILTER_PREFIX_LENGTH_CHANGED,
-  FILTER_SPLIT_CHANGED, jobResultsRequested, jobsFailed, jobsRequested,
+  FILTER_SPLIT_CHANGED, JOB_DELETED, jobResultsRequested, jobsFailed, jobsRequested,
   jobsRetrieved
 } from '../../actions/JobActions';
 import {CLASSIFICATION, NO_CLUSTER, RANDOM_FOREST, REGRESSION, SIMPLE_INDEX} from '../../reference';
@@ -133,6 +133,13 @@ describe('JobsReducer', () => {
     const state = jobs(undefined, jobsRequested());
     const state2 = jobs(state, jobsFailed('error'));
     expect(state2).toMatchObject({fetchState: {inFlight: false, error: 'error'}, jobs: []});
+  });
+
+  it('removes from list on delete', () => {
+    const jobList = [{id: 1, log: 'name'}];
+    const state2 = jobs(undefined, jobsRetrieved(jobList));
+    const state3 = jobs(state2, {type: JOB_DELETED, id: 1});
+    expect(state3).toMatchObject({uniqueSplits: [], jobs: []});
   });
 });
 
