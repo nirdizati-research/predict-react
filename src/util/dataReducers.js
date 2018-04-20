@@ -39,6 +39,22 @@ export const splitToString = (split) => {
   return label;
 };
 
+export const modelsToString = (models) => {
+  return models.map((model) => {
+    return {value: model.id, label: modelToString(model)};
+  });
+};
+
+export const modelToString = (model) => {
+  let label;
+  if (model.type === 'single') {
+    label = `Model #${model.id}, noCluster, ${model.config.encoding}, ${model.config.method}`;
+  } else {
+    label = `Model #${model.id}, Kmeans, ${model.config.encoding}, ${model.config.method}`;
+  }
+  return label;
+};
+
 export const jobToConfigTable = (job) => {
   const createdDate = new Date(job.created_date).toLocaleString();
   const modifiedDate = new Date(job.modified_date).toLocaleString();

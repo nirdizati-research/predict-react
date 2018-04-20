@@ -8,6 +8,7 @@ import JobStatus from './views/JobStatus/JobStatus';
 import Training from './views/Training/Training';
 import Validation from './views/Validation/Validation';
 import Split from './views/Split';
+import Prediction from './views/Prediction/Prediction';
 
 export default (
   <Router history={hashHistory}>
@@ -19,6 +20,7 @@ export default (
       <Route path="jobStatus" name="Job status" component={JobStatus}/>
       <Route path="training" name="Training" component={Training}/>
       <Route path="validation" name="Validation" component={Validation}/>
+      <Route path="prediction" name="Prediction" component={Prediction}/>
     </Route>
   </Router>
 );

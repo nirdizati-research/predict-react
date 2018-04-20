@@ -10,7 +10,9 @@ import {
   JOB_RESULTS_REQUESTED,
   JOBS_FAILED,
   JOBS_REQUESTED,
-  JOBS_RETRIEVED
+  JOBS_RETRIEVED,
+  JOB_RUN_CHANGED,
+  MODEL_CHANGED
 } from '../actions/JobActions';
 import {
   BOOLEAN, COMPLEX, DECISION_TREE, FREQUENCY, KMEANS, KNN, LASSO, LAST_PAYLOAD, LINEAR, NO_CLUSTER, RANDOM_FOREST,
@@ -24,11 +26,17 @@ const initialState = {
   fetchState: {inFlight: false},
   jobs: [],
   filteredJobs: [],
+  jobsrun: [],
+  filteredJobsRun: [],
   uniqueSplits: [],
   predictionMethod: REGRESSION,
   prefixLengths: [],
   selectedPrefixes: [],
-  splitId: -100
+  splitId: -100,
+  logId: -100,
+  naId: -100,
+  regId: -100,
+  classId: -100
 };
 
 const initialFilters = {
@@ -126,6 +134,12 @@ const checkboxChange = (target, state) => {
   return state;
 };
 
+const filterJobRun = (jobsrun, logId, naId, regId, classId) => {
+  return jobsrun.filter((job) => (job.config.log_id === logId) && ((job.config.model_id === naId) ||
+                                                                  (job.config.model_id === regId) ||
+                                                                  (job.config.model_id === classId)));
+};
+
 const jobs = (state = {...initialState, ...initialFilters}, action) => {
   switch (action.type) {
     case JOBS_REQUESTED: {
@@ -137,11 +151,15 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
 
     case JOBS_RETRIEVED: {
       const jobs = mergeIncomingJobs(action.payload, state.jobs);
+      const jobsrun = jobs.filter((job) => (job.config.add_label === false));
+      const filteredJobs = filterJobRun(state.jobsrun,state.logId,state.naId,state.regId,state.classId);
       const uniqueSplits = filterUnique(jobs.filter((job) => job.status === 'completed').reduce(reducer, []));
       return {
         ...state,
         fetchState: {inFlight: false},
         jobs: jobs,
+        jobsrun: jobsrun,
+        filteredJobsRun: filteredJobs,
         uniqueSplits: uniqueSplits
       };
     }
@@ -188,6 +206,28 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
       const filteredJobs = applyFilters(state.jobs, state.splitId, state.predictionMethod, state.encodings, state.clusterings, state.classification, state.regression);
       return {
         ...state, filteredJobs
+      };
+    }
+    case JOB_RUN_CHANGED: {
+      const logId = action.logId;
+      const filteredJobsRun = filterJobRun(state.jobsrun,logId,state.naId,state.regId,state.classId);
+      return {
+        ...state,
+          filteredJobsRun: filteredJobsRun,
+          logId: logId
+      };
+    }
+    case MODEL_CHANGED: {
+      const naId = action.naId;
+      const regId = action.regId;
+      const classId = action.classId;
+      const filteredJobsRun = filterJobRun(state.jobsrun,state.logId,naId,regId,classId);
+      return {
+        ...state,
+          filteredJobsRun: filteredJobsRun,
+          naId: naId,
+          classId: classId,
+          regId: regId
       };
     }
 

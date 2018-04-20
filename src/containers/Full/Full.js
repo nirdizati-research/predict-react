@@ -60,6 +60,12 @@ class Full extends Component {
           active: isActive('/validation', pathname),
           primaryText: 'Validation',
           leftIcon: <FontIcon>insert_chart</FontIcon>,
+        }, {
+          component: Link,
+          to: '/prediction',
+          active: isActive('/prediction', pathname),
+          primaryText: 'Prediction',
+          leftIcon: <FontIcon>donut_large</FontIcon>,
         }]}
       >
         {children ? React.cloneElement(children, {key: pathname}) : null}
