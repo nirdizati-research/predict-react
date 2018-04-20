@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import SelectField from 'react-md/lib/SelectFields';
-import {SelectionControl, SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
+import {Checkbox, SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
 import {Button} from 'react-md/lib/Buttons/index';
 import FetchState from './FetchState';
 import {
@@ -53,7 +53,8 @@ const initialState = (props) => {
       value: thresholdControls[0].value,
       threshold: defaultThreshold
     },
-    create_models: false
+    create_models: false,
+    add_elapsed_time: true
   };
 };
 
@@ -123,7 +124,10 @@ class TrainingFormCard extends Component {
         this.setState({rule: value});
         break;
       case 'create_models':
-        this.setState({create_models: !this.state.create_models});
+        this.setState({create_models: event.target.checked});
+        break;
+      case 'add_elapsed_time':
+        this.setState({add_elapsed_time: event.target.checked});
         break;
       // no default
     }
@@ -197,6 +201,7 @@ class TrainingFormCard extends Component {
         clusterings: this.state.clusterings,
         methods: methods,
         create_models: this.state.create_models,
+        add_elapsed_time: this.state.add_elapsed_time,
         [`${CLASSIFICATION}.knn`]: this.state[`${CLASSIFICATION}.knn`],
         [`${CLASSIFICATION}.randomForest`]: this.state[`${CLASSIFICATION}.randomForest`],
         [`${CLASSIFICATION}.decisionTree`]: this.state[`${CLASSIFICATION}.decisionTree`],
@@ -295,9 +300,13 @@ class TrainingFormCard extends Component {
         <CardText>
           <div className="md-grid md-grid--no-spacing">
             <div className="md-cell md-cell--12">
-              <SelectionControl id="create_models" name="create_models"
+              <Checkbox id="create_models" name="create_models"
                         label="Create and save models for runtime prediction"
-                                type="switch" value={this.state.create_models}
+                        checked={this.state.create_models} inline
+                        onChange={this.checkboxChange.bind(this)}/>
+              <Checkbox id="add_elapsed_time" name="add_elapsed_time"
+                        label="Add elapsed time to encoded log" inline
+                        checked={this.state.add_elapsed_time}
                         onChange={this.checkboxChange.bind(this)}/>
             </div>
             <div className="md-cell md-cell--12">
