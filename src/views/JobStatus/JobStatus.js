@@ -42,12 +42,13 @@ class JobStatus extends Component {
   }
 
   checkboxChange(_, event) {
+    const checked = event.target.checked;
     switch (event.target.name) {
       case 'showCompleted':
-        this.setState({showCompleted: !this.state.showCompleted});
+        this.setState({showCompleted: checked});
         break;
       case 'showDeleteButton':
-        this.setState({showDeleteButton: !this.state.showDeleteButton});
+        this.setState({showDeleteButton: checked});
         break;
       case 'fetchJobs': {
         if (this.state.fetchJobs) {
@@ -55,7 +56,7 @@ class JobStatus extends Component {
         } else {
           this.createInterval();
         }
-        this.setState({fetchJobs: !this.state.fetchJobs});
+        this.setState({fetchJobs: checked});
         break;
       }
       // no default
