@@ -29,7 +29,7 @@ class ClassConfigTable extends PureComponent {
 
   render() {
     const headers = ['id', 'Type', 'Encoding', 'Clustering', 'Method', 'Rule', 'Threshold',
-        'Prefix length', 'Padding', 'Advanced configuration', 'Split'];
+        'Prefix length', 'Padding', 'Create models', 'HyperOpt', 'Advanced configuration', 'Split'];
 
     return (<DataTable baseId="simple-pagination" plain>
       <TableHeader>
@@ -49,6 +49,10 @@ class ClassConfigTable extends PureComponent {
             <TableColumn style={columnStyle} numeric>{job.threshold}</TableColumn>
             <TableColumn style={columnStyle} numeric>{job.prefix_length}</TableColumn>
             <TableColumn style={columnStyle} numeric>{job.padding}</TableColumn>
+            <TableColumn style={columnStyle}>{JSON.stringify(job.create_models, null, 1)}</TableColumn>
+            <TableColumn style={columnStyle}>
+              <pre>{JSON.stringify(job.hyperopt, null, 1)}</pre>
+            </TableColumn>
             <TableColumn style={columnStyle}>
               <pre>{JSON.stringify(job.advanced, null, 1)}</pre>
             </TableColumn>

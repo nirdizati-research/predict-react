@@ -82,6 +82,8 @@ export const jobToValidationTable = (job) => {
       splitName: splitToString(job.split),
       prefix_length: job.config.prefix_length,
       padding: job.config.padding,
+      hyperopt: job.config.hyperopt,
+      create_models: job.config.create_models,
       advanced: job.config[`${REGRESSION}.${job.config.method}`]
     };
   } else {
@@ -96,6 +98,8 @@ export const jobToValidationTable = (job) => {
       rule: job.config.rule,
       threshold: job.config.threshold,
       padding: job.config.padding,
+      hyperopt: job.config.hyperopt,
+      create_models: job.config.create_models,
       advanced: job.config[`${job.type}.${job.config.method}`]
     };
   }

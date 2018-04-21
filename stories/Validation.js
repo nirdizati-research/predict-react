@@ -7,8 +7,6 @@ import ValidationHeaderCard from '../src/components/validation/ValidationHeaderC
 import ConfigTableCard from '../src/components/validation/ConfigTableCard';
 import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../src/reference';
 import ResultWrapper from '../src/components/validation/ResultWrapper';
-import {jobToConfigTable} from '../src/util/dataReducers';
-import PropTypes from 'prop-types';
 
 const splitLabels = [{value: 1, label: 'Split #1'}, {value: 2, label: 'Split #2'}];
 const classJobs = [
@@ -23,6 +21,12 @@ const classJobs = [
       'rule': 'remaining_time',
       'prefix_length': 1,
       'threshold': 'default',
+      'create_models': true,
+      'hyperopt': {
+        'use_hyperopt': true,
+        'max_evals': 100,
+        'performance_metric': 'acc'
+      },
       'classification.randomForest': {
         'n_estimators': 10,
         'criterion': 'gini',
@@ -68,6 +72,12 @@ const classJobs = [
       'rule': 'remaining_time',
       'prefix_length': 3,
       'threshold': 'default',
+      'create_models': true,
+      'hyperopt': {
+        'use_hyperopt': false,
+        'max_evals': 100,
+        'performance_metric': 'acc'
+      },
       'classification.randomForest': {
         'n_estimators': 10,
         'criterion': 'gini',
@@ -113,6 +123,12 @@ const regJobs = [
       'encoding': 'simpleIndex',
       'clustering': 'noCluster',
       'method': 'linear',
+      'create_models': false,
+      'hyperopt': {
+        'use_hyperopt': false,
+        'max_evals': 100,
+        'performance_metric': 'mse'
+      },
       'regression.linear': {
         'fit_intercept': true,
         'normalize': false,
@@ -151,6 +167,12 @@ const nextActivityJobs = [
       'rule': 'remaining_time',
       'prefix_length': 1,
       'threshold': 'default',
+      'hyperopt': {
+        'use_hyperopt': true,
+        'max_evals': 100,
+        'performance_metric': 'acc'
+      },
+      'create_models': true,
       'nextActivity.randomForest': {
         'n_estimators': 10,
         'criterion': 'gini',

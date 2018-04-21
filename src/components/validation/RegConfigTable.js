@@ -8,6 +8,7 @@ import {columnStyle} from '../../reference';
 import {jobFlatPropType} from '../../helpers';
 
 /* eslint-disable camelcase */
+/* eslint-disable max-len */
 class RegConfigTable extends PureComponent {
   constructor(props) {
     super(props);
@@ -27,7 +28,8 @@ class RegConfigTable extends PureComponent {
 
   render() {
     const headers =
-      ['id', 'Type', 'Encoding', 'Clustering', 'Method', 'Prefix length', 'Padding', 'Advanced configuration', 'Split'];
+      ['id', 'Type', 'Encoding', 'Clustering', 'Method', 'Prefix length',
+        'Padding', 'Create models', 'HyperOpt', 'Advanced configuration', 'Split'];
     return (<DataTable baseId="simple-pagination" plain>
       <TableHeader>
         <TableRow>
@@ -36,7 +38,7 @@ class RegConfigTable extends PureComponent {
       </TableHeader>
       <TableBody>
         {this.state.slicedData.map(
-          ({id, encoding, clustering, method, splitName, prefix_length, type, advanced, padding}) => (
+          ({id, encoding, clustering, method, splitName, prefix_length, type, advanced, padding, hyperopt, create_models}) => (
             <TableRow key={id}>
               <TableColumn style={columnStyle}>{id}</TableColumn>
               <TableColumn style={columnStyle}>{type}</TableColumn>
@@ -45,6 +47,10 @@ class RegConfigTable extends PureComponent {
               <TableColumn style={columnStyle}>{method}</TableColumn>
               <TableColumn style={columnStyle} numeric>{prefix_length}</TableColumn>
               <TableColumn style={columnStyle} numeric>{padding}</TableColumn>
+              <TableColumn style={columnStyle}>{JSON.stringify(create_models, null, 1)}</TableColumn>
+              <TableColumn style={columnStyle}>
+                <pre>{JSON.stringify(hyperopt, null, 1)}</pre>
+              </TableColumn>
               <TableColumn style={columnStyle}>
                 <pre>{JSON.stringify(advanced, null, 1)}</pre>
               </TableColumn>

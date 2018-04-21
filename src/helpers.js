@@ -5,6 +5,13 @@ import PropTypes from 'prop-types';
  * Created by tonis.kasekamp on 10/9/17.
  */
 
+
+const hyperOptShape = PropTypes.shape({
+  use_hyperopt: PropTypes.bool.isRequired,
+  max_evals: PropTypes.number.isRequired,
+  performance_metric: PropTypes.string.isRequired
+});
+
 export const jobPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   status: PropTypes.string.isRequired,
@@ -14,6 +21,7 @@ export const jobPropType = PropTypes.shape({
     prefix_length: PropTypes.number.isRequired,
     padding: PropTypes.string,
     threshold: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    hyperopt: PropTypes.objectOf(hyperOptShape),
     method: PropTypes.string.isRequired,
     clustering: PropTypes.string,
     encoding: PropTypes.string,
@@ -45,6 +53,7 @@ export const jobFlatPropType = PropTypes.shape({
   rule: PropTypes.string,
   padding: PropTypes.string,
   advanced: PropTypes.objectOf(PropTypes.any).isRequired,
+  hyperopt: PropTypes.shape(hyperOptShape),
   threshold: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 }).isRequired;
 
