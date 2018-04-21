@@ -10,6 +10,7 @@ import ClassificationRandomForest from '../src/components/advanced/Classificatio
 import RegressionRandomForest from '../src/components/advanced/RegressionRandomForest';
 import RegressionLasso from '../src/components/advanced/RegressionLasso';
 import RegressionLinear from '../src/components/advanced/RegressionLinear';
+import HyperOpt from '../src/components/advanced/HyperOpt';
 
 storiesOf('Advanced configuration', module)
   .add('classification', () => {
@@ -40,6 +41,22 @@ storiesOf('Advanced configuration', module)
               <RegressionRandomForest onChange={console.log}/>
               <RegressionLasso onChange={console.log}/>
               <RegressionLinear onChange={console.log}/>
+            </Card>
+          </div>
+        </div>
+      );
+    }
+  )
+  .add('other', () => {
+      return (
+        <div className="md-grid">
+          <div className="md-cell md-cell--12">
+            <Card className="md-block-centered">
+              <CardText>
+                Some text above
+              </CardText>
+              <HyperOpt onChange={console.log} predictionMethod={CLASSIFICATION}/>
+              <HyperOpt onChange={console.log} predictionMethod={REGRESSION}/>
             </Card>
           </div>
         </div>

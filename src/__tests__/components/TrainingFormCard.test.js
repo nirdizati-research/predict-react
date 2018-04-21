@@ -27,6 +27,11 @@ const regressionPayload = {
     'create_models': false,
     'add_elapsed_time': true,
     'methods': ['linear'],
+    'hyperopt': {
+      'use_hyperopt': false,
+      'max_evals': 10,
+      'performance_metric': 'mse'
+    },
     'classification.decisionTree': {},
     'classification.knn': {},
     'classification.randomForest': {},
@@ -50,6 +55,11 @@ const classificationPayload = {
       'padding': 'no_padding',
       'prefix_length': 1,
       'type': 'only',
+    },
+    'hyperopt': {
+      'use_hyperopt': false,
+      'max_evals': 10,
+      'performance_metric': 'acc'
     },
     'create_models': false,
     'add_elapsed_time': true,
@@ -78,6 +88,11 @@ const nextActivityPayload = {
       'padding': 'no_padding',
       'prefix_length': 1,
       'type': 'only',
+    },
+    'hyperopt': {
+      'use_hyperopt': false,
+      'max_evals': 10,
+      'performance_metric': 'acc'
     },
     'create_models': false,
     'add_elapsed_time': true,

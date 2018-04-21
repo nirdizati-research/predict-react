@@ -9,6 +9,7 @@ import ClassificationRandomForest from './ClassificationRandomForest';
 import RegressionRandomForest from './RegressionRandomForest';
 import RegressionLasso from './RegressionLasso';
 import RegressionLinear from './RegressionLinear';
+import HyperOpt from './HyperOpt';
 
 const knnUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html';
 const decisionTreeUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html';
@@ -18,6 +19,7 @@ const classRandomForest =
 const regressorRF = 'http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html';
 const regressorLasso = 'http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Lasso.html';
 const regressorLinear = 'http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html';
+const hyperUrl = 'http://hyperopt.github.io/hyperopt/';
 const AdvancedConfiguration = (props) => {
   const makeExpander = (panelLabel, url, component) => {
     return <GenericConfiguration key={panelLabel} panelLabel={panelLabel}
@@ -63,6 +65,9 @@ const AdvancedConfiguration = (props) => {
     }
   );
 
+  const hyperOpt = makeExpander('Hyperparameter Optimization', hyperUrl,
+    <HyperOpt onChange={props.onChange} predictionMethod={props.predictionMethod} {...props}/>);
+
   const configs = () => {
     if (props.predictionMethod === REGRESSION) {
       return configMapper(props.regression, regressionConfigMap);
@@ -71,7 +76,7 @@ const AdvancedConfiguration = (props) => {
     }
   };
 
-  return <ExpansionList>{configs()}</ExpansionList>;
+  return <ExpansionList>{hyperOpt}{configs()}</ExpansionList>;
 };
 
 AdvancedConfiguration.propTypes = {
