@@ -165,10 +165,6 @@ class TrainingFormCard extends Component {
     this.setState({threshold});
   }
 
-  onPrefixChange(prefix) {
-    this.setState({prefix: prefix});
-  }
-
   displayWarningCheck(prevState) {
     switch (prevState.predictionMethod) {
       case REGRESSION:
@@ -293,7 +289,7 @@ class TrainingFormCard extends Component {
                                      onChange={this.checkboxChange.bind(this)} controls={encodingMethods}
                                      value={this.state.encodings.join(',')} controlStyle={groupStyle}/>
             </div>
-            <PrefixSelector prefix={this.state.prefix} onChange={this.onPrefixChange.bind(this)}
+            <PrefixSelector prefix={this.state.prefix} onChange={this.advanceConfigChange.bind(this)}
                             maxEventsInLog={this.props.maxEventsInLog}/>
             <div className="md-cell md-cell--3">
               <SelectionControlGroup type="checkbox" label="Clustering methods" name="clusterings" id="clusterings"
