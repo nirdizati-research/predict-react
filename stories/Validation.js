@@ -127,7 +127,7 @@ const regJobs = [
       'hyperopt': {
         'use_hyperopt': false,
         'max_evals': 100,
-        'performance_metric': 'mse'
+        'performance_metric': 'rmse'
       },
       'regression.linear': {
         'fit_intercept': true,

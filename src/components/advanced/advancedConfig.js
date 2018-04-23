@@ -11,44 +11,10 @@ export const classificationKnnWeights = [
   }
 ];
 
-export const classificationDecisionTreeCriterion = [
-  {
-    value: 'gini',
-    label: 'gini'
-  },
-  {
-    value: 'entropy',
-    label: 'entropy'
-  }
-];
-
-export const classificationDecisionTreeSplitter = [
-  {
-    value: 'best',
-    label: 'best'
-  },
-  {
-    value: 'random',
-    label: 'random'
-  }
-];
-
-
-export const regressionRFCriterion = [
-  {
-    value: 'mse',
-    label: 'mse'
-  },
-  {
-    value: 'mae',
-    label: 'mae'
-  }
-];
-
 export const regressionMetrics = [
   {
-    value: 'mse',
-    label: 'mse'
+    value: 'rmse',
+    label: 'rmse'
   },
   {
     value: 'mae',

@@ -4,8 +4,7 @@ import {Checkbox} from 'react-md/lib/index';
 
 const defaults = {
   'fit_intercept': true,
-  'normalize': false,
-  'copy_X': true
+  'normalize': false
 };
 /* eslint-disable no-invalid-this */
 const RegressionLinear = (props) => {
@@ -29,17 +28,8 @@ const RegressionLinear = (props) => {
     defaultChecked={defaults.normalize}
     onChange={props.onChange.bind(this, {methodConfig, key: 'normalize'})}
   />;
-  const copyX = <Checkbox
-    key="copy_X"
-    id="copy_X"
-    name="copy_X"
-    label="copy_X"
-    className="md-cell md-cell--3"
-    defaultChecked={defaults.copy_X}
-    onChange={props.onChange.bind(this, {methodConfig, key: 'copy_X'})}
-  />;
 
-  return [fitIntercept, normalize, copyX];
+  return [fitIntercept, normalize];
 };
 
 RegressionLinear.propTypes = {
