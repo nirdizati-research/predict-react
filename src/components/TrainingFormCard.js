@@ -57,7 +57,7 @@ const initialState = (props) => {
     hyperopt: {
       use_hyperopt: false,
       max_evals: 10,
-      performance_metric: 'mse'
+      performance_metric: 'rmse'
     },
     create_models: false,
     add_elapsed_time: true
@@ -86,7 +86,7 @@ class TrainingFormCard extends Component {
     this.state = {...initialState(this.props), ...initialAdvancedConfiguration()};
   }
 
-  advanceConfigChange({methodConfig, key, isNumber, isFloat}, value) {
+  advanceConfigChange({methodConfig, key, isNumber, isFloat, maybeNumber}, value) {
     // Only the changed values are put in config. Otherwise merged with config in backend
     // classification.knn weights distance
     const config = this.state[methodConfig];
@@ -95,6 +95,11 @@ class TrainingFormCard extends Component {
       value = parseInt(value, 10);
     } else if (isFloat) {
       value = parseFloat(value);
+    } else if (maybeNumber) {
+      const parsed = parseFloat(value);
+      if (!isNaN(parsed)) {
+        value = parsed;
+      }
     }
     config[key] = value;
     this.setState({[methodConfig]: config});

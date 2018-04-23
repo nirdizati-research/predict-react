@@ -30,7 +30,7 @@ const regressionPayload = {
     'hyperopt': {
       'use_hyperopt': false,
       'max_evals': 10,
-      'performance_metric': 'mse'
+      'performance_metric': 'rmse'
     },
     'classification.decisionTree': {},
     'classification.knn': {},
