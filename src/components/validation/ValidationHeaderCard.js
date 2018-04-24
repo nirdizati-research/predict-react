@@ -8,9 +8,11 @@ import PropTypes from 'prop-types';
 import FetchState from './../FetchState';
 import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
 import {
+  CLASSIFICATION,
   classificationMethods,
   clustering,
   encoding,
+  LABELLING,
   predictionMethods,
   REGRESSION,
   regressionMethods
@@ -37,15 +39,29 @@ const ValidationHeaderCard = (props) => {
     props.methodChange(value);
   };
 
-  // terrible use of if else shorthand
-  const methods = props.predictionMethod === REGRESSION ?
-    <SelectionControlGroup type="checkbox" controls={regressionMethods} id="regression" name='regression'
-                           label="Regression methods" onChange={props.filterOptionChange} inline
-                           value={props.filterOptions.regression.join(',')}/> :
-    <SelectionControlGroup type="checkbox" controls={classificationMethods} id="classification" name='classification'
-                           label="Classification methods" onChange={props.filterOptionChange} inline
-                           value={props.filterOptions.classification.join(',')}/>;
+  const methods = () => {
+    if (props.predictionMethod === REGRESSION) {
+      return <SelectionControlGroup type="checkbox" controls={regressionMethods} id="regression" name='regression'
+                                    label="Regression methods" onChange={props.filterOptionChange} inline
+                                    value={props.filterOptions.regression.join(',')}/>;
+    } else if (props.predictionMethod === CLASSIFICATION) {
+      return <SelectionControlGroup type="checkbox" controls={classificationMethods} id="classification"
+                                    name='classification'
+                                    label="Classification methods" onChange={props.filterOptionChange} inline
+                                    value={props.filterOptions.classification.join(',')}/>;
+    } else {
+      return null;
+    }
+  };
 
+  const encodings = props.predictionMethod !== LABELLING ?
+    <SelectionControlGroup type="checkbox" label="Encoding methods" name="encodings" id="encodings"
+                           onChange={props.filterOptionChange} controls={encoding} inline
+                           value={props.filterOptions.encodings.join(',')}/> : null;
+  const clusterings = props.predictionMethod !== LABELLING ?
+    <SelectionControlGroup type="checkbox" label="Clustering methods" name="clusterings" id="clusterings"
+                           onChange={props.filterOptionChange} controls={clustering} inline
+                           value={props.filterOptions.clusterings.join(',')}/> : null;
   return <Card className="md-block-centered">
     <CardTitle title="Validation selection">
       <SelectField
@@ -63,15 +79,11 @@ const ValidationHeaderCard = (props) => {
           <SelectionControlGroup id="prediction" name="prediction" type="radio" label="Prediction method"
                                  inline controls={predictionMethods}
                                  onChange={localMethodChange}/>
-          <SelectionControlGroup type="checkbox" label="Encoding methods" name="encodings" id="encodings"
-                                 onChange={props.filterOptionChange} controls={encoding} inline
-                                 value={props.filterOptions.encodings.join(',')}/>
+          {encodings}
         </div>
         <div className="md-cell md-cell--6">
-          <SelectionControlGroup type="checkbox" label="Clustering methods" name="clusterings" id="clusterings"
-                                 onChange={props.filterOptionChange} controls={clustering} inline
-                                 value={props.filterOptions.clusterings.join(',')}/>
-          {methods}
+          {clusterings}
+          {methods()}
         </div>
       </div>
       <div className="md-cell">

@@ -6,14 +6,26 @@ import {
   FILTER_OPTION_CHANGED,
   FILTER_PREDICTION_METHOD_CHANGED,
   FILTER_PREFIX_LENGTH_CHANGED,
-  FILTER_SPLIT_CHANGED, JOB_DELETED,
+  FILTER_SPLIT_CHANGED,
+  JOB_DELETED,
   JOB_RESULTS_REQUESTED,
   JOBS_FAILED,
   JOBS_REQUESTED,
   JOBS_RETRIEVED
 } from '../actions/JobActions';
 import {
-  BOOLEAN, COMPLEX, DECISION_TREE, FREQUENCY, KMEANS, KNN, LASSO, LAST_PAYLOAD, LINEAR, NO_CLUSTER, RANDOM_FOREST,
+  BOOLEAN,
+  COMPLEX,
+  DECISION_TREE,
+  FREQUENCY,
+  KMEANS,
+  KNN,
+  LABELLING,
+  LASSO,
+  LAST_PAYLOAD,
+  LINEAR,
+  NO_CLUSTER,
+  RANDOM_FOREST,
   REGRESSION,
   SIMPLE_INDEX
 } from '../reference';
@@ -110,6 +122,9 @@ const removeById = (list, value) => {
 const prefixSet = (filteredJobs) => [...new Set(filteredJobs.map((job) => job.config.prefix_length))];
 
 const applyFilters = (jobs, splitId, predictionMethod, encodings, clusterings, classification, regression) => {
+  if (predictionMethod === LABELLING) {
+    return jobs.filter(filterBySplit(splitId)).filter(filterByMethod(predictionMethod));
+  }
   return jobs.filter(filterBySplit(splitId)).filter(filterByMethod(predictionMethod))
     .filter(filterByAllElse(encodings, clusterings, classification, regression, predictionMethod));
 };

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import ConfigTableCard from '../../components/validation/ConfigTableCard';
-import {CLASSIFICATION, REGRESSION} from '../../reference';
+import {CLASSIFICATION, LABELLING, REGRESSION} from '../../reference';
 import {
   FILTER_OPTION_CHANGED,
   FILTER_PREDICTION_METHOD_CHANGED,
@@ -39,6 +39,8 @@ class Validation extends Component {
     const splitLabels = splitsToString(this.props.uniqueSplits);
     const prefixStrings = this.props.prefixLengths.map((p) => p + '');
 
+    const results = this.props.predictionMethod === LABELLING ? null :
+      <ResultWrapper jobs={this.props.jobs} predictionMethod={this.props.predictionMethod}/>;
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
@@ -55,7 +57,7 @@ class Validation extends Component {
           <ConfigTableCard jobs={this.props.jobs}
                            predictionMethod={this.props.predictionMethod}/>
         </div>
-        <ResultWrapper jobs={this.props.jobs} predictionMethod={this.props.predictionMethod}/>
+        {results}
       </div>
     );
   }
@@ -72,7 +74,7 @@ Validation.propTypes = {
   onPrefixChange: PropTypes.func.isRequired,
   filterOptionChange: PropTypes.func.isRequired,
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION]).isRequired,
+  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, LABELLING]).isRequired,
   splitId: PropTypes.number.isRequired,
   uniqueSplits: PropTypes.arrayOf(PropTypes.any).isRequired,
   prefixLengths: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
