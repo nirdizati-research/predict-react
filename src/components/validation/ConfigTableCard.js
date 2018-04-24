@@ -21,9 +21,16 @@ class ConfigTableCard extends Component {
       case CLASSIFICATION:
         return <ClassConfigTable jobs={flatJobs}/>;
       case LABELLING:
-        return <LabelConfigTable jobs={flatJobs}/>;
+        return <LabelConfigTable jobs={flatJobs} onClick={this.props.onClick}/>;
       // no default
     }
+  }
+
+  getHelpText() {
+    if (this.props.predictionMethod === LABELLING) {
+      return <p>Click on the row to see the label distribution results below the table.</p>;
+    }
+    return null;
   }
 
   render() {
@@ -31,6 +38,7 @@ class ConfigTableCard extends Component {
     return <Card className="md-block-centered">
       <CardTitle title="Configuration overview"/>
       <CardText>
+        {this.getHelpText()}
         {table}
       </CardText>
     </Card>;
@@ -39,6 +47,7 @@ class ConfigTableCard extends Component {
 
 ConfigTableCard.propTypes = {
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, LABELLING]).isRequired
+  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, LABELLING]).isRequired,
+  onClick: PropTypes.func.isRequired
 };
 export default ConfigTableCard;

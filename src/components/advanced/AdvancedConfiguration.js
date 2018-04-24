@@ -64,7 +64,6 @@ const AdvancedConfiguration = (props) => {
 
 
   const configs = () => {
-
     if (props.predictionMethod === REGRESSION) {
       return [hyperOpt(), ...configMapper(props.regression, regressionConfigMap)];
     } else if (props.predictionMethod === CLASSIFICATION) {

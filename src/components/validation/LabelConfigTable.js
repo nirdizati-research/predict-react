@@ -35,7 +35,7 @@ class LabelConfigTable extends PureComponent {
       </TableHeader>
       <TableBody>
         {this.state.slicedData.map((job) => (
-          <TableRow key={job.id}>
+          <TableRow key={job.id} onClick={this.props.onClick.bind(this, job.id)}>
             <TableColumn style={columnStyle}>{job.id}</TableColumn>
             <TableColumn style={columnStyle}>{job.encoding}</TableColumn>
             <TableColumn style={columnStyle}>{job.label.type}</TableColumn>
@@ -58,7 +58,8 @@ class LabelConfigTable extends PureComponent {
 }
 
 LabelConfigTable.propTypes = {
-  jobs: PropTypes.arrayOf(labelJobFlat).isRequired
+  jobs: PropTypes.arrayOf(labelJobFlat).isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 export default LabelConfigTable;

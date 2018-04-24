@@ -14,8 +14,17 @@ import ValidationHeaderCard from '../../components/validation/ValidationHeaderCa
 import ResultWrapper from '../../components/validation/ResultWrapper';
 import {jobPropType} from '../../helpers';
 import {splitsToString} from '../../util/dataReducers';
+import BarChartCard from '../../components/chart/BarChartCard';
 
 class Validation extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      clickedJobId: null
+    };
+  }
+
   onChangePrefix(prefixLength) {
     this.props.onPrefixChange(prefixLength);
   }
@@ -34,12 +43,31 @@ class Validation extends Component {
     this.props.onMethodChange(method);
   }
 
+  onJobClick(id) {
+    this.setState({clickedJobId: id});
+  }
+
   render() {
     // Only unique splits for selector
     const splitLabels = splitsToString(this.props.uniqueSplits);
     const prefixStrings = this.props.prefixLengths.map((p) => p + '');
 
-    const results = this.props.predictionMethod === LABELLING ? null :
+    const validationChart = () => {
+      if (this.state.clickedJobId === null) {
+        return;
+      }
+      const jobs = this.props.jobs.filter((job) => job.id === this.state.clickedJobId);
+      if (jobs.length === 0) {
+        return;
+      }
+      return <div className="md-cell md-cell--12">
+        <BarChartCard data={jobs[0].result}
+                      cardTitle={`Labels of labelling job ${jobs[0].id}`}
+                      hTitle="Label count"
+                      chartTitle="Label"/></div>;
+    };
+
+    const results = this.props.predictionMethod === LABELLING ? validationChart() :
       <ResultWrapper jobs={this.props.jobs} predictionMethod={this.props.predictionMethod}/>;
     return (
       <div className="md-grid">
@@ -55,7 +83,7 @@ class Validation extends Component {
                                 labelTypeChange={this.props.labelTypeChange}/>
         </div>
         <div className="md-cell md-cell--12">
-          <ConfigTableCard jobs={this.props.jobs}
+          <ConfigTableCard jobs={this.props.jobs} onClick={this.onJobClick.bind(this)}
                            predictionMethod={this.props.predictionMethod}/>
         </div>
         {results}
