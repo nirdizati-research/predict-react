@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {TextField} from 'react-md/lib/index';
-import {CLASSIFICATION, REGRESSION} from '../../reference';
 
 const defaults = {
   'n_estimators': 10,
@@ -10,7 +9,7 @@ const defaults = {
 };
 /* eslint-disable no-invalid-this */
 const ClassificationRandomForest = (props) => {
-  const methodConfig = `${props.predictionMethod}.decisionTree`;
+  const methodConfig = `classification.decisionTree`;
 
   const nEstimators = <TextField
     key="n_estimators"
@@ -46,7 +45,6 @@ const ClassificationRandomForest = (props) => {
 };
 
 ClassificationRandomForest.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION]).isRequired
+  onChange: PropTypes.func.isRequired
 };
 export default ClassificationRandomForest;

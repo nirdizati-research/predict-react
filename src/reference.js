@@ -96,11 +96,18 @@ export const encoding = [
 const predictions = [
   {
     label: 'Remaining time',
-    value: REGRESSION
+    value: REGRESSION,
+    message: 'Regression'
   },
   {
     label: 'Outcome',
-    value: CLASSIFICATION
+    value: CLASSIFICATION,
+    message: 'Classification'
+  },
+  {
+    label: 'Labelling',
+    value: LABELLING,
+    message: 'Label distribution for classification'
   }
 ];
 

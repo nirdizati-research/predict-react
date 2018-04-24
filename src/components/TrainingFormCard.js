@@ -13,6 +13,7 @@ import {
   classificationMethods,
   clusteringMethods,
   encodingMethods,
+  LABELLING,
   paddingControls,
   predictionMethods,
   prefixTypeControls,
@@ -182,8 +183,23 @@ class TrainingFormCard extends Component {
       case CLASSIFICATION:
         this.props.onSubmit(this.getWithMethods(this.state.classification));
         break;
+      case LABELLING:
+        this.props.onSubmit(this.getLabellingPayload());
+        break;
       // no default
     }
+  }
+
+  getLabellingPayload() {
+    return {
+      type: this.state.predictionMethod,
+      split_id: this.state.split_id,
+      config: {
+        prefix: this.state.prefix,
+        encodings: this.state.encodings,
+        label: this.state.label,
+      }
+    };
   }
 
   getWithMethods(methods) {
@@ -229,6 +245,11 @@ class TrainingFormCard extends Component {
         <CheckboxGroup controls={classificationMethods} id="classification" label="Classification methods"
                        onChange={this.checkboxChange.bind(this)}
                        value={this.state.classification.join(',')}/> : null;
+    const createModels = this.state.predictionMethod !== LABELLING ?
+      <Checkbox id="create_models" name="create_models"
+                label="Create and save models for runtime prediction"
+                checked={this.state.create_models} inline
+                onChange={this.checkboxChange.bind(this)}/> : null;
     return (
       <Card className="md-block-centered">
         <CardTitle title="Training">
@@ -272,10 +293,7 @@ class TrainingFormCard extends Component {
         <CardText>
           <div className="md-grid md-grid--no-spacing">
             <div className="md-cell md-cell--12">
-              <Checkbox id="create_models" name="create_models"
-                        label="Create and save models for runtime prediction"
-                        checked={this.state.create_models} inline
-                        onChange={this.checkboxChange.bind(this)}/>
+              {createModels}
             </div>
             <div className="md-cell md-cell--12">
               {warning}
