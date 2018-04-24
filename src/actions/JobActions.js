@@ -9,9 +9,6 @@ export const jobsRequested = createPayloadForwardingAction(JOBS_REQUESTED);
 export const JOBS_RETRIEVED = 'JOBS_RETRIEVED';
 export const jobsRetrieved = createPayloadForwardingAction(JOBS_RETRIEVED);
 
-export const JOB_RUN_CHANGED = 'JOB_RUN_CHANGED';
-export const jobRunChanged = createPayloadForwardingAction(JOB_RUN_CHANGED);
-
 export const JOBS_FAILED = 'JOBS_FAILED';
 export const jobsFailed = createPayloadForwardingAction(JOBS_FAILED);
 
@@ -24,20 +21,8 @@ export const trainingSucceeded = createPayloadForwardingAction(TRAINING_SUCCEEDE
 export const TRAINING_FAILED = 'TRAINING_FAILED';
 export const trainingFailed = createPayloadForwardingAction(TRAINING_FAILED);
 
-export const PREDICTION_SUBMITTED = 'PREDICTION_SUBMITTED';
-export const submitPrediction = createPayloadForwardingAction(PREDICTION_SUBMITTED);
-
-export const PREDICTION_SUCCEEDED = 'PREDICTION_SUCCEEDED';
-export const predictionSucceeded = createPayloadForwardingAction(PREDICTION_SUCCEEDED);
-
-export const PREDICTION_FAILED = 'PREDICTION_FAILED';
-export const predictionFailed = createPayloadForwardingAction(PREDICTION_FAILED);
-
 export const JOB_RESULTS_REQUESTED = 'JOB_RESULTS_REQUESTED';
 export const jobResultsRequested = createPayloadForwardingAction(JOB_RESULTS_REQUESTED);
-
-export const MODEL_CHANGED = 'MODEL_CHANGED';
-export const modelChanged = createPayloadForwardingAction(MODEL_CHANGED);
 
 export const FILTER_SPLIT_CHANGED = 'FILTER_SPLIT_CHANGED';
 export const FILTER_PREDICTION_METHOD_CHANGED = 'FILTER_PREDICTION_METHOD_CHANGED';

@@ -1,6 +1,3 @@
-/**
- * Created by tonis.kasekamp on 10/17/17.
- */
 import React from 'react';
 import {Card, CardTitle} from 'react-md/lib/Cards/index';
 import SelectField from 'react-md/lib/SelectFields';
@@ -31,10 +28,6 @@ const PredictionHeaderCard = (props) => {
 PredictionHeaderCard.propTypes = {
   modelsLabel: modelsLabel,
   title: PropTypes.string.isRequired,
-  /*fetchState: PropTypes.shape({
-    inFlight: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  }).isRequired,*/
   modelChange: PropTypes.func.isRequired,
 };
 export default PredictionHeaderCard;

@@ -1,21 +1,20 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {REGRESSION} from '../../reference';
 import {
   modelsRequested, REG_MODEL_CHANGED, CLAS_MODEL_CHANGED,
-   NA_MODEL_CHANGED,
+   NA_MODEL_CHANGED, MODEL_CHANGED
 } from '../../actions/ModelActions';
 import {logListRequested, LOG_CHANGED} from '../../actions/LogActions';
-import {submitPrediction, JOB_RUN_CHANGED, jobsRequested,
-  MODEL_CHANGED} from '../../actions/JobActions';
+import {jobsRequested} from '../../actions/JobActions';
+import {submitPrediction, JOB_RUN_CHANGED,} from '../../actions/RuntimeActions';
 import PredictionHeaderCard from '../../components/prediction/PredictionHeaderCard';
-import LogSelector from '../../components/prediction/LogSelector'
-import ResultWrapper from '../../components/prediction/ResultWrapper';
-import {jobRunPropType, modelPropType} from '../../helpers';
+import LogSelector from '../../components/prediction/LogSelector';
+import ResultTable from '../../components/prediction/ResultTable';
+import {jobPropType, modelPropType, logPropType} from '../../helpers';
 import Button from 'react-md/lib/Buttons/Button';
 import {modelsToString} from '../../util/dataReducers';
-import Card from 'react-md/lib/Cards/index';
+import {Card, CardText} from 'react-md/lib/Cards/index';
 
 class Prediction extends Component {
   onChangeLog(logId) {
@@ -25,17 +24,23 @@ class Prediction extends Component {
 
   onRegChangeModel(modelId) {
     this.props.onRegModelChange(modelId);
-    this.props.onModelChange(modelId);
+    const naId=this.props.naModelId;
+    const classId=this.props.classModelId;
+    const regId=modelId;
+    this.props.onModelChange(naId,regId,classId);
   }
 
   onClasChangeModel(modelId) {
     this.props.onClasModelChange(modelId);
-    this.props.onModelChange(modelId);
+    const naId=this.props.naModelId;
+    const classId=modelId;
+    const regId=this.props.regModelId;
+    this.props.onModelChange(naId,regId,classId);
   }
 
   onNAChangeModel(modelId) {
     this.props.onNAModelChange(modelId);
-    const naId=this.props.naModelId;
+    const naId=modelId;
     const classId=this.props.classModelId;
     const regId=this.props.regModelId;
     this.props.onModelChange(naId,regId,classId);
@@ -49,18 +54,23 @@ class Prediction extends Component {
     }
   }
 
-  onChangeMethod(method) {
-    this.props.onMethodChange(method);
+  requestJobsRun() {
+    this.props.onRequestJobs();
+  }
+
+  onReset() {
+    window.location.reload()
   }
 
   Submit() {
     //const payload={log_id:this.props.logId, model_id:this.props.regModelId}
     const logId = this.props.logId;
     const regId = this.props.regModelId;
-    const classId = this.props.clasModelId;
+    const classId = this.props.classModelId;
     const naId = this.props.naModelId;
     const payload = logId + '&' + regId + '&' + classId + '&' + naId;
     this.props.onSubmitPrediction(payload);
+    this.props.onRequestJobs();
   }
 
   render() {
@@ -89,19 +99,19 @@ class Prediction extends Component {
                                 fetchState={this.props.modfetchState}
                                 modelChange={this.onNAChangeModel.bind(this)}/>
           <Card className="md-full-width">
-            <Button type="submit" flat primary onClick={this.Submit.bind(this)}>Calculate</Button>
+          <Button raised primary swapTheming onClick={this.Submit.bind(this)}
+                  className="buttons__group">Submit</Button>
+          <Button raised secondary swapTheming onClick={this.onReset.bind(this)}
+                  className="buttons__group">Reset</Button>
           </Card>
         </div>
-        <div>
-          <ResultWrapper jobsrun={this.props.jobsrun} predictionMethod={REGRESSION}/>
-        </div>
-
+        <CardText>
+          <ResultTable jobs={this.props.jobsrun} onRequestJobs={this.requestJobsRun.bind(this)}/>
+        </CardText>
       </div>
     );
   }
 }
-
-//<ResultWrapper jobs={this.props.jobs} predictionMethod={this.props.predictionMethod}/>
 
 Prediction.propTypes = {
   logfetchState: PropTypes.shape({
@@ -122,13 +132,13 @@ Prediction.propTypes = {
   onSubmitPrediction: PropTypes.func.isRequired,
   onRequestJobs: PropTypes.func.isRequired,
   models: PropTypes.arrayOf(modelPropType).isRequired,
-  logs: PropTypes.arrayOf(PropTypes.any).isRequired,
-  jobsrun: PropTypes.arrayOf(jobRunPropType).isRequired,
+  logs: PropTypes.arrayOf(logPropType).isRequired,
+  jobsrun: PropTypes.arrayOf(jobPropType).isRequired,
   regressionModels: PropTypes.arrayOf(modelPropType).isRequired,
   classificationModels: PropTypes.arrayOf(modelPropType).isRequired,
   nextActivityModels: PropTypes.arrayOf(modelPropType).isRequired,
   regModelId: PropTypes.number.isRequired,
-  clasModelId: PropTypes.number.isRequired,
+  classModelId: PropTypes.number.isRequired,
   naModelId: PropTypes.number.isRequired,
   logId: PropTypes.number.isRequired,
 };
@@ -141,7 +151,7 @@ const mapStateToProps = (state) => ({
   classificationModels: state.models.classificationModels,
   nextActivityModels: state.models.nextActivityModels,
   regModelId: state.models.regselected,
-  clasModelId: state.models.classelected,
+  classModelId: state.models.classelected,
   naModelId: state.models.naselected,
   logId: state.models.logId,
   modfetchState: state.models.fetchState,
@@ -155,7 +165,7 @@ const mapDispatchToProps = (dispatch) => ({
   onRegModelChange: (modelId) => dispatch({type: REG_MODEL_CHANGED, modelId}),
   onClasModelChange: (modelId) => dispatch({type: CLAS_MODEL_CHANGED, modelId}),
   onNAModelChange: (modelId) => dispatch({type: NA_MODEL_CHANGED, modelId}),
-  onModelChange: (modelId) => dispatch({type: MODEL_CHANGED, modelId}),
+  onModelChange: (naId, regId, classId) => dispatch({type: MODEL_CHANGED, naId, regId, classId}),
   onLogChange: (logId) => dispatch({type: LOG_CHANGED, logId}),
   onChangeJRun: (logId) => dispatch({type: JOB_RUN_CHANGED, logId}),
   onSubmitPrediction: (payload) => dispatch(submitPrediction({payload}))

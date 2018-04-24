@@ -1,6 +1,3 @@
-/**
- * Created by Tõnis Kasekamp on 18.12.2017.
- */
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';

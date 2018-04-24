@@ -21,4 +21,7 @@ export const clasModelChanged = createPayloadForwardingAction(CLAS_MODEL_CHANGED
 export const NA_MODEL_CHANGED = 'NA_MODEL_CHANGED';
 export const nAModelChanged = createPayloadForwardingAction(NA_MODEL_CHANGED);
 
+export const MODEL_CHANGED = 'MODEL_CHANGED';
+export const modelChanged = createPayloadForwardingAction(MODEL_CHANGED);
+
 export const FILTER_METHOD_CHANGED = 'FILTER_PREDICTION_METHOD_CHANGED';

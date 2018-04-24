@@ -10,10 +10,10 @@ import {
   JOB_RESULTS_REQUESTED,
   JOBS_FAILED,
   JOBS_REQUESTED,
-  JOBS_RETRIEVED,
-  JOB_RUN_CHANGED,
-  MODEL_CHANGED
+  JOBS_RETRIEVED
 } from '../actions/JobActions';
+import {MODEL_CHANGED} from '../actions/ModelActions';
+import {JOB_RUN_CHANGED} from '../actions/RuntimeActions';
 import {
   BOOLEAN, COMPLEX, DECISION_TREE, FREQUENCY, KMEANS, KNN, LASSO, LAST_PAYLOAD, LINEAR, NO_CLUSTER, RANDOM_FOREST,
   REGRESSION,
@@ -34,9 +34,9 @@ const initialState = {
   selectedPrefixes: [],
   splitId: -100,
   logId: -100,
-  naId: -100,
-  regId: -100,
-  classId: -100
+  naId: 0,
+  regId: 0,
+  classId: 0,
 };
 
 const initialFilters = {
@@ -151,15 +151,15 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
 
     case JOBS_RETRIEVED: {
       const jobs = mergeIncomingJobs(action.payload, state.jobs);
-      const jobsrun = jobs.filter((job) => (job.config.add_label === false));
-      const filteredJobs = filterJobRun(state.jobsrun,state.logId,state.naId,state.regId,state.classId);
+      const jobsrun = jobs.filter((job) => (job.config.add_label === false) && (job.status='completed'));
+      const filteredJobsRun = filterJobRun(state.jobsrun,state.logId,state.naId,state.regId,state.classId);
       const uniqueSplits = filterUnique(jobs.filter((job) => job.status === 'completed').reduce(reducer, []));
       return {
         ...state,
         fetchState: {inFlight: false},
         jobs: jobs,
         jobsrun: jobsrun,
-        filteredJobsRun: filteredJobs,
+        filteredJobsRun: filteredJobsRun,
         uniqueSplits: uniqueSplits
       };
     }
@@ -227,7 +227,7 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
           filteredJobsRun: filteredJobsRun,
           naId: naId,
           classId: classId,
-          regId: regId
+          regId: regId,
       };
     }
 

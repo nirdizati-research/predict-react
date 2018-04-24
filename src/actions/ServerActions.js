@@ -4,13 +4,12 @@ import {
   jobsFailed,
   jobsRetrieved,
   trainingFailed,
-  trainingSucceeded,
-  predictionFailed,
-  predictionSucceeded
+  trainingSucceeded
 } from './JobActions';
 import {changeVisibleLog, logInfoFailed, logInfoRetrieved, logListFailed, logListsRetrieved} from './LogActions';
 import {splitFailed, splitsFailed, splitsRetrieved, splitSucceeded} from './SplitActions';
 import {modelsFailed, modelsRetrieved} from './ModelActions';
+import {predictionFailed, predictionSucceeded} from './RuntimeActions';
 
 export const getJobs = () => (dispatch) => {
   jsonAjax(
