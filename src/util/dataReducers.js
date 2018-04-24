@@ -105,6 +105,7 @@ export const jobToValidationTable = (job) => {
   } else {
     return {
       id: job.id,
+      encoding: job.config.encoding,
       splitName: splitToString(job.split),
       prefix_length: job.config.prefix_length,
       padding: job.config.padding,

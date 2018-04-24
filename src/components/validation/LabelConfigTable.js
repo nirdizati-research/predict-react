@@ -25,7 +25,7 @@ class LabelConfigTable extends PureComponent {
   }
 
   render() {
-    const headers = ['id', 'Label type', 'Threshold type', 'Threshold', 'Attribute name', 'Prefix length', 'Padding', 'Split', 'Result'];
+    const headers = ['id', 'Encoding', 'Label type', 'Threshold type', 'Threshold', 'Attribute name', 'Prefix length', 'Padding', 'Split', 'Result'];
 
     return (<DataTable baseId="simple-pagination" plain>
       <TableHeader>
@@ -37,6 +37,7 @@ class LabelConfigTable extends PureComponent {
         {this.state.slicedData.map((job) => (
           <TableRow key={job.id}>
             <TableColumn style={columnStyle}>{job.id}</TableColumn>
+            <TableColumn style={columnStyle}>{job.encoding}</TableColumn>
             <TableColumn style={columnStyle}>{job.label.type}</TableColumn>
             <TableColumn style={columnStyle}>{job.label.threshold_type}</TableColumn>
             <TableColumn style={columnStyle} numeric>{job.label.threshold}</TableColumn>

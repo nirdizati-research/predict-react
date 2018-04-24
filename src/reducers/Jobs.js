@@ -96,6 +96,10 @@ const filterByAllElse = (encodings, clusterings, classification, regression, pre
     return firstHalf && classification.includes(job.config.method);
   }
 };
+
+const filterByEncoding = (encodings) => (job) => {
+  return encodings.includes(job.config.encoding);
+};
 const addOrRemove = (list, value) => {
   value = parseInt(value, 10);
   const index = list.indexOf(value);
@@ -123,7 +127,7 @@ const prefixSet = (filteredJobs) => [...new Set(filteredJobs.map((job) => job.co
 
 const applyFilters = (jobs, splitId, predictionMethod, encodings, clusterings, classification, regression) => {
   if (predictionMethod === LABELLING) {
-    return jobs.filter(filterBySplit(splitId)).filter(filterByMethod(predictionMethod));
+    return jobs.filter(filterBySplit(splitId)).filter(filterByMethod(predictionMethod)).filter(filterByEncoding(encodings));
   }
   return jobs.filter(filterBySplit(splitId)).filter(filterByMethod(predictionMethod))
     .filter(filterByAllElse(encodings, clusterings, classification, regression, predictionMethod));

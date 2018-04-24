@@ -20,7 +20,6 @@ import {
   REGRESSION,
   regressionMethods,
   REMAINING_TIME,
-  SIMPLE_INDEX,
   THRESHOLD_MEAN,
 } from '../reference';
 import CheckboxGroup from './training/CheckboxGroup';
@@ -197,7 +196,7 @@ class TrainingFormCard extends Component {
       split_id: this.state.split_id,
       config: {
         prefix: this.state.prefix,
-        encodings: [SIMPLE_INDEX], // all labels for encodings are the same
+        encodings: this.state.encodings,
         label: this.state.label,
       }
     };
@@ -257,11 +256,10 @@ class TrainingFormCard extends Component {
                                onChange={this.checkboxChange.bind(this)} controls={clusteringMethods}
                                value={this.state.clusterings.join(',')} controlStyle={groupStyle}/>
       </div> : null;
-    const encodingFragment = this.state.predictionMethod !== LABELLING ?
-      <SelectionControlGroup type="checkbox" label="Encoding methods" name="encodings" id="encodings"
-                             onChange={this.checkboxChange.bind(this)} controls={encodingMethods}
-                             value={this.state.encodings.join(',')} controlStyle={groupStyle}/> :
-      <p>All encodings label the same way. Using simpleIndex encoding method</p>;
+    const encodingFragment = <SelectionControlGroup type="checkbox" label="Encoding methods" name="encodings"
+                                                    id="encodings"
+                                                    onChange={this.checkboxChange.bind(this)} controls={encodingMethods}
+                                                    value={this.state.encodings.join(',')} controlStyle={groupStyle}/>;
     return (
       <Card className="md-block-centered">
         <CardTitle title="Training">
