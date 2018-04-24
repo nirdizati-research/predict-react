@@ -4,11 +4,16 @@
 import jobs from '../../reducers/Jobs';
 import {
   FILTER_OPTION_CHANGED,
-  FILTER_PREDICTION_METHOD_CHANGED, FILTER_PREFIX_LENGTH_CHANGED,
-  FILTER_SPLIT_CHANGED, JOB_DELETED, jobResultsRequested, jobsFailed, jobsRequested,
+  FILTER_PREDICTION_METHOD_CHANGED,
+  FILTER_PREFIX_LENGTH_CHANGED,
+  FILTER_SPLIT_CHANGED,
+  JOB_DELETED,
+  jobResultsRequested,
+  jobsFailed,
+  jobsRequested,
   jobsRetrieved
 } from '../../actions/JobActions';
-import {CLASSIFICATION, NO_CLUSTER, RANDOM_FOREST, REGRESSION, SIMPLE_INDEX} from '../../reference';
+import {CLASSIFICATION, NO_CLUSTER, RANDOM_FOREST, REGRESSION, REMAINING_TIME, SIMPLE_INDEX} from '../../reference';
 
 const jobList = [
   {
@@ -19,6 +24,7 @@ const jobList = [
       prefix_length: 2,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
+      label: {type: REMAINING_TIME},
       clustering: NO_CLUSTER
     },
     split: {
@@ -33,6 +39,7 @@ const jobList = [
       prefix_length: 2,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
+      label: {type: REMAINING_TIME},
       clustering: NO_CLUSTER
     },
     split: {
@@ -47,6 +54,7 @@ const jobList = [
       prefix_length: 1,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
+      label: {type: REMAINING_TIME},
       clustering: NO_CLUSTER
     },
     split: {
@@ -61,6 +69,7 @@ const jobList = [
       prefix_length: 5,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
+      label: {type: REMAINING_TIME},
       clustering: NO_CLUSTER
     },
     split: {
@@ -75,6 +84,7 @@ const jobList = [
       prefix_length: 4,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
+      label: {type: REMAINING_TIME},
       clustering: NO_CLUSTER
     },
     split: {
@@ -89,6 +99,7 @@ const jobList = [
       prefix_length: 2,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
+      label: {type: REMAINING_TIME},
       clustering: NO_CLUSTER
     },
     split: {

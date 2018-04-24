@@ -13,6 +13,7 @@ import {
   clustering,
   encoding,
   LABELLING,
+  labelTypeControls,
   predictionMethods,
   REGRESSION,
   regressionMethods
@@ -62,6 +63,17 @@ const ValidationHeaderCard = (props) => {
     <SelectionControlGroup type="checkbox" label="Clustering methods" name="clusterings" id="clusterings"
                            onChange={props.filterOptionChange} controls={clustering} inline
                            value={props.filterOptions.clusterings.join(',')}/> : null;
+
+  const labelType = <SelectField
+    key="type"
+    id="type"
+    label="Label type"
+    className="md-cell md-cell--3"
+    menuItems={labelTypeControls}
+    position={SelectField.Positions.BELOW}
+    onChange={props.labelTypeChange}
+    value={props.filterOptions.labelType}
+  />;
   return <Card className="md-block-centered">
     <CardTitle title="Validation selection">
       <SelectField
@@ -80,6 +92,7 @@ const ValidationHeaderCard = (props) => {
                                  inline controls={predictionMethods}
                                  onChange={localMethodChange}/>
           {encodings}
+          {labelType}
         </div>
         <div className="md-cell md-cell--6">
           {clusterings}
@@ -108,11 +121,13 @@ ValidationHeaderCard.propTypes = {
   selectedPrefixes: PropTypes.arrayOf(PropTypes.number).isRequired,
   selectedSplitId: PropTypes.number.isRequired,
   filterOptionChange: PropTypes.func.isRequired,
+  labelTypeChange: PropTypes.func.isRequired,
   filterOptions: PropTypes.shape({
     encodings: PropTypes.arrayOf(PropTypes.string).isRequired,
     clusterings: PropTypes.arrayOf(PropTypes.string).isRequired,
     classification: PropTypes.arrayOf(PropTypes.string).isRequired,
     regression: PropTypes.arrayOf(PropTypes.string).isRequired,
+    labelType: PropTypes.string.isRequired
   }).isRequired,
   predictionMethod: PropTypes.string.isRequired
 };

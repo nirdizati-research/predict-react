@@ -51,7 +51,8 @@ class Validation extends Component {
                                 selectedPrefixes={this.props.selectedPrefixes}
                                 prefixChange={this.onChangePrefix.bind(this)}
                                 selectedSplitId={this.props.splitId} filterOptionChange={this.props.filterOptionChange}
-                                filterOptions={this.props.filterOptions}/>
+                                filterOptions={this.props.filterOptions}
+                                labelTypeChange={this.props.labelTypeChange}/>
         </div>
         <div className="md-cell md-cell--12">
           <ConfigTableCard jobs={this.props.jobs}
@@ -73,6 +74,7 @@ Validation.propTypes = {
   onMethodChange: PropTypes.func.isRequired,
   onPrefixChange: PropTypes.func.isRequired,
   filterOptionChange: PropTypes.func.isRequired,
+  labelTypeChange: PropTypes.func.isRequired,
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
   predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, LABELLING]).isRequired,
   splitId: PropTypes.number.isRequired,
@@ -84,6 +86,7 @@ Validation.propTypes = {
     clusterings: PropTypes.arrayOf(PropTypes.string).isRequired,
     classification: PropTypes.arrayOf(PropTypes.string).isRequired,
     regression: PropTypes.arrayOf(PropTypes.string).isRequired,
+    labelType: PropTypes.string.isRequired
   }).isRequired,
 };
 
@@ -95,11 +98,12 @@ const mapStateToProps = (state) => ({
   predictionMethod: state.jobs.predictionMethod,
   prefixLengths: state.jobs.prefixLengths,
   selectedPrefixes: state.jobs.selectedPrefixes,
-  filterOptions: (({encodings, clusterings, classification, regression}) => ({
+  filterOptions: (({encodings, clusterings, classification, regression, labelType}) => ({
     encodings,
     clusterings,
     classification,
-    regression
+    regression,
+    labelType
   }))(state.jobs)
 });
 
@@ -108,6 +112,10 @@ const mapDispatchToProps = (dispatch) => ({
   filterOptionChange: (_, event) => dispatch({
     type: FILTER_OPTION_CHANGED,
     payload: {name: event.target.name, value: event.target.value}
+  }),
+  labelTypeChange: (value) => dispatch({
+    type: FILTER_OPTION_CHANGED,
+    payload: {name: 'labelType', value: value}
   }),
   onSplitChange: (splitId) => dispatch({type: FILTER_SPLIT_CHANGED, splitId}),
   onMethodChange: (method) => dispatch({type: FILTER_PREDICTION_METHOD_CHANGED, method}),
