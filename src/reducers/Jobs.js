@@ -6,6 +6,7 @@ import {
   FILTER_OPTION_CHANGED,
   FILTER_PREDICTION_METHOD_CHANGED,
   FILTER_PREFIX_LENGTH_CHANGED,
+  FILTER_REMAINING_TIME_CHANGED,
   FILTER_SPLIT_CHANGED,
   JOB_DELETED,
   JOB_RESULTS_REQUESTED,
@@ -224,6 +225,15 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
       const filteredJobs = applyFilters(state.jobs, state.splitId, state.predictionMethod, state.encodings, state.clusterings, state.classification, state.regression, state.labelType);
       return {
         ...state, filteredJobs
+      };
+    }
+
+    case FILTER_REMAINING_TIME_CHANGED: {
+      const labelType = action.payload.value;
+      const filteredJobs = applyFilters(state.jobs, state.splitId, state.predictionMethod, state.encodings, state.clusterings, state.classification, state.regression, labelType);
+      const prefixLengths = prefixSet(filteredJobs);
+      return {
+        ...state, filteredJobs, prefixLengths, labelType, selectedPrefixes: prefixLengths
       };
     }
 
