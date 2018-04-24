@@ -6,6 +6,7 @@ import React from 'react';
 
 export const CLASSIFICATION = 'classification';
 export const REGRESSION = 'regression';
+export const LABELLING = 'labelling';
 
 export const SPLIT_SINGLE = 'single';
 export const SPLIT_DOUBLE = 'double';
