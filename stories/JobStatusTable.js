@@ -5,6 +5,7 @@ import React from 'react';
 import {storiesOf} from '@storybook/react';
 import JobStatusTable from '../src/components/JobStatusTable';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
+import {label1} from './Advanced';
 
 const jobs = [
   {
@@ -16,7 +17,7 @@ const jobs = [
       'method': 'randomForest',
       'encoding': 'simpleIndex',
       'prefix_length': 1,
-      'label': {},
+      'label': label1,
       'hyperopt': {
         'use_hyperopt': true,
         'max_evals': 100,
@@ -52,7 +53,7 @@ const jobs = [
       'encoding': 'simpleIndex',
       'clustering': 'noCluster',
       'method': 'randomForest',
-      'label': {},
+      'label': label1,
       'hyperopt': {
         'use_hyperopt': true,
         'max_evals': 100,

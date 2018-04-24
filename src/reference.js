@@ -200,7 +200,7 @@ const prefixTypes = [
 ];
 
 // Makes things for Selection Controls
-const controlCreator = (optMap) => {
+export const controlCreator = (optMap) => {
   return optMap.map((opt) => {
     return {
       key: opt.value,

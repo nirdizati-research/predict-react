@@ -5,7 +5,7 @@ import TrainingFormCard from '../../components/TrainingFormCard';
 import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
 import {Button} from 'react-md/lib/Buttons/index';
 import CheckboxGroup from '../../components/training/CheckboxGroup';
-import {ExpansionPanel, SelectField} from 'react-md';
+import {SelectField} from 'react-md';
 import {CLASSIFICATION, REGRESSION, REMAINING_TIME, THRESHOLD_MEAN} from '../../reference';
 
 const fetchState = {inFlight: false};
@@ -15,7 +15,7 @@ const onSplitChange = jest.fn();
 
 const label = {
   type: REMAINING_TIME,
-  attribute_name: null,
+  attribute_name: '',
   threshold_type: THRESHOLD_MEAN,
   threshold: 0,
   add_remaining_time: false,
@@ -48,40 +48,11 @@ const regressionPayload = {
     'regression.randomForest': {},
   }
 };
-
-const classificationPayload = {
-  'type': 'classification',
-  'split_id': 1,
-  'config': {
-    'clusterings': ['noCluster'],
-    'encodings': ['simpleIndex'],
-    'methods': ['knn'],
-    'prefix': {
-      'padding': 'no_padding',
-      'prefix_length': 1,
-      'type': 'only',
-    },
-    'hyperopt': {
-      'use_hyperopt': false,
-      'max_evals': 10,
-      'performance_metric': 'acc'
-    },
-    'label': label,
-    'create_models': false,
-    'rule': 'elapsed_time',
-    'threshold': 'default',
-    'classification.decisionTree': {},
-    'classification.knn': {},
-    'classification.randomForest': {},
-    'regression.lasso': {},
-    'regression.linear': {},
-    'regression.randomForest': {},
-  }
-};
 const shallowElement = shallow(<TrainingFormCard fetchState={fetchState} splitLabels={splitLabels} maxEventsInLog={10}
-                                                 onSubmit={onSubmit} onSplitChange={onSplitChange}/>);
+                                                 onSubmit={onSubmit} onSplitChange={onSplitChange}
+                                                 traceAttributes={[]}/>);
 const element = mount(<TrainingFormCard fetchState={fetchState} splitLabels={splitLabels} onSubmit={onSubmit}
-                                        onSplitChange={onSplitChange} maxEventsInLog={10}/>);
+                                        onSplitChange={onSplitChange} maxEventsInLog={10} traceAttributes={[]}/>);
 describe('TrainingFormCard', () => {
   afterEach(() => {
     onSubmit.mockClear();

@@ -52,7 +52,8 @@ export const log = {
       '2011-01-05': 2,
       '2011-01-24': 1
     },
-    'maxEventsInLog': 13
+    'maxEventsInLog': 13,
+    'traceAttributes': []
   }
 };
 storiesOf('LogMetricsCard', module)

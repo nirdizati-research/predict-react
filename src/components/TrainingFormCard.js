@@ -22,7 +22,7 @@ import {
   THRESHOLD_MEAN,
 } from '../reference';
 import CheckboxGroup from './training/CheckboxGroup';
-import {splitLabels} from '../helpers';
+import {splitLabels, traceAttributeShape} from '../helpers';
 import PrefixSelector from './training/PrefixSelector';
 import AdvancedConfiguration from './advanced/AdvancedConfiguration';
 import {classificationMetrics, regressionMetrics} from './advanced/advancedConfig';
@@ -45,7 +45,7 @@ const initialState = (props) => {
     },
     label: {
       type: REMAINING_TIME,
-      attribute_name: null,
+      attribute_name: '',
       threshold_type: THRESHOLD_MEAN,
       threshold: 0,
       add_remaining_time: false,
@@ -266,6 +266,7 @@ class TrainingFormCard extends Component {
         </CardText>
         <AdvancedConfiguration classification={this.state.classification} regression={this.state.regression}
                                onChange={this.advanceConfigChange.bind(this)} label={this.state.label}
+                               traceAttributes={this.props.traceAttributes}
                                predictionMethod={this.state.predictionMethod}/>
 
         <CardText>
@@ -299,7 +300,8 @@ TrainingFormCard.propTypes = {
   }).isRequired,
   onSubmit: PropTypes.func.isRequired,
   onSplitChange: PropTypes.func.isRequired,
-  maxEventsInLog: PropTypes.number.isRequired
+  maxEventsInLog: PropTypes.number.isRequired,
+  traceAttributes: PropTypes.arrayOf(PropTypes.shape(traceAttributeShape)).isRequired
 };
 
 export default TrainingFormCard;

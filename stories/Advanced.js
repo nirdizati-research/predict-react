@@ -22,6 +22,29 @@ export const label1 = {
   add_elapsed_time: false,
 };
 
+export const traceAttributes = [
+  {
+    'name': 'creator',
+    'type': 'string',
+    'example': 'Fluxicon Nitro'
+  },
+  {
+    'name': 'another',
+    'type': 'string',
+    'example': 'Fluxicon Nitro'
+  },
+  {
+    'name': 'numbers',
+    'type': 'number',
+    'example': '345'
+  },
+  {
+    'name': 'amount',
+    'type': 'number',
+    'example': '2355'
+  }
+];
+
 storiesOf('Advanced configuration', module)
   .add('classification', () => {
       return (
@@ -65,7 +88,8 @@ storiesOf('Advanced configuration', module)
               <CardText>
                 Labelling
               </CardText>
-              <Labelling onChange={console.log} label={label1}/>
+              <Labelling onChange={console.log} label={label1} traceAttributes={traceAttributes}/>
+              <Labelling onChange={console.log} label={label1} traceAttributes={[]}/>
             </Card>
           </div>
           <div className="md-cell md-cell--12">
@@ -90,7 +114,7 @@ storiesOf('Advanced configuration', module)
               <CardText>
                 Some text above
               </CardText>
-              <AdvancedConfiguration predictionMethod={CLASSIFICATION} label={label1}
+              <AdvancedConfiguration predictionMethod={CLASSIFICATION} label={label1} traceAttributes={[]}
                                      classification={['knn', 'decisionTree', 'randomForest']}
                                      regression={[]} onChange={console.log}/>
             </Card>
@@ -103,6 +127,7 @@ storiesOf('Advanced configuration', module)
                 Some text above
               </CardText>
               <AdvancedConfiguration predictionMethod={REGRESSION} classification={[]} label={label1}
+                                     traceAttributes={[]}
                                      regression={['randomForest', 'lasso', 'linear']} onChange={console.log}/>
             </Card>
           </div>

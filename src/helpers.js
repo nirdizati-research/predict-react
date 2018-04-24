@@ -21,6 +21,12 @@ const hyperOptShape = {
   performance_metric: PropTypes.string.isRequired
 };
 
+export const traceAttributeShape = {
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  example: PropTypes.string.isRequired
+};
+
 export const labelPropType = {
   type: PropTypes.oneOf([NEXT_ACTIVITY, REMAINING_TIME, ATTRIBUTE_NUMBER, ATTRIBUTE_STRING]).isRequired,
   attribute_name: PropTypes.string,
@@ -85,6 +91,7 @@ export const logPropType = PropTypes.shape({
     events: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
     resources: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
     newTraces: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
+    traceAttributes: PropTypes.arrayOf(PropTypes.shape(traceAttributeShape)).isRequired,
     maxEventsInLog: PropTypes.number.isRequired,
   }).isRequired
 });

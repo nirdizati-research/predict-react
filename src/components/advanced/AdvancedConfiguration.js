@@ -10,7 +10,7 @@ import RegressionRandomForest from './RegressionRandomForest';
 import RegressionLasso from './RegressionLasso';
 import RegressionLinear from './RegressionLinear';
 import HyperOpt from './HyperOpt';
-import {labelPropType} from '../../helpers';
+import {labelPropType, traceAttributeShape} from '../../helpers';
 import Labelling from './Labelling';
 
 const knnUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html';
@@ -82,6 +82,7 @@ AdvancedConfiguration.propTypes = {
   regression: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.shape(labelPropType).isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION]).isRequired
+  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION]).isRequired,
+  traceAttributes: PropTypes.arrayOf(PropTypes.shape(traceAttributeShape)).isRequired
 };
 export default AdvancedConfiguration;
