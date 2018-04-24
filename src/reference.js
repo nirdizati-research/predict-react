@@ -6,6 +6,7 @@ import React from 'react';
 
 export const CLASSIFICATION = 'classification';
 export const REGRESSION = 'regression';
+export const LABELLING = 'labelling';
 
 export const SPLIT_SINGLE = 'single';
 export const SPLIT_DOUBLE = 'double';
@@ -95,11 +96,18 @@ export const encoding = [
 const predictions = [
   {
     label: 'Remaining time',
-    value: REGRESSION
+    value: REGRESSION,
+    message: 'Regression'
   },
   {
     label: 'Outcome',
-    value: CLASSIFICATION
+    value: CLASSIFICATION,
+    message: 'Classification'
+  },
+  {
+    label: 'Labelling',
+    value: LABELLING,
+    message: 'Label distribution for classification'
   }
 ];
 

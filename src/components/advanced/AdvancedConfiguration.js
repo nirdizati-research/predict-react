@@ -1,5 +1,5 @@
 import React from 'react';
-import {CLASSIFICATION, REGRESSION} from '../../reference';
+import {CLASSIFICATION, LABELLING, REGRESSION} from '../../reference';
 import PropTypes from 'prop-types';
 import ClassificationKnn from './ClassificationKnn';
 import ClassificationDecisionTree from './ClassificationDecisionTree';
@@ -31,14 +31,11 @@ const AdvancedConfiguration = (props) => {
 
   const classConfigMap = {
     'classification.knn': makeExpander('KNeighborsClassifier', knnUrl, <ClassificationKnn
-      onChange={props.onChange}
-      predictionMethod={CLASSIFICATION}/>),
+      onChange={props.onChange}/>),
     'classification.decisionTree': makeExpander('DecisionTreeClassifier', decisionTreeUrl,
-      <ClassificationDecisionTree onChange={props.onChange}
-                                  predictionMethod={CLASSIFICATION} {...props}/>),
+      <ClassificationDecisionTree onChange={props.onChange} {...props}/>),
     'classification.randomForest': makeExpander('RandomForestClassifier', classRandomForest,
-      <ClassificationRandomForest onChange={props.onChange}
-                                  predictionMethod={CLASSIFICATION} {...props}/>)
+      <ClassificationRandomForest onChange={props.onChange} {...props}/>)
   };
 
   const regressionConfigMap = {
@@ -58,8 +55,8 @@ const AdvancedConfiguration = (props) => {
     }
   );
 
-  const hyperOpt = makeExpander('Hyperparameter Optimization', hyperUrl,
-    <HyperOpt onChange={props.onChange} predictionMethod={props.predictionMethod} {...props}/>);
+  const hyperOpt = () => (makeExpander('Hyperparameter Optimization', hyperUrl,
+    <HyperOpt onChange={props.onChange} predictionMethod={props.predictionMethod} {...props}/>));
 
 
   const label = makeExpander('Labelling', '',
@@ -68,13 +65,15 @@ const AdvancedConfiguration = (props) => {
 
   const configs = () => {
     if (props.predictionMethod === REGRESSION) {
-      return configMapper(props.regression, regressionConfigMap);
+      return [hyperOpt(), ...configMapper(props.regression, regressionConfigMap)];
+    } else if (props.predictionMethod === CLASSIFICATION) {
+      return [hyperOpt(), ...configMapper(props.classification, classConfigMap)];
     } else {
-      return configMapper(props.classification, classConfigMap);
+      return [];
     }
   };
 
-  return <ExpansionList>{[label, hyperOpt, ...configs()]}</ExpansionList>;
+  return <ExpansionList>{[label, ...configs()]}</ExpansionList>;
 };
 
 AdvancedConfiguration.propTypes = {
@@ -82,7 +81,7 @@ AdvancedConfiguration.propTypes = {
   regression: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.shape(labelPropType).isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION]).isRequired,
+  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, LABELLING]).isRequired,
   traceAttributes: PropTypes.arrayOf(PropTypes.shape(traceAttributeShape)).isRequired
 };
 export default AdvancedConfiguration;

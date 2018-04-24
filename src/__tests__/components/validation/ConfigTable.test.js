@@ -73,7 +73,7 @@ const classJobs = [{
 }];
 
 describe('ConfigTableCard', () => {
-  const element = shallow(<ConfigTableCard jobs={[]} predictionMethod={CLASSIFICATION}/>);
+  const element = shallow(<ConfigTableCard jobs={[]} predictionMethod={CLASSIFICATION} onClick={jest.fn()}/>);
   it('renders', () => {
     expect(element).toBeDefined();
   });

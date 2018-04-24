@@ -79,6 +79,39 @@ const jobs = [
       'training_log': null
     },
     'error': ''
+  },
+  {
+    'id': 52,
+    'created_date': '2017-12-05T16:13:40.278339Z',
+    'modified_date': '2017-12-05T16:13:40.457762Z',
+    'config': {
+      'prefix_length': 1,
+      'encoding': 'simpleIndex',
+      'label': label1,
+      'hyperopt': {
+        'use_hyperopt': true,
+        'max_evals': 100,
+        'performance_metric': 'acc'
+      },
+    },
+    'status': 'completed',
+    'result': {
+      'true': 34,
+      'false': 434
+    },
+    'type': 'labelling',
+    'split': {
+      'id': 1,
+      'config': {},
+      'original_log': {
+        'id': 1,
+        'name': 'general_example.xes'
+      },
+      'type': 'single',
+      'test_log': null,
+      'training_log': null
+    },
+    'error': ''
   }
 ];
 

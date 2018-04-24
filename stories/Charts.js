@@ -128,6 +128,12 @@ storiesOf('Charts', module)
                         chartTitle="Events"/>
         </div>
         <div className="md-cell md-cell--12">
+          <BarChartCard data={{'true': 343, 'false': 3434}}
+                        cardTitle="Lablels"
+                        hTitle="Number of Executionsasdad"
+                        chartTitle="asdasfd"/>
+        </div>
+        <div className="md-cell md-cell--12">
           <BarChartCard fetchState={fetchState}
                         data={eventsInTrace}
                         cardTitle="Number of events in trace"

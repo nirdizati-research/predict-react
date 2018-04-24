@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {TextField} from 'react-md/lib/index';
-import {CLASSIFICATION, REGRESSION} from '../../reference';
 
 const defaults = {
   'max_depth': null,
@@ -10,7 +9,7 @@ const defaults = {
 };
 /* eslint-disable no-invalid-this */
 const ClassificationDecisionTree = (props) => {
-  const methodConfig = `${props.predictionMethod}.decisionTree`;
+  const methodConfig = `classification.decisionTree`;
 
   const maxDepth = <TextField
     key="max_depth"
@@ -49,7 +48,6 @@ const ClassificationDecisionTree = (props) => {
 };
 
 ClassificationDecisionTree.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION]).isRequired
+  onChange: PropTypes.func.isRequired
 };
 export default ClassificationDecisionTree;

@@ -1,7 +1,7 @@
 /**
  * Created by Tõnis Kasekamp on 18.12.2017.
  */
-import {REGRESSION, SPLIT_SINGLE} from '../reference';
+import {CLASSIFICATION, REGRESSION, SPLIT_SINGLE} from '../reference';
 
 // TODO use this in split table
 export const normalizeSplits = (splits) => {
@@ -87,7 +87,7 @@ export const jobToValidationTable = (job) => {
       create_models: job.config.create_models,
       advanced: job.config[`${REGRESSION}.${job.config.method}`]
     };
-  } else {
+  } else if (job.type === CLASSIFICATION) {
     return {
       id: job.id,
       type: job.type,
@@ -101,6 +101,16 @@ export const jobToValidationTable = (job) => {
       label: job.config.label,
       create_models: job.config.create_models,
       advanced: job.config[`${job.type}.${job.config.method}`]
+    };
+  } else {
+    return {
+      id: job.id,
+      encoding: job.config.encoding,
+      splitName: splitToString(job.split),
+      prefix_length: job.config.prefix_length,
+      padding: job.config.padding,
+      label: job.config.label,
+      result: job.result
     };
   }
 };

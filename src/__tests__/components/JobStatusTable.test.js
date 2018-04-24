@@ -20,6 +20,7 @@ describe('JobStatusTable', () => {
       config: {
         'prefix_length': 1,
         'method': 'method',
+        'encoding': 'simple_index',
         'padding': 'no_padding',
         'label': label1,
         'hyperopt': {

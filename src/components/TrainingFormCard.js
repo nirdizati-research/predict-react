@@ -13,6 +13,7 @@ import {
   classificationMethods,
   clusteringMethods,
   encodingMethods,
+  LABELLING,
   paddingControls,
   predictionMethods,
   prefixTypeControls,
@@ -182,8 +183,23 @@ class TrainingFormCard extends Component {
       case CLASSIFICATION:
         this.props.onSubmit(this.getWithMethods(this.state.classification));
         break;
+      case LABELLING:
+        this.props.onSubmit(this.getLabellingPayload());
+        break;
       // no default
     }
+  }
+
+  getLabellingPayload() {
+    return {
+      type: this.state.predictionMethod,
+      split_id: this.state.split_id,
+      config: {
+        prefix: this.state.prefix,
+        encodings: this.state.encodings,
+        label: this.state.label,
+      }
+    };
   }
 
   getWithMethods(methods) {
@@ -229,6 +245,21 @@ class TrainingFormCard extends Component {
         <CheckboxGroup controls={classificationMethods} id="classification" label="Classification methods"
                        onChange={this.checkboxChange.bind(this)}
                        value={this.state.classification.join(',')}/> : null;
+    const createModels = this.state.predictionMethod !== LABELLING ?
+      <Checkbox id="create_models" name="create_models"
+                label="Create and save models for runtime prediction"
+                checked={this.state.create_models} inline
+                onChange={this.checkboxChange.bind(this)}/> : null;
+    const clusteringFragment = this.state.predictionMethod !== LABELLING ?
+      <div className="md-cell md-cell--3">
+        <SelectionControlGroup type="checkbox" label="Clustering methods" name="clusterings" id="clusterings"
+                               onChange={this.checkboxChange.bind(this)} controls={clusteringMethods}
+                               value={this.state.clusterings.join(',')} controlStyle={groupStyle}/>
+      </div> : null;
+    const encodingFragment = <SelectionControlGroup type="checkbox" label="Encoding methods" name="encodings"
+                                                    id="encodings"
+                                                    onChange={this.checkboxChange.bind(this)} controls={encodingMethods}
+                                                    value={this.state.encodings.join(',')} controlStyle={groupStyle}/>;
     return (
       <Card className="md-block-centered">
         <CardTitle title="Training">
@@ -249,17 +280,11 @@ class TrainingFormCard extends Component {
                                      onChange={this.onPredictionMethodChange.bind(this)}/>
             </div>
             <div className="md-cell md-cell--3">
-              <SelectionControlGroup type="checkbox" label="Encoding methods" name="encodings" id="encodings"
-                                     onChange={this.checkboxChange.bind(this)} controls={encodingMethods}
-                                     value={this.state.encodings.join(',')} controlStyle={groupStyle}/>
+              {encodingFragment}
             </div>
             <PrefixSelector prefix={this.state.prefix} onChange={this.advanceConfigChange.bind(this)}
                             maxEventsInLog={this.props.maxEventsInLog}/>
-            <div className="md-cell md-cell--3">
-              <SelectionControlGroup type="checkbox" label="Clustering methods" name="clusterings" id="clusterings"
-                                     onChange={this.checkboxChange.bind(this)} controls={clusteringMethods}
-                                     value={this.state.clusterings.join(',')} controlStyle={groupStyle}/>
-            </div>
+            {clusteringFragment}
             {regressionFragment}
             {classificationFragment}
           </div>
@@ -272,10 +297,7 @@ class TrainingFormCard extends Component {
         <CardText>
           <div className="md-grid md-grid--no-spacing">
             <div className="md-cell md-cell--12">
-              <Checkbox id="create_models" name="create_models"
-                        label="Create and save models for runtime prediction"
-                        checked={this.state.create_models} inline
-                        onChange={this.checkboxChange.bind(this)}/>
+              {createModels}
             </div>
             <div className="md-cell md-cell--12">
               {warning}
