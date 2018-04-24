@@ -19,12 +19,13 @@ export default class GenericConfiguration extends PureComponent {
     columnWidths: PropTypes.arrayOf(PropTypes.number),
     panelLabel: PropTypes.string.isRequired,
     documentationUrl: PropTypes.string.isRequired,
-    children: PropTypes.any
+    children: PropTypes.any,
+    defaultExpanded: PropTypes.bool
   };
 
   render() {
-    const {panelLabel, documentationUrl, ...remProps} = this.props;
-    return <ExpansionPanel key={panelLabel} label={panelLabel}
+    const {panelLabel, documentationUrl, defaultExpanded, ...remProps} = this.props;
+    return <ExpansionPanel key={panelLabel} label={panelLabel} defaultExpanded={defaultExpanded}
                            footer={customFooter(documentationUrl)}
                            contentClassName="md-grid" {...remProps}>
       {this.props.children}

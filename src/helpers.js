@@ -1,4 +1,13 @@
-import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from './reference';
+import {
+  ATTRIBUTE_NUMBER,
+  ATTRIBUTE_STRING,
+  CLASSIFICATION,
+  NEXT_ACTIVITY,
+  REGRESSION,
+  REMAINING_TIME,
+  THRESHOLD_CUSTOM,
+  THRESHOLD_MEAN
+} from './reference';
 import PropTypes from 'prop-types';
 
 /**
@@ -12,6 +21,15 @@ const hyperOptShape = PropTypes.shape({
   performance_metric: PropTypes.string.isRequired
 });
 
+export const labelPropType = PropTypes.shape({
+  type: PropTypes.oneOf([NEXT_ACTIVITY, REMAINING_TIME, ATTRIBUTE_NUMBER, ATTRIBUTE_STRING]).isRequired,
+  attribute_name: PropTypes.string,
+  threshold_type: PropTypes.oneOf([THRESHOLD_MEAN, THRESHOLD_CUSTOM]).isRequired,
+  threshold: PropTypes.number.isRequired,
+  add_remaining_time: PropTypes.bool.isRequired,
+  add_elapsed_time: PropTypes.bool.isRequired,
+});
+
 export const jobPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   status: PropTypes.string.isRequired,
@@ -20,12 +38,11 @@ export const jobPropType = PropTypes.shape({
   config: PropTypes.shape({
     prefix_length: PropTypes.number.isRequired,
     padding: PropTypes.string,
-    threshold: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     hyperopt: PropTypes.objectOf(hyperOptShape),
+    label: PropTypes.objectOf(labelPropType),
     method: PropTypes.string.isRequired,
     clustering: PropTypes.string,
     encoding: PropTypes.string,
-    rule: PropTypes.string
   }).isRequired,
   created_date: PropTypes.string.isRequired,
   modified_date: PropTypes.string.isRequired,
@@ -72,3 +89,5 @@ export const logPropType = PropTypes.shape({
     maxEventsInLog: PropTypes.number.isRequired,
   }).isRequired
 });
+
+

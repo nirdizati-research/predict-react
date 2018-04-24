@@ -20,6 +20,8 @@ import {
   prefixTypeControls,
   REGRESSION,
   regressionMethods,
+  REMAINING_TIME,
+  THRESHOLD_MEAN,
   thresholdControls
 } from '../reference';
 import OutcomeRules from './training/OutcomeRules';
@@ -46,6 +48,14 @@ const initialState = (props) => {
       padding: paddingControls[0].value,
       type: prefixTypeControls[0].value,
       prefix_length: defaultPrefix,
+    },
+    label: {
+      type: REMAINING_TIME,
+      attribute_name: null,
+      threshold_type: THRESHOLD_MEAN,
+      threshold: 0,
+      add_remaining_time: false,
+      add_elapsed_time: false,
     },
     displayWarning: false,
     predictionMethod: REGRESSION,
@@ -308,7 +318,7 @@ class TrainingFormCard extends Component {
           </div>
         </CardText>
         <AdvancedConfiguration classification={this.state.classification} regression={this.state.regression}
-                               onChange={this.advanceConfigChange.bind(this)}
+                               onChange={this.advanceConfigChange.bind(this)} label={this.state.label}
                                predictionMethod={this.state.predictionMethod}/>
 
         <CardText>
