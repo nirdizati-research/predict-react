@@ -6,7 +6,6 @@ import React from 'react';
 
 export const CLASSIFICATION = 'classification';
 export const REGRESSION = 'regression';
-export const NEXT_ACTIVITY = 'nextActivity';
 
 export const SPLIT_SINGLE = 'single';
 export const SPLIT_DOUBLE = 'double';
@@ -26,6 +25,15 @@ export const BOOLEAN = 'boolean';
 export const FREQUENCY = 'frequency';
 export const COMPLEX = 'complex';
 export const LAST_PAYLOAD = 'lastPayload';
+
+// labeling stuff
+export const NEXT_ACTIVITY = 'next_activity';
+export const REMAINING_TIME = 'remaining_time';
+export const ATTRIBUTE_NUMBER = 'attribute_number';
+export const ATTRIBUTE_STRING = 'attribute_string';
+
+export const THRESHOLD_MEAN = 'threshold_mean';
+export const THRESHOLD_CUSTOM = 'threshold_custom';
 
 // Using these options directly means the message is not shown
 export const clustering = [
@@ -84,19 +92,6 @@ export const encoding = [
   }
 ];
 
-const outcomeRules = [
-  {
-    label: 'Remaining time',
-    value: 'remaining_time',
-    message: 'Fast/Slow'
-  },
-  {
-    label: 'Duration',
-    value: 'elapsed_time',
-    message: 'Fast/Slow'
-  }
-];
-
 const predictions = [
   {
     label: 'Remaining time',
@@ -105,11 +100,7 @@ const predictions = [
   {
     label: 'Outcome',
     value: CLASSIFICATION
-  },
-  {
-    label: 'Next activity',
-    value: NEXT_ACTIVITY
-  },
+  }
 ];
 
 const regression = [
@@ -129,16 +120,40 @@ const regression = [
 
 const threshold = [
   {
-    label: 'Average',
-    value: 'default',
-    message: 'Average value from the created labels of the business rule'
+    label: 'Label mean',
+    value: THRESHOLD_MEAN,
+    message: 'Mean value of the created label'
   },
   {
     label: 'Custom',
-    value: 'custom',
-    message: 'Threshold used is set by you'
+    value: THRESHOLD_CUSTOM,
+    message: 'Use the threshold value below'
   }
 ];
+
+const labelTypes = [
+  {
+    value: REMAINING_TIME,
+    label: 'Remaining time ',
+    message: 'Binary classification'
+  },
+  {
+    value: NEXT_ACTIVITY,
+    label: 'Next activity',
+    message: 'Multi-label classification'
+  },
+  {
+    value: ATTRIBUTE_NUMBER,
+    label: 'Trace number attribute',
+    message: 'Binary classification'
+  },
+  {
+    value: ATTRIBUTE_STRING,
+    label: 'Trace string attribute',
+    message: 'Multi-label classification'
+  },
+];
+
 
 export const splitTypes = [
   {
@@ -185,7 +200,7 @@ const prefixTypes = [
 ];
 
 // Makes things for Selection Controls
-const controlCreator = (optMap) => {
+export const controlCreator = (optMap) => {
   return optMap.map((opt) => {
     return {
       key: opt.value,
@@ -202,8 +217,8 @@ export const clusteringMethods = controlCreator(clustering);
 export const classificationMethods = controlCreator(classification);
 export const regressionMethods = controlCreator(regression);
 export const predictionMethods = controlCreator(predictions);
-export const outcomeRuleControls = controlCreator(outcomeRules);
 export const thresholdControls = controlCreator(threshold);
+export const labelTypeControls = controlCreator(labelTypes);
 export const paddingControls = controlCreator(padding);
 export const prefixTypeControls = controlCreator(prefixTypes);
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {TextField} from 'react-md/lib/index';
-import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
+import {CLASSIFICATION, REGRESSION} from '../../reference';
 
 const defaults = {
   'n_estimators': 10,
@@ -47,6 +47,6 @@ const ClassificationRandomForest = (props) => {
 
 ClassificationRandomForest.propTypes = {
   onChange: PropTypes.func.isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired
+  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION]).isRequired
 };
 export default ClassificationRandomForest;

@@ -5,6 +5,7 @@ import React from 'react';
 import {storiesOf} from '@storybook/react';
 import JobStatusTable from '../src/components/JobStatusTable';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
+import {label1} from './Advanced';
 
 const jobs = [
   {
@@ -15,9 +16,13 @@ const jobs = [
       'clustering': 'noCluster',
       'method': 'randomForest',
       'encoding': 'simpleIndex',
-      'rule': 'remaining_time',
       'prefix_length': 1,
-      'threshold': 'default'
+      'label': label1,
+      'hyperopt': {
+        'use_hyperopt': true,
+        'max_evals': 100,
+        'performance_metric': 'acc'
+      },
     },
     'status': 'completed',
     'result': {
@@ -44,12 +49,16 @@ const jobs = [
     'created_date': '2017-12-05T16:13:40.278339Z',
     'modified_date': '2017-12-05T16:13:40.457762Z',
     'config': {
-      'rule': 'remaining_time',
       'prefix_length': 1,
-      'threshold': 'default',
       'encoding': 'simpleIndex',
       'clustering': 'noCluster',
-      'method': 'randomForest'
+      'method': 'randomForest',
+      'label': label1,
+      'hyperopt': {
+        'use_hyperopt': true,
+        'max_evals': 100,
+        'performance_metric': 'acc'
+      },
     },
     'status': 'completed',
     'result': {
@@ -81,7 +90,7 @@ storiesOf('JobStatusTable', module)
             <Card className="md-block-centered">
               <CardTitle title="JobStatusTable"/>
               <CardText>
-                <JobStatusTable jobs={jobs}/>
+                <JobStatusTable jobs={jobs} showDeleteButton={false} onDelete={() => _}/>
               </CardText>
             </Card>
           </div>

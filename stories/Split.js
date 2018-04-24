@@ -19,6 +19,7 @@ export const splits = [
           'events': {},
           'resources': {},
           'newTraces': {},
+          'traceAttributes': [],
           'maxEventsInLog': 1
         }
     },
@@ -41,6 +42,7 @@ export const splits = [
           'events': {},
           'resources': {},
           'newTraces': {},
+          'traceAttributes': [],
           'maxEventsInLog': 1
         }
     },
@@ -52,6 +54,7 @@ export const splits = [
           'events': {},
           'resources': {},
           'newTraces': {},
+          'traceAttributes': [],
           'maxEventsInLog': 1
         }
     },
@@ -74,6 +77,7 @@ export const logList = [
         'events': {},
         'resources': {},
         'newTraces': {},
+        'traceAttributes': [],
         'maxEventsInLog': 1
       }
   },
@@ -85,6 +89,7 @@ export const logList = [
         'events': {},
         'resources': {},
         'newTraces': {},
+        'traceAttributes': [],
         'maxEventsInLog': 1
       }
   },
@@ -96,6 +101,7 @@ export const logList = [
         'events': {},
         'resources': {},
         'newTraces': {},
+        'traceAttributes': [],
         'maxEventsInLog': 1
       }
   }

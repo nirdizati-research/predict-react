@@ -1,5 +1,5 @@
 import React from 'react';
-import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
+import {CLASSIFICATION, REGRESSION} from '../../reference';
 import PropTypes from 'prop-types';
 import ClassificationKnn from './ClassificationKnn';
 import ClassificationDecisionTree from './ClassificationDecisionTree';
@@ -10,6 +10,8 @@ import RegressionRandomForest from './RegressionRandomForest';
 import RegressionLasso from './RegressionLasso';
 import RegressionLinear from './RegressionLinear';
 import HyperOpt from './HyperOpt';
+import {labelPropType, traceAttributeShape} from '../../helpers';
+import Labelling from './Labelling';
 
 const knnUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html';
 const decisionTreeUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html';
@@ -21,8 +23,8 @@ const regressorLasso = 'http://scikit-learn.org/stable/modules/generated/sklearn
 const regressorLinear = 'http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html';
 const hyperUrl = 'http://hyperopt.github.io/hyperopt/';
 const AdvancedConfiguration = (props) => {
-  const makeExpander = (panelLabel, url, component) => {
-    return <GenericConfiguration key={panelLabel} panelLabel={panelLabel}
+  const makeExpander = (panelLabel, url, component, defaultExpanded) => {
+    return <GenericConfiguration key={panelLabel} panelLabel={panelLabel} defaultExpanded={defaultExpanded}
                                  documentationUrl={url}>{component}</GenericConfiguration>;
   };
 
@@ -36,16 +38,7 @@ const AdvancedConfiguration = (props) => {
                                   predictionMethod={CLASSIFICATION} {...props}/>),
     'classification.randomForest': makeExpander('RandomForestClassifier', classRandomForest,
       <ClassificationRandomForest onChange={props.onChange}
-                                  predictionMethod={CLASSIFICATION} {...props}/>),
-    'nextActivity.knn': makeExpander('KNeighborsClassifier', knnUrl, <ClassificationKnn
-      onChange={props.onChange}
-      predictionMethod={NEXT_ACTIVITY}/>),
-    'nextActivity.decisionTree': makeExpander('DecisionTreeClassifier', decisionTreeUrl,
-      <ClassificationDecisionTree onChange={props.onChange}
-                                  predictionMethod={NEXT_ACTIVITY} {...props}/>),
-    'nextActivity.randomForest': makeExpander('RandomForestClassifier', classRandomForest,
-      <ClassificationRandomForest onChange={props.onChange}
-                                  predictionMethod={NEXT_ACTIVITY} {...props}/>)
+                                  predictionMethod={CLASSIFICATION} {...props}/>)
   };
 
   const regressionConfigMap = {
@@ -68,6 +61,11 @@ const AdvancedConfiguration = (props) => {
   const hyperOpt = makeExpander('Hyperparameter Optimization', hyperUrl,
     <HyperOpt onChange={props.onChange} predictionMethod={props.predictionMethod} {...props}/>);
 
+
+  const label = makeExpander('Labelling', '',
+    <Labelling onChange={props.onChange} label={props.label} {...props}/>, true);
+
+
   const configs = () => {
     if (props.predictionMethod === REGRESSION) {
       return configMapper(props.regression, regressionConfigMap);
@@ -76,13 +74,15 @@ const AdvancedConfiguration = (props) => {
     }
   };
 
-  return <ExpansionList>{hyperOpt}{configs()}</ExpansionList>;
+  return <ExpansionList>{[label, hyperOpt, ...configs()]}</ExpansionList>;
 };
 
 AdvancedConfiguration.propTypes = {
   classification: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   regression: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   onChange: PropTypes.func.isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired
+  label: PropTypes.shape(labelPropType).isRequired,
+  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION]).isRequired,
+  traceAttributes: PropTypes.arrayOf(PropTypes.shape(traceAttributeShape)).isRequired
 };
 export default AdvancedConfiguration;

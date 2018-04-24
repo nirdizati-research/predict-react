@@ -73,7 +73,7 @@ describe('generates data for prefix chart', () => {
   it('generates stuff', () => {
     const table = makeTable(regJobs, 'rmse');
     const actualTable = [
-      ['Prefix length', 'complex_linear_noCluster', 'simpleIndex_linear_noCluster', 'simpleIndex_randomForest_noCluster'],
+      ['Prefix length', 'linear_complex_noCluster_remaining_time', 'linear_simpleIndex_noCluster_remaining_time', 'randomForest_simpleIndex_noCluster_remaining_time'],
       [1, 221.72427510287082, null, null],
       [3, null, 201.76464727647456, 191.19102930552305],
       [5, null, null, 171.19102930552305]

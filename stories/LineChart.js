@@ -3,13 +3,9 @@
  */
 import React from 'react';
 import {storiesOf} from '@storybook/react';
-import LineChartCard from '../src/components/chart/LineChartCard';
-import BubbleChartCard from '../src/components/chart/BubbleChartCard';
-import ResultTableCard from '../src/components/validation/ResultTableCard';
-import {getChartHeader} from '../src/components/validation/ColumnHelper';
-import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../src/reference';
-import BarChartCard from '../src/components/chart/BarChartCard';
+import {REGRESSION} from '../src/reference';
 import ControlledLineChartCard from '../src/components/chart/ControlledLineChartCard';
+import {label1} from './Advanced';
 
 export const regJobs = [
   {
@@ -21,7 +17,8 @@ export const regJobs = [
       'regression.linear': {'fit_intercept': false, 'normalize': false, 'copy_X': true},
       'encoding': 'complex',
       'clustering': 'noCluster',
-      'method': 'linear'
+      'method': 'linear',
+      'label': label1
     },
     'status': 'completed',
     'result': {'rmse': 221.72427510287082, 'mae': 193.11309325742712, 'rscore': -0.060008504856852385},
@@ -55,7 +52,8 @@ export const regJobs = [
       'regression.linear': {'fit_intercept': true, 'normalize': false, 'copy_X': true},
       'encoding': 'simpleIndex',
       'clustering': 'noCluster',
-      'method': 'linear'
+      'method': 'linear',
+      'label': label1
     },
     'status': 'completed',
     'result': {'rmse': 201.76464727647456, 'mae': 165.3624707580213, 'rscore': 0.12224386445773794},
@@ -89,7 +87,8 @@ export const regJobs = [
       'regression.randomForest': {'n_estimators': 10, 'criterion': 'mse', 'max_depth': null, 'min_samples_split': 2},
       'encoding': 'simpleIndex',
       'clustering': 'noCluster',
-      'method': 'randomForest'
+      'method': 'randomForest',
+      'label': label1
     },
     'status': 'completed',
     'result': {'rmse': 191.19102930552305, 'mae': 138.26345747696183, 'rscore': 0.21183208508900764},
@@ -123,7 +122,8 @@ export const regJobs = [
       'regression.randomForest': {'n_estimators': 10, 'criterion': 'mse', 'max_depth': null, 'min_samples_split': 2},
       'encoding': 'simpleIndex',
       'clustering': 'noCluster',
-      'method': 'randomForest'
+      'method': 'randomForest',
+      'label': label1
     },
     'status': 'completed',
     'result': {'rmse': 171.19102930552305, 'mae': 128.26345747696183, 'rscore': 0.24183208508900764},

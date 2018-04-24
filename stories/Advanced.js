@@ -1,9 +1,8 @@
 import React from 'react';
 import {storiesOf} from '@storybook/react';
-import FetchState from '../src/components/FetchState';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import ClassificationKnn from '../src/components/advanced/ClassificationKnn';
-import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../src/reference';
+import {CLASSIFICATION, REGRESSION, REMAINING_TIME, THRESHOLD_MEAN} from '../src/reference';
 import AdvancedConfiguration from '../src/components/advanced/AdvancedConfiguration';
 import ClassificationDecisionTree from '../src/components/advanced/ClassificationDecisionTree';
 import ClassificationRandomForest from '../src/components/advanced/ClassificationRandomForest';
@@ -11,6 +10,40 @@ import RegressionRandomForest from '../src/components/advanced/RegressionRandomF
 import RegressionLasso from '../src/components/advanced/RegressionLasso';
 import RegressionLinear from '../src/components/advanced/RegressionLinear';
 import HyperOpt from '../src/components/advanced/HyperOpt';
+import Labelling from '../src/components/advanced/Labelling';
+
+
+export const label1 = {
+  type: REMAINING_TIME,
+  attribute_name: null,
+  threshold_type: THRESHOLD_MEAN,
+  threshold: 0,
+  add_remaining_time: false,
+  add_elapsed_time: false,
+};
+
+export const traceAttributes = [
+  {
+    'name': 'creator',
+    'type': 'string',
+    'example': 'Fluxicon Nitro'
+  },
+  {
+    'name': 'another',
+    'type': 'string',
+    'example': 'Fluxicon Nitro'
+  },
+  {
+    'name': 'numbers',
+    'type': 'number',
+    'example': '345'
+  },
+  {
+    'name': 'amount',
+    'type': 'number',
+    'example': '2355'
+  }
+];
 
 storiesOf('Advanced configuration', module)
   .add('classification', () => {
@@ -53,6 +86,15 @@ storiesOf('Advanced configuration', module)
           <div className="md-cell md-cell--12">
             <Card className="md-block-centered">
               <CardText>
+                Labelling
+              </CardText>
+              <Labelling onChange={console.log} label={label1} traceAttributes={traceAttributes}/>
+              <Labelling onChange={console.log} label={label1} traceAttributes={[]}/>
+            </Card>
+          </div>
+          <div className="md-cell md-cell--12">
+            <Card className="md-block-centered">
+              <CardText>
                 Some text above
               </CardText>
               <HyperOpt onChange={console.log} predictionMethod={CLASSIFICATION}/>
@@ -72,7 +114,7 @@ storiesOf('Advanced configuration', module)
               <CardText>
                 Some text above
               </CardText>
-              <AdvancedConfiguration predictionMethod={CLASSIFICATION}
+              <AdvancedConfiguration predictionMethod={CLASSIFICATION} label={label1} traceAttributes={[]}
                                      classification={['knn', 'decisionTree', 'randomForest']}
                                      regression={[]} onChange={console.log}/>
             </Card>
@@ -84,20 +126,9 @@ storiesOf('Advanced configuration', module)
               <CardText>
                 Some text above
               </CardText>
-              <AdvancedConfiguration predictionMethod={REGRESSION} classification={[]}
+              <AdvancedConfiguration predictionMethod={REGRESSION} classification={[]} label={label1}
+                                     traceAttributes={[]}
                                      regression={['randomForest', 'lasso', 'linear']} onChange={console.log}/>
-            </Card>
-          </div>
-
-          <div className="md-cell md-cell--12">
-            <Card className="md-block-centered">
-              <CardTitle title="Next Activity"/>
-              <CardText>
-                Some text above
-              </CardText>
-              <AdvancedConfiguration predictionMethod={NEXT_ACTIVITY}
-                                     classification={['knn', 'decisionTree', 'randomForest']}
-                                     regression={[]} onChange={console.log}/>
             </Card>
           </div>
         </div>

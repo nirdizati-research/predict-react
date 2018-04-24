@@ -2,7 +2,7 @@
  * Created by tonis.kasekamp on 10/9/17.
  */
 import React, {PureComponent} from 'react';
-import {DataTable, TableBody, TableColumn, TableHeader, TableRow, TablePagination} from 'react-md/lib/DataTables/index';
+import {DataTable, TableBody, TableColumn, TableHeader, TablePagination, TableRow} from 'react-md/lib/DataTables/index';
 import PropTypes from 'prop-types';
 import {columnStyle} from '../../reference';
 import {jobFlatPropType} from '../../helpers';
@@ -28,7 +28,7 @@ class RegConfigTable extends PureComponent {
 
   render() {
     const headers =
-      ['id', 'Type', 'Encoding', 'Clustering', 'Method', 'Prefix length',
+      ['id', 'Type', 'Encoding', 'Clustering', 'Method', 'Prefix length', 'Label',
         'Padding', 'Create models', 'HyperOpt', 'Advanced configuration', 'Split'];
     return (<DataTable baseId="simple-pagination" plain>
       <TableHeader>
@@ -38,7 +38,7 @@ class RegConfigTable extends PureComponent {
       </TableHeader>
       <TableBody>
         {this.state.slicedData.map(
-          ({id, encoding, clustering, method, splitName, prefix_length, type, advanced, padding, hyperopt, create_models}) => (
+          ({id, encoding, clustering, method, splitName, prefix_length, label, type, advanced, padding, hyperopt, create_models}) => (
             <TableRow key={id}>
               <TableColumn style={columnStyle}>{id}</TableColumn>
               <TableColumn style={columnStyle}>{type}</TableColumn>
@@ -46,6 +46,9 @@ class RegConfigTable extends PureComponent {
               <TableColumn style={columnStyle}>{clustering}</TableColumn>
               <TableColumn style={columnStyle}>{method}</TableColumn>
               <TableColumn style={columnStyle} numeric>{prefix_length}</TableColumn>
+              <TableColumn style={columnStyle}>
+                <pre>{JSON.stringify(label, null, 1)}</pre>
+              </TableColumn>
               <TableColumn style={columnStyle} numeric>{padding}</TableColumn>
               <TableColumn style={columnStyle}>{JSON.stringify(create_models, null, 1)}</TableColumn>
               <TableColumn style={columnStyle}>

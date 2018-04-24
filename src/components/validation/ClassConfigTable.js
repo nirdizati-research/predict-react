@@ -2,7 +2,7 @@
  * Created by tonis.kasekamp on 10/9/17.
  */
 import React, {PureComponent} from 'react';
-import {DataTable, TableBody, TableColumn, TableHeader, TableRow, TablePagination} from 'react-md/lib/DataTables/index';
+import {DataTable, TableBody, TableColumn, TableHeader, TablePagination, TableRow} from 'react-md/lib/DataTables/index';
 import PropTypes from 'prop-types';
 import {columnStyle} from '../../reference';
 import {jobFlatPropType} from '../../helpers';
@@ -28,7 +28,7 @@ class ClassConfigTable extends PureComponent {
   }
 
   render() {
-    const headers = ['id', 'Type', 'Encoding', 'Clustering', 'Method', 'Rule', 'Threshold',
+    const headers = ['id', 'Type', 'Encoding', 'Clustering', 'Method', 'Label',
         'Prefix length', 'Padding', 'Create models', 'HyperOpt', 'Advanced configuration', 'Split'];
 
     return (<DataTable baseId="simple-pagination" plain>
@@ -45,8 +45,9 @@ class ClassConfigTable extends PureComponent {
             <TableColumn style={columnStyle}>{job.encoding}</TableColumn>
             <TableColumn style={columnStyle}>{job.clustering}</TableColumn>
             <TableColumn style={columnStyle}>{job.method}</TableColumn>
-            <TableColumn style={columnStyle}>{job.rule}</TableColumn>
-            <TableColumn style={columnStyle} numeric>{job.threshold}</TableColumn>
+            <TableColumn style={columnStyle}>
+              <pre>{JSON.stringify(job.label, null, 1)}</pre>
+            </TableColumn>
             <TableColumn style={columnStyle} numeric>{job.prefix_length}</TableColumn>
             <TableColumn style={columnStyle} numeric>{job.padding}</TableColumn>
             <TableColumn style={columnStyle}>{JSON.stringify(job.create_models, null, 1)}</TableColumn>
