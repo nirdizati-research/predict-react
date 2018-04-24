@@ -6,9 +6,10 @@ import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import PropTypes from 'prop-types';
 import RegConfigTable from './RegConfigTable';
 import ClassConfigTable from './ClassConfigTable';
-import {CLASSIFICATION, REGRESSION} from '../../reference';
+import {CLASSIFICATION, LABELLING, REGRESSION} from '../../reference';
 import {jobPropType} from '../../helpers';
 import {jobToValidationTable} from '../../util/dataReducers';
+import LabelConfigTable from './LabelConfigTable';
 
 
 class ConfigTableCard extends Component {
@@ -19,6 +20,8 @@ class ConfigTableCard extends Component {
         return <RegConfigTable jobs={flatJobs}/>;
       case CLASSIFICATION:
         return <ClassConfigTable jobs={flatJobs}/>;
+      case LABELLING:
+        return <LabelConfigTable jobs={flatJobs}/>;
       // no default
     }
   }
@@ -36,6 +39,6 @@ class ConfigTableCard extends Component {
 
 ConfigTableCard.propTypes = {
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION]).isRequired
+  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, LABELLING]).isRequired
 };
 export default ConfigTableCard;

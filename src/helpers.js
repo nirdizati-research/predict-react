@@ -80,6 +80,15 @@ export const jobFlatPropType = PropTypes.shape({
   label: PropTypes.shape(labelPropType).isRequired,
 }).isRequired;
 
+export const labelJobFlat = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  splitName: PropTypes.string.isRequired,
+  prefix_length: PropTypes.number.isRequired,
+  padding: PropTypes.string.isRequired,
+  result: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
+  label: PropTypes.shape(labelPropType).isRequired,
+}).isRequired;
+
 export const splitLabels = PropTypes.arrayOf(PropTypes.shape({
   value: PropTypes.number.isRequired,
   label: PropTypes.string.isRequired
