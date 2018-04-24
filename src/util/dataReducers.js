@@ -83,6 +83,7 @@ export const jobToValidationTable = (job) => {
       prefix_length: job.config.prefix_length,
       padding: job.config.padding,
       hyperopt: job.config.hyperopt,
+      label: job.config.label,
       create_models: job.config.create_models,
       advanced: job.config[`${REGRESSION}.${job.config.method}`]
     };
@@ -95,18 +96,17 @@ export const jobToValidationTable = (job) => {
       method: job.config.method,
       splitName: splitToString(job.split),
       prefix_length: job.config.prefix_length,
-      rule: job.config.rule,
-      threshold: job.config.threshold,
       padding: job.config.padding,
       hyperopt: job.config.hyperopt,
+      label: job.config.label,
       create_models: job.config.create_models,
       advanced: job.config[`${job.type}.${job.config.method}`]
     };
   }
 };
 
-const toRun = (job) => {
-  return `${job.config.encoding}_${job.config.method}_${job.config.clustering}`;
+export const toRun = (job) => {
+  return `${job.config.method}_${job.config.encoding}_${job.config.clustering}_${job.config.label.type}`;
 };
 
 const toLineObject = (job, metricName) => {

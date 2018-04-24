@@ -67,11 +67,10 @@ export const jobFlatPropType = PropTypes.shape({
   splitName: PropTypes.string.isRequired,
   prefix_length: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
-  rule: PropTypes.string,
   padding: PropTypes.string,
   advanced: PropTypes.objectOf(PropTypes.any).isRequired,
   hyperopt: PropTypes.shape(hyperOptShape),
-  threshold: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  label: PropTypes.shape(labelPropType).isRequired,
 }).isRequired;
 
 export const splitLabels = PropTypes.arrayOf(PropTypes.shape({

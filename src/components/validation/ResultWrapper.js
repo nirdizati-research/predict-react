@@ -9,14 +9,10 @@ import {getChartHeader, getPrefixChartHeader, getTitles} from './ColumnHelper';
 import BubbleChartCard from '../chart/BubbleChartCard';
 import {jobPropType} from '../../helpers';
 import ControlledLineChartCard from '../chart/ControlledLineChartCard';
-
-const shortRun = (config) => {
-  return `${config.method}_${config.encoding}_${config.clustering}`;
-};
-
+import {toRun} from '../../util/dataReducers';
 
 const regressionMap = (jobs) => {
-  return jobs.map((job) => [job.id + '', shortRun(job.config),
+  return jobs.map((job) => [job.id + '', toRun(job),
     job.result.mae, job.result.rmse, job.result.rscore, job.config.prefix_length + '']);
 };
 
@@ -28,7 +24,7 @@ const classMap = (jobs) => {
     const trueNegative = job.result.true_negative || 0;
     const falsePositive = job.result.false_positive || 0;
     const falseNegative = job.result.false_negative || 0;
-    return [job.id + '', shortRun(job.config), job.result.f1score, job.result.acc, job.result.auc,
+    return [job.id + '', toRun(job), job.result.f1score, job.result.acc, job.result.auc,
       job.config.prefix_length + '', precision, recall, truePositive, trueNegative, falsePositive, falseNegative];
   });
 };
