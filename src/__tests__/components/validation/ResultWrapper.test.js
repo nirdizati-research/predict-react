@@ -7,6 +7,7 @@ import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../../reference';
 import ResultTableCard from '../../../components/validation/ResultTableCard';
 import ResultWrapper from '../../../components/validation/ResultWrapper';
 import BubbleChartCard from '../../../components/chart/BubbleChartCard';
+import {label1} from '../../../../stories/Advanced';
 
 const classJobs = [
   {
@@ -17,10 +18,14 @@ const classJobs = [
       'clustering': 'kmeans',
       'method': 'knn',
       'encoding': 'simpleIndex',
-      'rule': 'remaining_time',
       'prefix_length': 1,
-      'threshold': 'default',
-      'padding': 'no_padding'
+      'padding': 'no_padding',
+      'label': label1,
+      'hyperopt': {
+        'use_hyperopt': true,
+        'max_evals': 100,
+        'performance_metric': 'acc'
+      },
     },
     'status': 'completed',
     'result': {
@@ -50,10 +55,14 @@ const classJobs = [
       'clustering': 'kmeans',
       'method': 'knn',
       'encoding': 'simpleIndex',
-      'rule': 'remaining_time',
       'prefix_length': 1,
-      'threshold': 'default',
-      'padding': 'zero_padding'
+      'padding': 'zero_padding',
+      'label': label1,
+      'hyperopt': {
+        'use_hyperopt': true,
+        'max_evals': 100,
+        'performance_metric': 'acc'
+      },
     },
     'status': 'completed',
     'result': {
@@ -85,7 +94,13 @@ const regJobs = [{
     'encoding': 'simpleIndex',
     'clustering': 'noCluster',
     'method': 'linear',
-    'padding': 'no_padding'
+    'padding': 'no_padding',
+    'label': label1,
+    'hyperopt': {
+      'use_hyperopt': true,
+      'max_evals': 100,
+      'performance_metric': 'acc'
+    },
   },
   'status': 'created',
   'result': {

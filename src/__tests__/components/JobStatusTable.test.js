@@ -2,6 +2,7 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import JobStatusTable from '../../components/JobStatusTable';
 import {TableRow} from 'react-md/lib/DataTables/index';
+import {label1} from '../../../stories/Advanced';
 
 describe('JobStatusTable', () => {
   it('renders nothing without jobs', () => {
@@ -17,9 +18,15 @@ describe('JobStatusTable', () => {
       status: 'aa',
       modified_date: 'aa',
       config: {
-        prefix_length: 1,
-        method: 'method',
-        padding: 'no_padding'
+        'prefix_length': 1,
+        'method': 'method',
+        'padding': 'no_padding',
+        'label': label1,
+        'hyperopt': {
+          'use_hyperopt': true,
+          'max_evals': 100,
+          'performance_metric': 'acc'
+        },
       },
       split: {type: 'single', original_log: {name: 'name'}},
       created_date: 'aa',

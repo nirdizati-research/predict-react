@@ -2,7 +2,6 @@ import {
   classificationMethods,
   clusteringMethods,
   encodingMethods,
-  outcomeRuleControls,
   predictionMethods,
   regressionMethods,
   thresholdControls
@@ -28,10 +27,6 @@ describe('Reference', () => {
 
   it('contains 5 encoding', () => {
     expect(encodingMethods.length).toBe(5);
-  });
-
-  it('contains 3 outcomerules', () => {
-    expect(outcomeRuleControls.length).toBe(2);
   });
 
   it('contains 3 predictions', () => {

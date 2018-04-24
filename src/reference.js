@@ -92,19 +92,6 @@ export const encoding = [
   }
 ];
 
-const outcomeRules = [
-  {
-    label: 'Remaining time',
-    value: 'remaining_time',
-    message: 'Fast/Slow'
-  },
-  {
-    label: 'Duration',
-    value: 'elapsed_time',
-    message: 'Fast/Slow'
-  }
-];
-
 const predictions = [
   {
     label: 'Remaining time',
@@ -234,7 +221,6 @@ export const clusteringMethods = controlCreator(clustering);
 export const classificationMethods = controlCreator(classification);
 export const regressionMethods = controlCreator(regression);
 export const predictionMethods = controlCreator(predictions);
-export const outcomeRuleControls = controlCreator(outcomeRules);
 export const thresholdControls = controlCreator(threshold);
 export const labelTypeControls = controlCreator(labelTypes);
 export const paddingControls = controlCreator(padding);

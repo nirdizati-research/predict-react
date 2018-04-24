@@ -13,7 +13,7 @@ import HyperOpt from '../src/components/advanced/HyperOpt';
 import Labelling from '../src/components/advanced/Labelling';
 
 
-const label1 = {
+export const label1 = {
   type: REMAINING_TIME,
   attribute_name: null,
   threshold_type: THRESHOLD_MEAN,

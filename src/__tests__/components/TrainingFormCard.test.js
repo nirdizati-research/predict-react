@@ -5,14 +5,22 @@ import TrainingFormCard from '../../components/TrainingFormCard';
 import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
 import {Button} from 'react-md/lib/Buttons/index';
 import CheckboxGroup from '../../components/training/CheckboxGroup';
-import {SelectField} from 'react-md';
-import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
+import {ExpansionPanel, SelectField} from 'react-md';
+import {CLASSIFICATION, REGRESSION, REMAINING_TIME, THRESHOLD_MEAN} from '../../reference';
 
 const fetchState = {inFlight: false};
 const splitLabels = [{value: 1, label: 'Split #1'}, {value: 2, label: 'Split #2'}];
 const onSubmit = jest.fn();
 const onSplitChange = jest.fn();
 
+const label = {
+  type: REMAINING_TIME,
+  attribute_name: null,
+  threshold_type: THRESHOLD_MEAN,
+  threshold: 0,
+  add_remaining_time: false,
+  add_elapsed_time: false,
+};
 const regressionPayload = {
   'type': 'regression',
   'split_id': 1,
@@ -25,19 +33,16 @@ const regressionPayload = {
       'type': 'only',
     },
     'create_models': false,
-    'add_elapsed_time': true,
     'methods': ['linear'],
     'hyperopt': {
       'use_hyperopt': false,
       'max_evals': 10,
       'performance_metric': 'rmse'
     },
+    'label': label,
     'classification.decisionTree': {},
     'classification.knn': {},
     'classification.randomForest': {},
-    'nextActivity.decisionTree': {},
-    'nextActivity.knn': {},
-    'nextActivity.randomForest': {},
     'regression.lasso': {},
     'regression.linear': {},
     'regression.randomForest': {},
@@ -61,47 +66,13 @@ const classificationPayload = {
       'max_evals': 10,
       'performance_metric': 'acc'
     },
+    'label': label,
     'create_models': false,
-    'add_elapsed_time': true,
     'rule': 'elapsed_time',
     'threshold': 'default',
     'classification.decisionTree': {},
     'classification.knn': {},
     'classification.randomForest': {},
-    'nextActivity.decisionTree': {},
-    'nextActivity.knn': {},
-    'nextActivity.randomForest': {},
-    'regression.lasso': {},
-    'regression.linear': {},
-    'regression.randomForest': {},
-  }
-};
-
-const nextActivityPayload = {
-  'type': 'nextActivity',
-  'split_id': 1,
-  'config': {
-    'methods': ['knn'],
-    'clusterings': ['noCluster'],
-    'encodings': ['simpleIndex'],
-    'prefix': {
-      'padding': 'no_padding',
-      'prefix_length': 1,
-      'type': 'only',
-    },
-    'hyperopt': {
-      'use_hyperopt': false,
-      'max_evals': 10,
-      'performance_metric': 'acc'
-    },
-    'create_models': false,
-    'add_elapsed_time': true,
-    'classification.decisionTree': {},
-    'classification.knn': {},
-    'classification.randomForest': {},
-    'nextActivity.decisionTree': {},
-    'nextActivity.knn': {},
-    'nextActivity.randomForest': {},
     'regression.lasso': {},
     'regression.linear': {},
     'regression.randomForest': {},
@@ -150,33 +121,6 @@ describe('TrainingFormCard', () => {
 
       expect(onSubmit.mock.calls[0][0]).toEqual(regressionPayload);
     });
-
-    it('Classification with original threshold', () => {
-      element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: CLASSIFICATION}});
-      // Change rule
-      element.find(SelectionControlGroup).at(4).simulate('change', {target: {name: 'rule', value: 'elapsed_time'}});
-      element.find(Button).at(0).simulate('click');
-
-      expect(onSubmit.mock.calls[0][0]).toEqual(classificationPayload);
-    });
-
-    it('Classification with custom threshold', () => {
-      element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: CLASSIFICATION}});
-      // Change threshold
-      element.find(SelectionControlGroup).at(7).simulate('change', {target: {name: 'random?', value: 'custom'}});
-      element.find(Button).at(0).simulate('click');
-
-      let payload = classificationPayload;
-      payload.config.threshold = 0;
-      expect(onSubmit.mock.calls[0][0]).toEqual(payload);
-    });
-
-    it('NextActivity', () => {
-      element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: NEXT_ACTIVITY}});
-      element.find(Button).at(0).simulate('click');
-
-      expect(onSubmit.mock.calls[0][0]).toEqual(nextActivityPayload);
-    });
   });
 
   describe('reset', () => {
@@ -188,22 +132,13 @@ describe('TrainingFormCard', () => {
       expect(element.state().encodings.length).toBe(1);
     });
 
-    it('works for outcome', () => {
+    it('works for classification', () => {
       element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: CLASSIFICATION}});
       const group = element.find(SelectionControlGroup).at(4);
       group.simulate('change', {target: {name: 'classification[]', value: 'knn'}});
 
-      element.find(Button).at(1).simulate('click');
+      element.find(Button).at(2).simulate('click');
       expect(element.state().predictionMethod).toBe(REGRESSION);
-      expect(element.state().classification.length).toBe(1);
-    });
-
-    it('works for nextActivity', () => {
-      element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: NEXT_ACTIVITY}});
-      const group = element.find(SelectionControlGroup).at(3);
-      group.simulate('change', {target: {name: 'classification[]', value: 'knn'}});
-
-      element.find(Button).at(1).simulate('click');
       expect(element.state().classification.length).toBe(1);
     });
   });

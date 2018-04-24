@@ -15,20 +15,20 @@ import PropTypes from 'prop-types';
  */
 
 
-const hyperOptShape = PropTypes.shape({
+const hyperOptShape = {
   use_hyperopt: PropTypes.bool.isRequired,
   max_evals: PropTypes.number.isRequired,
   performance_metric: PropTypes.string.isRequired
-});
+};
 
-export const labelPropType = PropTypes.shape({
+export const labelPropType = {
   type: PropTypes.oneOf([NEXT_ACTIVITY, REMAINING_TIME, ATTRIBUTE_NUMBER, ATTRIBUTE_STRING]).isRequired,
   attribute_name: PropTypes.string,
   threshold_type: PropTypes.oneOf([THRESHOLD_MEAN, THRESHOLD_CUSTOM]).isRequired,
   threshold: PropTypes.number.isRequired,
   add_remaining_time: PropTypes.bool.isRequired,
   add_elapsed_time: PropTypes.bool.isRequired,
-});
+};
 
 export const jobPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
@@ -38,8 +38,8 @@ export const jobPropType = PropTypes.shape({
   config: PropTypes.shape({
     prefix_length: PropTypes.number.isRequired,
     padding: PropTypes.string,
-    hyperopt: PropTypes.objectOf(hyperOptShape),
-    label: PropTypes.objectOf(labelPropType),
+    hyperopt: PropTypes.shape(hyperOptShape).isRequired,
+    label: PropTypes.shape(labelPropType).isRequired,
     method: PropTypes.string.isRequired,
     clustering: PropTypes.string,
     encoding: PropTypes.string,

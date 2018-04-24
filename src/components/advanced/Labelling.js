@@ -20,16 +20,6 @@ const Labelling = (props) => {
     value={props.label.type}
   />;
 
-  const addElapsedTime = <Checkbox
-    key="add_elapsed_time"
-    id="add_elapsed_time"
-    name="add_elapsed_time"
-    label="Add elapsed time"
-    className="md-cell md-cell--3"
-    checked={props.label.add_elapsed_time}
-    onChange={props.onChange.bind(this, {methodConfig, key: 'add_elapsed_time'})}
-  />;
-
   const addRemainingTime = <Checkbox
     key="add_remaining_time"
     id="add_remaining_time"
@@ -71,11 +61,11 @@ const Labelling = (props) => {
   };
 
 
-  return [type, addElapsedTime, addRemainingTime, ...threshold(props.label)];
+  return [type, addRemainingTime, ...threshold(props.label)];
 };
 
 Labelling.propTypes = {
   onChange: PropTypes.func.isRequired,
-  label: PropTypes.shape(labelPropType),
+  label: PropTypes.shape(labelPropType).isRequired,
 };
 export default Labelling;

@@ -14,7 +14,6 @@ import {
   clusteringMethods,
   encodingMethods,
   NEXT_ACTIVITY,
-  outcomeRuleControls,
   paddingControls,
   predictionMethods,
   prefixTypeControls,
@@ -22,10 +21,7 @@ import {
   regressionMethods,
   REMAINING_TIME,
   THRESHOLD_MEAN,
-  thresholdControls
 } from '../reference';
-import OutcomeRules from './training/OutcomeRules';
-import Threshold from './training/Threshold';
 import CheckboxGroup from './training/CheckboxGroup';
 import {splitLabels} from '../helpers';
 import PrefixSelector from './training/PrefixSelector';
@@ -33,7 +29,6 @@ import AdvancedConfiguration from './advanced/AdvancedConfiguration';
 import {classificationMetrics, regressionMetrics} from './advanced/advancedConfig';
 
 const defaultPrefix = 1;
-const defaultThreshold = 0;
 const groupStyle = {height: 'auto'};
 
 const initialState = (props) => {
@@ -59,18 +54,12 @@ const initialState = (props) => {
     },
     displayWarning: false,
     predictionMethod: REGRESSION,
-    rule: outcomeRuleControls[0].value,
-    threshold: {
-      value: thresholdControls[0].value,
-      threshold: defaultThreshold
-    },
     hyperopt: {
       use_hyperopt: false,
       max_evals: 10,
       performance_metric: 'rmse'
     },
-    create_models: false,
-    add_elapsed_time: true
+    create_models: false
   };
 };
 
@@ -79,9 +68,6 @@ const initialAdvancedConfiguration = () => {
     [`${CLASSIFICATION}.knn`]: {},
     [`${CLASSIFICATION}.randomForest`]: {},
     [`${CLASSIFICATION}.decisionTree`]: {},
-    [`${NEXT_ACTIVITY}.knn`]: {},
-    [`${NEXT_ACTIVITY}.randomForest`]: {},
-    [`${NEXT_ACTIVITY}.decisionTree`]: {},
     [`${REGRESSION}.randomForest`]: {},
     [`${REGRESSION}.lasso`]: {},
     [`${REGRESSION}.linear`]: {}
@@ -147,9 +133,6 @@ class TrainingFormCard extends Component {
       case 'create_models':
         this.setState({create_models: event.target.checked});
         break;
-      case 'add_elapsed_time':
-        this.setState({add_elapsed_time: event.target.checked});
-        break;
       // no default
     }
 
@@ -176,9 +159,6 @@ class TrainingFormCard extends Component {
     this.props.onSplitChange(value);
   }
 
-  onThresholdChange(threshold) {
-    this.setState({threshold});
-  }
 
   displayWarningCheck(prevState) {
     switch (prevState.predictionMethod) {
@@ -205,7 +185,7 @@ class TrainingFormCard extends Component {
         this.props.onSubmit(this.getWithMethods(this.state.regression));
         break;
       case CLASSIFICATION:
-        this.props.onSubmit(this.getClassificationPayload());
+        this.props.onSubmit(this.getWithMethods(this.state.classification));
         break;
       case NEXT_ACTIVITY:
         this.props.onSubmit(this.getWithMethods(this.state.classification));
@@ -223,33 +203,18 @@ class TrainingFormCard extends Component {
         encodings: this.state.encodings,
         clusterings: this.state.clusterings,
         methods: methods,
+        label: this.state.label,
         create_models: this.state.create_models,
         add_elapsed_time: this.state.add_elapsed_time,
         hyperopt: this.state.hyperopt,
         [`${CLASSIFICATION}.knn`]: this.state[`${CLASSIFICATION}.knn`],
         [`${CLASSIFICATION}.randomForest`]: this.state[`${CLASSIFICATION}.randomForest`],
         [`${CLASSIFICATION}.decisionTree`]: this.state[`${CLASSIFICATION}.decisionTree`],
-        [`${NEXT_ACTIVITY}.knn`]: this.state[`${NEXT_ACTIVITY}.knn`],
-        [`${NEXT_ACTIVITY}.randomForest`]: this.state[`${NEXT_ACTIVITY}.randomForest`],
-        [`${NEXT_ACTIVITY}.decisionTree`]: this.state[`${NEXT_ACTIVITY}.decisionTree`],
         [`${REGRESSION}.randomForest`]: this.state[`${REGRESSION}.randomForest`],
         [`${REGRESSION}.lasso`]: this.state[`${REGRESSION}.lasso`],
         [`${REGRESSION}.linear`]: this.state[`${REGRESSION}.linear`]
       }
     };
-  }
-
-  getClassificationPayload() {
-    let actualThreshold;
-    if (this.state.threshold.value === thresholdControls[0].value) {
-      actualThreshold = this.state.threshold.value;
-    } else {
-      actualThreshold = this.state.threshold.threshold;
-    }
-    let payload = this.getWithMethods(this.state.classification);
-    payload.config.rule = this.state.rule;
-    payload.config.threshold = actualThreshold;
-    return payload;
   }
 
   onReset() {
@@ -273,13 +238,6 @@ class TrainingFormCard extends Component {
         <CheckboxGroup controls={classificationMethods} id="classification" label="Classification methods"
                        onChange={this.checkboxChange.bind(this)}
                        value={this.state.classification.join(',')}/> : null;
-
-    const outcomeRuleFragment = this.state.predictionMethod === CLASSIFICATION ?
-      <OutcomeRules checkboxChange={this.checkboxChange.bind(this)}
-                    value={this.state.rule}/> : null;
-    const thresholdFragment = this.state.predictionMethod === CLASSIFICATION ?
-      <Threshold onChange={this.onThresholdChange.bind(this)}
-                 threshold={this.state.threshold}/> : null;
     return (
       <Card className="md-block-centered">
         <CardTitle title="Training">
@@ -313,8 +271,6 @@ class TrainingFormCard extends Component {
             </div>
             {regressionFragment}
             {classificationFragment}
-            {outcomeRuleFragment}
-            {thresholdFragment}
           </div>
         </CardText>
         <AdvancedConfiguration classification={this.state.classification} regression={this.state.regression}
@@ -330,8 +286,11 @@ class TrainingFormCard extends Component {
                         onChange={this.checkboxChange.bind(this)}/>
               <Checkbox id="add_elapsed_time" name="add_elapsed_time"
                         label="Add elapsed time to encoded log" inline
-                        checked={this.state.add_elapsed_time}
-                        onChange={this.checkboxChange.bind(this)}/>
+                        checked={this.state.label.add_elapsed_time}
+                        onChange={this.advanceConfigChange.bind(this, {
+                          methodConfig: 'label',
+                          key: 'add_elapsed_time'
+                        })}/>
             </div>
             <div className="md-cell md-cell--12">
               {warning}
