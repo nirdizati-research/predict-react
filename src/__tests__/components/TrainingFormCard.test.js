@@ -117,7 +117,7 @@ describe('TrainingFormCard', () => {
 
   describe('submit', () => {
     it('default', () => {
-      element.find(Button).at(0).simulate('click');
+      element.find(Button).at(1).simulate('click');
 
       expect(onSubmit.mock.calls[0][0]).toEqual(regressionPayload);
     });
@@ -128,7 +128,7 @@ describe('TrainingFormCard', () => {
       const encodingGroup = element.find(SelectionControlGroup).at(1);
       encodingGroup.simulate('change', {target: {name: 'encodings[]', value: 'boolean'}});
 
-      element.find(Button).at(1).simulate('click');
+      element.find(Button).at(2).simulate('click');
       expect(element.state().encodings.length).toBe(1);
     });
 

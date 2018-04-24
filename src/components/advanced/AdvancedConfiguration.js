@@ -61,10 +61,9 @@ const AdvancedConfiguration = (props) => {
   const hyperOpt = makeExpander('Hyperparameter Optimization', hyperUrl,
     <HyperOpt onChange={props.onChange} predictionMethod={props.predictionMethod} {...props}/>);
 
-  const label = props.predictionMethod === CLASSIFICATION ?
-    makeExpander('Labelling', '',
-      <Labelling onChange={props.onChange} label={props.label} {...props}/>, true) :
-    <div key="random"/>;
+
+  const label = makeExpander('Labelling', '',
+    <Labelling onChange={props.onChange} label={props.label} {...props}/>, true);
 
 
   const configs = () => {
@@ -75,7 +74,7 @@ const AdvancedConfiguration = (props) => {
     }
   };
 
-  return <ExpansionList>{label}{hyperOpt}{configs()}</ExpansionList>;
+  return <ExpansionList>{[label, hyperOpt, ...configs()]}</ExpansionList>;
 };
 
 AdvancedConfiguration.propTypes = {

@@ -8,6 +8,9 @@ import {labelPropType} from '../../helpers';
 const methodConfig = 'label';
 /* eslint-disable no-invalid-this */
 const Labelling = (props) => {
+  const helpText = <p key='key' className="md-cell md-cell--12">
+    Classification supports all 4 labelling types. For Regression, the supoorted types are remaining time and number
+    attribute.</p>;
 
   const type = <SelectField
     key="type"
@@ -29,6 +32,15 @@ const Labelling = (props) => {
     checked={props.label.add_remaining_time}
     onChange={props.onChange.bind(this, {methodConfig, key: 'add_remaining_time'})}
   />;
+
+  const addElapsedTime = <Checkbox
+    key="add_elapsed_time"
+    id="add_elapsed_time"
+    name="add_elapsed_time"
+    label="Add elapsed time"
+    className="md-cell md-cell--3"
+    checked={props.label.add_elapsed_time}
+    onChange={props.onChange.bind(this, {methodConfig, key: 'add_elapsed_time'})}/>;
 
   const threshold = (label) => {
     if (label.type === REMAINING_TIME || label.type === ATTRIBUTE_NUMBER) {
@@ -60,8 +72,7 @@ const Labelling = (props) => {
     }
   };
 
-
-  return [type, addRemainingTime, ...threshold(props.label)];
+  return [helpText, type, addRemainingTime, addElapsedTime, ...threshold(props.label)];
 };
 
 Labelling.propTypes = {

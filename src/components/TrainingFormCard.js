@@ -284,13 +284,6 @@ class TrainingFormCard extends Component {
                         label="Create and save models for runtime prediction"
                         checked={this.state.create_models} inline
                         onChange={this.checkboxChange.bind(this)}/>
-              <Checkbox id="add_elapsed_time" name="add_elapsed_time"
-                        label="Add elapsed time to encoded log" inline
-                        checked={this.state.label.add_elapsed_time}
-                        onChange={this.advanceConfigChange.bind(this, {
-                          methodConfig: 'label',
-                          key: 'add_elapsed_time'
-                        })}/>
             </div>
             <div className="md-cell md-cell--12">
               {warning}
