@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import {mount} from 'enzyme';
-import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../../reference';
+import {CLASSIFICATION, REGRESSION} from '../../../reference';
 import ResultTableCard from '../../../components/validation/ResultTableCard';
 import ResultWrapper from '../../../components/validation/ResultWrapper';
 import BubbleChartCard from '../../../components/chart/BubbleChartCard';
@@ -157,12 +157,6 @@ describe('ResultWrapper', () => {
     const regData = [['53', 'linear_simpleIndex_noCluster_remaining_time', 11, 12, 13, '0']];
     expect(element.find(ResultTableCard).props().data).toEqual(regData);
     expect(element.find(ResultTableCard).props().predictionMethod).toMatch(REGRESSION);
-  });
-
-  it('renders next activity table', () => {
-    element.setProps({predictionMethod: NEXT_ACTIVITY, jobs: classJobs});
-    expect(element.find(ResultTableCard).props().data).toEqual(classData);
-    expect(element.find(ResultTableCard).props().predictionMethod).toMatch(NEXT_ACTIVITY);
   });
 
   it('flips data for regression', () => {

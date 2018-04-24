@@ -29,8 +29,8 @@ describe('Reference', () => {
     expect(encodingMethods.length).toBe(5);
   });
 
-  it('contains 3 predictions', () => {
-    expect(predictionMethods.length).toBe(3);
+  it('contains 2 predictions', () => {
+    expect(predictionMethods.length).toBe(2);
   });
   it('contains 3 regressions', () => {
     expect(regressionMethods.length).toBe(3);

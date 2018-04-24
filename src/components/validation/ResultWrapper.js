@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
+import {CLASSIFICATION, REGRESSION} from '../../reference';
 import ResultTableCard from './ResultTableCard';
 import {getChartHeader, getPrefixChartHeader, getTitles} from './ColumnHelper';
 import BubbleChartCard from '../chart/BubbleChartCard';
@@ -34,8 +34,6 @@ const prepareData = (jobs, predictionMethod) => {
     case REGRESSION:
       return regressionMap(jobs);
     case CLASSIFICATION:
-      return classMap(jobs);
-    case NEXT_ACTIVITY:
       return classMap(jobs);
     // no default
   }
@@ -114,7 +112,7 @@ const ResultWrapper = (props) => {
 
 ResultWrapper.propTypes = {
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
+  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION]).isRequired,
 };
 
 export default ResultWrapper;

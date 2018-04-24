@@ -8,7 +8,7 @@ import {TableRow} from 'react-md/lib/DataTables/index';
 import {TableColumn} from 'react-md';
 import RegConfigTable from '../../../components/validation/RegConfigTable';
 import ConfigTableCard from '../../../components/validation/ConfigTableCard';
-import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../../reference';
+import {CLASSIFICATION, REGRESSION} from '../../../reference';
 import {jobToValidationTable} from '../../../util/dataReducers';
 import {label1} from '../../../../stories/Advanced';
 
@@ -81,11 +81,6 @@ describe('ConfigTableCard', () => {
   it('does not render classification table', () => {
     element.setProps({predictionMethod: CLASSIFICATION});
     expect(element.find(ClassConfigTable).length).toBe(0);
-  });
-
-  it('does not render next activity table', () => {
-    element.setProps({predictionMethod: NEXT_ACTIVITY});
-    expect(element.find(RegConfigTable).length).toBe(0);
   });
 
   it('does not render regression table', () => {

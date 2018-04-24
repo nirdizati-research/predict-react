@@ -13,7 +13,6 @@ import {
   classificationMethods,
   clusteringMethods,
   encodingMethods,
-  NEXT_ACTIVITY,
   paddingControls,
   predictionMethods,
   prefixTypeControls,
@@ -170,10 +169,6 @@ class TrainingFormCard extends Component {
         return !(prevState.encodings.length !== 0
           && prevState.clusterings.length !== 0
           && prevState.classification.length !== 0);
-      case NEXT_ACTIVITY:
-        return !(prevState.encodings.length !== 0
-          && prevState.clusterings.length !== 0
-          && prevState.classification.length !== 0);
       // no default
     }
   }
@@ -185,9 +180,6 @@ class TrainingFormCard extends Component {
         this.props.onSubmit(this.getWithMethods(this.state.regression));
         break;
       case CLASSIFICATION:
-        this.props.onSubmit(this.getWithMethods(this.state.classification));
-        break;
-      case NEXT_ACTIVITY:
         this.props.onSubmit(this.getWithMethods(this.state.classification));
         break;
       // no default
@@ -233,8 +225,7 @@ class TrainingFormCard extends Component {
 
     // TODO refactor as 1 component in React 16.0
     const classificationFragment =
-      (this.state.predictionMethod === CLASSIFICATION) ||
-      (this.state.predictionMethod === NEXT_ACTIVITY) ?
+      (this.state.predictionMethod === CLASSIFICATION) ?
         <CheckboxGroup controls={classificationMethods} id="classification" label="Classification methods"
                        onChange={this.checkboxChange.bind(this)}
                        value={this.state.classification.join(',')}/> : null;

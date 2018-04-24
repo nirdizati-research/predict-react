@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Checkbox, TextField} from 'react-md/lib/index';
-import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
+import {CLASSIFICATION, REGRESSION} from '../../reference';
 import {classificationMetrics, regressionMetrics} from './advancedConfig';
 import SelectField from 'react-md/lib/SelectFields/index';
 
@@ -59,6 +59,6 @@ const HyperOpt = (props) => {
 
 HyperOpt.propTypes = {
   onChange: PropTypes.func.isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired
+  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION]).isRequired
 };
 export default HyperOpt;

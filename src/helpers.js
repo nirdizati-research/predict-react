@@ -34,7 +34,7 @@ export const jobPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   status: PropTypes.string.isRequired,
   split: PropTypes.any.isRequired,
-  type: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
+  type: PropTypes.oneOf([CLASSIFICATION, REGRESSION]).isRequired,
   config: PropTypes.shape({
     prefix_length: PropTypes.number.isRequired,
     padding: PropTypes.string,

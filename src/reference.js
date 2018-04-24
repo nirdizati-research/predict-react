@@ -100,11 +100,7 @@ const predictions = [
   {
     label: 'Outcome',
     value: CLASSIFICATION
-  },
-  {
-    label: 'Next activity',
-    value: NEXT_ACTIVITY
-  },
+  }
 ];
 
 const regression = [

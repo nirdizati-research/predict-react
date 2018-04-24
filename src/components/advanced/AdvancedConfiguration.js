@@ -1,5 +1,5 @@
 import React from 'react';
-import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
+import {CLASSIFICATION, REGRESSION} from '../../reference';
 import PropTypes from 'prop-types';
 import ClassificationKnn from './ClassificationKnn';
 import ClassificationDecisionTree from './ClassificationDecisionTree';
@@ -82,6 +82,6 @@ AdvancedConfiguration.propTypes = {
   regression: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.shape(labelPropType).isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired
+  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION]).isRequired
 };
 export default AdvancedConfiguration;

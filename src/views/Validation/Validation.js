@@ -2,10 +2,12 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import ConfigTableCard from '../../components/validation/ConfigTableCard';
-import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
+import {CLASSIFICATION, REGRESSION} from '../../reference';
 import {
   FILTER_OPTION_CHANGED,
-  FILTER_PREDICTION_METHOD_CHANGED, FILTER_PREFIX_LENGTH_CHANGED, FILTER_SPLIT_CHANGED,
+  FILTER_PREDICTION_METHOD_CHANGED,
+  FILTER_PREFIX_LENGTH_CHANGED,
+  FILTER_SPLIT_CHANGED,
   jobsRequested
 } from '../../actions/JobActions';
 import ValidationHeaderCard from '../../components/validation/ValidationHeaderCard';
@@ -70,7 +72,7 @@ Validation.propTypes = {
   onPrefixChange: PropTypes.func.isRequired,
   filterOptionChange: PropTypes.func.isRequired,
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
+  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION]).isRequired,
   splitId: PropTypes.number.isRequired,
   uniqueSplits: PropTypes.arrayOf(PropTypes.any).isRequired,
   prefixLengths: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
