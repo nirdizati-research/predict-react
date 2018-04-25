@@ -20,9 +20,18 @@ const methodConfig = 'label';
 /* eslint-disable no-invalid-this */
 /* eslint-disable react/prop-types */
 const Labelling = (props) => {
-  const helpText = <p key='key' className="md-cell md-cell--12">
-    Classification supports all 4 labelling types. For Regression, the supoorted types are remaining time and number
-    attribute.</p>;
+  const helpText = <div key='key' className="md-cell md-cell--12"><p>
+    Classification supports all 4 labelling types. For regression, the supported types are remaining time and number
+    attribute.
+  </p><p>
+    When using remaining time, the threshold is an integer in seconds. If the remaining time is below this threshold it
+    is classified as <code>True</code> or Fast. Times above the threshold are classified as <code>False</code> or Slow.
+  </p><p>
+    Number attributes below the threshold are set as <code>True</code>.
+  </p><p>
+    It is not recommended to use String base label testing on a value that has too many classes, like a registration
+    date. This will reduce the performance of front-end rendering due to the payload size.</p>
+  </div>;
 
   const type = <SelectField
     key="type"
