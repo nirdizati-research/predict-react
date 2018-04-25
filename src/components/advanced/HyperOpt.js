@@ -14,7 +14,7 @@ const defaults = {
 const HyperOpt = (props) => {
   const methodConfig = 'hyperopt';
 
-  const helpText = <p className="md-cell md-cell--12">
+  const helpText = <p key="gristel" className="md-cell md-cell--12">
     Hyper optimization tries to guess the optimal method configuration
     to achieve the best performance metric value. It tries to optimize all the method values visible here.
     Maximum evaluations should be high to achieve the best result.</p>;

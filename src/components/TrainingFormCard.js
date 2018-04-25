@@ -196,7 +196,6 @@ class TrainingFormCard extends Component {
       split_id: this.state.split_id,
       config: {
         prefix: this.state.prefix,
-        encodings: this.state.encodings,
         label: this.state.label,
       }
     };
@@ -256,10 +255,11 @@ class TrainingFormCard extends Component {
                                onChange={this.checkboxChange.bind(this)} controls={clusteringMethods}
                                value={this.state.clusterings.join(',')} controlStyle={groupStyle}/>
       </div> : null;
-    const encodingFragment = <SelectionControlGroup type="checkbox" label="Encoding methods" name="encodings"
-                                                    id="encodings"
-                                                    onChange={this.checkboxChange.bind(this)} controls={encodingMethods}
-                                                    value={this.state.encodings.join(',')} controlStyle={groupStyle}/>;
+    const encodingFragment = this.state.predictionMethod !== LABELLING ?
+      <div className="md-cell md-cell--3">
+        <SelectionControlGroup type="checkbox" label="Encoding methods" name="encodings"
+                               id="encodings" onChange={this.checkboxChange.bind(this)} controls={encodingMethods}
+                               value={this.state.encodings.join(',')} controlStyle={groupStyle}/></div> : null;
     return (
       <Card className="md-block-centered">
         <CardTitle title="Training">
@@ -279,9 +279,7 @@ class TrainingFormCard extends Component {
                                      value={this.state.predictionMethod} inline controls={predictionMethods}
                                      onChange={this.onPredictionMethodChange.bind(this)}/>
             </div>
-            <div className="md-cell md-cell--3">
-              {encodingFragment}
-            </div>
+            {encodingFragment}
             <PrefixSelector prefix={this.state.prefix} onChange={this.advanceConfigChange.bind(this)}
                             maxEventsInLog={this.props.maxEventsInLog}/>
             {clusteringFragment}

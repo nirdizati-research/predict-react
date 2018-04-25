@@ -74,12 +74,12 @@ export const encoding = [
   {
     label: 'Boolean',
     value: BOOLEAN,
-    message: 'Features represent whether or not a particular event class has occurred in the trace. Does not support 0 padding.'
+    message: 'Features represent whether or not a particular event class has occurred in the trace.'
   },
   {
     label: 'Frequency',
     value: FREQUENCY,
-    message: 'Features represent the absolute frequency of each possible event class. Event attributes are discarded. Does not support 0 padding.'
+    message: 'Features represent the absolute frequency of each possible event class. Event attributes are discarded.'
   },
   {
     label: 'Complex',

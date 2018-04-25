@@ -49,7 +49,7 @@ export const jobPropType = PropTypes.shape({
     label: PropTypes.shape(labelPropType).isRequired,
     method: PropTypes.string,
     clustering: PropTypes.string,
-    encoding: PropTypes.string.isRequired,
+    encoding: PropTypes.string,
   }).isRequired,
   created_date: PropTypes.string.isRequired,
   modified_date: PropTypes.string.isRequired,

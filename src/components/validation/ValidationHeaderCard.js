@@ -55,10 +55,10 @@ const ValidationHeaderCard = (props) => {
     }
   };
 
-  const encodings =
+  const encodings = props.predictionMethod !== LABELLING ?
     <SelectionControlGroup type="checkbox" label="Encoding methods" name="encodings" id="encodings"
                            onChange={props.filterOptionChange} controls={encoding} inline
-                           value={props.filterOptions.encodings.join(',')}/>;
+                           value={props.filterOptions.encodings.join(',')}/> : null;
   const clusterings = props.predictionMethod !== LABELLING ?
     <SelectionControlGroup type="checkbox" label="Clustering methods" name="clusterings" id="clusterings"
                            onChange={props.filterOptionChange} controls={clustering} inline

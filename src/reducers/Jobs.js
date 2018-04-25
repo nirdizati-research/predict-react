@@ -99,9 +99,6 @@ const filterByAllElse = (encodings, clusterings, classification, regression, pre
   }
 };
 
-const filterByEncoding = (encodings) => (job) => {
-  return encodings.includes(job.config.encoding);
-};
 const filterByLabelType = (labelType) => (job) => {
   return job.config.label.type === labelType;
 };
@@ -134,7 +131,7 @@ const prefixSet = (filteredJobs) => [...new Set(filteredJobs.map((job) => job.co
 const applyFilters = (jobs, splitId, predictionMethod, encodings, clusterings, classification, regression, labelType) => {
   const commonJobs = jobs.filter(filterBySplit(splitId)).filter(filterByMethod(predictionMethod)).filter(filterByLabelType(labelType));
   if (predictionMethod === LABELLING) {
-    return commonJobs.filter(filterByEncoding(encodings));
+    return commonJobs;
   }
   return commonJobs
     .filter(filterByAllElse(encodings, clusterings, classification, regression, predictionMethod));
