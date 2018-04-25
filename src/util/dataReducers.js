@@ -144,8 +144,19 @@ const makeEmptyPrefixRows = (uniqPrefs, columnSize) => {
   return uniqPrefs.map((u) => [u, ...Array.from({length: columnSize}, (_) => null)]);
 };
 
+const compareByPrefix = (a, b) => {
+  if (a.prefix_length > b.prefix_length) {
+    return -1;
+  }
+  if (a.prefix_length < b.prefix_length) {
+    return 1;
+  }
+  return 0;
+};
+
 export const makeTable = (jobs, metricName) => {
   const lineObjects = jobs.map((job) => toLineObject(job, metricName));
+  lineObjects.sort(compareByPrefix);
   const uniqueRuns = uniqueJobRuns(lineObjects);
   const header = ['Prefix length', ...uniqueRuns];
   const uniquePrefs = uniquePrefixes(lineObjects);

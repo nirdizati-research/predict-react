@@ -70,7 +70,7 @@ const ValidationHeaderCard = (props) => {
     key="type"
     id="type"
     label="Label type"
-    className="md-cell md-cell--3"
+    className="md-cell md-cell--12"
     menuItems={controls()}
     position={SelectField.Positions.BELOW}
     onChange={props.labelTypeChange}
