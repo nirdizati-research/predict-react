@@ -60,7 +60,8 @@ const AdvancedConfiguration = (props) => {
 
 
   const label = makeExpander('Labelling', '',
-    <Labelling onChange={props.onChange} label={props.label} {...props}/>, true);
+    <Labelling onChange={props.onChange} label={props.label}
+               predictionMethod={props.predictionMethod} {...props}/>, true);
 
 
   const configs = () => {

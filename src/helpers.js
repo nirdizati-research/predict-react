@@ -2,6 +2,7 @@ import {
   ATTRIBUTE_NUMBER,
   ATTRIBUTE_STRING,
   CLASSIFICATION,
+  DURATION,
   LABELLING,
   NEXT_ACTIVITY,
   REGRESSION,
@@ -29,7 +30,7 @@ export const traceAttributeShape = {
 };
 
 export const labelPropType = {
-  type: PropTypes.oneOf([NEXT_ACTIVITY, REMAINING_TIME, ATTRIBUTE_NUMBER, ATTRIBUTE_STRING]).isRequired,
+  type: PropTypes.oneOf([NEXT_ACTIVITY, REMAINING_TIME, ATTRIBUTE_NUMBER, ATTRIBUTE_STRING, DURATION]).isRequired,
   attribute_name: PropTypes.string,
   threshold_type: PropTypes.oneOf([THRESHOLD_MEAN, THRESHOLD_CUSTOM]).isRequired,
   threshold: PropTypes.number.isRequired,

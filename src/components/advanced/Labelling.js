@@ -4,8 +4,12 @@ import {Checkbox, TextField} from 'react-md/lib/index';
 import {
   ATTRIBUTE_NUMBER,
   ATTRIBUTE_STRING,
+  CLASSIFICATION,
+  classLabelControls,
   controlCreator,
-  labelTypeControls,
+  LABELLING,
+  regLabelControls,
+  REGRESSION,
   REMAINING_TIME,
   thresholdControls
 } from '../../reference';
@@ -33,12 +37,14 @@ const Labelling = (props) => {
     date. This will reduce the performance of front-end rendering due to the payload size.</p>
   </div>;
 
+  const controls = () => (props.predictionMethod === REGRESSION ? regLabelControls : classLabelControls);
+
   const type = <SelectField
     key="type"
     id="type"
     label="Label type"
     className="md-cell md-cell--3"
-    menuItems={labelTypeControls}
+    menuItems={controls()}
     position={SelectField.Positions.BELOW}
     onChange={props.onChange.bind(this, {methodConfig, key: 'type'})}
     value={props.label.type}
@@ -64,7 +70,9 @@ const Labelling = (props) => {
     onChange={props.onChange.bind(this, {methodConfig, key: 'add_elapsed_time'})}/>;
 
   const threshold = (label) => {
-    if (label.type === REMAINING_TIME || label.type === ATTRIBUTE_NUMBER) {
+    if (props.predictionMethod === REGRESSION) {
+      return [];
+    } else if (label.type === REMAINING_TIME || label.type === ATTRIBUTE_NUMBER) {
       const thresholdType = <SelectField
         key="threshold_type"
         id="threshold_type"
@@ -121,6 +129,7 @@ const Labelling = (props) => {
 Labelling.propTypes = {
   onChange: PropTypes.func.isRequired,
   label: PropTypes.shape(labelPropType).isRequired,
+  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, LABELLING]).isRequired,
   traceAttributes: PropTypes.arrayOf(PropTypes.shape(traceAttributeShape)).isRequired
 };
 export default Labelling;

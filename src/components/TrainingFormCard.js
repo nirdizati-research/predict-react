@@ -12,6 +12,7 @@ import {
   CLASSIFICATION,
   classificationMethods,
   clusteringMethods,
+  DURATION,
   encodingMethods,
   LABELLING,
   paddingControls,
@@ -145,8 +146,9 @@ class TrainingFormCard extends Component {
     // Following is a terrible hack for an uncontrolled component
     /* eslint-disable camelcase */
     const performance_metric = value === REGRESSION ? regressionMetrics[0].value : classificationMetrics[0].value;
+    const labelType = value === REGRESSION ? REMAINING_TIME : DURATION;
     this.setState({
-      predictionMethod: value,
+      predictionMethod: value, label: {...this.state.label, type: labelType},
       hyperopt: {...this.state.hyperopt, performance_metric}, ...initialAdvancedConfiguration()
     });
     this.setState((prevState, _) => {

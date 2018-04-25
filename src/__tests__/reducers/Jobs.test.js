@@ -13,7 +13,15 @@ import {
   jobsRequested,
   jobsRetrieved
 } from '../../actions/JobActions';
-import {CLASSIFICATION, NO_CLUSTER, RANDOM_FOREST, REGRESSION, REMAINING_TIME, SIMPLE_INDEX} from '../../reference';
+import {
+  CLASSIFICATION,
+  DURATION,
+  NO_CLUSTER,
+  RANDOM_FOREST,
+  REGRESSION,
+  REMAINING_TIME,
+  SIMPLE_INDEX
+} from '../../reference';
 
 const jobList = [
   {
@@ -24,7 +32,7 @@ const jobList = [
       prefix_length: 2,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
-      label: {type: REMAINING_TIME},
+      label: {type: DURATION},
       clustering: NO_CLUSTER
     },
     split: {
@@ -39,7 +47,7 @@ const jobList = [
       prefix_length: 2,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
-      label: {type: REMAINING_TIME},
+      label: {type: DURATION},
       clustering: NO_CLUSTER
     },
     split: {
@@ -69,7 +77,7 @@ const jobList = [
       prefix_length: 5,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
-      label: {type: REMAINING_TIME},
+      label: {type: DURATION},
       clustering: NO_CLUSTER
     },
     split: {
@@ -84,7 +92,7 @@ const jobList = [
       prefix_length: 4,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
-      label: {type: REMAINING_TIME},
+      label: {type: DURATION},
       clustering: NO_CLUSTER
     },
     split: {
