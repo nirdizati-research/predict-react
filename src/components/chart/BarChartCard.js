@@ -18,6 +18,10 @@ const compare = (a, b) =>{
 };
 
 const BarChartCard = (props) => {
+  // Empty data means empty rows means error
+  if (Object.keys(props.data).length === 0 && props.data.constructor === Object) {
+    return null;
+  }
   const rows = Object.keys(props.data).map((key) => [key, props.data[key]]);
 
   rows.sort(compare);
