@@ -38,7 +38,7 @@ const ValidationHeaderCard = (props) => {
     value={props.filterOptions.labelType}
   />;
   return <Card className="md-block-centered">
-    <CardTitle title="Validation selection">
+    <CardTitle title="Labelling result selection">
       <SelectField
         id="log-name-select"
         placeholder="log.xes"

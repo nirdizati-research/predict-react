@@ -48,6 +48,6 @@ class ConfigTableCard extends Component {
 ConfigTableCard.propTypes = {
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
   predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, LABELLING]).isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func
 };
 export default ConfigTableCard;

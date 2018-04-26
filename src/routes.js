@@ -8,6 +8,7 @@ import JobStatus from './views/JobStatus/JobStatus';
 import Training from './views/Training/Training';
 import Validation from './views/Validation/Validation';
 import Split from './views/Split';
+import Labelling from './views/Labelling';
 
 export default (
   <Router history={hashHistory}>
@@ -16,6 +17,7 @@ export default (
       <Route path="dashboard" name="Dashboard" component={Dashboard}/>
       <Route path="upload" name="Upload" component={Upload}/>
       <Route path="split" name="Split" component={Split}/>
+      <Route path="labelling" name="Labelling" component={Labelling}/>
       <Route path="jobStatus" name="Job status" component={JobStatus}/>
       <Route path="training" name="Training" component={Training}/>
       <Route path="validation" name="Validation" component={Validation}/>

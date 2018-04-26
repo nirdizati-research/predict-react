@@ -38,8 +38,7 @@ const JobStatusTable = (props) => {
           <TableColumn>{splitToString(split)}</TableColumn>
           <TableColumn>{error}</TableColumn>
           <TableColumn grow>
-            {props.showDeleteButton ? <code>{JSON.stringify(config, null, 2)}</code> :
-              <pre>{JSON.stringify(config, null, 2)}</pre>}
+            <pre>{JSON.stringify(config, null, 2)}</pre>
           </TableColumn>
 
         </TableRow>
