@@ -21,6 +21,9 @@ class Training extends Component {
   componentDidMount() {
     // TODO refactor this
     this.props.onRequestSplitList();
+    if (this.props.splitLabels.length > 0) {
+      this.onSplitChange(this.props.splitLabels[0].value);
+    }
   }
 
   onSplitChange(value) {

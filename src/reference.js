@@ -32,6 +32,7 @@ export const NEXT_ACTIVITY = 'next_activity';
 export const REMAINING_TIME = 'remaining_time';
 export const ATTRIBUTE_NUMBER = 'attribute_number';
 export const ATTRIBUTE_STRING = 'attribute_string';
+export const DURATION = 'duration';
 
 export const THRESHOLD_MEAN = 'threshold_mean';
 export const THRESHOLD_CUSTOM = 'threshold_custom';
@@ -139,10 +140,20 @@ const threshold = [
   }
 ];
 
-const labelTypes = [
+const regressionLabelTypes = [
   {
     value: REMAINING_TIME,
     label: 'Remaining time ',
+  },
+  {
+    value: ATTRIBUTE_NUMBER,
+    label: 'Trace number attribute',
+  }
+];
+const classificationLabelTypes = [
+  {
+    value: DURATION,
+    label: 'Trace duration',
     message: 'Binary classification'
   },
   {
@@ -226,7 +237,8 @@ export const classificationMethods = controlCreator(classification);
 export const regressionMethods = controlCreator(regression);
 export const predictionMethods = controlCreator(predictions);
 export const thresholdControls = controlCreator(threshold);
-export const labelTypeControls = controlCreator(labelTypes);
+export const regLabelControls = controlCreator(regressionLabelTypes);
+export const classLabelControls = controlCreator(classificationLabelTypes);
 export const paddingControls = controlCreator(padding);
 export const prefixTypeControls = controlCreator(prefixTypes);
 

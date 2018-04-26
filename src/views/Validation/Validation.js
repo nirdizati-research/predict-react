@@ -125,7 +125,7 @@ const mapStateToProps = (state) => ({
   uniqueSplits: state.jobs.uniqueSplits,
   splitId: state.jobs.splitId,
   predictionMethod: state.jobs.predictionMethod,
-  prefixLengths: state.jobs.prefixLengths,
+  prefixLengths: state.jobs.prefixLengths.sort((a, b) => (a - b)),
   selectedPrefixes: state.jobs.selectedPrefixes,
   filterOptions: (({encodings, clusterings, classification, regression, labelType}) => ({
     encodings,

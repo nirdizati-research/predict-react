@@ -10,11 +10,12 @@ import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
 import {
   CLASSIFICATION,
   classificationMethods,
+  classLabelControls,
   clustering,
   encoding,
   LABELLING,
-  labelTypeControls,
   predictionMethods,
+  regLabelControls,
   REGRESSION,
   regressionMethods
 } from '../../reference';
@@ -64,12 +65,13 @@ const ValidationHeaderCard = (props) => {
                            onChange={props.filterOptionChange} controls={clustering} inline
                            value={props.filterOptions.clusterings.join(',')}/> : null;
 
+  const controls = () => (props.predictionMethod === REGRESSION ? regLabelControls : classLabelControls);
   const labelType = <SelectField
     key="type"
     id="type"
     label="Label type"
-    className="md-cell md-cell--3"
-    menuItems={labelTypeControls}
+    className="md-cell md-cell--12"
+    menuItems={controls()}
     position={SelectField.Positions.BELOW}
     onChange={props.labelTypeChange}
     value={props.filterOptions.labelType}

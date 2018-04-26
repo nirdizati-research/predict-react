@@ -70,9 +70,8 @@ class ControlledLineChartCard extends Component {
       legend_toggle
     />;
     return <Card className="md-block-centered">
-      <CardTitle title={`Prefix length by ${this.state.metricName}`}/>
+      <CardTitle title={`Prefix length by `}>{this.getSelector()}</CardTitle>
       <CardText>
-        {this.getSelector()}
         {rows.length === 0 ? 'No data' : chart}
       </CardText>
     </Card>;

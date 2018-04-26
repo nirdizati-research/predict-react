@@ -18,6 +18,7 @@ import {
   BOOLEAN,
   COMPLEX,
   DECISION_TREE,
+  DURATION,
   FREQUENCY,
   KMEANS,
   KNN,
@@ -28,6 +29,7 @@ import {
   NO_CLUSTER,
   RANDOM_FOREST,
   REGRESSION,
+  REMAINING_TIME,
   SIMPLE_INDEX
 } from '../reference';
 
@@ -49,7 +51,7 @@ const initialFilters = {
   clusterings: [NO_CLUSTER, KMEANS],
   classification: [KNN, DECISION_TREE, RANDOM_FOREST],
   regression: [LINEAR, LASSO, RANDOM_FOREST],
-  labelType: 'remaining_time'
+  labelType: REMAINING_TIME
 };
 
 const mergeIncomingJobs = (incoming, existing) => {
@@ -201,10 +203,11 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
       };
     }
     case FILTER_PREDICTION_METHOD_CHANGED: {
-      const filteredJobs = applyFilters(state.jobs, state.splitId, action.method, initialFilters.encodings, initialFilters.clusterings, initialFilters.classification, initialFilters.regression, initialFilters.labelType);
+      const labelType = action.method === REGRESSION ? REMAINING_TIME : DURATION;
+      const filteredJobs = applyFilters(state.jobs, state.splitId, action.method, initialFilters.encodings, initialFilters.clusterings, initialFilters.classification, initialFilters.regression, labelType);
       const prefixLengths = prefixSet(filteredJobs);
       return {
-        ...state, filteredJobs, prefixLengths, ...initialFilters,
+        ...state, filteredJobs, prefixLengths, ...initialFilters, labelType,
         predictionMethod: action.method, selectedPrefixes: prefixLengths
       };
     }
