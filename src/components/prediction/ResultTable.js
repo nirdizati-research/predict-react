@@ -22,7 +22,6 @@ class ResultTable extends Component {
   }
   render () {
   const headers = ['id', 'Type', 'Status', 'Created date', 'Modified date', 'Split', 'Config', 'results'];
-
   const jobs = this.props.jobs.reverse();
   return (<DataTable baseId="simple-pagination" plain>
     <TableHeader>
@@ -39,8 +38,8 @@ class ResultTable extends Component {
           <TableColumn>{new Date(created_date).toLocaleString()}</TableColumn>
           <TableColumn>{new Date(modified_date).toLocaleString()}</TableColumn>
           <TableColumn>{splitToString(split)}</TableColumn>
-          <TableColumn grow><pre>{JSON.stringify(config, null, 2)}</pre></TableColumn>
-          <TableColumn>{result}</TableColumn>
+          <TableColumn><pre>{JSON.stringify(config, null, 2)}</pre></TableColumn>
+          <TableColumn>{result.map(t => <span>{t},<br/></span>)}</TableColumn>
         </TableRow>
       ))}
     </TableBody>
