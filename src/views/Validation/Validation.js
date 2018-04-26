@@ -25,11 +25,16 @@ class Validation extends Component {
     this.props.onSplitChange(splitId);
   }
 
+  componentWillReceiveProps(_) {
+    if (this.props.predictionMethod === LABELLING) {
+      this.props.onMethodChange(REGRESSION);
+    }
+  }
+
   componentDidMount() {
     if (this.props.jobs.length === 0) {
       this.props.onRequestJobs();
     }
-    this.props.onMethodChange(REGRESSION);
   }
 
   onChangeMethod(method) {
@@ -41,8 +46,10 @@ class Validation extends Component {
     const splitLabels = splitsToString(this.props.uniqueSplits);
     const prefixStrings = this.props.prefixLengths.map((p) => p + '');
 
-    const results =
-      <ResultWrapper jobs={this.props.jobs} predictionMethod={this.props.predictionMethod}/>;
+    // Dont render before componentWillReceiveProps has finished dispatch
+    if (this.props.predictionMethod === LABELLING) {
+      return null;
+    }
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
@@ -59,7 +66,7 @@ class Validation extends Component {
         <div className="md-cell md-cell--12">
           <ConfigTableCard jobs={this.props.jobs} predictionMethod={this.props.predictionMethod}/>
         </div>
-        {results}
+        <ResultWrapper jobs={this.props.jobs} predictionMethod={this.props.predictionMethod}/>
       </div>
     );
   }

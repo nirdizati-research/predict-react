@@ -35,7 +35,8 @@ const prepareData = (jobs, predictionMethod) => {
       return regressionMap(jobs);
     case CLASSIFICATION:
       return classMap(jobs);
-    // no default
+    default:
+      return [];
   }
 };
 

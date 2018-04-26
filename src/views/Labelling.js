@@ -8,20 +8,32 @@ import {
   FILTER_PREFIX_LENGTH_CHANGED,
   FILTER_REMAINING_TIME_CHANGED,
   FILTER_SPLIT_CHANGED,
-  jobsRequested
+  jobsRequested,
+  submitTraining
 } from '../actions/JobActions';
-import {jobPropType} from '../helpers';
+import {jobPropType, splitLabels} from '../helpers';
 import {splitsToString} from '../util/dataReducers';
 import BarChartCard from '../components/chart/BarChartCard';
 import LabellingHeaderCard from '../components/Labelling/LabellingHeaderCard';
+import TrainingFormCard from '../components/TrainingFormCard';
+import {splitsRequested} from '../actions/SplitActions';
+import {getLogProperties} from '../util/splitStuff';
 
 class Labelling extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      maxEventsInLog: 0,
+      traceAttributes: [],
       clickedJobId: null
     };
+  }
+
+  componentWillReceiveProps(_) {
+    if (this.props.predictionMethod !== LABELLING) {
+      this.props.onMethodChange(LABELLING);
+    }
   }
 
   onChangePrefix(prefixLength) {
@@ -33,14 +45,21 @@ class Labelling extends Component {
   }
 
   componentDidMount() {
+    this.props.onRequestSplitList();
+    if (this.props.splitLabels.length > 0) {
+      this.onSplitChange(this.props.splitLabels[0].value);
+    }
     if (this.props.jobs.length === 0) {
       this.props.onRequestJobs();
     }
-    this.props.onMethodChange(LABELLING);
   }
 
   onJobClick(id) {
     this.setState({clickedJobId: id});
+  }
+
+  onSplitChange(splitId) {
+    this.setState(getLogProperties(this.props.splits, splitId));
   }
 
   render() {
@@ -63,8 +82,18 @@ class Labelling extends Component {
                       chartTitle="Label"/></div>;
     };
 
+    // Dont render before componentWillReceiveProps has finished dispatch
+    if (this.props.predictionMethod !== LABELLING) {
+      return null;
+    }
     return (
       <div className="md-grid">
+        <div className="md-cell md-cell--12">
+          <TrainingFormCard fetchState={this.props.fetchState} onSubmit={this.props.onSubmitTraining}
+                            onSplitChange={this.onSplitChange.bind(this)} maxEventsInLog={this.state.maxEventsInLog}
+                            traceAttributes={this.state.traceAttributes} splitLabels={this.props.splitLabels}
+                            isLabelForm={true}/>
+        </div>
         <div className="md-cell md-cell--12">
           <LabellingHeaderCard splitLabels={splitLabels} fetchState={this.props.fetchState}
                                splitChange={this.onChangeSplit.bind(this)}
@@ -93,6 +122,10 @@ Labelling.propTypes = {
   onRequestJobs: PropTypes.func.isRequired,
   onSplitChange: PropTypes.func.isRequired,
   onMethodChange: PropTypes.func.isRequired,
+  onSubmitTraining: PropTypes.func.isRequired,
+  splitLabels: splitLabels,
+  splits: PropTypes.any,
+  onRequestSplitList: PropTypes.func.isRequired,
   onPrefixChange: PropTypes.func.isRequired,
   labelTypeChange: PropTypes.func.isRequired,
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
@@ -107,6 +140,8 @@ Labelling.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+  splitLabels: splitsToString(state.splits.splits),
+  splits: state.splits.splits,
   jobs: state.jobs.filteredJobs,
   fetchState: state.jobs.fetchState,
   uniqueSplits: state.jobs.uniqueSplits,
@@ -121,6 +156,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onRequestJobs: () => dispatch(jobsRequested()),
+  onRequestSplitList: () => dispatch(splitsRequested()),
+  onSubmitTraining: (payload) => dispatch(submitTraining(payload)),
   labelTypeChange: (value) => dispatch({
     type: FILTER_REMAINING_TIME_CHANGED,
     payload: {name: 'labelType', value: value}
