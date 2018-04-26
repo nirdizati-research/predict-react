@@ -8,8 +8,9 @@ import {TableRow} from 'react-md/lib/DataTables/index';
 import {TableColumn} from 'react-md';
 import RegConfigTable from '../../../components/validation/RegConfigTable';
 import ConfigTableCard from '../../../components/validation/ConfigTableCard';
-import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../../reference';
+import {CLASSIFICATION, REGRESSION} from '../../../reference';
 import {jobToValidationTable} from '../../../util/dataReducers';
+import {label1} from '../../../../stories/Advanced';
 
 const regJobs = [{
   'id': 53,
@@ -21,6 +22,7 @@ const regJobs = [{
     'clustering': 'noCluster',
     'method': 'linear',
     'padding': 'zero_padding',
+    'label': label1,
     'regression.linear': {}
   },
   'status': 'created',
@@ -45,13 +47,12 @@ const classJobs = [{
   'created_date': '2018-02-07T09:13:52.964154Z',
   'modified_date': '2018-02-07T09:13:52.964256Z',
   'config': {
-    'rule': 'remaining_time',
     'prefix_length': 1,
-    'threshold': 'default',
     'encoding': 'simpleIndex',
     'clustering': 'noCluster',
     'method': 'randomForest',
     'padding': 'zero_padding',
+    'label': label1,
     'classification.randomForest': {}
   },
   'status': 'created',
@@ -72,7 +73,7 @@ const classJobs = [{
 }];
 
 describe('ConfigTableCard', () => {
-  const element = shallow(<ConfigTableCard jobs={[]} predictionMethod={CLASSIFICATION}/>);
+  const element = shallow(<ConfigTableCard jobs={[]} predictionMethod={CLASSIFICATION} onClick={jest.fn()}/>);
   it('renders', () => {
     expect(element).toBeDefined();
   });
@@ -80,11 +81,6 @@ describe('ConfigTableCard', () => {
   it('does not render classification table', () => {
     element.setProps({predictionMethod: CLASSIFICATION});
     expect(element.find(ClassConfigTable).length).toBe(0);
-  });
-
-  it('does not render next activity table', () => {
-    element.setProps({predictionMethod: NEXT_ACTIVITY});
-    expect(element.find(RegConfigTable).length).toBe(0);
   });
 
   it('does not render regression table', () => {
@@ -99,7 +95,7 @@ describe('ClassConfigTable', () => {
     expect(element).toBeDefined();
     // Header row
     expect(element.find(TableRow).length).toBe(1);
-    expect(element.find(TableColumn).length).toBe(11);
+    expect(element.find(TableColumn).length).toBe(12);
   });
 
   it('renders jobs if present', () => {
@@ -115,7 +111,7 @@ describe('RegConfigTable', () => {
     expect(element).toBeDefined();
     // Header row
     expect(element.find(TableRow).length).toBe(1);
-    expect(element.find(TableColumn).length).toBe(9);
+    expect(element.find(TableColumn).length).toBe(12);
   });
 
   it('renders jobs if present', () => {

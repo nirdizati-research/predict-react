@@ -1,7 +1,7 @@
 /**
  * Created by tonis.kasekamp on 10/11/17.
  */
-import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
+import {CLASSIFICATION, REGRESSION} from '../../reference';
 
 const tableColumns = [
   {
@@ -129,8 +129,6 @@ export const getChartHeader = (predictionMethod) => {
       return regColumns;
     case CLASSIFICATION:
       return classColumns;
-    case NEXT_ACTIVITY:
-      return classColumns;
     // no default
   }
 };
@@ -140,8 +138,6 @@ export const getPrefixChartHeader = (predictionMethod) => {
     case REGRESSION:
       return prefixColumnsReg;
     case CLASSIFICATION:
-      return prefixColumnsClass;
-    case NEXT_ACTIVITY:
       return prefixColumnsClass;
     // no default
   }
@@ -157,8 +153,6 @@ export const getTitles = (predictionMethod) => {
       return regTitles;
     case CLASSIFICATION:
       return classTitles;
-    case NEXT_ACTIVITY:
-      return classTitles;
     // no default
   }
 };
@@ -168,8 +162,6 @@ export const getTableHeader = (predictionMethod) => {
     case REGRESSION:
       return regTableColumns;
     case CLASSIFICATION:
-      return classTableColumns;
-    case NEXT_ACTIVITY:
       return classTableColumns;
     // no default
   }

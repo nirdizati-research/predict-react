@@ -4,7 +4,7 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import {CardTitle} from 'react-md';
-import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../../reference';
+import {CLASSIFICATION, REGRESSION} from '../../../reference';
 import ResultTableCard from '../../../components/validation/ResultTableCard';
 import {Chart} from 'react-google-charts';
 
@@ -35,10 +35,5 @@ describe('ResultTableCard', () => {
   it('renders regression table', () => {
     element.setProps({predictionMethod: REGRESSION});
     expect(element.find(CardTitle).props().title).toMatch(REGRESSION);
-  });
-
-  it('renders next activity table', () => {
-    element.setProps({predictionMethod: NEXT_ACTIVITY});
-    expect(element.find(CardTitle).props().title).toMatch(NEXT_ACTIVITY);
   });
 });

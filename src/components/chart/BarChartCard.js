@@ -4,7 +4,6 @@
 import React from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import PropTypes from 'prop-types';
-import FetchState from '../FetchState';
 import {Chart} from 'react-google-charts';
 
 // Custom compare because why not
@@ -19,13 +18,18 @@ const compare = (a, b) =>{
 };
 
 const BarChartCard = (props) => {
+  // Empty data means empty rows means error
+  if (Object.keys(props.data).length === 0 && props.data.constructor === Object) {
+    return null;
+  }
   const rows = Object.keys(props.data).map((key) => [key, props.data[key]]);
 
   rows.sort(compare);
   const opts = {
     legend: 'none',
     hAxis: {
-      title: props.hTitle
+      title: props.hTitle,
+      minValue: 0
     },
     vAxis: {
       title: props.chartTitle
@@ -53,7 +57,6 @@ const BarChartCard = (props) => {
         width="100%"
         legend_toggle
       />
-      <FetchState fetchState={props.fetchState}/>
     </CardText>
   </Card>;
 };
@@ -67,7 +70,7 @@ BarChartCard.propTypes = {
   fetchState: PropTypes.shape({
     inFlight: PropTypes.bool.isRequired,
     error: PropTypes.any
-  }).isRequired,
+  }),
 };
 
 export default BarChartCard;

@@ -3,20 +3,16 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
+import {CLASSIFICATION, REGRESSION} from '../../reference';
 import ResultTableCard from './ResultTableCard';
 import {getChartHeader, getPrefixChartHeader, getTitles} from './ColumnHelper';
 import BubbleChartCard from '../chart/BubbleChartCard';
 import {jobPropType} from '../../helpers';
 import ControlledLineChartCard from '../chart/ControlledLineChartCard';
-
-const shortRun = (config) => {
-  return `${config.method}_${config.encoding}_${config.clustering}`;
-};
-
+import {toRun} from '../../util/dataReducers';
 
 const regressionMap = (jobs) => {
-  return jobs.map((job) => [job.id + '', shortRun(job.config),
+  return jobs.map((job) => [job.id + '', toRun(job),
     job.result.mae, job.result.rmse, job.result.rscore, job.config.prefix_length + '']);
 };
 
@@ -28,7 +24,7 @@ const classMap = (jobs) => {
     const trueNegative = job.result.true_negative || 0;
     const falsePositive = job.result.false_positive || 0;
     const falseNegative = job.result.false_negative || 0;
-    return [job.id + '', shortRun(job.config), job.result.f1score, job.result.acc, job.result.auc,
+    return [job.id + '', toRun(job), job.result.f1score, job.result.acc, job.result.auc,
       job.config.prefix_length + '', precision, recall, truePositive, trueNegative, falsePositive, falseNegative];
   });
 };
@@ -38,8 +34,6 @@ const prepareData = (jobs, predictionMethod) => {
     case REGRESSION:
       return regressionMap(jobs);
     case CLASSIFICATION:
-      return classMap(jobs);
-    case NEXT_ACTIVITY:
       return classMap(jobs);
     // no default
   }
@@ -118,7 +112,7 @@ const ResultWrapper = (props) => {
 
 ResultWrapper.propTypes = {
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
+  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION]).isRequired,
 };
 
 export default ResultWrapper;

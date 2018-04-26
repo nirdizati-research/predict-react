@@ -5,8 +5,7 @@ import {Checkbox, TextField} from 'react-md/lib/index';
 const defaults = {
   'alpha': 1.0,
   'fit_intercept': true,
-  'normalize': false,
-  'copy_X': true
+  'normalize': false
 };
 /* eslint-disable no-invalid-this */
 const RegressionLasso = (props) => {
@@ -40,17 +39,8 @@ const RegressionLasso = (props) => {
     defaultChecked={defaults.normalize}
     onChange={props.onChange.bind(this, {methodConfig, key: 'normalize'})}
   />;
-  const copyX = <Checkbox
-    key="copy_X"
-    id={`${methodConfig}.copy_X`}
-    name="copy_X"
-    label="copy_X"
-    className="md-cell md-cell--3"
-    defaultChecked={defaults.copy_X}
-    onChange={props.onChange.bind(this, {methodConfig, key: 'copy_X'})}
-  />;
 
-  return [alpha, fitIntercept, normalize, copyX];
+  return [alpha, fitIntercept, normalize];
 };
 
 RegressionLasso.propTypes = {

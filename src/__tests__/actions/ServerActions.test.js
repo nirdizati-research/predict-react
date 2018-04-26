@@ -1,8 +1,9 @@
 import {
+  deleteJob,
   getJobResults, getJobs, getLogInfo, getLogList, getSplits, postSplit,
   postTraining
 } from '../../actions/ServerActions';
-import {jobsFailed, jobsRetrieved, trainingFailed, trainingSucceeded} from '../../actions/JobActions';
+import {JOB_DELETED, jobsFailed, jobsRetrieved, trainingFailed, trainingSucceeded} from '../../actions/JobActions';
 import {
   changeVisibleLog,
   logInfoFailed,
@@ -122,6 +123,17 @@ describe('ServerActions', function () {
       mockXHR.onreadystatechange();
 
       expect(dispatch.mock.calls[0][0]).toEqual(logInfoFailed({logId: 1, error: error.error}));
+    });
+  });
+
+  describe('delete job', () => {
+    it('dispatches jobDeleted on success', () => {
+      mockXHR.responseText = JSON.stringify(logs);
+
+      deleteJob({id: 1})(dispatch);
+      mockXHR.onreadystatechange();
+
+      expect(dispatch.mock.calls[0][0]).toEqual({type: JOB_DELETED, id: 1});
     });
   });
 

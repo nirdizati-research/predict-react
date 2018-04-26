@@ -1,8 +1,9 @@
 import {
+  deleteJob,
   getJobResults, getJobs, getLogInfo, getLogList, getSplits, postSplit,
   postTraining, getPrediction, getModels
 } from '../actions/ServerActions';
-import {JOB_RESULTS_REQUESTED, JOBS_REQUESTED, TRAINING_SUBMITTED} from '../actions/JobActions';
+import {JOB_DELETE_REQUESTED, JOB_RESULTS_REQUESTED, JOBS_REQUESTED, TRAINING_SUBMITTED} from '../actions/JobActions';
 import {LOG_INFO_REQUESTED, LOG_LIST_REQUESTED} from '../actions/LogActions';
 import {SPLIT_SUBMITTED, SPLITS_REQUESTED} from '../actions/SplitActions';
 import {MODELS_REQUESTED} from '../actions/ModelActions';
@@ -18,6 +19,7 @@ const ACTION_TYPE_TO_SERVER_ACTION = {
   [SPLIT_SUBMITTED]: postSplit,
   [PREDICTION_SUBMITTED]: getPrediction,
   [MODELS_REQUESTED]: getModels,
+  [JOB_DELETE_REQUESTED]: deleteJob
 };
 
 const serverMiddleware = (store) => (next) => (action) => {

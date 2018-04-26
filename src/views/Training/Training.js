@@ -13,13 +13,17 @@ class Training extends Component {
     super();
 
     this.state = {
-      maxEventsInLog: 0
+      maxEventsInLog: 0,
+      traceAttributes: []
     };
   }
 
   componentDidMount() {
     // TODO refactor this
     this.props.onRequestSplitList();
+    if (this.props.splitLabels.length > 0) {
+      this.onSplitChange(this.props.splitLabels[0].value);
+    }
   }
 
   onSplitChange(value) {
@@ -38,7 +42,7 @@ class Training extends Component {
     const max = arr.reduce(function (a, b) {
       return Math.max(a, b);
     });
-    this.setState({maxEventsInLog: max});
+    this.setState({maxEventsInLog: max, traceAttributes: logs[0].properties.traceAttributes});
   }
 
   render() {
@@ -46,7 +50,7 @@ class Training extends Component {
       <div className="md-grid">
         <div className="md-cell md-cell--12">
           <TrainingFormCard splitLabels={this.props.splitLabels} fetchState={this.props.fetchState}
-                            maxEventsInLog={this.state.maxEventsInLog}
+                            maxEventsInLog={this.state.maxEventsInLog} traceAttributes={this.state.traceAttributes}
                             onSubmit={this.props.onSubmitTraining} onSplitChange={this.onSplitChange.bind(this)}/>
         </div>
       </div>

@@ -1,16 +1,13 @@
-/**
- * Created by tonis.kasekamp on 10/9/17.
- */
 import React, {PureComponent} from 'react';
 import {DataTable, TableBody, TableColumn, TableHeader, TablePagination, TableRow} from 'react-md/lib/DataTables/index';
 import PropTypes from 'prop-types';
 import {columnStyle} from '../../reference';
-import {jobFlatPropType} from '../../helpers';
+import {labelJobFlat} from '../../helpers';
 
 /* eslint-disable camelcase */
 
 /* eslint-disable max-len */
-class ClassConfigTable extends PureComponent {
+class LabelConfigTable extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {slicedData: this.props.jobs.slice(0, 10)};
@@ -28,8 +25,7 @@ class ClassConfigTable extends PureComponent {
   }
 
   render() {
-    const headers = ['id', 'Type', 'Encoding', 'Clustering', 'Method', 'Label',
-        'Prefix length', 'Padding', 'Create models', 'HyperOpt', 'Advanced configuration', 'Split'];
+    const headers = ['id', 'Label type', 'Threshold type', 'Threshold', 'Attribute name', 'Prefix length', 'Padding', 'Split', 'Result'];
 
     return (<DataTable baseId="simple-pagination" plain>
       <TableHeader>
@@ -39,26 +35,18 @@ class ClassConfigTable extends PureComponent {
       </TableHeader>
       <TableBody>
         {this.state.slicedData.map((job) => (
-          <TableRow key={job.id}>
+          <TableRow key={job.id} onClick={this.props.onClick.bind(this, job.id)}>
             <TableColumn style={columnStyle}>{job.id}</TableColumn>
-            <TableColumn style={columnStyle}>{job.type}</TableColumn>
-            <TableColumn style={columnStyle}>{job.encoding}</TableColumn>
-            <TableColumn style={columnStyle}>{job.clustering}</TableColumn>
-            <TableColumn style={columnStyle}>{job.method}</TableColumn>
-            <TableColumn style={columnStyle}>
-              <pre>{JSON.stringify(job.label, null, 1)}</pre>
-            </TableColumn>
+            <TableColumn style={columnStyle}>{job.label.type}</TableColumn>
+            <TableColumn style={columnStyle}>{job.label.threshold_type}</TableColumn>
+            <TableColumn style={columnStyle} numeric>{job.label.threshold}</TableColumn>
+            <TableColumn style={columnStyle}>{job.label.attribute_name}</TableColumn>
             <TableColumn style={columnStyle} numeric>{job.prefix_length}</TableColumn>
             <TableColumn style={columnStyle} numeric>{job.padding}</TableColumn>
-            <TableColumn style={columnStyle}>{JSON.stringify(job.create_models, null, 1)}</TableColumn>
-            <TableColumn style={columnStyle}>
-              <pre>{JSON.stringify(job.hyperopt, null, 1)}</pre>
-            </TableColumn>
-            <TableColumn style={columnStyle}>
-              <pre>{JSON.stringify(job.advanced, null, 1)}</pre>
-            </TableColumn>
             <TableColumn style={columnStyle} grow>{job.splitName}</TableColumn>
-
+            <TableColumn style={columnStyle}>
+              <pre>{JSON.stringify(job.result, null, 1)}</pre>
+            </TableColumn>
           </TableRow>
         ))}
       </TableBody>
@@ -68,8 +56,9 @@ class ClassConfigTable extends PureComponent {
   }
 }
 
-ClassConfigTable.propTypes = {
-  jobs: PropTypes.arrayOf(jobFlatPropType).isRequired
+LabelConfigTable.propTypes = {
+  jobs: PropTypes.arrayOf(labelJobFlat).isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
-export default ClassConfigTable;
+export default LabelConfigTable;

@@ -7,7 +7,7 @@ import LineChartCard from '../src/components/chart/LineChartCard';
 import BubbleChartCard from '../src/components/chart/BubbleChartCard';
 import ResultTableCard from '../src/components/validation/ResultTableCard';
 import {getChartHeader} from '../src/components/validation/ColumnHelper';
-import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../src/reference';
+import {CLASSIFICATION, REGRESSION} from '../src/reference';
 import BarChartCard from '../src/components/chart/BarChartCard';
 
 const fetchState = {inFlight: false};
@@ -128,6 +128,12 @@ storiesOf('Charts', module)
                         chartTitle="Events"/>
         </div>
         <div className="md-cell md-cell--12">
+          <BarChartCard data={{'true': 343, 'false': 3434}}
+                        cardTitle="Lablels"
+                        hTitle="Number of Executionsasdad"
+                        chartTitle="asdasfd"/>
+        </div>
+        <div className="md-cell md-cell--12">
           <BarChartCard fetchState={fetchState}
                         data={eventsInTrace}
                         cardTitle="Number of events in trace"
@@ -178,10 +184,6 @@ storiesOf('Charts', module)
           <div className="md-cell md-cell--12">
             <ResultTableCard fetchState={fetchState}
                              data={regTableData} predictionMethod={REGRESSION}/>
-          </div>
-          <div className="md-cell md-cell--12">
-            <ResultTableCard fetchState={fetchState}
-                             data={regTableData} predictionMethod={NEXT_ACTIVITY}/>
           </div>
         </div>
       );

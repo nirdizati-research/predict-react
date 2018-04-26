@@ -5,7 +5,7 @@ import {Chart} from 'react-google-charts';
 import {jobPropType} from '../../helpers';
 import {makeLabels, makeTable} from '../../util/dataReducers';
 import SelectField from 'react-md/lib/SelectFields/index';
-import {CLASSIFICATION, NEXT_ACTIVITY, REGRESSION} from '../../reference';
+import {CLASSIFICATION, REGRESSION} from '../../reference';
 
 /* eslint-disable no-unused-vars */
 class ControlledLineChartCard extends Component {
@@ -70,9 +70,8 @@ class ControlledLineChartCard extends Component {
       legend_toggle
     />;
     return <Card className="md-block-centered">
-      <CardTitle title={`Prefix length by ${this.state.metricName}`}/>
+      <CardTitle title={`Prefix length by `}>{this.getSelector()}</CardTitle>
       <CardText>
-        {this.getSelector()}
         {rows.length === 0 ? 'No data' : chart}
       </CardText>
     </Card>;
@@ -81,7 +80,7 @@ class ControlledLineChartCard extends Component {
 
 ControlledLineChartCard.propTypes = {
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, NEXT_ACTIVITY]).isRequired,
+  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION]).isRequired,
 };
 
 export default ControlledLineChartCard;

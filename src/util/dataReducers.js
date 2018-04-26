@@ -1,7 +1,7 @@
 /**
  * Created by Tõnis Kasekamp on 18.12.2017.
  */
-import {REGRESSION, SPLIT_SINGLE} from '../reference';
+import {CLASSIFICATION, REGRESSION, SPLIT_SINGLE} from '../reference';
 
 // TODO use this in split table
 export const normalizeSplits = (splits) => {
@@ -98,9 +98,12 @@ export const jobToValidationTable = (job) => {
       splitName: splitToString(job.split),
       prefix_length: job.config.prefix_length,
       padding: job.config.padding,
+      hyperopt: job.config.hyperopt,
+      label: job.config.label,
+      create_models: job.config.create_models,
       advanced: job.config[`${REGRESSION}.${job.config.method}`]
     };
-  } else {
+  } else if (job.type === CLASSIFICATION) {
     return {
       id: job.id,
       type: job.type,
@@ -109,16 +112,27 @@ export const jobToValidationTable = (job) => {
       method: job.config.method,
       splitName: splitToString(job.split),
       prefix_length: job.config.prefix_length,
-      rule: job.config.rule,
-      threshold: job.config.threshold,
       padding: job.config.padding,
+      hyperopt: job.config.hyperopt,
+      label: job.config.label,
+      create_models: job.config.create_models,
       advanced: job.config[`${job.type}.${job.config.method}`]
+    };
+  } else {
+    return {
+      id: job.id,
+      encoding: job.config.encoding,
+      splitName: splitToString(job.split),
+      prefix_length: job.config.prefix_length,
+      padding: job.config.padding,
+      label: job.config.label,
+      result: job.result
     };
   }
 };
 
-const toRun = (job) => {
-  return `${job.config.encoding}_${job.config.method}_${job.config.clustering}`;
+export const toRun = (job) => {
+  return `${job.config.method}_${job.config.encoding}_${job.config.clustering}_${job.config.label.type}`;
 };
 
 const toLineObject = (job, metricName) => {
@@ -146,8 +160,19 @@ const makeEmptyPrefixRows = (uniqPrefs, columnSize) => {
   return uniqPrefs.map((u) => [u, ...Array.from({length: columnSize}, (_) => null)]);
 };
 
+const compareByPrefix = (a, b) => {
+  if (a.prefix_length > b.prefix_length) {
+    return -1;
+  }
+  if (a.prefix_length < b.prefix_length) {
+    return 1;
+  }
+  return 0;
+};
+
 export const makeTable = (jobs, metricName) => {
   const lineObjects = jobs.map((job) => toLineObject(job, metricName));
+  lineObjects.sort(compareByPrefix);
   const uniqueRuns = uniqueJobRuns(lineObjects);
   const header = ['Prefix length', ...uniqueRuns];
   const uniquePrefs = uniquePrefixes(lineObjects);

@@ -1,6 +1,7 @@
 import {SERVER_URL} from '../constants';
 import jsonAjax from '../JSONAjaxRequest';
 import {
+  JOB_DELETED,
   jobsFailed,
   jobsRetrieved,
   trainingFailed,
@@ -111,3 +112,12 @@ export const getPrediction = ({payload}) => (dispatch) => {
     ({error}) => dispatch(predictionFailed(error))
   );
 };
+
+export const deleteJob = ({id}) => (dispatch) => {
+  jsonAjax(
+    SERVER_URL + `/jobs/${id}`,
+    'DELETE',
+    null,
+    () => dispatch({type: JOB_DELETED, id: id}),
+    ({error}) => {}
+  };
