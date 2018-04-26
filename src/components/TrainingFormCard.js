@@ -260,14 +260,14 @@ class TrainingFormCard extends Component {
                 checked={this.state.create_models} inline
                 onChange={this.checkboxChange.bind(this)}/> : null;
     const clusteringFragment = !this.props.isLabelForm ?
-      <div className="md-cell md-cell--3">
+      <div className="md-cell md-cell--4">
         <SelectionControlGroup type="checkbox" label="Clustering methods" name="clusterings" id="clusterings"
                                onChange={this.checkboxChange.bind(this)} controls={clusteringMethods}
                                value={this.state.clusterings.join(',')} controlStyle={groupStyle}/>
       </div> : null;
     const encodingFragment = !this.props.isLabelForm ?
-      <div className="md-cell md-cell--3">
-        <SelectionControlGroup type="checkbox" label="Encoding methods" name="encodings"
+      <div className="md-cell md-cell--4">
+        <SelectionControlGroup type="checkbox" label="Encoding methods" name="encodings" inline
                                id="encodings" onChange={this.checkboxChange.bind(this)} controls={encodingMethods}
                                value={this.state.encodings.join(',')} controlStyle={groupStyle}/></div> : null;
     return (
@@ -286,11 +286,11 @@ class TrainingFormCard extends Component {
           <div className="md-grid md-grid--no-spacing">
             {predictionControls}
             {encodingFragment}
-            <PrefixSelector prefix={this.state.prefix} onChange={this.advanceConfigChange.bind(this)}
-                            maxEventsInLog={this.props.maxEventsInLog}/>
-            {clusteringFragment}
             {regressionFragment}
             {classificationFragment}
+            {clusteringFragment}
+            <PrefixSelector prefix={this.state.prefix} onChange={this.advanceConfigChange.bind(this)}
+                            maxEventsInLog={this.props.maxEventsInLog}/>
           </div>
         </CardText>
         <AdvancedConfiguration classification={this.state.classification} regression={this.state.regression}
