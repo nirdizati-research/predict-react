@@ -27,4 +27,17 @@ storiesOf('TrainingFormCard', module)
         </div>
       );
     }
-  );
+  )
+  .add('labelling', () => {
+      return (
+        <div className="md-grid">
+          <div className="md-cell md-cell--12">
+            <TrainingFormCard splitLabels={splitsToString(splits)} fetchState={{inFlight: false}} onSubmit={(_) => _}
+                              onSplitChange={(_) => _} maxEventsInLog={10} traceAttributes={traceAttributes}
+                              isLabelForm={true}/>
+          </div>
+        </div>
+      );
+    }
+  )
+;

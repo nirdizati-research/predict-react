@@ -32,15 +32,17 @@ class PrefixSelector extends Component {
   }
 
   render() {
-    return <div className="md-cell md-cell--3">
-      <SelectionControlGroup type="radio" name="padding" id="padding" label="Encoded log padding"
+    return <div className="md-grid md-cell md-cell--12">
+      <SelectionControlGroup type="radio" name="padding" id="padding" label="Encoded log padding" inline
                              onChange={this.props.onChange.bind(this, {methodConfig, key: 'padding'})}
+                             className="md-cell md-cell--3"
                              controls={paddingControls} value={this.props.prefix.padding} controlStyle={groupStyle}/>
       <SelectionControlGroup type="radio" name="type" id="type" label="Prefix generation type"
                              onChange={this.props.onChange.bind(this, {methodConfig, key: 'type'})}
-                             controls={prefixTypeControls}
+                             controls={prefixTypeControls} inline className="md-cell md-cell--3"
                              value={this.props.prefix.type} controlStyle={groupStyle}/>
-      <p> How many events in a trace to consider. The max for this log is {this.props.maxEventsInLog}.
+      <p className="md-cell md-cell--3"> How many events in a trace to consider. The max for this log
+        is {this.props.maxEventsInLog}.
         Raise number at your own caution because this too high a number will cause errors.</p>
       <TextField
         id="prefixLength"
@@ -50,7 +52,7 @@ class PrefixSelector extends Component {
         onChange={this.onPrefixChange.bind(this)}
         min={0}
         max={this.props.maxEventsInLog}
-        className="md-cell md-cell--12"
+        className="md-cell md-cell--3"
         required
         error={this.state.error}
         errorText={`Can't be greater than log maximum prefix length ${this.props.maxEventsInLog}`}

@@ -34,6 +34,7 @@ const groupStyle = {height: 'auto'};
 
 const initialState = (props) => {
   const splitId = props.splitLabels[0] ? props.splitLabels[0].value : 0;
+  const predictionMethod = props.isLabelForm ? LABELLING : REGRESSION;
   return {
     split_id: splitId,
     encodings: [encodingMethods[0].value],
@@ -54,7 +55,7 @@ const initialState = (props) => {
       add_elapsed_time: false,
     },
     displayWarning: false,
-    predictionMethod: REGRESSION,
+    predictionMethod: predictionMethod,
     hyperopt: {
       use_hyperopt: false,
       max_evals: 10,
@@ -235,6 +236,13 @@ class TrainingFormCard extends Component {
     if (this.state.displayWarning) {
       warning = <p className="md-text md-text--error">Select at least one from every option</p>;
     }
+
+    const predictionControls = !this.props.isLabelForm ?
+      <div className="md-cell md-cell--12">
+        <SelectionControlGroup id="prediction" name="prediction" type="radio" label="Prediction method"
+                               value={this.state.predictionMethod} inline controls={predictionMethods}
+                               onChange={this.onPredictionMethodChange.bind(this)}/>
+      </div> : null;
     const regressionFragment = this.state.predictionMethod === REGRESSION ?
       <CheckboxGroup controls={regressionMethods} id="regression" label="Regression methods"
                      onChange={this.checkboxChange.bind(this)}
@@ -246,18 +254,18 @@ class TrainingFormCard extends Component {
         <CheckboxGroup controls={classificationMethods} id="classification" label="Classification methods"
                        onChange={this.checkboxChange.bind(this)}
                        value={this.state.classification.join(',')}/> : null;
-    const createModels = this.state.predictionMethod !== LABELLING ?
+    const createModels = !this.props.isLabelForm ?
       <Checkbox id="create_models" name="create_models"
                 label="Create and save models for runtime prediction"
                 checked={this.state.create_models} inline
                 onChange={this.checkboxChange.bind(this)}/> : null;
-    const clusteringFragment = this.state.predictionMethod !== LABELLING ?
+    const clusteringFragment = !this.props.isLabelForm ?
       <div className="md-cell md-cell--3">
         <SelectionControlGroup type="checkbox" label="Clustering methods" name="clusterings" id="clusterings"
                                onChange={this.checkboxChange.bind(this)} controls={clusteringMethods}
                                value={this.state.clusterings.join(',')} controlStyle={groupStyle}/>
       </div> : null;
-    const encodingFragment = this.state.predictionMethod !== LABELLING ?
+    const encodingFragment = !this.props.isLabelForm ?
       <div className="md-cell md-cell--3">
         <SelectionControlGroup type="checkbox" label="Encoding methods" name="encodings"
                                id="encodings" onChange={this.checkboxChange.bind(this)} controls={encodingMethods}
@@ -276,11 +284,7 @@ class TrainingFormCard extends Component {
           /></CardTitle>
         <CardText>
           <div className="md-grid md-grid--no-spacing">
-            <div className="md-cell md-cell--12">
-              <SelectionControlGroup id="prediction" name="prediction" type="radio" label="Prediction method"
-                                     value={this.state.predictionMethod} inline controls={predictionMethods}
-                                     onChange={this.onPredictionMethodChange.bind(this)}/>
-            </div>
+            {predictionControls}
             {encodingFragment}
             <PrefixSelector prefix={this.state.prefix} onChange={this.advanceConfigChange.bind(this)}
                             maxEventsInLog={this.props.maxEventsInLog}/>
@@ -323,6 +327,7 @@ TrainingFormCard.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onSplitChange: PropTypes.func.isRequired,
   maxEventsInLog: PropTypes.number.isRequired,
+  isLabelForm: PropTypes.bool,
   traceAttributes: PropTypes.arrayOf(PropTypes.shape(traceAttributeShape)).isRequired
 };
 

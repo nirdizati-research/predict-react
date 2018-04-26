@@ -104,11 +104,6 @@ const predictions = [
     label: 'Outcome',
     value: CLASSIFICATION,
     message: 'Classification'
-  },
-  {
-    label: 'Labelling',
-    value: LABELLING,
-    message: 'Label distribution for classification'
   }
 ];
 
