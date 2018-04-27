@@ -9,6 +9,8 @@ import ResultTableCard from '../src/components/validation/ResultTableCard';
 import {getChartHeader} from '../src/components/validation/ColumnHelper';
 import {CLASSIFICATION, REGRESSION} from '../src/reference';
 import BarChartCard from '../src/components/chart/BarChartCard';
+import {label1} from './Advanced';
+import PrefixLineChart from '../src/components/chart/PrefixLineChart';
 
 const fetchState = {inFlight: false};
 
@@ -106,7 +108,60 @@ const someColumns = [
   }
 ];
 
+export const labelJobs = [
+  {
+    'id': 4,
+    'config': {
+      'prefix_length': 1,
+      'encoding': 'simpleIndex',
+      'label': label1
+    },
+    'result': {'rmse': 221, 'mae': 193},
+    'type': 'labelling',
+  },
+  {
+    'id': 5,
+    'config': {
+      'prefix_length': 4,
+      'encoding': 'simpleIndex',
+      'label': label1
+    },
+    'result': {'rmse': 201, 'mae': 165},
+    'type': 'labelling',
+  },
+  {
+    'id': 6,
+    'config': {
+      'prefix_length': 3,
+      'encoding': 'simpleIndex',
+      'label': label1
+    },
+    'result': {'rmse': 191, 'mae': 138},
+    'type': 'labelling',
+  },
+  {
+    'id': 7,
+    'config': {
+      'prefix_length': 5,
+      'encoding': 'simpleIndex',
+      'label': label1
+    },
+    'result': {'rmse': 171, 'mae': 128},
+    'type': 'labelling',
+  }
+];
+
 storiesOf('Charts', module)
+  .add('PrefixLineChart', () => {
+    return (
+      <div className="md-grid">
+        <div className="md-cell md-cell--12">
+          <PrefixLineChart
+            jobs={labelJobs}/>
+        </div>
+      </div>
+    );
+  })
   .add('LineChartCard', () => {
     return (
       <div className="md-grid">
