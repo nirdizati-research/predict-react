@@ -7,6 +7,7 @@ import {
   CLASSIFICATION,
   classLabelControls,
   controlCreator,
+  DURATION,
   LABELLING,
   regLabelControls,
   REGRESSION,
@@ -72,7 +73,7 @@ const Labelling = (props) => {
   const threshold = (label) => {
     if (props.predictionMethod === REGRESSION) {
       return [];
-    } else if (label.type === REMAINING_TIME || label.type === ATTRIBUTE_NUMBER) {
+    } else if ([REMAINING_TIME, ATTRIBUTE_NUMBER, DURATION].includes(label.type)) {
       const thresholdType = <SelectField
         key="threshold_type"
         id="threshold_type"
