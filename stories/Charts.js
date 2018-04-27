@@ -21,6 +21,15 @@ const traces = {
   '2011-10-07': 83
 };
 
+const notOrderedTraces = {
+  '2011-10-06': 80,
+  '2011-10-03': 119,
+  '2011-10-01': 23,
+  '2011-10-05': 106,
+  '2011-10-07': 83,
+  '2011-10-04': 85
+};
+
 const resources = {
   '2011-10-01': 7,
   '2011-10-03': 13,
@@ -106,6 +115,12 @@ storiesOf('Charts', module)
                          data={traces}
                          cardTitle="Number of traces"
                          chartTitle="Active traces"/>
+        </div>
+        <div className="md-cell md-cell--12">
+          <LineChartCard fetchState={fetchState}
+                         data={notOrderedTraces}
+                         cardTitle="Modern art"
+                         chartTitle="Messed up order of object"/>
         </div>
         <div className="md-cell md-cell--12">
           <LineChartCard fetchState={fetchState}

@@ -40,10 +40,6 @@ class Labelling extends Component {
     this.props.onPrefixChange(prefixLength);
   }
 
-  onChangeSplit(splitId) {
-    this.props.onSplitChange(splitId);
-  }
-
   componentDidMount() {
     this.props.onRequestSplitList();
     if (this.props.splitLabels.length > 0) {
@@ -59,6 +55,7 @@ class Labelling extends Component {
   }
 
   onSplitChange(splitId) {
+    this.props.onSplitChange(splitId);
     this.setState(getLogProperties(this.props.splits, splitId));
   }
 
@@ -96,7 +93,7 @@ class Labelling extends Component {
         </div>
         <div className="md-cell md-cell--12">
           <LabellingHeaderCard splitLabels={splitLabels} fetchState={this.props.fetchState}
-                               splitChange={this.onChangeSplit.bind(this)}
+                               splitChange={this.onSplitChange.bind(this)}
                                prefixLengths={prefixStrings}
                                selectedPrefixes={this.props.selectedPrefixes}
                                prefixChange={this.onChangePrefix.bind(this)}
