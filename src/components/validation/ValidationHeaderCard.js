@@ -90,7 +90,7 @@ const ValidationHeaderCard = (props) => {
       <div className="md-grid md-grid--no-spacing">
         <div className="md-cell md-cell--6">
           <SelectionControlGroup id="prediction" name="prediction" type="radio" label="Prediction method"
-                                 inline controls={predictionMethods}
+                                 inline controls={predictionMethods} value={props.predictionMethod}
                                  onChange={localMethodChange}/>
           {encodings}
           {labelType}
