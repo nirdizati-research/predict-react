@@ -35,6 +35,7 @@ const groupStyle = {height: 'auto'};
 const initialState = (props) => {
   const splitId = props.splitLabels[0] ? props.splitLabels[0].value : 0;
   const predictionMethod = props.isLabelForm ? LABELLING : REGRESSION;
+  const labelType = props.isLabelForm ? DURATION : REMAINING_TIME;
   return {
     split_id: splitId,
     encodings: [encodingMethods[0].value],
@@ -47,7 +48,7 @@ const initialState = (props) => {
       prefix_length: defaultPrefix,
     },
     label: {
-      type: REMAINING_TIME,
+      type: labelType,
       attribute_name: '',
       threshold_type: THRESHOLD_MEAN,
       threshold: 0,
