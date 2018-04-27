@@ -4,11 +4,12 @@ import {Button} from 'react-md/lib/index';
 import {ExpansionPanel} from 'react-md/lib/ExpansionPanels/index';
 
 
-const customFooter = (url) => (
-  <footer style={{padding: 24}}>
-    <Button flat secondary href={url} target="_blank">Documentation</Button>
-  </footer>
-);
+const customFooter = (url) => url === '' ? null :
+  (
+    <footer style={{padding: 24}}>
+      <Button flat secondary href={url} target="_blank">Documentation</Button>
+    </footer>
+  );
 
 export default class GenericConfiguration extends PureComponent {
   static propTypes = {

@@ -36,6 +36,9 @@ export const labelPropType = {
   threshold: PropTypes.number.isRequired,
   add_remaining_time: PropTypes.bool.isRequired,
   add_elapsed_time: PropTypes.bool.isRequired,
+  add_executed_events: PropTypes.bool.isRequired,
+  add_resources_used: PropTypes.bool.isRequired,
+  add_new_traces: PropTypes.bool.isRequired,
 };
 
 export const jobPropType = PropTypes.shape({

@@ -20,6 +20,9 @@ const label = {
   threshold: 0,
   add_remaining_time: false,
   add_elapsed_time: false,
+  add_executed_events: false,
+  add_resources_used: false,
+  add_new_traces: false,
 };
 const regressionPayload = {
   'type': 'regression',
@@ -88,7 +91,7 @@ describe('TrainingFormCard', () => {
 
   describe('submit', () => {
     it('default', () => {
-      element.find(Button).at(1).simulate('click');
+      element.find(Button).at(0).simulate('click');
 
       expect(onSubmit.mock.calls[0][0]).toEqual(regressionPayload);
     });
@@ -99,7 +102,7 @@ describe('TrainingFormCard', () => {
       const encodingGroup = element.find(SelectionControlGroup).at(1);
       encodingGroup.simulate('change', {target: {name: 'encodings[]', value: 'boolean'}});
 
-      element.find(Button).at(2).simulate('click');
+      element.find(Button).at(1).simulate('click');
       expect(element.state().encodings.length).toBe(1);
     });
 
@@ -108,7 +111,7 @@ describe('TrainingFormCard', () => {
       const group = element.find(SelectionControlGroup).at(4);
       group.simulate('change', {target: {name: 'classification[]', value: 'knn'}});
 
-      element.find(Button).at(2).simulate('click');
+      element.find(Button).at(1).simulate('click');
       expect(element.state().predictionMethod).toBe(REGRESSION);
       expect(element.state().classification.length).toBe(1);
     });

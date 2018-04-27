@@ -20,6 +20,9 @@ export const label1 = {
   threshold: 0,
   add_remaining_time: false,
   add_elapsed_time: false,
+  add_executed_events: false,
+  add_resources_used: false,
+  add_new_traces: false,
 };
 
 export const traceAttributes = [
