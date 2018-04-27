@@ -73,8 +73,7 @@ class JobStatus extends Component {
             <CardTitle title="Job status"/>
             <CardText>
               <p>
-                Lots of logs below. See job results on the validation page.
-                Currently running jobs cannot be deleted. Do not try.
+                There are {this.props.jobs.length} jobs in the front-end application.
               </p>
               <Button raised onClick={this.props.onRequestJobs}>Refresh list</Button>
               <Checkbox id="fetchJobs" name="fetchJobs"

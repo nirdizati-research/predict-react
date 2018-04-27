@@ -41,9 +41,8 @@ class PrefixSelector extends Component {
                              onChange={this.props.onChange.bind(this, {methodConfig, key: 'type'})}
                              controls={prefixTypeControls} inline className="md-cell md-cell--3"
                              value={this.props.prefix.type} controlStyle={groupStyle}/>
-      <p className="md-cell md-cell--3"> How many events in a trace to consider. The max for this log
-        is {this.props.maxEventsInLog}.
-        Raise number at your own caution because this too high a number will cause errors.</p>
+      <p className="md-cell md-cell--3">The maximum prefix length is <b>{this.props.maxEventsInLog}</b>. Raise number at
+        your own caution because this too high a number will cause errors.</p>
       <TextField
         id="prefixLength"
         label="Prefix length"
