@@ -18,6 +18,7 @@ import LabellingHeaderCard from '../components/Labelling/LabellingHeaderCard';
 import TrainingFormCard from '../components/TrainingFormCard';
 import {splitsRequested} from '../actions/SplitActions';
 import {getLogProperties} from '../util/splitStuff';
+import PrefixLineChart from '../components/chart/PrefixLineChart';
 
 class Labelling extends Component {
   constructor(props) {
@@ -83,6 +84,12 @@ class Labelling extends Component {
     if (this.props.predictionMethod !== LABELLING) {
       return null;
     }
+    let prefixChart;
+    if (this.props.jobs.length > 0) {
+      prefixChart = <div className="md-cell md-cell--12" key="023">
+        <PrefixLineChart jobs={this.props.jobs}/>
+      </div>;
+    }
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
@@ -101,6 +108,7 @@ class Labelling extends Component {
                                filterOptions={this.props.filterOptions}
                                labelTypeChange={this.props.labelTypeChange}/>
         </div>
+        {prefixChart}
         <div className="md-cell md-cell--12">
           <ConfigTableCard jobs={this.props.jobs} onClick={this.onJobClick.bind(this)}
                            predictionMethod={this.props.predictionMethod}/>
