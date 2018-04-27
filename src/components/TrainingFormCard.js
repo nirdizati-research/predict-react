@@ -270,9 +270,11 @@ class TrainingFormCard extends Component {
         <SelectionControlGroup type="checkbox" label="Encoding methods" name="encodings" inline
                                id="encodings" onChange={this.checkboxChange.bind(this)} controls={encodingMethods}
                                value={this.state.encodings.join(',')} controlStyle={groupStyle}/></div> : null;
+
+    const title = this.props.isLabelForm ? 'Labelling' : 'Training';
     return (
       <Card className="md-block-centered">
-        <CardTitle title="Training">
+        <CardTitle title={title}>
           <SelectField
             id="log-name-select"
             placeholder="Split id will be here"
