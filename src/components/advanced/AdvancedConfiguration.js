@@ -12,6 +12,7 @@ import RegressionLinear from './RegressionLinear';
 import HyperOpt from './HyperOpt';
 import {labelPropType, traceAttributeShape} from '../../helpers';
 import Labelling from './Labelling';
+import AddColumns from './AddColumns';
 
 const knnUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html';
 const decisionTreeUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html';
@@ -58,6 +59,8 @@ const AdvancedConfiguration = (props) => {
   const hyperOpt = () => (makeExpander('Hyperparameter Optimization', hyperUrl,
     <HyperOpt onChange={props.onChange} predictionMethod={props.predictionMethod} {...props}/>));
 
+  const addColumns = () => (makeExpander('Additional log columns', '',
+    <AddColumns onChange={props.onChange} label={props.label} {...props}/>));
 
   const label = makeExpander('Labelling', '',
     <Labelling onChange={props.onChange} label={props.label}
@@ -66,9 +69,9 @@ const AdvancedConfiguration = (props) => {
 
   const configs = () => {
     if (props.predictionMethod === REGRESSION) {
-      return [hyperOpt(), ...configMapper(props.regression, regressionConfigMap)];
+      return [addColumns(), hyperOpt(), ...configMapper(props.regression, regressionConfigMap)];
     } else if (props.predictionMethod === CLASSIFICATION) {
-      return [hyperOpt(), ...configMapper(props.classification, classConfigMap)];
+      return [addColumns(), hyperOpt(), ...configMapper(props.classification, classConfigMap)];
     } else {
       return [];
     }
