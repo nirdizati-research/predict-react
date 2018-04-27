@@ -6,7 +6,7 @@ import {submitTraining} from '../../actions/JobActions';
 import {splitsToString} from '../../util/dataReducers';
 import {splitsRequested} from '../../actions/SplitActions';
 import {splitLabels} from '../../helpers';
-import {SPLIT_SINGLE} from '../../reference';
+import {getLogProperties} from '../../util/splitStuff';
 
 class Training extends Component {
   constructor() {
@@ -27,22 +27,7 @@ class Training extends Component {
   }
 
   onSplitChange(value) {
-    const split = this.props.splits.filter((split) => split.id === value)[0];
-    let logs;
-    if (split.type === SPLIT_SINGLE) {
-      logs = [split.original_log];
-    } else {
-      logs = [split.training_log, split.test_log];
-    }
-    this.getMaxEvents(logs);
-  }
-
-  getMaxEvents(logs) {
-    const arr = logs.map((log) => log.properties.maxEventsInLog);
-    const max = arr.reduce(function (a, b) {
-      return Math.max(a, b);
-    });
-    this.setState({maxEventsInLog: max, traceAttributes: logs[0].properties.traceAttributes});
+    this.setState(getLogProperties(this.props.splits, value));
   }
 
   render() {

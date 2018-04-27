@@ -44,6 +44,12 @@ class Full extends Component {
           leftIcon: <FontIcon>swap_horiz</FontIcon>,
         }, {
           component: Link,
+          to: '/labelling',
+          active: isActive('/labelling', pathname),
+          primaryText: 'Labelling',
+          leftIcon: <FontIcon>label_outline</FontIcon>,
+        }, {
+          component: Link,
           to: '/jobStatus',
           active: isActive('/jobStatus', pathname),
           primaryText: 'Job Status',

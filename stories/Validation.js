@@ -8,6 +8,7 @@ import ConfigTableCard from '../src/components/validation/ConfigTableCard';
 import {CLASSIFICATION, LABELLING, REGRESSION} from '../src/reference';
 import ResultWrapper from '../src/components/validation/ResultWrapper';
 import {label1} from './Advanced';
+import LabellingHeaderCard from '../src/components/Labelling/LabellingHeaderCard';
 
 const splitLabels = [{value: 1, label: 'Split #1'}, {value: 2, label: 'Split #2'}];
 const classJobs = [
@@ -216,22 +217,34 @@ storiesOf('Validation', module)
         </div>
       );
     }
-  ).add('ConfigTableCard', () => {
+  ).add('Labelling header card', () => {
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
-          <ConfigTableCard jobs={classJobs} predictionMethod={CLASSIFICATION}/>
-        </div>
-        <div className="md-cell md-cell--12">
-          <ConfigTableCard jobs={regJobs} predictionMethod={REGRESSION}/>
-        </div>
-        <div className="md-cell md-cell--12">
-          <ConfigTableCard jobs={labelJobs} predictionMethod={LABELLING}/>
+          <LabellingHeaderCard splitLabels={splitLabels} fetchState={{inFlight: false}} splitChange={(_) => _}
+                               selectedPrefixes={['2']} filterOptions={filterOptions} labelTypeChange={console.log}
+                               prefixLengths={['1', '2']} prefixChange={(_) => _} selectedSplitId={1}/>
         </div>
       </div>
     );
   }
-).add('ResultWrapper classification', () => {
+)
+  .add('ConfigTableCard', () => {
+      return (
+        <div className="md-grid">
+          <div className="md-cell md-cell--12">
+            <ConfigTableCard jobs={classJobs} predictionMethod={CLASSIFICATION}/>
+          </div>
+          <div className="md-cell md-cell--12">
+            <ConfigTableCard jobs={regJobs} predictionMethod={REGRESSION}/>
+          </div>
+          <div className="md-cell md-cell--12">
+            <ConfigTableCard jobs={labelJobs} predictionMethod={LABELLING}/>
+          </div>
+        </div>
+      );
+    }
+  ).add('ResultWrapper classification', () => {
     return (
       <div className="md-grid">
         <ResultWrapper jobs={classJobs} predictionMethod={CLASSIFICATION}/>
