@@ -37,9 +37,7 @@ const ValidationHeaderCard = (props) => {
       /></CardTitle>
     <CardText>
       <LabelControls labelChange={props.labelChange} {...props.filterOptions}/>
-      <div className="md-cell">
-        {checkies}
-      </div>
+      {checkies}
       <FetchState fetchState={props.fetchState}/>
     </CardText>
   </Card>;

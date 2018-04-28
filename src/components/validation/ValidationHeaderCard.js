@@ -30,8 +30,7 @@ const ValidationHeaderCard = (props) => {
 
   const checkies = props.prefixLengths.length > 0 ?
     <SelectionControlGroup type="checkbox" label="Prefix lengths" name="prefixLengths" id="prefixLengths"
-                           onChange={checkBoxChange} controls={prefixControls} inline className="md-cell md-cell-12"
-                           value={defaultValue}/> : null;
+                           onChange={checkBoxChange} controls={prefixControls} inline value={defaultValue}/> : null;
   const selectChange = (value, _) => {
     props.splitChange(value);
   };

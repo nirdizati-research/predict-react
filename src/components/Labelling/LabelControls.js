@@ -19,7 +19,7 @@ const LabelControls = (props) => {
     key="type"
     id="type"
     label="Label type"
-    className="md-cell md-cell--6"
+    className="md-cell md-cell--4"
     menuItems={controls()}
     position={SelectField.Positions.BELOW}
     onChange={props.labelChange.bind(this, {methodConfig, key: 'type'})}
@@ -34,7 +34,7 @@ const LabelControls = (props) => {
         key="threshold_type"
         id="threshold_type"
         label="Threshold type"
-        className="md-cell md-cell--6"
+        className="md-cell md-cell--4"
         menuItems={thresholdControls}
         position={SelectField.Positions.BELOW}
         onChange={props.labelChange.bind(this, {methodConfig, key: 'threshold_type'})}
@@ -46,7 +46,7 @@ const LabelControls = (props) => {
         key="threshold"
         id="threshold"
         label="Threshold"
-        className="md-cell md-cell--6"
+        className="md-cell md-cell--4"
         menuItems={thresholdLabels}
         position={SelectField.Positions.BELOW}
         onChange={props.labelChange.bind(this, {methodConfig, key: 'threshold'})}
@@ -65,7 +65,7 @@ const LabelControls = (props) => {
         key="attribute_name"
         id="attribute_name"
         label="Attribute name"
-        className="md-cell md-cell--6"
+        className="md-cell md-cell--4"
         menuItems={atrLabels}
         position={SelectField.Positions.BELOW}
         onChange={props.labelChange.bind(this, {methodConfig, key: 'attribute_name'})}
@@ -79,8 +79,8 @@ const LabelControls = (props) => {
   return <div className="md-grid">
     {labelType}
     {threshold(props.label)[0]}
-    {atr()}
     {threshold(props.label)[1]}
+    {atr()}
   </div>;
 };
 
