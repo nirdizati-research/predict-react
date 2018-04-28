@@ -3,6 +3,7 @@
  */
 import jobs from '../../reducers/Jobs';
 import {
+  FILTER_LABEL_CHANGED,
   FILTER_OPTION_CHANGED,
   FILTER_PREDICTION_METHOD_CHANGED,
   FILTER_PREFIX_LENGTH_CHANGED,
@@ -20,7 +21,9 @@ import {
   RANDOM_FOREST,
   REGRESSION,
   REMAINING_TIME,
-  SIMPLE_INDEX
+  SIMPLE_INDEX,
+  THRESHOLD_CUSTOM,
+  THRESHOLD_MEAN
 } from '../../reference';
 
 const jobList = [
@@ -32,7 +35,7 @@ const jobList = [
       prefix_length: 2,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
-      label: {type: DURATION},
+      label: {type: DURATION, threshold_type: THRESHOLD_MEAN},
       clustering: NO_CLUSTER
     },
     split: {
@@ -47,7 +50,7 @@ const jobList = [
       prefix_length: 2,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
-      label: {type: DURATION},
+      label: {type: DURATION, threshold_type: THRESHOLD_MEAN},
       clustering: NO_CLUSTER
     },
     split: {
@@ -77,7 +80,7 @@ const jobList = [
       prefix_length: 5,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
-      label: {type: DURATION},
+      label: {type: DURATION, threshold_type: THRESHOLD_MEAN},
       clustering: NO_CLUSTER
     },
     split: {
@@ -92,7 +95,7 @@ const jobList = [
       prefix_length: 4,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
-      label: {type: DURATION},
+      label: {type: DURATION, threshold_type: THRESHOLD_MEAN},
       clustering: NO_CLUSTER
     },
     split: {
@@ -108,6 +111,21 @@ const jobList = [
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
       label: {type: REMAINING_TIME},
+      clustering: NO_CLUSTER
+    },
+    split: {
+      id: 1
+    }
+  },
+  {
+    id: 75,
+    status: 'completed',
+    type: CLASSIFICATION,
+    config: {
+      prefix_length: 4,
+      encoding: SIMPLE_INDEX,
+      method: RANDOM_FOREST,
+      label: {type: DURATION, threshold_type: THRESHOLD_CUSTOM, threshold: 100},
       clustering: NO_CLUSTER
     },
     split: {
@@ -225,6 +243,18 @@ describe('Validation filter', () => {
       expect(state3.clusterings.length).toEqual(2);
       expect(state3.encodings.length).toEqual(5);
     });
+
+    it('has label remaining type for regression', () => {
+      let state3 = jobs(state2, {type: FILTER_SPLIT_CHANGED, splitId: 2});
+      state3 = jobs(state3, {type: FILTER_PREDICTION_METHOD_CHANGED, method: REGRESSION});
+      expect(state3.label).toEqual({type: REMAINING_TIME});
+    });
+
+    it('has label duration for classification', () => {
+      let state3 = jobs(state2, {type: FILTER_SPLIT_CHANGED, splitId: 2});
+      state3 = jobs(state3, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
+      expect(state3.label).toEqual({type: DURATION, threshold_type: THRESHOLD_MEAN});
+    });
   });
 
   describe('when FILTER_PREFIX_LENGTH_CHANGED', () => {
@@ -264,6 +294,36 @@ describe('Validation filter', () => {
       state3 = jobs(state3, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
       expect(state3.filteredJobs.length).toEqual(2);
       expect(state3.encodings.length).toEqual(5);
+    });
+  });
+
+  describe('when FILTER_LABEL_CHANGED', () => {
+    it('changes the label', () => {
+      let state3 = jobs(state2, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
+      state3 = jobs(state3, {
+        type: FILTER_LABEL_CHANGED,
+        payload: {config: {methodConfig: 'label', key: 'type'}, value: DURATION}
+      });
+      expect(state3.label).toEqual({type: DURATION, threshold_type: THRESHOLD_MEAN});
+      expect(state3.filteredJobs.length).toEqual(2);
+    });
+
+    it('filters for custom threshold', () => {
+      let state3 = jobs(state2, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
+      state3 = jobs(state3, {
+        type: FILTER_LABEL_CHANGED,
+        payload: {config: {methodConfig: 'label', key: 'type'}, value: DURATION}
+      });
+      state3 = jobs(state3, {
+        type: FILTER_LABEL_CHANGED,
+        payload: {config: {methodConfig: 'label', key: 'threshold_type'}, value: THRESHOLD_CUSTOM}
+      });
+      state3 = jobs(state3, {
+        type: FILTER_LABEL_CHANGED,
+        payload: {config: {methodConfig: 'label', key: 'threshold', isNumber: true}, value: '100'}
+      });
+      expect(state3.label).toEqual({type: DURATION, threshold_type: THRESHOLD_CUSTOM, threshold: 100});
+      expect(state3.filteredJobs.length).toEqual(1);
     });
   });
 });

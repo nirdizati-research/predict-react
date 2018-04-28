@@ -3,7 +3,7 @@
  */
 
 import {
-  FILTER_LABEL_TYPE_CHANGED,
+  FILTER_LABEL_CHANGED,
   FILTER_OPTION_CHANGED,
   FILTER_PREDICTION_METHOD_CHANGED,
   FILTER_PREFIX_LENGTH_CHANGED,
@@ -30,10 +30,17 @@ import {
   RANDOM_FOREST,
   REGRESSION,
   REMAINING_TIME,
-  SIMPLE_INDEX
+  SIMPLE_INDEX,
+  THRESHOLD_MEAN
 } from '../reference';
+import {labelCompare} from '../util/labelCompare';
 
 /* eslint-disable max-len */
+
+const initialLabels = {
+  remainingTime: {type: REMAINING_TIME},
+  duration: {type: DURATION, threshold_type: THRESHOLD_MEAN}
+};
 
 const initialState = {
   fetchState: {inFlight: false},
@@ -51,7 +58,7 @@ const initialFilters = {
   clusterings: [NO_CLUSTER, KMEANS],
   classification: [KNN, DECISION_TREE, RANDOM_FOREST],
   regression: [LINEAR, LASSO, RANDOM_FOREST],
-  labelType: REMAINING_TIME
+  label: initialLabels.remainingTime
 };
 
 const mergeIncomingJobs = (incoming, existing) => {
@@ -101,8 +108,8 @@ const filterByAllElse = (encodings, clusterings, classification, regression, pre
   }
 };
 
-const filterByLabelType = (labelType) => (job) => {
-  return job.config.label.type === labelType;
+const filterByLabelType = (predictionMethod, label) => (job) => {
+  return labelCompare(predictionMethod)(label, job.config.label);
 };
 
 const addOrRemove = (list, value) => {
@@ -130,8 +137,8 @@ const removeById = (list, value) => {
 
 const prefixSet = (filteredJobs) => [...new Set(filteredJobs.map((job) => job.config.prefix_length))];
 
-const applyFilters = ({jobs, splitId, predictionMethod, encodings, clusterings, classification, regression, labelType}) => {
-  const commonJobs = jobs.filter(filterBySplit(splitId)).filter(filterByMethod(predictionMethod)).filter(filterByLabelType(labelType));
+const applyFilters = ({jobs, splitId, predictionMethod, encodings, clusterings, classification, regression, label}) => {
+  const commonJobs = jobs.filter(filterBySplit(splitId)).filter(filterByMethod(predictionMethod)).filter(filterByLabelType(predictionMethod, label));
   if (predictionMethod === LABELLING) {
     return commonJobs;
   }
@@ -150,11 +157,28 @@ const checkboxChange = (target, state) => {
       return {...state, regression: addOrRemoveString(state.regression, value)};
     case 'classification[]':
       return {...state, classification: addOrRemoveString(state.classification, value)};
-    case 'labelType':
-      return {...state, labelType: value};
     // no default
   }
   return state;
+};
+
+const advancedConfigChange = (state, {methodConfig, key, isNumber, isFloat, maybeNumber}, value) => {
+  // Only the changed values are put in config. Otherwise merged with config in backend
+  // classification.knn weights distance
+  const config = state[methodConfig];
+  if (isNumber) {
+    // for some reason, value can be "". Don't know, dont care
+    value = parseInt(value, 10);
+  } else if (isFloat) {
+    value = parseFloat(value);
+  } else if (maybeNumber) {
+    const parsed = parseFloat(value);
+    if (!isNaN(parsed)) {
+      value = parsed;
+    }
+  }
+  config[key] = value;
+  return {...state, [methodConfig]: config};
 };
 
 const jobs = (state = {...initialState, ...initialFilters}, action) => {
@@ -203,12 +227,12 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
       };
     }
     case FILTER_PREDICTION_METHOD_CHANGED: {
-      const labelType = action.method === REGRESSION ? REMAINING_TIME : DURATION;
+      const label = action.method === REGRESSION ? initialLabels.remainingTime : initialLabels.duration;
       const predictionMethod = action.method;
-      const filteredJobs = applyFilters({...state, predictionMethod, ...initialFilters, labelType});
+      const filteredJobs = applyFilters({...state, predictionMethod, ...initialFilters, label});
       const prefixLengths = prefixSet(filteredJobs);
       return {
-        ...state, filteredJobs, prefixLengths, ...initialFilters, labelType,
+        ...state, filteredJobs, prefixLengths, ...initialFilters, label,
         predictionMethod, selectedPrefixes: prefixLengths
       };
     }
@@ -229,12 +253,12 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
       };
     }
 
-    case FILTER_LABEL_TYPE_CHANGED: {
-      const labelType = action.payload.value;
-      const filteredJobs = applyFilters({...state, labelType});
+    case FILTER_LABEL_CHANGED: {
+      const modifiedState = advancedConfigChange(state, action.payload.config, action.payload.value);
+      const filteredJobs = applyFilters({...modifiedState});
       const prefixLengths = prefixSet(filteredJobs);
       return {
-        ...state, filteredJobs, prefixLengths, labelType, selectedPrefixes: prefixLengths
+        ...modifiedState, filteredJobs, prefixLengths, selectedPrefixes: prefixLengths
       };
     }
 

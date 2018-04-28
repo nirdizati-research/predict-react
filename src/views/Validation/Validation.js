@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ConfigTableCard from '../../components/validation/ConfigTableCard';
 import {CLASSIFICATION, LABELLING, REGRESSION} from '../../reference';
 import {
-  FILTER_LABEL_TYPE_CHANGED,
+  FILTER_LABEL_CHANGED,
   FILTER_OPTION_CHANGED,
   FILTER_PREDICTION_METHOD_CHANGED,
   FILTER_PREFIX_LENGTH_CHANGED,
@@ -122,7 +122,7 @@ const mapDispatchToProps = (dispatch) => ({
     payload: {name: event.target.name, value: event.target.value}
   }),
   labelTypeChange: (value) => dispatch({
-    type: FILTER_LABEL_TYPE_CHANGED,
+    type: FILTER_LABEL_CHANGED,
     payload: {name: 'labelType', value: value}
   }),
   onSplitChange: (splitId) => dispatch({type: FILTER_SPLIT_CHANGED, splitId}),
