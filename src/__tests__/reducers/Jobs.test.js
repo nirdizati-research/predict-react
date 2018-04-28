@@ -15,6 +15,7 @@ import {
   jobsRetrieved
 } from '../../actions/JobActions';
 import {
+  ATTRIBUTE_NUMBER,
   CLASSIFICATION,
   DURATION,
   NO_CLUSTER,
@@ -132,6 +133,21 @@ const jobList = [
       id: 1
     }
   },
+  {
+    id: 76,
+    status: 'completed',
+    type: CLASSIFICATION,
+    config: {
+      prefix_length: 4,
+      encoding: SIMPLE_INDEX,
+      method: RANDOM_FOREST,
+      label: {type: ATTRIBUTE_NUMBER, threshold_type: THRESHOLD_MEAN, attribute_name: 'name'},
+      clustering: NO_CLUSTER
+    },
+    split: {
+      id: 1
+    }
+  },
 ];
 
 const initState = {fetchState: {inFlight: false}, jobs: []};
@@ -179,16 +195,9 @@ describe('JobsReducer', () => {
     expect(state3).toMatchObject({uniqueSplits: [], jobs: []});
   });
 });
-
+const state = jobs(undefined, jobsRetrieved(jobList));
+const state2 = jobs(state, {type: FILTER_SPLIT_CHANGED, splitId: 1});
 describe('Validation filter', () => {
-  let state;
-  let state2;
-
-  beforeEach(() => {
-    state = jobs(undefined, jobsRetrieved(jobList));
-    state2 = jobs(state, {type: FILTER_SPLIT_CHANGED, splitId: 1});
-  });
-
   describe('initial state', () => {
     it('has no filtered jobs initially', () => {
       expect(state).toMatchObject({filteredJobs: []});
@@ -324,6 +333,30 @@ describe('Validation filter', () => {
       });
       expect(state3.label).toEqual({type: DURATION, threshold_type: THRESHOLD_CUSTOM, threshold: 100});
       expect(state3.filteredJobs.length).toEqual(1);
+      expect(state3.thresholds).toEqual([100]);
+    });
+
+    it('filters for attribute names', () => {
+      let state34 = jobs(state2, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
+      state34 = jobs(state34, {
+        type: FILTER_LABEL_CHANGED,
+        payload: {config: {methodConfig: 'label', key: 'type'}, value: ATTRIBUTE_NUMBER}
+      });
+      state34 = jobs(state34, {
+        type: FILTER_LABEL_CHANGED,
+        payload: {config: {methodConfig: 'label', key: 'threshold_type'}, value: THRESHOLD_MEAN}
+      });
+      state34 = jobs(state34, {
+        type: FILTER_LABEL_CHANGED,
+        payload: {config: {methodConfig: 'label', key: 'attribute_name'}, value: 'name'}
+      });
+      expect(state34.label).toMatchObject({
+        type: ATTRIBUTE_NUMBER,
+        threshold_type: THRESHOLD_MEAN,
+        attribute_name: 'name'
+      });
+      expect(state34.filteredJobs.length).toEqual(1);
+      expect(state34.attributeNames).toEqual(['name']);
     });
   });
 });

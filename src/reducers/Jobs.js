@@ -50,6 +50,8 @@ const initialState = {
   predictionMethod: REGRESSION,
   prefixLengths: [],
   selectedPrefixes: [],
+  thresholds: [],
+  attributeNames: [],
   splitId: -100
 };
 
@@ -136,6 +138,8 @@ const removeById = (list, value) => {
 };
 
 const prefixSet = (filteredJobs) => [...new Set(filteredJobs.map((job) => job.config.prefix_length))];
+const thresholdSet = (filteredJobs) => [...new Set(filteredJobs.map((job) => job.config.label.threshold))];
+const attributeNameSet = (filteredJobs) => [...new Set(filteredJobs.map((job) => job.config.label.attribute_name))];
 
 const applyFilters = ({jobs, splitId, predictionMethod, encodings, clusterings, classification, regression, label}) => {
   const commonJobs = jobs.filter(filterBySplit(splitId)).filter(filterByMethod(predictionMethod)).filter(filterByLabelType(predictionMethod, label));
@@ -257,8 +261,10 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
       const modifiedState = advancedConfigChange(state, action.payload.config, action.payload.value);
       const filteredJobs = applyFilters({...modifiedState});
       const prefixLengths = prefixSet(filteredJobs);
+      const thresholds = thresholdSet(filteredJobs);
+      const attributeNames = attributeNameSet(filteredJobs);
       return {
-        ...modifiedState, filteredJobs, prefixLengths, selectedPrefixes: prefixLengths
+        ...modifiedState, filteredJobs, prefixLengths, selectedPrefixes: prefixLengths, thresholds, attributeNames
       };
     }
 
