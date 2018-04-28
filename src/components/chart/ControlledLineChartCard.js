@@ -14,7 +14,8 @@ class ControlledLineChartCard extends Component {
 
     const labels = makeLabels(this.props.jobs);
     const metricName = labels.length > 0 ? labels[0].label : null;
-    this.state = {metricName, labels,
+    this.state = {
+      metricName, labels,
       predictionMethod: this.props.predictionMethod
     };
   }
@@ -57,7 +58,9 @@ class ControlledLineChartCard extends Component {
         title: 'Prefix length',
         minValue: rows[0][0]
       },
-      interpolateNulls: true
+      interpolateNulls: true,
+      legend: {textStyle: {fontSize: 12}},
+      chartArea: {right: 250, left: 50}
     };
 
     const chart = <Chart

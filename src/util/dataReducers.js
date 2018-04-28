@@ -116,7 +116,7 @@ export const jobToValidationTable = (job) => {
 };
 
 export const toRun = (job) => {
-  return `${job.config.method}_${job.config.encoding}_${job.config.clustering}_${job.config.label.type}`;
+  return `${job.config.method}_${job.config.encoding}_${job.config.clustering}`;
 };
 
 const toLineObject = (job, metricName) => {
