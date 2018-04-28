@@ -10,15 +10,14 @@ import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
 import {
   CLASSIFICATION,
   classificationMethods,
-  classLabelControls,
   clustering,
   encoding,
   predictionMethods,
-  regLabelControls,
   REGRESSION,
   regressionMethods
 } from '../../reference';
 import {splitLabels} from '../../helpers';
+import LabelControls from '../Labelling/LabelControls';
 
 const ValidationHeaderCard = (props) => {
   const prefixControls = props.prefixLengths.map((prefix) => ({label: prefix, value: prefix}));
@@ -31,8 +30,7 @@ const ValidationHeaderCard = (props) => {
 
   const checkies = props.prefixLengths.length > 0 ?
     <SelectionControlGroup type="checkbox" label="Prefix lengths" name="prefixLengths" id="prefixLengths"
-                           onChange={checkBoxChange} controls={prefixControls} inline
-                           value={defaultValue}/> : null;
+                           onChange={checkBoxChange} controls={prefixControls} inline value={defaultValue}/> : null;
   const selectChange = (value, _) => {
     props.splitChange(value);
   };
@@ -44,10 +42,11 @@ const ValidationHeaderCard = (props) => {
     if (props.predictionMethod === REGRESSION) {
       return <SelectionControlGroup type="checkbox" controls={regressionMethods} id="regression" name='regression'
                                     label="Regression methods" onChange={props.filterOptionChange} inline
+                                    className="md-cell md-cell--6"
                                     value={props.filterOptions.regression.join(',')}/>;
     } else if (props.predictionMethod === CLASSIFICATION) {
       return <SelectionControlGroup type="checkbox" controls={classificationMethods} id="classification"
-                                    name='classification'
+                                    name='classification' className="md-cell md-cell--6"
                                     label="Classification methods" onChange={props.filterOptionChange} inline
                                     value={props.filterOptions.classification.join(',')}/>;
     } else {
@@ -57,24 +56,15 @@ const ValidationHeaderCard = (props) => {
 
   const encodings =
     <SelectionControlGroup type="checkbox" label="Encoding methods" name="encodings" id="encodings"
-                           onChange={props.filterOptionChange} controls={encoding} inline
+                           onChange={props.filterOptionChange} controls={encoding} inline className="md-cell md-cell--6"
                            value={props.filterOptions.encodings.join(',')}/>;
   const clusterings =
     <SelectionControlGroup type="checkbox" label="Clustering methods" name="clusterings" id="clusterings"
                            onChange={props.filterOptionChange} controls={clustering} inline
+                           className="md-cell md-cell--6"
                            value={props.filterOptions.clusterings.join(',')}/>;
 
-  const controls = () => (props.predictionMethod === REGRESSION ? regLabelControls : classLabelControls);
-  const labelType = <SelectField
-    key="type"
-    id="type"
-    label="Label type"
-    className="md-cell md-cell--12"
-    menuItems={controls()}
-    position={SelectField.Positions.BELOW}
-    onChange={props.labelTypeChange}
-    value={props.filterOptions.labelType}
-  />;
+
   return <Card className="md-block-centered">
     <CardTitle title="Validation selection">
       <SelectField
@@ -88,21 +78,17 @@ const ValidationHeaderCard = (props) => {
       /></CardTitle>
     <CardText>
       <div className="md-grid md-grid--no-spacing">
-        <div className="md-cell md-cell--6">
-          <SelectionControlGroup id="prediction" name="prediction" type="radio" label="Prediction method"
-                                 inline controls={predictionMethods} value={props.predictionMethod}
-                                 onChange={localMethodChange}/>
-          {encodings}
-          {labelType}
-        </div>
-        <div className="md-cell md-cell--6">
-          {clusterings}
-          {methods()}
-        </div>
-      </div>
-      <div className="md-cell">
+        <SelectionControlGroup id="prediction" name="prediction" type="radio" label="Prediction method"
+                               inline controls={predictionMethods} value={props.predictionMethod}
+                               onChange={localMethodChange} className="md-cell md-cell--6"/>
+        {encodings}
+        {clusterings}
+        {methods()}
         {checkies}
       </div>
+      <h4>Label controls</h4>
+      <LabelControls labelChange={props.labelChange}
+                     predictionMethod={props.predictionMethod} {...props.filterOptions}/>
       <FetchState fetchState={props.fetchState}/>
     </CardText>
   </Card>;
@@ -122,13 +108,15 @@ ValidationHeaderCard.propTypes = {
   selectedPrefixes: PropTypes.arrayOf(PropTypes.number).isRequired,
   selectedSplitId: PropTypes.number.isRequired,
   filterOptionChange: PropTypes.func.isRequired,
-  labelTypeChange: PropTypes.func.isRequired,
+  labelChange: PropTypes.func.isRequired,
   filterOptions: PropTypes.shape({
     encodings: PropTypes.arrayOf(PropTypes.string).isRequired,
     clusterings: PropTypes.arrayOf(PropTypes.string).isRequired,
     classification: PropTypes.arrayOf(PropTypes.string).isRequired,
     regression: PropTypes.arrayOf(PropTypes.string).isRequired,
-    labelType: PropTypes.string.isRequired
+    label: PropTypes.any.isRequired,
+    attributeNames: PropTypes.arrayOf(PropTypes.string).isRequired,
+    thresholds: PropTypes.arrayOf(PropTypes.number).isRequired
   }).isRequired,
   predictionMethod: PropTypes.string.isRequired
 };

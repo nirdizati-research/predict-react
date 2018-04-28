@@ -3,10 +3,10 @@
  */
 
 import {
+  FILTER_LABEL_CHANGED,
   FILTER_OPTION_CHANGED,
   FILTER_PREDICTION_METHOD_CHANGED,
   FILTER_PREFIX_LENGTH_CHANGED,
-  FILTER_REMAINING_TIME_CHANGED,
   FILTER_SPLIT_CHANGED,
   JOB_DELETED,
   JOB_RESULTS_REQUESTED,
@@ -30,10 +30,17 @@ import {
   RANDOM_FOREST,
   REGRESSION,
   REMAINING_TIME,
-  SIMPLE_INDEX
+  SIMPLE_INDEX,
+  THRESHOLD_MEAN
 } from '../reference';
+import {labelCompare} from '../util/labelCompare';
 
 /* eslint-disable max-len */
+
+const initialLabels = {
+  remainingTime: {type: REMAINING_TIME},
+  duration: {type: DURATION, threshold_type: THRESHOLD_MEAN}
+};
 
 const initialState = {
   fetchState: {inFlight: false},
@@ -43,6 +50,8 @@ const initialState = {
   predictionMethod: REGRESSION,
   prefixLengths: [],
   selectedPrefixes: [],
+  thresholds: [],
+  attributeNames: [],
   splitId: -100
 };
 
@@ -51,7 +60,7 @@ const initialFilters = {
   clusterings: [NO_CLUSTER, KMEANS],
   classification: [KNN, DECISION_TREE, RANDOM_FOREST],
   regression: [LINEAR, LASSO, RANDOM_FOREST],
-  labelType: REMAINING_TIME
+  label: initialLabels.remainingTime
 };
 
 const mergeIncomingJobs = (incoming, existing) => {
@@ -101,8 +110,8 @@ const filterByAllElse = (encodings, clusterings, classification, regression, pre
   }
 };
 
-const filterByLabelType = (labelType) => (job) => {
-  return job.config.label.type === labelType;
+const filterByLabelType = (predictionMethod, label) => (job) => {
+  return labelCompare(predictionMethod)(label, job.config.label);
 };
 
 const addOrRemove = (list, value) => {
@@ -129,9 +138,11 @@ const removeById = (list, value) => {
 };
 
 const prefixSet = (filteredJobs) => [...new Set(filteredJobs.map((job) => job.config.prefix_length))];
+const thresholdSet = (filteredJobs) => [...new Set(filteredJobs.map((job) => job.config.label.threshold))];
+const attributeNameSet = (filteredJobs) => [...new Set(filteredJobs.map((job) => job.config.label.attribute_name))];
 
-const applyFilters = (jobs, splitId, predictionMethod, encodings, clusterings, classification, regression, labelType) => {
-  const commonJobs = jobs.filter(filterBySplit(splitId)).filter(filterByMethod(predictionMethod)).filter(filterByLabelType(labelType));
+const applyFilters = ({jobs, splitId, predictionMethod, encodings, clusterings, classification, regression, label}) => {
+  const commonJobs = jobs.filter(filterBySplit(splitId)).filter(filterByMethod(predictionMethod)).filter(filterByLabelType(predictionMethod, label));
   if (predictionMethod === LABELLING) {
     return commonJobs;
   }
@@ -150,11 +161,28 @@ const checkboxChange = (target, state) => {
       return {...state, regression: addOrRemoveString(state.regression, value)};
     case 'classification[]':
       return {...state, classification: addOrRemoveString(state.classification, value)};
-    case 'labelType':
-      return {...state, labelType: value};
     // no default
   }
   return state;
+};
+
+const advancedConfigChange = (state, {methodConfig, key, isNumber, isFloat, maybeNumber}, value) => {
+  // Only the changed values are put in config. Otherwise merged with config in backend
+  // classification.knn weights distance
+  const config = state[methodConfig];
+  if (isNumber) {
+    // for some reason, value can be "". Don't know, dont care
+    value = parseInt(value, 10);
+  } else if (isFloat) {
+    value = parseFloat(value);
+  } else if (maybeNumber) {
+    const parsed = parseFloat(value);
+    if (!isNaN(parsed)) {
+      value = parsed;
+    }
+  }
+  config[key] = value;
+  return {...state, [methodConfig]: config};
 };
 
 const jobs = (state = {...initialState, ...initialFilters}, action) => {
@@ -169,8 +197,10 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
     case JOBS_RETRIEVED: {
       const jobs = mergeIncomingJobs(action.payload, state.jobs);
       const uniqueSplits = filterUnique(jobs.filter((job) => job.status === 'completed').reduce(reducer, []));
+      const thresholds = thresholdSet(jobs);
+      const attributeNames = attributeNameSet(jobs);
       return {
-        ...state, fetchState: {inFlight: false}, jobs, uniqueSplits
+        ...state, fetchState: {inFlight: false}, jobs, uniqueSplits, thresholds, attributeNames
       };
     }
 
@@ -184,8 +214,10 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
     case JOB_DELETED: {
       const jobs = removeById(state.jobs, action.id);
       const uniqueSplits = filterUnique(jobs.filter((job) => job.status === 'completed').reduce(reducer, []));
+      const thresholds = thresholdSet(jobs);
+      const attributeNames = attributeNameSet(jobs);
       return {
-        ...state, jobs, uniqueSplits
+        ...state, jobs, uniqueSplits, thresholds, attributeNames
       };
     }
     case JOB_RESULTS_REQUESTED: {
@@ -195,25 +227,26 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
       };
     }
     case FILTER_SPLIT_CHANGED: {
-      const filteredJobs = applyFilters(state.jobs, action.splitId, state.predictionMethod, state.encodings, state.clusterings, state.classification, state.regression, state.labelType);
+      const splitId = action.splitId;
+      const filteredJobs = applyFilters({...state, splitId});
       const prefixLengths = prefixSet(filteredJobs);
       return {
-        ...state, filteredJobs, prefixLengths,
-        splitId: action.splitId, selectedPrefixes: prefixLengths
+        ...state, filteredJobs, prefixLengths, splitId, selectedPrefixes: prefixLengths
       };
     }
     case FILTER_PREDICTION_METHOD_CHANGED: {
-      const labelType = action.method === REGRESSION ? REMAINING_TIME : DURATION;
-      const filteredJobs = applyFilters(state.jobs, state.splitId, action.method, initialFilters.encodings, initialFilters.clusterings, initialFilters.classification, initialFilters.regression, labelType);
+      const label = action.method === REGRESSION ? initialLabels.remainingTime : initialLabels.duration;
+      const predictionMethod = action.method;
+      const filteredJobs = applyFilters({...state, predictionMethod, ...initialFilters, label});
       const prefixLengths = prefixSet(filteredJobs);
       return {
-        ...state, filteredJobs, prefixLengths, ...initialFilters, labelType,
-        predictionMethod: action.method, selectedPrefixes: prefixLengths
+        ...state, filteredJobs, prefixLengths, ...initialFilters, label,
+        predictionMethod, selectedPrefixes: prefixLengths
       };
     }
     case FILTER_PREFIX_LENGTH_CHANGED: {
       const selectedPrefixes = addOrRemove(state.selectedPrefixes, action.prefixLength);
-      const filteredJobs = applyFilters(state.jobs, state.splitId, state.predictionMethod, state.encodings, state.clusterings, state.classification, state.regression, state.labelType)
+      const filteredJobs = applyFilters({...state})
         .filter(filterByPrefix(selectedPrefixes));
       return {
         ...state, selectedPrefixes, filteredJobs
@@ -222,18 +255,18 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
 
     case FILTER_OPTION_CHANGED: {
       state = checkboxChange(action.payload, state);
-      const filteredJobs = applyFilters(state.jobs, state.splitId, state.predictionMethod, state.encodings, state.clusterings, state.classification, state.regression, state.labelType);
+      const filteredJobs = applyFilters({...state});
       return {
         ...state, filteredJobs
       };
     }
 
-    case FILTER_REMAINING_TIME_CHANGED: {
-      const labelType = action.payload.value;
-      const filteredJobs = applyFilters(state.jobs, state.splitId, state.predictionMethod, state.encodings, state.clusterings, state.classification, state.regression, labelType);
+    case FILTER_LABEL_CHANGED: {
+      const modifiedState = advancedConfigChange(state, action.payload.config, action.payload.value);
+      const filteredJobs = applyFilters({...modifiedState});
       const prefixLengths = prefixSet(filteredJobs);
       return {
-        ...state, filteredJobs, prefixLengths, labelType, selectedPrefixes: prefixLengths
+        ...modifiedState, filteredJobs, prefixLengths, selectedPrefixes: prefixLengths
       };
     }
 

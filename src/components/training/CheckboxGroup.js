@@ -6,11 +6,9 @@ import PropTypes from 'prop-types';
 import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
 
 const CheckboxGroup = (props) => {
-  return <div className="md-cell md-cell--4">
-    <SelectionControlGroup type="checkbox" label={props.label} name={props.id} id={props.id}
-                           onChange={props.onChange} controls={props.controls}
-                           value={props.value} defaultValue={props.defaultValue}/>
-  </div>;
+  return <SelectionControlGroup type="checkbox" label={props.label} name={props.id} id={props.id}
+                                onChange={props.onChange} controls={props.controls} inline
+                                value={props.value} defaultValue={props.defaultValue}/>;
 };
 
 CheckboxGroup.propTypes = {

@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import ConfigTableCard from '../../components/validation/ConfigTableCard';
 import {CLASSIFICATION, LABELLING, REGRESSION} from '../../reference';
 import {
+  FILTER_LABEL_CHANGED,
   FILTER_OPTION_CHANGED,
   FILTER_PREDICTION_METHOD_CHANGED,
   FILTER_PREFIX_LENGTH_CHANGED,
-  FILTER_REMAINING_TIME_CHANGED,
   FILTER_SPLIT_CHANGED,
   jobsRequested
 } from '../../actions/JobActions';
@@ -61,7 +61,7 @@ class Validation extends Component {
                                 prefixChange={this.onChangePrefix.bind(this)}
                                 selectedSplitId={this.props.splitId} filterOptionChange={this.props.filterOptionChange}
                                 filterOptions={this.props.filterOptions}
-                                labelTypeChange={this.props.labelTypeChange}/>
+                                labelChange={this.props.labelTypeChange}/>
         </div>
         <div className="md-cell md-cell--12">
           <ConfigTableCard jobs={this.props.jobs} predictionMethod={this.props.predictionMethod}/>
@@ -94,7 +94,9 @@ Validation.propTypes = {
     clusterings: PropTypes.arrayOf(PropTypes.string).isRequired,
     classification: PropTypes.arrayOf(PropTypes.string).isRequired,
     regression: PropTypes.arrayOf(PropTypes.string).isRequired,
-    labelType: PropTypes.string.isRequired
+    label: PropTypes.any.isRequired,
+    attributeNames: PropTypes.arrayOf(PropTypes.string).isRequired,
+    thresholds: PropTypes.arrayOf(PropTypes.number).isRequired
   }).isRequired,
 };
 
@@ -106,12 +108,12 @@ const mapStateToProps = (state) => ({
   predictionMethod: state.jobs.predictionMethod,
   prefixLengths: state.jobs.prefixLengths.sort((a, b) => (a - b)),
   selectedPrefixes: state.jobs.selectedPrefixes,
-  filterOptions: (({encodings, clusterings, classification, regression, labelType}) => ({
+  filterOptions: (({encodings, clusterings, classification, regression, label, thresholds, attributeNames}) => ({
     encodings,
     clusterings,
     classification,
     regression,
-    labelType
+    label, attributeNames, thresholds
   }))(state.jobs)
 });
 
@@ -121,9 +123,9 @@ const mapDispatchToProps = (dispatch) => ({
     type: FILTER_OPTION_CHANGED,
     payload: {name: event.target.name, value: event.target.value}
   }),
-  labelTypeChange: (value) => dispatch({
-    type: FILTER_REMAINING_TIME_CHANGED,
-    payload: {name: 'labelType', value: value}
+  labelTypeChange: (conf, value) => dispatch({
+    type: FILTER_LABEL_CHANGED,
+    payload: {config: conf, value: value}
   }),
   onSplitChange: (splitId) => dispatch({type: FILTER_SPLIT_CHANGED, splitId}),
   onMethodChange: (method) => dispatch({type: FILTER_PREDICTION_METHOD_CHANGED, method}),

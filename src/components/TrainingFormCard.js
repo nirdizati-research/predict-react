@@ -241,12 +241,10 @@ class TrainingFormCard extends Component {
       warning = <p className="md-text md-text--error">Select at least one from every option</p>;
     }
 
-    const predictionControls = !this.props.isLabelForm ?
-      <div className="md-cell md-cell--12">
-        <SelectionControlGroup id="prediction" name="prediction" type="radio" label="Prediction method"
-                               value={this.state.predictionMethod} inline controls={predictionMethods}
-                               onChange={this.onPredictionMethodChange.bind(this)}/>
-      </div> : null;
+    const predictionControls =
+      <SelectionControlGroup id="prediction" name="prediction" type="radio" label="Prediction method"
+                             value={this.state.predictionMethod} inline controls={predictionMethods}
+                             onChange={this.onPredictionMethodChange.bind(this)}/>;
     const regressionFragment = this.state.predictionMethod === REGRESSION ?
       <CheckboxGroup controls={regressionMethods} id="regression" label="Regression methods"
                      onChange={this.checkboxChange.bind(this)}
@@ -263,19 +261,23 @@ class TrainingFormCard extends Component {
                 label="Create and save models for runtime prediction"
                 checked={this.state.create_models} inline
                 onChange={this.checkboxChange.bind(this)}/> : null;
-    const clusteringFragment = !this.props.isLabelForm ?
-      <div className="md-cell md-cell--4">
-        <SelectionControlGroup type="checkbox" label="Clustering methods" name="clusterings" id="clusterings"
-                               onChange={this.checkboxChange.bind(this)} controls={clusteringMethods}
-                               value={this.state.clusterings.join(',')} controlStyle={groupStyle}/>
-      </div> : null;
+    const clusteringFragment =
+      <SelectionControlGroup type="checkbox" label="Clustering methods" name="clusterings" id="clusterings"
+                             onChange={this.checkboxChange.bind(this)} controls={clusteringMethods}
+                             value={this.state.clusterings.join(',')} controlStyle={groupStyle}/>;
     const encodingFragment = !this.props.isLabelForm ?
-      <div className="md-cell md-cell--4">
-        <SelectionControlGroup type="checkbox" label="Encoding methods" name="encodings" inline
-                               id="encodings" onChange={this.checkboxChange.bind(this)} controls={encodingMethods}
-                               value={this.state.encodings.join(',')} controlStyle={groupStyle}/></div> : null;
+      <SelectionControlGroup type="checkbox" label="Encoding methods" name="encodings" className="md-cell md-cell--4"
+                             id="encodings" onChange={this.checkboxChange.bind(this)} controls={encodingMethods}
+                             value={this.state.encodings.join(',')} controlStyle={groupStyle}/> : null;
 
     const title = this.props.isLabelForm ? 'Labelling' : 'Training';
+
+    const otherSelector = this.props.isLabelForm ? null : <div className="md-cell md-cell--4">
+      {predictionControls}
+      {regressionFragment}
+      {classificationFragment}
+      {clusteringFragment}
+    </div>;
     return (
       <Card className="md-block-centered">
         <CardTitle title={title}>
@@ -290,13 +292,10 @@ class TrainingFormCard extends Component {
           /></CardTitle>
         <CardText>
           <div className="md-grid md-grid--no-spacing">
-            {predictionControls}
+            {otherSelector}
             {encodingFragment}
-            {regressionFragment}
-            {classificationFragment}
-            {clusteringFragment}
             <PrefixSelector prefix={this.state.prefix} onChange={this.advanceConfigChange.bind(this)}
-                            maxEventsInLog={this.props.maxEventsInLog}/>
+                            maxEventsInLog={this.props.maxEventsInLog} isLabelForm={this.props.isLabelForm}/>
           </div>
         </CardText>
         <AdvancedConfiguration classification={this.state.classification} regression={this.state.regression}

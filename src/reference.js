@@ -45,9 +45,9 @@ export const clustering = [
     message: 'No clustering and train a single model'
   },
   {
-    label: KMEANS,
+    label: 'K-means clustering',
     value: KMEANS,
-    message: 'Assign traces to k-means clusters and train a model for each cluster'
+    message: 'Assign traces to 3 k-means clusters and train a model for each cluster'
   }
 ];
 
@@ -126,7 +126,7 @@ const threshold = [
   {
     label: 'Label mean',
     value: THRESHOLD_MEAN,
-    message: 'Mean value of the created label'
+    message: 'Threshold is label mean'
   },
   {
     label: 'Custom',

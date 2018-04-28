@@ -18,7 +18,9 @@ const filterOptions = {
   clusterings: [],
   classification: [],
   regression: [],
-  labelType: 'remaining_time'
+  label: {type: 'remaining_time'},
+  thresholds: [],
+  attributeNames: []
 };
 
 describe('ValidationHeaderCard', () => {
@@ -26,12 +28,12 @@ describe('ValidationHeaderCard', () => {
     const element = shallow(<ValidationHeaderCard fetchState={fetchState} splitLabels={splitLabels}
                                                   splitChange={splitChange} methodChange={methodChange}
                                                   prefixLengths={[]} selectedPrefixes={[]}
-                                                  filterOptionChange={jest.fn()} labelTypeChange={jest.fn()}
+                                                  filterOptionChange={jest.fn()} labelChange={jest.fn()}
                                                   prefixChange={jest.fn()} filterOptions={filterOptions}
                                                   selectedSplitId={1} predictionMethod={CLASSIFICATION}/> );
     expect(element).toBeDefined();
     expect(element.find(FetchState).length).toBe(1);
-    expect(element.find(SelectField).length).toBe(2);
+    expect(element.find(SelectField).length).toBe(1);
     expect(element.find(SelectionControlGroup).length).toBe(4);
   });
 
@@ -39,7 +41,7 @@ describe('ValidationHeaderCard', () => {
     const element = shallow(<ValidationHeaderCard fetchState={fetchState} splitLabels={splitLabels}
                                                   splitChange={splitChange} methodChange={methodChange}
                                                   prefixLengths={[]} selectedPrefixes={[]}
-                                                  filterOptionChange={jest.fn()} labelTypeChange={jest.fn()}
+                                                  filterOptionChange={jest.fn()} labelChange={jest.fn()}
                                                   prefixChange={jest.fn()} filterOptions={filterOptions}
                                                   selectedSplitId={1} predictionMethod={CLASSIFICATION}/>);
     element.find(SelectField).at(0).simulate('change', 'Log2');
@@ -50,7 +52,7 @@ describe('ValidationHeaderCard', () => {
     const element = shallow(<ValidationHeaderCard fetchState={fetchState} splitLabels={splitLabels}
                                                   splitChange={splitChange} methodChange={methodChange}
                                                   prefixLengths={[]} selectedPrefixes={[]}
-                                                  filterOptionChange={jest.fn()} labelTypeChange={jest.fn()}
+                                                  filterOptionChange={jest.fn()} labelChange={jest.fn()}
                                                   prefixChange={jest.fn()} filterOptions={filterOptions}
                                                   selectedSplitId={1} predictionMethod={CLASSIFICATION}/>);
     element.find(SelectionControlGroup).at(0).simulate('change', CLASSIFICATION);
