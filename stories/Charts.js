@@ -126,7 +126,7 @@ export const labelJobs = [
       'encoding': 'simpleIndex',
       'label': label1
     },
-    'result': {'rmse': 201, 'mae': 165},
+    'result': {'rmse': 201, 'mae': 165, 'third': 34},
     'type': 'labelling',
   },
   {
