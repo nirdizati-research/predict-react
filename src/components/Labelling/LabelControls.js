@@ -1,23 +1,35 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {ATTRIBUTE_NUMBER, ATTRIBUTE_STRING, classLabelControls, DURATION, thresholdControls} from '../../reference';
+import {
+  ATTRIBUTE_NUMBER,
+  ATTRIBUTE_STRING,
+  classLabelControls,
+  DURATION,
+  regLabelControls,
+  REGRESSION,
+  thresholdControls
+} from '../../reference';
 import SelectField from 'react-md/lib/SelectFields/index';
 
+/* eslint-disable no-invalid-this */
 const methodConfig = 'label';
 const LabelControls = (props) => {
+  const controls = () => (props.predictionMethod === REGRESSION ? regLabelControls : classLabelControls);
   const labelType = <SelectField
     key="type"
     id="type"
     label="Label type"
     className="md-cell md-cell--6"
-    menuItems={classLabelControls}
+    menuItems={controls()}
     position={SelectField.Positions.BELOW}
     onChange={props.labelChange.bind(this, {methodConfig, key: 'type'})}
     value={props.label.type}
   />;
 
   const threshold = (label) => {
-    if ([ATTRIBUTE_NUMBER, DURATION].includes(label.type)) {
+    if (props.predictionMethod === REGRESSION) {
+      return [null, null];
+    } else if ([ATTRIBUTE_NUMBER, DURATION].includes(label.type)) {
       const thresholdType = <SelectField
         key="threshold_type"
         id="threshold_type"
@@ -77,5 +89,6 @@ LabelControls.propTypes = {
   attributeNames: PropTypes.arrayOf(PropTypes.string).isRequired,
   thresholds: PropTypes.arrayOf(PropTypes.number).isRequired,
   labelChange: PropTypes.func.isRequired,
+  predictionMethod: PropTypes.string
 };
 export default LabelControls;

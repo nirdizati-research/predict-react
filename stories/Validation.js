@@ -215,7 +215,7 @@ storiesOf('Validation', module)
             <ValidationHeaderCard splitLabels={splitLabels} fetchState={{inFlight: false}} splitChange={(_) => _}
                                   methodChange={(_) => _} selectedPrefixes={['2']} filterOptions={filterOptions}
                                   prefixLengths={['1', '2']} prefixChange={(_) => _} filterOptionChange={console.log}
-                                  predictionMethod={REGRESSION}/>
+                                  predictionMethod={REGRESSION} labelChange={console.log}/>
           </div>
         </div>
       );
