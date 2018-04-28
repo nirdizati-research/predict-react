@@ -46,32 +46,28 @@ class SplitFormCard extends Component {
       <Card className="md-block-centered">
         <CardTitle title="Create split"/>
         <CardText>
-          <p>Select log to create test set. There is no configuration yet, so just press ok. The split table below will
-            be updated upon successful split.</p>
+          <p>Select log and configuration to create test set. The table below will be updated updated when a split has
+            been successfully created.</p>
           <div className="md-grid">
-            <div className="md-cell md-cell--3">
-              <h4 className="md-cell md-cell--12">Log to split</h4>
-              <SelectField
-                id="log-name-select"
-                className="md-cell md-cell--12"
-                menuItems={itemsWithLabel}
-                position={SelectField.Positions.BELOW}
-                onChange={this.selectChange.bind(this)}
-                value={this.state.original_log}
-              />
-            </div>
-            <div className="md-cell md-cell--3">
-              <h4 className="md-cell md-cell--12">How to split the log</h4>
-              <SelectField
-                id="split-type-select"
-                className="md-cell md-cell--12"
-                menuItems={splitTypes}
-                position={SelectField.Positions.BELOW}
-                onChange={this.splitTypeChange.bind(this)}
-                value={this.state.config.split_type}
-              />
-            </div>
-            <div className="md-cell md-cell--3">
+            <SelectField
+              id="log-name-select"
+              label="Log file"
+              className="md-cell md-cell--4"
+              menuItems={itemsWithLabel}
+              position={SelectField.Positions.BELOW}
+              onChange={this.selectChange.bind(this)}
+              value={this.state.original_log}
+            />
+            <SelectField
+              id="split-type-select"
+              className="md-cell md-cell--4"
+              label="How to split the log"
+              menuItems={splitTypes}
+              position={SelectField.Positions.BELOW}
+              onChange={this.splitTypeChange.bind(this)}
+              value={this.state.config.split_type}
+            />
+            <div className="md-cell md-cell--4">
               <Slider
                 id="test-size"
                 label="Test set percentage. Default 0.2.  Min = 0, Max = 1, Step = 0.05"
