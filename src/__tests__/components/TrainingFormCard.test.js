@@ -73,8 +73,8 @@ describe('TrainingFormCard', () => {
 
     const selectGroups = shallowElement.find(SelectionControlGroup);
     expect(selectGroups.at(0).props().value).toBe(REGRESSION);
-    expect(selectGroups.at(1).props().value).toBe('simpleIndex');
-    expect(selectGroups.at(2).props().value).toBe('noCluster');
+    expect(selectGroups.at(2).props().value).toBe('simpleIndex');
+    expect(selectGroups.at(1).props().value).toBe('noCluster');
 
     expect(shallowElement.find(CheckboxGroup).props().value).toBe('linear');
     // no warning

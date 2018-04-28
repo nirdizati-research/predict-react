@@ -242,11 +242,9 @@ class TrainingFormCard extends Component {
     }
 
     const predictionControls = !this.props.isLabelForm ?
-      <div className="md-cell md-cell--12">
-        <SelectionControlGroup id="prediction" name="prediction" type="radio" label="Prediction method"
-                               value={this.state.predictionMethod} inline controls={predictionMethods}
-                               onChange={this.onPredictionMethodChange.bind(this)}/>
-      </div> : null;
+      <SelectionControlGroup id="prediction" name="prediction" type="radio" label="Prediction method"
+                             value={this.state.predictionMethod} inline controls={predictionMethods}
+                             onChange={this.onPredictionMethodChange.bind(this)}/> : null;
     const regressionFragment = this.state.predictionMethod === REGRESSION ?
       <CheckboxGroup controls={regressionMethods} id="regression" label="Regression methods"
                      onChange={this.checkboxChange.bind(this)}
@@ -264,16 +262,13 @@ class TrainingFormCard extends Component {
                 checked={this.state.create_models} inline
                 onChange={this.checkboxChange.bind(this)}/> : null;
     const clusteringFragment = !this.props.isLabelForm ?
-      <div className="md-cell md-cell--4">
-        <SelectionControlGroup type="checkbox" label="Clustering methods" name="clusterings" id="clusterings"
-                               onChange={this.checkboxChange.bind(this)} controls={clusteringMethods}
-                               value={this.state.clusterings.join(',')} controlStyle={groupStyle}/>
-      </div> : null;
+      <SelectionControlGroup type="checkbox" label="Clustering methods" name="clusterings" id="clusterings"
+                             onChange={this.checkboxChange.bind(this)} controls={clusteringMethods}
+                             value={this.state.clusterings.join(',')} controlStyle={groupStyle}/> : null;
     const encodingFragment = !this.props.isLabelForm ?
-      <div className="md-cell md-cell--4">
-        <SelectionControlGroup type="checkbox" label="Encoding methods" name="encodings" inline
-                               id="encodings" onChange={this.checkboxChange.bind(this)} controls={encodingMethods}
-                               value={this.state.encodings.join(',')} controlStyle={groupStyle}/></div> : null;
+      <SelectionControlGroup type="checkbox" label="Encoding methods" name="encodings" className="md-cell md-cell--4"
+                             id="encodings" onChange={this.checkboxChange.bind(this)} controls={encodingMethods}
+                             value={this.state.encodings.join(',')} controlStyle={groupStyle}/> : null;
 
     const title = this.props.isLabelForm ? 'Labelling' : 'Training';
     return (
@@ -290,11 +285,13 @@ class TrainingFormCard extends Component {
           /></CardTitle>
         <CardText>
           <div className="md-grid md-grid--no-spacing">
-            {predictionControls}
+            <div className="md-cell md-cell--4">
+              {predictionControls}
+              {regressionFragment}
+              {classificationFragment}
+              {clusteringFragment}
+            </div>
             {encodingFragment}
-            {regressionFragment}
-            {classificationFragment}
-            {clusteringFragment}
             <PrefixSelector prefix={this.state.prefix} onChange={this.advanceConfigChange.bind(this)}
                             maxEventsInLog={this.props.maxEventsInLog}/>
           </div>

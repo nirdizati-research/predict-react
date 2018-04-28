@@ -13,7 +13,7 @@ describe('Reference', () => {
     expect(clusteringMethods[1].key).toBe('kmeans');
     expect(clusteringMethods[1].value).toBe('kmeans');
     const label = shallow(clusteringMethods[1].label);
-    expect(label.text()).toMatch(/kmeans/);
+    expect(label.text()).toMatch(/K-means/);
     expect(label.text()).toMatch(/Assign traces/);
   });
 

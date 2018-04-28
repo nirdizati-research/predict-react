@@ -26,9 +26,6 @@ const methodConfig = 'label';
 /* eslint-disable react/prop-types */
 const Labelling = (props) => {
   const helpText = <div key='key' className="md-cell md-cell--12"><p>
-    Classification supports all 4 labelling types. For regression, the supported types are remaining time and number
-    attribute.
-  </p><p>
     When using remaining time, the threshold is an integer in seconds. If the remaining time is below this threshold it
     is classified as <code>True</code> or Fast. Times above the threshold are classified as <code>False</code> or Slow.
   </p><p>
