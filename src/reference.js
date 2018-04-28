@@ -126,7 +126,7 @@ const threshold = [
   {
     label: 'Label mean',
     value: THRESHOLD_MEAN,
-    message: 'Mean value of the created label'
+    message: 'Threshold is label mean'
   },
   {
     label: 'Custom',
