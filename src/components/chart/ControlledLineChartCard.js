@@ -60,7 +60,7 @@ class ControlledLineChartCard extends Component {
       },
       interpolateNulls: true,
       legend: {textStyle: {fontSize: 12}},
-      chartArea: {right: 250, left: 50}
+      chartArea: {right: 250, left: 100}
     };
 
     const chart = <Chart
