@@ -197,8 +197,10 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
     case JOBS_RETRIEVED: {
       const jobs = mergeIncomingJobs(action.payload, state.jobs);
       const uniqueSplits = filterUnique(jobs.filter((job) => job.status === 'completed').reduce(reducer, []));
+      const thresholds = thresholdSet(jobs);
+      const attributeNames = attributeNameSet(jobs);
       return {
-        ...state, fetchState: {inFlight: false}, jobs, uniqueSplits
+        ...state, fetchState: {inFlight: false}, jobs, uniqueSplits, thresholds, attributeNames
       };
     }
 
@@ -212,8 +214,10 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
     case JOB_DELETED: {
       const jobs = removeById(state.jobs, action.id);
       const uniqueSplits = filterUnique(jobs.filter((job) => job.status === 'completed').reduce(reducer, []));
+      const thresholds = thresholdSet(jobs);
+      const attributeNames = attributeNameSet(jobs);
       return {
-        ...state, jobs, uniqueSplits
+        ...state, jobs, uniqueSplits, thresholds, attributeNames
       };
     }
     case JOB_RESULTS_REQUESTED: {
@@ -261,10 +265,8 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
       const modifiedState = advancedConfigChange(state, action.payload.config, action.payload.value);
       const filteredJobs = applyFilters({...modifiedState});
       const prefixLengths = prefixSet(filteredJobs);
-      const thresholds = thresholdSet(filteredJobs);
-      const attributeNames = attributeNameSet(filteredJobs);
       return {
-        ...modifiedState, filteredJobs, prefixLengths, selectedPrefixes: prefixLengths, thresholds, attributeNames
+        ...modifiedState, filteredJobs, prefixLengths, selectedPrefixes: prefixLengths
       };
     }
 

@@ -36,7 +36,7 @@ const jobList = [
       prefix_length: 2,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
-      label: {type: DURATION, threshold_type: THRESHOLD_MEAN},
+      label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
       clustering: NO_CLUSTER
     },
     split: {
@@ -51,7 +51,7 @@ const jobList = [
       prefix_length: 2,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
-      label: {type: DURATION, threshold_type: THRESHOLD_MEAN},
+      label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
       clustering: NO_CLUSTER
     },
     split: {
@@ -66,7 +66,7 @@ const jobList = [
       prefix_length: 1,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
-      label: {type: REMAINING_TIME},
+      label: {type: REMAINING_TIME, threshold: 0},
       clustering: NO_CLUSTER
     },
     split: {
@@ -81,7 +81,7 @@ const jobList = [
       prefix_length: 5,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
-      label: {type: DURATION, threshold_type: THRESHOLD_MEAN},
+      label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
       clustering: NO_CLUSTER
     },
     split: {
@@ -96,7 +96,7 @@ const jobList = [
       prefix_length: 4,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
-      label: {type: DURATION, threshold_type: THRESHOLD_MEAN},
+      label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
       clustering: NO_CLUSTER
     },
     split: {
@@ -111,7 +111,7 @@ const jobList = [
       prefix_length: 2,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
-      label: {type: REMAINING_TIME},
+      label: {type: REMAINING_TIME, threshold: 0},
       clustering: NO_CLUSTER
     },
     split: {
@@ -141,7 +141,7 @@ const jobList = [
       prefix_length: 4,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
-      label: {type: ATTRIBUTE_NUMBER, threshold_type: THRESHOLD_MEAN, attribute_name: 'name'},
+      label: {type: ATTRIBUTE_NUMBER, threshold_type: THRESHOLD_MEAN, attribute_name: 'name', threshold: 0},
       clustering: NO_CLUSTER
     },
     split: {
@@ -162,17 +162,19 @@ describe('JobsReducer', () => {
   });
 
   it('adds jobs when request completed', () => {
-    const jobList = [{id: 1, log: 'name'}];
+    const jobList = [{id: 1, log: 'name', config: {label: {}}}];
     const state = jobs(undefined, jobsRequested());
     const state2 = jobs(state, jobsRetrieved(jobList));
     expect(state2).toMatchObject({fetchState: {inFlight: false}, jobs: jobList});
+    expect(state2.attributeNames).toEqual([undefined]);
+    expect(state2.thresholds).toEqual([undefined]);
   });
 
-  it('updates job list by uuid', () => {
-    const jobList = [{id: 1, log: 'name1', status: 'running'},
-      {id: 2, log: 'name2', status: 'running'},
-      {id: 3, log: 'name2', status: 'running'}];
-    const incoming = [{id: 2, log: 'name2', status: 'completed'}];
+  it('updates job list by id', () => {
+    const jobList = [{id: 1, log: 'name1', status: 'running', config: {label: {}}},
+      {id: 2, log: 'name2', status: 'running', config: {label: {}}},
+      {id: 3, log: 'name2', status: 'running', config: {label: {}}}];
+    const incoming = [{id: 2, log: 'name2', status: 'completed', config: {label: {}}}];
     const state = jobs(undefined, jobResultsRequested());
     state.jobs = jobList;
     const state2 = jobs(state, jobsRetrieved(incoming));
@@ -189,7 +191,7 @@ describe('JobsReducer', () => {
   });
 
   it('removes from list on delete', () => {
-    const jobList = [{id: 1, log: 'name'}];
+    const jobList = [{id: 1, log: 'name', config: {label: {}}}];
     const state2 = jobs(undefined, jobsRetrieved(jobList));
     const state3 = jobs(state2, {type: JOB_DELETED, id: 1});
     expect(state3).toMatchObject({uniqueSplits: [], jobs: []});
@@ -333,7 +335,7 @@ describe('Validation filter', () => {
       });
       expect(state3.label).toEqual({type: DURATION, threshold_type: THRESHOLD_CUSTOM, threshold: 100});
       expect(state3.filteredJobs.length).toEqual(1);
-      expect(state3.thresholds).toEqual([100]);
+      expect(state3.thresholds).toEqual([0, 100]);
     });
 
     it('filters for attribute names', () => {
@@ -356,7 +358,7 @@ describe('Validation filter', () => {
         attribute_name: 'name'
       });
       expect(state34.filteredJobs.length).toEqual(1);
-      expect(state34.attributeNames).toEqual(['name']);
+      expect(state34.attributeNames).toEqual([undefined, 'name']);
     });
   });
 });
