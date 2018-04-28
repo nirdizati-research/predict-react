@@ -106,7 +106,7 @@ class Labelling extends Component {
                                prefixChange={this.onChangePrefix.bind(this)}
                                selectedSplitId={this.props.splitId}
                                filterOptions={this.props.filterOptions}
-                               labelTypeChange={this.props.labelTypeChange}/>
+                               labelChange={this.props.labelTypeChange}/>
         </div>
         {prefixChart}
         <div className="md-cell md-cell--12">
@@ -140,7 +140,9 @@ Labelling.propTypes = {
   prefixLengths: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
   selectedPrefixes: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
   filterOptions: PropTypes.shape({
-    labelType: PropTypes.string.isRequired
+    label: PropTypes.any.isRequired,
+    attributeNames: PropTypes.arrayOf(PropTypes.string).isRequired,
+    thresholds: PropTypes.arrayOf(PropTypes.number).isRequired
   }).isRequired,
 };
 
@@ -154,8 +156,8 @@ const mapStateToProps = (state) => ({
   predictionMethod: state.jobs.predictionMethod,
   prefixLengths: state.jobs.prefixLengths.sort((a, b) => (a - b)),
   selectedPrefixes: state.jobs.selectedPrefixes,
-  filterOptions: (({labelType}) => ({
-    labelType
+  filterOptions: (({label, attributeNames, thresholds}) => ({
+    label, attributeNames, thresholds
   }))(state.jobs)
 });
 
@@ -163,9 +165,9 @@ const mapDispatchToProps = (dispatch) => ({
   onRequestJobs: () => dispatch(jobsRequested()),
   onRequestSplitList: () => dispatch(splitsRequested()),
   onSubmitTraining: (payload) => dispatch(submitTraining(payload)),
-  labelTypeChange: (value) => dispatch({
+  labelTypeChange: (conf, value) => dispatch({
     type: FILTER_LABEL_CHANGED,
-    payload: {name: 'labelType', value: value}
+    payload: {config: conf, value: value}
   }),
   onSplitChange: (splitId) => dispatch({type: FILTER_SPLIT_CHANGED, splitId}),
   onMethodChange: (method) => dispatch({type: FILTER_PREDICTION_METHOD_CHANGED, method}),

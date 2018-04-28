@@ -5,7 +5,7 @@ import React from 'react';
 import {storiesOf} from '@storybook/react';
 import ValidationHeaderCard from '../src/components/validation/ValidationHeaderCard';
 import ConfigTableCard from '../src/components/validation/ConfigTableCard';
-import {CLASSIFICATION, LABELLING, REGRESSION} from '../src/reference';
+import {CLASSIFICATION, DURATION, LABELLING, REGRESSION, THRESHOLD_MEAN} from '../src/reference';
 import ResultWrapper from '../src/components/validation/ResultWrapper';
 import {label1} from './Advanced';
 import LabellingHeaderCard from '../src/components/Labelling/LabellingHeaderCard';
@@ -202,6 +202,9 @@ const filterOptions = {
   clusterings: [],
   classification: [],
   regression: [],
+  label: {type: DURATION, threshold_type: THRESHOLD_MEAN},
+  thresholds: [1, 3, 4],
+  attributeNames: ['name', 'name2']
 };
 
 storiesOf('Validation', module)
@@ -222,7 +225,7 @@ storiesOf('Validation', module)
       <div className="md-grid">
         <div className="md-cell md-cell--12">
           <LabellingHeaderCard splitLabels={splitLabels} fetchState={{inFlight: false}} splitChange={(_) => _}
-                               selectedPrefixes={['2']} filterOptions={filterOptions} labelTypeChange={console.log}
+                               selectedPrefixes={['2']} filterOptions={filterOptions} labelChange={console.log}
                                prefixLengths={['1', '2']} prefixChange={(_) => _} selectedSplitId={1}/>
         </div>
       </div>
