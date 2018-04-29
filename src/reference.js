@@ -192,24 +192,24 @@ const padding = [
   {
     label: 'No padding',
     value: 'no_padding',
-    message: 'Traces with less than prefix_length will be discarded'
+    message: 'Traces with length less than prefix length will be discarded'
   },
   {
     label: 'With 0 padding',
     value: 'zero_padding',
-    message: 'Traces with less than prefix_length will be padded with 0'
+    message: 'Traces with length less than prefix length will be padded with 0'
   }
 ];
 
 const prefixTypes = [
   {
-    label: 'Only this prefix',
+    label: 'Only this prefix length',
     value: 'only'
   },
   {
-    label: 'Up to the prefix',
+    label: 'Up to the prefix length',
     value: 'up_to',
-    message: 'Run jobs from 1 to this value'
+    message: 'Create multiple jobs from prefix length 1 up to this value'
   },
 ];
 

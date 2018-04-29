@@ -39,12 +39,12 @@ class PrefixSelector extends Component {
       <SelectionControlGroup type="radio" name="padding" id="padding" label="Encoded log padding" inline
                              onChange={this.props.onChange.bind(this, {methodConfig, key: 'padding'})} className={cl}
                              controls={paddingControls} value={this.props.prefix.padding} controlStyle={groupStyle}/>
-      <SelectionControlGroup type="radio" name="type" id="type" label="Prefix generation type"
+      <SelectionControlGroup type="radio" name="type" id="type" label="Prefix length type"
                              onChange={this.props.onChange.bind(this, {methodConfig, key: 'type'})}
                              controls={prefixTypeControls} inline className={cl}
                              value={this.props.prefix.type} controlStyle={groupStyle}/>
-      <p className={cl}>The maximum prefix length is <b>{this.props.maxEventsInLog}</b>. Raise number at
-        your own caution because this too high a number will cause errors.</p>
+      <p className={cl}>The maximum prefix length is <b>{this.props.maxEventsInLog}</b>.
+        Values above maximum length might have inconsistent results.</p>
       <TextField
         id="prefixLength"
         label="Prefix length"
