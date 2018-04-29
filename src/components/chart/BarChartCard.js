@@ -5,9 +5,9 @@ import React from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import PropTypes from 'prop-types';
 import {Chart} from 'react-google-charts';
-
+import DEFAULT_CHART_COLORS from 'react-google-charts/lib/constants/DEFAULT_CHART_COLORS';
 // Custom compare because why not
-const compare = (a, b) =>{
+const compare = (a, b) => {
   if (a[1] > b[1]) {
     return -1;
   }
@@ -17,12 +17,18 @@ const compare = (a, b) =>{
   return 0;
 };
 
+// Make every bar different color
+const getColor = (index) => {
+  return index > 20 ? DEFAULT_CHART_COLORS[0] : DEFAULT_CHART_COLORS[index];
+};
+
 const BarChartCard = (props) => {
   // Empty data means empty rows means error
   if (Object.keys(props.data).length === 0 && props.data.constructor === Object) {
     return null;
   }
-  const rows = Object.keys(props.data).map((key) => [key, props.data[key]]);
+  const rows = Object.keys(props.data)
+    .map((key, index) => [key, props.data[key], props.data[key] + '', getColor(index)]);
 
   rows.sort(compare);
   const opts = {
@@ -43,7 +49,16 @@ const BarChartCard = (props) => {
     {
       type: 'number',
       label: props.chartTitle,
-    }];
+    },
+    {
+      type: 'string',
+      role: 'annotation'
+    },
+    {
+      type: 'string',
+      role: 'style'
+    }
+  ];
   return <Card className="md-block-centered">
     <CardTitle title={props.cardTitle}/>
     <CardText>
