@@ -154,7 +154,7 @@ const classificationLabelTypes = [
   {
     value: NEXT_ACTIVITY,
     label: 'Next activity',
-    message: 'Multi-label classification'
+    message: 'Multiclass classification'
   },
   {
     value: ATTRIBUTE_NUMBER,
@@ -164,7 +164,7 @@ const classificationLabelTypes = [
   {
     value: ATTRIBUTE_STRING,
     label: 'Trace string attribute',
-    message: 'Multi-label classification'
+    message: 'Multiclass classification'
   },
 ];
 
