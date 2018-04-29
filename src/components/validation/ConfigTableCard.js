@@ -28,7 +28,7 @@ class ConfigTableCard extends Component {
 
   getHelpText() {
     if (this.props.predictionMethod === LABELLING) {
-      return <p>Click on the row to see the label distribution results below the table.</p>;
+      return <p>Click on the row to see the label distribution results above the table.</p>;
     }
     return null;
   }

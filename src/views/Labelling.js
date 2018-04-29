@@ -66,16 +66,15 @@ class Labelling extends Component {
     const prefixStrings = this.props.prefixLengths.map((p) => p + '');
 
     const validationChart = () => {
-      if (this.state.clickedJobId === null) {
+      if (this.props.jobs.length === 0) {
         return;
       }
-      const jobs = this.props.jobs.filter((job) => job.id === this.state.clickedJobId);
-      if (jobs.length === 0) {
-        return;
-      }
-      return <div className="md-cell md-cell--12">
-        <BarChartCard data={jobs[0].result}
-                      cardTitle={`Labels of labelling job ${jobs[0].id}`}
+      const job = this.state.clickedJobId ?
+        this.props.jobs.filter((job) => job.id === this.state.clickedJobId)[0] : this.props.jobs[0];
+      const a = job ? job.id : '';
+      return <div className="md-cell md-cell--6">
+        <BarChartCard data={job ? job.result : {}}
+                      cardTitle={`Labels of labelling job ${a}`}
                       hTitle="Label count"
                       chartTitle="Label"/></div>;
     };
@@ -86,7 +85,7 @@ class Labelling extends Component {
     }
     let prefixChart;
     if (this.props.jobs.length > 0) {
-      prefixChart = <div className="md-cell md-cell--12" key="023">
+      prefixChart = <div className="md-cell md-cell--6" key="023">
         <PrefixLineChart jobs={this.props.jobs}/>
       </div>;
     }
@@ -109,11 +108,12 @@ class Labelling extends Component {
                                labelChange={this.props.labelTypeChange}/>
         </div>
         {prefixChart}
+        {validationChart()}
         <div className="md-cell md-cell--12">
           <ConfigTableCard jobs={this.props.jobs} onClick={this.onJobClick.bind(this)}
                            predictionMethod={this.props.predictionMethod}/>
         </div>
-        {validationChart()}
+
       </div>
     );
   }

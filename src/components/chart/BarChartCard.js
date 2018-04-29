@@ -23,55 +23,58 @@ const getColor = (index) => {
 };
 
 const BarChartCard = (props) => {
-  // Empty data means empty rows means error
-  if (Object.keys(props.data).length === 0 && props.data.constructor === Object) {
-    return null;
-  }
-  const rows = Object.keys(props.data)
-    .map((key, index) => [key, props.data[key], props.data[key] + '', getColor(index)]);
+  const chart = (props) => {
+    // Empty data means empty rows means error
+    if (Object.keys(props.data).length === 0 && props.data.constructor === Object) {
+      return 'No data, chart cannot be shown';
+    }
+    const rows = Object.keys(props.data)
+      .map((key, index) => [key, props.data[key], props.data[key] + '', getColor(index)]);
 
-  rows.sort(compare);
-  const opts = {
-    legend: 'none',
-    hAxis: {
-      title: props.hTitle,
-      minValue: 0
-    },
-    vAxis: {
-      title: props.chartTitle
-    }
+    rows.sort(compare);
+    const opts = {
+      legend: 'none',
+      hAxis: {
+        title: props.hTitle,
+        minValue: 0
+      },
+      vAxis: {
+        title: props.chartTitle
+      }
+    };
+    const columns = [
+      {
+        type: 'string',
+        label: props.hTitle,
+      },
+      {
+        type: 'number',
+        label: props.chartTitle,
+      },
+      {
+        type: 'string',
+        role: 'annotation'
+      },
+      {
+        type: 'string',
+        role: 'style'
+      }
+    ];
+    return <Chart
+      chartType="BarChart"
+      rows={rows}
+      columns={columns}
+      options={opts}
+      graph_id={props.hTitle}
+      width="100%"
+      legend_toggle
+    />;
   };
-  const columns = [
-    {
-      type: 'string',
-      label: props.hTitle,
-    },
-    {
-      type: 'number',
-      label: props.chartTitle,
-    },
-    {
-      type: 'string',
-      role: 'annotation'
-    },
-    {
-      type: 'string',
-      role: 'style'
-    }
-  ];
   return <Card className="md-block-centered">
     <CardTitle title={props.cardTitle}/>
     <CardText>
       {props.description}
-      <Chart
-        chartType="BarChart"
-        rows={rows}
-        columns={columns}
-        options={opts}
-        graph_id={props.hTitle}
-        width="100%"
-        legend_toggle
-      />
+      {chart(props)}
     </CardText>
   </Card>;
 };
