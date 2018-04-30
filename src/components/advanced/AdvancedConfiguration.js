@@ -59,7 +59,7 @@ const AdvancedConfiguration = (props) => {
   const hyperOpt = () => (makeExpander('Hyperparameter Optimization', hyperUrl,
     <HyperOpt onChange={props.onChange} predictionMethod={props.predictionMethod} {...props}/>));
 
-  const addColumns = () => (makeExpander('Additional log columns', '',
+  const addColumns = () => (makeExpander('Temporal and intercase features', '',
     <AddColumns onChange={props.onChange} label={props.label} {...props}/>));
 
   const label = makeExpander('Labelling', '',

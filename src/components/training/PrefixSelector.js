@@ -39,7 +39,7 @@ class PrefixSelector extends Component {
       <SelectionControlGroup type="radio" name="padding" id="padding" label="Encoded log padding" inline
                              onChange={this.props.onChange.bind(this, {methodConfig, key: 'padding'})} className={cl}
                              controls={paddingControls} value={this.props.prefix.padding} controlStyle={groupStyle}/>
-      <SelectionControlGroup type="radio" name="type" id="type" label="Prefix length type"
+      <SelectionControlGroup type="radio" name="type" id="type" label="Task generation type"
                              onChange={this.props.onChange.bind(this, {methodConfig, key: 'type'})}
                              controls={prefixTypeControls} inline className={cl}
                              value={this.props.prefix.type} controlStyle={groupStyle}/>
