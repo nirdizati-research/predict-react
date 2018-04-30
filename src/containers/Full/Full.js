@@ -32,16 +32,17 @@ class Full extends Component {
           leftIcon: <FontIcon>home</FontIcon>,
         }, {
           component: Link,
-          to: '/logs',
-          active: isActive('/logs', pathname),
-          primaryText: 'Logs',
-          leftIcon: <FontIcon>description</FontIcon>,
-        }, {
-          component: Link,
           to: '/upload',
           active: isActive('/upload', pathname),
           primaryText: 'Upload',
           leftIcon: <FontIcon>backup</FontIcon>,
+        }, {
+
+          component: Link,
+          to: '/logs',
+          active: isActive('/logs', pathname),
+          primaryText: 'Logs',
+          leftIcon: <FontIcon>description</FontIcon>,
         }, {
           component: Link,
           to: '/split',
@@ -56,16 +57,16 @@ class Full extends Component {
           leftIcon: <FontIcon>label_outline</FontIcon>,
         }, {
           component: Link,
-          to: '/jobs',
-          active: isActive('/jobs', pathname),
-          primaryText: 'Task status',
-          leftIcon: <FontIcon>list</FontIcon>,
-        }, {
-          component: Link,
           to: '/training',
           active: isActive('/training', pathname),
           primaryText: 'Training',
           leftIcon: <FontIcon>build</FontIcon>,
+        }, {
+          component: Link,
+          to: '/jobs',
+          active: isActive('/jobs', pathname),
+          primaryText: 'Task status',
+          leftIcon: <FontIcon>list</FontIcon>,
         }, {
           component: Link,
           to: '/validation',
