@@ -72,9 +72,10 @@ class Labelling extends Component {
       const job = this.state.clickedJobId ?
         this.props.jobs.filter((job) => job.id === this.state.clickedJobId)[0] : this.props.jobs[0];
       const a = job ? job.id : '';
+      const prefix = job ? job.config.prefix_length : '';
       return <div className="md-cell md-cell--6">
         <BarChartCard data={job ? job.result : {}}
-                      cardTitle={`Labels of labelling job ${a}`}
+                      cardTitle={`Labels for task ${a}, prefix length ${prefix}`}
                       hTitle="Label count"
                       chartTitle="Label"/></div>;
     };
