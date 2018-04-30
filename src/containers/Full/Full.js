@@ -28,8 +28,14 @@ class Full extends Component {
           component: IndexLink,
           to: '/',
           active: isActive('/', pathname),
-          primaryText: 'Dashboard',
+          primaryText: 'Home',
           leftIcon: <FontIcon>home</FontIcon>,
+        }, {
+          component: Link,
+          to: '/logs',
+          active: isActive('/logs', pathname),
+          primaryText: 'Logs',
+          leftIcon: <FontIcon>description</FontIcon>,
         }, {
           component: Link,
           to: '/upload',

@@ -22,6 +22,7 @@ function loadStories() {
   require('../stories/Upload');
   require('../stories/Split');
   require('../stories/Logs');
+  require('../stories/Random');
 }
 
 configure(loadStories, module);

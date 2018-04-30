@@ -6,7 +6,7 @@ import {changeVisibleLog, logListRequested} from '../../actions/LogActions';
 import LineChartCard from '../../components/chart/LineChartCard';
 import {logPropType} from '../../helpers';
 
-class Dashboard extends Component {
+class Logs extends Component {
   componentDidMount() {
     if (this.props.logList.length === 0) {
       return this.props.onRequestLogList(true);
@@ -59,7 +59,7 @@ class Dashboard extends Component {
   }
 }
 
-Dashboard.propTypes = {
+Logs.propTypes = {
   log: logPropType,
   fetchState: PropTypes.shape({
     inFlight: PropTypes.bool.isRequired,
@@ -85,4 +85,4 @@ const mapDispatchToProps = (dispatch) => ({
   onChangeVisible: (logId) => dispatch(changeVisibleLog({logId, requestInfo: true}))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Logs);

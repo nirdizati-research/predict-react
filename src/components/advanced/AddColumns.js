@@ -33,7 +33,7 @@ const AddColumns = (props) => {
   const header2 = <div key='h2' className="md-cell md-cell--12">
     <h4>Intercase features</h4>
     <p>These options use aggregated metrics of the entire log to create the value. The metrics are visible on the
-      Dashboard page. For any event at a prefix length, the value is the count of metric on the date of the event.</p>
+      Logs page. For any event at a prefix length, the value is the count of metric on the date of the event.</p>
   </div>;
   const addExecutedEvents = <Checkbox
     key="add_executed_events"
