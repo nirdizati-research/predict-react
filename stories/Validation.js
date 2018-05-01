@@ -17,8 +17,9 @@ const classJobs = [
     'created_date': '2017-11-14T20:52:36.469000Z',
     'modified_date': '2017-12-05T14:57:28.344216Z',
     'config': {
-      'clustering': 'noCluster',
+      'clustering': 'kmeans',
       'method': 'randomForest',
+      'kmeans': {'keyt': 1123},
       'encoding': 'simpleIndex',
       'prefix_length': 1,
       'create_models': true,
@@ -244,7 +245,7 @@ storiesOf('Validation', module)
             <ConfigTableCard jobs={regJobs} predictionMethod={REGRESSION}/>
           </div>
           <div className="md-cell md-cell--12">
-            <ConfigTableCard jobs={labelJobs} predictionMethod={LABELLING}/>
+            <ConfigTableCard jobs={labelJobs} predictionMethod={LABELLING} onClick={(_) => _}/>
           </div>
         </div>
       );

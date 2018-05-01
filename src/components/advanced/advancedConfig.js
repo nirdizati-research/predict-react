@@ -64,3 +64,18 @@ export const classificationMetrics = [
     label: 'False negative'
   },
 ];
+
+export const kmeansAlgorithm = [
+  {
+    value: 'auto',
+    label: 'auto'
+  },
+  {
+    value: 'full',
+    label: 'full'
+  },
+  {
+    value: 'elkan',
+    label: 'elkan'
+  },
+];

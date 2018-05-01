@@ -43,7 +43,8 @@ class ClassConfigTable extends PureComponent {
             <TableColumn style={columnStyle}>{job.id}</TableColumn>
             <TableColumn style={columnStyle}>{job.type}</TableColumn>
             <TableColumn style={columnStyle}>{job.encoding}</TableColumn>
-            <TableColumn style={columnStyle}>{job.clustering}</TableColumn>
+            <TableColumn style={columnStyle}>{job.clustering}{job.kmeans ?
+              <pre>{JSON.stringify(job.kmeans, null, 1)}</pre> : null}</TableColumn>
             <TableColumn style={columnStyle}>{job.method}</TableColumn>
             <TableColumn style={columnStyle}>
               <pre>{JSON.stringify(job.label, null, 1)}</pre>

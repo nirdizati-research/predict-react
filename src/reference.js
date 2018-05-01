@@ -50,7 +50,7 @@ export const clustering = [
   {
     label: 'K-means clustering',
     value: KMEANS,
-    message: 'Assign traces to 3 k-means clusters and train a model for each cluster'
+    message: 'Assign traces to k-means clusters and train a model for each cluster'
   }
 ];
 

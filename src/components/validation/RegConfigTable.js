@@ -38,26 +38,27 @@ class RegConfigTable extends PureComponent {
       </TableHeader>
       <TableBody>
         {this.state.slicedData.map(
-          ({id, encoding, clustering, method, splitName, prefix_length, label, type, advanced, padding, hyperopt, create_models}) => (
-            <TableRow key={id}>
-              <TableColumn style={columnStyle}>{id}</TableColumn>
-              <TableColumn style={columnStyle}>{type}</TableColumn>
-              <TableColumn style={columnStyle}>{encoding}</TableColumn>
-              <TableColumn style={columnStyle}>{clustering}</TableColumn>
-              <TableColumn style={columnStyle}>{method}</TableColumn>
-              <TableColumn style={columnStyle} numeric>{prefix_length}</TableColumn>
+          (job) => (
+            <TableRow key={job.id}>
+              <TableColumn style={columnStyle}>{job.id}</TableColumn>
+              <TableColumn style={columnStyle}>{job.type}</TableColumn>
+              <TableColumn style={columnStyle}>{job.encoding}</TableColumn>
+              <TableColumn style={columnStyle}>{job.clustering}{job.kmeans ?
+                <pre>{JSON.stringify(job.kmeans, null, 1)}</pre> : null}</TableColumn>
+              <TableColumn style={columnStyle}>{job.method}</TableColumn>
+              <TableColumn style={columnStyle} numeric>{job.prefix_length}</TableColumn>
               <TableColumn style={columnStyle}>
-                <pre>{JSON.stringify(label, null, 1)}</pre>
+                <pre>{JSON.stringify(job.label, null, 1)}</pre>
               </TableColumn>
-              <TableColumn style={columnStyle} numeric>{padding}</TableColumn>
-              <TableColumn style={columnStyle}>{JSON.stringify(create_models, null, 1)}</TableColumn>
+              <TableColumn style={columnStyle} numeric>{job.padding}</TableColumn>
+              <TableColumn style={columnStyle}>{JSON.stringify(job.create_models, null, 1)}</TableColumn>
               <TableColumn style={columnStyle}>
-                <pre>{JSON.stringify(hyperopt, null, 1)}</pre>
+                <pre>{JSON.stringify(job.hyperopt, null, 1)}</pre>
               </TableColumn>
               <TableColumn style={columnStyle}>
-                <pre>{JSON.stringify(advanced, null, 1)}</pre>
+                <pre>{JSON.stringify(job.advanced, null, 1)}</pre>
               </TableColumn>
-              <TableColumn style={columnStyle} grow>{splitName}</TableColumn>
+              <TableColumn style={columnStyle} grow>{job.splitName}</TableColumn>
             </TableRow>
           ))}
       </TableBody>

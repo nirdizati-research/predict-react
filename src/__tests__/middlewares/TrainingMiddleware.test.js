@@ -15,10 +15,10 @@ describe('TrainingMiddleware', () => {
     store.dispatch.mockClear();
   });
 
-  it('navigates to jobStatuswhen training succeeded', () => {
+  it('navigates to jobs when training succeeded', () => {
     trainingMiddleware(store)(next)(trainingSucceeded());
 
-    expect(store.dispatch.mock.calls[0][0]).toEqual(push('/jobStatus'));
+    expect(store.dispatch.mock.calls[0][0]).toEqual(push('/jobs'));
   });
 
   it('does nothing for other actions', () => {

@@ -14,6 +14,7 @@ import {
   clusteringMethods,
   DURATION,
   encodingMethods,
+  KMEANS,
   LABELLING,
   paddingControls,
   predictionMethods,
@@ -60,6 +61,7 @@ const initialState = (props) => {
     },
     displayWarning: false,
     predictionMethod: predictionMethod,
+    kmeans: {},
     hyperopt: {
       use_hyperopt: false,
       max_evals: 10,
@@ -123,9 +125,12 @@ class TrainingFormCard extends Component {
       case 'encodings[]':
         this.setState({encodings: this.addOrRemove(this.state.encodings, value)});
         break;
-      case 'clusterings[]':
-        this.setState({clusterings: this.addOrRemove(this.state.clusterings, value)});
+      case 'clusterings[]': {
+        // reset kmeans
+        const kmeans = value === KMEANS ? {} : this.state.kmeans;
+        this.setState({kmeans, clusterings: this.addOrRemove(this.state.clusterings, value)});
         break;
+      }
       case 'regression[]':
         this.setState({regression: this.addOrRemove(this.state.regression, value)});
         break;
@@ -221,6 +226,7 @@ class TrainingFormCard extends Component {
         create_models: this.state.create_models,
         add_elapsed_time: this.state.add_elapsed_time,
         hyperopt: this.state.hyperopt,
+        kmeans: this.state.kmeans,
         [`${CLASSIFICATION}.knn`]: this.state[`${CLASSIFICATION}.knn`],
         [`${CLASSIFICATION}.randomForest`]: this.state[`${CLASSIFICATION}.randomForest`],
         [`${CLASSIFICATION}.decisionTree`]: this.state[`${CLASSIFICATION}.decisionTree`],
@@ -300,7 +306,7 @@ class TrainingFormCard extends Component {
         </CardText>
         <AdvancedConfiguration classification={this.state.classification} regression={this.state.regression}
                                onChange={this.advanceConfigChange.bind(this)} label={this.state.label}
-                               traceAttributes={this.props.traceAttributes}
+                               traceAttributes={this.props.traceAttributes} clusterings={this.state.clusterings}
                                predictionMethod={this.state.predictionMethod}/>
 
         <CardText>

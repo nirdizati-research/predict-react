@@ -72,6 +72,7 @@ export const jobToConfigTable = (job) => {
 };
 
 export const jobToValidationTable = (job) => {
+  const kmeans = job.config.kmeans;
   if (job.type === REGRESSION) {
     return {
       id: job.id,
@@ -84,6 +85,7 @@ export const jobToValidationTable = (job) => {
       padding: job.config.padding,
       hyperopt: job.config.hyperopt,
       label: job.config.label,
+      kmeans,
       create_models: job.config.create_models,
       advanced: job.config[`${REGRESSION}.${job.config.method}`]
     };
@@ -100,6 +102,7 @@ export const jobToValidationTable = (job) => {
       hyperopt: job.config.hyperopt,
       label: job.config.label,
       create_models: job.config.create_models,
+      kmeans,
       advanced: job.config[`${job.type}.${job.config.method}`]
     };
   } else {
