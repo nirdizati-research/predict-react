@@ -37,6 +37,7 @@ const regressionPayload = {
     },
     'create_models': false,
     'methods': ['linear'],
+    'kmeans': {},
     'hyperopt': {
       'use_hyperopt': false,
       'max_evals': 10,

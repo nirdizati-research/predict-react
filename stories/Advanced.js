@@ -2,7 +2,7 @@ import React from 'react';
 import {storiesOf} from '@storybook/react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import ClassificationKnn from '../src/components/advanced/ClassificationKnn';
-import {CLASSIFICATION, REGRESSION, REMAINING_TIME, THRESHOLD_MEAN} from '../src/reference';
+import {CLASSIFICATION, KMEANS, REGRESSION, REMAINING_TIME, THRESHOLD_MEAN} from '../src/reference';
 import AdvancedConfiguration from '../src/components/advanced/AdvancedConfiguration';
 import ClassificationDecisionTree from '../src/components/advanced/ClassificationDecisionTree';
 import ClassificationRandomForest from '../src/components/advanced/ClassificationRandomForest';
@@ -119,7 +119,7 @@ storiesOf('Advanced configuration', module)
               </CardText>
               <AdvancedConfiguration predictionMethod={CLASSIFICATION} label={label1} traceAttributes={[]}
                                      classification={['knn', 'decisionTree', 'randomForest']}
-                                     regression={[]} onChange={console.log}/>
+                                     regression={[]} onChange={console.log} clusterings={[KMEANS]}/>
             </Card>
           </div>
 
@@ -130,7 +130,7 @@ storiesOf('Advanced configuration', module)
                 Some text above
               </CardText>
               <AdvancedConfiguration predictionMethod={REGRESSION} classification={[]} label={label1}
-                                     traceAttributes={[]}
+                                     traceAttributes={[]} clusterings={[]}
                                      regression={['randomForest', 'lasso', 'linear']} onChange={console.log}/>
             </Card>
           </div>
