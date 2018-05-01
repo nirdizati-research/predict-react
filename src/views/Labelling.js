@@ -5,6 +5,7 @@ import ConfigTableCard from '../components/validation/ConfigTableCard';
 import {CLASSIFICATION, LABELLING, REGRESSION} from '../reference';
 import {
   FILTER_LABEL_CHANGED,
+  FILTER_OPTION_CHANGED,
   FILTER_PREDICTION_METHOD_CHANGED,
   FILTER_PREFIX_LENGTH_CHANGED,
   FILTER_SPLIT_CHANGED,
@@ -101,7 +102,7 @@ class Labelling extends Component {
         <div className="md-cell md-cell--12">
           <LabellingHeaderCard splitLabels={splitLabels} fetchState={this.props.fetchState}
                                splitChange={this.onSplitChange.bind(this)}
-                               prefixLengths={prefixStrings}
+                               prefixLengths={prefixStrings} filterOptionChange={this.props.filterOptionChange}
                                selectedPrefixes={this.props.selectedPrefixes}
                                prefixChange={this.onChangePrefix.bind(this)}
                                selectedSplitId={this.props.splitId}
@@ -134,6 +135,7 @@ Labelling.propTypes = {
   onRequestSplitList: PropTypes.func.isRequired,
   onPrefixChange: PropTypes.func.isRequired,
   labelTypeChange: PropTypes.func.isRequired,
+  filterOptionChange: PropTypes.func.isRequired,
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
   predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, LABELLING]).isRequired,
   splitId: PropTypes.number.isRequired,
@@ -143,7 +145,8 @@ Labelling.propTypes = {
   filterOptions: PropTypes.shape({
     label: PropTypes.any.isRequired,
     attributeNames: PropTypes.arrayOf(PropTypes.string).isRequired,
-    thresholds: PropTypes.arrayOf(PropTypes.number).isRequired
+    thresholds: PropTypes.arrayOf(PropTypes.number).isRequired,
+    padding: PropTypes.string.isRequired
   }).isRequired,
 };
 
@@ -157,8 +160,8 @@ const mapStateToProps = (state) => ({
   predictionMethod: state.jobs.predictionMethod,
   prefixLengths: state.jobs.prefixLengths.sort((a, b) => (a - b)),
   selectedPrefixes: state.jobs.selectedPrefixes,
-  filterOptions: (({label, attributeNames, thresholds}) => ({
-    label, attributeNames, thresholds
+  filterOptions: (({label, attributeNames, thresholds, padding}) => ({
+    label, attributeNames, thresholds, padding
   }))(state.jobs)
 });
 
@@ -166,6 +169,10 @@ const mapDispatchToProps = (dispatch) => ({
   onRequestJobs: () => dispatch(jobsRequested()),
   onRequestSplitList: () => dispatch(splitsRequested()),
   onSubmitTraining: (payload) => dispatch(submitTraining(payload)),
+  filterOptionChange: (_, event) => dispatch({
+    type: FILTER_OPTION_CHANGED,
+    payload: {name: event.target.name, value: event.target.value}
+  }),
   labelTypeChange: (conf, value) => dispatch({
     type: FILTER_LABEL_CHANGED,
     payload: {config: conf, value: value}

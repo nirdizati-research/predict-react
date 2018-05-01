@@ -36,6 +36,9 @@ export const DURATION = 'duration';
 
 export const THRESHOLD_MEAN = 'threshold_mean';
 export const THRESHOLD_CUSTOM = 'threshold_custom';
+// padding
+export const ZERO_PADDING = 'zero_padding';
+export const NO_PADDING = 'no_padding';
 
 // Using these options directly means the message is not shown
 export const clustering = [
@@ -188,15 +191,15 @@ export const splitTypes = [
   },
 ];
 
-const padding = [
+export const padding = [
   {
     label: 'No padding',
-    value: 'no_padding',
+    value: NO_PADDING,
     message: 'Traces with length less then the specified prefix length will be discarded'
   },
   {
     label: 'With 0 padding',
-    value: 'zero_padding',
+    value: ZERO_PADDING,
     message: 'Traces with length less then the specified prefix length will padded with 0'
   }
 ];

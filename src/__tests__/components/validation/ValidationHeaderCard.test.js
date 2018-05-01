@@ -4,7 +4,7 @@ import FetchState from '../../../components/FetchState';
 import SelectField from 'react-md/lib/SelectFields';
 import ValidationHeaderCard from '../../../components/validation/ValidationHeaderCard';
 import {SelectionControlGroup} from 'react-md';
-import {CLASSIFICATION} from '../../../reference';
+import {CLASSIFICATION, NO_PADDING} from '../../../reference';
 
 const fetchState = {
   inFlight: false
@@ -20,7 +20,8 @@ const filterOptions = {
   regression: [],
   label: {type: 'remaining_time'},
   thresholds: [],
-  attributeNames: []
+  attributeNames: [],
+  padding: NO_PADDING
 };
 
 describe('ValidationHeaderCard', () => {
@@ -34,7 +35,7 @@ describe('ValidationHeaderCard', () => {
     expect(element).toBeDefined();
     expect(element.find(FetchState).length).toBe(1);
     expect(element.find(SelectField).length).toBe(1);
-    expect(element.find(SelectionControlGroup).length).toBe(4);
+    expect(element.find(SelectionControlGroup).length).toBe(5);
   });
 
   it('calls selectChange', () => {

@@ -27,6 +27,7 @@ import {
   LAST_PAYLOAD,
   LINEAR,
   NO_CLUSTER,
+  NO_PADDING,
   RANDOM_FOREST,
   REGRESSION,
   REMAINING_TIME,
@@ -60,7 +61,8 @@ const initialFilters = {
   clusterings: [NO_CLUSTER, KMEANS],
   classification: [KNN, DECISION_TREE, RANDOM_FOREST],
   regression: [LINEAR, LASSO, RANDOM_FOREST],
-  label: initialLabels.remainingTime
+  label: initialLabels.remainingTime,
+  padding: NO_PADDING
 };
 
 const mergeIncomingJobs = (incoming, existing) => {
@@ -99,6 +101,10 @@ const filterByMethod = (predictionMethod) => (job) => {
 
 const filterByPrefix = (selectedPrefixes) => (job) => {
   return selectedPrefixes.includes(job.config.prefix_length);
+};
+
+const filterByPadding = (padding) => (job) => {
+  return job.config.padding === padding;
 };
 
 const filterByAllElse = (encodings, clusterings, classification, regression, predictionMethod) => (job) => {
@@ -141,14 +147,19 @@ const prefixSet = (filteredJobs) => [...new Set(filteredJobs.map((job) => job.co
 const thresholdSet = (filteredJobs) => [...new Set(filteredJobs.map((job) => job.config.label.threshold))];
 const attributeNameSet = (filteredJobs) => [...new Set(filteredJobs.map((job) => job.config.label.attribute_name))];
 
-const applyFilters = ({jobs, splitId, predictionMethod, encodings, clusterings, classification, regression, label}) => {
-  const commonJobs = jobs.filter(filterBySplit(splitId)).filter(filterByMethod(predictionMethod)).filter(filterByLabelType(predictionMethod, label));
-  if (predictionMethod === LABELLING) {
-    return commonJobs;
-  }
-  return commonJobs
-    .filter(filterByAllElse(encodings, clusterings, classification, regression, predictionMethod));
-};
+const applyFilters =
+  ({jobs, splitId, predictionMethod, encodings, clusterings, classification, regression, label, padding}) => {
+    const commonJobs = jobs
+      .filter(filterBySplit(splitId))
+      .filter(filterByMethod(predictionMethod))
+      .filter(filterByPadding(padding))
+      .filter(filterByLabelType(predictionMethod, label));
+    if (predictionMethod === LABELLING) {
+      return commonJobs;
+    }
+    return commonJobs
+      .filter(filterByAllElse(encodings, clusterings, classification, regression, predictionMethod));
+  };
 
 const checkboxChange = (target, state) => {
   const value = target.value;
@@ -161,6 +172,8 @@ const checkboxChange = (target, state) => {
       return {...state, regression: addOrRemoveString(state.regression, value)};
     case 'classification[]':
       return {...state, classification: addOrRemoveString(state.classification, value)};
+    case 'padding-filter':
+      return {...state, padding: value};
     // no default
   }
   return state;

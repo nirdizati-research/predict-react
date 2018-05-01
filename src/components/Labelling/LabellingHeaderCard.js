@@ -6,6 +6,7 @@ import FetchState from './../FetchState';
 import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
 import {splitLabels} from '../../helpers';
 import LabelControls from './LabelControls';
+import {padding} from '../../reference';
 
 const ValidationHeaderCard = (props) => {
   const prefixControls = props.prefixLengths.map((prefix) => ({label: prefix, value: prefix}));
@@ -37,6 +38,9 @@ const ValidationHeaderCard = (props) => {
       /></CardTitle>
     <CardText>
       <LabelControls labelChange={props.labelChange} {...props.filterOptions}/>
+      <SelectionControlGroup type="radio" name="padding-filter" id="padding-filter" label="Encoded log padding"
+                             inline onChange={props.filterOptionChange}
+                             controls={padding} value={props.filterOptions.padding}/>
       {checkies}
       <FetchState fetchState={props.fetchState}/>
     </CardText>
@@ -56,10 +60,12 @@ ValidationHeaderCard.propTypes = {
   selectedPrefixes: PropTypes.arrayOf(PropTypes.number).isRequired,
   selectedSplitId: PropTypes.number.isRequired,
   labelChange: PropTypes.func.isRequired,
+  filterOptionChange: PropTypes.func.isRequired,
   filterOptions: PropTypes.shape({
     label: PropTypes.any.isRequired,
     attributeNames: PropTypes.arrayOf(PropTypes.string).isRequired,
-    thresholds: PropTypes.arrayOf(PropTypes.number).isRequired
+    thresholds: PropTypes.arrayOf(PropTypes.number).isRequired,
+    padding: PropTypes.string.isRequired
   }).isRequired
 };
 export default ValidationHeaderCard;

@@ -95,6 +95,7 @@ Validation.propTypes = {
     classification: PropTypes.arrayOf(PropTypes.string).isRequired,
     regression: PropTypes.arrayOf(PropTypes.string).isRequired,
     label: PropTypes.any.isRequired,
+    padding: PropTypes.string.isRequired,
     attributeNames: PropTypes.arrayOf(PropTypes.string).isRequired,
     thresholds: PropTypes.arrayOf(PropTypes.number).isRequired
   }).isRequired,
@@ -108,13 +109,14 @@ const mapStateToProps = (state) => ({
   predictionMethod: state.jobs.predictionMethod,
   prefixLengths: state.jobs.prefixLengths.sort((a, b) => (a - b)),
   selectedPrefixes: state.jobs.selectedPrefixes,
-  filterOptions: (({encodings, clusterings, classification, regression, label, thresholds, attributeNames}) => ({
-    encodings,
-    clusterings,
-    classification,
-    regression,
-    label, attributeNames, thresholds
-  }))(state.jobs)
+  filterOptions: (
+    ({encodings, clusterings, classification, regression, label, thresholds, attributeNames, padding}) => ({
+      encodings,
+      clusterings,
+      classification,
+      regression,
+      label, attributeNames, thresholds, padding
+    }))(state.jobs)
 });
 
 const mapDispatchToProps = (dispatch) => ({
