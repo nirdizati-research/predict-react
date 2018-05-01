@@ -54,6 +54,7 @@ export const jobPropType = PropTypes.shape({
     method: PropTypes.string,
     clustering: PropTypes.string,
     encoding: PropTypes.string,
+    kmeans: PropTypes.objectOf(PropTypes.any),
   }).isRequired,
   created_date: PropTypes.string.isRequired,
   modified_date: PropTypes.string.isRequired,
@@ -81,6 +82,7 @@ export const jobFlatPropType = PropTypes.shape({
   padding: PropTypes.string,
   advanced: PropTypes.objectOf(PropTypes.any).isRequired,
   hyperopt: PropTypes.shape(hyperOptShape),
+  kmeans: PropTypes.objectOf(PropTypes.any),
   label: PropTypes.shape(labelPropType).isRequired,
 }).isRequired;
 
