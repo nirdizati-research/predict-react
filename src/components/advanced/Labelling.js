@@ -25,15 +25,23 @@ const methodConfig = 'label';
 /* eslint-disable no-invalid-this */
 /* eslint-disable react/prop-types */
 const Labelling = (props) => {
-  const helpText = <div key='key' className="md-cell md-cell--12"><p>
-    When using remaining time, the threshold is an integer in seconds. If the remaining time is below this threshold it
-    is classified as <code>True</code> or Fast. Times above the threshold are classified as <code>False</code> or Slow.
-  </p><p>
-    Number attributes below the threshold are set as <code>True</code>.
-  </p><p>
-    It is not recommended to use String base label testing on a value that has too many classes, like a registration
-    date. This will reduce the performance of front-end rendering due to the payload size.</p>
-  </div>;
+  const helpText = () => {
+    if (props.predictionMethod === REGRESSION) {
+      return <div key='key' className="md-cell md-cell--12"/>;
+    } else {
+      return <div key='key' className="md-cell md-cell--12"><p>
+        When using remaining time, the threshold is an integer in seconds. If the remaining time is below this threshold
+        it
+        is classified as <code>True</code> or Fast. Times above the threshold are classified as <code>False</code> or
+        Slow.
+      </p><p>
+        Number attributes below the threshold are set as <code>True</code>.
+      </p><p>
+        It is not recommended to use String base label testing on a value that has too many classes, like a registration
+        date. This will reduce the performance of front-end rendering due to the payload size.</p>
+      </div>;
+    }
+  };
 
   const controls = () => (props.predictionMethod === REGRESSION ? regLabelControls : classLabelControls);
 
@@ -102,7 +110,7 @@ const Labelling = (props) => {
     />;
   };
 
-  return [helpText, type, attributeSelector(props), ...threshold(props.label)];
+  return [helpText(), type, attributeSelector(props), ...threshold(props.label)];
 };
 
 Labelling.propTypes = {

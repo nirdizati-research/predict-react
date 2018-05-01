@@ -70,18 +70,18 @@ class JobStatus extends Component {
       <div className="md-grid">
         <div className="md-cell md-cell--12">
           <Card className="md-block-centered">
-            <CardTitle title="Job status"/>
+            <CardTitle title="Task status"/>
             <CardText>
               <p>
-                There are {this.props.jobs.length} jobs in the front-end application.
+                There are {this.props.jobs.length} tasks in the front-end application.
               </p>
               <Button raised onClick={this.props.onRequestJobs}>Refresh list</Button>
               <Checkbox id="fetchJobs" name="fetchJobs"
-                        label="Automatically fetch jobs" inline
+                        label="Automatically fetch tasks" inline
                         checked={this.state.fetchJobs}
                         onChange={this.checkboxChange.bind(this)}/>
               <Checkbox id="showCompleted" name="showCompleted"
-                        label="Show completed jobs" inline
+                        label="Show completed tasks" inline
                         checked={this.state.showCompleted}
                         onChange={this.checkboxChange.bind(this)}/>
               <Checkbox id="showDeleteButton" name="showDeleteButton"

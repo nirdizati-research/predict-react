@@ -19,12 +19,14 @@ import {
   CLASSIFICATION,
   DURATION,
   NO_CLUSTER,
+  NO_PADDING,
   RANDOM_FOREST,
   REGRESSION,
   REMAINING_TIME,
   SIMPLE_INDEX,
   THRESHOLD_CUSTOM,
-  THRESHOLD_MEAN
+  THRESHOLD_MEAN,
+  ZERO_PADDING
 } from '../../reference';
 
 const jobList = [
@@ -36,6 +38,7 @@ const jobList = [
       prefix_length: 2,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
+      padding: NO_PADDING,
       label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
       clustering: NO_CLUSTER
     },
@@ -51,6 +54,7 @@ const jobList = [
       prefix_length: 2,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
+      padding: NO_PADDING,
       label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
       clustering: NO_CLUSTER
     },
@@ -66,6 +70,7 @@ const jobList = [
       prefix_length: 1,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
+      padding: NO_PADDING,
       label: {type: REMAINING_TIME, threshold: 0},
       clustering: NO_CLUSTER
     },
@@ -81,6 +86,7 @@ const jobList = [
       prefix_length: 5,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
+      padding: NO_PADDING,
       label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
       clustering: NO_CLUSTER
     },
@@ -96,6 +102,7 @@ const jobList = [
       prefix_length: 4,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
+      padding: NO_PADDING,
       label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
       clustering: NO_CLUSTER
     },
@@ -111,6 +118,7 @@ const jobList = [
       prefix_length: 2,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
+      padding: NO_PADDING,
       label: {type: REMAINING_TIME, threshold: 0},
       clustering: NO_CLUSTER
     },
@@ -126,6 +134,7 @@ const jobList = [
       prefix_length: 4,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
+      padding: NO_PADDING,
       label: {type: DURATION, threshold_type: THRESHOLD_CUSTOM, threshold: 100},
       clustering: NO_CLUSTER
     },
@@ -141,6 +150,7 @@ const jobList = [
       prefix_length: 4,
       encoding: SIMPLE_INDEX,
       method: RANDOM_FOREST,
+      padding: NO_PADDING,
       label: {type: ATTRIBUTE_NUMBER, threshold_type: THRESHOLD_MEAN, attribute_name: 'name', threshold: 0},
       clustering: NO_CLUSTER
     },
@@ -295,6 +305,15 @@ describe('Validation filter', () => {
       });
       expect(state3.filteredJobs.length).toEqual(0);
       expect(state3.encodings.length).toEqual(4);
+    });
+
+    it('changes for padding', () => {
+      let state3 = jobs(state2, {
+        type: FILTER_OPTION_CHANGED,
+        payload: {value: ZERO_PADDING, name: 'padding-filter'}
+      });
+      expect(state3.filteredJobs.length).toEqual(0);
+      expect(state3.padding).toEqual(ZERO_PADDING);
     });
 
     it('resets when prediction method changes', () => {

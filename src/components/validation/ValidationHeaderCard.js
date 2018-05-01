@@ -12,6 +12,7 @@ import {
   classificationMethods,
   clustering,
   encoding,
+  padding,
   predictionMethods,
   REGRESSION,
   regressionMethods
@@ -42,11 +43,11 @@ const ValidationHeaderCard = (props) => {
     if (props.predictionMethod === REGRESSION) {
       return <SelectionControlGroup type="checkbox" controls={regressionMethods} id="regression" name='regression'
                                     label="Regression methods" onChange={props.filterOptionChange} inline
-                                    className="md-cell md-cell--6"
+                                    className="md-cell md-cell--12"
                                     value={props.filterOptions.regression.join(',')}/>;
     } else if (props.predictionMethod === CLASSIFICATION) {
       return <SelectionControlGroup type="checkbox" controls={classificationMethods} id="classification"
-                                    name='classification' className="md-cell md-cell--6"
+                                    name='classification' className="md-cell md-cell--12"
                                     label="Classification methods" onChange={props.filterOptionChange} inline
                                     value={props.filterOptions.classification.join(',')}/>;
     } else {
@@ -83,6 +84,9 @@ const ValidationHeaderCard = (props) => {
                                onChange={localMethodChange} className="md-cell md-cell--6"/>
         {encodings}
         {clusterings}
+        <SelectionControlGroup type="radio" name="padding-filter" id="padding-filter" label="Encoded log padding" inline
+                               onChange={props.filterOptionChange} className="md-cell md-cell--6"
+                               controls={padding} value={props.filterOptions.padding}/>
         {methods()}
         {checkies}
       </div>
@@ -116,7 +120,8 @@ ValidationHeaderCard.propTypes = {
     regression: PropTypes.arrayOf(PropTypes.string).isRequired,
     label: PropTypes.any.isRequired,
     attributeNames: PropTypes.arrayOf(PropTypes.string).isRequired,
-    thresholds: PropTypes.arrayOf(PropTypes.number).isRequired
+    thresholds: PropTypes.arrayOf(PropTypes.number).isRequired,
+    padding: PropTypes.string.isRequired
   }).isRequired,
   predictionMethod: PropTypes.string.isRequired
 };
