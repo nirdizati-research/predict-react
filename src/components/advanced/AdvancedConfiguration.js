@@ -33,20 +33,20 @@ const AdvancedConfiguration = (props) => {
 
 
   const classConfigMap = {
-    'classification.knn': makeExpander('KNeighborsClassifier', knnUrl, <ClassificationKnn
+    'classification.knn': makeExpander('K-Neighbors classifier', knnUrl, <ClassificationKnn
       onChange={props.onChange}/>),
-    'classification.decisionTree': makeExpander('DecisionTreeClassifier', decisionTreeUrl,
+    'classification.decisionTree': makeExpander('Decision tree classifier', decisionTreeUrl,
       <ClassificationDecisionTree onChange={props.onChange} {...props}/>),
-    'classification.randomForest': makeExpander('RandomForestClassifier', classRandomForest,
+    'classification.randomForest': makeExpander('Random forest classifier', classRandomForest,
       <ClassificationRandomForest onChange={props.onChange} {...props}/>)
   };
 
   const regressionConfigMap = {
-    'regression.lasso': makeExpander('Lasso', regressorLasso,
+    'regression.lasso': makeExpander('Lasso regression', regressorLasso,
       <RegressionLasso onChange={props.onChange} {...props}/>),
-    'regression.linear': makeExpander('LinearRegression', regressorLinear,
+    'regression.linear': makeExpander('Linear regression', regressorLinear,
       <RegressionLinear onChange={props.onChange} {...props}/>),
-    'regression.randomForest': makeExpander('RandomForestRegressor', regressorRF,
+    'regression.randomForest': makeExpander('Random forest regressor', regressorRF,
       <RegressionRandomForest onChange={props.onChange} {...props}/>)
   };
 
