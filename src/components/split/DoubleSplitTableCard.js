@@ -8,7 +8,7 @@ import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import {logPropType} from '../../helpers';
 
 const DoubleSplitTableCard = (props) => {
-  const headers = ['id', 'Training log', 'Test log', 'Config'];
+  const headers = ['id', 'Training log', 'Test log', 'Configuration'];
 
   return (
     <Card className="md-block-centered">

@@ -29,9 +29,9 @@ class JobStatusTable extends PureComponent {
   }
 
   render() {
-    let headers = ['id', 'Status', 'Type', 'Created date', 'Modified date', 'Split', 'Error', 'Config'];
+    let headers = ['id', 'Status', 'Type', 'Created date', 'Modified date', 'Split', 'Error', 'Configuration'];
     if (this.props.showDeleteButton) {
-      headers = ['id', '', 'Status', 'Type', 'Created date', 'Modified date', 'Split', 'Error', 'Config'];
+      headers = ['id', '', 'Status', 'Type', 'Created date', 'Modified date', 'Split', 'Error', 'Configuration'];
     }
 
     return (<DataTable baseId="simple-pagination" plain>
