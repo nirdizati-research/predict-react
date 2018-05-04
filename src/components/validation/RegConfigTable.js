@@ -6,8 +6,10 @@ import {DataTable, TableBody, TableColumn, TableHeader, TablePagination, TableRo
 import PropTypes from 'prop-types';
 import {columnStyle} from '../../reference';
 import {jobFlatPropType} from '../../helpers';
+import JsonHolder from './JsonHolder';
 
 /* eslint-disable camelcase */
+
 /* eslint-disable max-len */
 class RegConfigTable extends PureComponent {
   constructor(props) {
@@ -29,8 +31,8 @@ class RegConfigTable extends PureComponent {
   render() {
     const headers =
       ['id', 'Type', 'Encoding', 'Clustering', 'Method', 'Prefix length', 'Label',
-        'Padding', 'Create models', 'HyperOpt', 'Advanced configuration', 'Split'];
-    return (<DataTable baseId="simple-pagination" plain>
+        'Padding', 'Create models', 'HyperOpt', 'Advanced configuration'];
+    return (<DataTable baseId="simple-pagination" selectableRows={false}>
       <TableHeader>
         <TableRow>
           {headers.map((header) => <TableColumn key={header} style={columnStyle}> {header}</TableColumn>)}
@@ -44,21 +46,14 @@ class RegConfigTable extends PureComponent {
               <TableColumn style={columnStyle}>{job.type}</TableColumn>
               <TableColumn style={columnStyle}>{job.encoding}</TableColumn>
               <TableColumn style={columnStyle}>{job.clustering}{job.kmeans ?
-                <pre>{JSON.stringify(job.kmeans, null, 1)}</pre> : null}</TableColumn>
+                <JsonHolder data={job.kmeans}/> : null}</TableColumn>
               <TableColumn style={columnStyle}>{job.method}</TableColumn>
               <TableColumn style={columnStyle} numeric>{job.prefix_length}</TableColumn>
-              <TableColumn style={columnStyle}>
-                <pre>{JSON.stringify(job.label, null, 1)}</pre>
-              </TableColumn>
+              <TableColumn style={columnStyle}><JsonHolder data={job.label}/></TableColumn>
               <TableColumn style={columnStyle} numeric>{job.padding}</TableColumn>
               <TableColumn style={columnStyle}>{JSON.stringify(job.create_models, null, 1)}</TableColumn>
-              <TableColumn style={columnStyle}>
-                <pre>{JSON.stringify(job.hyperopt, null, 1)}</pre>
-              </TableColumn>
-              <TableColumn style={columnStyle}>
-                <pre>{JSON.stringify(job.advanced, null, 1)}</pre>
-              </TableColumn>
-              <TableColumn style={columnStyle} grow>{job.splitName}</TableColumn>
+              <TableColumn style={columnStyle}><JsonHolder data={job.hyperopt}/></TableColumn>
+              <TableColumn style={columnStyle}><JsonHolder data={job.advanced}/></TableColumn>
             </TableRow>
           ))}
       </TableBody>

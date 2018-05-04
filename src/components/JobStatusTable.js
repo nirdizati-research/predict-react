@@ -8,6 +8,7 @@ import {splitToString} from '../util/dataReducers';
 import {jobPropType} from '../helpers';
 import {Button} from 'react-md/lib/Buttons/index';
 import {FontIcon} from 'react-md/lib/FontIcons/index';
+import JsonHolder from './validation/JsonHolder';
 
 /* eslint-disable camelcase */
 /* eslint-disable no-invalid-this */
@@ -28,16 +29,27 @@ class JobStatusTable extends PureComponent {
     }
   }
 
-  render() {
+  getHeaderColumns() {
     let headers = ['id', 'Status', 'Type', 'Created date', 'Modified date', 'Split', 'Error', 'Configuration'];
     if (this.props.showDeleteButton) {
       headers = ['id', '', 'Status', 'Type', 'Created date', 'Modified date', 'Split', 'Error', 'Configuration'];
     }
 
-    return (<DataTable baseId="simple-pagination" plain>
+    return headers.map((header) => {
+        let grow = false;
+        if (header === 'Configuration') {
+          grow = true;
+        }
+        return <TableColumn key={header} grow={grow}> {header}</TableColumn>;
+      }
+    );
+  }
+
+  render() {
+    return (<DataTable baseId="simple-pagination" selectableRows={false}>
       <TableHeader>
         <TableRow selectable={false}>
-          {headers.map((header) => <TableColumn key={header}> {header}</TableColumn>)}
+          {this.getHeaderColumns()}
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -55,10 +67,7 @@ class JobStatusTable extends PureComponent {
               <TableColumn>{new Date(modified_date).toLocaleString()}</TableColumn>
               <TableColumn>{splitToString(split)}</TableColumn>
               <TableColumn>{error}</TableColumn>
-              <TableColumn grow>
-                <pre>{JSON.stringify(config, null, 2)}</pre>
-              </TableColumn>
-
+              <TableColumn grow><JsonHolder data={config}/></TableColumn>
             </TableRow>
           ))}
       </TableBody>
