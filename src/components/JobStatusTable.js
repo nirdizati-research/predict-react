@@ -41,7 +41,7 @@ class JobStatusTable extends PureComponent {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {this.state.slicedData.reverse().map(
+        {this.state.slicedData.map(
           ({id, type, status, created_date, modified_date, split, config, error}) => (
             <TableRow key={id} selectable={false}>
               <TableColumn numeric>{id}</TableColumn>

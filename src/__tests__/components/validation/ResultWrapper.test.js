@@ -166,9 +166,9 @@ describe('ResultWrapper', () => {
     const chart3 = [['53', 11, 12, 'noCluster', 13]];
 
     expect(element.find(BubbleChartCard).at(0).props().data).toEqual(chart1);
-    expect(element.find(BubbleChartCard).at(0).props().hTitle).toBe('mae');
-    expect(element.find(BubbleChartCard).at(0).props().vTitle).toBe('rmse');
-    expect(element.find(BubbleChartCard).at(0).props().cardTitle).toBe('Bubble chart by regressor');
+    expect(element.find(BubbleChartCard).at(0).props().hTitle).toBe('MAE');
+    expect(element.find(BubbleChartCard).at(0).props().vTitle).toBe('RMSE');
+    expect(element.find(BubbleChartCard).at(0).props().cardTitle).toBe('Bubble chart by regression method');
 
     expect(element.find(BubbleChartCard).at(1).props().data).toEqual(chart2);
 

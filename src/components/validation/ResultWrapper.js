@@ -92,7 +92,7 @@ const getCharts = (data, predictionMethod) => {
                        columns={getPrefixChartHeader(predictionMethod)}
                        hTitle={headers[1].label}
                        vTitle={headers[2].label}
-                       cardTitle="Accuracy by prefix length"/></div>
+                       cardTitle="Bubble chart by prefix length"/></div>
   ];
 };
 

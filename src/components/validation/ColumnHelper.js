@@ -6,18 +6,18 @@ import {CLASSIFICATION, REGRESSION} from '../../reference';
 const tableColumns = [
   {
     type: 'string',
-    label: 'id',
+    label: 'ID',
   },
   {
     type: 'string',
-    label: 'run',
+    label: 'Task identity',
   }
 ];
 
 const classColumns = [
   {
     type: 'string',
-    label: 'id',
+    label: 'ID',
   },
   {
     type: 'number',
@@ -83,19 +83,19 @@ const classTableColumns = [
 const regColumns = [
   {
     type: 'string',
-    label: 'id',
+    label: 'ID',
   },
   {
     type: 'number',
-    label: 'mae',
+    label: 'MAE',
   },
   {
     type: 'number',
-    label: 'rmse',
+    label: 'RMSE',
   },
   {
     type: 'string',
-    label: 'method',
+    label: 'Method',
   },
   {
     type: 'number',
@@ -107,15 +107,15 @@ const regTableColumns = [
   ...tableColumns,
   {
     type: 'number',
-    label: 'mae',
+    label: 'Mean Absolute Error (MAE)',
   },
   {
     type: 'number',
-    label: 'rmse',
+    label: 'Root Mean Squared Error (RMSE)',
   },
   {
     type: 'number',
-    label: 'rscore',
+    label: 'R-score',
   },
   {
     type: 'string',
@@ -144,8 +144,8 @@ export const getPrefixChartHeader = (predictionMethod) => {
 };
 
 const desc = 'Bubble chart by ';
-const regTitles = ['regressor', 'encoding', 'clustering'].map((elem) => desc + elem);
-const classTitles = ['classifier', 'encoding', 'clustering'].map((elem) => desc + elem);
+const regTitles = ['regression method', 'encoding method', 'clustering method'].map((elem) => desc + elem);
+const classTitles = ['classification method', 'encoding method', 'clustering method'].map((elem) => desc + elem);
 
 export const getTitles = (predictionMethod) => {
   switch (predictionMethod) {

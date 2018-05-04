@@ -9,6 +9,17 @@ import FetchState from '../../components/FetchState';
 import {jobPropType} from '../../helpers';
 import {Checkbox} from 'react-md/lib/SelectionControls/index';
 
+// Greater numbers first
+const compare = (a, b) => {
+  if (a.id < b.id) {
+    return 1;
+  }
+  if (a.id > b.id) {
+    return -1;
+  }
+  return 0;
+};
+
 class JobStatus extends Component {
   constructor() {
     super();
@@ -89,7 +100,7 @@ class JobStatus extends Component {
                         checked={this.state.showDeleteButton}
                         onChange={this.checkboxChange.bind(this)}/>
               <FetchState fetchState={this.props.fetchState}/>
-              <JobStatusTable jobs={jobs} showDeleteButton={this.state.showDeleteButton}
+              <JobStatusTable jobs={jobs.sort(compare)} showDeleteButton={this.state.showDeleteButton}
                               onDelete={this.props.onDelete}/>
             </CardText>
           </Card>
