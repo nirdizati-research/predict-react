@@ -7,7 +7,8 @@ import {splitsRequested, submitSplit} from '../actions/SplitActions';
 import {SPLIT_DOUBLE, SPLIT_SINGLE} from '../reference';
 import SingleSplitTableCard from '../components/split/SingleSplitTableCard';
 import DoubleSplitTableCard from '../components/split/DoubleSplitTableCard';
-import {logPropType} from '../helpers';
+import {logPropType, splitPropType} from '../helpers';
+import {mergeSplitWithLogName} from '../util/dataReducers';
 
 class Split extends Component {
   componentDidMount() {
@@ -37,7 +38,7 @@ class Split extends Component {
 
 Split.propTypes = {
   logs: PropTypes.objectOf(logPropType).isRequired,
-  splits: PropTypes.arrayOf(PropTypes.any).isRequired,
+  splits: PropTypes.arrayOf(splitPropType).isRequired,
   onRequestLogList: PropTypes.func.isRequired,
   onRequestSplitList: PropTypes.func.isRequired,
   onSubmitSplit: PropTypes.func.isRequired,
@@ -49,7 +50,7 @@ Split.propTypes = {
 
 const mapStateToProps = (state) => ({
   logs: state.logs.logs.byId,
-  splits: state.splits.splits,
+  splits: mergeSplitWithLogName(state.splits.splits.byId, state.logs.logs.byId),
   fetchState: state.splits.fetchState,
 });
 

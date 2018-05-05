@@ -113,6 +113,19 @@ export const logPropType = PropTypes.shape({
   }).isRequired
 });
 
+export const splitPropType = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  type: PropTypes.oneOf(['single', 'double']).isRequired,
+  label: PropTypes.string,
+  originalLogName: PropTypes.string,
+  trainingLogName: PropTypes.string,
+  testLogName: PropTypes.string,
+  original_log: logPropType,
+  training_log: logPropType,
+  test_log: logPropType,
+  config: PropTypes.object.isRequired,
+});
+
 export const logsStore = PropTypes.shape({
   byId: PropTypes.objectOf(logPropType).isRequired,
   allIds: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
