@@ -23,6 +23,11 @@ const regJobs = [{
     'method': 'linear',
     'padding': 'zero_padding',
     'label': label1,
+    'hyperopt': {
+      'use_hyperopt': true,
+      'max_evals': 100,
+      'performance_metric': 'acc'
+    },
     'regression.linear': {}
   },
   'status': 'created',
@@ -53,6 +58,11 @@ const classJobs = [{
     'method': 'randomForest',
     'padding': 'zero_padding',
     'label': label1,
+    'hyperopt': {
+      'use_hyperopt': true,
+      'max_evals': 100,
+      'performance_metric': 'acc'
+    },
     'classification.randomForest': {}
   },
   'status': 'created',
@@ -95,7 +105,7 @@ describe('ClassConfigTable', () => {
     expect(element).toBeDefined();
     // Header row
     expect(element.find(TableRow).length).toBe(1);
-    expect(element.find(TableColumn).length).toBe(12);
+    expect(element.find(TableColumn).length).toBe(11);
   });
 
   it('renders jobs if present', () => {
@@ -111,7 +121,7 @@ describe('RegConfigTable', () => {
     expect(element).toBeDefined();
     // Header row
     expect(element.find(TableRow).length).toBe(1);
-    expect(element.find(TableColumn).length).toBe(12);
+    expect(element.find(TableColumn).length).toBe(11);
   });
 
   it('renders jobs if present', () => {
