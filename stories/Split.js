@@ -107,6 +107,7 @@ export const logList = [
   }
 ];
 
+export const logsById = Object.assign(...logList.map((log) => ({[log.id]: log})));
 
 storiesOf('Split', module)
   .add('SplitTableCard', () => {
@@ -126,7 +127,7 @@ storiesOf('Split', module)
       return (
         <div className="md-grid">
           <div className="md-cell md-cell--12">
-            <SplitFormCard logs={logList} fetchState={{inFlight: false}} onSubmit={(_) => _}/>
+            <SplitFormCard logs={logsById} fetchState={{inFlight: false}} onSubmit={(_) => _}/>
           </div>
         </div>
       );

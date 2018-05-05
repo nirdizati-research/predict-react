@@ -9,6 +9,7 @@ import SelectField from 'react-md/lib/SelectFields/index';
 import Button from 'react-md/lib/Buttons/Button';
 import {CardActions, Slider} from 'react-md';
 import {splitTypes} from '../../reference';
+import {logPropType} from '../../helpers';
 
 class SplitFormCard extends Component {
   constructor(props) {
@@ -40,7 +41,7 @@ class SplitFormCard extends Component {
   }
 
   render() {
-    const itemsWithLabel = this.props.logs.map(({id, name}) => ({value: id, label: name}));
+    const itemsWithLabel = Object.values(this.props.logs).map((log) => ({value: log.id, label: log.name}));
 
     return (
       <Card className="md-block-centered">
@@ -93,10 +94,7 @@ class SplitFormCard extends Component {
 }
 
 SplitFormCard.propTypes = {
-  logs: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired
-  }).isRequired).isRequired,
+  logs: PropTypes.objectOf(logPropType).isRequired,
   fetchState: PropTypes.shape({
     inFlight: PropTypes.bool.isRequired,
     error: PropTypes.any
