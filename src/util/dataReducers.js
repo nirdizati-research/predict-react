@@ -3,24 +3,13 @@
  */
 import {CLASSIFICATION, REGRESSION, SPLIT_SINGLE} from '../reference';
 
-// TODO use this in split table
-export const normalizeSplits = (splits) => {
-  return splits.map((split) => {
-    let originalLogName;
-    let trainingLogName;
-    let testLogName;
-
-    if (split.type === SPLIT_SINGLE) {
-      originalLogName = split.original_log.name;
-      trainingLogName = '';
-      testLogName = '';
-    } else {
-      originalLogName = '';
-      trainingLogName = split.training_log.name;
-      testLogName = split.test_log.name;
-    }
-    return {id: split.id, config: split.config, type: split.type, originalLogName, trainingLogName, testLogName};
-  });
+export const mergeSplitWithLogName = (splitsById, logsById) => {
+  return Object.values(splitsById).map((split) => ({
+    ...split,
+    originalLogName: logsById[split.original_log] ? logsById[split.original_log].name : '',
+    testLogName: logsById[split.test_log] ? logsById[split.test_log].name : '',
+    trainingLogName: logsById[split.training_log] ? logsById[split.training_log].name : ''
+  }));
 };
 
 export const splitsToString = (splits) => {

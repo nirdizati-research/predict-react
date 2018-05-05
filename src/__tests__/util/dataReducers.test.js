@@ -1,9 +1,41 @@
 /**
  * Created by tonis.kasekamp on 10/17/17.
  */
-import {makeLabels, makeTable, normalizeSplits, splitsToString} from '../../util/dataReducers';
+import {makeLabels, makeTable, mergeSplitWithLogName, splitsToString} from '../../util/dataReducers';
 import {regJobs} from '../../../stories/LineChart';
 
+const splitsById = {
+  1: {
+    'id': 1,
+    'original_log': 1,
+    'test_log': null,
+    'training_log': null,
+    'type': 'single',
+    'config': {
+      'value': 123,
+      'setting': 'something'
+    }
+  },
+  2: {
+    'id': 2,
+    'original_log': null,
+    'test_log': 2,
+    'training_log': 3,
+    'type': 'double',
+    'config': {
+      'value': 123,
+      'setting': 'something',
+      'value2': 123,
+      'setting2': 'something'
+    }
+  }
+};
+
+const logsById = {
+  1: {'id': 1, 'name': 'log1'},
+  2: {'id': 2, 'name': 'log2'},
+  3: {'id': 3, 'name': 'log3'}
+};
 const splits = [
   {
     'id': 1,
@@ -52,8 +84,8 @@ const completeSplits = [
   }
 ];
 
-it('returns normalized split', () => {
-  expect(normalizeSplits(splits)).toEqual(completeSplits);
+it('merges splits with log names', () => {
+  expect(mergeSplitWithLogName(splitsById, logsById)).toMatchObject(completeSplits);
 });
 
 describe('split to string', () => {
