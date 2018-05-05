@@ -1,22 +1,19 @@
 import {
   SPLIT_FAILED,
-  SPLIT_SUBMITTED, SPLIT_SUCCEEDED, SPLITS_FAILED, SPLITS_REQUESTED,
+  SPLIT_SUBMITTED,
+  SPLIT_SUCCEEDED,
+  SPLITS_FAILED,
+  SPLITS_REQUESTED,
   SPLITS_RETRIEVED
 } from '../actions/SplitActions';
+import {addListToStore, listRetrieved} from './genericHelpers';
 
 const initialState = {
   fetchState: {inFlight: false},
-  splits: []
-};
-
-// TODO refactor with jobs
-const mergeIncomingSplits = (incoming, existing) => {
-  // From https://stackoverflow.com/a/34963663
-  const a3 = existing.concat(incoming).reduce((acc, x) => {
-    acc[x.id] = Object.assign(acc[x.id] || {}, x);
-    return acc;
-  }, {});
-  return Object.keys(a3).map((key) => a3[key]);
+  splits: {
+    byId: {},
+    allIds: []
+  }
 };
 
 const splits = (state = initialState, action) => {
@@ -26,25 +23,30 @@ const splits = (state = initialState, action) => {
         ...state,
         fetchState: {inFlight: true},
       };
-    } case SPLITS_RETRIEVED: {
+    }
+    case SPLITS_RETRIEVED: {
       return {
         ...state,
         fetchState: {inFlight: false},
-        splits: mergeIncomingSplits(action.payload, state.splits)
+        splits: listRetrieved(action.payload)
       };
-    } case SPLITS_FAILED: {
+    }
+    case SPLITS_FAILED: {
       return {
         ...state,
         fetchState: {inFlight: false, error: action.payload},
       };
-    } case SPLIT_SUBMITTED: {
+    }
+    case SPLIT_SUBMITTED: {
       return {...state, fetchState: {inFlight: true}};
-    } case SPLIT_SUCCEEDED: {
+    }
+    case SPLIT_SUCCEEDED: {
       return {
-        splits: mergeIncomingSplits([action.payload], state.splits),
+        splits: addListToStore(state.splits, [action.payload]),
         fetchState: {inFlight: false}
       };
-    } case SPLIT_FAILED: {
+    }
+    case SPLIT_FAILED: {
       return {...state, fetchState: {inFlight: false, error: action.payload}};
     }
     default:

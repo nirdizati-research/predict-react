@@ -3,6 +3,7 @@
  */
 
 import {LOG_LIST_FAILED, LOG_LIST_REQUESTED, LOG_LIST_RETRIEVED} from '../actions/LogActions';
+import {listRetrieved} from './genericHelpers';
 
 const initialState = {
   fetchState: {inFlight: false},
@@ -10,13 +11,6 @@ const initialState = {
     byId: {},
     allIds: []
   }
-};
-
-// replace current state with new list
-const addLogs = (logList) => {
-  const allIds = logList.map(({id}) => id);
-  const byId = Object.assign(...logList.map((log) => ({[log.id]: log})));
-  return {allIds, byId};
 };
 
 const logs = (state = initialState, action) => {
@@ -32,7 +26,7 @@ const logs = (state = initialState, action) => {
         return {
           ...state,
           fetchState: {inFlight: false},
-          logs: addLogs(action.payload)
+          logs: listRetrieved(action.payload)
         };
       }
 
