@@ -6,7 +6,17 @@ import {LOG_LIST_FAILED, LOG_LIST_REQUESTED, LOG_LIST_RETRIEVED} from '../action
 
 const initialState = {
   fetchState: {inFlight: false},
-  logs: []
+  logs: {
+    byId: {},
+    allIds: []
+  }
+};
+
+// replace current state with new list
+const addLogs = (logList) => {
+  const allIds = logList.map(({id}) => id);
+  const byId = Object.assign(...logList.map((log) => ({[log.id]: log})));
+  return {allIds, byId};
 };
 
 const logs = (state = initialState, action) => {
@@ -22,7 +32,7 @@ const logs = (state = initialState, action) => {
         return {
           ...state,
           fetchState: {inFlight: false},
-          logs: action.payload
+          logs: addLogs(action.payload)
         };
       }
 

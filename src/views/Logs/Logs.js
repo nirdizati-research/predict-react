@@ -4,7 +4,7 @@ import LogListCard from '../../components/LogListCard';
 import PropTypes from 'prop-types';
 import {logListRequested} from '../../actions/LogActions';
 import LineChartCard from '../../components/chart/LineChartCard';
-import {logPropType} from '../../helpers';
+import {logsStore} from '../../helpers';
 
 class Logs extends Component {
   constructor(props) {
@@ -16,11 +16,11 @@ class Logs extends Component {
   }
 
   componentDidMount() {
-    if (this.props.logList.length === 0) {
+    if (this.props.logs.allIds.length === 0) {
       return this.props.onRequestLogList();
     } else {
       // set first log by default
-      this.setState({log: this.props.logList[0]});
+      this.setState({log: this.props.logs.byId[this.props.logs.allIds[0]]});
       return this.props.onRequestLogList();
     }
   }
@@ -28,8 +28,8 @@ class Logs extends Component {
 
   componentDidUpdate(prevProps) {
     // set selected log when logs have arrived
-    if (this.state.log === null && this.props.logList.length > 0) {
-      this.setState({log: this.props.logList[0]});
+    if (this.state.log === null && this.props.logs.allIds.length > 0) {
+      this.setState({log: this.props.logs.byId[this.props.logs.allIds[0]]});
     }
   }
 
@@ -43,8 +43,7 @@ class Logs extends Component {
 
   getLineChart(dataName, cardTitle) {
     if (this.state.log && Object.keys(this.state.log.properties[dataName]).length !== 0) {
-      return <LineChartCard fetchState={this.state.log.fetchState}
-                            data={this.state.log.properties[dataName]}
+      return <LineChartCard data={this.state.log.properties[dataName]}
                             cardTitle={cardTitle}
                             chartTitle="Number by day"/>;
     } else {
@@ -53,12 +52,12 @@ class Logs extends Component {
   }
 
   onChangeVisible(logId) {
-    const log = this.props.logList.find((log) => log.id === logId);
+    const log = this.props.logs.byId[logId];
     this.setState({log});
   }
 
   render() {
-    const logList = this.props.logList.map((log) => ({id: log.id, name: log.name}));
+    const logList = Object.values(this.props.logs.byId).map((log) => ({id: log.id, name: log.name}));
 
     const executionChart = this.getLineChart('events', 'Number of events executed');
     const resourceChart = this.getLineChart('resources', 'Number of resources used');
@@ -89,14 +88,13 @@ Logs.propTypes = {
     inFlight: PropTypes.bool.isRequired,
     error: PropTypes.any
   }).isRequired,
-  logList: PropTypes.arrayOf(logPropType).isRequired,
+  logs: logsStore,
   onRequestLogList: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  logList: state.logs.logs,
+  logs: state.logs.logs,
   fetchState: state.logs.fetchState
-
 });
 
 const mapDispatchToProps = (dispatch) => ({

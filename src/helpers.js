@@ -113,4 +113,8 @@ export const logPropType = PropTypes.shape({
   }).isRequired
 });
 
+export const logsStore = PropTypes.shape({
+  byId: PropTypes.objectOf(logPropType).isRequired,
+  allIds: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+}).isRequired;
 

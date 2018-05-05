@@ -5,7 +5,7 @@ import logs from '../../reducers/Logs';
 import {logListFailed, logListRequested, logListsRetrieved} from '../../actions/LogActions';
 import {logList} from '../../../stories/Split';
 
-const initState = {fetchState: {inFlight: false}, logs: []};
+const initState = {fetchState: {inFlight: false}, logs: {allIds: [], byId: {}}};
 describe('LogsReducer', () => {
   it('has nothing initially', () => {
     expect(logs(undefined, {})).toEqual(initState);
@@ -15,7 +15,7 @@ describe('LogsReducer', () => {
     const stateWithRequest = logs(undefined, logListRequested());
 
     it('changes fetchState when requesting', () => {
-      expect(stateWithRequest).toEqual({fetchState: {inFlight: true}, logs: []});
+      expect(stateWithRequest).toEqual({fetchState: {inFlight: true}, logs: {allIds: [], byId: {}}});
     });
 
     it('changes fetchState when request completed', () => {
@@ -30,10 +30,11 @@ describe('LogsReducer', () => {
 
     it('puts logs into store', () => {
       const state2 = logs(stateWithRequest, logListsRetrieved(logList));
-      const storeLogs = state2.logs;
+      const {allIds, byId} = state2.logs;
 
-      expect(storeLogs.length).toBe(3);
-      expect(storeLogs[0].name).toBe(logList[0].name);
+      expect(allIds).toEqual([1, 4, 123]);
+      expect(Object.keys(allIds).length).toEqual(3);
+      expect(byId[1].name).toBe(logList[0].name);
     });
   });
 });
