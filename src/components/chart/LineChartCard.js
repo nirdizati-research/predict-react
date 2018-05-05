@@ -4,7 +4,6 @@
 import React from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import PropTypes from 'prop-types';
-import FetchState from '../FetchState';
 import {Chart} from 'react-google-charts';
 
 // Custom compare because why not
@@ -55,7 +54,6 @@ const LineChartCard = (props) => {
     <CardTitle title={props.cardTitle}/>
     <CardText>
       {rows.length < 2 ? 'Chart cannot be shown. Metrics not available.' : chart}
-      <FetchState fetchState={props.fetchState}/>
     </CardText>
   </Card>;
 };
@@ -63,11 +61,7 @@ const LineChartCard = (props) => {
 LineChartCard.propTypes = {
   data: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
   cardTitle: PropTypes.string.isRequired,
-  chartTitle: PropTypes.string.isRequired,
-  fetchState: PropTypes.shape({
-    inFlight: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  }).isRequired,
+  chartTitle: PropTypes.string.isRequired
 };
 
 export default LineChartCard;

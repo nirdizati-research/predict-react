@@ -166,27 +166,23 @@ storiesOf('Charts', module)
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
-          <LineChartCard fetchState={fetchState}
-                         data={traces}
+          <LineChartCard data={traces}
                          cardTitle="Number of traces"
                          chartTitle="Active traces"/>
         </div>
         <div className="md-cell md-cell--12">
-          <LineChartCard fetchState={fetchState}
-                         data={notOrderedTraces}
+          <LineChartCard data={notOrderedTraces}
                          cardTitle="Modern art"
                          chartTitle="Messed up order of object"/>
         </div>
         <div className="md-cell md-cell--12">
-          <LineChartCard fetchState={fetchState}
-                         data={resources}
+          <LineChartCard data={resources}
                          cardTitle="Number of resources"
                          chartTitle="Active traces"/>
         </div>
 
         <div className="md-cell md-cell--12">
-          <LineChartCard fetchState={fetchState}
-                         data={{}}
+          <LineChartCard data={{}}
                          cardTitle="Number of resources empty"
                          chartTitle="Empty chart"/>
         </div>
