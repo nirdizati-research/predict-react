@@ -1,13 +1,7 @@
 import {SERVER_URL} from '../constants';
 import jsonAjax from '../JSONAjaxRequest';
-import {
-  JOB_DELETED,
-  jobsFailed,
-  jobsRetrieved,
-  trainingFailed,
-  trainingSucceeded
-} from './JobActions';
-import {changeVisibleLog, logInfoFailed, logInfoRetrieved, logListFailed, logListsRetrieved} from './LogActions';
+import {JOB_DELETED, jobsFailed, jobsRetrieved, trainingFailed, trainingSucceeded} from './JobActions';
+import {logInfoFailed, logInfoRetrieved, logListFailed, logListsRetrieved} from './LogActions';
 import {splitFailed, splitsFailed, splitsRetrieved, splitSucceeded} from './SplitActions';
 
 export const getJobs = () => (dispatch) => {
@@ -30,20 +24,13 @@ export const getJobResults = (log) => (dispatch) => {
   );
 };
 
-const checkIfChangeVisible = (dispatch, changeVisible, requestInfo, logList) => {
-  if (changeVisible && logList[0]) {
-    dispatch(changeVisibleLog({logId: logList[0].id, requestInfo}));
-  }
-};
-
-export const getLogList = ({changeVisible, requestInfo}) => (dispatch) => {
+export const getLogList = () => (dispatch) => {
   jsonAjax(
     SERVER_URL + '/logs/',
     'GET',
     null,
     (logList) => {
       dispatch(logListsRetrieved(logList));
-      checkIfChangeVisible(dispatch, changeVisible, requestInfo, logList);
     },
     ({error}) => dispatch(logListFailed(error))
   );

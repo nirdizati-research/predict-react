@@ -1,16 +1,15 @@
 import {
   deleteJob,
-  getJobResults, getJobs, getLogInfo, getLogList, getSplits, postSplit,
+  getJobResults,
+  getJobs,
+  getLogInfo,
+  getLogList,
+  getSplits,
+  postSplit,
   postTraining
 } from '../../actions/ServerActions';
 import {JOB_DELETED, jobsFailed, jobsRetrieved, trainingFailed, trainingSucceeded} from '../../actions/JobActions';
-import {
-  changeVisibleLog,
-  logInfoFailed,
-  logInfoRetrieved,
-  logListFailed,
-  logListsRetrieved
-} from '../../actions/LogActions';
+import {logInfoFailed, logInfoRetrieved, logListFailed, logListsRetrieved} from '../../actions/LogActions';
 import {splitFailed, splitsFailed, splitsRetrieved, splitSucceeded} from '../../actions/SplitActions';
 
 // https://www.jstwister.com/post/unit-testing-beginners-guide-mock-http-and-files/
@@ -158,7 +157,6 @@ describe('ServerActions', function () {
   });
 
   describe('getLogList', () => {
-    const callParams = {changeVisible: true, requestInfo: true};
     describe('on success', () => {
       const logList = [
         {
@@ -175,32 +173,17 @@ describe('ServerActions', function () {
         mockXHR.responseText = JSON.stringify(logList);
       });
 
-      it('dispatches logListsRetrieved and changeVisibleLog', () => {
-        getLogList(callParams)(dispatch);
+      it('dispatches logListsRetrieved', () => {
+        getLogList()(dispatch);
         mockXHR.onreadystatechange();
         expect(dispatch.mock.calls[0][0]).toEqual(logListsRetrieved(logList));
-        expect(dispatch.mock.calls[1][0]).toEqual(changeVisibleLog({logId: 1, requestInfo: true}));
-      });
-
-      it('doesnt dispatch changeVisibleLog if not changeVisible', () => {
-        getLogList({changeVisible: false, requestInfo: true})(dispatch);
-        mockXHR.onreadystatechange();
-        expect(dispatch.mock.calls[1]).toBeUndefined();
-      });
-
-      it('doesnt dispatch changeVisibleLog if no logs', () => {
-        mockXHR.responseText = JSON.stringify([]);
-
-        getLogList(callParams)(dispatch);
-        mockXHR.onreadystatechange();
-        expect(dispatch.mock.calls[1]).toBeUndefined();
       });
     });
 
     it('dispatches trainingFailed on error', () => {
       standardError(mockXHR);
 
-      getLogList(callParams)(dispatch);
+      getLogList()(dispatch);
       mockXHR.onreadystatechange();
 
       expect(dispatch.mock.calls[0][0]).toEqual(logListFailed(error.error));

@@ -17,11 +17,11 @@ class Logs extends Component {
 
   componentDidMount() {
     if (this.props.logList.length === 0) {
-      return this.props.onRequestLogList(false);
+      return this.props.onRequestLogList();
     } else {
       // set first log by default
       this.setState({log: this.props.logList[0]});
-      return this.props.onRequestLogList(false);
+      return this.props.onRequestLogList();
     }
   }
 
@@ -100,7 +100,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onRequestLogList: (changeVisible) => dispatch(logListRequested({changeVisible, requestInfo: true}))
+  onRequestLogList: () => dispatch(logListRequested())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Logs);
