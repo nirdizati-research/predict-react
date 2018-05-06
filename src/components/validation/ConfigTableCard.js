@@ -4,8 +4,7 @@
 import React, {Component} from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import PropTypes from 'prop-types';
-import RegConfigTable from './RegConfigTable';
-import ClassConfigTable from './ClassConfigTable';
+import ConfigTable from './ConfigTable';
 import {CLASSIFICATION, LABELLING, REGRESSION} from '../../reference';
 import {jobPropType} from '../../propTypes';
 import {jobToValidationTable} from '../../util/dataReducers';
@@ -17,9 +16,9 @@ class ConfigTableCard extends Component {
     const flatJobs = this.props.jobs.map(jobToValidationTable);
     switch (this.props.predictionMethod) {
       case REGRESSION:
-        return <RegConfigTable jobs={flatJobs}/>;
+        return <ConfigTable jobs={flatJobs}/>;
       case CLASSIFICATION:
-        return <ClassConfigTable jobs={flatJobs}/>;
+        return <ConfigTable jobs={flatJobs}/>;
       case LABELLING:
         return <LabelConfigTable jobs={flatJobs} onClick={this.props.onClick}/>;
       // no default

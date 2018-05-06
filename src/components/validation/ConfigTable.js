@@ -11,7 +11,7 @@ import JsonHolder from './JsonHolder';
 /* eslint-disable camelcase */
 
 /* eslint-disable max-len */
-class ClassConfigTable extends PureComponent {
+class ConfigTable extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {slicedData: this.props.jobs.slice(0, 10)};
@@ -29,9 +29,9 @@ class ClassConfigTable extends PureComponent {
   }
 
   render() {
-    const headers = ['id', 'Type', 'Encoding', 'Clustering', 'Method', 'Label',
-      'Prefix length', 'Padding', 'Create models', 'HyperOpt', 'Advanced configuration'];
-
+    const headers =
+      ['id', 'Type', 'Encoding', 'Clustering', 'Method', 'Prefix length', 'Label',
+        'Padding', 'Create models', 'HyperOpt', 'Advanced configuration'];
     return (<DataTable baseId="simple-pagination" selectableRows={false}>
       <TableHeader>
         <TableRow>
@@ -39,22 +39,23 @@ class ClassConfigTable extends PureComponent {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {this.state.slicedData.map((job) => (
-          <TableRow key={job.id}>
-            <TableColumn style={columnStyle}>{job.id}</TableColumn>
-            <TableColumn style={columnStyle}>{job.type}</TableColumn>
-            <TableColumn style={columnStyle}>{job.encoding}</TableColumn>
-            <TableColumn style={columnStyle}>{job.clustering}{job.kmeans ?
-              <JsonHolder data={job.kmeans}/> : null}</TableColumn>
-            <TableColumn style={columnStyle}>{job.method}</TableColumn>
-            <TableColumn style={columnStyle} grow><JsonHolder data={job.label}/></TableColumn>
-            <TableColumn style={columnStyle} numeric>{job.prefix_length}</TableColumn>
-            <TableColumn style={columnStyle} numeric>{job.padding}</TableColumn>
-            <TableColumn style={columnStyle}>{JSON.stringify(job.create_models, null, 1)}</TableColumn>
-            <TableColumn style={columnStyle}><JsonHolder data={job.hyperopt}/></TableColumn>
-            <TableColumn style={columnStyle} grow><JsonHolder data={job.advanced}/></TableColumn>
-          </TableRow>
-        ))}
+        {this.state.slicedData.map(
+          (job) => (
+            <TableRow key={job.id}>
+              <TableColumn style={columnStyle}>{job.id}</TableColumn>
+              <TableColumn style={columnStyle}>{job.type}</TableColumn>
+              <TableColumn style={columnStyle}>{job.encoding}</TableColumn>
+              <TableColumn style={columnStyle}>{job.clustering}{job.kmeans ?
+                <JsonHolder data={job.kmeans}/> : null}</TableColumn>
+              <TableColumn style={columnStyle}>{job.method}</TableColumn>
+              <TableColumn style={columnStyle} numeric>{job.prefix_length}</TableColumn>
+              <TableColumn style={columnStyle}><JsonHolder data={job.label}/></TableColumn>
+              <TableColumn style={columnStyle} numeric>{job.padding}</TableColumn>
+              <TableColumn style={columnStyle}>{JSON.stringify(job.create_models, null, 1)}</TableColumn>
+              <TableColumn style={columnStyle}><JsonHolder data={job.hyperopt}/></TableColumn>
+              <TableColumn style={columnStyle}><JsonHolder data={job.advanced}/></TableColumn>
+            </TableRow>
+          ))}
       </TableBody>
       <TablePagination rows={this.props.jobs.length} rowsPerPageLabel={'Rows per page'}
                        onPagination={this.handlePagination.bind(this)}/>
@@ -62,8 +63,8 @@ class ClassConfigTable extends PureComponent {
   }
 }
 
-ClassConfigTable.propTypes = {
+ConfigTable.propTypes = {
   jobs: PropTypes.arrayOf(jobFlatPropType).isRequired
 };
 
-export default ClassConfigTable;
+export default ConfigTable;
