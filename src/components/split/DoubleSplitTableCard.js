@@ -5,7 +5,7 @@ import React from 'react';
 import {DataTable, TableBody, TableColumn, TableHeader, TableRow} from 'react-md/lib/DataTables/index';
 import PropTypes from 'prop-types';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
-import {logPropType} from '../../helpers';
+import {splitPropType} from '../../helpers';
 
 const DoubleSplitTableCard = (props) => {
   const headers = ['id', 'Training log', 'Test log', 'Configuration'];
@@ -31,12 +31,12 @@ const DoubleSplitTableCard = (props) => {
 
 /* eslint-disable camelcase */
 const tableBody = (splits) => {
-  return splits.map(({id, training_log, test_log}) => {
+  return splits.map(({id, trainingLogName, testLogName}) => {
     return (
       <TableRow key={id} selectable={false}>
         <TableColumn numeric>{id}</TableColumn>
-        <TableColumn>{training_log.name}</TableColumn>
-        <TableColumn>{test_log.name}</TableColumn>
+        <TableColumn>{trainingLogName}</TableColumn>
+        <TableColumn>{testLogName}</TableColumn>
         <TableColumn>Configuration is user defined</TableColumn>
       </TableRow>
     );
@@ -44,14 +44,7 @@ const tableBody = (splits) => {
 };
 
 DoubleSplitTableCard.propTypes = {
-  splits: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    type: PropTypes.oneOf(['single', 'double']).isRequired,
-    original_log: logPropType,
-    training_log: logPropType,
-    test_log: logPropType,
-    config: PropTypes.object.isRequired,
-  })).isRequired
+  splits: PropTypes.arrayOf(splitPropType).isRequired
 };
 
 export default DoubleSplitTableCard;

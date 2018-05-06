@@ -11,53 +11,20 @@ import SingleSplitTableCard from '../src/components/split/SingleSplitTableCard';
 export const splits = [
   {
     'id': 1,
-    'original_log': {
-      'id': 1,
-      'name': 'general_example.xes',
-      'properties':
-        {
-          'events': {},
-          'resources': {},
-          'newTraces': {},
-          'traceAttributes': [],
-          'maxEventsInLog': 1
-        }
-    },
-    'test_log': null,
-    'training_log': null,
+    'originalLogName': 'general_example.xes',
+    'testLogName': '',
+    'trainingLogName': '',
     'type': 'single',
     'config': {
-      'value': 123,
-      'setting': 'something'
+      'split_type': 'split_random',
+      'test_size': 0.5
     }
   },
   {
     'id': 2,
-    'original_log': null,
-    'test_log': {
-      'id': 1,
-      'name': 'general_example.xes',
-      'properties':
-        {
-          'events': {},
-          'resources': {},
-          'newTraces': {},
-          'traceAttributes': [],
-          'maxEventsInLog': 1
-        }
-    },
-    'training_log': {
-      'id': 2,
-      'name': 'general_example2.xes',
-      'properties':
-        {
-          'events': {},
-          'resources': {},
-          'newTraces': {},
-          'traceAttributes': [],
-          'maxEventsInLog': 1
-        }
-    },
+    'originalLogName': '',
+    'testLogName': 'general_example.xes',
+    'trainingLogName': 'general_example2.xes',
     'type': 'double',
     'config': {
       'value': 123,
