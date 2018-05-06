@@ -29,6 +29,11 @@ export const traceAttributeShape = {
   example: PropTypes.string.isRequired
 };
 
+export const fetchStatePropType = PropTypes.shape({
+  inFlight: PropTypes.bool.isRequired,
+  error: PropTypes.any
+}).isRequired;
+
 export const labelPropType = {
   type: PropTypes.oneOf([NEXT_ACTIVITY, REMAINING_TIME, ATTRIBUTE_NUMBER, ATTRIBUTE_STRING, DURATION]).isRequired,
   attribute_name: PropTypes.string,

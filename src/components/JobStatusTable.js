@@ -5,7 +5,7 @@ import React, {PureComponent} from 'react';
 import {DataTable, TableBody, TableColumn, TableHeader, TablePagination, TableRow} from 'react-md/lib/DataTables/index';
 import PropTypes from 'prop-types';
 import {splitToString} from '../util/dataReducers';
-import {jobPropType} from '../helpers';
+import {jobPropType} from '../propTypes';
 import {Button} from 'react-md/lib/Buttons/index';
 import {FontIcon} from 'react-md/lib/FontIcons/index';
 import JsonHolder from './validation/JsonHolder';

@@ -9,7 +9,7 @@ import SelectField from 'react-md/lib/SelectFields/index';
 import Button from 'react-md/lib/Buttons/Button';
 import {CardActions, Slider} from 'react-md';
 import {splitTypes} from '../../reference';
-import {logPropType} from '../../helpers';
+import {fetchStatePropType, logPropType} from '../../propTypes';
 
 class SplitFormCard extends Component {
   constructor(props) {
@@ -95,10 +95,7 @@ class SplitFormCard extends Component {
 
 SplitFormCard.propTypes = {
   logs: PropTypes.objectOf(logPropType).isRequired,
-  fetchState: PropTypes.shape({
-    inFlight: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  }).isRequired,
+  fetchState: fetchStatePropType,
   onSubmit: PropTypes.func.isRequired
 };
 

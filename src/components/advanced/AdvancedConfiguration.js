@@ -10,7 +10,7 @@ import RegressionRandomForest from './RegressionRandomForest';
 import RegressionLasso from './RegressionLasso';
 import RegressionLinear from './RegressionLinear';
 import HyperOpt from './HyperOpt';
-import {labelPropType, traceAttributeShape} from '../../helpers';
+import {labelPropType, traceAttributeShape} from '../../propTypes';
 import Labelling from './Labelling';
 import AddColumns from './AddColumns';
 import KMeans from './KMeans';

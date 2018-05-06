@@ -4,7 +4,7 @@ import SelectField from 'react-md/lib/SelectFields';
 import PropTypes from 'prop-types';
 import FetchState from './../FetchState';
 import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
-import {splitLabelPropType} from '../../helpers';
+import {fetchStatePropType, splitLabelPropType} from '../../propTypes';
 import LabelControls from './LabelControls';
 import {padding} from '../../reference';
 
@@ -50,10 +50,7 @@ const ValidationHeaderCard = (props) => {
 
 ValidationHeaderCard.propTypes = {
   splitLabels: splitLabelPropType,
-  fetchState: PropTypes.shape({
-    inFlight: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  }).isRequired,
+  fetchState: fetchStatePropType,
   splitChange: PropTypes.func.isRequired,
   prefixLengths: PropTypes.arrayOf(PropTypes.string).isRequired,
   prefixChange: PropTypes.func.isRequired,

@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import CircularProgress from 'react-md/lib/Progress/CircularProgress';
-import PropTypes from 'prop-types';
+import {fetchStatePropType} from '../propTypes';
 
 const FetchState = (props) => {
   let message = null;
@@ -18,9 +18,6 @@ const FetchState = (props) => {
 };
 
 FetchState.propTypes = {
-  fetchState: PropTypes.shape({
-    inFlight: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  }).isRequired,
+  fetchState: fetchStatePropType,
 };
 export default FetchState;

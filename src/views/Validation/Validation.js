@@ -13,7 +13,7 @@ import {
 } from '../../actions/JobActions';
 import ValidationHeaderCard from '../../components/validation/ValidationHeaderCard';
 import ResultWrapper from '../../components/validation/ResultWrapper';
-import {jobPropType} from '../../helpers';
+import {fetchStatePropType, jobPropType} from '../../propTypes';
 import {splitsToString} from '../../util/dataReducers';
 
 class Validation extends Component {
@@ -73,10 +73,7 @@ class Validation extends Component {
 }
 
 Validation.propTypes = {
-  fetchState: PropTypes.shape({
-    inFlight: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  }).isRequired,
+  fetchState: fetchStatePropType,
   onRequestJobs: PropTypes.func.isRequired,
   onSplitChange: PropTypes.func.isRequired,
   onMethodChange: PropTypes.func.isRequired,

@@ -25,7 +25,7 @@ import {
   THRESHOLD_MEAN,
 } from '../reference';
 import CheckboxGroup from './training/CheckboxGroup';
-import {splitLabelPropType, traceAttributeShape} from '../helpers';
+import {fetchStatePropType, splitLabelPropType, traceAttributeShape} from '../propTypes';
 import PrefixSelector from './training/PrefixSelector';
 import AdvancedConfiguration from './advanced/AdvancedConfiguration';
 import {classificationMetrics, regressionMetrics} from './advanced/advancedConfig';
@@ -339,10 +339,7 @@ class TrainingFormCard extends Component {
 
 TrainingFormCard.propTypes = {
   splitLabels: splitLabelPropType,
-  fetchState: PropTypes.shape({
-    inFlight: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  }).isRequired,
+  fetchState: fetchStatePropType,
   onSubmit: PropTypes.func.isRequired,
   onSplitChange: PropTypes.func.isRequired,
   maxEventsInLog: PropTypes.number.isRequired,

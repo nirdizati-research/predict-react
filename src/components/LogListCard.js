@@ -3,6 +3,7 @@ import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import SelectField from 'react-md/lib/SelectFields';
 import PropTypes from 'prop-types';
 import FetchState from './FetchState';
+import {fetchStatePropType} from '../propTypes';
 
 const LogListCard = (props) => {
   const itemsWithLabel = props.logList.map(({id, name}) => ({value: id, label: name}));
@@ -34,10 +35,7 @@ LogListCard.propTypes = {
     name: PropTypes.string.isRequired
   })).isRequired,
   visibleLogId: PropTypes.number.isRequired,
-  fetchState: PropTypes.shape({
-    inFlight: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  }).isRequired,
+  fetchState: fetchStatePropType,
   selectChange: PropTypes.func.isRequired
 };
 export default LogListCard;

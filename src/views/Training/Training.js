@@ -5,7 +5,7 @@ import TrainingFormCard from '../../components/TrainingFormCard';
 import {submitTraining} from '../../actions/JobActions';
 import {splitsToLabel} from '../../util/dataReducers';
 import {splitsRequested} from '../../actions/SplitActions';
-import {splitLabelPropType} from '../../helpers';
+import {fetchStatePropType, splitLabelPropType} from '../../propTypes';
 import {getLogProperties} from '../../util/splitStuff';
 import {logListRequested} from '../../actions/LogActions';
 
@@ -47,10 +47,7 @@ Training.propTypes = {
   getLogProperties: PropTypes.func.isRequired,
   onRequestSplitList: PropTypes.func.isRequired,
   onSubmitTraining: PropTypes.func.isRequired,
-  fetchState: PropTypes.shape({
-    inFlight: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  }).isRequired
+  fetchState: fetchStatePropType
 };
 
 const mapStateToProps = (state) => ({

@@ -4,7 +4,7 @@ import LogListCard from '../../components/LogListCard';
 import PropTypes from 'prop-types';
 import {logListRequested} from '../../actions/LogActions';
 import LineChartCard from '../../components/chart/LineChartCard';
-import {logsStore} from '../../helpers';
+import {fetchStatePropType, logsStore} from '../../propTypes';
 
 class Logs extends Component {
   constructor(props) {
@@ -82,10 +82,7 @@ class Logs extends Component {
 }
 
 Logs.propTypes = {
-  fetchState: PropTypes.shape({
-    inFlight: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  }).isRequired,
+  fetchState: fetchStatePropType,
   logs: logsStore,
   onRequestLogList: PropTypes.func.isRequired
 };

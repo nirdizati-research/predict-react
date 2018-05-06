@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import RegConfigTable from './RegConfigTable';
 import ClassConfigTable from './ClassConfigTable';
 import {CLASSIFICATION, LABELLING, REGRESSION} from '../../reference';
-import {jobPropType} from '../../helpers';
+import {jobPropType} from '../../propTypes';
 import {jobToValidationTable} from '../../util/dataReducers';
 import LabelConfigTable from './LabelConfigTable';
 

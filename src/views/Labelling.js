@@ -12,7 +12,7 @@ import {
   jobsRequested,
   submitTraining
 } from '../actions/JobActions';
-import {jobPropType, splitLabelPropType} from '../helpers';
+import {fetchStatePropType, jobPropType, splitLabelPropType} from '../propTypes';
 import {splitsToString} from '../util/dataReducers';
 import BarChartCard from '../components/chart/BarChartCard';
 import LabellingHeaderCard from '../components/Labelling/LabellingHeaderCard';
@@ -122,10 +122,7 @@ class Labelling extends Component {
 }
 
 Labelling.propTypes = {
-  fetchState: PropTypes.shape({
-    inFlight: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  }).isRequired,
+  fetchState: fetchStatePropType,
   onRequestJobs: PropTypes.func.isRequired,
   onSplitChange: PropTypes.func.isRequired,
   onMethodChange: PropTypes.func.isRequired,

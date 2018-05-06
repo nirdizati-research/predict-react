@@ -6,7 +6,7 @@ import Button from 'react-md/lib/Buttons/Button';
 import {JOB_DELETE_REQUESTED, jobsRequested} from '../../actions/JobActions';
 import JobStatusTable from '../../components/JobStatusTable';
 import FetchState from '../../components/FetchState';
-import {jobPropType} from '../../helpers';
+import {fetchStatePropType, jobPropType} from '../../propTypes';
 import {Checkbox} from 'react-md/lib/SelectionControls/index';
 
 // Greater numbers first
@@ -114,10 +114,7 @@ JobStatus.propTypes = {
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
   onRequestJobs: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  fetchState: PropTypes.shape({
-    inFlight: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  }).isRequired,
+  fetchState: fetchStatePropType,
 };
 
 const mapStateToProps = (state) => ({

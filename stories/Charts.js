@@ -187,8 +187,7 @@ storiesOf('Charts', module)
                          chartTitle="Empty chart"/>
         </div>
         <div className="md-cell md-cell--12">
-          <BarChartCard fetchState={fetchState}
-                        data={events}
+          <BarChartCard data={events}
                         cardTitle="Event Occurrences"
                         hTitle="Number of Executions"
                         chartTitle="Events"/>
@@ -200,8 +199,7 @@ storiesOf('Charts', module)
                         chartTitle="asdasfd"/>
         </div>
         <div className="md-cell md-cell--12">
-          <BarChartCard fetchState={fetchState}
-                        data={eventsInTrace}
+          <BarChartCard data={eventsInTrace}
                         cardTitle="Number of events in trace"
                         hTitle="Number of events"
                         chartTitle="Event count"
