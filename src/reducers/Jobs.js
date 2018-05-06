@@ -45,12 +45,9 @@ const initialLabels = {
 
 const initialState = {
   fetchState: {inFlight: false},
-  jobs: {
-    byId: {},
-    allIds: [],
-    filteredIds: []
-  },
-  filteredJobs: [],
+  byId: {},
+  allIds: [],
+  filteredIds: [],
   uniqueSplits: [],
   predictionMethod: REGRESSION,
   prefixLengths: [],
@@ -118,23 +115,23 @@ const addOrRemoveString = (list, value) => {
   }
 };
 
-const prefixSet = (filteredJobs) => [...new Set(filteredJobs.map((job) => job.config.prefix_length))];
+const prefixSet = (jobsById, ids) => [...new Set(ids.map(id => jobsById[id].config.prefix_length))];
 const thresholdSet = (jobsById) => [...new Set(Object.values(jobsById).map((job) => job.config.label.threshold))];
 const attributeNameSet = (jobsById) =>
   [...new Set(Object.values(jobsById).map(job => job.config.label.attribute_name).filter(a => a !== undefined))];
 
 const applyFilters =
-  ({jobs, splitId, predictionMethod, encodings, clusterings, classification, regression, label, padding}) => {
-    const commonJobs = jobs
+  ({byId, splitId, predictionMethod, encodings, clusterings, classification, regression, label, padding}) => {
+    const commonJobs = Object.values(byId)
       .filter(filterBySplit(splitId))
       .filter(filterByMethod(predictionMethod))
       .filter(filterByPadding(padding))
       .filter(filterByLabelType(predictionMethod, label));
     if (predictionMethod === LABELLING) {
-      return commonJobs;
+      return commonJobs.map(({id}) => id);
     }
     return commonJobs
-      .filter(filterByAllElse(encodings, clusterings, classification, regression, predictionMethod));
+      .filter(filterByAllElse(encodings, clusterings, classification, regression, predictionMethod)).map(({id}) => id);
   };
 
 const checkboxChange = (target, state) => {
@@ -187,12 +184,12 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
     }
 
     case JOBS_RETRIEVED: {
-      const jobs = addListToStore(state.jobs, action.payload);
+      const jobs = addListToStore(state, action.payload);
       const uniqueSplits = completedUniqueSplits(jobs.byId);
       const thresholds = thresholdSet(jobs.byId);
       const attributeNames = attributeNameSet(jobs.byId);
       return {
-        ...state, fetchState: {inFlight: false}, jobs: {...jobs, filteredIds: jobs.allIds},
+        ...state, fetchState: {inFlight: false}, ...jobs,
         uniqueSplits, thresholds, attributeNames
       };
     }
@@ -205,55 +202,55 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
     }
 
     case JOB_DELETED: {
-      const jobs = removeFromStore(state.jobs, action.id);
+      const jobs = removeFromStore(state, action.id);
       const uniqueSplits = completedUniqueSplits(jobs.byId);
       const thresholds = thresholdSet(jobs.byId);
       const attributeNames = attributeNameSet(jobs.byId);
       return {
-        ...state, jobs: {...jobs, filteredIds: jobs.allIds}, uniqueSplits, thresholds, attributeNames
+        ...state, ...jobs, uniqueSplits, thresholds, attributeNames
       };
     }
     case FILTER_SPLIT_CHANGED: {
       const splitId = action.splitId;
-      const filteredJobs = applyFilters({...state, splitId});
-      const prefixLengths = prefixSet(filteredJobs);
+      const filteredIds = applyFilters({...state, splitId});
+      const prefixLengths = prefixSet(state.byId, filteredIds);
       return {
-        ...state, filteredJobs, prefixLengths, splitId, selectedPrefixes: prefixLengths
+        ...state, filteredIds, prefixLengths, splitId, selectedPrefixes: prefixLengths
       };
     }
     case FILTER_PREDICTION_METHOD_CHANGED: {
       const label = action.method === REGRESSION ? initialLabels.remainingTime : initialLabels.duration;
       const predictionMethod = action.method;
-      const filteredJobs = applyFilters({...state, predictionMethod, ...initialFilters, label});
-      const prefixLengths = prefixSet(filteredJobs);
+      const filteredIds = applyFilters({...state, predictionMethod, ...initialFilters, label});
+      const prefixLengths = prefixSet(state.byId, filteredIds);
       return {
-        ...state, filteredJobs, prefixLengths, ...initialFilters, label,
+        ...state, filteredIds, prefixLengths, ...initialFilters, label,
         predictionMethod, selectedPrefixes: prefixLengths
       };
     }
     case FILTER_PREFIX_LENGTH_CHANGED: {
       const selectedPrefixes = addOrRemove(state.selectedPrefixes, action.prefixLength);
-      const filteredJobs = applyFilters({...state})
-        .filter(filterByPrefix(selectedPrefixes));
+      const filteredIds = applyFilters({...state}).map(id => state.byId[id])
+        .filter(filterByPrefix(selectedPrefixes)).map(({id}) => id);
       return {
-        ...state, selectedPrefixes, filteredJobs
+        ...state, selectedPrefixes, filteredIds
       };
     }
 
     case FILTER_OPTION_CHANGED: {
       state = checkboxChange(action.payload, state);
-      const filteredJobs = applyFilters({...state});
+      const filteredIds = applyFilters({...state});
       return {
-        ...state, filteredJobs
+        ...state, filteredIds
       };
     }
 
     case FILTER_LABEL_CHANGED: {
       const modifiedState = advancedConfigChange(state, action.payload.config, action.payload.value);
-      const filteredJobs = applyFilters({...modifiedState});
-      const prefixLengths = prefixSet(filteredJobs);
+      const filteredIds = applyFilters({...modifiedState});
+      const prefixLengths = prefixSet(state.byId, filteredIds);
       return {
-        ...modifiedState, filteredJobs, prefixLengths, selectedPrefixes: prefixLengths
+        ...modifiedState, filteredIds, prefixLengths, selectedPrefixes: prefixLengths
       };
     }
 
