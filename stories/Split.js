@@ -7,7 +7,7 @@ import SplitFormCard from '../src/components/split/SplitFormCard';
 import {SPLIT_DOUBLE, SPLIT_SINGLE} from '../src/reference';
 import DoubleSplitTableCard from '../src/components/split/DoubleSplitTableCard';
 import SingleSplitTableCard from '../src/components/split/SingleSplitTableCard';
-import {splitsToLabel} from '../src/util/dataReducers';
+import {splitsToLabel} from '../src/util/unNormalize';
 
 
 // these things are a hack with both id and log name

@@ -10,7 +10,7 @@ import {fetchStatePropType, jobPropType} from '../../propTypes';
 import {Checkbox} from 'react-md/lib/SelectionControls/index';
 import {logListRequested} from '../../actions/LogActions';
 import {splitsRequested} from '../../actions/SplitActions';
-import {mapJobs} from '../../util/dataReducers';
+import {mapJobs} from '../../util/unNormalize';
 
 // Greater numbers first
 const compare = (a, b) => {

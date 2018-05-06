@@ -13,7 +13,6 @@ import {
   submitTraining
 } from '../actions/JobActions';
 import {fetchStatePropType, jobPropType, splitLabelPropType} from '../propTypes';
-import {splitsToString} from '../util/dataReducers';
 import BarChartCard from '../components/chart/BarChartCard';
 import LabellingHeaderCard from '../components/Labelling/LabellingHeaderCard';
 import TrainingFormCard from '../components/TrainingFormCard';
@@ -63,7 +62,6 @@ class Labelling extends Component {
 
   render() {
     // Only unique splits for selector
-    const splitLabels = splitsToString(this.props.uniqueSplits);
     const prefixStrings = this.props.prefixLengths.map((p) => p + '');
 
     const validationChart = () => {
@@ -100,7 +98,7 @@ class Labelling extends Component {
                             isLabelForm={true}/>
         </div>
         <div className="md-cell md-cell--12">
-          <LabellingHeaderCard splitLabels={splitLabels} fetchState={this.props.fetchState}
+          <LabellingHeaderCard splitLabels={[]} fetchState={this.props.fetchState}
                                splitChange={this.onSplitChange.bind(this)}
                                prefixLengths={prefixStrings} filterOptionChange={this.props.filterOptionChange}
                                selectedPrefixes={this.props.selectedPrefixes}
@@ -148,7 +146,7 @@ Labelling.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  splitLabels: splitsToString(state.splits.splits),
+  splitLabels: state.splits.splits,
   splits: state.splits.splits,
   jobs: state.jobs.filteredJobs,
   fetchState: state.jobs.fetchState,

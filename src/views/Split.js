@@ -8,7 +8,7 @@ import {SPLIT_DOUBLE, SPLIT_SINGLE} from '../reference';
 import SingleSplitTableCard from '../components/split/SingleSplitTableCard';
 import DoubleSplitTableCard from '../components/split/DoubleSplitTableCard';
 import {fetchStatePropType, logPropType, splitPropType} from '../propTypes';
-import {mergeSplitWithLogName} from '../util/dataReducers';
+import {mergeSplitWithLogName} from '../util/unNormalize';
 
 class Split extends Component {
   componentDidMount() {

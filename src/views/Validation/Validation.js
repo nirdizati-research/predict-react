@@ -14,7 +14,6 @@ import {
 import ValidationHeaderCard from '../../components/validation/ValidationHeaderCard';
 import ResultWrapper from '../../components/validation/ResultWrapper';
 import {fetchStatePropType, jobPropType} from '../../propTypes';
-import {splitsToString} from '../../util/dataReducers';
 
 class Validation extends Component {
   onChangePrefix(prefixLength) {
@@ -43,7 +42,6 @@ class Validation extends Component {
 
   render() {
     // Only unique splits for selector
-    const splitLabels = splitsToString(this.props.uniqueSplits);
     const prefixStrings = this.props.prefixLengths.map((p) => p + '');
 
     // Dont render before componentWillReceiveProps has finished dispatch
@@ -53,7 +51,7 @@ class Validation extends Component {
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
-          <ValidationHeaderCard splitLabels={splitLabels} fetchState={this.props.fetchState}
+          <ValidationHeaderCard splitLabels={[]} fetchState={this.props.fetchState}
                                 methodChange={this.onChangeMethod.bind(this)}
                                 splitChange={this.onChangeSplit.bind(this)}
                                 prefixLengths={prefixStrings} predictionMethod={this.props.predictionMethod}

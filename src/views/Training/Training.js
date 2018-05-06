@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import TrainingFormCard from '../../components/TrainingFormCard';
 import {submitTraining} from '../../actions/JobActions';
-import {splitsToLabel} from '../../util/dataReducers';
+import {splitsToLabel} from '../../util/unNormalize';
 import {splitsRequested} from '../../actions/SplitActions';
 import {fetchStatePropType, splitLabelPropType} from '../../propTypes';
 import {getLogProperties} from '../../util/splitStuff';
