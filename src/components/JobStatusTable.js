@@ -4,13 +4,13 @@
 import React, {PureComponent} from 'react';
 import {DataTable, TableBody, TableColumn, TableHeader, TablePagination, TableRow} from 'react-md/lib/DataTables/index';
 import PropTypes from 'prop-types';
-import {splitToString} from '../util/dataReducers';
 import {jobPropType} from '../propTypes';
 import {Button} from 'react-md/lib/Buttons/index';
 import {FontIcon} from 'react-md/lib/FontIcons/index';
 import JsonHolder from './validation/JsonHolder';
 
 /* eslint-disable camelcase */
+
 /* eslint-disable no-invalid-this */
 class JobStatusTable extends PureComponent {
   constructor(props) {
@@ -54,7 +54,7 @@ class JobStatusTable extends PureComponent {
       </TableHeader>
       <TableBody>
         {this.state.slicedData.map(
-          ({id, type, status, created_date, modified_date, split, config, error}) => (
+          ({id, type, status, created_date, modified_date, splitName, config, error}) => (
             <TableRow key={id} selectable={false}>
               <TableColumn numeric>{id}</TableColumn>
               {this.props.showDeleteButton ?
@@ -65,7 +65,7 @@ class JobStatusTable extends PureComponent {
               <TableColumn>{type}</TableColumn>
               <TableColumn>{new Date(created_date).toLocaleString()}</TableColumn>
               <TableColumn>{new Date(modified_date).toLocaleString()}</TableColumn>
-              <TableColumn>{splitToString(split)}</TableColumn>
+              <TableColumn>{splitName}</TableColumn>
               <TableColumn>{error}</TableColumn>
               <TableColumn grow><JsonHolder data={config}/></TableColumn>
             </TableRow>

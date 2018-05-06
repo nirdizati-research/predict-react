@@ -8,6 +8,9 @@ import JobStatusTable from '../../components/JobStatusTable';
 import FetchState from '../../components/FetchState';
 import {fetchStatePropType, jobPropType} from '../../propTypes';
 import {Checkbox} from 'react-md/lib/SelectionControls/index';
+import {logListRequested} from '../../actions/LogActions';
+import {splitsRequested} from '../../actions/SplitActions';
+import {mapJobs} from '../../util/dataReducers';
 
 // Greater numbers first
 const compare = (a, b) => {
@@ -32,8 +35,8 @@ class JobStatus extends Component {
   }
 
   componentDidMount() {
-    // Get only if empty
-    // TODO move this check to somewhere else
+    this.props.onRequestLogList();
+    this.props.onRequestSplitList();
     if (this.props.jobs === []) {
       this.props.onRequestJobs();
     }
@@ -113,16 +116,20 @@ class JobStatus extends Component {
 JobStatus.propTypes = {
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
   onRequestJobs: PropTypes.func.isRequired,
+  onRequestLogList: PropTypes.func.isRequired,
+  onRequestSplitList: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   fetchState: fetchStatePropType,
 };
 
 const mapStateToProps = (state) => ({
-  jobs: state.jobs.jobs,
+  jobs: mapJobs(state.logs.byId, state.splits.byId, state.jobs.byId),
   fetchState: state.jobs.fetchState
 });
 const mapDispatchToProps = (dispatch) => ({
   onRequestJobs: () => dispatch(jobsRequested()),
+  onRequestLogList: () => dispatch(logListRequested()),
+  onRequestSplitList: () => dispatch(splitsRequested()),
   onDelete: (id) => dispatch({type: JOB_DELETE_REQUESTED, payload: {id}})
 });
 

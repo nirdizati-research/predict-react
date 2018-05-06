@@ -29,7 +29,8 @@ describe('JobStatusTable', () => {
           'performance_metric': 'acc'
         },
       },
-      split: {type: 'single', original_log: {name: 'name'}},
+      splitName: 'name',
+      split_id: 1,
       created_date: 'aa',
       type: 'classification',
       error: '',

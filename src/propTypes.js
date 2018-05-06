@@ -49,7 +49,8 @@ export const labelPropType = {
 export const jobPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   status: PropTypes.string.isRequired,
-  split: PropTypes.any.isRequired,
+  split_id: PropTypes.number.isRequired,
+  splitName: PropTypes.string,
   type: PropTypes.oneOf([CLASSIFICATION, REGRESSION, LABELLING]).isRequired,
   config: PropTypes.shape({
     prefix_length: PropTypes.number.isRequired,
@@ -137,6 +138,11 @@ export const logsStore = PropTypes.shape({
 
 export const splitStore = PropTypes.shape({
   byId: PropTypes.objectOf(splitPropType).isRequired,
+  allIds: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+}).isRequired;
+
+export const jobStore = PropTypes.shape({
+  byId: PropTypes.objectOf(jobPropType).isRequired,
   allIds: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
 }).isRequired;
 
