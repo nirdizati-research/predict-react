@@ -8,7 +8,7 @@ import {fetchStatePropType, splitLabelPropType} from '../../propTypes';
 import LabelControls from './LabelControls';
 import {padding} from '../../reference';
 
-const ValidationHeaderCard = (props) => {
+const LabellingHeaderCard = (props) => {
   const prefixControls = props.prefixLengths.map((prefix) => ({label: prefix, value: prefix}));
 
   const defaultValue = ',' + props.selectedPrefixes.join(',');
@@ -48,7 +48,7 @@ const ValidationHeaderCard = (props) => {
 };
 
 
-ValidationHeaderCard.propTypes = {
+LabellingHeaderCard.propTypes = {
   splitLabels: splitLabelPropType,
   fetchState: fetchStatePropType,
   splitChange: PropTypes.func.isRequired,
@@ -65,4 +65,4 @@ ValidationHeaderCard.propTypes = {
     padding: PropTypes.string.isRequired
   }).isRequired
 };
-export default ValidationHeaderCard;
+export default LabellingHeaderCard;
