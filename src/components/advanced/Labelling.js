@@ -15,7 +15,7 @@ import {
   thresholdControls
 } from '../../reference';
 import SelectField from 'react-md/lib/SelectFields/index';
-import {labelPropType, traceAttributeShape} from '../../helpers';
+import {labelPropType, traceAttributeShape} from '../../propTypes';
 
 const traceAttributeToLabel = (traceAttr) => {
   return {label: traceAttr.name, value: traceAttr.name, message: `First trace value: ${traceAttr.example}`};

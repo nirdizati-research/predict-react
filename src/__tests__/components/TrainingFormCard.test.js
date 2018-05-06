@@ -83,11 +83,16 @@ describe('TrainingFormCard', () => {
   });
 
   it('changes log name', () => {
+    // constructor call
+    expect(onSplitChange.mock.calls[0][0]).toEqual(1);
     shallowElement.find(SelectField).simulate('change', 'Split #2');
     // In real condition split_id will be 2
     // expect(shallowElement.state().split_id).toBe(2);
     expect(shallowElement.state().split_id).toBe('Split #2');
-    expect(onSplitChange.mock.calls[0][0]).toEqual('Split #2');
+    // props updated
+    expect(onSplitChange.mock.calls[1][0]).toEqual(1);
+    // actual simulate change call
+    expect(onSplitChange.mock.calls[2][0]).toEqual('Split #2');
   });
 
   describe('submit', () => {

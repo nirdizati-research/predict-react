@@ -1,15 +1,10 @@
-import {
-  deleteJob,
-  getJobResults, getJobs, getLogInfo, getLogList, getSplits, postSplit,
-  postTraining
-} from '../actions/ServerActions';
-import {JOB_DELETE_REQUESTED, JOB_RESULTS_REQUESTED, JOBS_REQUESTED, TRAINING_SUBMITTED} from '../actions/JobActions';
+import {deleteJob, getJobs, getLogInfo, getLogList, getSplits, postSplit, postTraining} from '../actions/ServerActions';
+import {JOB_DELETE_REQUESTED, JOBS_REQUESTED, TRAINING_SUBMITTED} from '../actions/JobActions';
 import {LOG_INFO_REQUESTED, LOG_LIST_REQUESTED} from '../actions/LogActions';
 import {SPLIT_SUBMITTED, SPLITS_REQUESTED} from '../actions/SplitActions';
 
 const ACTION_TYPE_TO_SERVER_ACTION = {
   [JOBS_REQUESTED]: getJobs,
-  [JOB_RESULTS_REQUESTED]: getJobResults,
   [LOG_LIST_REQUESTED]: getLogList,
   [LOG_INFO_REQUESTED]: getLogInfo,
   [TRAINING_SUBMITTED]: postTraining,

@@ -9,7 +9,6 @@ import {
   FILTER_PREFIX_LENGTH_CHANGED,
   FILTER_SPLIT_CHANGED,
   JOB_DELETED,
-  jobResultsRequested,
   jobsFailed,
   jobsRequested,
   jobsRetrieved
@@ -42,9 +41,7 @@ const jobList = [
       label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
       clustering: NO_CLUSTER
     },
-    split: {
-      id: 1
-    }
+    split_id: 1
   },
   {
     id: 2,
@@ -58,9 +55,7 @@ const jobList = [
       label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
       clustering: NO_CLUSTER
     },
-    split: {
-      id: 1
-    }
+    split_id: 1
   },
   {
     id: 3,
@@ -74,9 +69,7 @@ const jobList = [
       label: {type: REMAINING_TIME, threshold: 0},
       clustering: NO_CLUSTER
     },
-    split: {
-      id: 2
-    }
+    split_id: 2
   },
   {
     id: 4,
@@ -90,9 +83,7 @@ const jobList = [
       label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
       clustering: NO_CLUSTER
     },
-    split: {
-      id: 4
-    }
+    split_id: 4
   },
   {
     id: 5,
@@ -106,9 +97,7 @@ const jobList = [
       label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
       clustering: NO_CLUSTER
     },
-    split: {
-      id: 1
-    }
+    split_id: 1
   },
   {
     id: 6,
@@ -122,9 +111,7 @@ const jobList = [
       label: {type: REMAINING_TIME, threshold: 0},
       clustering: NO_CLUSTER
     },
-    split: {
-      id: 1
-    }
+    split_id: 1
   },
   {
     id: 75,
@@ -138,9 +125,7 @@ const jobList = [
       label: {type: DURATION, threshold_type: THRESHOLD_CUSTOM, threshold: 100},
       clustering: NO_CLUSTER
     },
-    split: {
-      id: 1
-    }
+    split_id: 1
   },
   {
     id: 76,
@@ -154,72 +139,99 @@ const jobList = [
       label: {type: ATTRIBUTE_NUMBER, threshold_type: THRESHOLD_MEAN, attribute_name: 'name', threshold: 0},
       clustering: NO_CLUSTER
     },
-    split: {
-      id: 1
-    }
+    split_id: 1
   },
 ];
 
-const initState = {fetchState: {inFlight: false}, jobs: []};
+const changedJob = {
+  id: 1,
+  status: 'completed',
+  type: CLASSIFICATION,
+  config: {
+    prefix_length: 2,
+    encoding: SIMPLE_INDEX,
+    method: RANDOM_FOREST,
+    padding: NO_PADDING,
+    label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
+    clustering: NO_CLUSTER
+  },
+  split_id: 1
+};
+
+const initState = {fetchState: {inFlight: false}, byId: {}, allIds: [], filteredIds: []};
 describe('JobsReducer', () => {
+  let state;
+
+  beforeEach(() => {
+    state = jobs(undefined, jobsRequested());
+  });
+
   it('has nothing initially', () => {
     expect(jobs(undefined, {})).toMatchObject(initState);
   });
 
   it('changes fetchState when requesting', () => {
-    const state = jobs(undefined, jobsRequested());
     expect(state).toMatchObject({fetchState: {inFlight: true}});
   });
 
   it('adds jobs when request completed', () => {
-    const jobList = [{id: 1, log: 'name', config: {label: {}}}];
-    const state = jobs(undefined, jobsRequested());
     const state2 = jobs(state, jobsRetrieved(jobList));
-    expect(state2).toMatchObject({fetchState: {inFlight: false}, jobs: jobList});
-    expect(state2.attributeNames).toEqual([undefined]);
-    expect(state2.thresholds).toEqual([undefined]);
+    expect(state2.fetchState).toMatchObject({inFlight: false});
+    expect(state2.attributeNames).toEqual(['name']);
+    expect(state2.thresholds).toEqual([0, 100]);
+    expect(state2.uniqueSplits).toEqual([1, 2]);
+
+    const {allIds, byId} = state2;
+    expect(allIds).toEqual([1, 2, 3, 4, 5, 6, 75, 76]);
+    expect(Object.keys(byId).length).toEqual(8);
+    expect(byId[1].split_id).toBe(1);
   });
 
   it('updates job list by id', () => {
-    const jobList = [{id: 1, log: 'name1', status: 'running', config: {label: {}}},
-      {id: 2, log: 'name2', status: 'running', config: {label: {}}},
-      {id: 3, log: 'name2', status: 'running', config: {label: {}}}];
-    const incoming = [{id: 2, log: 'name2', status: 'completed', config: {label: {}}}];
-    const state = jobs(undefined, jobResultsRequested());
-    state.jobs = jobList;
-    const state2 = jobs(state, jobsRetrieved(incoming));
-    expect(state2.jobs.length).toEqual(3);
-    expect(state2.jobs).toContainEqual(jobList[0]);
-    expect(state2.jobs).toContainEqual(jobList[2]);
-    expect(state2.jobs).toContainEqual(incoming[0]);
+    const state2 = jobs(jobs(undefined, jobsRetrieved(jobList)), jobsRetrieved([changedJob]));
+
+    const {byId} = state2;
+    expect(byId[1].status).toBe('completed');
   });
 
   it('stores error message', () => {
-    const state = jobs(undefined, jobsRequested());
     const state2 = jobs(state, jobsFailed('error'));
-    expect(state2).toMatchObject({fetchState: {inFlight: false, error: 'error'}, jobs: []});
+    expect(state2).toMatchObject({fetchState: {inFlight: false, error: 'error'}});
   });
 
   it('removes from list on delete', () => {
-    const jobList = [{id: 1, log: 'name', config: {label: {}}}];
-    const state2 = jobs(undefined, jobsRetrieved(jobList));
-    const state3 = jobs(state2, {type: JOB_DELETED, id: 1});
-    expect(state3).toMatchObject({uniqueSplits: [], jobs: []});
+    const state2 = jobs(jobs(undefined, jobsRetrieved(jobList)), {type: JOB_DELETED, id: 75});
+    const state3 = jobs(state2, {type: JOB_DELETED, id: 76});
+    expect(state3.attributeNames).toEqual([]);
+    expect(state3.thresholds).toEqual([0]);
+
+    const {allIds, byId} = state3;
+    expect(allIds).toEqual([1, 2, 3, 4, 5, 6]);
+    expect(Object.keys(byId).length).toEqual(6);
   });
 });
-const state = jobs(undefined, jobsRetrieved(jobList));
-const state2 = jobs(state, {type: FILTER_SPLIT_CHANGED, splitId: 1});
+
 describe('Validation filter', () => {
+  let state;
+  let state2;
+  let stateClass;
+
+  beforeEach(() => {
+    state = jobs(undefined, jobsRetrieved(jobList));
+    state2 = jobs(state, {type: FILTER_SPLIT_CHANGED, splitId: 1});
+    stateClass = jobs(state2, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
+  });
+
   describe('initial state', () => {
     it('has no filtered jobs initially', () => {
-      expect(state).toMatchObject({filteredJobs: []});
+      expect(state).toMatchObject({filteredIds: []});
     });
 
     it('has unique list of split ids', () => {
-      expect(state).toMatchObject({uniqueSplits: [{id: 1}, {id: 2}]});
+      expect(state).toMatchObject({uniqueSplits: [1, 2]});
     });
 
-    it('has CLASSIFICATION method', () => {
+    it('has REGRESSION method', () => {
       expect(state).toMatchObject({predictionMethod: REGRESSION});
     });
 
@@ -230,7 +242,7 @@ describe('Validation filter', () => {
 
   describe('when FILTER_SPLIT_CHANGED', () => {
     it('adds to filtered job list', () => {
-      expect(state2.filteredJobs.length).toEqual(1);
+      expect(state2.filteredIds).toEqual([6]);
     });
 
     it('populates prefix list', () => {
@@ -245,20 +257,18 @@ describe('Validation filter', () => {
   describe('when FILTER_PREDICTION_METHOD_CHANGED', () => {
     it('adds to filtered job list', () => {
       let state3 = jobs(state2, {type: FILTER_SPLIT_CHANGED, splitId: 2});
-      state3 = jobs(state3, {type: FILTER_PREDICTION_METHOD_CHANGED, method: REGRESSION});
-      expect(state3.filteredJobs.length).toEqual(1);
+      expect(state3.filteredIds).toEqual([3]);
     });
 
     it('populates prefix list', () => {
       let state3 = jobs(state2, {type: FILTER_SPLIT_CHANGED, splitId: 2});
-      state3 = jobs(state3, {type: FILTER_PREDICTION_METHOD_CHANGED, method: REGRESSION});
       expect(state3.prefixLengths).toEqual([1]);
       expect(state3.selectedPrefixes).toEqual([1]);
     });
 
     it('resets filter options', () => {
       let state3 = jobs(state2, {type: FILTER_SPLIT_CHANGED, splitId: 2});
-      state3 = jobs(state3, {type: FILTER_PREDICTION_METHOD_CHANGED, method: REGRESSION});
+      state3 = jobs(state3, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
       expect(state3.classification.length).toEqual(3);
       expect(state3.regression.length).toEqual(3);
       expect(state3.clusterings.length).toEqual(2);
@@ -272,27 +282,23 @@ describe('Validation filter', () => {
     });
 
     it('has label duration for classification', () => {
-      let state3 = jobs(state2, {type: FILTER_SPLIT_CHANGED, splitId: 2});
-      state3 = jobs(state3, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
+      let state3 = jobs(stateClass, {type: FILTER_SPLIT_CHANGED, splitId: 2});
       expect(state3.label).toEqual({type: DURATION, threshold_type: THRESHOLD_MEAN});
     });
   });
 
   describe('when FILTER_PREFIX_LENGTH_CHANGED', () => {
     it('removes from jobs', () => {
-      let state3 = jobs(state2, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
-      state3 = jobs(state3, {type: FILTER_PREFIX_LENGTH_CHANGED, prefixLength: '4'});
+      const state3 = jobs(stateClass, {type: FILTER_PREFIX_LENGTH_CHANGED, prefixLength: '4'});
       expect(state3.prefixLengths).toEqual([2, 4]);
       expect(state3.selectedPrefixes).toEqual([2]);
-      expect(state3.filteredJobs.length).toEqual(1);
-      expect(state3.filteredJobs[0].id).toEqual(2);
+      expect(state3.filteredIds).toEqual([2]);
     });
 
     it('removes and adds back to jobs', () => {
-      let state3 = jobs(state2, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
-      state3 = jobs(state3, {type: FILTER_PREFIX_LENGTH_CHANGED, prefixLength: '4'});
+      const state3 = jobs(stateClass, {type: FILTER_PREFIX_LENGTH_CHANGED, prefixLength: '4'});
       const state4 = jobs(state3, {type: FILTER_PREFIX_LENGTH_CHANGED, prefixLength: '4'});
-      expect(state4.filteredJobs.length).toEqual(2);
+      expect(state4.filteredIds).toEqual([2, 5]);
       expect(state4.selectedPrefixes).toEqual([2, 4]);
     });
   });
@@ -303,7 +309,7 @@ describe('Validation filter', () => {
         type: FILTER_OPTION_CHANGED,
         payload: {value: SIMPLE_INDEX, name: 'encodings[]'}
       });
-      expect(state3.filteredJobs.length).toEqual(0);
+      expect(state3.filteredIds).toEqual([]);
       expect(state3.encodings.length).toEqual(4);
     });
 
@@ -312,7 +318,7 @@ describe('Validation filter', () => {
         type: FILTER_OPTION_CHANGED,
         payload: {value: ZERO_PADDING, name: 'padding-filter'}
       });
-      expect(state3.filteredJobs.length).toEqual(0);
+      expect(state3.filteredIds).toEqual([]);
       expect(state3.padding).toEqual(ZERO_PADDING);
     });
 
@@ -322,25 +328,23 @@ describe('Validation filter', () => {
         payload: {value: SIMPLE_INDEX, name: 'encodings[]'}
       });
       state3 = jobs(state3, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
-      expect(state3.filteredJobs.length).toEqual(2);
+      expect(state3.filteredIds).toEqual([2, 5]);
       expect(state3.encodings.length).toEqual(5);
     });
   });
 
   describe('when FILTER_LABEL_CHANGED', () => {
     it('changes the label', () => {
-      let state3 = jobs(state2, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
-      state3 = jobs(state3, {
+      const state3 = jobs(stateClass, {
         type: FILTER_LABEL_CHANGED,
         payload: {config: {methodConfig: 'label', key: 'type'}, value: DURATION}
       });
       expect(state3.label).toEqual({type: DURATION, threshold_type: THRESHOLD_MEAN});
-      expect(state3.filteredJobs.length).toEqual(2);
+      expect(state3.filteredIds).toEqual([2, 5]);
     });
 
     it('filters for custom threshold', () => {
-      let state3 = jobs(state2, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
-      state3 = jobs(state3, {
+      let state3 = jobs(stateClass, {
         type: FILTER_LABEL_CHANGED,
         payload: {config: {methodConfig: 'label', key: 'type'}, value: DURATION}
       });
@@ -353,13 +357,12 @@ describe('Validation filter', () => {
         payload: {config: {methodConfig: 'label', key: 'threshold', isNumber: true}, value: '100'}
       });
       expect(state3.label).toEqual({type: DURATION, threshold_type: THRESHOLD_CUSTOM, threshold: 100});
-      expect(state3.filteredJobs.length).toEqual(1);
+      expect(state3.filteredIds).toEqual([75]);
       expect(state3.thresholds).toEqual([0, 100]);
     });
 
     it('filters for attribute names', () => {
-      let state34 = jobs(state2, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
-      state34 = jobs(state34, {
+      let state34 = jobs(stateClass, {
         type: FILTER_LABEL_CHANGED,
         payload: {config: {methodConfig: 'label', key: 'type'}, value: ATTRIBUTE_NUMBER}
       });
@@ -376,8 +379,8 @@ describe('Validation filter', () => {
         threshold_type: THRESHOLD_MEAN,
         attribute_name: 'name'
       });
-      expect(state34.filteredJobs.length).toEqual(1);
-      expect(state34.attributeNames).toEqual([undefined, 'name']);
+      expect(state34.filteredIds).toEqual([76]);
+      expect(state34.attributeNames).toEqual(['name']);
     });
   });
 });

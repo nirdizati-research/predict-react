@@ -12,23 +12,22 @@ import {
   jobsRequested,
   submitTraining
 } from '../actions/JobActions';
-import {jobPropType, splitLabels} from '../helpers';
-import {splitsToString} from '../util/dataReducers';
+import {fetchStatePropType, jobPropType, splitLabelPropType} from '../propTypes';
 import BarChartCard from '../components/chart/BarChartCard';
 import LabellingHeaderCard from '../components/Labelling/LabellingHeaderCard';
 import TrainingFormCard from '../components/TrainingFormCard';
 import {splitsRequested} from '../actions/SplitActions';
 import {getLogProperties} from '../util/splitStuff';
 import PrefixLineChart from '../components/chart/PrefixLineChart';
+import {mapJobs, splitsToLabel} from '../util/unNormalize';
+import {logListRequested} from '../actions/LogActions';
 
 class Labelling extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      maxEventsInLog: 0,
-      traceAttributes: [],
-      clickedJobId: null
+      split_id: 0
     };
   }
 
@@ -43,11 +42,9 @@ class Labelling extends Component {
   }
 
   componentDidMount() {
-    this.props.onRequestSplitList();
-    if (this.props.splitLabels.length > 0) {
-      this.onSplitChange(this.props.splitLabels[0].value);
-    }
     if (this.props.jobs.length === 0) {
+      this.props.onRequestLogList();
+      this.props.onRequestSplitList();
       this.props.onRequestJobs();
     }
   }
@@ -58,13 +55,13 @@ class Labelling extends Component {
 
   onSplitChange(splitId) {
     this.props.onSplitChange(splitId);
-    this.setState(getLogProperties(this.props.splits, splitId));
+    this.setState({split_id: splitId});
   }
 
   render() {
     // Only unique splits for selector
-    const splitLabels = splitsToString(this.props.uniqueSplits);
     const prefixStrings = this.props.prefixLengths.map((p) => p + '');
+    const {maxEventsInLog, traceAttributes} = this.props.getLogProperties(this.state.split_id);
 
     const validationChart = () => {
       if (this.props.jobs.length === 0) {
@@ -95,12 +92,12 @@ class Labelling extends Component {
       <div className="md-grid">
         <div className="md-cell md-cell--12">
           <TrainingFormCard fetchState={this.props.fetchState} onSubmit={this.props.onSubmitTraining}
-                            onSplitChange={this.onSplitChange.bind(this)} maxEventsInLog={this.state.maxEventsInLog}
-                            traceAttributes={this.state.traceAttributes} splitLabels={this.props.splitLabels}
+                            onSplitChange={this.onSplitChange.bind(this)} maxEventsInLog={maxEventsInLog}
+                            traceAttributes={traceAttributes} splitLabels={this.props.splitLabels}
                             isLabelForm={true}/>
         </div>
         <div className="md-cell md-cell--12">
-          <LabellingHeaderCard splitLabels={splitLabels} fetchState={this.props.fetchState}
+          <LabellingHeaderCard splitLabels={this.props.usedSplitLabels} fetchState={this.props.fetchState}
                                splitChange={this.onSplitChange.bind(this)}
                                prefixLengths={prefixStrings} filterOptionChange={this.props.filterOptionChange}
                                selectedPrefixes={this.props.selectedPrefixes}
@@ -122,16 +119,15 @@ class Labelling extends Component {
 }
 
 Labelling.propTypes = {
-  fetchState: PropTypes.shape({
-    inFlight: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  }).isRequired,
+  fetchState: fetchStatePropType,
   onRequestJobs: PropTypes.func.isRequired,
+  onRequestLogList: PropTypes.func.isRequired,
   onSplitChange: PropTypes.func.isRequired,
   onMethodChange: PropTypes.func.isRequired,
   onSubmitTraining: PropTypes.func.isRequired,
-  splitLabels: splitLabels,
-  splits: PropTypes.any,
+  getLogProperties: PropTypes.func.isRequired,
+  splitLabels: splitLabelPropType,
+  usedSplitLabels: splitLabelPropType,
   onRequestSplitList: PropTypes.func.isRequired,
   onPrefixChange: PropTypes.func.isRequired,
   labelTypeChange: PropTypes.func.isRequired,
@@ -139,7 +135,6 @@ Labelling.propTypes = {
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
   predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, LABELLING]).isRequired,
   splitId: PropTypes.number.isRequired,
-  uniqueSplits: PropTypes.arrayOf(PropTypes.any).isRequired,
   prefixLengths: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
   selectedPrefixes: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
   filterOptions: PropTypes.shape({
@@ -151,11 +146,11 @@ Labelling.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  splitLabels: splitsToString(state.splits.splits),
-  splits: state.splits.splits,
-  jobs: state.jobs.filteredJobs,
+  jobs: mapJobs(state.logs.byId, state.splits.byId, state.jobs.byId, state.jobs.filteredIds),
+  splitLabels: splitsToLabel(state.logs.byId, state.splits.byId, state.splits.allIds),
+  usedSplitLabels: splitsToLabel(state.logs.byId, state.splits.byId, state.jobs.uniqueSplits),
+  getLogProperties: getLogProperties(state.splits.byId, state.logs.byId),
   fetchState: state.jobs.fetchState,
-  uniqueSplits: state.jobs.uniqueSplits,
   splitId: state.jobs.splitId,
   predictionMethod: state.jobs.predictionMethod,
   prefixLengths: state.jobs.prefixLengths.sort((a, b) => (a - b)),
@@ -168,6 +163,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onRequestJobs: () => dispatch(jobsRequested()),
   onRequestSplitList: () => dispatch(splitsRequested()),
+  onRequestLogList: () => dispatch(logListRequested()),
   onSubmitTraining: (payload) => dispatch(submitTraining(payload)),
   filterOptionChange: (_, event) => dispatch({
     type: FILTER_OPTION_CHANGED,

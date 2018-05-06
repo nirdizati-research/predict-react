@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import {DataTable, TableBody, TableColumn, TableHeader, TablePagination, TableRow} from 'react-md/lib/DataTables/index';
 import PropTypes from 'prop-types';
 import {columnStyle} from '../../reference';
-import {labelJobFlat} from '../../helpers';
+import {labelJobFlat} from '../../propTypes';
 import JsonHolder from './JsonHolder';
 
 /* eslint-disable camelcase */

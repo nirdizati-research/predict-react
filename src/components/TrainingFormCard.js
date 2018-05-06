@@ -25,7 +25,7 @@ import {
   THRESHOLD_MEAN,
 } from '../reference';
 import CheckboxGroup from './training/CheckboxGroup';
-import {splitLabels, traceAttributeShape} from '../helpers';
+import {fetchStatePropType, splitLabelPropType, traceAttributeShape} from '../propTypes';
 import PrefixSelector from './training/PrefixSelector';
 import AdvancedConfiguration from './advanced/AdvancedConfiguration';
 import {classificationMetrics, regressionMetrics} from './advanced/advancedConfig';
@@ -88,6 +88,14 @@ class TrainingFormCard extends Component {
 
     // TODO group to {} by prediction method
     this.state = {...initialState(this.props), ...initialAdvancedConfiguration()};
+    this.props.onSplitChange(this.state.split_id);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.state.split_id === 0 && this.props.splitLabels.length > 0) {
+      this.setState({split_id: this.props.splitLabels[0].value});
+      this.props.onSplitChange(this.props.splitLabels[0].value);
+    }
   }
 
   advanceConfigChange({methodConfig, key, isNumber, isFloat, maybeNumber}, value) {
@@ -330,11 +338,8 @@ class TrainingFormCard extends Component {
 }
 
 TrainingFormCard.propTypes = {
-  splitLabels: splitLabels,
-  fetchState: PropTypes.shape({
-    inFlight: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  }).isRequired,
+  splitLabels: splitLabelPropType,
+  fetchState: fetchStatePropType,
   onSubmit: PropTypes.func.isRequired,
   onSplitChange: PropTypes.func.isRequired,
   maxEventsInLog: PropTypes.number.isRequired,

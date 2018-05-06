@@ -29,6 +29,11 @@ export const traceAttributeShape = {
   example: PropTypes.string.isRequired
 };
 
+export const fetchStatePropType = PropTypes.shape({
+  inFlight: PropTypes.bool.isRequired,
+  error: PropTypes.any
+}).isRequired;
+
 export const labelPropType = {
   type: PropTypes.oneOf([NEXT_ACTIVITY, REMAINING_TIME, ATTRIBUTE_NUMBER, ATTRIBUTE_STRING, DURATION]).isRequired,
   attribute_name: PropTypes.string,
@@ -44,7 +49,8 @@ export const labelPropType = {
 export const jobPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   status: PropTypes.string.isRequired,
-  split: PropTypes.any.isRequired,
+  split_id: PropTypes.number.isRequired,
+  splitName: PropTypes.string,
   type: PropTypes.oneOf([CLASSIFICATION, REGRESSION, LABELLING]).isRequired,
   config: PropTypes.shape({
     prefix_length: PropTypes.number.isRequired,
@@ -96,7 +102,7 @@ export const labelJobFlat = PropTypes.shape({
   label: PropTypes.shape(labelPropType).isRequired,
 }).isRequired;
 
-export const splitLabels = PropTypes.arrayOf(PropTypes.shape({
+export const splitLabelPropType = PropTypes.arrayOf(PropTypes.shape({
   value: PropTypes.number.isRequired,
   label: PropTypes.string.isRequired
 }).isRequired).isRequired;
@@ -113,4 +119,30 @@ export const logPropType = PropTypes.shape({
   }).isRequired
 });
 
+export const splitPropType = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  type: PropTypes.oneOf(['single', 'double']).isRequired,
+  originalLogName: PropTypes.string,
+  trainingLogName: PropTypes.string,
+  testLogName: PropTypes.string,
+  original_log: PropTypes.number,
+  training_log: PropTypes.number,
+  test_log: PropTypes.number,
+  config: PropTypes.object.isRequired,
+});
+
+export const logsStore = PropTypes.shape({
+  byId: PropTypes.objectOf(logPropType).isRequired,
+  allIds: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+}).isRequired;
+
+export const splitStore = PropTypes.shape({
+  byId: PropTypes.objectOf(splitPropType).isRequired,
+  allIds: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+}).isRequired;
+
+export const jobStore = PropTypes.shape({
+  byId: PropTypes.objectOf(jobPropType).isRequired,
+  allIds: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+}).isRequired;
 

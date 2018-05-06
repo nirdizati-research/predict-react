@@ -84,11 +84,7 @@ BarChartCard.propTypes = {
   cardTitle: PropTypes.string.isRequired,
   chartTitle: PropTypes.string.isRequired,
   hTitle: PropTypes.string.isRequired,
-  description: PropTypes.string,
-  fetchState: PropTypes.shape({
-    inFlight: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  }),
+  description: PropTypes.string
 };
 
 export default BarChartCard;

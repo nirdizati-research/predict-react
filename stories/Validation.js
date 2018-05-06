@@ -51,17 +51,7 @@ const classJobs = [
       'recall': 0
     },
     'type': 'classification',
-    'split': {
-      'id': 1,
-      'config': {},
-      'original_log': {
-        'id': 1,
-        'name': 'general_example.xes'
-      },
-      'type': 'single',
-      'test_log': null,
-      'training_log': null
-    },
+    'split_id': 1,
     'error': ''
   },
   {
@@ -102,17 +92,7 @@ const classJobs = [
       'recall': 0
     },
     'type': 'classification',
-    'split': {
-      'id': 1,
-      'config': {},
-      'original_log': {
-        'id': 1,
-        'name': 'general_example.xes'
-      },
-      'type': 'single',
-      'test_log': null,
-      'training_log': null
-    },
+    'split_id': 1,
     'error': ''
   }];
 
@@ -147,17 +127,7 @@ const regJobs = [
       'rscore': 3
     },
     'type': 'regression',
-    'split': {
-      'id': 1,
-      'config': {},
-      'original_log': {
-        'id': 1,
-        'name': 'general_example.xes'
-      },
-      'type': 'single',
-      'test_log': null,
-      'training_log': null
-    },
+    'split_id': 1,
     'error': ''
   }];
 
@@ -183,17 +153,7 @@ const labelJobs = [
       'false': 434
     },
     'type': 'labelling',
-    'split': {
-      'id': 1,
-      'config': {},
-      'original_log': {
-        'id': 1,
-        'name': 'general_example.xes'
-      },
-      'type': 'single',
-      'test_log': null,
-      'training_log': null
-    },
+    'split_id': 1,
     'error': ''
   }
 ];

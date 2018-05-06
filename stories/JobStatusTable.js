@@ -31,17 +31,8 @@ const jobs = [
       'auc': 0.5
     },
     'type': 'classification',
-    'split': {
-      'id': 1,
-      'config': {},
-      'original_log': {
-        'id': 1,
-        'name': 'general_example.xes'
-      },
-      'type': 'single',
-      'test_log': null,
-      'training_log': null
-    },
+    'split_id': 1,
+    'splitName': 'some name',
     'error': ''
   },
   {
@@ -67,17 +58,8 @@ const jobs = [
       'auc': 0.5
     },
     'type': 'classification',
-    'split': {
-      'id': 1,
-      'config': {},
-      'original_log': {
-        'id': 1,
-        'name': 'general_example.xes'
-      },
-      'type': 'single',
-      'test_log': null,
-      'training_log': null
-    },
+    'split_id': 1,
+    'splitName': 'some name',
     'error': ''
   },
   {
@@ -100,17 +82,8 @@ const jobs = [
       'false': 434
     },
     'type': 'labelling',
-    'split': {
-      'id': 1,
-      'config': {},
-      'original_log': {
-        'id': 1,
-        'name': 'general_example.xes'
-      },
-      'type': 'single',
-      'test_log': null,
-      'training_log': null
-    },
+    'split_id': 1,
+    'splitName': 'some name',
     'error': ''
   }
 ];

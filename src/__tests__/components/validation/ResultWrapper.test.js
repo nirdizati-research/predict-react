@@ -34,17 +34,7 @@ const classJobs = [
       'auc': 3
     },
     'type': 'classification',
-    'split': {
-      'id': 1,
-      'config': {},
-      'original_log': {
-        'id': 1,
-        'name': 'general_example.xes'
-      },
-      'type': 'single',
-      'test_log': null,
-      'training_log': null
-    },
+    'split_id': 1,
     'error': ''
   },
   {
@@ -71,17 +61,7 @@ const classJobs = [
       'auc': 30
     },
     'type': 'classification',
-    'split': {
-      'id': 1,
-      'config': {},
-      'original_log': {
-        'id': 1,
-        'name': 'general_example.xes'
-      },
-      'type': 'single',
-      'test_log': null,
-      'training_log': null
-    },
+    'split_id': 1,
     'error': ''
   }];
 
@@ -109,19 +89,7 @@ const regJobs = [{
     'rscore': 13
   },
   'type': 'regression',
-  'split': {
-    'id': 1,
-    'config': {
-      'prefix_length': 2
-    },
-    'original_log': {
-      'id': 1,
-      'name': 'general_example.xes'
-    },
-    'type': 'single',
-    'test_log': null,
-    'training_log': null
-  },
+  'split_id': 1,
   'error': ''
 }];
 const classData = [

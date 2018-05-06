@@ -2,31 +2,46 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import LogListCard from '../../components/LogListCard';
 import PropTypes from 'prop-types';
-import {changeVisibleLog, logListRequested} from '../../actions/LogActions';
+import {logListRequested} from '../../actions/LogActions';
 import LineChartCard from '../../components/chart/LineChartCard';
-import {logPropType} from '../../helpers';
+import {fetchStatePropType, logsStore} from '../../propTypes';
 
 class Logs extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      log: null
+    };
+  }
+
   componentDidMount() {
-    if (this.props.logList.length === 0) {
-      return this.props.onRequestLogList(true);
-    } else {
-      return this.props.onRequestLogList(false);
+    this.props.onRequestLogList();
+    if (this.props.logs.allIds.length > 0) {
+      // set first log by default
+      this.setState({log: this.props.logs.byId[this.props.logs.allIds[0]]});
+    }
+  }
+
+
+  componentDidUpdate(prevProps) {
+    // set selected log when logs have arrived
+    if (this.state.log === null && this.props.logs.allIds.length > 0) {
+      this.setState({log: this.props.logs.byId[this.props.logs.allIds[0]]});
     }
   }
 
   getVisibleLogId() {
-    if (this.props.log) {
-      return this.props.log.id;
+    if (this.state.log) {
+      return this.state.log.id;
     } else {
       return 0;
     }
   }
 
   getLineChart(dataName, cardTitle) {
-    if (this.props.log && Object.keys(this.props.log.properties[dataName]).length !== 0) {
-      return <LineChartCard fetchState={this.props.log.fetchState}
-                            data={this.props.log.properties[dataName]}
+    if (this.state.log && Object.keys(this.state.log.properties[dataName]).length !== 0) {
+      return <LineChartCard data={this.state.log.properties[dataName]}
                             cardTitle={cardTitle}
                             chartTitle="Number by day"/>;
     } else {
@@ -34,16 +49,23 @@ class Logs extends Component {
     }
   }
 
+  onChangeVisible(logId) {
+    const log = this.props.logs.byId[logId];
+    this.setState({log});
+  }
+
   render() {
+    const logList = Object.values(this.props.logs.byId).map((log) => ({id: log.id, name: log.name}));
+
     const executionChart = this.getLineChart('events', 'Number of events executed');
     const resourceChart = this.getLineChart('resources', 'Number of resources used');
     const newTracesChart = this.getLineChart('newTraces', 'Number of new traces');
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
-          <LogListCard logList={this.props.logList} fetchState={this.props.fetchState}
+          <LogListCard logList={logList} fetchState={this.props.fetchState}
                        visibleLogId={this.getVisibleLogId()}
-                       selectChange={this.props.onChangeVisible}/>
+                       selectChange={this.onChangeVisible.bind(this)}/>
         </div>
         <div className="md-cell md-cell--12">
           {executionChart}
@@ -60,29 +82,18 @@ class Logs extends Component {
 }
 
 Logs.propTypes = {
-  log: logPropType,
-  fetchState: PropTypes.shape({
-    inFlight: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  }).isRequired,
-  logList: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired
-  })).isRequired,
-  onRequestLogList: PropTypes.func.isRequired,
-  onChangeVisible: PropTypes.func.isRequired,
+  fetchState: fetchStatePropType,
+  logs: logsStore,
+  onRequestLogList: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  log: state.logs.logs.filter((log) => log.visible)[0],
-  logList: state.logs.logs.map((log) => ({id: log.id, name: log.name})),
+  logs: state.logs,
   fetchState: state.logs.fetchState
-
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onRequestLogList: (changeVisible) => dispatch(logListRequested({changeVisible, requestInfo: true})),
-  onChangeVisible: (logId) => dispatch(changeVisibleLog({logId, requestInfo: true}))
+  onRequestLogList: () => dispatch(logListRequested())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Logs);

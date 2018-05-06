@@ -7,7 +7,7 @@ import {CLASSIFICATION, REGRESSION} from '../../reference';
 import ResultTableCard from './ResultTableCard';
 import {getChartHeader, getPrefixChartHeader, getTitles} from './ColumnHelper';
 import BubbleChartCard from '../chart/BubbleChartCard';
-import {jobPropType} from '../../helpers';
+import {jobPropType} from '../../propTypes';
 import ControlledLineChartCard from '../chart/ControlledLineChartCard';
 import {toRun} from '../../util/dataReducers';
 

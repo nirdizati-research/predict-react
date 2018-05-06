@@ -1,6 +1,4 @@
 import {
-  CHANGE_VISIBLE_LOG,
-  changeVisibleLog,
   LOG_INFO_FAILED,
   LOG_INFO_REQUESTED,
   LOG_INFO_RETRIEVED,
@@ -16,11 +14,6 @@ import {
 } from '../../actions/LogActions';
 
 describe('LogActions', () => {
-  describe('changeVisibleLog', () => {
-    it('has correct payload type', () => {
-      expect(changeVisibleLog().type).toBe(CHANGE_VISIBLE_LOG);
-    });
-  });
   describe('logListRequested', () => {
     it('has correct payload type', () => {
       expect(logListRequested().type).toBe(LOG_LIST_REQUESTED);
