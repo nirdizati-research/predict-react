@@ -7,10 +7,8 @@ import {listRetrieved} from './genericHelpers';
 
 const initialState = {
   fetchState: {inFlight: false},
-  logs: {
-    byId: {},
-    allIds: []
-  }
+  byId: {},
+  allIds: []
 };
 
 const logs = (state = initialState, action) => {
@@ -26,7 +24,7 @@ const logs = (state = initialState, action) => {
         return {
           ...state,
           fetchState: {inFlight: false},
-          logs: listRetrieved(action.payload)
+          ...listRetrieved(action.payload)
         };
       }
 

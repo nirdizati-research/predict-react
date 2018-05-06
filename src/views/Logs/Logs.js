@@ -88,7 +88,7 @@ Logs.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  logs: state.logs.logs,
+  logs: state.logs,
   fetchState: state.logs.fetchState
 });
 

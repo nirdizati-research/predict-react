@@ -46,8 +46,8 @@ Split.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  logs: state.logs.logs.byId,
-  splits: mergeSplitWithLogName(state.splits.splits.byId, state.logs.logs.byId),
+  logs: state.logs.byId,
+  splits: mergeSplitWithLogName(state.splits.byId, state.logs.byId),
   fetchState: state.splits.fetchState,
 });
 

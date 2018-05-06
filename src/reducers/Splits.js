@@ -10,10 +10,8 @@ import {addListToStore, listRetrieved} from './genericHelpers';
 
 const initialState = {
   fetchState: {inFlight: false},
-  splits: {
-    byId: {},
-    allIds: []
-  }
+  byId: {},
+  allIds: []
 };
 
 const splits = (state = initialState, action) => {
@@ -28,7 +26,7 @@ const splits = (state = initialState, action) => {
       return {
         ...state,
         fetchState: {inFlight: false},
-        splits: listRetrieved(action.payload)
+        ...listRetrieved(action.payload)
       };
     }
     case SPLITS_FAILED: {
@@ -42,7 +40,7 @@ const splits = (state = initialState, action) => {
     }
     case SPLIT_SUCCEEDED: {
       return {
-        splits: addListToStore(state.splits, [action.payload]),
+        ...addListToStore(state, [action.payload]),
         fetchState: {inFlight: false}
       };
     }

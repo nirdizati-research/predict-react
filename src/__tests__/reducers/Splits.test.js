@@ -12,7 +12,7 @@ import {
   submitSplit
 } from '../../actions/SplitActions';
 
-const initState = {fetchState: {inFlight: false}, splits: {allIds: [], byId: {}}};
+const initState = {fetchState: {inFlight: false}, allIds: [], byId: {}};
 describe('SplitList', () => {
   it('has nothing initially', () => {
     expect(splits(undefined, {})).toEqual(initState);
@@ -20,7 +20,7 @@ describe('SplitList', () => {
 
   it('changes fetchState when requesting', () => {
     const state = splits(undefined, splitsRequested());
-    expect(state).toEqual({fetchState: {inFlight: true}, splits: {allIds: [], byId: {}}});
+    expect(state).toEqual({fetchState: {inFlight: true}, allIds: [], byId: {}});
   });
 
   it('adds splits when request completed', () => {
@@ -29,7 +29,7 @@ describe('SplitList', () => {
     const state2 = splits(state, splitsRetrieved(splitList));
     expect(state2.fetchState).toEqual({inFlight: false});
 
-    const {allIds, byId} = state2.splits;
+    const {allIds, byId} = state2;
 
     expect(allIds).toEqual([1]);
     expect(Object.keys(byId).length).toEqual(1);
@@ -39,14 +39,14 @@ describe('SplitList', () => {
   it('stores error message', () => {
     const state = splits(undefined, splitsRequested());
     const state2 = splits(state, splitsFailed('error'));
-    expect(state2).toEqual({fetchState: {inFlight: false, error: 'error'}, splits: {allIds: [], byId: {}}});
+    expect(state2).toEqual({fetchState: {inFlight: false, error: 'error'}, allIds: [], byId: {}});
   });
 });
 
 describe('Split submitting', () => {
   it('changes fetchState when submitted', () => {
     const state = splits(undefined, submitSplit());
-    expect(state).toEqual({splits: {allIds: [], byId: {}}, fetchState: {inFlight: true}});
+    expect(state).toEqual({allIds: [], byId: {}, fetchState: {inFlight: true}});
   });
 
   it('adds to state when submit success', () => {
@@ -55,7 +55,7 @@ describe('Split submitting', () => {
     const state2 = splits(state, splitSucceeded({id: 2, type: 'double'}));
     expect(state2.fetchState).toEqual({inFlight: false});
 
-    const {allIds, byId} = state2.splits;
+    const {allIds, byId} = state2;
 
     expect(allIds).toEqual([1, 2]);
     expect(Object.keys(byId).length).toEqual(2);
@@ -65,6 +65,6 @@ describe('Split submitting', () => {
   it('stores error message', () => {
     const state = splits(undefined, submitSplit());
     const state2 = splits(state, splitFailed('error'));
-    expect(state2).toEqual({splits: {allIds: [], byId: {}}, fetchState: {inFlight: false, error: 'error'}});
+    expect(state2).toEqual({allIds: [], byId: {}, fetchState: {inFlight: false, error: 'error'}});
   });
 });
