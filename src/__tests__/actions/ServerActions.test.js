@@ -1,6 +1,5 @@
 import {
   deleteJob,
-  getJobResults,
   getJobs,
   getLogInfo,
   getLogList,
@@ -79,26 +78,6 @@ describe('ServerActions', function () {
       standardError(mockXHR);
 
       getJobs()(dispatch);
-      mockXHR.onreadystatechange();
-
-      expect(dispatch.mock.calls[0][0]).toEqual(jobsFailed(error.error));
-    });
-  });
-
-  describe('getJobResults', () => {
-    it('dispatches jobsRetrieved on success', () => {
-      mockXHR.responseText = JSON.stringify(logs);
-
-      getJobResults()(dispatch);
-      mockXHR.onreadystatechange();
-
-      expect(dispatch.mock.calls[0][0]).toEqual(jobsRetrieved(logs));
-    });
-
-    it('dispatches jobsFailed on error', () => {
-      standardError(mockXHR);
-
-      getJobResults()(dispatch);
       mockXHR.onreadystatechange();
 
       expect(dispatch.mock.calls[0][0]).toEqual(jobsFailed(error.error));

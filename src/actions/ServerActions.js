@@ -14,16 +14,6 @@ export const getJobs = () => (dispatch) => {
   );
 };
 
-export const getJobResults = (log) => (dispatch) => {
-  jsonAjax(
-    SERVER_URL + `/core_services/jobs?log=${log}&status=completed`,
-    'GET',
-    null,
-    (jobs) => dispatch(jobsRetrieved(jobs)),
-    ({error}) => dispatch(jobsFailed(error))
-  );
-};
-
 export const getLogList = () => (dispatch) => {
   jsonAjax(
     SERVER_URL + '/logs/',
