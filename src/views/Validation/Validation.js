@@ -13,7 +13,10 @@ import {
 } from '../../actions/JobActions';
 import ValidationHeaderCard from '../../components/validation/ValidationHeaderCard';
 import ResultWrapper from '../../components/validation/ResultWrapper';
-import {fetchStatePropType, jobPropType} from '../../propTypes';
+import {fetchStatePropType, jobPropType, splitLabelPropType} from '../../propTypes';
+import {mapJobs, splitsToLabel} from '../../util/unNormalize';
+import {logListRequested} from '../../actions/LogActions';
+import {splitsRequested} from '../../actions/SplitActions';
 
 class Validation extends Component {
   onChangePrefix(prefixLength) {
@@ -32,6 +35,8 @@ class Validation extends Component {
 
   componentDidMount() {
     if (this.props.jobs.length === 0) {
+      this.props.onRequestLogList();
+      this.props.onRequestSplitList();
       this.props.onRequestJobs();
     }
   }
@@ -51,7 +56,7 @@ class Validation extends Component {
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
-          <ValidationHeaderCard splitLabels={[]} fetchState={this.props.fetchState}
+          <ValidationHeaderCard splitLabels={this.props.splitLabels} fetchState={this.props.fetchState}
                                 methodChange={this.onChangeMethod.bind(this)}
                                 splitChange={this.onChangeSplit.bind(this)}
                                 prefixLengths={prefixStrings} predictionMethod={this.props.predictionMethod}
@@ -72,6 +77,9 @@ class Validation extends Component {
 
 Validation.propTypes = {
   fetchState: fetchStatePropType,
+  splitLabels: splitLabelPropType,
+  onRequestLogList: PropTypes.func.isRequired,
+  onRequestSplitList: PropTypes.func.isRequired,
   onRequestJobs: PropTypes.func.isRequired,
   onSplitChange: PropTypes.func.isRequired,
   onMethodChange: PropTypes.func.isRequired,
@@ -81,7 +89,6 @@ Validation.propTypes = {
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
   predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, LABELLING]).isRequired,
   splitId: PropTypes.number.isRequired,
-  uniqueSplits: PropTypes.arrayOf(PropTypes.any).isRequired,
   prefixLengths: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
   selectedPrefixes: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
   filterOptions: PropTypes.shape({
@@ -97,9 +104,9 @@ Validation.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  jobs: state.jobs.filteredJobs,
+  jobs: mapJobs(state.logs.byId, state.splits.byId, state.jobs.byId, state.jobs.filteredIds),
+  splitLabels: splitsToLabel(state.logs.byId, state.splits.byId, state.jobs.uniqueSplits),
   fetchState: state.jobs.fetchState,
-  uniqueSplits: state.jobs.uniqueSplits,
   splitId: state.jobs.splitId,
   predictionMethod: state.jobs.predictionMethod,
   prefixLengths: state.jobs.prefixLengths.sort((a, b) => (a - b)),
@@ -115,6 +122,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  onRequestLogList: () => dispatch(logListRequested()),
+  onRequestSplitList: () => dispatch(splitsRequested()),
   onRequestJobs: () => dispatch(jobsRequested()),
   filterOptionChange: (_, event) => dispatch({
     type: FILTER_OPTION_CHANGED,

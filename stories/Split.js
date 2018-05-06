@@ -85,7 +85,7 @@ export const logList = [
 
 export const logsById = Object.assign(...logList.map((log) => ({[log.id]: log})));
 export const splitsById = Object.assign(...splits.map((split) => ({[split.id]: split})));
-export const splitLabels = splitsToLabel(splitsById, logsById);
+export const splitLabels = splitsToLabel(logsById, splitsById, [1, 2]);
 
 storiesOf('Split', module)
   .add('SplitTableCard', () => {

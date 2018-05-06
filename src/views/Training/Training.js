@@ -52,7 +52,7 @@ Training.propTypes = {
 
 const mapStateToProps = (state) => ({
   getLogProperties: getLogProperties(state.splits.byId, state.logs.byId),
-  splitLabels: splitsToLabel(state.splits.byId, state.logs.byId),
+  splitLabels: splitsToLabel(state.logs.byId, state.splits.byId, state.splits.allIds),
   fetchState: state.training.fetchState,
 });
 

@@ -63,7 +63,7 @@ it('merges splits with log names', () => {
 
 
 describe('split to label', () => {
-  const stringLabels = splitsToLabel(splitsById, logsById);
+  const stringLabels = splitsToLabel(logsById, splitsById, [1, 2]);
 
   it('formats single split', () => {
     expect(stringLabels[0]).toEqual({value: 1, label: 'Split #1, log1'});

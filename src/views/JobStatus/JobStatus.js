@@ -123,7 +123,7 @@ JobStatus.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  jobs: mapJobs(state.logs.byId, state.splits.byId, state.jobs.byId),
+  jobs: mapJobs(state.logs.byId, state.splits.byId, state.jobs.byId, state.jobs.allIds),
   fetchState: state.jobs.fetchState
 });
 const mapDispatchToProps = (dispatch) => ({

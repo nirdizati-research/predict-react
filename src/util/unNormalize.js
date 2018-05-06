@@ -13,8 +13,9 @@ export const mergeSplitWithLogName = (splitsById, logsById) => {
   }));
 };
 
-export const splitsToLabel = (splitsById, logsById) => {
-  return Object.values(splitsById).map((split) => {
+export const splitsToLabel = (logsById, splitsById, splitIds) => {
+  return splitIds.map((id) => {
+    const split = splitsById[id];
     return {value: split.id, label: splitToLabel(logsById, split)};
   });
 };
@@ -30,8 +31,9 @@ const splitToLabel = (logsById, split) => {
   return label;
 };
 
-export const mapJobs = (logsById, splitsById, jobsById) => {
-  return Object.values(jobsById).map((job) => {
+export const mapJobs = (logsById, splitsById, jobsById, jobIds) => {
+  return jobIds.map(id => {
+    const job = jobsById[id];
     return {
       ...job,
       splitName: splitToLabel(logsById, splitsById[job.split_id])
