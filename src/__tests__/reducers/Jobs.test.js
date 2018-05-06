@@ -160,17 +160,21 @@ const changedJob = {
 
 const initState = {fetchState: {inFlight: false}, byId: {}, allIds: [], filteredIds: []};
 describe('JobsReducer', () => {
+  let state;
+
+  beforeEach(() => {
+    state = jobs(undefined, jobsRequested());
+  });
+
   it('has nothing initially', () => {
     expect(jobs(undefined, {})).toMatchObject(initState);
   });
 
   it('changes fetchState when requesting', () => {
-    const state = jobs(undefined, jobsRequested());
     expect(state).toMatchObject({fetchState: {inFlight: true}});
   });
 
   it('adds jobs when request completed', () => {
-    const state = jobs(undefined, jobsRequested());
     const state2 = jobs(state, jobsRetrieved(jobList));
     expect(state2.fetchState).toMatchObject({inFlight: false});
     expect(state2.attributeNames).toEqual(['name']);
@@ -184,22 +188,19 @@ describe('JobsReducer', () => {
   });
 
   it('updates job list by id', () => {
-    const state = jobs(undefined, jobsRetrieved(jobList));
-    const state2 = jobs(state, jobsRetrieved([changedJob]));
+    const state2 = jobs(jobs(undefined, jobsRetrieved(jobList)), jobsRetrieved([changedJob]));
 
     const {byId} = state2;
     expect(byId[1].status).toBe('completed');
   });
 
   it('stores error message', () => {
-    const state = jobs(undefined, jobsRequested());
     const state2 = jobs(state, jobsFailed('error'));
     expect(state2).toMatchObject({fetchState: {inFlight: false, error: 'error'}});
   });
 
   it('removes from list on delete', () => {
-    const state = jobs(undefined, jobsRetrieved(jobList));
-    const state2 = jobs(state, {type: JOB_DELETED, id: 75});
+    const state2 = jobs(jobs(undefined, jobsRetrieved(jobList)), {type: JOB_DELETED, id: 75});
     const state3 = jobs(state2, {type: JOB_DELETED, id: 76});
     expect(state3.attributeNames).toEqual([]);
     expect(state3.thresholds).toEqual([0]);
@@ -211,8 +212,16 @@ describe('JobsReducer', () => {
 });
 
 describe('Validation filter', () => {
-  const state = jobs(undefined, jobsRetrieved(jobList));
-  const state2 = jobs(state, {type: FILTER_SPLIT_CHANGED, splitId: 1});
+  let state;
+  let state2;
+  let stateClass;
+
+  beforeEach(() => {
+    state = jobs(undefined, jobsRetrieved(jobList));
+    state2 = jobs(state, {type: FILTER_SPLIT_CHANGED, splitId: 1});
+    stateClass = jobs(state2, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
+  });
+
   describe('initial state', () => {
     it('has no filtered jobs initially', () => {
       expect(state).toMatchObject({filteredIds: []});
@@ -273,24 +282,21 @@ describe('Validation filter', () => {
     });
 
     it('has label duration for classification', () => {
-      let state3 = jobs(state2, {type: FILTER_SPLIT_CHANGED, splitId: 2});
-      state3 = jobs(state3, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
+      let state3 = jobs(stateClass, {type: FILTER_SPLIT_CHANGED, splitId: 2});
       expect(state3.label).toEqual({type: DURATION, threshold_type: THRESHOLD_MEAN});
     });
   });
 
   describe('when FILTER_PREFIX_LENGTH_CHANGED', () => {
     it('removes from jobs', () => {
-      let state3 = jobs(state2, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
-      state3 = jobs(state3, {type: FILTER_PREFIX_LENGTH_CHANGED, prefixLength: '4'});
+      const state3 = jobs(stateClass, {type: FILTER_PREFIX_LENGTH_CHANGED, prefixLength: '4'});
       expect(state3.prefixLengths).toEqual([2, 4]);
       expect(state3.selectedPrefixes).toEqual([2]);
       expect(state3.filteredIds).toEqual([2]);
     });
 
     it('removes and adds back to jobs', () => {
-      let state3 = jobs(state2, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
-      state3 = jobs(state3, {type: FILTER_PREFIX_LENGTH_CHANGED, prefixLength: '4'});
+      const state3 = jobs(stateClass, {type: FILTER_PREFIX_LENGTH_CHANGED, prefixLength: '4'});
       const state4 = jobs(state3, {type: FILTER_PREFIX_LENGTH_CHANGED, prefixLength: '4'});
       expect(state4.filteredIds).toEqual([2, 5]);
       expect(state4.selectedPrefixes).toEqual([2, 4]);
@@ -329,8 +335,7 @@ describe('Validation filter', () => {
 
   describe('when FILTER_LABEL_CHANGED', () => {
     it('changes the label', () => {
-      let state3 = jobs(state2, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
-      state3 = jobs(state3, {
+      const state3 = jobs(stateClass, {
         type: FILTER_LABEL_CHANGED,
         payload: {config: {methodConfig: 'label', key: 'type'}, value: DURATION}
       });
@@ -339,8 +344,7 @@ describe('Validation filter', () => {
     });
 
     it('filters for custom threshold', () => {
-      let state3 = jobs(state2, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
-      state3 = jobs(state3, {
+      let state3 = jobs(stateClass, {
         type: FILTER_LABEL_CHANGED,
         payload: {config: {methodConfig: 'label', key: 'type'}, value: DURATION}
       });
@@ -358,8 +362,7 @@ describe('Validation filter', () => {
     });
 
     it('filters for attribute names', () => {
-      let state34 = jobs(state2, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
-      state34 = jobs(state34, {
+      let state34 = jobs(stateClass, {
         type: FILTER_LABEL_CHANGED,
         payload: {config: {methodConfig: 'label', key: 'type'}, value: ATTRIBUTE_NUMBER}
       });
