@@ -3,39 +3,37 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import TrainingFormCard from '../../components/TrainingFormCard';
 import {submitTraining} from '../../actions/JobActions';
-import {splitsToString} from '../../util/dataReducers';
+import {splitsToLabel} from '../../util/dataReducers';
 import {splitsRequested} from '../../actions/SplitActions';
-import {splitLabels} from '../../helpers';
+import {splitLabelPropType} from '../../helpers';
 import {getLogProperties} from '../../util/splitStuff';
+import {logListRequested} from '../../actions/LogActions';
 
 class Training extends Component {
   constructor() {
     super();
 
     this.state = {
-      maxEventsInLog: 0,
-      traceAttributes: []
+      split_id: 0
     };
   }
 
   componentDidMount() {
-    // TODO refactor this
+    this.props.onRequestLogList();
     this.props.onRequestSplitList();
-    if (this.props.splitLabels.length > 0) {
-      this.onSplitChange(this.props.splitLabels[0].value);
-    }
   }
 
   onSplitChange(value) {
-    this.setState(getLogProperties(this.props.splits, value));
+    this.setState({split_id: value});
   }
 
   render() {
+    const {maxEventsInLog, traceAttributes} = this.props.getLogProperties(this.state.split_id);
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
           <TrainingFormCard splitLabels={this.props.splitLabels} fetchState={this.props.fetchState}
-                            maxEventsInLog={this.state.maxEventsInLog} traceAttributes={this.state.traceAttributes}
+                            maxEventsInLog={maxEventsInLog} traceAttributes={traceAttributes}
                             onSubmit={this.props.onSubmitTraining} onSplitChange={this.onSplitChange.bind(this)}/>
         </div>
       </div>
@@ -44,8 +42,9 @@ class Training extends Component {
 }
 
 Training.propTypes = {
-  splitLabels: splitLabels,
-  splits: PropTypes.any,
+  splitLabels: splitLabelPropType,
+  onRequestLogList: PropTypes.func.isRequired,
+  getLogProperties: PropTypes.func.isRequired,
   onRequestSplitList: PropTypes.func.isRequired,
   onSubmitTraining: PropTypes.func.isRequired,
   fetchState: PropTypes.shape({
@@ -55,13 +54,14 @@ Training.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  splitLabels: splitsToString(state.splits.splits),
-  splits: state.splits.splits,
+  getLogProperties: getLogProperties(state.splits.splits.byId, state.logs.logs.byId),
+  splitLabels: splitsToLabel(state.splits.splits.byId, state.logs.logs.byId),
   fetchState: state.training.fetchState,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onRequestSplitList: () => dispatch(splitsRequested()),
+  onRequestLogList: () => dispatch(logListRequested()),
   onSubmitTraining: (payload) => dispatch(submitTraining(payload))
 });
 

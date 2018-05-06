@@ -96,7 +96,7 @@ export const labelJobFlat = PropTypes.shape({
   label: PropTypes.shape(labelPropType).isRequired,
 }).isRequired;
 
-export const splitLabels = PropTypes.arrayOf(PropTypes.shape({
+export const splitLabelPropType = PropTypes.arrayOf(PropTypes.shape({
   value: PropTypes.number.isRequired,
   label: PropTypes.string.isRequired
 }).isRequired).isRequired;
@@ -116,18 +116,22 @@ export const logPropType = PropTypes.shape({
 export const splitPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   type: PropTypes.oneOf(['single', 'double']).isRequired,
-  label: PropTypes.string,
   originalLogName: PropTypes.string,
   trainingLogName: PropTypes.string,
   testLogName: PropTypes.string,
-  original_log: logPropType,
-  training_log: logPropType,
-  test_log: logPropType,
+  original_log: PropTypes.number,
+  training_log: PropTypes.number,
+  test_log: PropTypes.number,
   config: PropTypes.object.isRequired,
 });
 
 export const logsStore = PropTypes.shape({
   byId: PropTypes.objectOf(logPropType).isRequired,
+  allIds: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+}).isRequired;
+
+export const splitStore = PropTypes.shape({
+  byId: PropTypes.objectOf(splitPropType).isRequired,
   allIds: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
 }).isRequired;
 

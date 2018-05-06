@@ -1,7 +1,7 @@
 /**
  * Created by tonis.kasekamp on 10/17/17.
  */
-import {makeLabels, makeTable, mergeSplitWithLogName, splitsToString} from '../../util/dataReducers';
+import {makeLabels, makeTable, mergeSplitWithLogName, splitsToLabel, splitsToString} from '../../util/dataReducers';
 import {regJobs} from '../../../stories/LineChart';
 
 const splitsById = {
@@ -90,6 +90,18 @@ it('merges splits with log names', () => {
 
 describe('split to string', () => {
   const stringLabels = splitsToString(splits);
+
+  it('formats single split', () => {
+    expect(stringLabels[0]).toEqual({value: 1, label: 'Split #1, log1'});
+  });
+
+  it('formats double split', () => {
+    expect(stringLabels[1]).toEqual({value: 2, label: 'Split #2, logs log3 and log2'});
+  });
+});
+
+describe('split to label', () => {
+  const stringLabels = splitsToLabel(splitsById, logsById);
 
   it('formats single split', () => {
     expect(stringLabels[0]).toEqual({value: 1, label: 'Split #1, log1'});

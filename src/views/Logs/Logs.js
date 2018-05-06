@@ -16,12 +16,10 @@ class Logs extends Component {
   }
 
   componentDidMount() {
-    if (this.props.logs.allIds.length === 0) {
-      return this.props.onRequestLogList();
-    } else {
+    this.props.onRequestLogList();
+    if (this.props.logs.allIds.length > 0) {
       // set first log by default
       this.setState({log: this.props.logs.byId[this.props.logs.allIds[0]]});
-      return this.props.onRequestLogList();
     }
   }
 

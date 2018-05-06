@@ -91,8 +91,9 @@ storiesOf('Advanced configuration', module)
               <CardText>
                 Labelling
               </CardText>
-              <Labelling onChange={console.log} label={label1} traceAttributes={traceAttributes}/>
-              <Labelling onChange={console.log} label={label1} traceAttributes={[]}/>
+              <Labelling onChange={console.log} label={label1} traceAttributes={traceAttributes}
+                         predictionMethod={CLASSIFICATION}/>
+              <Labelling onChange={console.log} label={label1} traceAttributes={[]} predictionMethod={REGRESSION}/>
             </Card>
           </div>
           <div className="md-cell md-cell--12">

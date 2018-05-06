@@ -7,10 +7,16 @@ import SplitFormCard from '../src/components/split/SplitFormCard';
 import {SPLIT_DOUBLE, SPLIT_SINGLE} from '../src/reference';
 import DoubleSplitTableCard from '../src/components/split/DoubleSplitTableCard';
 import SingleSplitTableCard from '../src/components/split/SingleSplitTableCard';
+import {splitsToLabel} from '../src/util/dataReducers';
 
+
+// these things are a hack with both id and log name
 export const splits = [
   {
     'id': 1,
+    'original_log': 1,
+    'test_log': null,
+    'training_log': null,
     'originalLogName': 'general_example.xes',
     'testLogName': '',
     'trainingLogName': '',
@@ -22,6 +28,9 @@ export const splits = [
   },
   {
     'id': 2,
+    'original_log': null,
+    'test_log': 1,
+    'training_log': 4,
     'originalLogName': '',
     'testLogName': 'general_example.xes',
     'trainingLogName': 'general_example2.xes',
@@ -75,6 +84,8 @@ export const logList = [
 ];
 
 export const logsById = Object.assign(...logList.map((log) => ({[log.id]: log})));
+export const splitsById = Object.assign(...splits.map((split) => ({[split.id]: split})));
+export const splitLabels = splitsToLabel(splitsById, logsById);
 
 storiesOf('Split', module)
   .add('SplitTableCard', () => {
