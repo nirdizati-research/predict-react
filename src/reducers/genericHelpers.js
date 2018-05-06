@@ -8,7 +8,12 @@ export const listRetrieved = (objectList) => {
 // partial update of objects
 export const addListToStore = ({allIds, byId}, objectList) => {
   const newObjs = listRetrieved(objectList);
-  // allIds = allIds.concat(objectList.map(({id}) => id));
-  // byId = objectList.map((obj))
   return {allIds: allIds.concat(newObjs.allIds), byId: {...byId, ...newObjs.byId}};
+};
+
+
+export const removeFromStore = ({allIds, byId}, objectId) => {
+  allIds = allIds.filter(element => element !== objectId);
+  delete byId[objectId];
+  return {allIds, byId};
 };

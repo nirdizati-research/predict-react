@@ -9,7 +9,6 @@ import {
   FILTER_PREFIX_LENGTH_CHANGED,
   FILTER_SPLIT_CHANGED,
   JOB_DELETED,
-  jobResultsRequested,
   jobsFailed,
   jobsRequested,
   jobsRetrieved
@@ -42,9 +41,7 @@ const jobList = [
       label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
       clustering: NO_CLUSTER
     },
-    split: {
-      id: 1
-    }
+    split_id: 1
   },
   {
     id: 2,
@@ -58,9 +55,7 @@ const jobList = [
       label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
       clustering: NO_CLUSTER
     },
-    split: {
-      id: 1
-    }
+    split_id: 1
   },
   {
     id: 3,
@@ -74,9 +69,7 @@ const jobList = [
       label: {type: REMAINING_TIME, threshold: 0},
       clustering: NO_CLUSTER
     },
-    split: {
-      id: 2
-    }
+    split_id: 2
   },
   {
     id: 4,
@@ -90,9 +83,7 @@ const jobList = [
       label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
       clustering: NO_CLUSTER
     },
-    split: {
-      id: 4
-    }
+    split_id: 4
   },
   {
     id: 5,
@@ -106,9 +97,7 @@ const jobList = [
       label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
       clustering: NO_CLUSTER
     },
-    split: {
-      id: 1
-    }
+    split_id: 1
   },
   {
     id: 6,
@@ -122,9 +111,7 @@ const jobList = [
       label: {type: REMAINING_TIME, threshold: 0},
       clustering: NO_CLUSTER
     },
-    split: {
-      id: 1
-    }
+    split_id: 1
   },
   {
     id: 75,
@@ -138,9 +125,7 @@ const jobList = [
       label: {type: DURATION, threshold_type: THRESHOLD_CUSTOM, threshold: 100},
       clustering: NO_CLUSTER
     },
-    split: {
-      id: 1
-    }
+    split_id: 1
   },
   {
     id: 76,
@@ -154,13 +139,11 @@ const jobList = [
       label: {type: ATTRIBUTE_NUMBER, threshold_type: THRESHOLD_MEAN, attribute_name: 'name', threshold: 0},
       clustering: NO_CLUSTER
     },
-    split: {
-      id: 1
-    }
+    split_id: 1
   },
 ];
 
-const initState = {fetchState: {inFlight: false}, jobs: []};
+const initState = {fetchState: {inFlight: false}, jobs: {byId: {}, allIds: [], filteredIds: []}};
 describe('JobsReducer', () => {
   it('has nothing initially', () => {
     expect(jobs(undefined, {})).toMatchObject(initState);
@@ -172,44 +155,53 @@ describe('JobsReducer', () => {
   });
 
   it('adds jobs when request completed', () => {
-    const jobList = [{id: 1, log: 'name', config: {label: {}}}];
     const state = jobs(undefined, jobsRequested());
     const state2 = jobs(state, jobsRetrieved(jobList));
-    expect(state2).toMatchObject({fetchState: {inFlight: false}, jobs: jobList});
-    expect(state2.attributeNames).toEqual([undefined]);
-    expect(state2.thresholds).toEqual([undefined]);
+    expect(state2.fetchState).toMatchObject({inFlight: false});
+    expect(state2.attributeNames).toEqual(['name']);
+    expect(state2.thresholds).toEqual([0, 100]);
+    expect(state2.uniqueSplits).toEqual([1, 2]);
+
+    const {allIds, byId, filteredIds} = state2.jobs;
+    expect(allIds).toEqual([1, 2, 3, 4, 5, 6, 75, 76]);
+    expect(filteredIds).toEqual([1, 2, 3, 4, 5, 6, 75, 76]);
+    expect(Object.keys(byId).length).toEqual(8);
+    expect(byId[1].split_id).toBe(1);
   });
 
   it('updates job list by id', () => {
-    const jobList = [{id: 1, log: 'name1', status: 'running', config: {label: {}}},
-      {id: 2, log: 'name2', status: 'running', config: {label: {}}},
-      {id: 3, log: 'name2', status: 'running', config: {label: {}}}];
-    const incoming = [{id: 2, log: 'name2', status: 'completed', config: {label: {}}}];
-    const state = jobs(undefined, jobResultsRequested());
-    state.jobs = jobList;
-    const state2 = jobs(state, jobsRetrieved(incoming));
-    expect(state2.jobs.length).toEqual(3);
-    expect(state2.jobs).toContainEqual(jobList[0]);
-    expect(state2.jobs).toContainEqual(jobList[2]);
-    expect(state2.jobs).toContainEqual(incoming[0]);
+    const state = jobs(undefined, jobsRetrieved(jobList));
+    let changedJob = jobList[0];
+    changedJob.status = 'completed';
+    const state2 = jobs(state, jobsRetrieved([changedJob]));
+
+    const {byId} = state2.jobs;
+    expect(byId[1].status).toBe('completed');
   });
 
   it('stores error message', () => {
     const state = jobs(undefined, jobsRequested());
     const state2 = jobs(state, jobsFailed('error'));
-    expect(state2).toMatchObject({fetchState: {inFlight: false, error: 'error'}, jobs: []});
+    expect(state2).toMatchObject({fetchState: {inFlight: false, error: 'error'}});
   });
 
   it('removes from list on delete', () => {
-    const jobList = [{id: 1, log: 'name', config: {label: {}}}];
-    const state2 = jobs(undefined, jobsRetrieved(jobList));
-    const state3 = jobs(state2, {type: JOB_DELETED, id: 1});
-    expect(state3).toMatchObject({uniqueSplits: [], jobs: []});
+    const state = jobs(undefined, jobsRetrieved(jobList));
+    const state2 = jobs(state, {type: JOB_DELETED, id: 75});
+    const state3 = jobs(state2, {type: JOB_DELETED, id: 76});
+    expect(state3.attributeNames).toEqual([]);
+    expect(state3.thresholds).toEqual([0]);
+
+    const {allIds, byId, filteredIds} = state3.jobs;
+    expect(allIds).toEqual([1, 2, 3, 4, 5, 6]);
+    expect(filteredIds).toEqual([1, 2, 3, 4, 5, 6]);
+    expect(Object.keys(byId).length).toEqual(6);
   });
 });
-const state = jobs(undefined, jobsRetrieved(jobList));
-const state2 = jobs(state, {type: FILTER_SPLIT_CHANGED, splitId: 1});
+
 describe('Validation filter', () => {
+  const state = jobs(undefined, jobsRetrieved(jobList));
+  const state2 = jobs(state, {type: FILTER_SPLIT_CHANGED, splitId: 1});
   describe('initial state', () => {
     it('has no filtered jobs initially', () => {
       expect(state).toMatchObject({filteredJobs: []});

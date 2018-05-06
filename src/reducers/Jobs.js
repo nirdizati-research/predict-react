@@ -9,7 +9,6 @@ import {
   FILTER_PREFIX_LENGTH_CHANGED,
   FILTER_SPLIT_CHANGED,
   JOB_DELETED,
-  JOB_RESULTS_REQUESTED,
   JOBS_FAILED,
   JOBS_REQUESTED,
   JOBS_RETRIEVED
@@ -35,6 +34,7 @@ import {
   THRESHOLD_MEAN
 } from '../reference';
 import {labelCompare} from '../util/labelCompare';
+import {addListToStore, removeFromStore} from './genericHelpers';
 
 /* eslint-disable max-len */
 
@@ -45,7 +45,11 @@ const initialLabels = {
 
 const initialState = {
   fetchState: {inFlight: false},
-  jobs: [],
+  jobs: {
+    byId: {},
+    allIds: [],
+    filteredIds: []
+  },
   filteredJobs: [],
   uniqueSplits: [],
   predictionMethod: REGRESSION,
@@ -65,34 +69,9 @@ const initialFilters = {
   padding: NO_PADDING
 };
 
-const mergeIncomingJobs = (incoming, existing) => {
-  // From https://stackoverflow.com/a/34963663
-  const a3 = existing.concat(incoming).reduce((acc, x) => {
-    acc[x.id] = Object.assign(acc[x.id] || {}, x);
-    return acc;
-  }, {});
-  return Object.keys(a3).map((key) => a3[key]);
-};
-
-const filterUnique = (splits) => {
-  const resArr = [];
-  splits.filter(function (item) {
-    const i = resArr.findIndex((split) => split.id === item.id);
-    if (i <= -1) {
-      resArr.push(item);
-    }
-    return null;
-  });
-  return resArr;
-};
-
-const reducer = (acc, job) => {
-  acc.push(job.split);
-  return acc;
-};
 
 const filterBySplit = (splitId) => (job) => {
-  return job.split.id === splitId;
+  return job.split_id === splitId;
 };
 
 const filterByMethod = (predictionMethod) => (job) => {
@@ -139,13 +118,10 @@ const addOrRemoveString = (list, value) => {
   }
 };
 
-const removeById = (list, value) => {
-  return list.filter((val) => val.id !== value);
-};
-
 const prefixSet = (filteredJobs) => [...new Set(filteredJobs.map((job) => job.config.prefix_length))];
-const thresholdSet = (filteredJobs) => [...new Set(filteredJobs.map((job) => job.config.label.threshold))];
-const attributeNameSet = (filteredJobs) => [...new Set(filteredJobs.map((job) => job.config.label.attribute_name))];
+const thresholdSet = (jobsById) => [...new Set(Object.values(jobsById).map((job) => job.config.label.threshold))];
+const attributeNameSet = (jobsById) =>
+  [...new Set(Object.values(jobsById).map(job => job.config.label.attribute_name).filter(a => a !== undefined))];
 
 const applyFilters =
   ({jobs, splitId, predictionMethod, encodings, clusterings, classification, regression, label, padding}) => {
@@ -198,6 +174,9 @@ const advancedConfigChange = (state, {methodConfig, key, isNumber, isFloat, mayb
   return {...state, [methodConfig]: config};
 };
 
+const completedUniqueSplits = (jobsById) =>
+  [...new Set(Object.values(jobsById).filter(job => job.status === 'completed').map((job => job.split_id)))];
+
 const jobs = (state = {...initialState, ...initialFilters}, action) => {
   switch (action.type) {
     case JOBS_REQUESTED: {
@@ -208,12 +187,13 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
     }
 
     case JOBS_RETRIEVED: {
-      const jobs = mergeIncomingJobs(action.payload, state.jobs);
-      const uniqueSplits = filterUnique(jobs.filter((job) => job.status === 'completed').reduce(reducer, []));
-      const thresholds = thresholdSet(jobs);
-      const attributeNames = attributeNameSet(jobs);
+      const jobs = addListToStore(state.jobs, action.payload);
+      const uniqueSplits = completedUniqueSplits(jobs.byId);
+      const thresholds = thresholdSet(jobs.byId);
+      const attributeNames = attributeNameSet(jobs.byId);
       return {
-        ...state, fetchState: {inFlight: false}, jobs, uniqueSplits, thresholds, attributeNames
+        ...state, fetchState: {inFlight: false}, jobs: {...jobs, filteredIds: jobs.allIds},
+        uniqueSplits, thresholds, attributeNames
       };
     }
 
@@ -225,18 +205,12 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
     }
 
     case JOB_DELETED: {
-      const jobs = removeById(state.jobs, action.id);
-      const uniqueSplits = filterUnique(jobs.filter((job) => job.status === 'completed').reduce(reducer, []));
-      const thresholds = thresholdSet(jobs);
-      const attributeNames = attributeNameSet(jobs);
+      const jobs = removeFromStore(state.jobs, action.id);
+      const uniqueSplits = completedUniqueSplits(jobs.byId);
+      const thresholds = thresholdSet(jobs.byId);
+      const attributeNames = attributeNameSet(jobs.byId);
       return {
-        ...state, jobs, uniqueSplits, thresholds, attributeNames
-      };
-    }
-    case JOB_RESULTS_REQUESTED: {
-      return {
-        ...state,
-        fetchState: {inFlight: true},
+        ...state, jobs: {...jobs, filteredIds: jobs.allIds}, uniqueSplits, thresholds, attributeNames
       };
     }
     case FILTER_SPLIT_CHANGED: {
