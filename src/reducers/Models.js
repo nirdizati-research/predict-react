@@ -11,7 +11,8 @@ import {
   NA_MODEL_CHANGED
 } from '../actions/ModelActions'
 import {LOG_CHANGED} from '../actions/LogActions'
-import {REGRESSION, NEXT_ACTIVITY, CLASSIFICATION} from '../reference';
+import {REGRESSION, NEXT_ACTIVITY, CLASSIFICATION,
+  ATTRIBUTE_NUMBER, ATTRIBUTE_STRING, REMAINING_TIME} from '../reference';
 
 const initialState = {
   fetchState: {inFlight: false},
@@ -23,9 +24,6 @@ const initialState = {
   regressionModels: [],
   classificationModels: [],
   nextActivityModels: [],
-  predictionMethod: REGRESSION,
-  prefixLengths: 1,
-  selectedPrefixes: []
 };
 
 const mergeIncomingModels = (incoming, existing) => {
@@ -35,10 +33,6 @@ const mergeIncomingModels = (incoming, existing) => {
     return acc;
   }, {});
   return Object.keys(a3).map((key) => a3[key]);
-};
-
-const filterByMethod = (models, predictionMethod) => {
-  return models.filter((model) => (model.type === predictionMethod));
 };
 
 const models = (state = initialState, action) => {
@@ -52,9 +46,13 @@ const models = (state = initialState, action) => {
 
     case MODELS_RETRIEVED: {
       const models = mergeIncomingModels(action.payload, state.models);
-      const regressionModels = filterByMethod(models, REGRESSION)
-      const classificationModels = filterByMethod(models, CLASSIFICATION)
-      const nextActivityModels = filterByMethod(models, NEXT_ACTIVITY)
+      const regressionModels = models.filter((model) => (model.type === REGRESSION));
+      const classificationModels = models.filter((model) => (model.type === CLASSIFICATION) &&
+                                                            ((model.config.label === REMAINING_TIME) ||
+                                                            (model.config.label === ATTRIBUTE_NUMBER)));
+      const nextActivityModels = models.filter((model) => (model.type === CLASSIFICATION) &&
+                                                            ((model.config.label === NEXT_ACTIVITY) ||
+                                                            (model.config.label === ATTRIBUTE_STRING)));
       return {
         ...state,
         fetchState: {inFlight: false},
@@ -98,9 +96,21 @@ const models = (state = initialState, action) => {
 
     case LOG_CHANGED: {
       const logId=action.logId
+      const regressionModels = state.regressionModels.filter((model) => (model.config.prefix_length === action.p_length)
+                                                                        || ((model.config.padding === 'zero_padding') &&
+                                                                            (model.config.prefix_length >= action.p_length)))
+      const classificationModels = state.regressionModels.filter((model) => (model.config.prefix_length === action.p_length)
+                                                                            || ((model.config.padding === 'zero_padding') &&
+                                                                            (model.config.prefix_length >= action.p_length)))
+      const nextActivityModels = state.regressionModels.filter((model) => (model.config.prefix_length === action.p_length)
+                                                                          || ((model.config.padding === 'zero_padding') &&
+                                                                          (model.config.prefix_length >= action.p_length)))
       return {
         ...state,
         logId,
+        regressionModels,
+        classificationModels,
+        nextActivityModels,
       };
     }
 

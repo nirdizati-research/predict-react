@@ -18,7 +18,12 @@ import {Card, CardText} from 'react-md/lib/Cards/index';
 
 class Prediction extends Component {
   onChangeLog(logId) {
-    this.props.onLogChange(logId);
+    const logs = this.props.logs.filter((log) => (log.id === logId))
+    const arr = logs.map((log) => log.properties.maxEventsInLog);
+    const p_length = arr.reduce(function (a, b) {
+      return Math.max(a, b);
+    });
+    this.props.onLogChange(logId, p_length);
     this.props.onChangeJRun(logId);
   }
 
@@ -75,9 +80,9 @@ class Prediction extends Component {
 
   render() {
     // Only unique splits for selector
-    const regmodelsLabel = modelsToString(this.props.regressionModels);
-    const clasmodelsLabel = modelsToString(this.props.classificationModels);
-    const namodelsLabel = modelsToString(this.props.nextActivityModels);
+    const regModelsLabel = modelsToString(this.props.regressionModels);
+    const clasModelsLabel = modelsToString(this.props.classificationModels);
+    const naModelsLabel = modelsToString(this.props.nextActivityModels);
 
     return (
       <div className="md-grid">
@@ -86,16 +91,16 @@ class Prediction extends Component {
                       logChange={this.onChangeLog.bind(this)}/>
         </div>
         <div className="md-cell md-cell--12">
-          <PredictionHeaderCard modelsLabel={regmodelsLabel}
+          <PredictionHeaderCard modelsLabel={regModelsLabel}
                                 title='Regression Model Selection'
                                 fetchState={this.props.modfetchState}
                                 modelChange={this.onRegChangeModel.bind(this)}/>
-          <PredictionHeaderCard modelsLabel={clasmodelsLabel}
-                                title='Classification Model Selection'
+          <PredictionHeaderCard modelsLabel={clasModelsLabel}
+                                title='Outcome Model Selection'
                                 fetchState={this.props.modfetchState}
                                 modelChange={this.onClasChangeModel.bind(this)}/>
-          <PredictionHeaderCard modelsLabel={namodelsLabel}
-                                title='Next Activity Model Selection'
+          <PredictionHeaderCard modelsLabel={naModelsLabel}
+                                title='Labelling Model Selection'
                                 fetchState={this.props.modfetchState}
                                 modelChange={this.onNAChangeModel.bind(this)}/>
           <Card className="md-full-width">
@@ -166,7 +171,7 @@ const mapDispatchToProps = (dispatch) => ({
   onClasModelChange: (modelId) => dispatch({type: CLAS_MODEL_CHANGED, modelId}),
   onNAModelChange: (modelId) => dispatch({type: NA_MODEL_CHANGED, modelId}),
   onModelChange: (naId, regId, classId) => dispatch({type: MODEL_CHANGED, naId, regId, classId}),
-  onLogChange: (logId) => dispatch({type: LOG_CHANGED, logId}),
+  onLogChange: (logId, p_length) => dispatch({type: LOG_CHANGED, logId, p_length}),
   onChangeJRun: (logId) => dispatch({type: JOB_RUN_CHANGED, logId}),
   onSubmitPrediction: (payload) => dispatch(submitPrediction({payload}))
 });

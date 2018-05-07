@@ -120,4 +120,5 @@ export const deleteJob = ({id}) => (dispatch) => {
     null,
     () => dispatch({type: JOB_DELETED, id: id}),
     ({error}) => {}
+    );
   };

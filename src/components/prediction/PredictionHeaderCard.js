@@ -15,7 +15,7 @@ const PredictionHeaderCard = (props) => {
     <CardTitle title={props.title}>
     <SelectField
       id="log-name-select"
-      placeholder="log.xes"
+      placeholder="model.xes"
       className="md-cell"
       menuItems={props.modelsLabel}
       position={SelectField.Positions.BELOW}
