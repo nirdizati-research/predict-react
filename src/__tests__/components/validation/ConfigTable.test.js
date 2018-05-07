@@ -3,14 +3,14 @@
  */
 import React from 'react';
 import {mount, shallow} from 'enzyme';
-import ClassConfigTable from '../../../components/validation/ClassConfigTable';
 import {TableRow} from 'react-md/lib/DataTables/index';
 import {TableColumn} from 'react-md';
-import RegConfigTable from '../../../components/validation/RegConfigTable';
+import ConfigTable from '../../../components/validation/ConfigTable';
 import ConfigTableCard from '../../../components/validation/ConfigTableCard';
-import {CLASSIFICATION, REGRESSION} from '../../../reference';
+import {CLASSIFICATION, LABELLING} from '../../../reference';
 import {jobToValidationTable} from '../../../util/dataReducers';
 import {label1} from '../../../../stories/Advanced';
+import LabelConfigTable from '../../../components/validation/LabelConfigTable';
 
 const regJobs = [{
   'id': 53,
@@ -23,22 +23,17 @@ const regJobs = [{
     'method': 'linear',
     'padding': 'zero_padding',
     'label': label1,
+    'hyperopt': {
+      'use_hyperopt': true,
+      'max_evals': 100,
+      'performance_metric': 'acc'
+    },
     'regression.linear': {}
   },
   'status': 'created',
   'result': {},
   'type': 'regression',
-  'split': {
-    'id': 1,
-    'config': {},
-    'original_log': {
-      'id': 1,
-      'name': 'general_example.xes'
-    },
-    'type': 'single',
-    'test_log': null,
-    'training_log': null
-  },
+  'split_id': 1,
   'error': ''
 }];
 
@@ -53,22 +48,34 @@ const classJobs = [{
     'method': 'randomForest',
     'padding': 'zero_padding',
     'label': label1,
+    'hyperopt': {
+      'use_hyperopt': true,
+      'max_evals': 100,
+      'performance_metric': 'acc'
+    },
     'classification.randomForest': {}
   },
   'status': 'created',
   'result': {},
   'type': 'classification',
-  'split': {
-    'id': 1,
-    'config': {},
-    'original_log': {
-      'id': 1,
-      'name': 'general_example.xes'
-    },
-    'type': 'single',
-    'test_log': null,
-    'training_log': null
+  'split_id': 1,
+  'error': ''
+}];
+
+const labelJobs = [{
+  'id': 52,
+  'created_date': '2018-02-07T09:13:52.964154Z',
+  'modified_date': '2018-02-07T09:13:52.964256Z',
+  'config': {
+    'prefix_length': 1,
+    'encoding': 'simpleIndex',
+    'padding': 'zero_padding',
+    'label': label1,
   },
+  'status': 'created',
+  'result': {},
+  'type': 'labelling',
+  'split_id': 1,
   'error': ''
 }];
 
@@ -76,47 +83,40 @@ describe('ConfigTableCard', () => {
   const element = shallow(<ConfigTableCard jobs={[]} predictionMethod={CLASSIFICATION} onClick={jest.fn()}/>);
   it('renders', () => {
     expect(element).toBeDefined();
+    expect(element.find(ConfigTable).length).toBe(0);
   });
 
-  it('does not render classification table', () => {
-    element.setProps({predictionMethod: CLASSIFICATION});
-    expect(element.find(ClassConfigTable).length).toBe(0);
+  it('renders table', () => {
+    element.setProps({jobs: classJobs});
+    expect(element.find(ConfigTable).length).toBe(1);
+    expect(element.find(LabelConfigTable).length).toBe(0);
   });
 
-  it('does not render regression table', () => {
-    element.setProps({predictionMethod: REGRESSION});
-    expect(element.find(RegConfigTable).length).toBe(0);
-  });
-});
-
-describe('ClassConfigTable', () => {
-  it('renders nothing without jobs', () => {
-    const element = shallow(<ClassConfigTable jobs={[]}/>);
-    expect(element).toBeDefined();
-    // Header row
-    expect(element.find(TableRow).length).toBe(1);
-    expect(element.find(TableColumn).length).toBe(12);
-  });
-
-  it('renders jobs if present', () => {
-    const element = mount(<ClassConfigTable jobs={classJobs.map(jobToValidationTable)}/>);
-    expect(element.find(TableRow).length).toBe(2);
-    expect(element.text()).toMatch(/classification/);
+  it('renders labelling table', () => {
+    element.setProps({predictionMethod: LABELLING, jobs: labelJobs});
+    expect(element.find(ConfigTable).length).toBe(0);
+    expect(element.find(LabelConfigTable).length).toBe(1);
   });
 });
 
-describe('RegConfigTable', () => {
+describe('ConfigTable', () => {
   it('renders nothing without jobs', () => {
-    const element = shallow(<RegConfigTable jobs={[]}/>);
+    const element = shallow(<ConfigTable jobs={[]}/>);
     expect(element).toBeDefined();
     // Header row
     expect(element.find(TableRow).length).toBe(1);
-    expect(element.find(TableColumn).length).toBe(12);
+    expect(element.find(TableColumn).length).toBe(11);
   });
 
-  it('renders jobs if present', () => {
-    const element = mount(<RegConfigTable jobs={regJobs.map(jobToValidationTable)}/>);
+  it('renders regression jobs if present', () => {
+    const element = mount(<ConfigTable jobs={regJobs.map(jobToValidationTable)}/>);
     expect(element.find(TableRow).length).toBe(2);
     expect(element.text()).toMatch(/regression/);
+  });
+
+  it('renders classification jobs if present', () => {
+    const element = mount(<ConfigTable jobs={classJobs.map(jobToValidationTable)}/>);
+    expect(element.find(TableRow).length).toBe(2);
+    expect(element.text()).toMatch(/classification/);
   });
 });

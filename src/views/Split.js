@@ -7,15 +7,13 @@ import {splitsRequested, submitSplit} from '../actions/SplitActions';
 import {SPLIT_DOUBLE, SPLIT_SINGLE} from '../reference';
 import SingleSplitTableCard from '../components/split/SingleSplitTableCard';
 import DoubleSplitTableCard from '../components/split/DoubleSplitTableCard';
+import {fetchStatePropType, logPropType, splitPropType} from '../propTypes';
+import {mergeSplitWithLogName} from '../util/unNormalize';
 
 class Split extends Component {
   componentDidMount() {
     // TODO refactor this
-    if (this.props.logs.length === 0) {
-      this.props.onRequestLogList(true);
-    } else {
-      this.props.onRequestLogList(false);
-    }
+    this.props.onRequestLogList();
     // Request on every page refresh. Not ideal
     this.props.onRequestSplitList();
   }
@@ -39,25 +37,22 @@ class Split extends Component {
 }
 
 Split.propTypes = {
-  logs: PropTypes.arrayOf(PropTypes.any).isRequired,
-  splits: PropTypes.arrayOf(PropTypes.any).isRequired,
+  logs: PropTypes.objectOf(logPropType).isRequired,
+  splits: PropTypes.arrayOf(splitPropType).isRequired,
   onRequestLogList: PropTypes.func.isRequired,
   onRequestSplitList: PropTypes.func.isRequired,
   onSubmitSplit: PropTypes.func.isRequired,
-  fetchState: PropTypes.shape({
-    inFlight: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  }).isRequired
+  fetchState: fetchStatePropType
 };
 
 const mapStateToProps = (state) => ({
-  logs: state.logs.logs,
-  splits: state.splits.splits,
+  logs: state.logs.byId,
+  splits: mergeSplitWithLogName(state.splits.byId, state.logs.byId),
   fetchState: state.splits.fetchState,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onRequestLogList: (changeVisible) => dispatch(logListRequested({changeVisible, requestInfo: false})),
+  onRequestLogList: () => dispatch(logListRequested()),
   onRequestSplitList: () => dispatch(splitsRequested()),
   onSubmitSplit: (payload) => dispatch(submitSplit(payload))
 });

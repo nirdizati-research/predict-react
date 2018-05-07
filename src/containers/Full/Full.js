@@ -28,7 +28,7 @@ class Full extends Component {
           component: IndexLink,
           to: '/',
           active: isActive('/', pathname),
-          primaryText: 'Dashboard',
+          primaryText: 'Home',
           leftIcon: <FontIcon>home</FontIcon>,
         }, {
           component: Link,
@@ -37,6 +37,13 @@ class Full extends Component {
           primaryText: 'Upload',
           leftIcon: <FontIcon>backup</FontIcon>,
         }, {
+
+          component: Link,
+          to: '/logs',
+          active: isActive('/logs', pathname),
+          primaryText: 'Logs',
+          leftIcon: <FontIcon>description</FontIcon>,
+        }, {
           component: Link,
           to: '/split',
           active: isActive('/split', pathname),
@@ -44,16 +51,22 @@ class Full extends Component {
           leftIcon: <FontIcon>swap_horiz</FontIcon>,
         }, {
           component: Link,
-          to: '/jobStatus',
-          active: isActive('/jobStatus', pathname),
-          primaryText: 'Job Status',
-          leftIcon: <FontIcon>list</FontIcon>,
+          to: '/label',
+          active: isActive('/label', pathname),
+          primaryText: 'Labelling',
+          leftIcon: <FontIcon>label_outline</FontIcon>,
         }, {
           component: Link,
           to: '/training',
           active: isActive('/training', pathname),
           primaryText: 'Training',
           leftIcon: <FontIcon>build</FontIcon>,
+        }, {
+          component: Link,
+          to: '/jobs',
+          active: isActive('/jobs', pathname),
+          primaryText: 'Task status',
+          leftIcon: <FontIcon>list</FontIcon>,
         }, {
           component: Link,
           to: '/validation',

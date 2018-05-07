@@ -3,35 +3,28 @@ import {shallow} from 'enzyme';
 import {CardTitle} from 'react-md/lib/Cards/index';
 import LineChartCard from '../../../components/chart/LineChartCard';
 import {Chart} from 'react-google-charts';
-import FetchState from '../../../components/FetchState';
 
-const fetchState = {
-  inFlight: false
-};
 const traces = {
+  '2011-10-07': 83,
   '2011-10-01': 23,
   '2011-10-03': 119,
   '2011-10-04': 85,
   '2011-10-05': 106,
   '2011-10-06': 80,
-  '2011-10-07': 83
 };
 const cardTitle = 'Card title';
 const chartTitle = 'Chart title';
 
 describe('LineChartCard', () => {
   it('renders', () => {
-    const element = shallow(<LineChartCard fetchState={fetchState} cardTitle={cardTitle} chartTitle={chartTitle}
-                                           data={traces}/>);
+    const element = shallow(<LineChartCard cardTitle={cardTitle} chartTitle={chartTitle} data={traces}/>);
     expect(element).toBeDefined();
-    expect(element.find(FetchState).length).toBe(1);
     expect(element.find(Chart).length).toBe(1);
     expect(element.find(CardTitle).props().title).toBe(cardTitle);
   });
 
   it('creates options with titles', () => {
-    const element = shallow(<LineChartCard fetchState={fetchState} cardTitle={cardTitle} chartTitle={chartTitle}
-                                           data={traces}/>);
+    const element = shallow(<LineChartCard cardTitle={cardTitle} chartTitle={chartTitle} data={traces}/>);
 
     const chartProps = element.find(Chart).props();
 
@@ -41,8 +34,7 @@ describe('LineChartCard', () => {
   });
 
   it('maps data', () => {
-    const element = shallow(<LineChartCard fetchState={fetchState} cardTitle={cardTitle} chartTitle={chartTitle}
-                                           data={traces}/>);
+    const element = shallow(<LineChartCard cardTitle={cardTitle} chartTitle={chartTitle} data={traces}/>);
     const chartProps = element.find(Chart).props();
 
     expect(chartProps.rows.length).toBe(6);

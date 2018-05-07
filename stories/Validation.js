@@ -5,19 +5,21 @@ import React from 'react';
 import {storiesOf} from '@storybook/react';
 import ValidationHeaderCard from '../src/components/validation/ValidationHeaderCard';
 import ConfigTableCard from '../src/components/validation/ConfigTableCard';
-import {CLASSIFICATION, LABELLING, REGRESSION} from '../src/reference';
+import {CLASSIFICATION, DURATION, LABELLING, NO_PADDING, REGRESSION, THRESHOLD_MEAN} from '../src/reference';
 import ResultWrapper from '../src/components/validation/ResultWrapper';
 import {label1} from './Advanced';
+import LabellingHeaderCard from '../src/components/Labelling/LabellingHeaderCard';
 
 const splitLabels = [{value: 1, label: 'Split #1'}, {value: 2, label: 'Split #2'}];
-const classJobs = [
+export const classJobs = [
   {
     'id': 1,
     'created_date': '2017-11-14T20:52:36.469000Z',
     'modified_date': '2017-12-05T14:57:28.344216Z',
     'config': {
-      'clustering': 'noCluster',
+      'clustering': 'kmeans',
       'method': 'randomForest',
+      'kmeans': {'keyt': 1123},
       'encoding': 'simpleIndex',
       'prefix_length': 1,
       'create_models': true,
@@ -49,17 +51,7 @@ const classJobs = [
       'recall': 0
     },
     'type': 'classification',
-    'split': {
-      'id': 1,
-      'config': {},
-      'original_log': {
-        'id': 1,
-        'name': 'general_example.xes'
-      },
-      'type': 'single',
-      'test_log': null,
-      'training_log': null
-    },
+    'split_id': 1,
     'error': ''
   },
   {
@@ -100,17 +92,7 @@ const classJobs = [
       'recall': 0
     },
     'type': 'classification',
-    'split': {
-      'id': 1,
-      'config': {},
-      'original_log': {
-        'id': 1,
-        'name': 'general_example.xes'
-      },
-      'type': 'single',
-      'test_log': null,
-      'training_log': null
-    },
+    'split_id': 1,
     'error': ''
   }];
 
@@ -145,17 +127,7 @@ const regJobs = [
       'rscore': 3
     },
     'type': 'regression',
-    'split': {
-      'id': 1,
-      'config': {},
-      'original_log': {
-        'id': 1,
-        'name': 'general_example.xes'
-      },
-      'type': 'single',
-      'test_log': null,
-      'training_log': null
-    },
+    'split_id': 1,
     'error': ''
   }];
 
@@ -181,17 +153,7 @@ const labelJobs = [
       'false': 434
     },
     'type': 'labelling',
-    'split': {
-      'id': 1,
-      'config': {},
-      'original_log': {
-        'id': 1,
-        'name': 'general_example.xes'
-      },
-      'type': 'single',
-      'test_log': null,
-      'training_log': null
-    },
+    'split_id': 1,
     'error': ''
   }
 ];
@@ -201,6 +163,10 @@ const filterOptions = {
   clusterings: [],
   classification: [],
   regression: [],
+  label: {type: DURATION, threshold_type: THRESHOLD_MEAN},
+  thresholds: [1, 3, 4],
+  attributeNames: ['name', 'name2'],
+  padding: NO_PADDING
 };
 
 storiesOf('Validation', module)
@@ -211,27 +177,40 @@ storiesOf('Validation', module)
             <ValidationHeaderCard splitLabels={splitLabels} fetchState={{inFlight: false}} splitChange={(_) => _}
                                   methodChange={(_) => _} selectedPrefixes={['2']} filterOptions={filterOptions}
                                   prefixLengths={['1', '2']} prefixChange={(_) => _} filterOptionChange={console.log}
-                                  predictionMethod={REGRESSION}/>
+                                  predictionMethod={REGRESSION} labelChange={console.log}/>
           </div>
         </div>
       );
     }
-  ).add('ConfigTableCard', () => {
+  ).add('Labelling header card', () => {
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
-          <ConfigTableCard jobs={classJobs} predictionMethod={CLASSIFICATION}/>
-        </div>
-        <div className="md-cell md-cell--12">
-          <ConfigTableCard jobs={regJobs} predictionMethod={REGRESSION}/>
-        </div>
-        <div className="md-cell md-cell--12">
-          <ConfigTableCard jobs={labelJobs} predictionMethod={LABELLING}/>
+          <LabellingHeaderCard splitLabels={splitLabels} fetchState={{inFlight: false}} splitChange={(_) => _}
+                               selectedPrefixes={['2']} filterOptions={filterOptions} labelChange={console.log}
+                               prefixLengths={['1', '2']} prefixChange={(_) => _} selectedSplitId={1}
+                               filterOptionChange={console.log}/>
         </div>
       </div>
     );
   }
-).add('ResultWrapper classification', () => {
+)
+  .add('ConfigTableCard', () => {
+      return (
+        <div className="md-grid">
+          <div className="md-cell md-cell--12">
+            <ConfigTableCard jobs={classJobs} predictionMethod={CLASSIFICATION}/>
+          </div>
+          <div className="md-cell md-cell--12">
+            <ConfigTableCard jobs={regJobs} predictionMethod={REGRESSION}/>
+          </div>
+          <div className="md-cell md-cell--12">
+            <ConfigTableCard jobs={labelJobs} predictionMethod={LABELLING} onClick={(_) => _}/>
+          </div>
+        </div>
+      );
+    }
+  ).add('ResultWrapper classification', () => {
     return (
       <div className="md-grid">
         <ResultWrapper jobs={classJobs} predictionMethod={CLASSIFICATION}/>

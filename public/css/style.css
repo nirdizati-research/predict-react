@@ -3151,7 +3151,9 @@ svg.md-icon {
   visibility: hidden; }
 
 .md-divider--text-field {
-  margin-top: 7px; }
+    margin-top: 7px;
+    overflow: visible;
+}
   .md-divider--text-field::after {
     background: #2196f3;
     content: '';
@@ -3639,7 +3641,6 @@ body {
 .file-inputs__upload-form {
   display: flex;
   flex-wrap: wrap;
-  padding-top: 2em;
   position: relative; }
   .file-inputs__upload-form__progress {
     left: 0;

@@ -9,6 +9,8 @@ import ResultTableCard from '../src/components/validation/ResultTableCard';
 import {getChartHeader} from '../src/components/validation/ColumnHelper';
 import {CLASSIFICATION, REGRESSION} from '../src/reference';
 import BarChartCard from '../src/components/chart/BarChartCard';
+import {label1} from './Advanced';
+import PrefixLineChart from '../src/components/chart/PrefixLineChart';
 
 const fetchState = {inFlight: false};
 
@@ -19,6 +21,15 @@ const traces = {
   '2011-10-05': 106,
   '2011-10-06': 80,
   '2011-10-07': 83
+};
+
+const notOrderedTraces = {
+  '2011-10-06': 80,
+  '2011-10-03': 119,
+  '2011-10-01': 23,
+  '2011-10-05': 106,
+  '2011-10-07': 83,
+  '2011-10-04': 85
 };
 
 const resources = {
@@ -97,32 +108,102 @@ const someColumns = [
   }
 ];
 
+export const labelJobs = [
+  {
+    'id': 4,
+    'split_id': 1,
+    'created_date': '2017-11-14T20:52:36.469000Z',
+    'modified_date': '2017-12-05T14:57:28.344216Z',
+    'status': 'completed',
+    'config': {
+      'prefix_length': 1,
+      'encoding': 'simpleIndex',
+      'label': label1
+    },
+    'result': {'rmse': 221, 'mae': 193},
+    'type': 'labelling',
+  },
+  {
+    'id': 5,
+    'split_id': 1,
+    'created_date': '2017-11-14T20:52:36.469000Z',
+    'modified_date': '2017-12-05T14:57:28.344216Z',
+    'status': 'completed',
+    'config': {
+      'prefix_length': 4,
+      'encoding': 'simpleIndex',
+      'label': label1
+    },
+    'result': {'rmse': 201, 'mae': 165, 'third': 34},
+    'type': 'labelling',
+  },
+  {
+    'id': 6,
+    'split_id': 1,
+    'created_date': '2017-11-14T20:52:36.469000Z',
+    'modified_date': '2017-12-05T14:57:28.344216Z',
+    'status': 'completed',
+    'config': {
+      'prefix_length': 3,
+      'encoding': 'simpleIndex',
+      'label': label1
+    },
+    'result': {'rmse': 191, 'mae': 138},
+    'type': 'labelling',
+  },
+  {
+    'id': 7,
+    'split_id': 1,
+    'created_date': '2017-11-14T20:52:36.469000Z',
+    'modified_date': '2017-12-05T14:57:28.344216Z',
+    'status': 'completed',
+    'config': {
+      'prefix_length': 5,
+      'encoding': 'simpleIndex',
+      'label': label1
+    },
+    'result': {'rmse': 171, 'mae': 128},
+    'type': 'labelling',
+  }
+];
+
 storiesOf('Charts', module)
+  .add('PrefixLineChart', () => {
+    return (
+      <div className="md-grid">
+        <div className="md-cell md-cell--12">
+          <PrefixLineChart
+            jobs={labelJobs}/>
+        </div>
+      </div>
+    );
+  })
   .add('LineChartCard', () => {
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
-          <LineChartCard fetchState={fetchState}
-                         data={traces}
+          <LineChartCard data={traces}
                          cardTitle="Number of traces"
                          chartTitle="Active traces"/>
         </div>
         <div className="md-cell md-cell--12">
-          <LineChartCard fetchState={fetchState}
-                         data={resources}
+          <LineChartCard data={notOrderedTraces}
+                         cardTitle="Modern art"
+                         chartTitle="Messed up order of object"/>
+        </div>
+        <div className="md-cell md-cell--12">
+          <LineChartCard data={resources}
                          cardTitle="Number of resources"
                          chartTitle="Active traces"/>
         </div>
 
         <div className="md-cell md-cell--12">
-          <LineChartCard fetchState={fetchState}
-                         data={{}}
+          <LineChartCard data={{}}
                          cardTitle="Number of resources empty"
                          chartTitle="Empty chart"/>
         </div>
         <div className="md-cell md-cell--12">
-          <BarChartCard fetchState={fetchState}
-                        data={events}
+          <BarChartCard data={events}
                         cardTitle="Event Occurrences"
                         hTitle="Number of Executions"
                         chartTitle="Events"/>
@@ -134,8 +215,7 @@ storiesOf('Charts', module)
                         chartTitle="asdasfd"/>
         </div>
         <div className="md-cell md-cell--12">
-          <BarChartCard fetchState={fetchState}
-                        data={eventsInTrace}
+          <BarChartCard data={eventsInTrace}
                         cardTitle="Number of events in trace"
                         hTitle="Number of events"
                         chartTitle="Event count"

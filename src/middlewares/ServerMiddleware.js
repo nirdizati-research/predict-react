@@ -11,7 +11,6 @@ import {PREDICTION_SUBMITTED} from '../actions/RuntimeActions';
 
 const ACTION_TYPE_TO_SERVER_ACTION = {
   [JOBS_REQUESTED]: getJobs,
-  [JOB_RESULTS_REQUESTED]: getJobResults,
   [LOG_LIST_REQUESTED]: getLogList,
   [LOG_INFO_REQUESTED]: getLogInfo,
   [TRAINING_SUBMITTED]: postTraining,

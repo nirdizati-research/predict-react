@@ -6,8 +6,22 @@ import Button from 'react-md/lib/Buttons/Button';
 import {JOB_DELETE_REQUESTED, jobsRequested} from '../../actions/JobActions';
 import JobStatusTable from '../../components/JobStatusTable';
 import FetchState from '../../components/FetchState';
-import {jobPropType} from '../../helpers';
+import {fetchStatePropType, jobPropType} from '../../propTypes';
 import {Checkbox} from 'react-md/lib/SelectionControls/index';
+import {logListRequested} from '../../actions/LogActions';
+import {splitsRequested} from '../../actions/SplitActions';
+import {mapJobs} from '../../util/unNormalize';
+
+// Greater numbers first
+const compare = (a, b) => {
+  if (a.id < b.id) {
+    return 1;
+  }
+  if (a.id > b.id) {
+    return -1;
+  }
+  return 0;
+};
 
 class JobStatus extends Component {
   constructor() {
@@ -21,8 +35,8 @@ class JobStatus extends Component {
   }
 
   componentDidMount() {
-    // Get only if empty
-    // TODO move this check to somewhere else
+    this.props.onRequestLogList();
+    this.props.onRequestSplitList();
     if (this.props.jobs === []) {
       this.props.onRequestJobs();
     }
@@ -70,19 +84,18 @@ class JobStatus extends Component {
       <div className="md-grid">
         <div className="md-cell md-cell--12">
           <Card className="md-block-centered">
-            <CardTitle title="Job status"/>
+            <CardTitle title="Task status"/>
             <CardText>
               <p>
-                Lots of logs below. See job results on the validation page.
-                Currently running jobs cannot be deleted. Do not try.
+                There are {this.props.jobs.length} tasks in the front-end application.
               </p>
               <Button raised onClick={this.props.onRequestJobs}>Refresh list</Button>
               <Checkbox id="fetchJobs" name="fetchJobs"
-                        label="Automatically fetch jobs" inline
+                        label="Automatically fetch tasks" inline
                         checked={this.state.fetchJobs}
                         onChange={this.checkboxChange.bind(this)}/>
               <Checkbox id="showCompleted" name="showCompleted"
-                        label="Show completed jobs" inline
+                        label="Show completed tasks" inline
                         checked={this.state.showCompleted}
                         onChange={this.checkboxChange.bind(this)}/>
               <Checkbox id="showDeleteButton" name="showDeleteButton"
@@ -90,7 +103,7 @@ class JobStatus extends Component {
                         checked={this.state.showDeleteButton}
                         onChange={this.checkboxChange.bind(this)}/>
               <FetchState fetchState={this.props.fetchState}/>
-              <JobStatusTable jobs={jobs} showDeleteButton={this.state.showDeleteButton}
+              <JobStatusTable jobs={jobs.sort(compare)} showDeleteButton={this.state.showDeleteButton}
                               onDelete={this.props.onDelete}/>
             </CardText>
           </Card>
@@ -103,19 +116,20 @@ class JobStatus extends Component {
 JobStatus.propTypes = {
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
   onRequestJobs: PropTypes.func.isRequired,
+  onRequestLogList: PropTypes.func.isRequired,
+  onRequestSplitList: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  fetchState: PropTypes.shape({
-    inFlight: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  }).isRequired,
+  fetchState: fetchStatePropType,
 };
 
 const mapStateToProps = (state) => ({
-  jobs: state.jobs.jobs,
+  jobs: mapJobs(state.logs.byId, state.splits.byId, state.jobs.byId, state.jobs.allIds),
   fetchState: state.jobs.fetchState
 });
 const mapDispatchToProps = (dispatch) => ({
   onRequestJobs: () => dispatch(jobsRequested()),
+  onRequestLogList: () => dispatch(logListRequested()),
+  onRequestSplitList: () => dispatch(splitsRequested()),
   onDelete: (id) => dispatch({type: JOB_DELETE_REQUESTED, payload: {id}})
 });
 

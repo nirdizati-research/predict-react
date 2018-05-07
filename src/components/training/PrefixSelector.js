@@ -31,17 +31,20 @@ class PrefixSelector extends Component {
     }
   }
 
+
   render() {
-    return <div className="md-cell md-cell--3">
-      <SelectionControlGroup type="radio" name="padding" id="padding" label="Encoded log padding"
-                             onChange={this.props.onChange.bind(this, {methodConfig, key: 'padding'})}
+    const classes = this.props.isLabelForm ? 'md-grid' : 'md-cell md-cell--4';
+    const cl = this.props.isLabelForm ? 'md-cell md-cell--3' : '';
+    return <div className={classes}>
+      <SelectionControlGroup type="radio" name="padding" id="padding" label="Encoded log padding" inline
+                             onChange={this.props.onChange.bind(this, {methodConfig, key: 'padding'})} className={cl}
                              controls={paddingControls} value={this.props.prefix.padding} controlStyle={groupStyle}/>
-      <SelectionControlGroup type="radio" name="type" id="type" label="Prefix generation type"
+      <SelectionControlGroup type="radio" name="type" id="type" label="Task generation type"
                              onChange={this.props.onChange.bind(this, {methodConfig, key: 'type'})}
-                             controls={prefixTypeControls}
+                             controls={prefixTypeControls} inline className={cl}
                              value={this.props.prefix.type} controlStyle={groupStyle}/>
-      <p> How many events in a trace to consider. The max for this log is {this.props.maxEventsInLog}.
-        Raise number at your own caution because this too high a number will cause errors.</p>
+      <p className={cl}>The maximum prefix length is <b>{this.props.maxEventsInLog}</b>.
+        Values above maximum length might have inconsistent results.</p>
       <TextField
         id="prefixLength"
         label="Prefix length"
@@ -50,8 +53,8 @@ class PrefixSelector extends Component {
         onChange={this.onPrefixChange.bind(this)}
         min={0}
         max={this.props.maxEventsInLog}
-        className="md-cell md-cell--12"
         required
+        className={cl}
         error={this.state.error}
         errorText={`Can't be greater than log maximum prefix length ${this.props.maxEventsInLog}`}
       />
@@ -66,7 +69,8 @@ PrefixSelector.propTypes = {
     prefix_length: PropTypes.number.isRequired
   }).isRequired,
   maxEventsInLog: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  isLabelForm: PropTypes.bool
 };
 
 export default PrefixSelector;

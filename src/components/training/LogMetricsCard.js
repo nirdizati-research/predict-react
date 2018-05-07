@@ -1,6 +1,6 @@
 import React from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
-import {logPropType} from '../../helpers';
+import {logPropType} from '../../propTypes';
 
 const LogMetricsCard = (props) => {
   return <Card className="md-block-centered">

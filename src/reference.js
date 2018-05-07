@@ -36,6 +36,9 @@ export const DURATION = 'duration';
 
 export const THRESHOLD_MEAN = 'threshold_mean';
 export const THRESHOLD_CUSTOM = 'threshold_custom';
+// padding
+export const ZERO_PADDING = 'zero_padding';
+export const NO_PADDING = 'no_padding';
 
 // Using these options directly means the message is not shown
 export const clustering = [
@@ -45,7 +48,7 @@ export const clustering = [
     message: 'No clustering and train a single model'
   },
   {
-    label: KMEANS,
+    label: 'K-means clustering',
     value: KMEANS,
     message: 'Assign traces to k-means clusters and train a model for each cluster'
   }
@@ -70,45 +73,40 @@ export const encoding = [
   {
     label: 'Simple index',
     value: SIMPLE_INDEX,
-    message: 'Each feature corresponds to a position in the trace and the possible values for each feature are the event classes. Event attributes are discarded.'
+    message: 'Each feature corresponds to a position in the trace and the possible values for each feature are the activity names. Event attributes are discarded.'
   },
   {
     label: 'Boolean',
     value: BOOLEAN,
-    message: 'Features represent whether or not a particular event class has occurred in the trace.'
+    message: 'Features represent whether or not a particular activity has occurred in the trace. Event attributes are discarded.'
   },
   {
     label: 'Frequency',
     value: FREQUENCY,
-    message: 'Features represent the absolute frequency of each possible event class. Event attributes are discarded.'
+    message: 'Features represent the absolute frequency of each possible activity. Event attributes are discarded.'
   },
   {
     label: 'Complex',
     value: COMPLEX,
-    message: 'Simple index encoding with event attributes'
+    message: 'Each feature corresponds to a position in the trace and the possible values for each feature are the activity names and event attributes'
   },
   {
     label: 'Last payload',
     value: LAST_PAYLOAD,
-    message: 'Simple index encoding with event attributes for only the last considered event in trace.'
+    message: 'Features represent the event attributes of the last event that occurred in the trace.'
   }
 ];
 
 const predictions = [
   {
-    label: 'Remaining time',
+    label: 'Regression',
     value: REGRESSION,
-    message: 'Regression'
+    message: 'Numeric values'
   },
   {
-    label: 'Outcome',
+    label: 'Classification',
     value: CLASSIFICATION,
-    message: 'Classification'
-  },
-  {
-    label: 'Labelling',
-    value: LABELLING,
-    message: 'Label distribution for classification'
+    message: 'Categorical values'
   }
 ];
 
@@ -131,7 +129,7 @@ const threshold = [
   {
     label: 'Label mean',
     value: THRESHOLD_MEAN,
-    message: 'Mean value of the created label'
+    message: 'Threshold is label mean'
   },
   {
     label: 'Custom',
@@ -159,7 +157,7 @@ const classificationLabelTypes = [
   {
     value: NEXT_ACTIVITY,
     label: 'Next activity',
-    message: 'Multi-label classification'
+    message: 'Multiclass classification'
   },
   {
     value: ATTRIBUTE_NUMBER,
@@ -169,7 +167,7 @@ const classificationLabelTypes = [
   {
     value: ATTRIBUTE_STRING,
     label: 'Trace string attribute',
-    message: 'Multi-label classification'
+    message: 'Multiclass classification'
   },
 ];
 
@@ -193,28 +191,28 @@ export const splitTypes = [
   },
 ];
 
-const padding = [
+export const padding = [
   {
     label: 'No padding',
-    value: 'no_padding',
-    message: 'Traces with less than prefix_length will be discarded'
+    value: NO_PADDING,
+    message: 'Traces with length less then the specified prefix length will be discarded'
   },
   {
     label: 'With 0 padding',
-    value: 'zero_padding',
-    message: 'Traces with less than prefix_length will be padded with 0'
+    value: ZERO_PADDING,
+    message: 'Traces with length less then the specified prefix length will padded with 0'
   }
 ];
 
 const prefixTypes = [
   {
-    label: 'Only this prefix',
+    label: 'Only this prefix length',
     value: 'only'
   },
   {
-    label: 'Up to the prefix',
+    label: 'Up to the prefix length',
     value: 'up_to',
-    message: 'Run jobs from 1 to this value'
+    message: 'Create multiple tasks from the specified prefix length 1 up to this value'
   },
 ];
 

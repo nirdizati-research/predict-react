@@ -3,54 +3,37 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import TrainingFormCard from '../../components/TrainingFormCard';
 import {submitTraining} from '../../actions/JobActions';
-import {splitsToString} from '../../util/dataReducers';
+import {splitsToLabel} from '../../util/unNormalize';
 import {splitsRequested} from '../../actions/SplitActions';
-import {splitLabels} from '../../helpers';
-import {SPLIT_SINGLE} from '../../reference';
+import {fetchStatePropType, splitLabelPropType} from '../../propTypes';
+import {getLogProperties} from '../../util/splitStuff';
+import {logListRequested} from '../../actions/LogActions';
 
 class Training extends Component {
   constructor() {
     super();
 
     this.state = {
-      maxEventsInLog: 0,
-      traceAttributes: []
+      split_id: 0
     };
   }
 
   componentDidMount() {
-    // TODO refactor this
+    this.props.onRequestLogList();
     this.props.onRequestSplitList();
-    if (this.props.splitLabels.length > 0) {
-      this.onSplitChange(this.props.splitLabels[0].value);
-    }
   }
 
   onSplitChange(value) {
-    const split = this.props.splits.filter((split) => split.id === value)[0];
-    let logs;
-    if (split.type === SPLIT_SINGLE) {
-      logs = [split.original_log];
-    } else {
-      logs = [split.training_log, split.test_log];
-    }
-    this.getMaxEvents(logs);
-  }
-
-  getMaxEvents(logs) {
-    const arr = logs.map((log) => log.properties.maxEventsInLog);
-    const max = arr.reduce(function (a, b) {
-      return Math.max(a, b);
-    });
-    this.setState({maxEventsInLog: max, traceAttributes: logs[0].properties.traceAttributes});
+    this.setState({split_id: value});
   }
 
   render() {
+    const {maxEventsInLog, traceAttributes} = this.props.getLogProperties(this.state.split_id);
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
           <TrainingFormCard splitLabels={this.props.splitLabels} fetchState={this.props.fetchState}
-                            maxEventsInLog={this.state.maxEventsInLog} traceAttributes={this.state.traceAttributes}
+                            maxEventsInLog={maxEventsInLog} traceAttributes={traceAttributes}
                             onSubmit={this.props.onSubmitTraining} onSplitChange={this.onSplitChange.bind(this)}/>
         </div>
       </div>
@@ -59,24 +42,23 @@ class Training extends Component {
 }
 
 Training.propTypes = {
-  splitLabels: splitLabels,
-  splits: PropTypes.any,
+  splitLabels: splitLabelPropType,
+  onRequestLogList: PropTypes.func.isRequired,
+  getLogProperties: PropTypes.func.isRequired,
   onRequestSplitList: PropTypes.func.isRequired,
   onSubmitTraining: PropTypes.func.isRequired,
-  fetchState: PropTypes.shape({
-    inFlight: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  }).isRequired
+  fetchState: fetchStatePropType
 };
 
 const mapStateToProps = (state) => ({
-  splitLabels: splitsToString(state.splits.splits),
-  splits: state.splits.splits,
+  getLogProperties: getLogProperties(state.splits.byId, state.logs.byId),
+  splitLabels: splitsToLabel(state.logs.byId, state.splits.byId, state.splits.allIds),
   fetchState: state.training.fetchState,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onRequestSplitList: () => dispatch(splitsRequested()),
+  onRequestLogList: () => dispatch(logListRequested()),
   onSubmitTraining: (payload) => dispatch(submitTraining(payload))
 });
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {CLASSIFICATION, LABELLING, REGRESSION} from '../../reference';
+import {CLASSIFICATION, KMEANS, LABELLING, REGRESSION} from '../../reference';
 import PropTypes from 'prop-types';
 import ClassificationKnn from './ClassificationKnn';
 import ClassificationDecisionTree from './ClassificationDecisionTree';
@@ -10,8 +10,10 @@ import RegressionRandomForest from './RegressionRandomForest';
 import RegressionLasso from './RegressionLasso';
 import RegressionLinear from './RegressionLinear';
 import HyperOpt from './HyperOpt';
-import {labelPropType, traceAttributeShape} from '../../helpers';
+import {labelPropType, traceAttributeShape} from '../../propTypes';
 import Labelling from './Labelling';
+import AddColumns from './AddColumns';
+import KMeans from './KMeans';
 
 const knnUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html';
 const decisionTreeUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html';
@@ -21,6 +23,7 @@ const classRandomForest =
 const regressorRF = 'http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html';
 const regressorLasso = 'http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Lasso.html';
 const regressorLinear = 'http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html';
+const kmeansUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html';
 const hyperUrl = 'http://hyperopt.github.io/hyperopt/';
 const AdvancedConfiguration = (props) => {
   const makeExpander = (panelLabel, url, component, defaultExpanded) => {
@@ -30,20 +33,20 @@ const AdvancedConfiguration = (props) => {
 
 
   const classConfigMap = {
-    'classification.knn': makeExpander('KNeighborsClassifier', knnUrl, <ClassificationKnn
+    'classification.knn': makeExpander('K-Neighbors classifier', knnUrl, <ClassificationKnn
       onChange={props.onChange}/>),
-    'classification.decisionTree': makeExpander('DecisionTreeClassifier', decisionTreeUrl,
+    'classification.decisionTree': makeExpander('Decision tree classifier', decisionTreeUrl,
       <ClassificationDecisionTree onChange={props.onChange} {...props}/>),
-    'classification.randomForest': makeExpander('RandomForestClassifier', classRandomForest,
+    'classification.randomForest': makeExpander('Random forest classifier', classRandomForest,
       <ClassificationRandomForest onChange={props.onChange} {...props}/>)
   };
 
   const regressionConfigMap = {
-    'regression.lasso': makeExpander('Lasso', regressorLasso,
+    'regression.lasso': makeExpander('Lasso regression', regressorLasso,
       <RegressionLasso onChange={props.onChange} {...props}/>),
-    'regression.linear': makeExpander('LinearRegression', regressorLinear,
+    'regression.linear': makeExpander('Linear regression', regressorLinear,
       <RegressionLinear onChange={props.onChange} {...props}/>),
-    'regression.randomForest': makeExpander('RandomForestRegressor', regressorRF,
+    'regression.randomForest': makeExpander('Random forest regressor', regressorRF,
       <RegressionRandomForest onChange={props.onChange} {...props}/>)
   };
 
@@ -58,6 +61,16 @@ const AdvancedConfiguration = (props) => {
   const hyperOpt = () => (makeExpander('Hyperparameter Optimization', hyperUrl,
     <HyperOpt onChange={props.onChange} predictionMethod={props.predictionMethod} {...props}/>));
 
+  const addColumns = () => (makeExpander('Temporal and intercase features', '',
+    <AddColumns onChange={props.onChange} label={props.label} {...props}/>));
+
+  const kmeans = () => {
+    if (props.clusterings.includes(KMEANS)) {
+      return [makeExpander('KMeans', kmeansUrl,
+        <KMeans onChange={props.onChange} {...props}/>)];
+    }
+    return [];
+  };
 
   const label = makeExpander('Labelling', '',
     <Labelling onChange={props.onChange} label={props.label}
@@ -66,9 +79,9 @@ const AdvancedConfiguration = (props) => {
 
   const configs = () => {
     if (props.predictionMethod === REGRESSION) {
-      return [hyperOpt(), ...configMapper(props.regression, regressionConfigMap)];
+      return [addColumns(), ...kmeans(), hyperOpt(), ...configMapper(props.regression, regressionConfigMap)];
     } else if (props.predictionMethod === CLASSIFICATION) {
-      return [hyperOpt(), ...configMapper(props.classification, classConfigMap)];
+      return [addColumns(), ...kmeans(), hyperOpt(), ...configMapper(props.classification, classConfigMap)];
     } else {
       return [];
     }
@@ -80,6 +93,7 @@ const AdvancedConfiguration = (props) => {
 AdvancedConfiguration.propTypes = {
   classification: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   regression: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  clusterings: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.shape(labelPropType).isRequired,
   predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, LABELLING]).isRequired,

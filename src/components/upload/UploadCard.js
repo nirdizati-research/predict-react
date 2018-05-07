@@ -4,10 +4,10 @@ import ServerUpload from './ServerUpload.jsx';
 
 const UploadCard = () => {
   return <Card className="md-block-centered">
-    <CardTitle title="Upload"/>
+    <CardTitle title="Single log file upload"/>
     <CardText>
       <h3>After upload create a Split with this log!</h3>
-
+      <p>Supported log file formats are <span className="md-font-semibold">xes, mxml, xes.gz and mxml.gz</span></p>
       Upload a single log file.
       Log parameters for the charts will be calculated during the upload and this process may take time. Remain patient!
       <ServerUpload/>

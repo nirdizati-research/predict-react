@@ -5,7 +5,7 @@ import SelectField from 'react-md/lib/SelectFields';
 
 import SplitFormCard from '../../../components/split/SplitFormCard';
 import FetchState from '../../../components/FetchState';
-import {logList} from '../../../../stories/Split';
+import {logsById} from '../../../../stories/Split';
 import {Button} from 'react-md/lib/Buttons/index';
 import {Slider} from 'react-md';
 
@@ -14,9 +14,8 @@ const fetchState = {
 };
 const onSubmit = jest.fn();
 
-
 it('renders', () => {
-  const element = shallow(<SplitFormCard fetchState={fetchState} logs={logList} onSubmit={onSubmit}/>);
+  const element = shallow(<SplitFormCard fetchState={fetchState} logs={logsById} onSubmit={onSubmit}/>);
   expect(element).toBeDefined();
   expect(element.find(FetchState).length).toBe(1);
   expect(element.find(SelectField).length).toBe(2);
@@ -25,7 +24,7 @@ it('renders', () => {
 });
 
 it('calls selectChange', () => {
-  const element = shallow(<SplitFormCard fetchState={fetchState} logs={logList} onSubmit={onSubmit}/>);
+  const element = shallow(<SplitFormCard fetchState={fetchState} logs={logsById} onSubmit={onSubmit}/>);
   element.find(SelectField).at(0).simulate('change', 'nonlocal.mxml.gz');
   element.find(SelectField).at(1).simulate('change', 'split_random');
   element.find(Button).at(0).simulate('click');

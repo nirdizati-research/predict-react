@@ -7,7 +7,7 @@ import {CLASSIFICATION, REGRESSION} from '../../reference';
 import ResultTableCard from './ResultTableCard';
 import {getChartHeader, getPrefixChartHeader, getTitles} from './ColumnHelper';
 import BubbleChartCard from '../chart/BubbleChartCard';
-import {jobPropType} from '../../helpers';
+import {jobPropType} from '../../propTypes';
 import ControlledLineChartCard from '../chart/ControlledLineChartCard';
 import {toRun} from '../../util/dataReducers';
 
@@ -35,7 +35,8 @@ const prepareData = (jobs, predictionMethod) => {
       return regressionMap(jobs);
     case CLASSIFICATION:
       return classMap(jobs);
-    // no default
+    default:
+      return [];
   }
 };
 
@@ -91,7 +92,7 @@ const getCharts = (data, predictionMethod) => {
                        columns={getPrefixChartHeader(predictionMethod)}
                        hTitle={headers[1].label}
                        vTitle={headers[2].label}
-                       cardTitle="Accuracy by prefix length"/></div>
+                       cardTitle="Bubble chart by prefix length"/></div>
   ];
 };
 

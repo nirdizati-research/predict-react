@@ -1,7 +1,7 @@
 /**
  * Created by Tõnis Kasekamp on 18.12.2017.
  */
-import {CLASSIFICATION, REGRESSION, SPLIT_SINGLE} from '../reference';
+import {CLASSIFICATION, REGRESSION} from '../reference';
 
 // TODO use this in split table
 export const normalizeSplits = (splits) => {
@@ -88,6 +88,7 @@ export const jobToConfigTable = (job) => {
 };
 
 export const jobToValidationTable = (job) => {
+  const kmeans = job.config.kmeans;
   if (job.type === REGRESSION) {
     return {
       id: job.id,
@@ -95,11 +96,11 @@ export const jobToValidationTable = (job) => {
       encoding: job.config.encoding,
       clustering: job.config.clustering,
       method: job.config.method,
-      splitName: splitToString(job.split),
       prefix_length: job.config.prefix_length,
       padding: job.config.padding,
       hyperopt: job.config.hyperopt,
       label: job.config.label,
+      kmeans,
       create_models: job.config.create_models,
       advanced: job.config[`${REGRESSION}.${job.config.method}`]
     };
@@ -110,19 +111,18 @@ export const jobToValidationTable = (job) => {
       encoding: job.config.encoding,
       clustering: job.config.clustering,
       method: job.config.method,
-      splitName: splitToString(job.split),
       prefix_length: job.config.prefix_length,
       padding: job.config.padding,
       hyperopt: job.config.hyperopt,
       label: job.config.label,
       create_models: job.config.create_models,
+      kmeans,
       advanced: job.config[`${job.type}.${job.config.method}`]
     };
   } else {
     return {
       id: job.id,
       encoding: job.config.encoding,
-      splitName: splitToString(job.split),
       prefix_length: job.config.prefix_length,
       padding: job.config.padding,
       label: job.config.label,
@@ -132,7 +132,7 @@ export const jobToValidationTable = (job) => {
 };
 
 export const toRun = (job) => {
-  return `${job.config.method}_${job.config.encoding}_${job.config.clustering}_${job.config.label.type}`;
+  return `${job.config.method}_${job.config.encoding}_${job.config.clustering}`;
 };
 
 const toLineObject = (job, metricName) => {

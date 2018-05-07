@@ -34,17 +34,7 @@ const classJobs = [
       'auc': 3
     },
     'type': 'classification',
-    'split': {
-      'id': 1,
-      'config': {},
-      'original_log': {
-        'id': 1,
-        'name': 'general_example.xes'
-      },
-      'type': 'single',
-      'test_log': null,
-      'training_log': null
-    },
+    'split_id': 1,
     'error': ''
   },
   {
@@ -71,17 +61,7 @@ const classJobs = [
       'auc': 30
     },
     'type': 'classification',
-    'split': {
-      'id': 1,
-      'config': {},
-      'original_log': {
-        'id': 1,
-        'name': 'general_example.xes'
-      },
-      'type': 'single',
-      'test_log': null,
-      'training_log': null
-    },
+    'split_id': 1,
     'error': ''
   }];
 
@@ -109,24 +89,12 @@ const regJobs = [{
     'rscore': 13
   },
   'type': 'regression',
-  'split': {
-    'id': 1,
-    'config': {
-      'prefix_length': 2
-    },
-    'original_log': {
-      'id': 1,
-      'name': 'general_example.xes'
-    },
-    'type': 'single',
-    'test_log': null,
-    'training_log': null
-  },
+  'split_id': 1,
   'error': ''
 }];
 const classData = [
-  ['1', 'knn_simpleIndex_kmeans_remaining_time', 123, 111, 3, '1', 0, 0, 0, 0, 0, 0],
-  ['3', 'knn_simpleIndex_kmeans_remaining_time', 1230, 1110, 30, '1', 0, 0, 0, 0, 0, 0],
+  ['1', 'knn_simpleIndex_kmeans', 123, 111, 3, '1', 0, 0, 0, 0, 0, 0],
+  ['3', 'knn_simpleIndex_kmeans', 1230, 1110, 30, '1', 0, 0, 0, 0, 0, 0],
 ];
 
 let element = null;
@@ -154,7 +122,7 @@ describe('ResultWrapper', () => {
 
   it('supplies data for regression', () => {
     element.setProps({predictionMethod: REGRESSION, jobs: regJobs});
-    const regData = [['53', 'linear_simpleIndex_noCluster_remaining_time', 11, 12, 13, '0']];
+    const regData = [['53', 'linear_simpleIndex_noCluster', 11, 12, 13, '0']];
     expect(element.find(ResultTableCard).props().data).toEqual(regData);
     expect(element.find(ResultTableCard).props().predictionMethod).toMatch(REGRESSION);
   });
@@ -166,9 +134,9 @@ describe('ResultWrapper', () => {
     const chart3 = [['53', 11, 12, 'noCluster', 13]];
 
     expect(element.find(BubbleChartCard).at(0).props().data).toEqual(chart1);
-    expect(element.find(BubbleChartCard).at(0).props().hTitle).toBe('mae');
-    expect(element.find(BubbleChartCard).at(0).props().vTitle).toBe('rmse');
-    expect(element.find(BubbleChartCard).at(0).props().cardTitle).toBe('Bubble chart by regressor');
+    expect(element.find(BubbleChartCard).at(0).props().hTitle).toBe('MAE');
+    expect(element.find(BubbleChartCard).at(0).props().vTitle).toBe('RMSE');
+    expect(element.find(BubbleChartCard).at(0).props().cardTitle).toBe('Bubble chart by regression method');
 
     expect(element.find(BubbleChartCard).at(1).props().data).toEqual(chart2);
 

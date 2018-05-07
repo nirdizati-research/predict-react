@@ -3,13 +3,12 @@
  */
 
 import {
+  FILTER_LABEL_CHANGED,
   FILTER_OPTION_CHANGED,
   FILTER_PREDICTION_METHOD_CHANGED,
   FILTER_PREFIX_LENGTH_CHANGED,
-  FILTER_REMAINING_TIME_CHANGED,
   FILTER_SPLIT_CHANGED,
   JOB_DELETED,
-  JOB_RESULTS_REQUESTED,
   JOBS_FAILED,
   JOBS_REQUESTED,
   JOBS_RETRIEVED
@@ -29,29 +28,47 @@ import {
   LAST_PAYLOAD,
   LINEAR,
   NO_CLUSTER,
+  NO_PADDING,
   RANDOM_FOREST,
   REGRESSION,
   REMAINING_TIME,
-  SIMPLE_INDEX
+  SIMPLE_INDEX,
+  THRESHOLD_MEAN
 } from '../reference';
+import {labelCompare} from '../util/labelCompare';
+import {addListToStore, removeFromStore} from './genericHelpers';
+import {advancedConfigChange} from '../util/advancedFormInput';
 
 /* eslint-disable max-len */
 
+const initialLabels = {
+  remainingTime: {type: REMAINING_TIME},
+  duration: {type: DURATION, threshold_type: THRESHOLD_MEAN}
+};
+
 const initialState = {
   fetchState: {inFlight: false},
+<<<<<<< HEAD
   jobs: [],
   filteredJobs: [],
   jobsrun: [],
   filteredJobsRun: [],
+=======
+  byId: {},
+  allIds: [],
+  filteredIds: [],
+>>>>>>> 2457e5521087bf60ab612f168b6e0de15afa3f39
   uniqueSplits: [],
   predictionMethod: REGRESSION,
   prefixLengths: [],
   selectedPrefixes: [],
-  splitId: -100,
   logId: -100,
   naId: 0,
   regId: 0,
   classId: 0,
+  thresholds: [],
+  attributeNames: [],
+  splitId: -100
 };
 
 const initialFilters = {
@@ -59,37 +76,13 @@ const initialFilters = {
   clusterings: [NO_CLUSTER, KMEANS],
   classification: [KNN, DECISION_TREE, RANDOM_FOREST],
   regression: [LINEAR, LASSO, RANDOM_FOREST],
-  labelType: REMAINING_TIME
+  label: initialLabels.remainingTime,
+  padding: NO_PADDING
 };
 
-const mergeIncomingJobs = (incoming, existing) => {
-  // From https://stackoverflow.com/a/34963663
-  const a3 = existing.concat(incoming).reduce((acc, x) => {
-    acc[x.id] = Object.assign(acc[x.id] || {}, x);
-    return acc;
-  }, {});
-  return Object.keys(a3).map((key) => a3[key]);
-};
-
-const filterUnique = (splits) => {
-  const resArr = [];
-  splits.filter(function (item) {
-    const i = resArr.findIndex((split) => split.id === item.id);
-    if (i <= -1) {
-      resArr.push(item);
-    }
-    return null;
-  });
-  return resArr;
-};
-
-const reducer = (acc, job) => {
-  acc.push(job.split);
-  return acc;
-};
 
 const filterBySplit = (splitId) => (job) => {
-  return job.split.id === splitId;
+  return job.split_id === splitId;
 };
 
 const filterByMethod = (predictionMethod) => (job) => {
@@ -98,6 +91,10 @@ const filterByMethod = (predictionMethod) => (job) => {
 
 const filterByPrefix = (selectedPrefixes) => (job) => {
   return selectedPrefixes.includes(job.config.prefix_length);
+};
+
+const filterByPadding = (padding) => (job) => {
+  return job.config.padding === padding;
 };
 
 const filterByAllElse = (encodings, clusterings, classification, regression, predictionMethod) => (job) => {
@@ -109,8 +106,8 @@ const filterByAllElse = (encodings, clusterings, classification, regression, pre
   }
 };
 
-const filterByLabelType = (labelType) => (job) => {
-  return job.config.label.type === labelType;
+const filterByLabelType = (predictionMethod, label) => (job) => {
+  return labelCompare(predictionMethod)(label, job.config.label);
 };
 
 const addOrRemove = (list, value) => {
@@ -132,20 +129,24 @@ const addOrRemoveString = (list, value) => {
   }
 };
 
-const removeById = (list, value) => {
-  return list.filter((val) => val.id !== value);
-};
+const prefixSet = (jobsById, ids) => [...new Set(ids.map(id => jobsById[id].config.prefix_length))];
+const thresholdSet = (jobsById) => [...new Set(Object.values(jobsById).map((job) => job.config.label.threshold))];
+const attributeNameSet = (jobsById) =>
+  [...new Set(Object.values(jobsById).map(job => job.config.label.attribute_name).filter(a => a !== undefined))];
 
-const prefixSet = (filteredJobs) => [...new Set(filteredJobs.map((job) => job.config.prefix_length))];
-
-const applyFilters = (jobs, splitId, predictionMethod, encodings, clusterings, classification, regression, labelType) => {
-  const commonJobs = jobs.filter(filterBySplit(splitId)).filter(filterByMethod(predictionMethod)).filter(filterByLabelType(labelType));
-  if (predictionMethod === LABELLING) {
-    return commonJobs;
-  }
-  return commonJobs
-    .filter(filterByAllElse(encodings, clusterings, classification, regression, predictionMethod));
-};
+const applyFilters =
+  ({byId, splitId, predictionMethod, encodings, clusterings, classification, regression, label, padding}) => {
+    const commonJobs = Object.values(byId)
+      .filter(filterBySplit(splitId))
+      .filter(filterByMethod(predictionMethod))
+      .filter(filterByPadding(padding))
+      .filter(filterByLabelType(predictionMethod, label));
+    if (predictionMethod === LABELLING) {
+      return commonJobs.map(({id}) => id);
+    }
+    return commonJobs
+      .filter(filterByAllElse(encodings, clusterings, classification, regression, predictionMethod)).map(({id}) => id);
+  };
 
 const checkboxChange = (target, state) => {
   const value = target.value;
@@ -158,18 +159,23 @@ const checkboxChange = (target, state) => {
       return {...state, regression: addOrRemoveString(state.regression, value)};
     case 'classification[]':
       return {...state, classification: addOrRemoveString(state.classification, value)};
-    case 'labelType':
-      return {...state, labelType: value};
+    case 'padding-filter':
+      return {...state, padding: value};
     // no default
   }
   return state;
 };
+
 
 const filterJobRun = (jobsrun, logId, naId, regId, classId) => {
   return jobsrun.filter((job) => (job.config.log_id === logId) && ((job.config.model_id === naId) ||
                                                                   (job.config.model_id === regId) ||
                                                                   (job.config.model_id === classId)));
 };
+
+const completedUniqueSplits = (jobsById) =>
+  [...new Set(Object.values(jobsById).filter(job => job.status === 'completed').map((job => job.split_id)))];
+
 
 const jobs = (state = {...initialState, ...initialFilters}, action) => {
   switch (action.type) {
@@ -181,17 +187,16 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
     }
 
     case JOBS_RETRIEVED: {
-      const jobs = mergeIncomingJobs(action.payload, state.jobs);
+      const jobs = addListToStore(state, action.payload);
       const jobsrun = jobs.filter((job) => (job.config.add_label === false) && (job.status='completed'));
       const filteredJobsRun = filterJobRun(state.jobsrun,state.logId,state.naId,state.regId,state.classId);
-      const uniqueSplits = filterUnique(jobs.filter((job) => job.status === 'completed').reduce(reducer, []));
+      const uniqueSplits = completedUniqueSplits(jobs.byId);
+      const thresholds = thresholdSet(jobs.byId);
+      const attributeNames = attributeNameSet(jobs.byId);
       return {
-        ...state,
-        fetchState: {inFlight: false},
-        jobs: jobs,
-        jobsrun: jobsrun,
-        filteredJobsRun: filteredJobsRun,
-        uniqueSplits: uniqueSplits
+        ...state, fetchState: {inFlight: false}, ...jobs,
+        uniqueSplits, thresholds, attributeNames,
+        filteredJobsRun, jobsrun
       };
     }
 
@@ -203,49 +208,46 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
     }
 
     case JOB_DELETED: {
-      const jobs = removeById(state.jobs, action.id);
-      const uniqueSplits = filterUnique(jobs.filter((job) => job.status === 'completed').reduce(reducer, []));
+      const jobs = removeFromStore(state, action.id);
+      const uniqueSplits = completedUniqueSplits(jobs.byId);
+      const thresholds = thresholdSet(jobs.byId);
+      const attributeNames = attributeNameSet(jobs.byId);
       return {
-        ...state, jobs, uniqueSplits
-      };
-    }
-    case JOB_RESULTS_REQUESTED: {
-      return {
-        ...state,
-        fetchState: {inFlight: true},
+        ...state, ...jobs, uniqueSplits, thresholds, attributeNames
       };
     }
     case FILTER_SPLIT_CHANGED: {
-      const filteredJobs = applyFilters(state.jobs, action.splitId, state.predictionMethod, state.encodings, state.clusterings, state.classification, state.regression, state.labelType);
-      const prefixLengths = prefixSet(filteredJobs);
+      const splitId = action.splitId;
+      const filteredIds = applyFilters({...state, splitId});
+      const prefixLengths = prefixSet(state.byId, filteredIds);
       return {
-        ...state, filteredJobs, prefixLengths,
-        splitId: action.splitId, selectedPrefixes: prefixLengths
+        ...state, filteredIds, prefixLengths, splitId, selectedPrefixes: prefixLengths
       };
     }
     case FILTER_PREDICTION_METHOD_CHANGED: {
-      const labelType = action.method === REGRESSION ? REMAINING_TIME : DURATION;
-      const filteredJobs = applyFilters(state.jobs, state.splitId, action.method, initialFilters.encodings, initialFilters.clusterings, initialFilters.classification, initialFilters.regression, labelType);
-      const prefixLengths = prefixSet(filteredJobs);
+      const label = action.method === REGRESSION ? initialLabels.remainingTime : initialLabels.duration;
+      const predictionMethod = action.method;
+      const filteredIds = applyFilters({...state, predictionMethod, ...initialFilters, label});
+      const prefixLengths = prefixSet(state.byId, filteredIds);
       return {
-        ...state, filteredJobs, prefixLengths, ...initialFilters, labelType,
-        predictionMethod: action.method, selectedPrefixes: prefixLengths
+        ...state, filteredIds, prefixLengths, ...initialFilters, label,
+        predictionMethod, selectedPrefixes: prefixLengths
       };
     }
     case FILTER_PREFIX_LENGTH_CHANGED: {
       const selectedPrefixes = addOrRemove(state.selectedPrefixes, action.prefixLength);
-      const filteredJobs = applyFilters(state.jobs, state.splitId, state.predictionMethod, state.encodings, state.clusterings, state.classification, state.regression, state.labelType)
-        .filter(filterByPrefix(selectedPrefixes));
+      const filteredIds = applyFilters({...state}).map(id => state.byId[id])
+        .filter(filterByPrefix(selectedPrefixes)).map(({id}) => id);
       return {
-        ...state, selectedPrefixes, filteredJobs
+        ...state, selectedPrefixes, filteredIds
       };
     }
 
     case FILTER_OPTION_CHANGED: {
       state = checkboxChange(action.payload, state);
-      const filteredJobs = applyFilters(state.jobs, state.splitId, state.predictionMethod, state.encodings, state.clusterings, state.classification, state.regression, state.labelType);
+      const filteredIds = applyFilters({...state});
       return {
-        ...state, filteredJobs
+        ...state, filteredIds
       };
     }
     case JOB_RUN_CHANGED: {
@@ -271,12 +273,12 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
       };
     }
 
-    case FILTER_REMAINING_TIME_CHANGED: {
-      const labelType = action.payload.value;
-      const filteredJobs = applyFilters(state.jobs, state.splitId, state.predictionMethod, state.encodings, state.clusterings, state.classification, state.regression, labelType);
-      const prefixLengths = prefixSet(filteredJobs);
+    case FILTER_LABEL_CHANGED: {
+      const modifiedState = advancedConfigChange(state, action.payload.config, action.payload.value);
+      const filteredIds = applyFilters({...modifiedState});
+      const prefixLengths = prefixSet(state.byId, filteredIds);
       return {
-        ...state, filteredJobs, prefixLengths, labelType, selectedPrefixes: prefixLengths
+        ...modifiedState, filteredIds, prefixLengths, selectedPrefixes: prefixLengths
       };
     }
 

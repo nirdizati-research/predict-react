@@ -2,7 +2,8 @@ import React, {PureComponent} from 'react';
 import {DataTable, TableBody, TableColumn, TableHeader, TablePagination, TableRow} from 'react-md/lib/DataTables/index';
 import PropTypes from 'prop-types';
 import {columnStyle} from '../../reference';
-import {labelJobFlat} from '../../helpers';
+import {labelJobFlat} from '../../propTypes';
+import JsonHolder from './JsonHolder';
 
 /* eslint-disable camelcase */
 
@@ -25,9 +26,9 @@ class LabelConfigTable extends PureComponent {
   }
 
   render() {
-    const headers = ['id', 'Label type', 'Threshold type', 'Threshold', 'Attribute name', 'Prefix length', 'Padding', 'Split', 'Result'];
+    const headers = ['id', 'Label type', 'Threshold type', 'Threshold', 'Attribute name', 'Prefix length', 'Padding', 'Result'];
 
-    return (<DataTable baseId="simple-pagination" plain>
+    return (<DataTable baseId="simple-pagination" selectableRows={false}>
       <TableHeader>
         <TableRow>
           {headers.map((header) => <TableColumn key={header} style={columnStyle}> {header}</TableColumn>)}
@@ -43,10 +44,7 @@ class LabelConfigTable extends PureComponent {
             <TableColumn style={columnStyle}>{job.label.attribute_name}</TableColumn>
             <TableColumn style={columnStyle} numeric>{job.prefix_length}</TableColumn>
             <TableColumn style={columnStyle} numeric>{job.padding}</TableColumn>
-            <TableColumn style={columnStyle} grow>{job.splitName}</TableColumn>
-            <TableColumn style={columnStyle}>
-              <pre>{JSON.stringify(job.result, null, 1)}</pre>
-            </TableColumn>
+            <TableColumn style={columnStyle} grow><JsonHolder data={job.result}/></TableColumn>
           </TableRow>
         ))}
       </TableBody>

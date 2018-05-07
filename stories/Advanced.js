@@ -2,7 +2,7 @@ import React from 'react';
 import {storiesOf} from '@storybook/react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import ClassificationKnn from '../src/components/advanced/ClassificationKnn';
-import {CLASSIFICATION, REGRESSION, REMAINING_TIME, THRESHOLD_MEAN} from '../src/reference';
+import {CLASSIFICATION, KMEANS, REGRESSION, REMAINING_TIME, THRESHOLD_MEAN} from '../src/reference';
 import AdvancedConfiguration from '../src/components/advanced/AdvancedConfiguration';
 import ClassificationDecisionTree from '../src/components/advanced/ClassificationDecisionTree';
 import ClassificationRandomForest from '../src/components/advanced/ClassificationRandomForest';
@@ -20,6 +20,9 @@ export const label1 = {
   threshold: 0,
   add_remaining_time: false,
   add_elapsed_time: false,
+  add_executed_events: false,
+  add_resources_used: false,
+  add_new_traces: false,
 };
 
 export const traceAttributes = [
@@ -88,8 +91,9 @@ storiesOf('Advanced configuration', module)
               <CardText>
                 Labelling
               </CardText>
-              <Labelling onChange={console.log} label={label1} traceAttributes={traceAttributes}/>
-              <Labelling onChange={console.log} label={label1} traceAttributes={[]}/>
+              <Labelling onChange={console.log} label={label1} traceAttributes={traceAttributes}
+                         predictionMethod={CLASSIFICATION}/>
+              <Labelling onChange={console.log} label={label1} traceAttributes={[]} predictionMethod={REGRESSION}/>
             </Card>
           </div>
           <div className="md-cell md-cell--12">
@@ -116,7 +120,7 @@ storiesOf('Advanced configuration', module)
               </CardText>
               <AdvancedConfiguration predictionMethod={CLASSIFICATION} label={label1} traceAttributes={[]}
                                      classification={['knn', 'decisionTree', 'randomForest']}
-                                     regression={[]} onChange={console.log}/>
+                                     regression={[]} onChange={console.log} clusterings={[KMEANS]}/>
             </Card>
           </div>
 
@@ -127,7 +131,7 @@ storiesOf('Advanced configuration', module)
                 Some text above
               </CardText>
               <AdvancedConfiguration predictionMethod={REGRESSION} classification={[]} label={label1}
-                                     traceAttributes={[]}
+                                     traceAttributes={[]} clusterings={[]}
                                      regression={['randomForest', 'lasso', 'linear']} onChange={console.log}/>
             </Card>
           </div>

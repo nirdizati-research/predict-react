@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Checkbox, TextField} from 'react-md/lib/index';
+import {TextField} from 'react-md/lib/index';
 import {
   ATTRIBUTE_NUMBER,
   ATTRIBUTE_STRING,
   CLASSIFICATION,
   classLabelControls,
   controlCreator,
+  DURATION,
   LABELLING,
   regLabelControls,
   REGRESSION,
@@ -14,7 +15,7 @@ import {
   thresholdControls
 } from '../../reference';
 import SelectField from 'react-md/lib/SelectFields/index';
-import {labelPropType, traceAttributeShape} from '../../helpers';
+import {labelPropType, traceAttributeShape} from '../../propTypes';
 
 const traceAttributeToLabel = (traceAttr) => {
   return {label: traceAttr.name, value: traceAttr.name, message: `First trace value: ${traceAttr.example}`};
@@ -24,18 +25,23 @@ const methodConfig = 'label';
 /* eslint-disable no-invalid-this */
 /* eslint-disable react/prop-types */
 const Labelling = (props) => {
-  const helpText = <div key='key' className="md-cell md-cell--12"><p>
-    Classification supports all 4 labelling types. For regression, the supported types are remaining time and number
-    attribute.
-  </p><p>
-    When using remaining time, the threshold is an integer in seconds. If the remaining time is below this threshold it
-    is classified as <code>True</code> or Fast. Times above the threshold are classified as <code>False</code> or Slow.
-  </p><p>
-    Number attributes below the threshold are set as <code>True</code>.
-  </p><p>
-    It is not recommended to use String base label testing on a value that has too many classes, like a registration
-    date. This will reduce the performance of front-end rendering due to the payload size.</p>
-  </div>;
+  const helpText = () => {
+    if (props.predictionMethod === REGRESSION) {
+      return <div key='key' className="md-cell md-cell--12"/>;
+    } else {
+      return <div key='key' className="md-cell md-cell--12"><p>
+        When using remaining time, the threshold is an integer in seconds. If the remaining time is below this threshold
+        it
+        is classified as <code>True</code> or Fast. Times above the threshold are classified as <code>False</code> or
+        Slow.
+      </p><p>
+        Number attributes below the threshold are set as <code>True</code>.
+      </p><p>
+        It is not recommended to use String base label testing on a value that has too many classes, like a registration
+        date. This will reduce the performance of front-end rendering due to the payload size.</p>
+      </div>;
+    }
+  };
 
   const controls = () => (props.predictionMethod === REGRESSION ? regLabelControls : classLabelControls);
 
@@ -50,29 +56,10 @@ const Labelling = (props) => {
     value={props.label.type}
   />;
 
-  const addRemainingTime = <Checkbox
-    key="add_remaining_time"
-    id="add_remaining_time"
-    name="add_remaining_time"
-    label="Add remaining time"
-    className="md-cell md-cell--3"
-    checked={props.label.add_remaining_time}
-    onChange={props.onChange.bind(this, {methodConfig, key: 'add_remaining_time'})}
-  />;
-
-  const addElapsedTime = <Checkbox
-    key="add_elapsed_time"
-    id="add_elapsed_time"
-    name="add_elapsed_time"
-    label="Add elapsed time"
-    className="md-cell md-cell--3"
-    checked={props.label.add_elapsed_time}
-    onChange={props.onChange.bind(this, {methodConfig, key: 'add_elapsed_time'})}/>;
-
   const threshold = (label) => {
     if (props.predictionMethod === REGRESSION) {
       return [];
-    } else if (label.type === REMAINING_TIME || label.type === ATTRIBUTE_NUMBER) {
+    } else if ([REMAINING_TIME, ATTRIBUTE_NUMBER, DURATION].includes(label.type)) {
       const thresholdType = <SelectField
         key="threshold_type"
         id="threshold_type"
@@ -123,7 +110,7 @@ const Labelling = (props) => {
     />;
   };
 
-  return [helpText, type, attributeSelector(props), addRemainingTime, addElapsedTime, ...threshold(props.label)];
+  return [helpText(), type, attributeSelector(props), ...threshold(props.label)];
 };
 
 Labelling.propTypes = {
