@@ -191,7 +191,9 @@ describe('JobsReducer', () => {
   it('updates job list by id', () => {
     const state2 = jobs(jobs(undefined, jobsRetrieved(jobList)), jobsRetrieved([changedJob]));
 
-    const {byId} = state2;
+    const {allIds, byId} = state2;
+    expect(Object.keys(byId).length).toEqual(8);
+    expect(allIds.length).toEqual(8);
     expect(byId[1].status).toBe('completed');
   });
 

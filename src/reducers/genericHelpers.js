@@ -8,7 +8,7 @@ export const listRetrieved = (objectList) => {
 // partial update of objects
 export const addListToStore = ({allIds, byId}, objectList) => {
   const newObjs = listRetrieved(objectList);
-  return {allIds: allIds.concat(newObjs.allIds), byId: {...byId, ...newObjs.byId}};
+  return {allIds: [...new Set([...allIds, ...newObjs.allIds])], byId: {...byId, ...newObjs.byId}};
 };
 
 
