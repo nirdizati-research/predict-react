@@ -29,6 +29,7 @@ import {fetchStatePropType, splitLabelPropType, traceAttributeShape} from '../pr
 import PrefixSelector from './training/PrefixSelector';
 import AdvancedConfiguration from './advanced/AdvancedConfiguration';
 import {classificationMetrics, regressionMetrics} from './advanced/advancedConfig';
+import {advancedConfigChange} from '../util/advancedFormInput';
 
 const defaultPrefix = 1;
 const groupStyle = {height: 'auto'};
@@ -98,23 +99,8 @@ class TrainingFormCard extends Component {
     }
   }
 
-  advanceConfigChange({methodConfig, key, isNumber, isFloat, maybeNumber}, value) {
-    // Only the changed values are put in config. Otherwise merged with config in backend
-    // classification.knn weights distance
-    const config = this.state[methodConfig];
-    if (isNumber) {
-      // for some reason, value can be "". Don't know, dont care
-      value = parseInt(value, 10);
-    } else if (isFloat) {
-      value = parseFloat(value);
-    } else if (maybeNumber) {
-      const parsed = parseFloat(value);
-      if (!isNaN(parsed)) {
-        value = parsed;
-      }
-    }
-    config[key] = value;
-    this.setState({[methodConfig]: config});
+  advanceConfigChange(config, value) {
+    this.setState(advancedConfigChange(this.state, config, value));
   }
 
   addOrRemove(list, value) {
