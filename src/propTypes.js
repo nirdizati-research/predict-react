@@ -82,7 +82,6 @@ export const jobPropType = PropTypes.shape({
 
 export const jobFlatPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
-  splitName: PropTypes.string.isRequired,
   prefix_length: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
   padding: PropTypes.string,
@@ -95,7 +94,6 @@ export const jobFlatPropType = PropTypes.shape({
 export const labelJobFlat = PropTypes.shape({
   id: PropTypes.number.isRequired,
   encoding: PropTypes.string.isRequired,
-  splitName: PropTypes.string.isRequired,
   prefix_length: PropTypes.number.isRequired,
   padding: PropTypes.string.isRequired,
   result: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,

@@ -66,7 +66,7 @@ export const logList = [
         'resources': {},
         'newTraces': {},
         'traceAttributes': [],
-        'maxEventsInLog': 1
+        'maxEventsInLog': 123
       }
   },
   {

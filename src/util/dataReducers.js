@@ -13,7 +13,6 @@ export const jobToValidationTable = (job) => {
       encoding: job.config.encoding,
       clustering: job.config.clustering,
       method: job.config.method,
-      splitName: '',
       prefix_length: job.config.prefix_length,
       padding: job.config.padding,
       hyperopt: job.config.hyperopt,
@@ -29,7 +28,6 @@ export const jobToValidationTable = (job) => {
       encoding: job.config.encoding,
       clustering: job.config.clustering,
       method: job.config.method,
-      splitName: '',
       prefix_length: job.config.prefix_length,
       padding: job.config.padding,
       hyperopt: job.config.hyperopt,
@@ -42,7 +40,6 @@ export const jobToValidationTable = (job) => {
     return {
       id: job.id,
       encoding: job.config.encoding,
-      splitName: '',
       prefix_length: job.config.prefix_length,
       padding: job.config.padding,
       label: job.config.label,

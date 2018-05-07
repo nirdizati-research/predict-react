@@ -23,24 +23,7 @@ export const regJobs = [
     'status': 'completed',
     'result': {'rmse': 221.72427510287082, 'mae': 193.11309325742712, 'rscore': -0.060008504856852385},
     'type': 'regression',
-    'split': {
-      'id': 4,
-      'config': {},
-      'original_log': {
-        'id': 5,
-        'name': 'financial_log.xes.gz',
-        'properties': {
-          'events': {},
-          'resources': {},
-          'newTraces': {},
-          'maxEventsInLog': 119,
-          'traceAttributes': []
-        }
-      },
-      'type': 'single',
-      'test_log': null,
-      'training_log': null
-    },
+    'split_id': 4,
     'error': ''
   },
   {
@@ -58,24 +41,7 @@ export const regJobs = [
     'status': 'completed',
     'result': {'rmse': 201.76464727647456, 'mae': 165.3624707580213, 'rscore': 0.12224386445773794},
     'type': 'regression',
-    'split': {
-      'id': 4,
-      'config': {},
-      'original_log': {
-        'id': 5,
-        'name': 'financial_log.xes.gz',
-        'properties': {
-          'events': {},
-          'resources': {},
-          'newTraces': {},
-          'maxEventsInLog': 119,
-          'traceAttributes': []
-        }
-      },
-      'type': 'single',
-      'test_log': null,
-      'training_log': null
-    },
+    'split_id': 4,
     'error': ''
   },
   {
@@ -93,24 +59,7 @@ export const regJobs = [
     'status': 'completed',
     'result': {'rmse': 191.19102930552305, 'mae': 138.26345747696183, 'rscore': 0.21183208508900764},
     'type': 'regression',
-    'split': {
-      'id': 4,
-      'config': {},
-      'original_log': {
-        'id': 5,
-        'name': 'financial_log.xes.gz',
-        'properties': {
-          'events': {},
-          'resources': {},
-          'newTraces': {},
-          'maxEventsInLog': 119,
-          'traceAttributes': []
-        }
-      },
-      'type': 'single',
-      'test_log': null,
-      'training_log': null
-    },
+    'split_id': 4,
     'error': ''
   },
   {
@@ -128,24 +77,7 @@ export const regJobs = [
     'status': 'completed',
     'result': {'rmse': 171.19102930552305, 'mae': 128.26345747696183, 'rscore': 0.24183208508900764},
     'type': 'regression',
-    'split': {
-      'id': 4,
-      'config': {},
-      'original_log': {
-        'id': 5,
-        'name': 'financial_log.xes.gz',
-        'properties': {
-          'events': {},
-          'resources': {},
-          'newTraces': {},
-          'maxEventsInLog': 119,
-          'traceAttributes': []
-        }
-      },
-      'type': 'single',
-      'test_log': null,
-      'training_log': null
-    },
+    'split_id': 4,
     'error': ''
   }
 ];

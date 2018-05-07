@@ -17,6 +17,7 @@ import {
   ATTRIBUTE_NUMBER,
   CLASSIFICATION,
   DURATION,
+  LABELLING,
   NO_CLUSTER,
   NO_PADDING,
   RANDOM_FOREST,
@@ -285,6 +286,12 @@ describe('Validation filter', () => {
       let state3 = jobs(stateClass, {type: FILTER_SPLIT_CHANGED, splitId: 2});
       expect(state3.label).toEqual({type: DURATION, threshold_type: THRESHOLD_MEAN});
     });
+
+    it('has label duration for labelling', () => {
+      const state3 = jobs(state2, {type: FILTER_PREDICTION_METHOD_CHANGED, method: LABELLING});
+      expect(state3.label).toEqual({type: DURATION, threshold_type: THRESHOLD_MEAN});
+      expect(state3.filteredIds).toEqual([]);
+    });
   });
 
   describe('when FILTER_PREFIX_LENGTH_CHANGED', () => {
@@ -311,6 +318,33 @@ describe('Validation filter', () => {
       });
       expect(state3.filteredIds).toEqual([]);
       expect(state3.encodings.length).toEqual(4);
+    });
+
+    it('changes for classification method', () => {
+      let state3 = jobs(stateClass, {
+        type: FILTER_OPTION_CHANGED,
+        payload: {value: RANDOM_FOREST, name: 'classification[]'}
+      });
+      expect(state3.classification.length).toEqual(2);
+      expect(state3.filteredIds).toEqual([]);
+    });
+
+    it('changes for regression method', () => {
+      let state3 = jobs(state2, {
+        type: FILTER_OPTION_CHANGED,
+        payload: {value: RANDOM_FOREST, name: 'regression[]'}
+      });
+      expect(state3.regression.length).toEqual(2);
+      expect(state3.filteredIds).toEqual([]);
+    });
+
+    it('changes for clustering method', () => {
+      let state3 = jobs(state2, {
+        type: FILTER_OPTION_CHANGED,
+        payload: {value: NO_CLUSTER, name: 'clusterings[]'}
+      });
+      expect(state3.clusterings.length).toEqual(1);
+      expect(state3.filteredIds).toEqual([]);
     });
 
     it('changes for padding', () => {

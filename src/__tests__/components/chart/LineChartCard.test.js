@@ -5,12 +5,12 @@ import LineChartCard from '../../../components/chart/LineChartCard';
 import {Chart} from 'react-google-charts';
 
 const traces = {
+  '2011-10-07': 83,
   '2011-10-01': 23,
   '2011-10-03': 119,
   '2011-10-04': 85,
   '2011-10-05': 106,
   '2011-10-06': 80,
-  '2011-10-07': 83
 };
 const cardTitle = 'Card title';
 const chartTitle = 'Chart title';
