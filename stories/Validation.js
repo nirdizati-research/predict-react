@@ -11,7 +11,7 @@ import {label1} from './Advanced';
 import LabellingHeaderCard from '../src/components/Labelling/LabellingHeaderCard';
 
 const splitLabels = [{value: 1, label: 'Split #1'}, {value: 2, label: 'Split #2'}];
-const classJobs = [
+export const classJobs = [
   {
     'id': 1,
     'created_date': '2017-11-14T20:52:36.469000Z',

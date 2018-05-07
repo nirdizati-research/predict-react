@@ -2,10 +2,11 @@ import {shallow} from 'enzyme/build/index';
 import UploadCard from '../../../components/upload/UploadCard';
 
 import * as React from 'react';
-import ServerUpload from '../../../components/upload/ServerUpload';
-import UploadDouble from '../../../components/upload/UploadDouble';
+
 import UploadDoubleCard from '../../../components/upload/UploadDoubleCard';
 import {TextField} from 'react-md';
+import ServerUpload from '../../../components/upload/ServerUpload.jsx';
+import UploadDouble from '../../../components/upload/UploadDouble.jsx';
 
 it('renders single card', () => {
   const element = shallow(<UploadCard/>);

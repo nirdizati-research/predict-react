@@ -111,6 +111,10 @@ const someColumns = [
 export const labelJobs = [
   {
     'id': 4,
+    'split_id': 1,
+    'created_date': '2017-11-14T20:52:36.469000Z',
+    'modified_date': '2017-12-05T14:57:28.344216Z',
+    'status': 'completed',
     'config': {
       'prefix_length': 1,
       'encoding': 'simpleIndex',
@@ -121,6 +125,10 @@ export const labelJobs = [
   },
   {
     'id': 5,
+    'split_id': 1,
+    'created_date': '2017-11-14T20:52:36.469000Z',
+    'modified_date': '2017-12-05T14:57:28.344216Z',
+    'status': 'completed',
     'config': {
       'prefix_length': 4,
       'encoding': 'simpleIndex',
@@ -131,6 +139,10 @@ export const labelJobs = [
   },
   {
     'id': 6,
+    'split_id': 1,
+    'created_date': '2017-11-14T20:52:36.469000Z',
+    'modified_date': '2017-12-05T14:57:28.344216Z',
+    'status': 'completed',
     'config': {
       'prefix_length': 3,
       'encoding': 'simpleIndex',
@@ -141,6 +153,10 @@ export const labelJobs = [
   },
   {
     'id': 7,
+    'split_id': 1,
+    'created_date': '2017-11-14T20:52:36.469000Z',
+    'modified_date': '2017-12-05T14:57:28.344216Z',
+    'status': 'completed',
     'config': {
       'prefix_length': 5,
       'encoding': 'simpleIndex',
