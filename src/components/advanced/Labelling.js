@@ -71,10 +71,14 @@ const Labelling = (props) => {
         value={label.threshold_type}
       />;
 
+      let thresholdLabel = 'Threshold';
+      if (label.type === DURATION) {
+        thresholdLabel = thresholdLabel + ' (seconds)';
+      }
       const threshold = <TextField
         key="threshold"
         id="threshold"
-        label="Threshold"
+        label={thresholdLabel}
         type="number"
         value={label.threshold}
         onChange={props.onChange.bind(this, {methodConfig, key: 'threshold', isNumber: true})}
