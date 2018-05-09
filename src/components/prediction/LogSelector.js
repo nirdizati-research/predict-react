@@ -3,7 +3,8 @@ import React, {Component} from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import FetchState from '../FetchState';
 import SelectField from 'react-md/lib/SelectFields/index';
-class SplitFormCard extends Component {
+
+class LogSelector extends Component {
   constructor(props) {
     super(props);
 
@@ -23,7 +24,13 @@ class SplitFormCard extends Component {
   }
 
   render() {
-    const itemsWithLabel = this.props.logs.map(({id, name}) => ({value: id, label: name}));
+    const itemsWithLabel = []
+    for (var k in this.props.logs){
+      if (this.props.logs.hasOwnProperty(k)) {
+        var log={value: this.props.logs[k].id, label : this.props.logs[k].name}
+        itemsWithLabel.push(log)
+       }
+    }
 
     return (
       <Card className="md-block-centered">
@@ -35,7 +42,7 @@ class SplitFormCard extends Component {
             menuItems={itemsWithLabel}
             position={SelectField.Positions.BELOW}
             onChange={this.selectChange.bind(this)}
-            value={this.state.original_log}
+            value={this.props.logId}
           />
           <FetchState fetchState={this.props.fetchState}/>
         </CardText>
@@ -43,16 +50,14 @@ class SplitFormCard extends Component {
   }
 }
 
-SplitFormCard.propTypes = {
-  logs: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired
-  }).isRequired).isRequired,
+LogSelector.propTypes = {
+  logs: PropTypes.object.isRequired,
   fetchState: PropTypes.shape({
     inFlight: PropTypes.bool.isRequired,
     error: PropTypes.any
   }).isRequired,
-  logChange: PropTypes.func.isRequired
+  logChange: PropTypes.func.isRequired,
+  logId: PropTypes.number.isRequired
 };
 
-export default SplitFormCard;
+export default LogSelector;

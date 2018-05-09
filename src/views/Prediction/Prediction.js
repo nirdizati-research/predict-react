@@ -11,18 +11,15 @@ import {submitPrediction, JOB_RUN_CHANGED,} from '../../actions/RuntimeActions';
 import PredictionHeaderCard from '../../components/prediction/PredictionHeaderCard';
 import LogSelector from '../../components/prediction/LogSelector';
 import ResultTable from '../../components/prediction/ResultTable';
-import {jobPropType, modelPropType, logPropType} from '../../helpers';
+import {jobPropType, modelPropType} from '../../propTypes';
 import Button from 'react-md/lib/Buttons/Button';
 import {modelsToString} from '../../util/dataReducers';
 import {Card, CardText} from 'react-md/lib/Cards/index';
 
 class Prediction extends Component {
   onChangeLog(logId) {
-    const logs = this.props.logs.filter((log) => (log.id === logId))
-    const arr = logs.map((log) => log.properties.maxEventsInLog);
-    const p_length = arr.reduce(function (a, b) {
-      return Math.max(a, b);
-    });
+    var log = this.props.logs[logId]
+    const p_length = log.properties.maxEventsInLog;
     this.props.onLogChange(logId, p_length);
     this.props.onChangeJRun(logId);
   }
@@ -88,7 +85,7 @@ class Prediction extends Component {
       <div className="md-grid">
         <div className="md-cell md-cell--12">
         <LogSelector  logs={this.props.logs} fetchState={this.props.logfetchState}
-                      logChange={this.onChangeLog.bind(this)}/>
+                      logChange={this.onChangeLog.bind(this)} logId={this.props.logId}/>
         </div>
         <div className="md-cell md-cell--12">
           <PredictionHeaderCard modelsLabel={regModelsLabel}
@@ -137,7 +134,7 @@ Prediction.propTypes = {
   onSubmitPrediction: PropTypes.func.isRequired,
   onRequestJobs: PropTypes.func.isRequired,
   models: PropTypes.arrayOf(modelPropType).isRequired,
-  logs: PropTypes.arrayOf(logPropType).isRequired,
+  logs: PropTypes.object.isRequired,
   jobsrun: PropTypes.arrayOf(jobPropType).isRequired,
   regressionModels: PropTypes.arrayOf(modelPropType).isRequired,
   classificationModels: PropTypes.arrayOf(modelPropType).isRequired,
@@ -150,7 +147,7 @@ Prediction.propTypes = {
 
 const mapStateToProps = (state) => ({
   models: state.models.models,
-  logs: state.logs.logs,
+  logs: state.logs.byId,
   jobsrun: state.jobs.filteredJobsRun,
   regressionModels: state.models.regressionModels,
   classificationModels: state.models.classificationModels,

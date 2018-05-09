@@ -48,16 +48,13 @@ const initialLabels = {
 
 const initialState = {
   fetchState: {inFlight: false},
-<<<<<<< HEAD
   jobs: [],
   filteredJobs: [],
   jobsrun: [],
   filteredJobsRun: [],
-=======
   byId: {},
   allIds: [],
   filteredIds: [],
->>>>>>> 2457e5521087bf60ab612f168b6e0de15afa3f39
   uniqueSplits: [],
   predictionMethod: REGRESSION,
   prefixLengths: [],
@@ -188,7 +185,12 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
 
     case JOBS_RETRIEVED: {
       const jobs = addListToStore(state, action.payload);
-      const jobsrun = jobs.filter((job) => (job.config.add_label === false) && (job.status='completed'));
+      const jobsrun = []
+      for (var k in state.byId) {
+        if((state.byId.hasOwnProperty(k)) && state.byId[k].config.add_label === false){
+          jobsrun.push(state.byId[k])
+        }
+      }
       const filteredJobsRun = filterJobRun(state.jobsrun,state.logId,state.naId,state.regId,state.classId);
       const uniqueSplits = completedUniqueSplits(jobs.byId);
       const thresholds = thresholdSet(jobs.byId);

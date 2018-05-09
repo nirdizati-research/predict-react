@@ -2,7 +2,7 @@ import React from 'react';
 import {Card, CardTitle} from 'react-md/lib/Cards/index';
 import SelectField from 'react-md/lib/SelectFields';
 import PropTypes from 'prop-types';
-import {modelsLabel} from '../../helpers';
+import {modelsLabel} from '../../propTypes';
 
 
 const PredictionHeaderCard = (props) => {

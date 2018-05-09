@@ -2,24 +2,23 @@ import React, {Component} from 'react';
 import {DataTable, TableBody, TableColumn, TableHeader, TableRow} from 'react-md/lib/DataTables/index';
 import PropTypes from 'prop-types';
 import {splitToString} from '../../util/dataReducers';
-import {jobPropType} from '../../helpers';
+import {jobPropType} from '../../propTypes';
 
 /* eslint-disable camelcase */
 class ResultTable extends Component {
 
   componentDidMount() {
-    // Get only if empty
-    // TODO move this check to somewhere else
 
     const intervalId = setInterval(() => {
       this.props.onRequestJobs();
-    }, 5000);
+    }, 10000);
     this.setState({intervalId: intervalId});
   }
 
   componentWillUnmount() {
     clearInterval(this.state.intervalId);
   }
+
   render () {
   const headers = ['id', 'Type', 'Status', 'Created date', 'Modified date', 'Split', 'Config', 'results'];
   const jobs = this.props.jobs.reverse();
@@ -30,16 +29,16 @@ class ResultTable extends Component {
       </TableRow>
     </TableHeader>
     <TableBody>
-      {jobs.map(({id, type, status, created_date, modified_date, split, config, result}) => (
+      {jobs.map(({id, type, status, created_date, modified_date, splitName, config, result}) => (
         <TableRow key={id} selectable={false}>
           <TableColumn numeric>{id}</TableColumn>
           <TableColumn>{status}</TableColumn>
           <TableColumn>{type}</TableColumn>
           <TableColumn>{new Date(created_date).toLocaleString()}</TableColumn>
           <TableColumn>{new Date(modified_date).toLocaleString()}</TableColumn>
-          <TableColumn>{splitToString(split)}</TableColumn>
+          <TableColumn>{splitName}</TableColumn>
           <TableColumn><pre>{JSON.stringify(config, null, 2)}</pre></TableColumn>
-          <TableColumn>{result.map(t => <span>{t},<br/></span>)}</TableColumn>
+          <TableColumn>{result}</TableColumn>
         </TableRow>
       ))}
     </TableBody>

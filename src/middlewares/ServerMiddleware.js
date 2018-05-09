@@ -1,9 +1,8 @@
 import {
-  deleteJob,
-  getJobResults, getJobs, getLogInfo, getLogList, getSplits, postSplit,
+  deleteJob, getJobs, getLogInfo, getLogList, getSplits, postSplit,
   postTraining, getPrediction, getModels
 } from '../actions/ServerActions';
-import {JOB_DELETE_REQUESTED, JOB_RESULTS_REQUESTED, JOBS_REQUESTED, TRAINING_SUBMITTED} from '../actions/JobActions';
+import {JOB_DELETE_REQUESTED, JOBS_REQUESTED, TRAINING_SUBMITTED} from '../actions/JobActions';
 import {LOG_INFO_REQUESTED, LOG_LIST_REQUESTED} from '../actions/LogActions';
 import {SPLIT_SUBMITTED, SPLITS_REQUESTED} from '../actions/SplitActions';
 import {MODELS_REQUESTED} from '../actions/ModelActions';

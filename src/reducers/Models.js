@@ -12,7 +12,7 @@ import {
 } from '../actions/ModelActions'
 import {LOG_CHANGED} from '../actions/LogActions'
 import {REGRESSION, NEXT_ACTIVITY, CLASSIFICATION,
-  ATTRIBUTE_NUMBER, ATTRIBUTE_STRING, REMAINING_TIME} from '../reference';
+  ATTRIBUTE_NUMBER, ATTRIBUTE_STRING, REMAINING_TIME, DURATION} from '../reference';
 
 const initialState = {
   fetchState: {inFlight: false},
@@ -48,18 +48,19 @@ const models = (state = initialState, action) => {
       const models = mergeIncomingModels(action.payload, state.models);
       const regressionModels = models.filter((model) => (model.type === REGRESSION));
       const classificationModels = models.filter((model) => (model.type === CLASSIFICATION) &&
-                                                            ((model.config.label === REMAINING_TIME) ||
-                                                            (model.config.label === ATTRIBUTE_NUMBER)));
+                                                            ((model.config.label.type === REMAINING_TIME) ||
+                                                            (model.config.label.type === ATTRIBUTE_NUMBER) ||
+                                                            (model.config.label.type === DURATION)));
       const nextActivityModels = models.filter((model) => (model.type === CLASSIFICATION) &&
-                                                            ((model.config.label === NEXT_ACTIVITY) ||
-                                                            (model.config.label === ATTRIBUTE_STRING)));
+                                                            ((model.config.label.type === NEXT_ACTIVITY) ||
+                                                            (model.config.label.type === ATTRIBUTE_STRING)));
       return {
         ...state,
         fetchState: {inFlight: false},
         models: models,
-        regressionModels,
-        classificationModels,
-        nextActivityModels,
+        regressionModels: regressionModels,
+        classificationModels: classificationModels,
+        nextActivityModels: nextActivityModels,
       };
     }
 
