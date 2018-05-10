@@ -23,7 +23,7 @@ export const splits = [
     'type': 'single',
     'config': {
       'split_type': 'split_random',
-      'test_size': 0.5
+      'test_size': 0.509
     }
   },
   {
