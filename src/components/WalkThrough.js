@@ -1,6 +1,6 @@
 import React from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
-import nirdizati from '../../images/nirdizati-logo-e1501821874335.png';
+import nirdizati from '../images/nirdizati-logo-e1501821874335.png';
 
 const WalkThrough = () => {
   return <Card className="md-block-centered">
