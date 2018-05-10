@@ -37,7 +37,7 @@ const tableBody = (splits) => {
         <TableColumn numeric>{id}</TableColumn>
         <TableColumn>{originalLogName}</TableColumn>
         <TableColumn>{config.split_type}</TableColumn>
-        <TableColumn numeric>{config.test_size}</TableColumn>
+        <TableColumn numeric>{Math.round(config.test_size * 100) / 100}</TableColumn>
       </TableRow>
     );
   });
