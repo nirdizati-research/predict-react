@@ -158,6 +158,15 @@ describe('JobsReducer', () => {
     expect(state).toMatchObject({fetchState: {inFlight: true}});
   });
 
+  it('when receives nothing', () => {
+    const state2 = jobs(state, jobsRetrieved([]));
+    expect(state2.fetchState).toMatchObject({inFlight: false});
+
+    const {allIds, byId} = state2;
+    expect(allIds).toEqual([]);
+    expect(Object.keys(byId).length).toEqual(0);
+  });
+
   it('adds jobs when request completed', () => {
     const state2 = jobs(state, jobsRetrieved(jobList));
     expect(state2.fetchState).toMatchObject({inFlight: false});
