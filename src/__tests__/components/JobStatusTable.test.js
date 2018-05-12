@@ -11,7 +11,7 @@ const jobs = [{
   modified_date: 'aa',
   config: {
     'method': 'method',
-    'encoding': {'method': 'simple_index', 'prefix_length': 1, 'padding': 'no_padding', 'generation_type': 'only'},
+    'encoding': {'method': 'simpleIndex', 'prefix_length': 1, 'padding': 'no_padding', 'generation_type': 'only'},
     'label': label1,
     'hyperopt': {
       'use_hyperopt': true,
