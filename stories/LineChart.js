@@ -14,7 +14,7 @@ export const regJobs = [
     'modified_date': '2018-04-14T06:22:03.597000Z',
     'config': {
       'regression.linear': {'fit_intercept': false, 'normalize': false, 'copy_X': true},
-      'encoding': {method: 'complex', 'prefix_length': 1, 'padding': 'no_padding', 'generation_type': 'only'},
+      'encoding': {'method': 'complex', 'prefix_length': 1, 'padding': 'no_padding', 'generation_type': 'only'},
       'clustering': 'noCluster',
       'method': 'linear',
       'label': label1
@@ -30,7 +30,7 @@ export const regJobs = [
     'created_date': '2018-04-14T06:29:21.355000Z',
     'modified_date': '2018-04-14T06:30:24.760000Z',
     'config': {
-      'encoding': {method: 'simpleIndex', 'prefix_length': 3, 'padding': 'no_padding', 'generation_type': 'only'},
+      'encoding': {'method': 'simpleIndex', 'prefix_length': 3, 'padding': 'no_padding', 'generation_type': 'only'},
       'regression.linear': {'fit_intercept': true, 'normalize': false, 'copy_X': true},
       'clustering': 'noCluster',
       'method': 'linear',

@@ -20,6 +20,7 @@ import {
   LABELLING,
   NO_CLUSTER,
   NO_PADDING,
+  ONLY_THIS,
   RANDOM_FOREST,
   REGRESSION,
   REMAINING_TIME,
@@ -35,10 +36,8 @@ const jobList = [
     status: 'created',
     type: CLASSIFICATION,
     config: {
-      prefix_length: 2,
-      encoding: SIMPLE_INDEX,
+      encoding: {method: SIMPLE_INDEX, prefix_length: 2, padding: NO_PADDING, generation_type: ONLY_THIS},
       method: RANDOM_FOREST,
-      padding: NO_PADDING,
       label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
       clustering: NO_CLUSTER
     },
@@ -49,10 +48,8 @@ const jobList = [
     status: 'completed',
     type: CLASSIFICATION,
     config: {
-      prefix_length: 2,
-      encoding: SIMPLE_INDEX,
+      encoding: {method: SIMPLE_INDEX, prefix_length: 2, padding: NO_PADDING, generation_type: ONLY_THIS},
       method: RANDOM_FOREST,
-      padding: NO_PADDING,
       label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
       clustering: NO_CLUSTER
     },
@@ -63,10 +60,8 @@ const jobList = [
     status: 'completed',
     type: REGRESSION,
     config: {
-      prefix_length: 1,
-      encoding: SIMPLE_INDEX,
+      encoding: {method: SIMPLE_INDEX, prefix_length: 1, padding: NO_PADDING, generation_type: ONLY_THIS},
       method: RANDOM_FOREST,
-      padding: NO_PADDING,
       label: {type: REMAINING_TIME, threshold: 0},
       clustering: NO_CLUSTER
     },
@@ -77,10 +72,8 @@ const jobList = [
     status: 'created',
     type: CLASSIFICATION,
     config: {
-      prefix_length: 5,
-      encoding: SIMPLE_INDEX,
+      encoding: {method: SIMPLE_INDEX, prefix_length: 5, padding: NO_PADDING, generation_type: ONLY_THIS},
       method: RANDOM_FOREST,
-      padding: NO_PADDING,
       label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
       clustering: NO_CLUSTER
     },
@@ -91,10 +84,8 @@ const jobList = [
     status: 'completed',
     type: CLASSIFICATION,
     config: {
-      prefix_length: 4,
-      encoding: SIMPLE_INDEX,
+      encoding: {method: SIMPLE_INDEX, prefix_length: 4, padding: NO_PADDING, generation_type: ONLY_THIS},
       method: RANDOM_FOREST,
-      padding: NO_PADDING,
       label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
       clustering: NO_CLUSTER
     },
@@ -105,10 +96,8 @@ const jobList = [
     status: 'completed',
     type: REGRESSION,
     config: {
-      prefix_length: 2,
-      encoding: SIMPLE_INDEX,
+      encoding: {method: SIMPLE_INDEX, prefix_length: 2, padding: NO_PADDING, generation_type: ONLY_THIS},
       method: RANDOM_FOREST,
-      padding: NO_PADDING,
       label: {type: REMAINING_TIME, threshold: 0},
       clustering: NO_CLUSTER
     },
@@ -119,10 +108,8 @@ const jobList = [
     status: 'completed',
     type: CLASSIFICATION,
     config: {
-      prefix_length: 4,
-      encoding: SIMPLE_INDEX,
+      encoding: {method: SIMPLE_INDEX, prefix_length: 4, padding: NO_PADDING, generation_type: ONLY_THIS},
       method: RANDOM_FOREST,
-      padding: NO_PADDING,
       label: {type: DURATION, threshold_type: THRESHOLD_CUSTOM, threshold: 100},
       clustering: NO_CLUSTER
     },
@@ -133,10 +120,8 @@ const jobList = [
     status: 'completed',
     type: CLASSIFICATION,
     config: {
-      prefix_length: 4,
-      encoding: SIMPLE_INDEX,
+      encoding: {method: SIMPLE_INDEX, prefix_length: 4, padding: NO_PADDING, generation_type: ONLY_THIS},
       method: RANDOM_FOREST,
-      padding: NO_PADDING,
       label: {type: ATTRIBUTE_NUMBER, threshold_type: THRESHOLD_MEAN, attribute_name: 'name', threshold: 0},
       clustering: NO_CLUSTER
     },
@@ -149,10 +134,8 @@ const changedJob = {
   status: 'completed',
   type: CLASSIFICATION,
   config: {
-    prefix_length: 2,
-    encoding: SIMPLE_INDEX,
+    encoding: {method: SIMPLE_INDEX, prefix_length: 2, padding: NO_PADDING, generation_type: ONLY_THIS},
     method: RANDOM_FOREST,
-    padding: NO_PADDING,
     label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
     clustering: NO_CLUSTER
   },
