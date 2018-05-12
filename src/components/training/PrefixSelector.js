@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {TextField} from 'react-md/lib/TextFields/index';
 import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
 import {paddingControls, prefixTypeControls} from '../../reference';
+import {encodingPropType} from '../../propTypes';
 
 const groupStyle = {height: 'auto'};
 const methodConfig = 'encoding';
@@ -63,11 +64,7 @@ class PrefixSelector extends Component {
 }
 
 PrefixSelector.propTypes = {
-  encoding: PropTypes.shape({
-    padding: PropTypes.string.isRequired,
-    generation_type: PropTypes.string.isRequired,
-    prefix_length: PropTypes.number.isRequired
-  }).isRequired,
+  encoding: PropTypes.shape(encodingPropType).isRequired,
   maxEventsInLog: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   isLabelForm: PropTypes.bool

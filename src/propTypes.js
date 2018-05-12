@@ -1,14 +1,24 @@
 import {
+  ALL_IN_ONE,
   ATTRIBUTE_NUMBER,
   ATTRIBUTE_STRING,
+  BOOLEAN,
   CLASSIFICATION,
+  COMPLEX,
   DURATION,
+  FREQUENCY,
   LABELLING,
+  LAST_PAYLOAD,
   NEXT_ACTIVITY,
+  NO_PADDING,
+  ONLY_THIS,
   REGRESSION,
   REMAINING_TIME,
+  SIMPLE_INDEX,
   THRESHOLD_CUSTOM,
-  THRESHOLD_MEAN
+  THRESHOLD_MEAN,
+  UP_TO,
+  ZERO_PADDING
 } from './reference';
 import PropTypes from 'prop-types';
 
@@ -33,6 +43,13 @@ export const fetchStatePropType = PropTypes.shape({
   inFlight: PropTypes.bool.isRequired,
   error: PropTypes.any
 }).isRequired;
+
+export const encodingPropType = {
+  method: PropTypes.oneOf([SIMPLE_INDEX, BOOLEAN, FREQUENCY, COMPLEX, LAST_PAYLOAD]),
+  padding: PropTypes.oneOf([ZERO_PADDING, NO_PADDING]).isRequired,
+  generation_type: PropTypes.oneOf([UP_TO, ONLY_THIS, ALL_IN_ONE]).isRequired,
+  prefix_length: PropTypes.number.isRequired
+};
 
 export const labelPropType = {
   type: PropTypes.oneOf([NEXT_ACTIVITY, REMAINING_TIME, ATTRIBUTE_NUMBER, ATTRIBUTE_STRING, DURATION]).isRequired,
