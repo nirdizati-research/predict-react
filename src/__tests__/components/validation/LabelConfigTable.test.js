@@ -19,7 +19,7 @@ it('renders nothing without jobs', () => {
   expect(element).toBeDefined();
   // Header row
   expect(element.find(TableRow).length).toBe(1);
-  expect(element.find(TableColumn).length).toBe(8);
+  expect(element.find(TableColumn).length).toBe(9);
 });
 
 it('renders jobs if present', () => {

@@ -106,7 +106,7 @@ describe('ConfigTable', () => {
     expect(element).toBeDefined();
     // Header row
     expect(element.find(TableRow).length).toBe(1);
-    expect(element.find(TableColumn).length).toBe(11);
+    expect(element.find(TableColumn).length).toBe(12);
   });
 
   it('renders regression jobs if present', () => {

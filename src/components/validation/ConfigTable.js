@@ -31,7 +31,7 @@ class ConfigTable extends PureComponent {
   render() {
     const headers =
       ['id', 'Type', 'Encoding', 'Clustering', 'Method', 'Prefix length', 'Label',
-        'Padding', 'Create models', 'HyperOpt', 'Advanced configuration'];
+        'Padding', 'Generation type', 'Create models', 'HyperOpt', 'Advanced configuration'];
     return (<DataTable baseId="simple-pagination" selectableRows={false}>
       <TableHeader>
         <TableRow>
@@ -50,7 +50,8 @@ class ConfigTable extends PureComponent {
               <TableColumn style={columnStyle}>{job.method}</TableColumn>
               <TableColumn style={columnStyle} numeric>{job.prefix_length}</TableColumn>
               <TableColumn style={columnStyle}><JsonHolder data={job.label}/></TableColumn>
-              <TableColumn style={columnStyle} numeric>{job.padding}</TableColumn>
+              <TableColumn style={columnStyle}>{job.padding}</TableColumn>
+              <TableColumn style={columnStyle}>{job.generationType}</TableColumn>
               <TableColumn style={columnStyle}>{JSON.stringify(job.create_models, null, 1)}</TableColumn>
               <TableColumn style={columnStyle}><JsonHolder data={job.hyperopt}/></TableColumn>
               <TableColumn style={columnStyle}><JsonHolder data={job.advanced}/></TableColumn>
