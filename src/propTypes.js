@@ -1,14 +1,24 @@
 import {
+  ALL_IN_ONE,
   ATTRIBUTE_NUMBER,
   ATTRIBUTE_STRING,
+  BOOLEAN,
   CLASSIFICATION,
+  COMPLEX,
   DURATION,
+  FREQUENCY,
   LABELLING,
+  LAST_PAYLOAD,
   NEXT_ACTIVITY,
+  NO_PADDING,
+  ONLY_THIS,
   REGRESSION,
   REMAINING_TIME,
+  SIMPLE_INDEX,
   THRESHOLD_CUSTOM,
-  THRESHOLD_MEAN
+  THRESHOLD_MEAN,
+  UP_TO,
+  ZERO_PADDING
 } from './reference';
 import PropTypes from 'prop-types';
 
@@ -34,6 +44,13 @@ export const fetchStatePropType = PropTypes.shape({
   error: PropTypes.any
 }).isRequired;
 
+export const encodingPropType = {
+  method: PropTypes.oneOf([SIMPLE_INDEX, BOOLEAN, FREQUENCY, COMPLEX, LAST_PAYLOAD]),
+  padding: PropTypes.oneOf([ZERO_PADDING, NO_PADDING]).isRequired,
+  generation_type: PropTypes.oneOf([UP_TO, ONLY_THIS, ALL_IN_ONE]).isRequired,
+  prefix_length: PropTypes.number.isRequired
+};
+
 export const labelPropType = {
   type: PropTypes.oneOf([NEXT_ACTIVITY, REMAINING_TIME, ATTRIBUTE_NUMBER, ATTRIBUTE_STRING, DURATION]).isRequired,
   attribute_name: PropTypes.string,
@@ -53,13 +70,11 @@ export const jobPropType = PropTypes.shape({
   splitName: PropTypes.string,
   type: PropTypes.oneOf([CLASSIFICATION, REGRESSION, LABELLING]).isRequired,
   config: PropTypes.shape({
-    prefix_length: PropTypes.number.isRequired,
-    padding: PropTypes.string,
     hyperopt: PropTypes.shape(hyperOptShape),
     label: PropTypes.shape(labelPropType).isRequired,
     method: PropTypes.string,
     clustering: PropTypes.string,
-    encoding: PropTypes.string,
+    encoding: PropTypes.shape(encodingPropType).isRequired,
     kmeans: PropTypes.objectOf(PropTypes.any),
   }).isRequired,
   created_date: PropTypes.string.isRequired,
@@ -85,6 +100,8 @@ export const jobFlatPropType = PropTypes.shape({
   prefix_length: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
   padding: PropTypes.string,
+  encodingMethod: PropTypes.string.isRequired,
+  generationType: PropTypes.string.isRequired,
   advanced: PropTypes.objectOf(PropTypes.any).isRequired,
   hyperopt: PropTypes.shape(hyperOptShape),
   kmeans: PropTypes.objectOf(PropTypes.any),
@@ -93,9 +110,7 @@ export const jobFlatPropType = PropTypes.shape({
 
 export const labelJobFlat = PropTypes.shape({
   id: PropTypes.number.isRequired,
-  encoding: PropTypes.string.isRequired,
-  prefix_length: PropTypes.number.isRequired,
-  padding: PropTypes.string.isRequired,
+  encoding: PropTypes.shape(encodingPropType).isRequired,
   result: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
   label: PropTypes.shape(labelPropType).isRequired,
 }).isRequired;

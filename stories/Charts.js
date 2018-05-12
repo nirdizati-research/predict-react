@@ -5,12 +5,12 @@ import React from 'react';
 import {storiesOf} from '@storybook/react';
 import LineChartCard from '../src/components/chart/LineChartCard';
 import BubbleChartCard from '../src/components/chart/BubbleChartCard';
-import ResultTableCard from '../src/components/validation/ResultTableCard';
 import {getChartHeader} from '../src/components/validation/ColumnHelper';
 import {CLASSIFICATION, REGRESSION} from '../src/reference';
 import BarChartCard from '../src/components/chart/BarChartCard';
 import {label1} from './Advanced';
 import PrefixLineChart from '../src/components/chart/PrefixLineChart';
+import {encoding1} from '../src/__tests__/components/validation/ConfigTable.test';
 
 const fetchState = {inFlight: false};
 
@@ -116,8 +116,7 @@ export const labelJobs = [
     'modified_date': '2017-12-05T14:57:28.344216Z',
     'status': 'completed',
     'config': {
-      'prefix_length': 1,
-      'encoding': 'simpleIndex',
+      'encoding': encoding1,
       'label': label1
     },
     'result': {'rmse': 221, 'mae': 193},
@@ -130,8 +129,7 @@ export const labelJobs = [
     'modified_date': '2017-12-05T14:57:28.344216Z',
     'status': 'completed',
     'config': {
-      'prefix_length': 4,
-      'encoding': 'simpleIndex',
+      'encoding': {'method': 'simpleIndex', 'prefix_length': 4, 'padding': 'no_padding', 'generation_type': 'only'},
       'label': label1
     },
     'result': {'rmse': 201, 'mae': 165, 'third': 34},
@@ -144,8 +142,7 @@ export const labelJobs = [
     'modified_date': '2017-12-05T14:57:28.344216Z',
     'status': 'completed',
     'config': {
-      'prefix_length': 3,
-      'encoding': 'simpleIndex',
+      'encoding': {'method': 'simpleIndex', 'prefix_length': 3, 'padding': 'no_padding', 'generation_type': 'only'},
       'label': label1
     },
     'result': {'rmse': 191, 'mae': 138},
@@ -158,8 +155,7 @@ export const labelJobs = [
     'modified_date': '2017-12-05T14:57:28.344216Z',
     'status': 'completed',
     'config': {
-      'prefix_length': 5,
-      'encoding': 'simpleIndex',
+      'encoding': {'method': 'simpleIndex', 'prefix_length': 5, 'padding': 'no_padding', 'generation_type': 'only'},
       'label': label1
     },
     'result': {'rmse': 171, 'mae': 128},
@@ -253,19 +249,4 @@ storiesOf('Charts', module)
         </div>
       </div>
     );
-  })
-  .add('ResultTableCard', () => {
-      return (
-        <div className="md-grid">
-          <div className="md-cell md-cell--12">
-            <ResultTableCard fetchState={fetchState}
-                             data={classTableData} predictionMethod={CLASSIFICATION}/>
-          </div>
-          <div className="md-cell md-cell--12">
-            <ResultTableCard fetchState={fetchState}
-                             data={regTableData} predictionMethod={REGRESSION}/>
-          </div>
-        </div>
-      );
-    }
-  );
+  });

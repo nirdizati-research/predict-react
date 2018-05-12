@@ -39,6 +39,11 @@ export const THRESHOLD_CUSTOM = 'threshold_custom';
 // padding
 export const ZERO_PADDING = 'zero_padding';
 export const NO_PADDING = 'no_padding';
+// task generation type
+export const UP_TO = 'up_to';
+export const ONLY_THIS = 'only';
+export const ALL_IN_ONE = 'all_in_one';
+
 
 // Using these options directly means the message is not shown
 export const clustering = [
@@ -207,13 +212,18 @@ export const padding = [
 const prefixTypes = [
   {
     label: 'Only this prefix length',
-    value: 'only'
+    value: ONLY_THIS
   },
   {
     label: 'Up to the prefix length',
-    value: 'up_to',
+    value: UP_TO,
     message: 'Create multiple tasks from the specified prefix length 1 up to this value'
   },
+  {
+    label: 'Up to the prefix length in one',
+    value: ALL_IN_ONE,
+    message: 'Creates one task with all prefixes in one dataset'
+  }
 ];
 
 // Makes things for Selection Controls

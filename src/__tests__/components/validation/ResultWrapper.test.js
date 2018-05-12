@@ -8,6 +8,7 @@ import ResultTableCard from '../../../components/validation/ResultTableCard';
 import ResultWrapper from '../../../components/validation/ResultWrapper';
 import BubbleChartCard from '../../../components/chart/BubbleChartCard';
 import {label1} from '../../../../stories/Advanced';
+import {encoding1} from './ConfigTable.test';
 
 const classJobs = [
   {
@@ -17,9 +18,7 @@ const classJobs = [
     'config': {
       'clustering': 'kmeans',
       'method': 'knn',
-      'encoding': 'simpleIndex',
-      'prefix_length': 1,
-      'padding': 'no_padding',
+      'encoding': encoding1,
       'label': label1,
       'hyperopt': {
         'use_hyperopt': true,
@@ -44,9 +43,7 @@ const classJobs = [
     'config': {
       'clustering': 'kmeans',
       'method': 'knn',
-      'encoding': 'simpleIndex',
-      'prefix_length': 1,
-      'padding': 'zero_padding',
+      'encoding': encoding1,
       'label': label1,
       'hyperopt': {
         'use_hyperopt': true,
@@ -70,11 +67,9 @@ const regJobs = [{
   'created_date': '2018-02-07T22:47:32.146583Z',
   'modified_date': '2018-02-07T22:47:32.149647Z',
   'config': {
-    'prefix_length': 0,
-    'encoding': 'simpleIndex',
+    'encoding': encoding1,
     'clustering': 'noCluster',
     'method': 'linear',
-    'padding': 'no_padding',
     'label': label1,
     'hyperopt': {
       'use_hyperopt': true,
@@ -122,7 +117,7 @@ describe('ResultWrapper', () => {
 
   it('supplies data for regression', () => {
     element.setProps({predictionMethod: REGRESSION, jobs: regJobs});
-    const regData = [['53', 'linear_simpleIndex_noCluster', 11, 12, 13, '0']];
+    const regData = [['53', 'linear_simpleIndex_noCluster', 11, 12, 13, '1']];
     expect(element.find(ResultTableCard).props().data).toEqual(regData);
     expect(element.find(ResultTableCard).props().predictionMethod).toMatch(REGRESSION);
   });

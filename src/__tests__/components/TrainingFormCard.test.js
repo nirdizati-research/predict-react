@@ -32,10 +32,10 @@ const regressionPayload = {
   'config': {
     'clusterings': ['noCluster'],
     'encodings': ['simpleIndex'],
-    'prefix': {
+    'encoding': {
       'padding': 'no_padding',
       'prefix_length': 1,
-      'type': 'only',
+      'generation_type': 'only',
     },
     'create_models': false,
     'methods': ['linear'],
@@ -69,7 +69,7 @@ const labelPayload = {
       'threshold_type': 'threshold_mean',
       'type': 'duration'
     },
-    'prefix': {'padding': 'no_padding', 'prefix_length': 1, 'type': 'only'}
+    'encoding': {'padding': 'no_padding', 'prefix_length': 1, 'generation_type': 'only'}
   },
   'split_id': 1,
   'type': 'labelling'
@@ -129,7 +129,7 @@ describe('TrainingFormCard', () => {
 
   describe('reset', () => {
     it('works for default', () => {
-      const encodingGroup = element.find(SelectionControlGroup).at(1);
+      const encodingGroup = element.find(SelectionControlGroup).at(3);
       encodingGroup.simulate('change', {target: {name: 'encodings[]', value: 'boolean'}});
 
       element.find(Button).at(1).simulate('click');
@@ -138,7 +138,7 @@ describe('TrainingFormCard', () => {
 
     it('works for classification', () => {
       element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: CLASSIFICATION}});
-      const group = element.find(SelectionControlGroup).at(4);
+      const group = element.find(SelectionControlGroup).at(1);
       group.simulate('change', {target: {name: 'classification[]', value: 'knn'}});
 
       element.find(Button).at(1).simulate('click');
@@ -150,7 +150,7 @@ describe('TrainingFormCard', () => {
   describe('warning', () => {
     it('warns if no encoding method', () => {
       element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: REGRESSION}});
-      const encodingGroup = element.find(SelectionControlGroup).at(1);
+      const encodingGroup = element.find(SelectionControlGroup).at(3);
       encodingGroup.simulate('change', {target: {name: 'encodings[]', value: 'simpleIndex'}});
 
       expect(element.find('.md-text--error').length).toBe(1);
@@ -164,7 +164,7 @@ describe('TrainingFormCard', () => {
     });
 
     it('warns if no regression method', () => {
-      const regressionGroup = element.find(SelectionControlGroup).at(3);
+      const regressionGroup = element.find(SelectionControlGroup).at(1);
       regressionGroup.simulate('change', {target: {name: 'regression[]', value: 'linear'}});
 
       expect(element.find('.md-text--error').length).toBe(1);
@@ -172,7 +172,7 @@ describe('TrainingFormCard', () => {
 
     it('warns if no classification method', () => {
       element.find(SelectionControlGroup).at(0).simulate('change', {target: {name: 'rule', value: CLASSIFICATION}});
-      const group = element.find(SelectionControlGroup).at(4);
+      const group = element.find(SelectionControlGroup).at(1);
       group.simulate('change', {target: {name: 'classification[]', value: 'knn'}});
       expect(element.find('.md-text--error').length).toBe(1);
     });

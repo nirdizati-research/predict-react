@@ -13,9 +13,8 @@ export const regJobs = [
     'created_date': '2018-04-14T06:19:46.660000Z',
     'modified_date': '2018-04-14T06:22:03.597000Z',
     'config': {
-      'prefix_length': 1,
       'regression.linear': {'fit_intercept': false, 'normalize': false, 'copy_X': true},
-      'encoding': 'complex',
+      'encoding': {'method': 'complex', 'prefix_length': 1, 'padding': 'no_padding', 'generation_type': 'only'},
       'clustering': 'noCluster',
       'method': 'linear',
       'label': label1
@@ -31,9 +30,8 @@ export const regJobs = [
     'created_date': '2018-04-14T06:29:21.355000Z',
     'modified_date': '2018-04-14T06:30:24.760000Z',
     'config': {
-      'prefix_length': 3,
+      'encoding': {'method': 'simpleIndex', 'prefix_length': 3, 'padding': 'no_padding', 'generation_type': 'only'},
       'regression.linear': {'fit_intercept': true, 'normalize': false, 'copy_X': true},
-      'encoding': 'simpleIndex',
       'clustering': 'noCluster',
       'method': 'linear',
       'label': label1
@@ -49,9 +47,8 @@ export const regJobs = [
     'created_date': '2018-04-14T06:29:21.360000Z',
     'modified_date': '2018-04-14T06:30:24.406000Z',
     'config': {
-      'prefix_length': 3,
+      'encoding': {'method': 'simpleIndex', 'prefix_length': 3, 'padding': 'no_padding', 'generation_type': 'only'},
       'regression.randomForest': {'n_estimators': 10, 'criterion': 'mse', 'max_depth': null, 'min_samples_split': 2},
-      'encoding': 'simpleIndex',
       'clustering': 'noCluster',
       'method': 'randomForest',
       'label': label1
@@ -67,9 +64,8 @@ export const regJobs = [
     'created_date': '2018-04-14T06:29:21.360000Z',
     'modified_date': '2018-04-14T06:30:24.406000Z',
     'config': {
-      'prefix_length': 5,
+      'encoding': {'method': 'simpleIndex', 'prefix_length': 5, 'padding': 'no_padding', 'generation_type': 'only'},
       'regression.randomForest': {'n_estimators': 10, 'criterion': 'mse', 'max_depth': null, 'min_samples_split': 2},
-      'encoding': 'simpleIndex',
       'clustering': 'noCluster',
       'method': 'randomForest',
       'label': label1

@@ -26,7 +26,7 @@ class LabelConfigTable extends PureComponent {
   }
 
   render() {
-    const headers = ['id', 'Label type', 'Threshold type', 'Threshold', 'Attribute name', 'Prefix length', 'Padding', 'Result'];
+    const headers = ['id', 'Label type', 'Threshold type', 'Threshold', 'Attribute name', 'Prefix length', 'Padding', 'Generation type', 'Result'];
 
     return (<DataTable baseId="simple-pagination" selectableRows={false}>
       <TableHeader>
@@ -42,8 +42,9 @@ class LabelConfigTable extends PureComponent {
             <TableColumn style={columnStyle}>{job.label.threshold_type}</TableColumn>
             <TableColumn style={columnStyle} numeric>{job.label.threshold}</TableColumn>
             <TableColumn style={columnStyle}>{job.label.attribute_name}</TableColumn>
-            <TableColumn style={columnStyle} numeric>{job.prefix_length}</TableColumn>
-            <TableColumn style={columnStyle} numeric>{job.padding}</TableColumn>
+            <TableColumn style={columnStyle} numeric>{job.encoding.prefix_length}</TableColumn>
+            <TableColumn style={columnStyle} numeric>{job.encoding.padding}</TableColumn>
+            <TableColumn style={columnStyle} numeric>{job.encoding.generation_type}</TableColumn>
             <TableColumn style={columnStyle} grow><JsonHolder data={job.result}/></TableColumn>
           </TableRow>
         ))}
