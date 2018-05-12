@@ -32,10 +32,10 @@ const regressionPayload = {
   'config': {
     'clusterings': ['noCluster'],
     'encodings': ['simpleIndex'],
-    'prefix': {
+    'encoding': {
       'padding': 'no_padding',
       'prefix_length': 1,
-      'type': 'only',
+      'generation_type': 'only',
     },
     'create_models': false,
     'methods': ['linear'],
@@ -69,7 +69,7 @@ const labelPayload = {
       'threshold_type': 'threshold_mean',
       'type': 'duration'
     },
-    'prefix': {'padding': 'no_padding', 'prefix_length': 1, 'type': 'only'}
+    'encoding': {'padding': 'no_padding', 'prefix_length': 1, 'generation_type': 'only'}
   },
   'split_id': 1,
   'type': 'labelling'

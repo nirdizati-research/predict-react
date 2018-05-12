@@ -44,9 +44,9 @@ const initialState = (props) => {
     clusterings: [clusteringMethods[0].value],
     classification: [classificationMethods[0].value],
     regression: [regressionMethods[0].value],
-    prefix: {
+    encoding: {
       padding: paddingControls[0].value,
-      type: prefixTypeControls[0].value,
+      generation_type: prefixTypeControls[0].value,
       prefix_length: defaultPrefix,
     },
     label: {
@@ -201,7 +201,7 @@ class TrainingFormCard extends Component {
       type: this.state.predictionMethod,
       split_id: this.state.split_id,
       config: {
-        prefix: this.state.prefix,
+        encoding: this.state.encoding,
         label: this.state.label,
       }
     };
@@ -212,7 +212,7 @@ class TrainingFormCard extends Component {
       type: this.state.predictionMethod,
       split_id: this.state.split_id,
       config: {
-        prefix: this.state.prefix,
+        encoding: this.state.encoding,
         encodings: this.state.encodings,
         clusterings: this.state.clusterings,
         methods: methods,
@@ -294,7 +294,7 @@ class TrainingFormCard extends Component {
           <div className="md-grid md-grid--no-spacing">
             {otherSelector}
             {encodingFragment}
-            <PrefixSelector prefix={this.state.prefix} onChange={this.advanceConfigChange.bind(this)}
+            <PrefixSelector encoding={this.state.encoding} onChange={this.advanceConfigChange.bind(this)}
                             maxEventsInLog={this.props.maxEventsInLog} isLabelForm={this.props.isLabelForm}/>
           </div>
         </CardText>
