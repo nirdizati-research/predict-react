@@ -10,10 +10,8 @@ const jobs = [{
   status: 'aa',
   modified_date: 'aa',
   config: {
-    'prefix_length': 1,
     'method': 'method',
-    'encoding': 'simple_index',
-    'padding': 'no_padding',
+    'encoding': {'method': 'simple_index', 'prefix_length': 1, 'padding': 'no_padding', 'generation_type': 'only'},
     'label': label1,
     'hyperopt': {
       'use_hyperopt': true,

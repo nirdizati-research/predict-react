@@ -5,14 +5,12 @@ import React from 'react';
 import {storiesOf} from '@storybook/react';
 import LineChartCard from '../src/components/chart/LineChartCard';
 import BubbleChartCard from '../src/components/chart/BubbleChartCard';
-import ResultTableCard from '../src/components/validation/ResultTableCard';
 import {getChartHeader} from '../src/components/validation/ColumnHelper';
 import {CLASSIFICATION, REGRESSION} from '../src/reference';
 import BarChartCard from '../src/components/chart/BarChartCard';
 import {label1} from './Advanced';
 import PrefixLineChart from '../src/components/chart/PrefixLineChart';
-
-const fetchState = {inFlight: false};
+import {encoding1} from '../src/__tests__/components/validation/ConfigTable.test';
 
 const traces = {
   '2011-10-01': 23,
@@ -64,20 +62,10 @@ const regressor = [
   ['uuid122', 218.33484913201886, 218.33484913201886, 'xboost', 0.10676014147290103]
 ];
 
-const regTableData = [
-  ['uuid121', 'linear', 321.16984512656944, 470.1483088530332, -0.75205320910182749],
-  ['uuid122', 'xboost', 218.33484913201886, 218.33484913201886, 0.10676014147290103]
-];
 const classData = [
   ['uuid121', 0.7152600170502984, 0.6232374506486181, 'knn_simpleIndex_noCluster_clustering', 0.63384260739574716],
   ['uuid122', 0.933152664859982, 0.9165256627185561, 'decisionTree_simpleIndex_kmeans_clustering', 0.9605116926217754],
   ['uuid123', 0.7300537412153782, 0.6408140814081408, 'knn_boolean_noCluster_clustering', 0.62917375812309062]
-];
-
-const classTableData = [
-  ['uuid121', 'knn_simpleIndex_noCluster_clustering', 0.7152600170502984, 0.6232374506486181, 0.63384260739574716],
-  ['uuid122', 'decisionTree_simpleIndex_kmeans_clustering', 0.933152664859982, 0.9165256627185561, 0.9605116926217754],
-  ['uuid123', 'knn_boolean_noCluster_clustering', 0.7300537412153782, 0.6408140814081408, 0.62917375812309062]
 ];
 
 const someData = [
@@ -116,8 +104,7 @@ export const labelJobs = [
     'modified_date': '2017-12-05T14:57:28.344216Z',
     'status': 'completed',
     'config': {
-      'prefix_length': 1,
-      'encoding': 'simpleIndex',
+      'encoding': encoding1,
       'label': label1
     },
     'result': {'rmse': 221, 'mae': 193},
@@ -130,8 +117,7 @@ export const labelJobs = [
     'modified_date': '2017-12-05T14:57:28.344216Z',
     'status': 'completed',
     'config': {
-      'prefix_length': 4,
-      'encoding': 'simpleIndex',
+      'encoding': {'method': 'simpleIndex', 'prefix_length': 4, 'padding': 'no_padding', 'generation_type': 'only'},
       'label': label1
     },
     'result': {'rmse': 201, 'mae': 165, 'third': 34},
@@ -144,8 +130,7 @@ export const labelJobs = [
     'modified_date': '2017-12-05T14:57:28.344216Z',
     'status': 'completed',
     'config': {
-      'prefix_length': 3,
-      'encoding': 'simpleIndex',
+      'encoding': {'method': 'simpleIndex', 'prefix_length': 3, 'padding': 'no_padding', 'generation_type': 'only'},
       'label': label1
     },
     'result': {'rmse': 191, 'mae': 138},
@@ -158,8 +143,7 @@ export const labelJobs = [
     'modified_date': '2017-12-05T14:57:28.344216Z',
     'status': 'completed',
     'config': {
-      'prefix_length': 5,
-      'encoding': 'simpleIndex',
+      'encoding': {'method': 'simpleIndex', 'prefix_length': 5, 'padding': 'no_padding', 'generation_type': 'only'},
       'label': label1
     },
     'result': {'rmse': 171, 'mae': 128},
@@ -253,19 +237,4 @@ storiesOf('Charts', module)
         </div>
       </div>
     );
-  })
-  .add('ResultTableCard', () => {
-      return (
-        <div className="md-grid">
-          <div className="md-cell md-cell--12">
-            <ResultTableCard fetchState={fetchState}
-                             data={classTableData} predictionMethod={CLASSIFICATION}/>
-          </div>
-          <div className="md-cell md-cell--12">
-            <ResultTableCard fetchState={fetchState}
-                             data={regTableData} predictionMethod={REGRESSION}/>
-          </div>
-        </div>
-      );
-    }
-  );
+  });

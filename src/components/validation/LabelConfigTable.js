@@ -42,8 +42,8 @@ class LabelConfigTable extends PureComponent {
             <TableColumn style={columnStyle}>{job.label.threshold_type}</TableColumn>
             <TableColumn style={columnStyle} numeric>{job.label.threshold}</TableColumn>
             <TableColumn style={columnStyle}>{job.label.attribute_name}</TableColumn>
-            <TableColumn style={columnStyle} numeric>{job.prefix_length}</TableColumn>
-            <TableColumn style={columnStyle} numeric>{job.padding}</TableColumn>
+            <TableColumn style={columnStyle} numeric>{job.encoding.prefix_length}</TableColumn>
+            <TableColumn style={columnStyle} numeric>{job.encoding.padding}</TableColumn>
             <TableColumn style={columnStyle} grow><JsonHolder data={job.result}/></TableColumn>
           </TableRow>
         ))}

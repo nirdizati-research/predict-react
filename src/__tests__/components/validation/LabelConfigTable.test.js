@@ -7,9 +7,7 @@ import {label1} from '../../../../stories/Advanced';
 const jobs = [{
   id: 1,
   label: label1,
-  encoding: 'asd',
-  padding: 'adasd',
-  prefix_length: 2,
+  encoding: {method: 'simpleIndex', padding: 'no_padding', prefix_length: 2, generation_type: 'only'},
   splitName: 'name',
   split_id: 1,
   type: 'labelling',

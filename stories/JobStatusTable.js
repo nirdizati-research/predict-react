@@ -15,8 +15,7 @@ const jobs = [
     'config': {
       'clustering': 'noCluster',
       'method': 'randomForest',
-      'encoding': 'simpleIndex',
-      'prefix_length': 1,
+      'encoding': {'method': 'simpleIndex', 'prefix_length': 3, 'padding': 'no_padding', 'generation_type': 'only'},
       'label': label1,
       'hyperopt': {
         'use_hyperopt': true,
@@ -40,8 +39,7 @@ const jobs = [
     'created_date': '2017-12-05T16:13:40.278339Z',
     'modified_date': '2017-12-05T16:13:40.457762Z',
     'config': {
-      'prefix_length': 1,
-      'encoding': 'simpleIndex',
+      'encoding': {'method': 'simpleIndex', 'prefix_length': 3, 'padding': 'no_padding', 'generation_type': 'only'},
       'clustering': 'noCluster',
       'method': 'randomForest',
       'label': label1,
@@ -67,8 +65,7 @@ const jobs = [
     'created_date': '2017-12-05T16:13:40.278339Z',
     'modified_date': '2017-12-05T16:13:40.457762Z',
     'config': {
-      'prefix_length': 1,
-      'encoding': 'simpleIndex',
+      'encoding': {'method': 'simpleIndex', 'prefix_length': 3, 'padding': 'no_padding', 'generation_type': 'only'},
       'label': label1,
       'hyperopt': {
         'use_hyperopt': true,

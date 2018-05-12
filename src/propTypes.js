@@ -70,13 +70,11 @@ export const jobPropType = PropTypes.shape({
   splitName: PropTypes.string,
   type: PropTypes.oneOf([CLASSIFICATION, REGRESSION, LABELLING]).isRequired,
   config: PropTypes.shape({
-    prefix_length: PropTypes.number.isRequired,
-    padding: PropTypes.string,
     hyperopt: PropTypes.shape(hyperOptShape),
     label: PropTypes.shape(labelPropType).isRequired,
     method: PropTypes.string,
     clustering: PropTypes.string,
-    encoding: PropTypes.string,
+    encoding: PropTypes.shape(encodingPropType).isRequired,
     kmeans: PropTypes.objectOf(PropTypes.any),
   }).isRequired,
   created_date: PropTypes.string.isRequired,
@@ -102,6 +100,8 @@ export const jobFlatPropType = PropTypes.shape({
   prefix_length: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
   padding: PropTypes.string,
+  encodingMethod: PropTypes.string.isRequired,
+  generationType: PropTypes.string.isRequired,
   advanced: PropTypes.objectOf(PropTypes.any).isRequired,
   hyperopt: PropTypes.shape(hyperOptShape),
   kmeans: PropTypes.objectOf(PropTypes.any),
@@ -110,9 +110,7 @@ export const jobFlatPropType = PropTypes.shape({
 
 export const labelJobFlat = PropTypes.shape({
   id: PropTypes.number.isRequired,
-  encoding: PropTypes.string.isRequired,
-  prefix_length: PropTypes.number.isRequired,
-  padding: PropTypes.string.isRequired,
+  encoding: PropTypes.shape(encodingPropType).isRequired,
   result: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
   label: PropTypes.shape(labelPropType).isRequired,
 }).isRequired;

@@ -20,11 +20,9 @@ export const classJobs = [
       'clustering': 'kmeans',
       'method': 'randomForest',
       'kmeans': {'keyt': 1123},
-      'encoding': 'simpleIndex',
-      'prefix_length': 1,
+      'encoding': {'method': 'simpleIndex', 'prefix_length': 1, 'padding': 'no_padding', 'generation_type': 'only'},
       'create_models': true,
       'label': label1,
-      'padding': 'no_padding',
       'hyperopt': {
         'use_hyperopt': true,
         'max_evals': 100,
@@ -61,11 +59,9 @@ export const classJobs = [
     'config': {
       'clustering': 'noCluster',
       'method': 'randomForest',
-      'encoding': 'simpleIndex',
-      'prefix_length': 3,
+      'encoding': {'method': 'simpleIndex', 'prefix_length': 3, 'padding': 'no_padding', 'generation_type': 'only'},
       'label': label1,
       'create_models': true,
-      'padding': 'no_padding',
       'hyperopt': {
         'use_hyperopt': false,
         'max_evals': 100,
@@ -102,13 +98,11 @@ const regJobs = [
     'created_date': '2018-02-07T22:47:32.146583Z',
     'modified_date': '2018-02-07T22:47:32.149647Z',
     'config': {
-      'prefix_length': 0,
-      'encoding': 'simpleIndex',
+      'encoding': {'method': 'simpleIndex', 'prefix_length': 1, 'padding': 'no_padding', 'generation_type': 'only'},
       'clustering': 'noCluster',
       'method': 'linear',
       'create_models': false,
       'label': label1,
-      'padding': 'no_padding',
       'hyperopt': {
         'use_hyperopt': false,
         'max_evals': 100,
@@ -137,10 +131,8 @@ const labelJobs = [
     'created_date': '2017-12-05T16:13:40.278339Z',
     'modified_date': '2017-12-05T16:13:40.457762Z',
     'config': {
-      'prefix_length': 1,
-      'encoding': 'simpleIndex',
+      'encoding': {'method': 'simpleIndex', 'prefix_length': 1, 'padding': 'no_padding', 'generation_type': 'only'},
       'label': label1,
-      'padding': 'no_padding',
       'hyperopt': {
         'use_hyperopt': true,
         'max_evals': 100,
