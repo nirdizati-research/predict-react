@@ -33,7 +33,7 @@ describe('EventChartCard', () => {
     const chartProps = element.find(Chart).props();
 
     expect(chartProps.rows.length).toBe(6);
-    expect(chartProps.rows[0]).toEqual(['W_Filling_in application', 6117, '6117', '#990099']);
-    expect(chartProps.rows[5]).toEqual(['W_Check_for_fraud', 130, '130', '#109618']);
+    expect(chartProps.rows[0]).toEqual(['', 6117, 'W_Filling_in application: 6117', '#990099']);
+    expect(chartProps.rows[5]).toEqual(['', 130, 'W_Check_for_fraud: 130', '#109618']);
   });
 });
