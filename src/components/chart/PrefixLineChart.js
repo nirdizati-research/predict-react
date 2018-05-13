@@ -20,6 +20,8 @@ const PrefixLineChart = (props) => {
       title: 'Prefix length',
       minValue: rows[0][0]
     },
+    legend: {textStyle: {fontSize: 12}},
+    chartArea: {right: 150, left: 50},
     interpolateNulls: true
   };
 
