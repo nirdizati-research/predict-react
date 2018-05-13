@@ -12,9 +12,8 @@ const SingleSplitTableCard = (props) => {
 
   return (
     <Card className="md-block-centered">
-      <CardTitle title="Splits overview"/>
+      <CardTitle title="Split configurations from single logs"/>
       <CardText>
-        Split created via configuration above
         <DataTable baseId="simple-pagination" plain>
           <TableHeader>
             <TableRow selectable={false}>
