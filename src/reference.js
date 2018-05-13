@@ -220,9 +220,9 @@ const prefixTypes = [
     message: 'Create multiple tasks from the specified prefix length 1 up to this value'
   },
   {
-    label: 'Up to the prefix length in one',
+    label: 'All in one dataset',
     value: ALL_IN_ONE,
-    message: 'Creates one task with all prefixes in one dataset'
+    message: 'Creates one task with all prefixes up to the specified prefix length in one dataset'
   }
 ];
 
