@@ -16,7 +16,7 @@ export default (
     <Route path="/" name="Home" component={Full}>
       <IndexRoute component={FrontPage}/>
       <Route path="home" name="Home" component={FrontPage}/>
-      <Route path="logs" name="Logs" component={Logs}/>
+      <Route path="logs" name="Log details" component={Logs}/>
       <Route path="upload" name="Upload" component={Upload}/>
       <Route path="split" name="Split" component={Split}/>
       <Route path="label" name="Labelling" component={Labelling}/>

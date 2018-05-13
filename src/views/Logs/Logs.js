@@ -39,11 +39,11 @@ class Logs extends Component {
     }
   }
 
-  getLineChart(dataName, cardTitle) {
+  getLineChart(dataName, cardTitle, chartTitle) {
     if (this.state.log && Object.keys(this.state.log.properties[dataName]).length !== 0) {
       return <LineChartCard data={this.state.log.properties[dataName]}
                             cardTitle={cardTitle}
-                            chartTitle="Number by day"/>;
+                            chartTitle={chartTitle}/>;
     } else {
       return null;
     }
@@ -57,9 +57,9 @@ class Logs extends Component {
   render() {
     const logList = Object.values(this.props.logs.byId).map((log) => ({id: log.id, name: log.name}));
 
-    const executionChart = this.getLineChart('events', 'Number of events executed');
-    const resourceChart = this.getLineChart('resources', 'Number of resources used');
-    const newTracesChart = this.getLineChart('newTraces', 'Number of new traces');
+    const executionChart = this.getLineChart('events', 'Number of events executed per day', 'Number of events');
+    const resourceChart = this.getLineChart('resources', 'Number of resources employed per day', 'Number of resources');
+    const newTracesChart = this.getLineChart('newTraces', 'Number of new cases started per day', 'Number of traces');
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
