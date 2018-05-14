@@ -42,9 +42,9 @@ const AdvancedConfiguration = (props) => {
   };
 
   const regressionConfigMap = {
-    'regression.lasso': makeExpander('Lasso regression', regressorLasso,
+    'regression.lasso': makeExpander('Lasso regressor', regressorLasso,
       <RegressionLasso onChange={props.onChange} {...props}/>),
-    'regression.linear': makeExpander('Linear regression', regressorLinear,
+    'regression.linear': makeExpander('Linear regressor', regressorLinear,
       <RegressionLinear onChange={props.onChange} {...props}/>),
     'regression.randomForest': makeExpander('Random forest regressor', regressorRF,
       <RegressionRandomForest onChange={props.onChange} {...props}/>)

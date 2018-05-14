@@ -3,10 +3,10 @@ import {labelJobToTable} from '../../util/tableUtil';
 
 const labellingData = [
   ['Prefix length', 'rmse', 'mae', 'third'],
-  [1, 221, 193, undefined],
-  [3, 191, 138, undefined],
+  [1, 221, 193, 0],
+  [3, 191, 138, 0],
   [4, 201, 165, 34],
-  [5, 171, 128, undefined],
+  [5, 171, 128, 0],
 ];
 
 it('creates label chart data', () => {

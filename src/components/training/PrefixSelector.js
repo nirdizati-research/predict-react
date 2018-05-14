@@ -44,11 +44,9 @@ class PrefixSelector extends Component {
                              onChange={this.props.onChange.bind(this, {methodConfig, key: 'generation_type'})}
                              controls={prefixTypeControls} inline className={cl}
                              value={this.props.encoding.generation_type} controlStyle={groupStyle}/>
-      <p className={cl}>The maximum prefix length is <b>{this.props.maxEventsInLog}</b>.
-        Values above maximum length might have inconsistent results.</p>
       <TextField
         id="prefixLength"
-        label="Prefix length"
+        label={`Prefix length (maximum ${this.props.maxEventsInLog})`}
         type="number"
         value={this.props.encoding.prefix_length}
         onChange={this.onPrefixChange.bind(this)}

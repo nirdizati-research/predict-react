@@ -22,7 +22,7 @@ it('renders', () => {
 it('is label form', () => {
   element.setProps({isLabelForm: true});
   expect(element).toBeDefined();
-  expect(element.find('.md-cell--3').length).toBe(4);
+  expect(element.find('.md-cell--3').length).toBe(3);
 });
 
 it('calls on change', () => {

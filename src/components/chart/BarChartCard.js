@@ -29,7 +29,7 @@ const BarChartCard = (props) => {
       return 'No data, chart cannot be shown';
     }
     const rows = Object.keys(props.data)
-      .map((key, index) => [key, props.data[key], props.data[key] + '', getColor(index)]);
+      .map((key, index) => ['', props.data[key], key + ': ' + props.data[key], getColor(index)]);
 
     rows.sort(compare);
     const opts = {

@@ -11,9 +11,9 @@ const LogListCard = (props) => {
     props.selectChange(value);
   };
   return <Card className="md-block-centered">
-    <CardTitle title="Log overview"/>
+    <CardTitle title="Log details"/>
     <CardText>
-      <p>Pick a log to see details</p>
+      <p>Choose a log to see the details</p>
       <SelectField
         id="log-name-select"
         placeholder="log.xes"

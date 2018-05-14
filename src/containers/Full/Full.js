@@ -37,11 +37,10 @@ class Full extends Component {
           primaryText: 'Upload',
           leftIcon: <FontIcon>backup</FontIcon>,
         }, {
-
           component: Link,
           to: '/logs',
           active: isActive('/logs', pathname),
-          primaryText: 'Logs',
+          primaryText: 'Log details',
           leftIcon: <FontIcon>description</FontIcon>,
         }, {
           component: Link,

@@ -8,7 +8,8 @@ const UploadDoubleCard = () => {
     <CardText>
       <p>Supported log file formats are <span className="md-font-semibold">xes, mxml, xes.gz and mxml.gz</span></p>
       Upload two log files.
-      Log parameters for the charts will be calculated during the upload and this process may take time. Remain patient!
+      Metrics for the charts on Log details page will be calculated during the upload and this process may take time.
+      Remain patient!
       <UploadDouble/>
     </CardText>
   </Card>;
