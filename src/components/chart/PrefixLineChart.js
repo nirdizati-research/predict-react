@@ -21,7 +21,7 @@ const PrefixLineChart = (props) => {
       minValue: rows[0][0]
     },
     legend: {textStyle: {fontSize: 12}},
-    chartArea: {right: 150, left: 50},
+    chartArea: {right: 150, left: 70},
     interpolateNulls: true
   };
 
