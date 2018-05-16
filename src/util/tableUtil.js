@@ -15,5 +15,14 @@ export const labelJobToTable = (jobs) => {
   const headers = [...new Set(allResultKeys.reduce(reducer, []))];
   const rows = jobs.map((job) =>
     [job.config.encoding.prefix_length, ...headers.map((h) => job.result[h] ? job.result[h] : 0)]);
-  return [['Prefix length', ...headers], ...rows];
+
+  // change '0' to 'End'
+  const newHeader = headers.map(h => {
+    if (h === '0') {
+      return 'END';
+    } else {
+      return h;
+    }
+  });
+  return [['Prefix length', ...newHeader], ...rows];
 };

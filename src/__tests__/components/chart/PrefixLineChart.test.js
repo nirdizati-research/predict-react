@@ -15,7 +15,7 @@ it('maps jobs to chart', () => {
   const chartProps = element.find(Chart).props();
 
   expect(chartProps.rows.length).toBe(4);
-  expect(chartProps.columns.length).toBe(4);
+  expect(chartProps.columns.length).toBe(5);
   expect(chartProps.options.hAxis.minValue).toBe(1);
 });
 

@@ -3,11 +3,6 @@
  */
 import React from 'react';
 import {storiesOf} from '@storybook/react';
-import LineChartCard from '../src/components/chart/LineChartCard';
-import BubbleChartCard from '../src/components/chart/BubbleChartCard';
-import {getChartHeader} from '../src/components/validation/ColumnHelper';
-import {CLASSIFICATION, REGRESSION} from '../src/reference';
-import BarChartCard from '../src/components/chart/BarChartCard';
 import {label1} from './Advanced';
 import PrefixLineChart from '../src/components/chart/PrefixLineChart';
 import {encoding1} from '../src/__tests__/components/validation/ConfigTable.test';
@@ -135,7 +130,7 @@ export const labelJobs = [
       'encoding': {'method': 'simpleIndex', 'prefix_length': 3, 'padding': 'no_padding', 'generation_type': 'only'},
       'label': label1
     },
-    'result': {'rmse': 191, 'mae': 138},
+    'result': {'rmse': 191, 'mae': 138, '0': 23},
     'type': 'labelling',
   },
   {
@@ -163,80 +158,80 @@ storiesOf('Charts', module)
         </div>
       </div>
     );
-  })
-  .add('LineChartCard', () => {
-    return (
-      <div className="md-grid">
-        <div className="md-cell md-cell--12">
-          <LineChartCard data={traces}
-                         cardTitle="Number of traces"
-                         chartTitle="Active traces"/>
-        </div>
-        <div className="md-cell md-cell--12">
-          <LineChartCard data={notOrderedTraces}
-                         cardTitle="Modern art"
-                         chartTitle="Messed up order of object"/>
-        </div>
-        <div className="md-cell md-cell--12">
-          <LineChartCard data={resources}
-                         cardTitle="Number of resources"
-                         chartTitle="Active traces"/>
-        </div>
-
-        <div className="md-cell md-cell--12">
-          <LineChartCard data={{}}
-                         cardTitle="Number of resources empty"
-                         chartTitle="Empty chart"/>
-        </div>
-        <div className="md-cell md-cell--12">
-          <BarChartCard data={events}
-                        cardTitle="Event Occurrences"
-                        hTitle="Number of Executions"
-                        chartTitle="Events"/>
-        </div>
-        <div className="md-cell md-cell--12">
-          <BarChartCard data={{'true': 343, 'false': 3434}}
-                        cardTitle="Lablels"
-                        hTitle="Number of Executionsasdad"
-                        chartTitle="asdasfd"/>
-        </div>
-        <div className="md-cell md-cell--12">
-          <BarChartCard data={eventsInTrace}
-                        cardTitle="Number of events in trace"
-                        hTitle="Number of events"
-                        chartTitle="Event count"
-                        description="This chart can be used to estimate the prefix_length"/>
-        </div>
-      </div>
-    );
-  })
-  .add('BubbleChartCard', () => {
-    return (
-      <div className="md-grid">
-        <div className="md-cell md-cell--12">
-          <BubbleChartCard
-            data={regressor}
-            columns={getChartHeader(REGRESSION)}
-            hTitle="Mae"
-            vTitle="Rmse"
-            cardTitle="Bubble chart by regressor"/>
-        </div>
-        <div className="md-cell md-cell--12">
-          <BubbleChartCard
-            data={classData}
-            columns={getChartHeader(CLASSIFICATION)}
-            hTitle="fmeasure"
-            vTitle="accuracy"
-            cardTitle="Bubble chart by classificator"/>
-        </div>
-        <div className="md-cell md-cell--12">
-          <BubbleChartCard
-            data={someData}
-            columns={someColumns}
-            hTitle="fmeasure"
-            vTitle="accuracy"
-            cardTitle="Bubble chart by prefix length"/>
-        </div>
-      </div>
-    );
   });
+//   .add('LineChartCard', () => {
+//     return (
+//       <div className="md-grid">
+//         <div className="md-cell md-cell--12">
+//           <LineChartCard data={traces}
+//                          cardTitle="Number of traces"
+//                          chartTitle="Active traces"/>
+//         </div>
+//         <div className="md-cell md-cell--12">
+//           <LineChartCard data={notOrderedTraces}
+//                          cardTitle="Modern art"
+//                          chartTitle="Messed up order of object"/>
+//         </div>
+//         <div className="md-cell md-cell--12">
+//           <LineChartCard data={resources}
+//                          cardTitle="Number of resources"
+//                          chartTitle="Active traces"/>
+//         </div>
+//
+//         <div className="md-cell md-cell--12">
+//           <LineChartCard data={{}}
+//                          cardTitle="Number of resources empty"
+//                          chartTitle="Empty chart"/>
+//         </div>
+//         <div className="md-cell md-cell--12">
+//           <BarChartCard data={events}
+//                         cardTitle="Event Occurrences"
+//                         hTitle="Number of Executions"
+//                         chartTitle="Events"/>
+//         </div>
+//         <div className="md-cell md-cell--12">
+//           <BarChartCard data={{'true': 343, 'false': 3434}}
+//                         cardTitle="Lablels"
+//                         hTitle="Number of Executionsasdad"
+//                         chartTitle="asdasfd"/>
+//         </div>
+//         <div className="md-cell md-cell--12">
+//           <BarChartCard data={eventsInTrace}
+//                         cardTitle="Number of events in trace"
+//                         hTitle="Number of events"
+//                         chartTitle="Event count"
+//                         description="This chart can be used to estimate the prefix_length"/>
+//         </div>
+//       </div>
+//     );
+//   })
+//   .add('BubbleChartCard', () => {
+//     return (
+//       <div className="md-grid">
+//         <div className="md-cell md-cell--12">
+//           <BubbleChartCard
+//             data={regressor}
+//             columns={getChartHeader(REGRESSION)}
+//             hTitle="Mae"
+//             vTitle="Rmse"
+//             cardTitle="Bubble chart by regressor"/>
+//         </div>
+//         <div className="md-cell md-cell--12">
+//           <BubbleChartCard
+//             data={classData}
+//             columns={getChartHeader(CLASSIFICATION)}
+//             hTitle="fmeasure"
+//             vTitle="accuracy"
+//             cardTitle="Bubble chart by classificator"/>
+//         </div>
+//         <div className="md-cell md-cell--12">
+//           <BubbleChartCard
+//             data={someData}
+//             columns={someColumns}
+//             hTitle="fmeasure"
+//             vTitle="accuracy"
+//             cardTitle="Bubble chart by prefix length"/>
+//         </div>
+//       </div>
+//     );
+//   });
