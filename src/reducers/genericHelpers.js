@@ -1,5 +1,8 @@
 // replace current state with new list
 export const listRetrieved = (objectList) => {
+  if (objectList.length === 0) {
+    return {allIds: [], byId: {}};
+  }
   const allIds = objectList.map(({id}) => id);
   const byId = Object.assign(...objectList.map((obj) => ({[obj.id]: obj})));
   return {allIds, byId};

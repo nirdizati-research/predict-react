@@ -8,7 +8,7 @@ let onChange;
 beforeEach(() => {
   onChange = jest.fn();
   element = shallow(<PrefixSelector onChange={onChange} maxEventsInLog={123}
-                                    prefix={{prefix_length: 1, padding: 'no_padding', type: 'up_to'}}/>);
+                                    encoding={{prefix_length: 1, padding: 'no_padding', generation_type: 'up_to'}}/>);
 });
 
 it('renders', () => {
@@ -22,12 +22,12 @@ it('renders', () => {
 it('is label form', () => {
   element.setProps({isLabelForm: true});
   expect(element).toBeDefined();
-  expect(element.find('.md-cell--3').length).toBe(4);
+  expect(element.find('.md-cell--3').length).toBe(3);
 });
 
 it('calls on change', () => {
   element.find(TextField).simulate('change', '23');
-  expect(onChange.mock.calls[0][0]).toEqual({'isNumber': true, 'key': 'prefix_length', 'methodConfig': 'prefix'});
+  expect(onChange.mock.calls[0][0]).toEqual({'isNumber': true, 'key': 'prefix_length', 'methodConfig': 'encoding'});
   expect(onChange.mock.calls[0][1]).toEqual('23');
 });
 

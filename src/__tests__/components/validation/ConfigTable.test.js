@@ -12,16 +12,21 @@ import {jobToValidationTable} from '../../../util/dataReducers';
 import {label1} from '../../../../stories/Advanced';
 import LabelConfigTable from '../../../components/validation/LabelConfigTable';
 
+export const encoding1 = {
+  'method': 'simpleIndex',
+  'prefix_length': 1,
+  'padding': 'zero_padding',
+  'generation_type': 'only'
+};
+
 const regJobs = [{
   'id': 53,
   'created_date': '2018-02-07T22:47:32.146583Z',
   'modified_date': '2018-02-07T22:47:32.149647Z',
   'config': {
-    'prefix_length': 0,
-    'encoding': 'simpleIndex',
+    'encoding': encoding1,
     'clustering': 'noCluster',
     'method': 'linear',
-    'padding': 'zero_padding',
     'label': label1,
     'hyperopt': {
       'use_hyperopt': true,
@@ -42,11 +47,9 @@ const classJobs = [{
   'created_date': '2018-02-07T09:13:52.964154Z',
   'modified_date': '2018-02-07T09:13:52.964256Z',
   'config': {
-    'prefix_length': 1,
-    'encoding': 'simpleIndex',
+    'encoding': encoding1,
     'clustering': 'noCluster',
     'method': 'randomForest',
-    'padding': 'zero_padding',
     'label': label1,
     'hyperopt': {
       'use_hyperopt': true,
@@ -67,9 +70,7 @@ const labelJobs = [{
   'created_date': '2018-02-07T09:13:52.964154Z',
   'modified_date': '2018-02-07T09:13:52.964256Z',
   'config': {
-    'prefix_length': 1,
-    'encoding': 'simpleIndex',
-    'padding': 'zero_padding',
+    'encoding': encoding1,
     'label': label1,
   },
   'status': 'created',
@@ -105,7 +106,7 @@ describe('ConfigTable', () => {
     expect(element).toBeDefined();
     // Header row
     expect(element.find(TableRow).length).toBe(1);
-    expect(element.find(TableColumn).length).toBe(11);
+    expect(element.find(TableColumn).length).toBe(12);
   });
 
   it('renders regression jobs if present', () => {

@@ -87,15 +87,15 @@ const filterByMethod = (predictionMethod) => (job) => {
 };
 
 const filterByPrefix = (selectedPrefixes) => (job) => {
-  return selectedPrefixes.includes(job.config.prefix_length);
+  return selectedPrefixes.includes(job.config.encoding.prefix_length);
 };
 
 const filterByPadding = (padding) => (job) => {
-  return job.config.padding === padding;
+  return job.config.encoding.padding === padding;
 };
 
 const filterByAllElse = (encodings, clusterings, classification, regression, predictionMethod) => (job) => {
-  const firstHalf = encodings.includes(job.config.encoding) && clusterings.includes(job.config.clustering);
+  const firstHalf = encodings.includes(job.config.encoding.method) && clusterings.includes(job.config.clustering);
   if (predictionMethod === REGRESSION) {
     return firstHalf && regression.includes(job.config.method);
   } else {
@@ -126,7 +126,7 @@ const addOrRemoveString = (list, value) => {
   }
 };
 
-const prefixSet = (jobsById, ids) => [...new Set(ids.map(id => jobsById[id].config.prefix_length))];
+const prefixSet = (jobsById, ids) => [...new Set(ids.map(id => jobsById[id].config.encoding.prefix_length))];
 const thresholdSet = (jobsById) => [...new Set(Object.values(jobsById).map((job) => job.config.label.threshold))];
 const attributeNameSet = (jobsById) =>
   [...new Set(Object.values(jobsById).map(job => job.config.label.attribute_name).filter(a => a !== undefined))];
