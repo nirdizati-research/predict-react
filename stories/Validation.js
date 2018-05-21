@@ -94,13 +94,13 @@ export const classJobs = [
 
 const regJobs = [
   {
-    'id': 53,
+    'id': 1073,
     'created_date': '2018-02-07T22:47:32.146583Z',
     'modified_date': '2018-02-07T22:47:32.149647Z',
     'config': {
-      'encoding': {'method': 'simpleIndex', 'prefix_length': 1, 'padding': 'no_padding', 'generation_type': 'only'},
+      'encoding': {'method': 'complex', 'prefix_length': 16, 'padding': 'no_padding', 'generation_type': 'only'},
       'clustering': 'noCluster',
-      'method': 'linear',
+      'method': 'lasso',
       'create_models': false,
       'label': label1,
       'hyperopt': {
@@ -108,22 +108,46 @@ const regJobs = [
         'max_evals': 100,
         'performance_metric': 'rmse'
       },
-      'regression.linear': {
+      'regression.lasso': {
         'fit_intercept': true,
         'normalize': false,
         'copy_X': true
       }
     },
     'status': 'created',
-    'result': {
-      'mae': 1,
-      'rmse': 2,
-      'rscore': 3
-    },
+    'result': {'rmse': 1316.1386475352517, 'mae': 933.93803112935666, 'rscore': -0.10448018564371164},
     'type': 'regression',
     'split_id': 1,
     'error': ''
-  }];
+  },
+  {
+    'id': 1240,
+    'created_date': '2018-02-07T22:47:32.146583Z',
+    'modified_date': '2018-02-07T22:47:32.149647Z',
+    'config': {
+      'encoding': {'method': 'complex', 'prefix_length': 16, 'padding': 'no_padding', 'generation_type': 'only'},
+      'clustering': 'noCluster',
+      'method': 'lasso',
+      'create_models': false,
+      'label': label1,
+      'hyperopt': {
+        'use_hyperopt': false,
+        'max_evals': 100,
+        'performance_metric': 'rmse'
+      },
+      'regression.lasso': {
+        'fit_intercept': true,
+        'normalize': false,
+        'copy_X': true
+      }
+    },
+    'status': 'created',
+    'result': {'rmse': 1309.2985098872928, 'mae': 918.62048228654021, 'rscore': -0.093029773636106539},
+    'type': 'regression',
+    'split_id': 1,
+    'error': ''
+  }
+];
 
 const labelJobs = [
   {
