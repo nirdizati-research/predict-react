@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import FetchState from '../FetchState';
 import SelectField from 'react-md/lib/SelectFields/index';
+import {logsStore} from '../../propTypes';
 
 class LogSelector extends Component {
   constructor(props) {
@@ -51,7 +52,7 @@ class LogSelector extends Component {
 }
 
 LogSelector.propTypes = {
-  logs: PropTypes.object.isRequired,
+  logs: logsStore,
   fetchState: PropTypes.shape({
     inFlight: PropTypes.bool.isRequired,
     error: PropTypes.any

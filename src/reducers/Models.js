@@ -7,8 +7,7 @@ import {
   MODELS_RETRIEVED,
   MODELS_REQUESTED,
   REG_MODEL_CHANGED,
-  CLAS_MODEL_CHANGED,
-  NA_MODEL_CHANGED
+  CLAS_MODEL_CHANGED
 } from '../actions/ModelActions'
 import {LOG_CHANGED} from '../actions/LogActions'
 import {REGRESSION, NEXT_ACTIVITY, CLASSIFICATION,
@@ -20,10 +19,8 @@ const initialState = {
   logId: 0,
   regselected: 0,
   classelected: 0,
-  naselected: 0,
   regressionModels: [],
   classificationModels: [],
-  nextActivityModels: [],
 };
 
 const mergeIncomingModels = (incoming, existing) => {
@@ -47,20 +44,13 @@ const models = (state = initialState, action) => {
     case MODELS_RETRIEVED: {
       const models = mergeIncomingModels(action.payload, state.models);
       const regressionModels = models.filter((model) => (model.type === REGRESSION));
-      const classificationModels = models.filter((model) => (model.type === CLASSIFICATION) &&
-                                                            ((model.config.label.type === REMAINING_TIME) ||
-                                                            (model.config.label.type === ATTRIBUTE_NUMBER) ||
-                                                            (model.config.label.type === DURATION)));
-      const nextActivityModels = models.filter((model) => (model.type === CLASSIFICATION) &&
-                                                            ((model.config.label.type === NEXT_ACTIVITY) ||
-                                                            (model.config.label.type === ATTRIBUTE_STRING)));
+      const classificationModels = models.filter((model) => (model.type === CLASSIFICATION));
       return {
         ...state,
         fetchState: {inFlight: false},
         models: models,
         regressionModels: regressionModels,
         classificationModels: classificationModels,
-        nextActivityModels: nextActivityModels,
       };
     }
 
@@ -87,14 +77,6 @@ const models = (state = initialState, action) => {
       };
     }
 
-    case NA_MODEL_CHANGED: {
-      const naselected=action.modelId
-      return {
-        ...state,
-        naselected,
-      };
-    }
-
     case LOG_CHANGED: {
       const logId=action.logId
       const regressionModels = state.regressionModels.filter((model) => (model.config.prefix_length === action.p_length)
@@ -103,15 +85,12 @@ const models = (state = initialState, action) => {
       const classificationModels = state.regressionModels.filter((model) => (model.config.prefix_length === action.p_length)
                                                                             || ((model.config.padding === 'zero_padding') &&
                                                                             (model.config.prefix_length >= action.p_length)))
-      const nextActivityModels = state.regressionModels.filter((model) => (model.config.prefix_length === action.p_length)
-                                                                          || ((model.config.padding === 'zero_padding') &&
-                                                                          (model.config.prefix_length >= action.p_length)))
+
       return {
         ...state,
         logId,
         regressionModels,
         classificationModels,
-        nextActivityModels,
       };
     }
 

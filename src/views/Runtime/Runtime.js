@@ -14,11 +14,9 @@ import {jobPropType, modelPropType} from '../../propTypes';
 import {logsStore} from '../../propTypes';
 import Button from 'react-md/lib/Buttons/Button';
 import {modelsToString} from '../../util/dataReducers';
-import {splitsRequested} from '../../actions/SplitActions';
-import {mapJobs} from '../../util/unNormalize';
 import {Card, CardText} from 'react-md/lib/Cards/index';
 
-class Prediction extends Component {
+class Runtime extends Component {
   onChangeLog(logId) {
     var log = this.props.logs[logId]
     const p_length = log.properties.maxEventsInLog;
@@ -45,7 +43,6 @@ class Prediction extends Component {
   componentDidMount() {
     if (this.props.models.length === 0 ) {
       this.props.onRequestModels();
-      this.props.onRequestSplitList();
       this.props.onRequestLogList();
       this.props.onRequestJobs();
     }
@@ -56,7 +53,7 @@ class Prediction extends Component {
   }
 
   onReset() {
-    window.location.reload()
+    this.state.setState(initialState);
   }
 
   Submit() {
@@ -116,9 +113,9 @@ Prediction.propTypes = {
   onChangeJRun: PropTypes.func.isRequired,
   onRequestModels: PropTypes.func.isRequired,
   onRegModelChange: PropTypes.func.isRequired,
-  onRequestSplitList: PropTypes.func.isRequired,
   onModelChange: PropTypes.func.isRequired,
   onClasModelChange: PropTypes.func.isRequired,
+  onNAModelChange: PropTypes.func.isRequired,
   onLogChange: PropTypes.func.isRequired,
   onSubmitPrediction: PropTypes.func.isRequired,
   onRequestJobs: PropTypes.func.isRequired,
@@ -135,7 +132,7 @@ Prediction.propTypes = {
 const mapStateToProps = (state) => ({
   models: state.models.models,
   logs: state.logs,
-  jobsrun: mapJobs(state.logs.byId, state.splits.byId, state.jobs.byId, state.jobs.allIds),
+  jobsrun: mapJobs(state.logs.byId, state.splits.byId, state.jobs.runbyId, state.jobs.allIds),
   regressionModels: state.models.regressionModels,
   classificationModels: state.models.classificationModels,
   regModelId: state.models.regselected,
@@ -148,7 +145,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onRequestJobs: () => dispatch(jobsRequested()),
   onRequestModels: () => dispatch(modelsRequested()),
-  onRequestSplitList: () => dispatch(splitsRequested()),
   onRequestLogList: (changeVisible) => dispatch(logListRequested({changeVisible, requestInfo: false})),
   onRegModelChange: (modelId) => dispatch({type: REG_MODEL_CHANGED, modelId}),
   onClasModelChange: (modelId) => dispatch({type: CLAS_MODEL_CHANGED, modelId}),
@@ -158,4 +154,4 @@ const mapDispatchToProps = (dispatch) => ({
   onSubmitPrediction: (payload) => dispatch(submitPrediction({payload}))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Prediction);
+export default connect(mapStateToProps, mapDispatchToProps)(Runtime);

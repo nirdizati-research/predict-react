@@ -18,9 +18,6 @@ export const regModelChanged = createPayloadForwardingAction(REG_MODEL_CHANGED);
 export const CLAS_MODEL_CHANGED = 'CLAS_MODEL_CHANGED';
 export const clasModelChanged = createPayloadForwardingAction(CLAS_MODEL_CHANGED);
 
-export const NA_MODEL_CHANGED = 'NA_MODEL_CHANGED';
-export const nAModelChanged = createPayloadForwardingAction(NA_MODEL_CHANGED);
-
 export const MODEL_CHANGED = 'MODEL_CHANGED';
 export const modelChanged = createPayloadForwardingAction(MODEL_CHANGED);
 
