@@ -48,12 +48,11 @@ const resources = {
 };
 
 const eventsInTrace = {
-  '1': 5,
-  '2': 5,
-  '3': 9,
-  '4': 5,
-  '5': 13,
-  '6': 5
+  'Archive Repair': 574,
+  'Restart Repair': 139,
+  'END': 74,
+  'Repair (Simple)': 68,
+  'Repair (Complex)': 26
 };
 
 const events = {
@@ -208,10 +207,9 @@ storiesOf('Charts', module)
         </div>
         <div className="md-cell md-cell--12">
           <BarChartCard data={eventsInTrace}
-                        cardTitle="Number of events in trace"
-                        hTitle="Number of events"
-                        chartTitle="Event count"
-                        description="This chart can be used to estimate the prefix_length"/>
+                        cardTitle="Labels for task 8, prefix length 8"
+                        hTitle="Label"
+                        chartTitle="Label count"/>
         </div>
       </div>
     );
