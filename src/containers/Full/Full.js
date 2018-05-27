@@ -1,14 +1,32 @@
 import React, {Component} from 'react';
 import {NavigationDrawer} from 'react-md/lib/NavigationDrawers/index';
-import {FontIcon} from 'react-md/lib/index';
 import {IndexLink, Link} from 'react-router';
 import PropTypes from 'prop-types';
+import {Button, FontIcon} from 'react-md';
+import HelpDialog from '../../components/static/HelpDialog';
+import {getHelpText} from '../../components/static/helpReference';
+
+
+const helpButton = (click) => (
+  <Button flat swapTheming onClick={click} iconBefore={false} iconEl={<FontIcon>help</FontIcon>}>
+    Help
+  </Button>);
 
 function isActive(to, path) {
   return to === path;
 }
 
 class Full extends Component {
+  state = {visible: false};
+
+  click() {
+    this.setState({visible: true});
+  }
+
+  hide() {
+    this.setState({visible: false});
+  }
+
   render() {
     const {
       location: {pathname},
@@ -23,6 +41,7 @@ class Full extends Component {
         desktopDrawerType={NavigationDrawer.DrawerTypes.PERSISTENT_MINI}
         toolbarTitle='Nirdizati Research'
 
+        toolbarActions={[helpButton(this.click.bind(this))]}
         defaultVisible={false}
         navItems={[{
           component: IndexLink,
@@ -74,6 +93,7 @@ class Full extends Component {
           leftIcon: <FontIcon>insert_chart</FontIcon>,
         }]}
       >
+        <HelpDialog texts={getHelpText(pathname)} visible={this.state.visible} hide={this.hide.bind(this)}/>
         {children ? React.cloneElement(children, {key: pathname}) : null}
       </NavigationDrawer>
     );

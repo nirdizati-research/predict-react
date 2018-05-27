@@ -1,6 +1,3 @@
-/**
- * Created by Tõnis Kasekamp on 25.09.2017.
- */
 import React from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import {Chart} from 'react-google-charts';
@@ -42,8 +39,12 @@ const EncodingByLogCard = () => {
   return <Card className="md-block-centered">
     <CardTitle title="Encoding performance by log size" subtitle="Tested version 1.0.0"/>
     <CardText>
-      The encoding methods in this tool have a different performance impact. The size of the log also effects the
-      encoding time. The following chart illustrates the relative difference of the methods and log sizes.
+      <p>The encoding methods in this tool have a different performance impact. The size of the log also effects the
+        encoding time. The following chart illustrates the relative difference of the methods and log sizes.</p>
+      <p>
+        The test measures only the encoding of the log file without the time taken to read in and parse the log file
+        from the file system. The test configuration was prefix length 20 with zero padding.</p>
+
       The logs for this test are:
       <ul>
         <li><a href="https://data.4tu.nl/repository/uuid:915d2bfb-7e84-49ad-a286-dc35f063a460">Hospital log</a> about
@@ -57,8 +58,8 @@ const EncodingByLogCard = () => {
         </li>
       </ul>
 
-      As can be seen, there is no performance difference with a small log file. However using a massive event log with
-      tens of thousands of traces will have a significant impact on the encoding time.
+      <p> As can be seen, there is no performance difference with a small log file. However using a massive event log
+        with tens of thousands of traces will have a significant impact on the encoding time.</p>
       <Chart
         chartType="ColumnChart"
         data={data}

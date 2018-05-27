@@ -1,7 +1,8 @@
 import React, {PureComponent} from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import nirdizati from '../images/nirdizati-logo-e1501821874335.png';
-import {Avatar, Button, DialogContainer, FontIcon, List, ListItem} from 'react-md';
+import {Avatar, Button, FontIcon, List, ListItem} from 'react-md';
+import HelpDialog from './static/HelpDialog';
 
 /* eslint-disable max-len */
 class WalkThrough extends PureComponent {
@@ -18,18 +19,7 @@ class WalkThrough extends PureComponent {
 
   render() {
     return <Card className="md-block-centered">
-      <DialogContainer
-        id="simple-list-dialog"
-        visible={this.state.visible}
-        title="Simple List Dialog"
-        onHide={this.hide}
-      > <List onClick={this.hide}>
-        <ListItem primaryText="Single line text goes here"/>
-        <ListItem primaryText="Two line wrapped text goes here making it wrap to the next line"/>
-        <ListItem primaryText="Single line text goes here"/>
-        <ListItem
-          primaryText="Three line wrapped text goes here making it wrap to the next line and continues longer to be here"/>
-      </List></DialogContainer>
+      <HelpDialog texts={['random']} visible={this.state.visible} hide={this.hide.bind(this)}/>
       <CardTitle title="Nirdizati Research"
                  subtitle="A Web Application to Support Research in Predictive Monitoring Tasks">
         <div className="md-cell--right">
