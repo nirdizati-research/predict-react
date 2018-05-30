@@ -1,10 +1,12 @@
 import React, {PureComponent} from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import nirdizati from '../images/nirdizati-logo-e1501821874335.png';
-import {Avatar, Button, FontIcon, List, ListItem} from 'react-md';
-import HelpDialog from './static/HelpDialog';
+import {Avatar, Button, DialogContainer, FontIcon, List, ListItem} from 'react-md';
+
 
 /* eslint-disable max-len */
+
+/* eslint-disable react/no-unescaped-entities */
 class WalkThrough extends PureComponent {
   state = {visible: false};
 
@@ -19,7 +21,7 @@ class WalkThrough extends PureComponent {
 
   render() {
     return <Card className="md-block-centered">
-      <HelpDialog texts={['random']} visible={this.state.visible} hide={this.hide.bind(this)}/>
+      {dialog(this.state.visible, this.hide.bind(this))}
       <CardTitle title="Nirdizati Research"
                  subtitle="A Web Application to Support Research in Predictive Monitoring Tasks">
         <div className="md-cell--right">
@@ -90,6 +92,25 @@ class WalkThrough extends PureComponent {
     </Card>;
   }
 }
+
+
+const dialog = (visible, hide) => (<DialogContainer
+  id="help-dialog"
+  visible={visible}
+  title="Help dialog"
+  onHide={hide}
+  contentProps={{id: 'ids'}}
+  width={600}
+  focusOnMount={false}
+>
+  <img src={'https://i.imgur.com/du7CH6G.jpg'} alt="Nirdizati logo" width='550px'/>
+  <h4 className="md-text-center">To the brave Horsemen of the Apocalypse!</h4>
+  <p>This application is 100% vegan friendly!</p>
+  <p>Application developed while searching for Ballmer's Peak.</p>
+  <p>Could not be possible without running around Anne canal.</p>
+  <p>And thanks to all helpers with React and just listening me talk about this application.</p>
+  <p className="md-font-semibold">Tõnis Kasekamp</p>
+</DialogContainer>);
 
 export default WalkThrough;
 

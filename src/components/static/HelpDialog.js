@@ -12,16 +12,15 @@ const actions = [{
   primary: true,
   onClick: () => window.open(thesisUrl),
 }];
-
+/* eslint-disable react/no-unescaped-entities */
 const HelpDialog = (props) => {
   const paragraphs = props.texts.map((text, i) => (
     <p key={i}>
       {text}
     </p>
   ));
-
-
-  const header = <p key={0} className={'md-caption'}>This documentation is based on the Master thesis by Tõnis Kasekamp
+  const header = <p key={0} className='md-caption md-text-justify'>This documentation is based on the Master thesis by
+    <span className="md-font-semibold"> Tõnis Kasekamp </span>
     called "A Web Application to Support Researchers in Predictive Process Monitoring Tasks". The thesis contains better
     documentation about the functionality, so look there for a full explanation about the configuration
     options.</p>;
