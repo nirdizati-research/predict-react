@@ -1,8 +1,13 @@
 {
   "name": "predict-react",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
-  "author": "Tõnis Kasekamp",
+  "author": {
+    "name": "Tõnis Kasekamp",
+    "email": "toniskasekamp@gmail.com"
+  },
+  "homepage": "http://research.nirdizati.org/#/",
+  "license": "MIT",
   "devDependencies": {
     "@storybook/react": "3.2.13",
     "coveralls": "^3.0.0",
