@@ -23,6 +23,10 @@ export const regressionMetrics = [
   {
     value: 'rscore',
     label: 'rscore'
+  },
+  {
+    value: 'mape',
+    label: 'mape'
   }
 ];
 

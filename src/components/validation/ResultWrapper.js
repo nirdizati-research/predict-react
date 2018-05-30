@@ -13,7 +13,7 @@ import {toRun} from '../../util/dataReducers';
 
 const regressionMap = (jobs) => {
   return jobs.map((job) => [job.id + '', toRun(job),
-    job.result.mae, job.result.rmse, job.result.rscore, job.config.encoding.prefix_length + '']);
+    job.result.mae, job.result.rmse, job.result.mape, job.config.encoding.prefix_length + '', job.result.rscore]);
 };
 
 const classMap = (jobs) => {
