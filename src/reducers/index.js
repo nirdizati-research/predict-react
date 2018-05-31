@@ -5,6 +5,7 @@ import logs from './Logs';
 import training from './Training';
 import splits from './Splits';
 import models from './Models';
+import traces from './Traces';
 
 export default combineReducers({
   routing: routerReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
   logs,
   models,
   training,
-  splits
+  splits,
+  traces
 });

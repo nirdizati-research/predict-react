@@ -20,7 +20,7 @@ import {Card, CardText} from 'react-md/lib/Cards/index';
 
 class Prediction extends Component {
   onChangeLog(logId) {
-    var log = this.props.logs[logId]
+    var log = this.props.logs.byId[logId]
     const p_length = log.properties.maxEventsInLog;
     this.props.onLogChange(logId, p_length);
     this.props.onChangeJRun(logId);
@@ -59,6 +59,12 @@ class Prediction extends Component {
     window.location.reload()
   }
 
+  filterJobRun () {
+     return this.props.jobsrun.filter((job) => (job.config.log_id === this.props.logId) &&
+                                                                  ((job.config.model_id === this.props.regModelId) ||
+                                                                  (job.config.model_id === this.props.classModelId)));
+  }
+
   Submit() {
     //const payload={log_id:this.props.logId, model_id:this.props.regModelId}
     const logId = this.props.logId;
@@ -71,6 +77,7 @@ class Prediction extends Component {
 
   render() {
     // Only unique splits for selector
+    const filteredJobsRun = this.filterJobRun();
     const regModelsLabel = modelsToString(this.props.regressionModels);
     const clasModelsLabel = modelsToString(this.props.classificationModels);
 
@@ -97,7 +104,7 @@ class Prediction extends Component {
           </Card>
         </div>
         <CardText>
-          <ResultTable jobs={this.props.jobsrun} onRequestJobs={this.requestJobsRun.bind(this)}/>
+          <ResultTable jobs={filteredJobsRun} onRequestJobs={this.requestJobsRun.bind(this)}/>
         </CardText>
       </div>
     );
@@ -135,7 +142,7 @@ Prediction.propTypes = {
 const mapStateToProps = (state) => ({
   models: state.models.models,
   logs: state.logs,
-  jobsrun: mapJobs(state.logs.byId, state.splits.byId, state.jobs.byId, state.jobs.allIds),
+  jobsrun: mapJobs(state.logs.byId, state.splits.byId, state.jobs.byId, state.jobs.runIds),
   regressionModels: state.models.regressionModels,
   classificationModels: state.models.classificationModels,
   regModelId: state.models.regselected,

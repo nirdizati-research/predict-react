@@ -50,8 +50,7 @@ const initialState = {
   fetchState: {inFlight: false},
   jobs: [],
   filteredJobs: [],
-  jobsrun: [],
-  filteredJobsRun: [],
+  runIds: [],
   byId: {},
   allIds: [],
   filteredIds: [],
@@ -164,12 +163,6 @@ const checkboxChange = (target, state) => {
 };
 
 
-const filterJobRun = (jobsrun, logId, naId, regId, classId) => {
-  return jobsrun.filter((job) => (job.config.log_id === logId) && ((job.config.model_id === naId) ||
-                                                                  (job.config.model_id === regId) ||
-                                                                  (job.config.model_id === classId)));
-};
-
 const completedUniqueSplits = (jobsById) =>
   [...new Set(Object.values(jobsById).filter(job => job.status === 'completed').map((job => job.split_id)))];
 
@@ -185,20 +178,19 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
 
     case JOBS_RETRIEVED: {
       const jobs = addListToStore(state, action.payload);
-      const jobsrun = []
+      const runIds = []
       for (var k in state.byId) {
         if((state.byId.hasOwnProperty(k)) && state.byId[k].config.add_label === false){
-          jobsrun.push(state.byId[k])
+          runIds.push(k)
         }
       }
-      const filteredJobsRun = filterJobRun(state.jobsrun,state.logId,state.naId,state.regId,state.classId);
       const uniqueSplits = completedUniqueSplits(jobs.byId);
       const thresholds = thresholdSet(jobs.byId);
       const attributeNames = attributeNameSet(jobs.byId);
       return {
         ...state, fetchState: {inFlight: false}, ...jobs,
         uniqueSplits, thresholds, attributeNames,
-        filteredJobsRun, jobsrun
+         runIds
       };
     }
 
@@ -254,10 +246,8 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
     }
     case JOB_RUN_CHANGED: {
       const logId = action.logId;
-      const filteredJobsRun = filterJobRun(state.jobsrun,logId,state.naId,state.regId,state.classId);
       return {
         ...state,
-          filteredJobsRun: filteredJobsRun,
           logId: logId
       };
     }
@@ -265,10 +255,8 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
       const naId = action.naId;
       const regId = action.regId;
       const classId = action.classId;
-      const filteredJobsRun = filterJobRun(state.jobsrun,state.logId,naId,regId,classId);
       return {
         ...state,
-          filteredJobsRun: filteredJobsRun,
           naId: naId,
           classId: classId,
           regId: regId,

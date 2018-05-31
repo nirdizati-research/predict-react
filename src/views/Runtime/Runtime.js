@@ -5,12 +5,12 @@ import {
   modelsRequested, REG_MODEL_CHANGED, CLAS_MODEL_CHANGED, MODEL_CHANGED
 } from '../../actions/ModelActions';
 import {logListRequested, LOG_CHANGED} from '../../actions/LogActions';
-import {jobsRequested} from '../../actions/JobActions';
-import {submitPrediction, JOB_RUN_CHANGED,} from '../../actions/RuntimeActions';
+import {traceListRequested} from '../../actions/TraceActions';
+import {submitPrediction} from '../../actions/RuntimeActions';
 import PredictionHeaderCard from '../../components/prediction/PredictionHeaderCard';
 import LogSelector from '../../components/prediction/LogSelector';
-import ResultTable from '../../components/prediction/ResultTable';
-import {jobPropType, modelPropType} from '../../propTypes';
+import RuntimeTable from '../../components/Runtime/RuntimeTable';
+import {tracePropType, modelPropType} from '../../propTypes';
 import {logsStore} from '../../propTypes';
 import Button from 'react-md/lib/Buttons/Button';
 import {modelsToString} from '../../util/dataReducers';
@@ -18,10 +18,9 @@ import {Card, CardText} from 'react-md/lib/Cards/index';
 
 class Runtime extends Component {
   onChangeLog(logId) {
-    var log = this.props.logs[logId]
+    var log = this.props.logs.byId[logId]
     const p_length = log.properties.maxEventsInLog;
     this.props.onLogChange(logId, p_length);
-    this.props.onChangeJRun(logId);
   }
 
   onRegChangeModel(modelId) {
@@ -44,16 +43,24 @@ class Runtime extends Component {
     if (this.props.models.length === 0 ) {
       this.props.onRequestModels();
       this.props.onRequestLogList();
-      this.props.onRequestJobs();
+      this.props.onRequestTraces();
     }
   }
 
-  requestJobsRun() {
-    this.props.onRequestJobs();
+  requestTraces() {
+    this.props.onRequestTraces();
   }
 
   onReset() {
-    this.state.setState(initialState);
+    window.location.reload()
+  }
+
+  filterTrace (byId) {
+     const arTraces = [];
+     for (var key in byId){
+       if (byId[key].real_log === this.props.logId) arTraces.push(byId[key])
+     }
+     return arTraces
   }
 
   Submit() {
@@ -68,6 +75,7 @@ class Runtime extends Component {
 
   render() {
     // Only unique splits for selector
+    const filteredTraces = this.filterTrace(this.props.traces);
     const regModelsLabel = modelsToString(this.props.regressionModels);
     const clasModelsLabel = modelsToString(this.props.classificationModels);
 
@@ -94,14 +102,14 @@ class Runtime extends Component {
           </Card>
         </div>
         <CardText>
-          <ResultTable jobs={this.props.jobsrun} onRequestJobs={this.requestJobsRun.bind(this)}/>
+          <RuntimeTable traces={filteredTraces} onRequestTraces={this.requestTraces.bind(this)}/>
         </CardText>
       </div>
     );
   }
 }
 
-Prediction.propTypes = {
+Runtime.propTypes = {
   logfetchState: PropTypes.shape({
     inFlight: PropTypes.bool.isRequired,
     error: PropTypes.any
@@ -110,18 +118,16 @@ Prediction.propTypes = {
     inFlight: PropTypes.bool.isRequired,
     error: PropTypes.any
   }).isRequired,
-  onChangeJRun: PropTypes.func.isRequired,
   onRequestModels: PropTypes.func.isRequired,
   onRegModelChange: PropTypes.func.isRequired,
   onModelChange: PropTypes.func.isRequired,
   onClasModelChange: PropTypes.func.isRequired,
-  onNAModelChange: PropTypes.func.isRequired,
   onLogChange: PropTypes.func.isRequired,
   onSubmitPrediction: PropTypes.func.isRequired,
-  onRequestJobs: PropTypes.func.isRequired,
+  onRequestTraces: PropTypes.func.isRequired,
   models: PropTypes.arrayOf(modelPropType).isRequired,
   logs: logsStore,
-  jobsrun: PropTypes.arrayOf(jobPropType).isRequired,
+  traces: PropTypes.arrayOf(tracePropType).isRequired,
   regressionModels: PropTypes.arrayOf(modelPropType).isRequired,
   classificationModels: PropTypes.arrayOf(modelPropType).isRequired,
   regModelId: PropTypes.number.isRequired,
@@ -132,7 +138,7 @@ Prediction.propTypes = {
 const mapStateToProps = (state) => ({
   models: state.models.models,
   logs: state.logs,
-  jobsrun: mapJobs(state.logs.byId, state.splits.byId, state.jobs.runbyId, state.jobs.allIds),
+  traces: state.traces.byId,
   regressionModels: state.models.regressionModels,
   classificationModels: state.models.classificationModels,
   regModelId: state.models.regselected,
@@ -143,14 +149,13 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onRequestJobs: () => dispatch(jobsRequested()),
+  onRequestTraces: () => dispatch(traceListRequested()),
   onRequestModels: () => dispatch(modelsRequested()),
   onRequestLogList: (changeVisible) => dispatch(logListRequested({changeVisible, requestInfo: false})),
   onRegModelChange: (modelId) => dispatch({type: REG_MODEL_CHANGED, modelId}),
   onClasModelChange: (modelId) => dispatch({type: CLAS_MODEL_CHANGED, modelId}),
   onModelChange: (naId, regId, classId) => dispatch({type: MODEL_CHANGED, naId, regId, classId}),
   onLogChange: (logId, p_length) => dispatch({type: LOG_CHANGED, logId, p_length}),
-  onChangeJRun: (logId) => dispatch({type: JOB_RUN_CHANGED, logId}),
   onSubmitPrediction: (payload) => dispatch(submitPrediction({payload}))
 });
 

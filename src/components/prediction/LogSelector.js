@@ -25,13 +25,8 @@ class LogSelector extends Component {
   }
 
   render() {
-    const itemsWithLabel = []
-    for (var k in this.props.logs){
-      if (this.props.logs.hasOwnProperty(k)) {
-        var log={value: this.props.logs[k].id, label : this.props.logs[k].name}
-        itemsWithLabel.push(log)
-       }
-    }
+    const logList = Object.values(this.props.logs.byId).map((log) => ({id: log.id, name: log.name}));
+    const itemsWithLabel = logList.map(({id, name}) => ({value: id, label: name}));
 
     return (
       <Card className="md-block-centered">
@@ -40,6 +35,7 @@ class LogSelector extends Component {
           <SelectField
             id="log-name-select"
             className="md-cell"
+            placeholder="log.xes"
             menuItems={itemsWithLabel}
             position={SelectField.Positions.BELOW}
             onChange={this.selectChange.bind(this)}

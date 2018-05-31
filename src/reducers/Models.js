@@ -10,8 +10,7 @@ import {
   CLAS_MODEL_CHANGED
 } from '../actions/ModelActions'
 import {LOG_CHANGED} from '../actions/LogActions'
-import {REGRESSION, NEXT_ACTIVITY, CLASSIFICATION,
-  ATTRIBUTE_NUMBER, ATTRIBUTE_STRING, REMAINING_TIME, DURATION} from '../reference';
+import {REGRESSION, CLASSIFICATION} from '../reference';
 
 const initialState = {
   fetchState: {inFlight: false},
@@ -79,12 +78,12 @@ const models = (state = initialState, action) => {
 
     case LOG_CHANGED: {
       const logId=action.logId
-      const regressionModels = state.regressionModels.filter((model) => (model.config.prefix_length === action.p_length)
+      const regressionModels = state.regressionModels.filter((model) => (model.config.encoding.prefix_length === action.p_length)
                                                                         || ((model.config.padding === 'zero_padding') &&
-                                                                            (model.config.prefix_length >= action.p_length)))
-      const classificationModels = state.regressionModels.filter((model) => (model.config.prefix_length === action.p_length)
+                                                                            (model.config.encoding.prefix_length >= action.p_length)))
+      const classificationModels = state.classificationModels.filter((model) => (model.config.encoding.prefix_length === action.p_length)
                                                                             || ((model.config.padding === 'zero_padding') &&
-                                                                            (model.config.prefix_length >= action.p_length)))
+                                                                            (model.config.encoding.prefix_length >= action.p_length)))
 
       return {
         ...state,

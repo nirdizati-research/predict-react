@@ -1,14 +1,27 @@
-import React, {Component} from 'react';
-import {DataTable, TableBody, TableColumn, TableHeader, TableRow} from 'react-md/lib/DataTables/index';
+import React, {PureComponent} from 'react';
+import {DataTable, TableBody, TableColumn, TableHeader, TablePagination, TableRow} from 'react-md/lib/DataTables/index';
 import PropTypes from 'prop-types';
-import {splitToString} from '../../util/dataReducers';
 import {jobPropType} from '../../propTypes';
+import JsonHolder from '../validation/JsonHolder';
 
 /* eslint-disable camelcase */
-class ResultTable extends Component {
+class ResultTable extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {slicedData: this.props.jobs.slice(0, 10)};
+  }
+
+  handlePagination(start, rowsPerPage) {
+    this.setState({slicedData: this.props.jobs.slice(start, start + rowsPerPage)});
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.jobs.length !== this.props.jobs.length) {
+      this.setState({slicedData: this.props.jobs.slice(0, 10)});
+    }
+  }
 
   componentDidMount() {
-
     const intervalId = setInterval(() => {
       this.props.onRequestJobs();
     }, 10000);
@@ -19,29 +32,44 @@ class ResultTable extends Component {
     clearInterval(this.state.intervalId);
   }
 
+  getHeaderColumns() {
+    let headers = ['id', 'Status', 'Type', 'Created date', 'Modified date', 'Split', 'Error', 'Results', 'Configuration'];
+
+    return headers.map((header) => {
+        let grow = false;
+        if (header === 'Configuration') {
+          grow = true;
+        }
+        return <TableColumn key={header} grow={grow}> {header}</TableColumn>;
+      }
+    );
+  }
+
   render () {
-  const headers = ['id', 'Type', 'Status', 'Created date', 'Modified date', 'Split', 'Config', 'results'];
-  const jobs = this.props.jobs.reverse();
   return (<DataTable baseId="simple-pagination" plain>
     <TableHeader>
       <TableRow selectable={false}>
-        {headers.map((header) => <TableColumn key={header}> {header}</TableColumn>)}
+        {this.getHeaderColumns()}
       </TableRow>
     </TableHeader>
     <TableBody>
-      {jobs.map(({id, type, status, created_date, modified_date, splitName, config, result}) => (
-        <TableRow key={id} selectable={false}>
-          <TableColumn numeric>{id}</TableColumn>
-          <TableColumn>{status}</TableColumn>
-          <TableColumn>{type}</TableColumn>
-          <TableColumn>{new Date(created_date).toLocaleString()}</TableColumn>
-          <TableColumn>{new Date(modified_date).toLocaleString()}</TableColumn>
-          <TableColumn>{splitName}</TableColumn>
-          <TableColumn><pre>{JSON.stringify(config, null, 2)}</pre></TableColumn>
-          <TableColumn>{result}</TableColumn>
-        </TableRow>
-      ))}
+      {this.state.slicedData.map(
+        ({id, type, status, created_date, modified_date, splitName, config, error, result}) => (
+          <TableRow key={id} selectable={false}>
+            <TableColumn numeric>{id}</TableColumn>
+            <TableColumn>{status}</TableColumn>
+            <TableColumn>{type}</TableColumn>
+            <TableColumn>{new Date(created_date).toLocaleString()}</TableColumn>
+            <TableColumn>{new Date(modified_date).toLocaleString()}</TableColumn>
+            <TableColumn>{splitName}</TableColumn>
+            <TableColumn>{error}</TableColumn>
+            <TableColumn>{result}</TableColumn>
+            <TableColumn grow><JsonHolder data={config}/></TableColumn>
+          </TableRow>
+        ))}
     </TableBody>
+    <TablePagination rows={this.props.jobs.length} rowsPerPageLabel={'Rows per page'}
+                     onPagination={this.handlePagination.bind(this)}/>
   </DataTable>);
   }
 };

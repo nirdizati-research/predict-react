@@ -2,6 +2,7 @@ import {SERVER_URL} from '../constants';
 import jsonAjax from '../JSONAjaxRequest';
 import {JOB_DELETED, jobsFailed, jobsRetrieved, trainingFailed, trainingSucceeded} from './JobActions';
 import {logInfoFailed, logInfoRetrieved, logListFailed, logListsRetrieved} from './LogActions';
+import {traceListFailed, traceListsRetrieved} from './TraceActions';
 import {splitFailed, splitsFailed, splitsRetrieved, splitSucceeded} from './SplitActions';
 import {modelsFailed, modelsRetrieved} from './ModelActions';
 import {predictionFailed, predictionSucceeded} from './RuntimeActions';
@@ -45,6 +46,18 @@ export const getLogList = () => (dispatch) => {
       dispatch(logListsRetrieved(logList));
     },
     ({error}) => dispatch(logListFailed(error))
+  );
+};
+
+export const getTraceList = () => (dispatch) => {
+  jsonAjax(
+    SERVER_URL + '/runtime/traces/',
+    'GET',
+    null,
+    (logList) => {
+      dispatch(traceListsRetrieved(logList));
+    },
+    ({error}) => dispatch(traceListFailed(error))
   );
 };
 

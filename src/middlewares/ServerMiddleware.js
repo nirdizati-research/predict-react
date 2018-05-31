@@ -1,8 +1,9 @@
 import {
   deleteJob, getJobs, getLogInfo, getLogList, getSplits, postSplit,
-  postTraining, getPrediction, getModels
+  postTraining, getPrediction, getModels, getTraceList
 } from '../actions/ServerActions';
 import {JOB_DELETE_REQUESTED, JOBS_REQUESTED, TRAINING_SUBMITTED} from '../actions/JobActions';
+import {TRACE_LIST_REQUESTED} from '../actions/TraceActions';
 import {LOG_INFO_REQUESTED, LOG_LIST_REQUESTED} from '../actions/LogActions';
 import {SPLIT_SUBMITTED, SPLITS_REQUESTED} from '../actions/SplitActions';
 import {MODELS_REQUESTED} from '../actions/ModelActions';
@@ -11,6 +12,7 @@ import {PREDICTION_SUBMITTED} from '../actions/RuntimeActions';
 const ACTION_TYPE_TO_SERVER_ACTION = {
   [JOBS_REQUESTED]: getJobs,
   [LOG_LIST_REQUESTED]: getLogList,
+  [TRACE_LIST_REQUESTED]: getTraceList,
   [LOG_INFO_REQUESTED]: getLogInfo,
   [TRAINING_SUBMITTED]: postTraining,
   [SPLITS_REQUESTED]: getSplits,

@@ -92,7 +92,7 @@ export const jobPropType = PropTypes.shape({
     false_negative: PropTypes.number,
     precision: PropTypes.number,
     recall: PropTypes.number
-  }).isRequired
+  })
 }).isRequired;
 
 export const jobFlatPropType = PropTypes.shape({
@@ -132,21 +132,33 @@ export const logPropType = PropTypes.shape({
   }).isRequired
 });
 
-
 export const modelPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   split: PropTypes.any.isRequired,
   config: PropTypes.shape({
-    prefix_length: PropTypes.number.isRequired,
-    threshold: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    method: PropTypes.string.isRequired,
+    hyperopt: PropTypes.shape(hyperOptShape),
+    label: PropTypes.shape(labelPropType).isRequired,
+    method: PropTypes.string,
     clustering: PropTypes.string,
-    encoding: PropTypes.string,
-    rule: PropTypes.string,
-    logId: PropTypes.number
+    encoding: PropTypes.shape(encodingPropType).isRequired,
+    kmeans: PropTypes.objectOf(PropTypes.any),
   }).isRequired,
   type: PropTypes.string.isRequired,
 }).isRequired;
+
+export const tracePropType = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  xlog: PropTypes.shape({
+    config: PropTypes.any.isRequired,
+    real_log: PropTypes.shape(logPropType).isRequired,
+  }).isRequired,
+  real_log: PropTypes.number.isRequired,
+  reg_model:PropTypes.shape(modelPropType),
+  class_model:PropTypes.shape(modelPropType),
+  config: PropTypes.any.isRequired,
+  reg_results: PropTypes.string,
+  class_results: PropTypes.string
+});
 
 export const splitPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
