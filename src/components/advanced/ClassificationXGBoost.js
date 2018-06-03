@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import {TextField} from 'react-md';
 
 const defaults = {
-  'n_estimators': 100,
-  'max_depth': 3
+  'max_depth': 3,
+  'learning_rate': 0.1,
+  'n_estimators': 100
 };
 /* eslint-disable no-invalid-this */
-const RegressionXGBoost = (props) => {
-  const methodConfig = `regression.xgboost`;
+const ClassificationXGBoost = (props) => {
+  const methodConfig = `classification.xgboost`;
 
   const nEstimators = <TextField
     key="n_estimators"
@@ -30,11 +31,21 @@ const RegressionXGBoost = (props) => {
     min={0}
     className="md-cell md-cell--3"
   />;
+  const learningRate = <TextField
+    key="learning_rate"
+    id="learning_rate"
+    label="learning rate"
+    type="number"
+    defaultValue={defaults.learning_rate}
+    onChange={props.onChange.bind(this, {methodConfig, key: 'learning_rate', isFloat: true})}
+    min={0}
+    className="md-cell md-cell--3"
+  />;
 
-  return [nEstimators, maxDepth];
+  return [nEstimators, maxDepth, learningRate];
 };
 
-RegressionXGBoost.propTypes = {
+ClassificationXGBoost.propTypes = {
   onChange: PropTypes.func.isRequired
 };
-export default RegressionXGBoost;
+export default ClassificationXGBoost;

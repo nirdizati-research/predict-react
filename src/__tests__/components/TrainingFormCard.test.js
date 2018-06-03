@@ -49,6 +49,7 @@ const regressionPayload = {
     'classification.decisionTree': {},
     'classification.knn': {},
     'classification.randomForest': {},
+    'classification.xgboost': {},
     'regression.lasso': {},
     'regression.linear': {},
     'regression.randomForest': {},

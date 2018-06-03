@@ -72,7 +72,11 @@ const classification = [
   {
     label: 'Random forest',
     value: RANDOM_FOREST
-  }
+  },
+  {
+    label: 'XGBoost',
+    value: XGBOOST
+  },
 ];
 
 export const encoding = [

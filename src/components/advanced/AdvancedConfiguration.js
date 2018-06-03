@@ -15,6 +15,7 @@ import Labelling from './Labelling';
 import AddColumns from './AddColumns';
 import KMeans from './KMeans';
 import RegressionXGBoost from './RegressionXGBoost';
+import ClassificationXGBoost from './ClassificationXGBoost';
 
 const knnUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html';
 const decisionTreeUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html';
@@ -24,7 +25,8 @@ const classRandomForest =
 const regressorRF = 'http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html';
 const regressorLasso = 'http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Lasso.html';
 const regressorLinear = 'http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html';
-const regressorXGboost = 'https://xgboost.readthedocs.io/en/latest/parameter.html#parameters-for-tree-booster';
+const regressorXGboost = 'https://xgboost.readthedocs.io/en/latest/python/python_api.html#xgboost.XGBRegressor';
+const classificationXGboost = 'https://xgboost.readthedocs.io/en/latest/python/python_api.html#xgboost.XGBClassifier';
 const kmeansUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html';
 const hyperUrl = 'http://hyperopt.github.io/hyperopt/';
 const AdvancedConfiguration = (props) => {
@@ -40,7 +42,9 @@ const AdvancedConfiguration = (props) => {
     'classification.decisionTree': makeExpander('Decision tree classifier', decisionTreeUrl,
       <ClassificationDecisionTree onChange={props.onChange} {...props}/>),
     'classification.randomForest': makeExpander('Random forest classifier', classRandomForest,
-      <ClassificationRandomForest onChange={props.onChange} {...props}/>)
+      <ClassificationRandomForest onChange={props.onChange} {...props}/>),
+    'classification.xgboost': makeExpander('XGBoost classifier', classificationXGboost,
+      <ClassificationXGBoost onChange={props.onChange} {...props}/>)
   };
 
   const regressionConfigMap = {

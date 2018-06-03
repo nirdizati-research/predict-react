@@ -12,6 +12,7 @@ import RegressionLinear from '../src/components/advanced/RegressionLinear';
 import HyperOpt from '../src/components/advanced/HyperOpt';
 import Labelling from '../src/components/advanced/Labelling';
 import RegressionXGBoost from '../src/components/advanced/RegressionXGBoost';
+import ClassificationXGBoost from '../src/components/advanced/ClassificationXGBoost';
 
 
 export const label1 = {
@@ -61,6 +62,7 @@ storiesOf('Advanced configuration', module)
               <ClassificationKnn onChange={console.log}/>
               <ClassificationDecisionTree onChange={console.log}/>
               <ClassificationRandomForest onChange={console.log}/>
+              <ClassificationXGBoost onChange={console.log}/>
             </Card>
           </div>
         </div>
@@ -121,7 +123,7 @@ storiesOf('Advanced configuration', module)
                 Some text above
               </CardText>
               <AdvancedConfiguration predictionMethod={CLASSIFICATION} label={label1} traceAttributes={[]}
-                                     classification={['knn', 'decisionTree', 'randomForest']}
+                                     classification={['knn', 'decisionTree', 'randomForest', 'xgboost']}
                                      regression={[]} onChange={console.log} clusterings={[KMEANS]}/>
             </Card>
           </div>

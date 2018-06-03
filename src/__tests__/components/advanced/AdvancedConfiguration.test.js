@@ -13,6 +13,7 @@ import ClassificationKnn from '../../../components/advanced/ClassificationKnn';
 import ClassificationRandomForest from '../../../components/advanced/ClassificationRandomForest';
 import ClassificationDecisionTree from '../../../components/advanced/ClassificationDecisionTree';
 import RegressionXGBoost from '../../../components/advanced/RegressionXGBoost';
+import ClassificationXGBoost from '../../../components/advanced/ClassificationXGBoost';
 
 
 describe('Regression', () => {
@@ -41,7 +42,8 @@ describe('Regression', () => {
 
 describe('Classification', () => {
   const element = shallow(<AdvancedConfiguration predictionMethod={CLASSIFICATION}
-                                                 classification={['knn', 'decisionTree', 'randomForest']} label={label1}
+                                                 classification={['knn', 'decisionTree', 'randomForest', 'xgboost']}
+                                                 label={label1}
                                                  traceAttributes={[]} clusterings={[KMEANS]} regression={[]}
                                                  onChange={jest.fn()}/>);
 
@@ -58,6 +60,7 @@ describe('Classification', () => {
     expect(element.find(ClassificationKnn).length).toBe(1);
     expect(element.find(ClassificationRandomForest).length).toBe(1);
     expect(element.find(ClassificationDecisionTree).length).toBe(1);
+    expect(element.find(ClassificationXGBoost).length).toBe(1);
   });
 });
 
