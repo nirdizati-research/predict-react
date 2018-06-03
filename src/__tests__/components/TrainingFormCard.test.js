@@ -52,6 +52,7 @@ const regressionPayload = {
     'regression.lasso': {},
     'regression.linear': {},
     'regression.randomForest': {},
+    'regression.xgboost': {},
   }
 };
 

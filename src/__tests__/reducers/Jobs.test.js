@@ -265,7 +265,7 @@ describe('Validation filter', () => {
       let state3 = jobs(state2, {type: FILTER_SPLIT_CHANGED, splitId: 2});
       state3 = jobs(state3, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
       expect(state3.classification.length).toEqual(3);
-      expect(state3.regression.length).toEqual(3);
+      expect(state3.regression.length).toEqual(4);
       expect(state3.clusterings.length).toEqual(2);
       expect(state3.encodings.length).toEqual(5);
     });
@@ -328,7 +328,7 @@ describe('Validation filter', () => {
         type: FILTER_OPTION_CHANGED,
         payload: {value: RANDOM_FOREST, name: 'regression[]'}
       });
-      expect(state3.regression.length).toEqual(2);
+      expect(state3.regression.length).toEqual(3);
       expect(state3.filteredIds).toEqual([]);
     });
 

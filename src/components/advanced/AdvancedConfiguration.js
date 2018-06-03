@@ -14,6 +14,7 @@ import {labelPropType, traceAttributeShape} from '../../propTypes';
 import Labelling from './Labelling';
 import AddColumns from './AddColumns';
 import KMeans from './KMeans';
+import RegressionXGBoost from './RegressionXGBoost';
 
 const knnUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html';
 const decisionTreeUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html';
@@ -23,6 +24,7 @@ const classRandomForest =
 const regressorRF = 'http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html';
 const regressorLasso = 'http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Lasso.html';
 const regressorLinear = 'http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html';
+const regressorXGboost = 'https://xgboost.readthedocs.io/en/latest/parameter.html#parameters-for-tree-booster';
 const kmeansUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html';
 const hyperUrl = 'http://hyperopt.github.io/hyperopt/';
 const AdvancedConfiguration = (props) => {
@@ -47,7 +49,9 @@ const AdvancedConfiguration = (props) => {
     'regression.linear': makeExpander('Linear regressor', regressorLinear,
       <RegressionLinear onChange={props.onChange} {...props}/>),
     'regression.randomForest': makeExpander('Random forest regressor', regressorRF,
-      <RegressionRandomForest onChange={props.onChange} {...props}/>)
+      <RegressionRandomForest onChange={props.onChange} {...props}/>),
+    'regression.xgboost': makeExpander('XGBoost tree boost regressor', regressorXGboost,
+      <RegressionXGBoost onChange={props.onChange} {...props}/>)
   };
 
 
