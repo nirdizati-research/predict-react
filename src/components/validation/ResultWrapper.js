@@ -24,7 +24,7 @@ const classMap = (jobs) => {
     const trueNegative = job.result.true_negative || 0;
     const falsePositive = job.result.false_positive || 0;
     const falseNegative = job.result.false_negative || 0;
-    return [job.id + '', toRun(job), job.result.f1score, job.result.acc, job.result.auc,
+    return [job.id + '', toRun(job), job.result.f1score, job.result.auc, job.result.acc,
       job.config.encoding.prefix_length + '', precision, recall,
       truePositive, trueNegative, falsePositive, falseNegative];
   });
