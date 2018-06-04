@@ -20,6 +20,7 @@ export const RANDOM_FOREST = 'randomForest';
 // regression methods
 export const LINEAR = 'linear';
 export const LASSO = 'lasso';
+export const XGBOOST = 'xgboost';
 // encoding methods
 export const SIMPLE_INDEX = 'simpleIndex';
 export const BOOLEAN = 'boolean';
@@ -71,7 +72,11 @@ const classification = [
   {
     label: 'Random forest',
     value: RANDOM_FOREST
-  }
+  },
+  {
+    label: 'XGBoost',
+    value: XGBOOST
+  },
 ];
 
 export const encoding = [
@@ -127,6 +132,10 @@ const regression = [
   {
     label: 'Lasso',
     value: LASSO
+  },
+  {
+    label: 'XGBoost',
+    value: XGBOOST
   },
 ];
 
