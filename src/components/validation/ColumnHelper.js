@@ -25,7 +25,7 @@ const classColumns = [
   },
   {
     type: 'number',
-    label: 'Accuracy',
+    label: 'AUC',
   },
   {
     type: 'string',
@@ -33,7 +33,7 @@ const classColumns = [
   },
   {
     type: 'number',
-    label: 'AUC',
+    label: 'Accuracy',
   }
 ];
 const classTableColumns = [
