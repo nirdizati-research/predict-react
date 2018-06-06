@@ -8,10 +8,14 @@ import {Avatar, Button, DialogContainer, FontIcon, List, ListItem} from 'react-m
 
 /* eslint-disable react/no-unescaped-entities */
 class WalkThrough extends PureComponent {
-  state = {visible: false};
+  state = {visible: false, other: false};
 
   imageClick() {
     this.setState({visible: true});
+  }
+
+  otherClick() {
+    this.setState({other: true});
   }
 
   hide() {
@@ -29,8 +33,10 @@ class WalkThrough extends PureComponent {
         </div>
       </CardTitle>
       <CardText>
-        <p>Nirdizati Research is a tool to find the most suitable predictive model for an event log. The general flow
+        <p>Nirdizati Research is a <span onDoubleClick={this.otherClick.bind(this)}>tool</span> to find the most
+          suitable predictive model for an event log. The general flow
           to use the application is as follows.</p>
+        {rotate(this.state.other)}
         <div className="md-grid">
           <List className="md-cell md-cell--12">
             <ListItem
@@ -93,6 +99,16 @@ class WalkThrough extends PureComponent {
   }
 }
 
+const rotate = (visible) => {
+  if (visible) {
+    return <div id="rotating"><a href="http://math.ut.ee/~sander24/"><img
+      src="https://github.com/TKasekamp/Veebirakendus/blob/110fe7c8f0705cc51b78eb2be56a46481e762a04/src/main/webapp/images/kryptox.gif?raw=true"
+      alt="sander"/></a>
+    </div>;
+  } else {
+    return null;
+  }
+};
 
 const dialog = (visible, hide) => (<DialogContainer
   id="help-dialog"
@@ -108,6 +124,8 @@ const dialog = (visible, hide) => (<DialogContainer
   <p>This application is 100% vegan friendly!</p>
   <p>Application developed while searching for Ballmer's Peak.</p>
   <p>Could not be possible without running around Anne canal.</p>
+  <p>Special thanks to the person who made me improve the presentation with their inquisitive questions. And for the
+    ice cream after the presentation. </p>
   <p>And thanks to all helpers with React and just listening me talk about this application.</p>
   <p className="md-font-semibold">Tõnis Kasekamp</p>
 </DialogContainer>);

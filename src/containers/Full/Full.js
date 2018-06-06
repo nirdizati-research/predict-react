@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import {Button, FontIcon} from 'react-md';
 import HelpDialog from '../../components/static/HelpDialog';
 import {getHelpText} from '../../components/static/helpReference';
+import Footer from '../../components/footer/Footer';
 
 
 const helpButton = (click) => (
@@ -95,6 +96,7 @@ class Full extends Component {
       >
         <HelpDialog texts={getHelpText(pathname)} visible={this.state.visible} hide={this.hide.bind(this)}/>
         {children ? React.cloneElement(children, {key: pathname}) : null}
+        <Footer/>
       </NavigationDrawer>
     );
   }
