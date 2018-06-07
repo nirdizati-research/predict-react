@@ -93,7 +93,26 @@ export const jobPropType = PropTypes.shape({
     false_negative: PropTypes.number,
     precision: PropTypes.number,
     recall: PropTypes.number
-  }).isRequired
+  })
+}).isRequired;
+
+export const jobRunPropType = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  status: PropTypes.string.isRequired,
+  split_id: PropTypes.number.isRequired,
+  splitName: PropTypes.string,
+  type: PropTypes.oneOf([CLASSIFICATION, REGRESSION, LABELLING]).isRequired,
+  config: PropTypes.shape({
+    hyperopt: PropTypes.shape(hyperOptShape),
+    label: PropTypes.shape(labelPropType).isRequired,
+    method: PropTypes.string,
+    clustering: PropTypes.string,
+    encoding: PropTypes.shape(encodingPropType).isRequired,
+    kmeans: PropTypes.objectOf(PropTypes.any),
+  }).isRequired,
+  created_date: PropTypes.string.isRequired,
+  modified_date: PropTypes.string.isRequired,
+  result: PropTypes.any.isRequired,
 }).isRequired;
 
 export const jobFlatPropType = PropTypes.shape({
@@ -133,6 +152,37 @@ export const logPropType = PropTypes.shape({
   }).isRequired
 });
 
+export const modelPropType = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  split: PropTypes.any.isRequired,
+  config: PropTypes.shape({
+    hyperopt: PropTypes.shape(hyperOptShape),
+    label: PropTypes.shape(labelPropType).isRequired,
+    method: PropTypes.string,
+    clustering: PropTypes.string,
+    encoding: PropTypes.shape(encodingPropType).isRequired,
+    kmeans: PropTypes.objectOf(PropTypes.any),
+  }).isRequired,
+  type: PropTypes.string.isRequired,
+}).isRequired;
+
+export const tracePropType = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  xlog: PropTypes.shape({
+    config: PropTypes.any.isRequired,
+  }).isRequired,
+  completed: PropTypes.bool.isrequired,
+  first_event : PropTypes.string.isRequired,
+  last_event : PropTypes.string.isRequired,
+  n_events : PropTypes.number.isRequired,
+  real_log: PropTypes.number.isRequired,
+  reg_model:PropTypes.shape(modelPropType),
+  class_model:PropTypes.shape(modelPropType),
+  config: PropTypes.any.isRequired,
+  reg_results: PropTypes.any,
+  class_results: PropTypes.any
+});
+
 export const splitPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   type: PropTypes.oneOf(['single', 'double']).isRequired,
@@ -160,3 +210,7 @@ export const jobStore = PropTypes.shape({
   allIds: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
 }).isRequired;
 
+export const modelsLabel = PropTypes.arrayOf(PropTypes.shape({
+  value: PropTypes.number.isRequired,
+  label: PropTypes.string.isRequired
+}).isRequired).isRequired;

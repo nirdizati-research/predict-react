@@ -2,7 +2,40 @@
  * Created by Tõnis Kasekamp on 18.12.2017.
  */
 import {CLASSIFICATION, REGRESSION} from '../reference';
+import {SPLIT_SINGLE} from '../reference';
 
+
+export const modelsToString = (models) => {
+  return models.map((model) => {
+    return {value: model.id, label: modelToString(model)};
+  });
+};
+
+export const modelToString = (model) => {
+  let label;
+  if (model.type === 'single') {
+    label = `Model #${model.id}, noCluster, ${model.config.encoding.method}, ${model.config.method}`;
+  } else {
+    label = `Model #${model.id}, Kmeans, ${model.config.encoding.method}, ${model.config.method}`;
+  }
+  return label;
+};
+
+export const splitsToString = (splits) => {
+  return splits.map((split) => {
+    return {value: split.id, label: splitToString(split)};
+  });
+};
+
+export const splitToString = (split) => {
+  let label;
+  if (split.type === SPLIT_SINGLE) {
+    label = `Split #${split.id}, ${split.original_log.name}`;
+  } else {
+    label = `Split #${split.id}, logs ${split.training_log.name} and ${split.test_log.name}`;
+  }
+  return label;
+};
 
 export const jobToValidationTable = (job) => {
   const kmeans = job.config.kmeans;
