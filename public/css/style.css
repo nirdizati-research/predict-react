@@ -3652,3 +3652,25 @@ body {
   .file-inputs__upload-form__file-field {
     flex-grow: 1;
     margin-left: 8px; }
+
+.footer {
+    background: #424242;
+    color: #fff;
+}
+
+.footer .md-body-2, .footer .md-title, .footer p {
+    color: inherit;
+}
+
+#rotating {
+    animation: roll 3s infinite;
+}
+
+@keyframes roll {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

@@ -20,6 +20,8 @@ import RegressionLinear from '../../../components/advanced/RegressionLinear';
 import RegressionLasso from '../../../components/advanced/RegressionLasso';
 import RegressionRandomForest from '../../../components/advanced/RegressionRandomForest';
 import Labelling from '../../../components/advanced/Labelling';
+import RegressionXGBoost from '../../../components/advanced/RegressionXGBoost';
+import ClassificationXGBoost from '../../../components/advanced/ClassificationXGBoost';
 
 const onChange = jest.fn();
 
@@ -70,6 +72,16 @@ it('RegressionLasso', () => {
 
 it('RegressionRandomForest', () => {
   const element = shallow(<RegressionRandomForest onChange={onChange}/>).first();
+  expect(element.find(TextField).length).toBe(3);
+});
+
+it('RegressionXGBoost', () => {
+  const element = shallow(<RegressionXGBoost onChange={onChange}/>).first();
+  expect(element.find(TextField).length).toBe(2);
+});
+
+it('ClassificationXGBoost', () => {
+  const element = shallow(<ClassificationXGBoost onChange={onChange}/>).first();
   expect(element.find(TextField).length).toBe(3);
 });
 

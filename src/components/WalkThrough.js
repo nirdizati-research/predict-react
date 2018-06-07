@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import nirdizati from '../images/nirdizati-logo-e1501821874335.png';
-import {Avatar, Button, FontIcon, List, ListItem} from 'react-md';
+import {Avatar, Button, DialogContainer, FontIcon, List} from 'react-md';
+import GuideItem from './static/GuideItem';
+
 
 /* eslint-disable max-len */
 const WalkThrough = () => {
@@ -90,5 +92,25 @@ const WalkThrough = () => {
     </CardText>
   </Card>;
 };
+
+const dialog = (visible, hide) => (<DialogContainer
+  id="help-dialog"
+  visible={visible}
+  title="Help dialog"
+  onHide={hide}
+  contentProps={{id: 'ids'}}
+  width={600}
+  focusOnMount={false}
+>
+  <img src={'https://i.imgur.com/du7CH6G.jpg'} alt="Nirdizati logo" width='550px'/>
+  <h4 className="md-text-center">To the brave Horsemen of the Apocalypse!</h4>
+  <p>This application is 100% vegan friendly!</p>
+  <p>Application developed while searching for Ballmer's Peak.</p>
+  <p>Could not be possible without running around Anne canal.</p>
+  <p>Special thanks to the person who made me improve the presentation with their inquisitive questions. And for the
+    ice cream after the presentation. </p>
+  <p>And thanks to all helpers with React and just listening me talk about this application.</p>
+  <p className="md-font-semibold">Tõnis Kasekamp</p>
+</DialogContainer>);
 
 export default WalkThrough;

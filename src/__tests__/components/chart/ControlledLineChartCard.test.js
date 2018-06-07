@@ -13,7 +13,7 @@ it('renders', () => {
   expect(element).toBeDefined();
   expect(element.find(Chart).length).toBe(1);
   expect(element.find(SelectField).length).toBe(1);
-  expect(element.find(SelectField).props().menuItems.length).toBe(3);
+  expect(element.find(SelectField).props().menuItems.length).toBe(4);
   expect(element.find(SelectField).props().value).toBe('rmse');
 });
 

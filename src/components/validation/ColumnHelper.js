@@ -25,7 +25,7 @@ const classColumns = [
   },
   {
     type: 'number',
-    label: 'Accuracy',
+    label: 'AUC',
   },
   {
     type: 'string',
@@ -33,7 +33,7 @@ const classColumns = [
   },
   {
     type: 'number',
-    label: 'AUC',
+    label: 'Accuracy',
   }
 ];
 const classTableColumns = [
@@ -99,7 +99,7 @@ const regColumns = [
   },
   {
     type: 'number',
-    label: 'rscore',
+    label: 'MAPE',
   }
 ];
 
@@ -115,11 +115,15 @@ const regTableColumns = [
   },
   {
     type: 'number',
-    label: 'R-score',
+    label: 'Mean Absolute Percentage Error (MAPE)',
   },
   {
     type: 'string',
     label: 'Prefix length',
+  },
+  {
+    type: 'number',
+    label: 'R-score',
   },
 ];
 

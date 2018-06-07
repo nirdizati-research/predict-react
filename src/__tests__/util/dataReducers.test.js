@@ -21,11 +21,12 @@ describe('generates data for prefix chart', () => {
 
   it('makes selectId labels from results', () => {
     const labels = makeLabels(regJobs);
-    expect(labels.length).toEqual(3);
-    expect(labels).toEqual([{
-      label: 'rmse',
-      value: 'rmse'
-    },
+    expect(labels.length).toEqual(4);
+    expect(labels).toEqual([
+      {
+        label: 'rmse',
+        value: 'rmse'
+      },
       {
         label: 'mae',
         value: 'mae'
@@ -33,6 +34,11 @@ describe('generates data for prefix chart', () => {
       {
         label: 'rscore',
         value: 'rscore'
-      }]);
+      },
+      {
+        label: 'mape',
+        value: 'mape'
+      }
+    ]);
   });
 });

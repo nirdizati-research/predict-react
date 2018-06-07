@@ -11,6 +11,8 @@ import RegressionLasso from '../src/components/advanced/RegressionLasso';
 import RegressionLinear from '../src/components/advanced/RegressionLinear';
 import HyperOpt from '../src/components/advanced/HyperOpt';
 import Labelling from '../src/components/advanced/Labelling';
+import RegressionXGBoost from '../src/components/advanced/RegressionXGBoost';
+import ClassificationXGBoost from '../src/components/advanced/ClassificationXGBoost';
 
 
 export const label1 = {
@@ -57,9 +59,10 @@ storiesOf('Advanced configuration', module)
               <CardText>
                 Some text above
               </CardText>
-              <ClassificationKnn predictionMethod={CLASSIFICATION} onChange={console.log}/>
-              <ClassificationDecisionTree predictionMethod={CLASSIFICATION} onChange={console.log}/>
-              <ClassificationRandomForest predictionMethod={CLASSIFICATION} onChange={console.log}/>
+              <ClassificationKnn onChange={console.log}/>
+              <ClassificationDecisionTree onChange={console.log}/>
+              <ClassificationRandomForest onChange={console.log}/>
+              <ClassificationXGBoost onChange={console.log}/>
             </Card>
           </div>
         </div>
@@ -77,6 +80,7 @@ storiesOf('Advanced configuration', module)
               <RegressionRandomForest onChange={console.log}/>
               <RegressionLasso onChange={console.log}/>
               <RegressionLinear onChange={console.log}/>
+              <RegressionXGBoost onChange={console.log}/>
             </Card>
           </div>
         </div>
@@ -119,7 +123,7 @@ storiesOf('Advanced configuration', module)
                 Some text above
               </CardText>
               <AdvancedConfiguration predictionMethod={CLASSIFICATION} label={label1} traceAttributes={[]}
-                                     classification={['knn', 'decisionTree', 'randomForest']}
+                                     classification={['knn', 'decisionTree', 'randomForest', 'xgboost']}
                                      regression={[]} onChange={console.log} clusterings={[KMEANS]}/>
             </Card>
           </div>
@@ -132,7 +136,8 @@ storiesOf('Advanced configuration', module)
               </CardText>
               <AdvancedConfiguration predictionMethod={REGRESSION} classification={[]} label={label1}
                                      traceAttributes={[]} clusterings={[]}
-                                     regression={['randomForest', 'lasso', 'linear']} onChange={console.log}/>
+                                     regression={['randomForest', 'lasso', 'linear', 'xgboost']}
+                                     onChange={console.log}/>
             </Card>
           </div>
         </div>

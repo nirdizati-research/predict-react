@@ -13,7 +13,7 @@ import {toRun} from '../../util/dataReducers';
 
 const regressionMap = (jobs) => {
   return jobs.map((job) => [job.id + '', toRun(job),
-    job.result.mae, job.result.rmse, job.result.rscore, job.config.encoding.prefix_length + '']);
+    job.result.mae, job.result.rmse, job.result.mape, job.config.encoding.prefix_length + '', job.result.rscore]);
 };
 
 const classMap = (jobs) => {
@@ -24,7 +24,7 @@ const classMap = (jobs) => {
     const trueNegative = job.result.true_negative || 0;
     const falsePositive = job.result.false_positive || 0;
     const falseNegative = job.result.false_negative || 0;
-    return [job.id + '', toRun(job), job.result.f1score, job.result.acc, job.result.auc,
+    return [job.id + '', toRun(job), job.result.f1score, job.result.auc, job.result.acc,
       job.config.encoding.prefix_length + '', precision, recall,
       truePositive, trueNegative, falsePositive, falseNegative];
   });

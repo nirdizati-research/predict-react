@@ -83,6 +83,7 @@ export const jobPropType = PropTypes.shape({
     mae: PropTypes.number,
     rmse: PropTypes.number,
     rscore: PropTypes.number,
+    mape: PropTypes.number,
     fmeasure: PropTypes.number,
     acc: PropTypes.number,
     auc: PropTypes.number,

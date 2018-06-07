@@ -115,7 +115,7 @@ const regJobs = [
       }
     },
     'status': 'created',
-    'result': {'rmse': 1316.1386475352517, 'mae': 933.93803112935666, 'rscore': -0.10448018564371164},
+    'result': {'rmse': 1316.1386475352517, 'mae': 933.93803112935666, 'rscore': -0.10448018564371164, 'mape': 50.34},
     'type': 'regression',
     'split_id': 1,
     'error': ''
@@ -142,7 +142,7 @@ const regJobs = [
       }
     },
     'status': 'created',
-    'result': {'rmse': 1309.2985098872928, 'mae': 918.62048228654021, 'rscore': -0.093029773636106539},
+    'result': {'rmse': 1309.2985098872928, 'mae': 918.62048228654021, 'rscore': -0.093029773636106539, 'mape': 50.34},
     'type': 'regression',
     'split_id': 1,
     'error': ''
