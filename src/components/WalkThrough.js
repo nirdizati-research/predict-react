@@ -1,17 +1,22 @@
 import React, {PureComponent} from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import nirdizati from '../images/nirdizati-logo-e1501821874335.png';
-import {Avatar, Button, DialogContainer, FontIcon, List, ListItem} from 'react-md';
+import {Avatar, Button, DialogContainer, FontIcon, List} from 'react-md';
+import GuideItem from './static/GuideItem';
 
 
 /* eslint-disable max-len */
 
 /* eslint-disable react/no-unescaped-entities */
 class WalkThrough extends PureComponent {
-  state = {visible: false};
+  state = {visible: false, other: false};
 
   imageClick() {
     this.setState({visible: true});
+  }
+
+  otherClick() {
+    this.setState({other: true});
   }
 
   hide() {
@@ -29,61 +34,62 @@ class WalkThrough extends PureComponent {
         </div>
       </CardTitle>
       <CardText>
-        <p>Nirdizati Research is a tool to find the most suitable predictive model for an event log. The general flow
+        <p>Nirdizati Research is a <span onDoubleClick={this.otherClick.bind(this)}>tool</span> to find the most
+          suitable predictive model for an event log. The general flow
           to use the application is as follows.</p>
+        {rotate(this.state.other)}
         <div className="md-grid">
           <List className="md-cell md-cell--12">
-            <ListItem
-              leftAvatar={<Avatar suffix="purple">1</Avatar>}
-              rightIcon={<Button flat primary href={'/#/upload'} iconEl={<FontIcon>backup</FontIcon>}>Upload</Button>}
-              primaryText="Upload"
-              secondaryText="Upload a log file"
-              threeLines
+            <GuideItem
+              avatar={<Avatar suffix="red">1</Avatar>}
+              button={<Button flat primary href={'/#/upload'} iconEl={<FontIcon>backup</FontIcon>}>Upload</Button>}
+              title="Upload"
+              text="Upload a log file"
             />
-            <ListItem
-              leftAvatar={<Avatar suffix="red">2</Avatar>}
-              rightIcon={<Button flat primary href={'/#/logs'} iconEl={<FontIcon>description</FontIcon>}>Log
+            <GuideItem
+              avatar={<Avatar suffix="orange">2</Avatar>}
+              button={<Button flat primary href={'/#/logs'} iconEl={<FontIcon>description</FontIcon>}>Log
                 details</Button>}
-              primaryText="Log details"
-              secondaryText="Check the log details"
+              title="Log details"
+              text="Check the log details"
               threeLines
             />
-            <ListItem
-              leftAvatar={<Avatar suffix="pink">3</Avatar>}
-              rightIcon={<Button flat primary href={'/#/split'} iconEl={<FontIcon>swap_horiz</FontIcon>}>Split</Button>}
-              primaryText="Split"
-              secondaryText="Split the log into a training and a test set"
+            <GuideItem
+              avatar={<Avatar suffix="yellow">3</Avatar>}
+              button={<Button flat primary href={'/#/split'} iconEl={<FontIcon>swap_horiz</FontIcon>}>Split</Button>}
+              title="Split"
+              text="Split the log into a training and a test set"
               threeLines
             />
-            <ListItem
-              leftAvatar={<Avatar suffix="amber">4</Avatar>}
-              rightIcon={<Button flat primary href={'/#/label'}
-                                 iconEl={<FontIcon>label_outline</FontIcon>}>Labelling</Button>}
-              primaryText="Labelling"
-              secondaryText="(Optional) Test the label distribution for a given labeling"
+            <GuideItem
+              avatar={<Avatar suffix="light-green">4</Avatar>}
+              button={<Button flat primary href={'/#/label'}
+                              iconEl={<FontIcon>label_outline</FontIcon>}>Labelling</Button>}
+              title="Labelling"
+              text="(Optional) Test the label distribution for a given labeling"
               threeLines
             />
-            <ListItem
-              leftAvatar={<Avatar suffix="yellow">5</Avatar>}
-              rightIcon={<Button flat primary href={'/#/training'}
-                                 iconEl={<FontIcon>build</FontIcon>}>Training</Button>}
-              primaryText="Training"
-              secondaryText="Submit a prediction task to train a predictive model with an array of configuration options"
+            <GuideItem
+              avatar={<Avatar suffix="cyan">5</Avatar>}
+              button={<Button flat primary href={'/#/training'}
+                              iconEl={<FontIcon>build</FontIcon>}>Training</Button>}
+              title="Training"
+              text="Submit a prediction task to train a predictive model with an array of configuration options"
               threeLines
             />
-            <ListItem
-              leftAvatar={<Avatar suffix="cyan">6</Avatar>}
-              primaryText="Task status"
-              secondaryText={'Check the status of the enqueued prediction tasks'}
-              rightIcon={<Button flat primary href={'/#/jobs'} iconEl={<FontIcon>list</FontIcon>}>Task status</Button>}
+            <GuideItem
+              avatar={<Avatar suffix="purple">6</Avatar>}
+              title="Task status"
+              text={'Check the status of the enqueued prediction tasks'}
+              button={<Button flat primary href={'/#/jobs'} iconEl={<FontIcon>list</FontIcon>}>Task status</Button>}
               threeLines
             />
-            <ListItem
-              leftAvatar={<Avatar suffix="light-green">7</Avatar>}
-              rightIcon={<Button flat primary href={'/#/validation'}
-                                 iconEl={<FontIcon>insert_chart</FontIcon>}>Validation</Button>}
-              primaryText="Validation"
-              secondaryText="Compare the resulting models using different metrics and download the results"
+            <GuideItem
+              avatar={<Avatar suffix="pink">7</Avatar>}
+              button={<Button flat primary href={'/#/validation'}
+                              iconEl={<FontIcon>insert_chart</FontIcon>}>Validation</Button>}
+              title="Validation"
+              text="Compare the resulting models using different metrics and download the results"
               threeLines
             />
           </List>
@@ -93,6 +99,16 @@ class WalkThrough extends PureComponent {
   }
 }
 
+const rotate = (visible) => {
+  if (visible) {
+    return <div id="rotating"><a href="http://math.ut.ee/~sander24/"><img
+      src="https://github.com/TKasekamp/Veebirakendus/blob/110fe7c8f0705cc51b78eb2be56a46481e762a04/src/main/webapp/images/kryptox.gif?raw=true"
+      alt="sander"/></a>
+    </div>;
+  } else {
+    return null;
+  }
+};
 
 const dialog = (visible, hide) => (<DialogContainer
   id="help-dialog"
@@ -108,6 +124,8 @@ const dialog = (visible, hide) => (<DialogContainer
   <p>This application is 100% vegan friendly!</p>
   <p>Application developed while searching for Ballmer's Peak.</p>
   <p>Could not be possible without running around Anne canal.</p>
+  <p>Special thanks to the person who made me improve the presentation with their inquisitive questions. And for the
+    ice cream after the presentation. </p>
   <p>And thanks to all helpers with React and just listening me talk about this application.</p>
   <p className="md-font-semibold">Tõnis Kasekamp</p>
 </DialogContainer>);
