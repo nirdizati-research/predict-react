@@ -74,7 +74,7 @@ const WalkThrough = () => {
             rightIcon={<Button flat primary href={'/#/prediction'}
                                iconEl={<FontIcon>work</FontIcon>}>Prediction</Button>}
             primaryText="Prediction"
-            secondaryText="Compare the resulting models using different metrics and download the results"
+            secondaryText="Create a prediction of an incomplete track"
             threeLines
           />
           <ListItem
@@ -82,7 +82,7 @@ const WalkThrough = () => {
             rightIcon={<Button flat primary href={'/#/runtime'}
                                iconEl={<FontIcon>flash_on</FontIcon>}>Runtime</Button>}
             primaryText="Runtime"
-            secondaryText="Compare the resulting models using different metrics and download the results"
+            secondaryText="Create continuous predictions for a stream of events"
             threeLines
           />
         </List>
