@@ -62,10 +62,26 @@ const WalkThrough = () => {
             threeLines
           />
           <ListItem
-            leftAvatar={<Avatar suffix="light-green">7</Avatar>}
+            leftAvatar={<Avatar suffix="blue">7</Avatar>}
             rightIcon={<Button flat primary href={'/#/validation'}
                                iconEl={<FontIcon>insert_chart</FontIcon>}>Validation</Button>}
             primaryText="Validation"
+            secondaryText="Compare the resulting models using different metrics and download the results"
+            threeLines
+          />
+          <ListItem
+            leftAvatar={<Avatar suffix="light-green">8</Avatar>}
+            rightIcon={<Button flat primary href={'/#/prediction'}
+                               iconEl={<FontIcon>work</FontIcon>}>Prediction</Button>}
+            primaryText="Prediction"
+            secondaryText="Compare the resulting models using different metrics and download the results"
+            threeLines
+          />
+          <ListItem
+            leftAvatar={<Avatar suffix="green">9</Avatar>}
+            rightIcon={<Button flat primary href={'/#/runtime'}
+                               iconEl={<FontIcon>flash_on</FontIcon>}>Runtime</Button>}
+            primaryText="Runtime"
             secondaryText="Compare the resulting models using different metrics and download the results"
             threeLines
           />

@@ -9,15 +9,6 @@ const initialState = {
   byId: [],
 };
 
-const mergeIncomingTraces = (incoming, existing) => {
-  // From https://stackoverflow.com/a/34963663
-  const a3 = existing.concat(incoming).reduce((acc, x) => {
-    acc[x.id] = Object.assign(acc[x.id] || {}, x);
-    return acc;
-  }, {});
-  return Object.keys(a3).map((key) => a3[key]);
-};
-
 const traces = (state = initialState, action) => {
     switch (action.type) {
       case TRACE_LIST_REQUESTED: {
@@ -31,7 +22,7 @@ const traces = (state = initialState, action) => {
         return {
           ...state,
           fetchState: {inFlight: false},
-          byId: mergeIncomingTraces(action.payload, state.byId)
+          byId: action.payload,
         };
       }
 

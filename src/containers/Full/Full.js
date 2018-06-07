@@ -77,13 +77,13 @@ class Full extends Component {
           to: '/prediction',
           active: isActive('/prediction', pathname),
           primaryText: 'Prediction',
-          leftIcon: <FontIcon>donut_large</FontIcon>,
+          leftIcon: <FontIcon>work</FontIcon>,
         }, {
           component: Link,
           to: '/runtime',
           active: isActive('/runtime', pathname),
           primaryText: 'Runtime',
-          leftIcon: <FontIcon>insert_chart</FontIcon>,
+          leftIcon: <FontIcon>flash_on</FontIcon>,
         }]}
       >
         {children ? React.cloneElement(children, {key: pathname}) : null}

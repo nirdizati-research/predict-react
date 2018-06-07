@@ -14,9 +14,9 @@ export const modelsToString = (models) => {
 export const modelToString = (model) => {
   let label;
   if (model.type === 'single') {
-    label = `Model #${model.id}, noCluster, ${model.config.encoding}, ${model.config.method}`;
+    label = `Model #${model.id}, noCluster, ${model.config.encoding.method}, ${model.config.method}`;
   } else {
-    label = `Model #${model.id}, Kmeans, ${model.config.encoding}, ${model.config.method}`;
+    label = `Model #${model.id}, Kmeans, ${model.config.encoding.method}, ${model.config.method}`;
   }
   return label;
 };

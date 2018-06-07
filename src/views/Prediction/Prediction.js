@@ -10,7 +10,7 @@ import {submitPrediction, JOB_RUN_CHANGED,} from '../../actions/RuntimeActions';
 import PredictionHeaderCard from '../../components/prediction/PredictionHeaderCard';
 import LogSelector from '../../components/prediction/LogSelector';
 import ResultTable from '../../components/prediction/ResultTable';
-import {jobPropType, modelPropType} from '../../propTypes';
+import {jobRunPropType, modelPropType} from '../../propTypes';
 import {logsStore} from '../../propTypes';
 import Button from 'react-md/lib/Buttons/Button';
 import {modelsToString} from '../../util/dataReducers';
@@ -91,11 +91,13 @@ class Prediction extends Component {
           <PredictionHeaderCard modelsLabel={regModelsLabel}
                                 title='Regression Model Selection'
                                 fetchState={this.props.modfetchState}
-                                modelChange={this.onRegChangeModel.bind(this)}/>
+                                modelChange={this.onRegChangeModel.bind(this)}
+                                modelId={this.props.regModelId}/>
           <PredictionHeaderCard modelsLabel={clasModelsLabel}
                                 title='Classification Model Selection'
                                 fetchState={this.props.modfetchState}
-                                modelChange={this.onClasChangeModel.bind(this)}/>
+                                modelChange={this.onClasChangeModel.bind(this)}
+                                modelId={this.props.classModelId}/>
           <Card className="md-full-width">
           <Button raised primary swapTheming onClick={this.Submit.bind(this)}
                   className="buttons__group">Submit</Button>
@@ -131,7 +133,7 @@ Prediction.propTypes = {
   onRequestJobs: PropTypes.func.isRequired,
   models: PropTypes.arrayOf(modelPropType).isRequired,
   logs: logsStore,
-  jobsrun: PropTypes.arrayOf(jobPropType).isRequired,
+  jobsrun: PropTypes.arrayOf(jobRunPropType).isRequired,
   regressionModels: PropTypes.arrayOf(modelPropType).isRequired,
   classificationModels: PropTypes.arrayOf(modelPropType).isRequired,
   regModelId: PropTypes.number.isRequired,

@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import {DataTable, TableBody, TableColumn, TableHeader, TablePagination, TableRow} from 'react-md/lib/DataTables/index';
 import PropTypes from 'prop-types';
-import {jobPropType} from '../../propTypes';
+import {jobRunPropType} from '../../propTypes';
 import JsonHolder from '../validation/JsonHolder';
 
 /* eslint-disable camelcase */
@@ -63,7 +63,7 @@ class ResultTable extends PureComponent {
             <TableColumn>{new Date(modified_date).toLocaleString()}</TableColumn>
             <TableColumn>{splitName}</TableColumn>
             <TableColumn>{error}</TableColumn>
-            <TableColumn>{result}</TableColumn>
+            <TableColumn>{JSON.stringify(result)}</TableColumn>
             <TableColumn grow><JsonHolder data={config}/></TableColumn>
           </TableRow>
         ))}
@@ -75,7 +75,7 @@ class ResultTable extends PureComponent {
 };
 
 ResultTable.propTypes = {
-  jobs: PropTypes.arrayOf(jobPropType).isRequired,
+  jobs: PropTypes.arrayOf(jobRunPropType).isRequired,
   onRequestJobs: PropTypes.func.isRequired,
 };
 

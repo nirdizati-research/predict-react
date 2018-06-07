@@ -6,7 +6,7 @@ import {
 } from '../../actions/ModelActions';
 import {logListRequested, LOG_CHANGED} from '../../actions/LogActions';
 import {traceListRequested} from '../../actions/TraceActions';
-import {submitPrediction} from '../../actions/RuntimeActions';
+import {submitRuntime} from '../../actions/RuntimeActions';
 import PredictionHeaderCard from '../../components/prediction/PredictionHeaderCard';
 import LogSelector from '../../components/prediction/LogSelector';
 import RuntimeTable from '../../components/Runtime/RuntimeTable';
@@ -69,8 +69,8 @@ class Runtime extends Component {
     const regId = this.props.regModelId;
     const classId = this.props.classModelId;
     const payload = logId + '&' + regId + '&' + classId;
-    this.props.onSubmitPrediction(payload);
-    this.props.onRequestJobs();
+    this.props.onSubmitRuntime(payload);
+    this.props.onRequestTraces();
   }
 
   render() {
@@ -89,11 +89,13 @@ class Runtime extends Component {
           <PredictionHeaderCard modelsLabel={regModelsLabel}
                                 title='Regression Model Selection'
                                 fetchState={this.props.modfetchState}
-                                modelChange={this.onRegChangeModel.bind(this)}/>
+                                modelChange={this.onRegChangeModel.bind(this)}
+                                modelId={this.props.regModelId}/>
           <PredictionHeaderCard modelsLabel={clasModelsLabel}
                                 title='Classification Model Selection'
                                 fetchState={this.props.modfetchState}
-                                modelChange={this.onClasChangeModel.bind(this)}/>
+                                modelChange={this.onClasChangeModel.bind(this)}
+                                modelId={this.props.classModelId}/>
           <Card className="md-full-width">
           <Button raised primary swapTheming onClick={this.Submit.bind(this)}
                   className="buttons__group">Submit</Button>
@@ -123,7 +125,7 @@ Runtime.propTypes = {
   onModelChange: PropTypes.func.isRequired,
   onClasModelChange: PropTypes.func.isRequired,
   onLogChange: PropTypes.func.isRequired,
-  onSubmitPrediction: PropTypes.func.isRequired,
+  onSubmitRuntime: PropTypes.func.isRequired,
   onRequestTraces: PropTypes.func.isRequired,
   models: PropTypes.arrayOf(modelPropType).isRequired,
   logs: logsStore,
@@ -156,7 +158,7 @@ const mapDispatchToProps = (dispatch) => ({
   onClasModelChange: (modelId) => dispatch({type: CLAS_MODEL_CHANGED, modelId}),
   onModelChange: (naId, regId, classId) => dispatch({type: MODEL_CHANGED, naId, regId, classId}),
   onLogChange: (logId, p_length) => dispatch({type: LOG_CHANGED, logId, p_length}),
-  onSubmitPrediction: (payload) => dispatch(submitPrediction({payload}))
+  onSubmitRuntime: (payload) => dispatch(submitRuntime({payload}))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Runtime);
