@@ -3,6 +3,22 @@
  */
 import {CLASSIFICATION, REGRESSION} from '../reference';
 
+export const modelsToString = (models) => {
+  return models.map((model) => {
+    return {value: model.id, label: modelToString(model)};
+  });
+};
+
+export const modelToString = (model) => {
+  let label;
+  if (model.type === 'single') {
+    label = `Model #${model.id}, noCluster, ${model.config.encoding.method}, ${model.config.method}`;
+  } else {
+    label = `Model #${model.id}, Kmeans, ${model.config.encoding.method}, ${model.config.method}`;
+  }
+  return label;
+};
+
 
 export const jobToValidationTable = (job) => {
   const kmeans = job.config.kmeans;

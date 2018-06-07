@@ -13,6 +13,8 @@ import {
   JOBS_REQUESTED,
   JOBS_RETRIEVED
 } from '../actions/JobActions';
+import {MODEL_CHANGED} from '../actions/ModelActions';
+import {JOB_RUN_CHANGED} from '../actions/RuntimeActions';
 import {
   BOOLEAN,
   COMPLEX,
@@ -47,6 +49,7 @@ const initialLabels = {
 
 const initialState = {
   fetchState: {inFlight: false},
+  runIds: [],
   byId: {},
   allIds: [],
   filteredIds: [],
@@ -54,6 +57,9 @@ const initialState = {
   predictionMethod: REGRESSION,
   prefixLengths: [],
   selectedPrefixes: [],
+  logId: -100,
+  regId: 0,
+  classId: 0,
   thresholds: [],
   attributeNames: [],
   splitId: -100
@@ -168,12 +174,20 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
 
     case JOBS_RETRIEVED: {
       const jobs = addListToStore(state, action.payload);
+      // this is shit
+      const runIds = [];
+      for (const k in state.byId) {
+        if ((state.byId.hasOwnProperty(k)) && state.byId[k].config.add_label === false) {
+          runIds.push(k);
+        }
+      }
       const uniqueSplits = completedUniqueSplits(jobs.byId);
       const thresholds = thresholdSet(jobs.byId);
       const attributeNames = attributeNameSet(jobs.byId);
       return {
         ...state, fetchState: {inFlight: false}, ...jobs,
-        uniqueSplits, thresholds, attributeNames
+        uniqueSplits, thresholds, attributeNames,
+        runIds
       };
     }
 
@@ -225,6 +239,22 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
       const filteredIds = applyFilters({...state});
       return {
         ...state, filteredIds
+      };
+    }
+    case JOB_RUN_CHANGED: {
+      const logId = action.logId;
+      return {
+        ...state,
+        logId: logId
+      };
+    }
+    case MODEL_CHANGED: {
+      const regId = action.regId;
+      const classId = action.classId;
+      return {
+        ...state,
+        classId: classId,
+        regId: regId,
       };
     }
 

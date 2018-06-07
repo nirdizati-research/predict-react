@@ -4,7 +4,6 @@ import nirdizati from '../images/nirdizati-logo-e1501821874335.png';
 import {Avatar, Button, DialogContainer, FontIcon, List} from 'react-md';
 import GuideItem from './static/GuideItem';
 
-
 /* eslint-disable max-len */
 
 /* eslint-disable react/no-unescaped-entities */
@@ -52,14 +51,12 @@ class WalkThrough extends PureComponent {
                 details</Button>}
               title="Log details"
               text="Check the log details"
-              threeLines
             />
             <GuideItem
               avatar={<Avatar suffix="yellow">3</Avatar>}
               button={<Button flat primary href={'/#/split'} iconEl={<FontIcon>swap_horiz</FontIcon>}>Split</Button>}
               title="Split"
               text="Split the log into a training and a test set"
-              threeLines
             />
             <GuideItem
               avatar={<Avatar suffix="light-green">4</Avatar>}
@@ -67,7 +64,6 @@ class WalkThrough extends PureComponent {
                               iconEl={<FontIcon>label_outline</FontIcon>}>Labelling</Button>}
               title="Labelling"
               text="(Optional) Test the label distribution for a given labeling"
-              threeLines
             />
             <GuideItem
               avatar={<Avatar suffix="cyan">5</Avatar>}
@@ -75,14 +71,12 @@ class WalkThrough extends PureComponent {
                               iconEl={<FontIcon>build</FontIcon>}>Training</Button>}
               title="Training"
               text="Submit a prediction task to train a predictive model with an array of configuration options"
-              threeLines
             />
             <GuideItem
               avatar={<Avatar suffix="purple">6</Avatar>}
               title="Task status"
               text={'Check the status of the enqueued prediction tasks'}
               button={<Button flat primary href={'/#/jobs'} iconEl={<FontIcon>list</FontIcon>}>Task status</Button>}
-              threeLines
             />
             <GuideItem
               avatar={<Avatar suffix="pink">7</Avatar>}
@@ -90,7 +84,20 @@ class WalkThrough extends PureComponent {
                               iconEl={<FontIcon>insert_chart</FontIcon>}>Validation</Button>}
               title="Validation"
               text="Compare the resulting models using different metrics and download the results"
-              threeLines
+            />
+            <GuideItem
+              avatar={<Avatar suffix="blue">8</Avatar>}
+              button={<Button flat primary href={'/#/prediction'}
+                              iconEl={<FontIcon>work</FontIcon>}>Prediction</Button>}
+              title="Prediction"
+              text="Create a prediction of an incomplete track"
+            />
+            <GuideItem
+              avatar={<Avatar suffix="green">9</Avatar>}
+              button={<Button flat primary href={'/#/runtime'}
+                              iconEl={<FontIcon>flash_on</FontIcon>}>Runtime</Button>}
+              title="Runtime"
+              text="Create continuous predictions for a stream of events"
             />
           </List>
         </div>
@@ -131,4 +138,3 @@ const dialog = (visible, hide) => (<DialogContainer
 </DialogContainer>);
 
 export default WalkThrough;
-
