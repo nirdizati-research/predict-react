@@ -7,13 +7,14 @@ import {jobsRequested} from '../../actions/JobActions';
 import {JOB_RUN_CHANGED, submitPrediction} from '../../actions/RuntimeActions';
 import LogSelector from '../../components/prediction/LogSelector';
 import ResultTable from '../../components/prediction/ResultTable';
-import {jobRunPropType, logsStore, modelPropType} from '../../propTypes';
+import {fetchStatePropType, jobRunPropType, logsStore, modelPropType} from '../../propTypes';
 import {modelsToString} from '../../util/dataReducers';
 import {splitsRequested} from '../../actions/SplitActions';
 import {mapJobs} from '../../util/unNormalize';
 import {CardText} from 'react-md/lib/Cards/index';
 import ModelSelector from '../../components/prediction/ModelSelector';
 import {REGRESSION} from '../../reference';
+import {Card} from 'react-md';
 
 class Prediction extends Component {
   onChangeLog(logId) {
@@ -83,23 +84,20 @@ class Prediction extends Component {
                          onReset={this.onReset} classModelsLabel={clasModelsLabel} regModelsLabel={regModelsLabel}
                          classModelId={this.props.classModelId} regModelId={this.props.regModelId}/>
         </div>
-        <CardText>
-          <ResultTable jobs={filteredJobsRun} onRequestJobs={this.requestJobsRun.bind(this)}/>
-        </CardText>
+        <div className="md-cell md-cell--12">
+          <Card>
+            <CardText>
+              <ResultTable jobs={filteredJobsRun} onRequestJobs={this.requestJobsRun.bind(this)}/>
+            </CardText>
+          </Card></div>
       </div>
     );
   }
 }
 
 Prediction.propTypes = {
-  logfetchState: PropTypes.shape({
-    inFlight: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  }).isRequired,
-  modfetchState: PropTypes.shape({
-    inFlight: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  }).isRequired,
+  logfetchState: fetchStatePropType,
+  modfetchState: fetchStatePropType,
   onChangeJRun: PropTypes.func.isRequired,
   onRequestModels: PropTypes.func.isRequired,
   onRegModelChange: PropTypes.func.isRequired,

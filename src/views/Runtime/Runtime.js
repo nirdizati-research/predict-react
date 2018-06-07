@@ -7,11 +7,12 @@ import {traceListRequested} from '../../actions/TraceActions';
 import {submitRuntime} from '../../actions/RuntimeActions';
 import LogSelector from '../../components/prediction/LogSelector';
 import RuntimeTable from '../../components/Runtime/RuntimeTable';
-import {logsStore, modelPropType, tracePropType} from '../../propTypes';
+import {fetchStatePropType, logsStore, modelPropType, tracePropType} from '../../propTypes';
 import {modelsToString} from '../../util/dataReducers';
 import {CardText} from 'react-md/lib/Cards/index';
 import ModelSelector from '../../components/prediction/ModelSelector';
 import {REGRESSION} from '../../reference';
+import {Card} from 'react-md';
 
 class Runtime extends Component {
   onChangeLog(logId) {
@@ -81,23 +82,20 @@ class Runtime extends Component {
                          onReset={this.onReset} classModelsLabel={clasModelsLabel} regModelsLabel={regModelsLabel}
                          classModelId={this.props.classModelId} regModelId={this.props.regModelId}/>
         </div>
-        <CardText>
-          <RuntimeTable traces={filteredTraces} onRequestTraces={this.requestTraces.bind(this)}/>
-        </CardText>
+        <div className="md-cell md-cell--12">
+          <Card>
+            <CardText>
+              <RuntimeTable traces={filteredTraces} onRequestTraces={this.requestTraces.bind(this)}/>
+            </CardText>
+          </Card></div>
       </div>
     );
   }
 }
 
 Runtime.propTypes = {
-  logfetchState: PropTypes.shape({
-    inFlight: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  }).isRequired,
-  modfetchState: PropTypes.shape({
-    inFlight: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  }).isRequired,
+  logfetchState: fetchStatePropType,
+  modfetchState: fetchStatePropType,
   onRequestModels: PropTypes.func.isRequired,
   onRegModelChange: PropTypes.func.isRequired,
   onModelChange: PropTypes.func.isRequired,
