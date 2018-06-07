@@ -1,19 +1,17 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {
-  modelsRequested, REG_MODEL_CHANGED, CLAS_MODEL_CHANGED, MODEL_CHANGED
-} from '../../actions/ModelActions';
-import {logListRequested, LOG_CHANGED} from '../../actions/LogActions';
+import {CLAS_MODEL_CHANGED, MODEL_CHANGED, modelsRequested, REG_MODEL_CHANGED} from '../../actions/ModelActions';
+import {LOG_CHANGED, logListRequested} from '../../actions/LogActions';
 import {traceListRequested} from '../../actions/TraceActions';
 import {submitRuntime} from '../../actions/RuntimeActions';
-import PredictionHeaderCard from '../../components/prediction/PredictionHeaderCard';
 import LogSelector from '../../components/prediction/LogSelector';
 import RuntimeTable from '../../components/Runtime/RuntimeTable';
-import {tracePropType, modelPropType, logsStore} from '../../propTypes';
-import Button from 'react-md/lib/Buttons/Button';
+import {logsStore, modelPropType, tracePropType} from '../../propTypes';
 import {modelsToString} from '../../util/dataReducers';
-import {Card, CardText} from 'react-md/lib/Cards/index';
+import {CardText} from 'react-md/lib/Cards/index';
+import ModelSelector from '../../components/prediction/ModelSelector';
+import {REGRESSION} from '../../reference';
 
 class Runtime extends Component {
   onChangeLog(logId) {
@@ -22,17 +20,15 @@ class Runtime extends Component {
     this.props.onLogChange(logId, pLength);
   }
 
-  onRegChangeModel(modelId) {
-    this.props.onRegModelChange(modelId);
-    const classId = this.props.classModelId;
-    this.props.onModelChange(modelId, classId);
-  }
-
-  onClasChangeModel(modelId) {
-    this.props.onClasModelChange(modelId);
-    const classId = modelId;
-    const regId = this.props.regModelId;
-    this.props.onModelChange(regId, classId);
+  onModelChange({method}, modelId) {
+    if (method === REGRESSION) {
+      this.props.onRegModelChange(modelId);
+      const classId = this.props.classModelId;
+      this.props.onModelChange(modelId, classId);
+    } else {
+      const regId = this.props.regModelId;
+      this.props.onModelChange(regId, modelId);
+    }
   }
 
   componentDidMount() {
@@ -81,22 +77,9 @@ class Runtime extends Component {
                        logChange={this.onChangeLog.bind(this)} logId={this.props.logId}/>
         </div>
         <div className="md-cell md-cell--12">
-          <PredictionHeaderCard modelsLabel={regModelsLabel}
-                                title='Regression Model Selection'
-                                fetchState={this.props.modfetchState}
-                                modelChange={this.onRegChangeModel.bind(this)}
-                                modelId={this.props.regModelId}/>
-          <PredictionHeaderCard modelsLabel={clasModelsLabel}
-                                title='Classification Model Selection'
-                                fetchState={this.props.modfetchState}
-                                modelChange={this.onClasChangeModel.bind(this)}
-                                modelId={this.props.classModelId}/>
-          <Card className="md-full-width">
-            <Button raised primary swapTheming onClick={this.Submit.bind(this)}
-                    className="buttons__group">Submit</Button>
-            <Button raised secondary swapTheming onClick={this.onReset.bind(this)}
-                    className="buttons__group">Reset</Button>
-          </Card>
+          <ModelSelector modelChange={this.onModelChange.bind(this)} onSubmit={this.Submit.bind(this)}
+                         onReset={this.onReset} classModelsLabel={clasModelsLabel} regModelsLabel={regModelsLabel}
+                         classModelId={this.props.classModelId} regModelId={this.props.regModelId}/>
         </div>
         <CardText>
           <RuntimeTable traces={filteredTraces} onRequestTraces={this.requestTraces.bind(this)}/>

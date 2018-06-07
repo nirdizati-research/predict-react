@@ -5,15 +5,15 @@ import {CLAS_MODEL_CHANGED, MODEL_CHANGED, modelsRequested, REG_MODEL_CHANGED} f
 import {LOG_CHANGED, logListRequested} from '../../actions/LogActions';
 import {jobsRequested} from '../../actions/JobActions';
 import {JOB_RUN_CHANGED, submitPrediction} from '../../actions/RuntimeActions';
-import PredictionHeaderCard from '../../components/prediction/PredictionHeaderCard';
 import LogSelector from '../../components/prediction/LogSelector';
 import ResultTable from '../../components/prediction/ResultTable';
 import {jobRunPropType, logsStore, modelPropType} from '../../propTypes';
-import Button from 'react-md/lib/Buttons/Button';
 import {modelsToString} from '../../util/dataReducers';
 import {splitsRequested} from '../../actions/SplitActions';
 import {mapJobs} from '../../util/unNormalize';
-import {Card, CardText} from 'react-md/lib/Cards/index';
+import {CardText} from 'react-md/lib/Cards/index';
+import ModelSelector from '../../components/prediction/ModelSelector';
+import {REGRESSION} from '../../reference';
 
 class Prediction extends Component {
   onChangeLog(logId) {
@@ -23,16 +23,15 @@ class Prediction extends Component {
     this.props.onChangeJRun(logId);
   }
 
-  onRegChangeModel(modelId) {
-    this.props.onRegModelChange(modelId);
-    const classId = this.props.classModelId;
-    this.props.onModelChange(modelId, classId);
-  }
-
-  onClasChangeModel(modelId) {
-    this.props.onClasModelChange(modelId);
-    const regId = this.props.regModelId;
-    this.props.onModelChange(regId, modelId);
+  onModelChange({method}, modelId) {
+    if (method === REGRESSION) {
+      this.props.onRegModelChange(modelId);
+      const classId = this.props.classModelId;
+      this.props.onModelChange(modelId, classId);
+    } else {
+      const regId = this.props.regModelId;
+      this.props.onModelChange(regId, modelId);
+    }
   }
 
   componentDidMount() {
@@ -80,22 +79,9 @@ class Prediction extends Component {
                        logChange={this.onChangeLog.bind(this)} logId={this.props.logId}/>
         </div>
         <div className="md-cell md-cell--12">
-          <PredictionHeaderCard modelsLabel={regModelsLabel}
-                                title='Regression Model Selection'
-                                fetchState={this.props.modfetchState}
-                                modelChange={this.onRegChangeModel.bind(this)}
-                                modelId={this.props.regModelId}/>
-          <PredictionHeaderCard modelsLabel={clasModelsLabel}
-                                title='Classification Model Selection'
-                                fetchState={this.props.modfetchState}
-                                modelChange={this.onClasChangeModel.bind(this)}
-                                modelId={this.props.classModelId}/>
-          <Card className="md-full-width">
-            <Button raised primary swapTheming onClick={this.Submit.bind(this)}
-                    className="buttons__group">Submit</Button>
-            <Button raised secondary swapTheming onClick={this.onReset.bind(this)}
-                    className="buttons__group">Reset</Button>
-          </Card>
+          <ModelSelector modelChange={this.onModelChange.bind(this)} onSubmit={this.Submit.bind(this)}
+                         onReset={this.onReset} classModelsLabel={clasModelsLabel} regModelsLabel={regModelsLabel}
+                         classModelId={this.props.classModelId} regModelId={this.props.regModelId}/>
         </div>
         <CardText>
           <ResultTable jobs={filteredJobsRun} onRequestJobs={this.requestJobsRun.bind(this)}/>

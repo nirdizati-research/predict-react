@@ -6,21 +6,7 @@ import SelectField from 'react-md/lib/SelectFields/index';
 import {logsStore} from '../../propTypes';
 
 class LogSelector extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      original_log: 0,
-      config: {}
-    };
-  }
-
-  onSubmit() {
-    this.props.onSubmit(this.state);
-  }
-
   selectChange(value, _) {
-    this.setState({original_log: value});
     this.props.logChange(value);
   }
 
@@ -54,7 +40,6 @@ LogSelector.propTypes = {
     error: PropTypes.any
   }).isRequired,
   logChange: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
   logId: PropTypes.number.isRequired
 };
 
