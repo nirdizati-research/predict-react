@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {CLAS_MODEL_CHANGED, MODEL_CHANGED, modelsRequested, REG_MODEL_CHANGED} from '../../actions/ModelActions';
+import {MODEL_CHANGED, modelsRequested} from '../../actions/ModelActions';
 import {LOG_CHANGED, logListRequested} from '../../actions/LogActions';
 import {traceListRequested} from '../../actions/TraceActions';
 import {submitRuntime} from '../../actions/RuntimeActions';
@@ -11,7 +11,6 @@ import {fetchStatePropType, logsStore, modelPropType, tracePropType} from '../..
 import {modelsToString} from '../../util/dataReducers';
 import {CardText} from 'react-md/lib/Cards/index';
 import ModelSelector from '../../components/prediction/ModelSelector';
-import {REGRESSION} from '../../reference';
 import {Card} from 'react-md';
 
 class Runtime extends Component {
@@ -22,14 +21,7 @@ class Runtime extends Component {
   }
 
   onModelChange({method}, modelId) {
-    if (method === REGRESSION) {
-      this.props.onRegModelChange(modelId);
-      const classId = this.props.classModelId;
-      this.props.onModelChange(modelId, classId);
-    } else {
-      const regId = this.props.regModelId;
-      this.props.onModelChange(regId, modelId);
-    }
+    this.props.onModelChange({method}, modelId);
   }
 
   componentDidMount() {
@@ -49,11 +41,7 @@ class Runtime extends Component {
   }
 
   filterTrace(byId) {
-    const arTraces = [];
-    for (const key in byId) {
-      if (byId[key].real_log === this.props.logId) arTraces.push(byId[key]);
-    }
-    return arTraces;
+    return byId.filter((trace) => (trace.real_log === this.props.logId))
   }
 
   Submit() {
@@ -97,9 +85,7 @@ Runtime.propTypes = {
   logfetchState: fetchStatePropType,
   modfetchState: fetchStatePropType,
   onRequestModels: PropTypes.func.isRequired,
-  onRegModelChange: PropTypes.func.isRequired,
   onModelChange: PropTypes.func.isRequired,
-  onClasModelChange: PropTypes.func.isRequired,
   onLogChange: PropTypes.func.isRequired,
   onSubmitRuntime: PropTypes.func.isRequired,
   onRequestTraces: PropTypes.func.isRequired,
@@ -131,9 +117,7 @@ const mapDispatchToProps = (dispatch) => ({
   onRequestTraces: () => dispatch(traceListRequested()),
   onRequestModels: () => dispatch(modelsRequested()),
   onRequestLogList: (changeVisible) => dispatch(logListRequested({changeVisible, requestInfo: false})),
-  onRegModelChange: (modelId) => dispatch({type: REG_MODEL_CHANGED, modelId}),
-  onClasModelChange: (modelId) => dispatch({type: CLAS_MODEL_CHANGED, modelId}),
-  onModelChange: (naId, regId, classId) => dispatch({type: MODEL_CHANGED, naId, regId, classId}),
+  onModelChange: ({method}, modelId) => dispatch({type: MODEL_CHANGED, method, modelId}),
   onLogChange: (logId, pLength) => dispatch({type: LOG_CHANGED, logId, pLength}),
   onSubmitRuntime: (payload) => dispatch(submitRuntime({payload}))
 });

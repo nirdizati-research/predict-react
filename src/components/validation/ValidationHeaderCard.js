@@ -17,7 +17,7 @@ import {
   REGRESSION,
   regressionMethods
 } from '../../reference';
-import {fetchStatePropType, splitLabelPropType} from '../../propTypes';
+import {fetchStatePropType, selectLabelProptype} from '../../propTypes';
 import LabelControls from '../Labelling/LabelControls';
 
 const ValidationHeaderCard = (props) => {
@@ -100,7 +100,7 @@ const ValidationHeaderCard = (props) => {
 
 
 ValidationHeaderCard.propTypes = {
-  splitLabels: splitLabelPropType,
+  splitLabels: selectLabelProptype,
   fetchState: fetchStatePropType,
   methodChange: PropTypes.func.isRequired,
   splitChange: PropTypes.func.isRequired,

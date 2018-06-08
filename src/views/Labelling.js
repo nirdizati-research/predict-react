@@ -12,7 +12,7 @@ import {
   jobsRequested,
   submitTraining
 } from '../actions/JobActions';
-import {fetchStatePropType, jobPropType, splitLabelPropType} from '../propTypes';
+import {fetchStatePropType, jobPropType, selectLabelProptype} from '../propTypes';
 import BarChartCard from '../components/chart/BarChartCard';
 import LabellingHeaderCard from '../components/Labelling/LabellingHeaderCard';
 import TrainingFormCard from '../components/TrainingFormCard';
@@ -126,8 +126,8 @@ Labelling.propTypes = {
   onMethodChange: PropTypes.func.isRequired,
   onSubmitTraining: PropTypes.func.isRequired,
   getLogProperties: PropTypes.func.isRequired,
-  splitLabels: splitLabelPropType,
-  usedSplitLabels: splitLabelPropType,
+  splitLabels: selectLabelProptype,
+  usedSplitLabels: selectLabelProptype,
   onRequestSplitList: PropTypes.func.isRequired,
   onPrefixChange: PropTypes.func.isRequired,
   labelTypeChange: PropTypes.func.isRequired,

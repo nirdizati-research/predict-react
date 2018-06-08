@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Card, CardTitle} from 'react-md/lib/Cards/index';
 import SelectField from 'react-md/lib/SelectFields';
 import PropTypes from 'prop-types';
-import {modelsLabel} from '../../propTypes';
+import {selectLabelProptype} from '../../propTypes';
 
 class PredictionHeaderCard extends Component {
   selectChange(value, _) {
@@ -17,7 +17,7 @@ class PredictionHeaderCard extends Component {
             id="log-name-select"
             placeholder="model.xes"
             className="md-cell"
-            menuItems={this.props.modelsLabel}
+            menuItems={this.props.selectLabelProptype}
             position={SelectField.Positions.BELOW}
             onChange={this.selectChange.bind(this)}
             value={this.props.modelId}
@@ -28,7 +28,7 @@ class PredictionHeaderCard extends Component {
 
 
 PredictionHeaderCard.propTypes = {
-  modelsLabel: modelsLabel,
+  modelsLabel: selectLabelProptype,
   title: PropTypes.string.isRequired,
   modelChange: PropTypes.func.isRequired,
   modelId: PropTypes.number.isRequired

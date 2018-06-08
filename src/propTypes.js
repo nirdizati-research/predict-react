@@ -68,7 +68,7 @@ export const jobPropType = PropTypes.shape({
   status: PropTypes.string.isRequired,
   split_id: PropTypes.number.isRequired,
   splitName: PropTypes.string,
-  type: PropTypes.oneOf([CLASSIFICATION, REGRESSION, LABELLING]).isRequired,
+  type: PropTypes.oneOf([CLASSIFICATION, REGRESSION]).isRequired,
   config: PropTypes.shape({
     hyperopt: PropTypes.shape(hyperOptShape),
     label: PropTypes.shape(labelPropType).isRequired,
@@ -135,7 +135,7 @@ export const labelJobFlat = PropTypes.shape({
   label: PropTypes.shape(labelPropType).isRequired,
 }).isRequired;
 
-export const splitLabelPropType = PropTypes.arrayOf(PropTypes.shape({
+export const selectLabelProptype = PropTypes.arrayOf(PropTypes.shape({
   value: PropTypes.number.isRequired,
   label: PropTypes.string.isRequired
 }).isRequired).isRequired;
@@ -209,8 +209,3 @@ export const jobStore = PropTypes.shape({
   byId: PropTypes.objectOf(jobPropType).isRequired,
   allIds: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
 }).isRequired;
-
-export const modelsLabel = PropTypes.arrayOf(PropTypes.shape({
-  value: PropTypes.number.isRequired,
-  label: PropTypes.string.isRequired
-}).isRequired).isRequired;

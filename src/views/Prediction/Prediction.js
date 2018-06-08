@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {CLAS_MODEL_CHANGED, MODEL_CHANGED, modelsRequested, REG_MODEL_CHANGED} from '../../actions/ModelActions';
+import {MODEL_CHANGED, modelsRequested} from '../../actions/ModelActions';
 import {LOG_CHANGED, logListRequested} from '../../actions/LogActions';
 import {jobsRequested} from '../../actions/JobActions';
 import {JOB_RUN_CHANGED, submitPrediction} from '../../actions/RuntimeActions';
@@ -13,7 +13,6 @@ import {splitsRequested} from '../../actions/SplitActions';
 import {mapJobs} from '../../util/unNormalize';
 import {CardText} from 'react-md/lib/Cards/index';
 import ModelSelector from '../../components/prediction/ModelSelector';
-import {REGRESSION} from '../../reference';
 import {Card} from 'react-md';
 
 class Prediction extends Component {
@@ -25,14 +24,7 @@ class Prediction extends Component {
   }
 
   onModelChange({method}, modelId) {
-    if (method === REGRESSION) {
-      this.props.onRegModelChange(modelId);
-      const classId = this.props.classModelId;
-      this.props.onModelChange(modelId, classId);
-    } else {
-      const regId = this.props.regModelId;
-      this.props.onModelChange(regId, modelId);
-    }
+    this.props.onModelChange({method}, modelId);
   }
 
   componentDidMount() {
@@ -100,10 +92,8 @@ Prediction.propTypes = {
   modfetchState: fetchStatePropType,
   onChangeJRun: PropTypes.func.isRequired,
   onRequestModels: PropTypes.func.isRequired,
-  onRegModelChange: PropTypes.func.isRequired,
   onRequestSplitList: PropTypes.func.isRequired,
   onModelChange: PropTypes.func.isRequired,
-  onClasModelChange: PropTypes.func.isRequired,
   onLogChange: PropTypes.func.isRequired,
   onSubmitPrediction: PropTypes.func.isRequired,
   onRequestJobs: PropTypes.func.isRequired,
@@ -136,9 +126,7 @@ const mapDispatchToProps = (dispatch) => ({
   onRequestModels: () => dispatch(modelsRequested()),
   onRequestSplitList: () => dispatch(splitsRequested()),
   onRequestLogList: (changeVisible) => dispatch(logListRequested({changeVisible, requestInfo: false})),
-  onRegModelChange: (modelId) => dispatch({type: REG_MODEL_CHANGED, modelId}),
-  onClasModelChange: (modelId) => dispatch({type: CLAS_MODEL_CHANGED, modelId}),
-  onModelChange: (regId, classId) => dispatch({type: MODEL_CHANGED, regId, classId}),
+  onModelChange: ({method}, modelId) => dispatch({type: MODEL_CHANGED, method, modelId}),
   onLogChange: (logId, pLength) => dispatch({type: LOG_CHANGED, logId, pLength}),
   onChangeJRun: (logId) => dispatch({type: JOB_RUN_CHANGED, logId}),
   onSubmitPrediction: (payload) => dispatch(submitPrediction({payload}))

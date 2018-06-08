@@ -5,7 +5,7 @@ import TrainingFormCard from '../../components/TrainingFormCard';
 import {submitTraining} from '../../actions/JobActions';
 import {splitsToLabel} from '../../util/unNormalize';
 import {splitsRequested} from '../../actions/SplitActions';
-import {fetchStatePropType, splitLabelPropType} from '../../propTypes';
+import {fetchStatePropType, selectLabelProptype} from '../../propTypes';
 import {getLogProperties} from '../../util/splitStuff';
 import {logListRequested} from '../../actions/LogActions';
 
@@ -42,7 +42,7 @@ class Training extends Component {
 }
 
 Training.propTypes = {
-  splitLabels: splitLabelPropType,
+  splitLabels: selectLabelProptype,
   onRequestLogList: PropTypes.func.isRequired,
   getLogProperties: PropTypes.func.isRequired,
   onRequestSplitList: PropTypes.func.isRequired,

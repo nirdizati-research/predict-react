@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import {Card} from 'react-md/lib/Cards/index';
 import SelectField from 'react-md/lib/SelectFields';
 import PropTypes from 'prop-types';
-import {modelsLabel} from '../../propTypes';
+import {selectLabelProptype} from '../../propTypes';
 import {Button, CardText} from 'react-md';
 import {CLASSIFICATION, REGRESSION} from '../../reference';
 
 class ModelSelector extends Component {
-  selectChange(value, _) {
-    this.props.modelChange(value);
+  selectChange({method}, value, _) {
+    this.props.modelChange({method}, value);
   }
 
   render() {
@@ -54,8 +54,8 @@ class ModelSelector extends Component {
 
 
 ModelSelector.propTypes = {
-  regModelsLabel: modelsLabel,
-  classModelsLabel: modelsLabel,
+  regModelsLabel: selectLabelProptype,
+  classModelsLabel: selectLabelProptype,
   modelChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onReset: PropTypes.func.isRequired,

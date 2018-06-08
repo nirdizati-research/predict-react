@@ -19,7 +19,7 @@ class RuntimeTable extends PureComponent {
     const intervalId = setInterval(() => {
       this.props.onRequestTraces();
       this.setState({slicedData: this.props.traces.slice(0, 10)});
-    }, 10000);
+    }, 5000);
     this.setState({intervalId: intervalId});
   }
 

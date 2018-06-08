@@ -249,13 +249,20 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
       };
     }
     case MODEL_CHANGED: {
-      const regId = action.regId;
-      const classId = action.classId;
-      return {
-        ...state,
-        classId: classId,
-        regId: regId,
-      };
+      if (action.method === REGRESSION) {
+        const regId = action.modelId;
+        return {
+          ...state,
+          regId,
+        };
+      }
+      else {
+        const classId = action.modelId;
+        return {
+          ...state,
+          classId,
+        };
+      }
     }
 
     case FILTER_LABEL_CHANGED: {

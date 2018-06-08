@@ -24,7 +24,8 @@ class ResultTable extends PureComponent {
   componentDidMount() {
     const intervalId = setInterval(() => {
       this.props.onRequestJobs();
-    }, 10000);
+      this.setState({slicedData: this.props.jobs.slice(0, 10)});
+    }, 5000);
     this.setState({intervalId: intervalId});
   }
 

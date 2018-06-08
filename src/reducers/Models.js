@@ -2,8 +2,7 @@ import {
   MODELS_FAILED,
   MODELS_RETRIEVED,
   MODELS_REQUESTED,
-  REG_MODEL_CHANGED,
-  CLAS_MODEL_CHANGED
+  MODEL_CHANGED
 } from '../actions/ModelActions';
 import {LOG_CHANGED} from '../actions/LogActions';
 import {REGRESSION, CLASSIFICATION} from '../reference';
@@ -17,6 +16,12 @@ const initialState = {
   regressionModels: [],
   classificationModels: [],
 };
+
+const filterModels = (models, p_length) => {
+  return models.filter((model) => (model.config.encoding.prefix_length === p_length)
+    || ((model.config.padding === 'zero_padding') &&
+      (model.config.encoding.prefix_length >= p_length)));
+}
 
 const mergeIncomingModels = (incoming, existing) => {
   // From https://stackoverflow.com/a/34963663
@@ -56,32 +61,27 @@ const models = (state = initialState, action) => {
       };
     }
 
-    case REG_MODEL_CHANGED: {
-      const regselected = action.modelId;
-      return {
-        ...state,
-        regselected,
-      };
-    }
-
-    case CLAS_MODEL_CHANGED: {
-      const classelected = action.modelId;
-      return {
-        ...state,
-        classelected,
-      };
+    case MODEL_CHANGED: {
+      if (action.method === REGRESSION) {
+        const regselected = action.modelId;
+        return {
+          ...state,
+          regselected,
+        };
+      }
+      else {
+        const classelected = action.modelId;
+        return {
+          ...state,
+          classelected,
+        };
+      }
     }
 
     case LOG_CHANGED: {
       const logId = action.logId;
-      const regressionModels = state.regressionModels
-        .filter((model) => (model.config.encoding.prefix_length === action.p_length)
-          || ((model.config.padding === 'zero_padding') &&
-            (model.config.encoding.prefix_length >= action.p_length)));
-      const classificationModels = state.classificationModels
-        .filter((model) => (model.config.encoding.prefix_length === action.p_length)
-          || ((model.config.padding === 'zero_padding') &&
-            (model.config.encoding.prefix_length >= action.p_length)));
+      const regressionModels = filterModels(state.regressionModels, action.pLength)
+      const classificationModels = filterModels(state.classificationModels, action.pLength)
 
       return {
         ...state,
