@@ -1,8 +1,8 @@
 import React from 'react';
 import {Button, Cell, GridList} from 'react-md';
 
-const FRONTEND_URL = 'https://github.com/TKasekamp/predict-react';
-const BACKEND_URL = 'https://github.com/TKasekamp/predict-python';
+const FRONTEND_URL = 'https://github.com/nirdizati-research/predict-react';
+const BACKEND_URL = 'https://github.com/nirdizati-research/predict-python';
 
 const Footer = () => (
   <GridList component="footer" className="md-grid footer">
