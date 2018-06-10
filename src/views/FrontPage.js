@@ -4,6 +4,7 @@ import WalkThrough from '../components/WalkThrough';
 import EncodingByLogCard from '../components/static/EncodingByLogCard';
 import {ClassificationMethodsCard} from '../components/static/ClassificationMethodsCard';
 import {RegressionMethodsCard} from '../components/static/RegressionMethodsCard';
+import {HyperOptCard} from '../components/static/HyperOptCard';
 
 class FrontPage extends Component {
   render() {
@@ -18,6 +19,9 @@ class FrontPage extends Component {
           <ClassificationMethodsCard/></div>
         <div className="md-cell md-cell--6">
           <RegressionMethodsCard/></div>
+        <div className="md-cell md-cell--12">
+          <HyperOptCard/>
+        </div>
       </div>
     );
   }
