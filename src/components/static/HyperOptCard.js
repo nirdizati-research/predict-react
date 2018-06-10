@@ -19,8 +19,8 @@ const data = [
 
 export const HyperOptCard = () => {
   return <Card className="md-block-centered">
-    <CardTitle title="Hyperparameter optimization comparison" subtitle="Tested version 1.0.0"/>
-    <CardText>
+    <CardTitle title="Hyperparameter optimization comparison" subtitle="Tested version 1.0.0" expander/>
+    <CardText expandable>
       <p>Compared to a normal prediction task, the machine learning method is invoked multiple times with various
         parameters when using Hyperparameter optimization. In this test, we compared the results of a classification
         prediction task with and without Hyperparameter optimization. The optimization task was evaluated 10 times with

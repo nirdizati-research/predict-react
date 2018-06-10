@@ -30,8 +30,8 @@ const dataReg = [
 
 export const RegressionMethodsCard = () => {
   return <Card className="md-block-centered">
-    <CardTitle title="Regression method comparison" subtitle="Tested version 1.0.0"/>
-    <CardText>
+    <CardTitle title="Regression method comparison" subtitle="Tested version 1.0.0" expander/>
+    <CardText expandable>
       <p>How long does it take to run various regression methods? This is the answer.</p>
       <p>
         The regression tests were run with the configuration: encoding type boolean, no padding, prefix length 20,

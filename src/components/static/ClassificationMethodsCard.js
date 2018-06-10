@@ -48,8 +48,8 @@ const dataClass = [
 
 export const ClassificationMethodsCard = () => {
   return <Card className="md-block-centered">
-    <CardTitle title="Classification method comparison" subtitle="Tested version 1.0.0"/>
-    <CardText>
+    <CardTitle title="Classification method comparison" subtitle="Tested version 1.0.0" expander/>
+    <CardText expandable>
       <p>How long does it take to run various classification methods? This is the answer.</p>
       <p>
         The classification tests were run with the configuration: encoding type boolean, no padding, prefix length 20,
