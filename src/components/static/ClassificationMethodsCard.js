@@ -12,25 +12,38 @@ const opts = {
     title: 'Time in seconds',
   },
   chartArea: {width: '60%'},
-  bar: {groupWidth: '75%'},
   isStacked: false,
 };
 
-const columns = [
+// const columns = [
+//   {type: 'string', label: 'Classification method'},
+//   {type: 'number', label: 'Log read in time'},
+//   {type: 'string', role: 'annotation'},
+//   {type: 'number', label: 'Encoding method'},
+//   {type: 'string', role: 'annotation'},
+//   {type: 'number', label: 'Method time'},
+//   {type: 'string', role: 'annotation'},
+// ];
+
+// Not used. only for reference
+// const allData = [
+//   columns,
+//   ['Decision tree', 278.42, '278.42', 1.66, '1.66', 0.06, '0.06'],
+//   ['Random forest', 268.41, '268.41', 1.78, '1.78', 0.39, '0.39'],
+//   ['KNN', 286.33, '286.33', 1.19, '1.19', 4.60, '4.60'],
+// ];
+
+const columns2 = [
   {type: 'string', label: 'Classification method'},
-  {type: 'number', label: 'Log read in time'},
-  {type: 'string', role: 'annotation'},
-  {type: 'number', label: 'Encoding method'},
-  {type: 'string', role: 'annotation'},
   {type: 'number', label: 'Method time'},
   {type: 'string', role: 'annotation'},
 ];
 
-const data = [
-  columns,
-  ['Decision tree', 278.42, '278.42', 1.66, '1.66', 0.06, '0.06'],
-  ['Random forest', 268.41, '268.41', 1.78, '1.78', 0.39, '0.39'],
-  ['KNN', 286.33, '286.33', 1.19, '1.19', 4.60, '4.60'],
+const dataClass = [
+  columns2,
+  ['Decision tree', 0.06, '0.06'],
+  ['Random forest', 0.39, '0.39'],
+  ['KNN', 4.60, '4.60'],
 ];
 
 export const ClassificationMethodsCard = () => {
@@ -52,10 +65,10 @@ export const ClassificationMethodsCard = () => {
 
       This is a big log file, so normal tasks won&apos;t take so long.
       <Chart
-        chartType="ColumnChart"
-        data={data}
+        chartType="BarChart"
+        data={dataClass}
         options={opts}
-        graph_id="class-methods"
+        graph_id="class-methods2"
         width="100%"
       />
     </CardText>
