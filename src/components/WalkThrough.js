@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import nirdizati from '../images/nirdizati-logo-e1501821874335.png';
-import {Avatar, Button, DialogContainer, FontIcon, List} from 'react-md';
+import {Avatar, Button, FontIcon, List} from 'react-md';
 import GuideItem from './static/GuideItem';
 import {dialog, rotate} from './training/LogMetricsCard';
 
