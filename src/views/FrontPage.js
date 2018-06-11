@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import WalkThrough from '../components/WalkThrough';
 import EncodingByLogCard from '../components/static/EncodingByLogCard';
 import {ClassificationMethodsCard} from '../components/static/ClassificationMethodsCard';
+import {RegressionMethodsCard} from '../components/static/RegressionMethodsCard';
+import {HyperOptCard} from '../components/static/HyperOptCard';
 
 class FrontPage extends Component {
   render() {
@@ -13,8 +15,13 @@ class FrontPage extends Component {
         </div>
         <div className="md-cell md-cell--12">
           <EncodingByLogCard/></div>
-        <div className="md-cell md-cell--12">
+        <div className="md-cell md-cell--6">
           <ClassificationMethodsCard/></div>
+        <div className="md-cell md-cell--6">
+          <RegressionMethodsCard/></div>
+        <div className="md-cell md-cell--12">
+          <HyperOptCard/>
+        </div>
       </div>
     );
   }
