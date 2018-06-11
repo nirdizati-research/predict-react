@@ -13,7 +13,7 @@ import {
 } from '../../actions/JobActions';
 import ValidationHeaderCard from '../../components/validation/ValidationHeaderCard';
 import ResultWrapper from '../../components/validation/ResultWrapper';
-import {fetchStatePropType, jobPropType, splitLabelPropType} from '../../propTypes';
+import {fetchStatePropType, jobPropType, selectLabelProptype} from '../../propTypes';
 import {mapJobs, splitsToLabel} from '../../util/unNormalize';
 import {logListRequested} from '../../actions/LogActions';
 import {splitsRequested} from '../../actions/SplitActions';
@@ -77,7 +77,7 @@ class Validation extends Component {
 
 Validation.propTypes = {
   fetchState: fetchStatePropType,
-  splitLabels: splitLabelPropType,
+  splitLabels: selectLabelProptype,
   onRequestLogList: PropTypes.func.isRequired,
   onRequestSplitList: PropTypes.func.isRequired,
   onRequestJobs: PropTypes.func.isRequired,

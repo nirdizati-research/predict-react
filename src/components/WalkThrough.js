@@ -3,7 +3,7 @@ import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import nirdizati from '../images/nirdizati-logo-e1501821874335.png';
 import {Avatar, Button, FontIcon, List} from 'react-md';
 import GuideItem from './static/GuideItem';
-import {dialog, rotate} from './training/LogMetricsCard';
+import {rotate} from './training/LogMetricsCard';
 
 
 class WalkThrough extends PureComponent {
@@ -24,7 +24,6 @@ class WalkThrough extends PureComponent {
 
   render() {
     return <Card className="md-block-centered">
-      {dialog(this.state.visible, this.hide.bind(this))}
       <CardTitle title="Nirdizati Research"
                  subtitle="A Web Application to Support Research in Predictive Monitoring Tasks">
         <div className="md-cell--right">
@@ -69,7 +68,7 @@ class WalkThrough extends PureComponent {
               threeLines
             />
             <GuideItem
-              avatar={<Avatar suffix="cyan">5</Avatar>}
+              avatar={<Avatar suffix="green">5</Avatar>}
               button={<Button flat primary href={'/#/training'}
                               iconEl={<FontIcon>build</FontIcon>}>Training</Button>}
               title="Training"
@@ -77,18 +76,34 @@ class WalkThrough extends PureComponent {
               threeLines
             />
             <GuideItem
-              avatar={<Avatar suffix="purple">6</Avatar>}
+              avatar={<Avatar suffix="cyan">6</Avatar>}
               title="Task status"
               text={'Check the status of the enqueued prediction tasks'}
-              button={<Button flat primary href={'/#/jobs'} iconEl={<FontIcon>list</FontIcon>}>Task status</Button>}
+              button={<Button flat primary href={'/#/jobs'}
+                              iconEl={<FontIcon>list</FontIcon>}>Task status</Button>}
               threeLines
             />
             <GuideItem
-              avatar={<Avatar suffix="pink">7</Avatar>}
+              avatar={<Avatar suffix="blue">7</Avatar>}
               button={<Button flat primary href={'/#/validation'}
                               iconEl={<FontIcon>insert_chart</FontIcon>}>Validation</Button>}
               title="Validation"
               text="Compare the resulting models using different metrics and download the results"
+              threeLines
+            /><GuideItem
+              avatar={<Avatar suffix="purple">6</Avatar>}
+              title="Prediction"
+              text={'Create a prediction of an incomplete track'}
+              button={<Button flat primary href={'/#/prediction'}
+                              iconEl={<FontIcon>work</FontIcon>}>Prediction</Button>}
+              threeLines
+            />
+            <GuideItem
+              avatar={<Avatar suffix="pink">7</Avatar>}
+              button={<Button flat primary href={'/#/runtime'}
+                              iconEl={<FontIcon>flash_on</FontIcon>}>Runtime</Button>}
+              title="Validation"
+              text="Create continuous predictions for a stream of events"
               threeLines
             />
           </List>
@@ -100,4 +115,3 @@ class WalkThrough extends PureComponent {
 
 
 export default WalkThrough;
-

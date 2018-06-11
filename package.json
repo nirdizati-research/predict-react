@@ -11,14 +11,14 @@
   "devDependencies": {
     "@storybook/react": "3.2.13",
     "coveralls": "^3.0.0",
-    "enzyme": "^3.2.0",
-    "enzyme-adapter-react-16": "^1.1.0",
-    "eslint": "4.4.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "eslint": "^4.19.1",
     "eslint-config-google": "^0.9.1",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-concat": "^2.6.0",
     "gulp-sass": "^2.3.2",
-    "react-scripts": "1.0.15"
+    "react-scripts": "^1.1.4"
   },
   "dependencies": {
     "prop-types": "^15.6.0",

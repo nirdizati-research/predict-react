@@ -4,7 +4,7 @@ import SelectField from 'react-md/lib/SelectFields';
 import PropTypes from 'prop-types';
 import FetchState from './../FetchState';
 import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
-import {fetchStatePropType, splitLabelPropType} from '../../propTypes';
+import {fetchStatePropType, selectLabelProptype} from '../../propTypes';
 import LabelControls from './LabelControls';
 import {padding} from '../../reference';
 
@@ -49,7 +49,7 @@ const LabellingHeaderCard = (props) => {
 
 
 LabellingHeaderCard.propTypes = {
-  splitLabels: splitLabelPropType,
+  splitLabels: selectLabelProptype,
   fetchState: fetchStatePropType,
   splitChange: PropTypes.func.isRequired,
   prefixLengths: PropTypes.arrayOf(PropTypes.string).isRequired,
