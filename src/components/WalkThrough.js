@@ -3,7 +3,6 @@ import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import nirdizati from '../images/nirdizati-logo-e1501821874335.png';
 import {Avatar, Button, FontIcon, List} from 'react-md';
 import GuideItem from './static/GuideItem';
-import {dialog, rotate} from './training/LogMetricsCard';
 
 
 class WalkThrough extends PureComponent {
@@ -24,7 +23,6 @@ class WalkThrough extends PureComponent {
 
   render() {
     return <Card className="md-block-centered">
-      {dialog(this.state.visible, this.hide.bind(this))}
       <CardTitle title="Nirdizati Research"
                  subtitle="A Web Application to Support Research in Predictive Monitoring Tasks">
         <div className="md-cell--right">
@@ -36,7 +34,6 @@ class WalkThrough extends PureComponent {
           suitable predictive model for an event log. The general flow
           to use the application is as follows.</p>
         <p>Scroll below for various performance comparisons.</p>
-        {rotate(this.state.other)}
         <div className="md-grid">
           <List className="md-cell md-cell--12">
             <GuideItem
@@ -80,7 +77,8 @@ class WalkThrough extends PureComponent {
               avatar={<Avatar suffix="cyan">6</Avatar>}
               title="Task status"
               text={'Check the status of the enqueued prediction tasks'}
-              button={<Button flat primary href={'/#/jobs'} iconEl={<FontIcon>list</FontIcon>}>Task status</Button>}
+              button={<Button flat primary href={'/#/jobs'}
+                              iconEl={<FontIcon>list</FontIcon>}>Task status</Button>}
               threeLines
             />
             <GuideItem
@@ -94,7 +92,8 @@ class WalkThrough extends PureComponent {
               avatar={<Avatar suffix="purple">6</Avatar>}
               title="Prediction"
               text={'Create a prediction of an incomplete track'}
-              button={<Button flat primary href={'/#/prediction'} iconEl={<FontIcon>work</FontIcon>}>Prediction</Button>}
+              button={<Button flat primary href={'/#/prediction'}
+                              iconEl={<FontIcon>work</FontIcon>}>Prediction</Button>}
               threeLines
             />
             <GuideItem

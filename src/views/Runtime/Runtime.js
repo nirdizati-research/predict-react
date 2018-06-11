@@ -41,7 +41,7 @@ class Runtime extends Component {
   }
 
   filterTrace(byId) {
-    return byId.filter((trace) => (trace.real_log === this.props.logId))
+    return byId.filter((trace) => (trace.real_log === this.props.logId));
   }
 
   Submit() {

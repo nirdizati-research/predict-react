@@ -17,11 +17,11 @@ const initialState = {
   classificationModels: [],
 };
 
-const filterModels = (models, p_length) => {
-  return models.filter((model) => (model.config.encoding.prefix_length === p_length)
+const filterModels = (models, plength) => {
+  return models.filter((model) => (model.config.encoding.prefix_length === plength)
     || ((model.config.padding === 'zero_padding') &&
-      (model.config.encoding.prefix_length >= p_length)));
-}
+      (model.config.encoding.prefix_length >= plength)));
+};
 
 const mergeIncomingModels = (incoming, existing) => {
   // From https://stackoverflow.com/a/34963663
@@ -68,8 +68,7 @@ const models = (state = initialState, action) => {
           ...state,
           regselected,
         };
-      }
-      else {
+      } else {
         const classelected = action.modelId;
         return {
           ...state,
@@ -80,8 +79,8 @@ const models = (state = initialState, action) => {
 
     case LOG_CHANGED: {
       const logId = action.logId;
-      const regressionModels = filterModels(state.regressionModels, action.pLength)
-      const classificationModels = filterModels(state.classificationModels, action.pLength)
+      const regressionModels = filterModels(state.regressionModels, action.pLength);
+      const classificationModels = filterModels(state.classificationModels, action.pLength);
 
       return {
         ...state,

@@ -255,8 +255,7 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
           ...state,
           regId,
         };
-      }
-      else {
+      } else {
         const classId = action.modelId;
         return {
           ...state,
