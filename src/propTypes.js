@@ -68,7 +68,7 @@ export const jobPropType = PropTypes.shape({
   status: PropTypes.string.isRequired,
   split_id: PropTypes.number.isRequired,
   splitName: PropTypes.string,
-  type: PropTypes.oneOf([CLASSIFICATION, REGRESSION]).isRequired,
+  type: PropTypes.oneOf([CLASSIFICATION, REGRESSION, LABELLING]).isRequired,
   config: PropTypes.shape({
     hyperopt: PropTypes.shape(hyperOptShape),
     label: PropTypes.shape(labelPropType).isRequired,
@@ -101,7 +101,7 @@ export const jobRunPropType = PropTypes.shape({
   status: PropTypes.string.isRequired,
   split_id: PropTypes.number.isRequired,
   splitName: PropTypes.string,
-  type: PropTypes.oneOf([CLASSIFICATION, REGRESSION, LABELLING]).isRequired,
+  type: PropTypes.oneOf([CLASSIFICATION, REGRESSION]).isRequired,
   config: PropTypes.shape({
     hyperopt: PropTypes.shape(hyperOptShape),
     label: PropTypes.shape(labelPropType).isRequired,
