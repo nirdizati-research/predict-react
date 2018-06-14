@@ -14,6 +14,8 @@ import ModelSelector from '../../components/prediction/ModelSelector';
 import {Card} from 'react-md';
 
 class Runtime extends Component {
+
+
   onChangeLog(logId) {
     const log = this.props.logs.byId[logId];
     const pLength = log.properties.maxEventsInLog;
@@ -55,9 +57,9 @@ class Runtime extends Component {
 
   render() {
     // Only unique splits for selector
-    const filteredTraces = this.filterTrace(this.props.traces);
     const regModelsLabel = modelsToString(this.props.regressionModels);
     const clasModelsLabel = modelsToString(this.props.classificationModels);
+    const filteredTraces = this.filterTrace(this.props.traces);
 
     return (
       <div className="md-grid">
