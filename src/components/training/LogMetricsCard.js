@@ -3,7 +3,6 @@ import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import {logPropType} from '../../propTypes';
 import {DialogContainer} from 'react-md';
 
-
 /* eslint-disable max-len */
 /* eslint-disable react/no-unescaped-entities */
 export const rotate = (visible) => {

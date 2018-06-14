@@ -14,9 +14,10 @@ const BubbleChartCard = (props) => {
     bubble: {textStyle: {fontSize: 11}}
   };
 
+  // Bubble chart collapsed due to performance reasons
   return <Card className="md-block-centered">
-    <CardTitle title={props.cardTitle}/>
-    <CardText>
+    <CardTitle title={props.cardTitle} expander/>
+    <CardText expandable>
       <Chart
         chartType="BubbleChart"
         rows={props.data}

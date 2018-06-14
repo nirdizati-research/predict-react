@@ -37,8 +37,8 @@ const data = [
 
 const EncodingByLogCard = () => {
   return <Card className="md-block-centered">
-    <CardTitle title="Encoding performance by log size" subtitle="Tested version 1.0.0"/>
-    <CardText>
+    <CardTitle title="Encoding performance by log size" subtitle="Tested version 1.0.0" expander/>
+    <CardText expandable>
       <p>The encoding methods in this tool have a different performance impact. The size of the log also effects the
         encoding time. The following chart illustrates the relative difference of the methods and log sizes.</p>
       <p>

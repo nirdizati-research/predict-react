@@ -4,6 +4,8 @@ import WalkThrough from '../src/components/WalkThrough';
 import EncodingByLogCard from '../src/components/static/EncodingByLogCard';
 import {ClassificationMethodsCard} from '../src/components/static/ClassificationMethodsCard';
 import {getHelpText} from '../src/components/static/helpReference';
+import {RegressionMethodsCard} from '../src/components/static/RegressionMethodsCard';
+import {HyperOptCard} from '../src/components/static/HyperOptCard';
 
 
 const helpTexts = ['/', '/upload', '/logs', '/split', '/label', '/training', '/jobs', '/validation'];
@@ -42,8 +44,14 @@ storiesOf('Static things', module)
   .add('Charts', () => {
       return (
         <div className="md-grid">
-          <div className="md-cell md-cell--12">
+          <div className="md-cell md-cell--6">
             <ClassificationMethodsCard/>
+          </div>
+          <div className="md-cell md-cell--6">
+            <RegressionMethodsCard/>
+          </div>
+          <div className="md-cell md-cell--12">
+            <HyperOptCard/>
           </div>
           <div className="md-cell md-cell--12">
             <EncodingByLogCard/>
