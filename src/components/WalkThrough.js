@@ -102,7 +102,7 @@ class WalkThrough extends PureComponent {
               avatar={<Avatar suffix="pink">9</Avatar>}
               button={<Button flat primary href={'/#/runtime'}
                               iconEl={<FontIcon>flash_on</FontIcon>}>Runtime</Button>}
-              title="Validation"
+              title="Runtime"
               text="Create continuous predictions for a stream of events"
               threeLines
             />
