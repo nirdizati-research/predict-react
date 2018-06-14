@@ -14,8 +14,6 @@ import ModelSelector from '../../components/prediction/ModelSelector';
 import {Card} from 'react-md';
 
 class Runtime extends Component {
-
-
   onChangeLog(logId) {
     const log = this.props.logs.byId[logId];
     const pLength = log.properties.maxEventsInLog;

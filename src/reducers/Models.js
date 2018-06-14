@@ -81,7 +81,7 @@ const models = (state = initialState, action) => {
     case LOG_CHANGED: {
       const logId = action.logId;
       const regressionModels = filterModels(state.models, action.pLength, REGRESSION);
-      const classificationModels = filterModels(state.models, action.pLength,CLASSIFICATION);
+      const classificationModels = filterModels(state.models, action.pLength, CLASSIFICATION);
 
       return {
         ...state,
