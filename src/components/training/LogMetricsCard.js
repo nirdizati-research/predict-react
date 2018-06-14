@@ -3,7 +3,6 @@ import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import {logPropType} from '../../propTypes';
 import {DialogContainer} from 'react-md';
 
-
 /* eslint-disable max-len */
 /* eslint-disable react/no-unescaped-entities */
 export const rotate = (visible) => {
@@ -37,7 +36,6 @@ export const dialog = (visible, hide) => (<DialogContainer
   <p>And thanks to all helpers with React and just listening me talk about this application.</p>
   <p className="md-font-semibold">Tõnis Kasekamp</p>
 </DialogContainer>);
-
 const LogMetricsCard = (props) => {
   return <Card className="md-block-centered">
     <CardTitle title="Log metrics" subtitle={props.log.name}/>
@@ -53,8 +51,6 @@ const LogMetricsCard = (props) => {
     </CardText>
   </Card>;
 };
-
-
 LogMetricsCard.propTypes = {
   log: logPropType
 };

@@ -6,7 +6,7 @@ import {LOG_CHANGED, logListRequested} from '../../actions/LogActions';
 import {traceListRequested} from '../../actions/TraceActions';
 import {submitRuntime} from '../../actions/RuntimeActions';
 import LogSelector from '../../components/prediction/LogSelector';
-import RuntimeTable from '../../components/Runtime/RuntimeTable';
+import RuntimeTable from '../../components/runtime/RuntimeTable';
 import {fetchStatePropType, logsStore, modelPropType, tracePropType} from '../../propTypes';
 import {modelsToString} from '../../util/dataReducers';
 import {CardText} from 'react-md/lib/Cards/index';
@@ -55,9 +55,9 @@ class Runtime extends Component {
 
   render() {
     // Only unique splits for selector
-    const filteredTraces = this.filterTrace(this.props.traces);
     const regModelsLabel = modelsToString(this.props.regressionModels);
     const clasModelsLabel = modelsToString(this.props.classificationModels);
+    const filteredTraces = this.filterTrace(this.props.traces);
 
     return (
       <div className="md-grid">

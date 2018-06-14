@@ -91,7 +91,7 @@ class WalkThrough extends PureComponent {
               text="Compare the resulting models using different metrics and download the results"
               threeLines
             /><GuideItem
-              avatar={<Avatar suffix="purple">6</Avatar>}
+              avatar={<Avatar suffix="purple">8</Avatar>}
               title="Prediction"
               text={'Create a prediction of an incomplete track'}
               button={<Button flat primary href={'/#/prediction'}
@@ -99,7 +99,7 @@ class WalkThrough extends PureComponent {
               threeLines
             />
             <GuideItem
-              avatar={<Avatar suffix="pink">7</Avatar>}
+              avatar={<Avatar suffix="pink">9</Avatar>}
               button={<Button flat primary href={'/#/runtime'}
                               iconEl={<FontIcon>flash_on</FontIcon>}>Runtime</Button>}
               title="Validation"

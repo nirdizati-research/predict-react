@@ -17,8 +17,9 @@ const initialState = {
   classificationModels: [],
 };
 
-const filterModels = (models, plength) => {
-  return models.filter((model) => (model.config.encoding.prefix_length === plength)
+const filterModels = (modelstmp, plength, method) => {
+  const models = modelstmp.filter((model) => (model.type === method));
+  return models.filter((model) => (model.config.encoding.prefix_length >= plength)
     || ((model.config.padding === 'zero_padding') &&
       (model.config.encoding.prefix_length >= plength)));
 };
@@ -79,8 +80,8 @@ const models = (state = initialState, action) => {
 
     case LOG_CHANGED: {
       const logId = action.logId;
-      const regressionModels = filterModels(state.regressionModels, action.pLength);
-      const classificationModels = filterModels(state.classificationModels, action.pLength);
+      const regressionModels = filterModels(state.models, action.pLength, REGRESSION);
+      const classificationModels = filterModels(state.models, action.pLength, CLASSIFICATION);
 
       return {
         ...state,
