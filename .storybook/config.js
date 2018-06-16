@@ -14,7 +14,7 @@ function loadStories() {
   require('../stories/Advanced');
   require('../stories/LineChart');
   require('../stories/JobStatusTable');
-  require('../stories/FetchState');
+  require('../stories/SmallComponents');
   require('../stories/LogListCard');
   require('../stories/Charts');
   require('../stories/TrainingForm');
