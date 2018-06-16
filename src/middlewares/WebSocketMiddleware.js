@@ -24,7 +24,7 @@ const webSocketMiddleware = (store) => (next) => {
     } else if (action.type === MESSAGE_RECEIVED) {
       switch (action.payload.type) {
         case 'Job': {
-          store.dispatch({type: JOB_UPDATED, payload: action.payload.object});
+          store.dispatch({type: JOB_UPDATED, payload: action.payload.data});
           break;
         }
         default:

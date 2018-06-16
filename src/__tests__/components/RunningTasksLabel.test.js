@@ -5,7 +5,7 @@ import RunningTasksLabel from '../../components/RunningTasksLabel';
 it('renders nothing when no tasks running', () => {
   const props = {
     haveRunning: false,
-    runningCount: 0,
+    completedCount: 0,
     totalCount: 0
   };
   const element = shallow(<RunningTasksLabel {...props}/>);
@@ -16,7 +16,7 @@ it('renders nothing when no tasks running', () => {
 it('renders numbers when running', () => {
   const props = {
     haveRunning: true,
-    runningCount: 2,
+    completedCount: 2,
     totalCount: 3
   };
   const element = shallow(<RunningTasksLabel {...props}/>);
