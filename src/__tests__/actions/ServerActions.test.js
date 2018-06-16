@@ -122,7 +122,7 @@ describe('ServerActions', function () {
       postTraining({})(dispatch);
       mockXHR.onreadystatechange();
 
-      expect(dispatch.mock.calls[0][0]).toEqual(trainingSucceeded());
+      expect(dispatch.mock.calls[0][0]).toEqual(trainingSucceeded(logs));
     });
 
     it('dispatches trainingFailed on error', () => {

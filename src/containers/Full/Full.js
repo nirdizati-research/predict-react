@@ -6,6 +6,7 @@ import {Button, FontIcon} from 'react-md';
 import HelpDialog from '../../components/static/HelpDialog';
 import {getHelpText} from '../../components/static/helpReference';
 import Footer from '../../components/footer/Footer';
+import RunningTasks from '../RunningTasks';
 
 
 const helpButton = (click) => (
@@ -42,7 +43,7 @@ class Full extends Component {
         desktopDrawerType={NavigationDrawer.DrawerTypes.PERSISTENT_MINI}
         toolbarTitle='Nirdizati Research'
 
-        toolbarActions={[helpButton(this.click.bind(this))]}
+        toolbarActions={[<RunningTasks key="running"/>, helpButton(this.click.bind(this))]}
         defaultVisible={false}
         navItems={[{
           component: IndexLink,

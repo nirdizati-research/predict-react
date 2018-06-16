@@ -46,7 +46,7 @@ export const postTraining = (payload) => (dispatch) => {
     SERVER_URL + `/jobs/multiple`,
     'POST',
     payload,
-    () => dispatch(trainingSucceeded()),
+    (jobs) => dispatch(trainingSucceeded(jobs)),
     ({error}) => dispatch(trainingFailed(error))
   );
 };

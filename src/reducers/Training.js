@@ -2,26 +2,34 @@
  * Created by tonis.kasekamp on 9/29/17.
  */
 
-import {TRAINING_SUBMITTED, TRAINING_SUCCEEDED, TRAINING_FAILED} from '../actions/JobActions';
+import {JOB_UPDATED, TRAINING_FAILED, TRAINING_SUBMITTED, TRAINING_SUCCEEDED} from '../actions/JobActions';
 
 const initialState = {
-  fetchState: {inFlight: false}
+  fetchState: {inFlight: false},
+  haveRunning: false,
+  totalCount: 0,
+  runningIds: []
 };
 
 const training = (state = initialState, action) => {
   switch (action.type) {
     case TRAINING_SUBMITTED: {
-      return {fetchState: {inFlight: true}};
+      return {...state, fetchState: {inFlight: true}};
     }
 
     case TRAINING_SUCCEEDED: {
-      return {
-        fetchState: {inFlight: false}
-      };
+      const totalCount = action.payload.length;
+      const runningIds = action.payload.map(({id}) => id);
+      return {...state, haveRunning: true, totalCount, runningIds, fetchState: {inFlight: false}};
     }
 
     case TRAINING_FAILED: {
-      return {fetchState: {inFlight: false, error: action.payload}};
+      return {...state, haveRunning: false, fetchState: {inFlight: false, error: action.payload}};
+    }
+
+    case JOB_UPDATED: {
+      const runningIds = state.runningIds.filter(id => id !== action.payload.id);
+      return {...state, runningIds};
     }
     default:
       return state;

@@ -11,6 +11,8 @@ import serverMiddleware from './middlewares/ServerMiddleware';
 import {chooseServer} from './constants';
 import WebFontLoader from 'webfontloader';
 import trainingMiddleware from './middlewares/TrainingMiddleware';
+import {CONNECT_REQUESTED} from './actions/WebSocket';
+import webSocketMiddleware from './middlewares/WebSocketMiddleware';
 
 WebFontLoader.load({
   google: {
@@ -28,6 +30,7 @@ let store = createStore(
       routerMiddle,
       thunk,
       serverMiddleware,
+      webSocketMiddleware,
       trainingMiddleware
     )
   )
@@ -37,6 +40,8 @@ let store = createStore(
 const history = syncHistoryWithStore(hashHistory, store);
 
 chooseServer();
+// WS connection
+store.dispatch({type: CONNECT_REQUESTED});
 
 ReactDOM.render(
   <Provider store={store}>
