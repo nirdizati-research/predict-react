@@ -16,13 +16,14 @@ export const mergeSplitWithLogName = (splitsById, logsById) => {
 export const splitsToLabel = (logsById, splitsById, splitIds) => {
   return splitIds.map((id) => {
     const split = splitsById[id];
-    return {value: split.id, label: splitToLabel(logsById, split)};
+    return {value: id, label: splitToLabel(logsById, split)};
   });
 };
 
 /* eslint-disable max-len */
 const splitToLabel = (logsById, split) => {
   let label;
+  if (!split) return '';
   if (split.type === SPLIT_SINGLE) {
     label = `Split #${split.id}, ${logOrDefault(logsById, split.original_log)}`;
   } else {

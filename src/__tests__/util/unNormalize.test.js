@@ -74,3 +74,6 @@ describe('split to label', () => {
   });
 });
 
+it('returns empty string when undefined split', () => {
+  expect(splitsToLabel(logsById, {}, [1])).toEqual([{value: 1, label: ''}]);
+});
