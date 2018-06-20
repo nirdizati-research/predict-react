@@ -40,8 +40,8 @@ class Runtime extends Component {
     window.location.reload();
   }
 
-  filterTrace(byId) {
-    return byId.filter((trace) => (trace.real_log === this.props.logId));
+  filterTrace() {
+    return this.props.traces.filter((trace) => (trace.real_log === this.props.logId));
   }
 
   Submit() {
@@ -57,7 +57,6 @@ class Runtime extends Component {
     // Only unique splits for selector
     const regModelsLabel = modelsToString(this.props.regressionModels);
     const clasModelsLabel = modelsToString(this.props.classificationModels);
-    const filteredTraces = this.filterTrace(this.props.traces);
 
     return (
       <div className="md-grid">
@@ -73,7 +72,7 @@ class Runtime extends Component {
         <div className="md-cell md-cell--12">
           <Card>
             <CardText>
-              <RuntimeTable traces={filteredTraces} onRequestTraces={this.requestTraces.bind(this)}/>
+              <RuntimeTable traces={this.filterTrace()} onRequestTraces={this.requestTraces.bind(this)}/>
             </CardText>
           </Card></div>
       </div>
@@ -98,6 +97,7 @@ Runtime.propTypes = {
   regModelId: PropTypes.number.isRequired,
   classModelId: PropTypes.number.isRequired,
   logId: PropTypes.number.isRequired,
+  changed: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -111,6 +111,7 @@ const mapStateToProps = (state) => ({
   logId: state.models.logId,
   modfetchState: state.models.fetchState,
   logfetchState: state.logs.fetchState,
+  changed: state.traces.changed,
 });
 
 const mapDispatchToProps = (dispatch) => ({

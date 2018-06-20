@@ -18,7 +18,8 @@ class RuntimeTable extends PureComponent {
   compareTraces (prevtraces, traces) {
     if (prevtraces.length !== traces.length) return true;
     for (var i = 0; i < prevtraces.length; i=i+1){
-      if(prevtraces[i].n_events !== traces[i].n_events) return true;
+      if((prevtraces[i].last_event !== traces[i].last_event) || (prevtraces[i].completed !== traces[i].completed) ||
+        (prevtraces[i].n_events !== traces[i].n_events))return true;
     }
     return false;
   }
@@ -27,7 +28,6 @@ class RuntimeTable extends PureComponent {
     if (this.compareTraces(prevProps.traces, this.props.traces)) {
       this.setState({slicedData: this.props.traces.slice(0, 10)});
     }
-
   }
 
   getHeaderColumns() {
@@ -51,7 +51,7 @@ class RuntimeTable extends PureComponent {
       <TableBody>
         {this.state.slicedData.map(
           ({id, completed, n_events, first_event, last_event, reg_results, class_results, reg_actual, class_actual}) => (
-            <TableRow key={id} selectable={false}>
+            <TableRow key={id} selectable={false} style = {(class_results === class_actual) ? {backgroundColor:'rgba(0,240,0,0.2)'} : {backgroundColor:'rgba(240,0,0,0.2)'}}>
               <TableColumn numeric>{id}</TableColumn>
               <TableColumn>{completed ? 'True' : 'False'}</TableColumn>
               <TableColumn>{n_events}</TableColumn>

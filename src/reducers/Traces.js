@@ -2,7 +2,9 @@ import {TRACE_LIST_FAILED, TRACE_LIST_REQUESTED, TRACE_LIST_RETRIEVED, TRACE_UPD
 
 const initialState = {
   fetchState: {inFlight: false},
+  changed: 0,
   byId: [],
+
 };
 
 function compare (a, b) {
@@ -40,6 +42,7 @@ const traces = (state = initialState, action) => {
         return {
           ...state,
           fetchState: {inFlight: true},
+          changed: 0,
         };
       }
 
@@ -50,6 +53,7 @@ const traces = (state = initialState, action) => {
           ...state,
           fetchState: {inFlight: false},
           byId,
+          changed:1,
         };
       }
 
@@ -62,11 +66,9 @@ const traces = (state = initialState, action) => {
 
       case TRACE_UPDATED: {
         const byId = addToSet(state.byId, action.payload);
+        const changed = 1 - state.changed;
         byId.sort(compare);
-        return {
-          ...state,
-          byId,
-        };
+        return {...state, byId, changed};
       }
 
       default:
