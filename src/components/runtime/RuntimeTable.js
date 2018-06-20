@@ -17,9 +17,8 @@ class RuntimeTable extends PureComponent {
 
   componentDidMount() {
     const intervalId = setInterval(() => {
-      this.props.onRequestTraces();
       this.setState({slicedData: this.props.traces.slice(0, 10)});
-    }, 10000);
+    }, 2000);
     this.setState({intervalId: intervalId});
   }
 
@@ -35,7 +34,8 @@ class RuntimeTable extends PureComponent {
 
   getHeaderColumns() {
     const headers =
-      ['id', 'Completed', 'Events Elapsed', 'Start Time', 'Latest event time', 'Regression Results', 'Classification Results'];
+      ['id', 'Completed', 'Events Elapsed', 'Start Time', 'Latest event time',
+       'Regression Results', 'Regression Actual', 'Classification Results', 'Classification Actual'];
 
     return headers.map((header) => {
         return <TableColumn key={header}> {header}</TableColumn>;
@@ -52,7 +52,7 @@ class RuntimeTable extends PureComponent {
       </TableHeader>
       <TableBody>
         {this.state.slicedData.map(
-          ({id, completed, n_events, first_event, last_event, reg_results, class_results}) => (
+          ({id, completed, n_events, first_event, last_event, reg_results, class_results, reg_actual, class_actual}) => (
             <TableRow key={id} selectable={false}>
               <TableColumn numeric>{id}</TableColumn>
               <TableColumn>{completed ? 'True' : 'False'}</TableColumn>
@@ -60,7 +60,9 @@ class RuntimeTable extends PureComponent {
               <TableColumn>{first_event}</TableColumn>
               <TableColumn>{last_event}</TableColumn>
               <TableColumn>{JSON.stringify(reg_results)}</TableColumn>
+              <TableColumn>{JSON.stringify(reg_actual)}</TableColumn>
               <TableColumn>{JSON.stringify(class_results)}</TableColumn>
+              <TableColumn>{JSON.stringify(class_actual)}</TableColumn>
             </TableRow>
           ))}
       </TableBody>

@@ -174,7 +174,9 @@ export const tracePropType = PropTypes.shape({
   n_events: PropTypes.number.isRequired,
   real_log: PropTypes.number.isRequired,
   reg_results: PropTypes.any,
-  class_results: PropTypes.any
+  class_results: PropTypes.any,
+  reg_actual: PropTypes.any,
+  class_actual: PropTypes.any
 });
 
 export const splitPropType = PropTypes.shape({

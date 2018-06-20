@@ -7,6 +7,7 @@ import {
   MESSAGE_RECEIVED
 } from '../actions/WebSocket';
 import {JOB_UPDATED} from '../actions/JobActions';
+import {TRACE_UPDATED} from '../actions/TraceActions';
 
 // Using WebSocket abstraction from basic websocket example
 const webSocketMiddleware = (store) => (next) => {
@@ -25,6 +26,11 @@ const webSocketMiddleware = (store) => (next) => {
       switch (action.payload.type) {
         case 'Job': {
           store.dispatch({type: JOB_UPDATED, payload: action.payload.data});
+          break;
+        }
+        case 'XTrace':
+        {
+          store.dispatch({type: TRACE_UPDATED, payload: action.payload.data});
           break;
         }
         default:
