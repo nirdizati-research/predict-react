@@ -93,7 +93,7 @@ class WalkThrough extends PureComponent {
             /><GuideItem
               avatar={<Avatar suffix="purple">8</Avatar>}
               title="Prediction"
-              text={'Create a prediction of an incomplete track'}
+              text={'Create a prediction of an incomplete trace'}
               button={<Button flat primary href={'/#/prediction'}
                               iconEl={<FontIcon>work</FontIcon>}>Prediction</Button>}
               threeLines

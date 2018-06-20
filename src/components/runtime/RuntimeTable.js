@@ -8,28 +8,26 @@ import {tracePropType} from '../../propTypes';
 class RuntimeTable extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = {slicedData: this.props.traces.slice(0, 10)};
+    this.state = {slicedData: []};
   }
 
   handlePagination(start, rowsPerPage) {
     this.setState({slicedData: this.props.traces.slice(start, start + rowsPerPage)});
   }
 
-  componentDidMount() {
-    const intervalId = setInterval(() => {
-      this.setState({slicedData: this.props.traces.slice(0, 10)});
-    }, 2000);
-    this.setState({intervalId: intervalId});
+  compareTraces (prevtraces, traces) {
+    if (prevtraces.length !== traces.length) return true;
+    for (var i = 0; i < prevtraces.length; i=i+1){
+      if(prevtraces[i].n_events !== traces[i].n_events) return true;
+    }
+    return false;
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.traces.length !== this.props.traces.length) {
+    if (this.compareTraces(prevProps.traces, this.props.traces)) {
       this.setState({slicedData: this.props.traces.slice(0, 10)});
     }
-  }
 
-  componentWillUnmount() {
-    clearInterval(this.state.intervalId);
   }
 
   getHeaderColumns() {
