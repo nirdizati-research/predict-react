@@ -59,7 +59,7 @@ class Logs extends Component {
 
     const executionChart = this.getLineChart('events', 'Number of events executed per day', 'Number of events');
     const resourceChart = this.getLineChart('resources', 'Number of resources employed per day', 'Number of resources');
-    const newTracesChart = this.getLineChart('newTraces', 'Number of new cases started per day', 'Number of traces');
+    const newTracesChart = this.getLineChart('newTraces', 'Number of new traces started per day', 'Number of traces');
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
