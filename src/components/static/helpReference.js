@@ -11,7 +11,7 @@ const helpReference = [
   },
   {
     pathname: '/logs',
-    texts: ['The page features graphs that describe a log file, i.e, the number of events executed per day, the number of resources employed per day and the number of new cases started per day.']
+    texts: ['The page features graphs that describe a log file, i.e, the number of events executed per day, the number of resources employed per day and the number of new traces started per day.']
   },
   {
     pathname: '/split',

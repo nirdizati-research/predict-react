@@ -184,30 +184,6 @@ export default class UploadDouble extends PureComponent {
       >
         {progressBar}
         <CardActions className="md-full-width">
-          {progressTestBar}
-          <FileUpload
-            id="server-upload-test"
-            label="Choose test set"
-            required
-            accept=".xes, .mxml, .gz"
-            onLoad={this.handleTestLoad}
-            onLoadStart={this.handleTestLoadStart}
-            onProgress={this.handleTestProgress}
-            name="testSet"
-            className="file-inputs__upload-form__file-upload"
-            primary
-            iconBefore
-          />
-          <TextField
-            id="server-upload-file-field-test"
-            placeholder="No file chosen"
-            value={fileNameTest}
-            className="file-inputs__upload-form__file-field"
-            readOnly
-            fullWidth={false}
-          />
-        </CardActions>
-        <CardActions className="md-full-width">
           {progressTrainingBar}
           <FileUpload
             id="server-upload-training"
@@ -226,6 +202,30 @@ export default class UploadDouble extends PureComponent {
             id="server-upload-file-field-training"
             placeholder="No file chosen"
             value={fileNameTraining}
+            className="file-inputs__upload-form__file-field"
+            readOnly
+            fullWidth={false}
+          />
+        </CardActions>
+        <CardActions className="md-full-width">
+          {progressTestBar}
+          <FileUpload
+            id="server-upload-test"
+            label="Choose test set"
+            required
+            accept=".xes, .mxml, .gz"
+            onLoad={this.handleTestLoad}
+            onLoadStart={this.handleTestLoadStart}
+            onProgress={this.handleTestProgress}
+            name="testSet"
+            className="file-inputs__upload-form__file-upload"
+            primary
+            iconBefore
+          />
+          <TextField
+            id="server-upload-file-field-test"
+            placeholder="No file chosen"
+            value={fileNameTest}
             className="file-inputs__upload-form__file-field"
             readOnly
             fullWidth={false}

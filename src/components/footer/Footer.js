@@ -8,6 +8,9 @@ const Footer = () => (
   <GridList component="footer" className="md-grid footer">
     <Cell component="section" size={4}>
       <h4 className="md-title">Contact</h4>
+      <Button flat primary href="mailto:nirdizati.research@gmail.com" iconChildren="mail">
+        Nirdizati Research
+      </Button>
       <Button flat primary href="mailto:tonis.kasekamp@gmail.com" iconChildren="mail">
         Tõnis Kasekamp
       </Button>

@@ -80,7 +80,7 @@ const AdvancedConfiguration = (props) => {
     return [];
   };
 
-  const label = makeExpander('Labelling', '',
+  const label = makeExpander('Labeling', '',
     <Labelling onChange={props.onChange} label={props.label}
                predictionMethod={props.predictionMethod} {...props}/>, true);
 
