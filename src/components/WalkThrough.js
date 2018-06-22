@@ -3,7 +3,7 @@ import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import nirdizati from '../images/nirdizati-logo-e1501821874335.png';
 import {Avatar, Button, FontIcon, List} from 'react-md';
 import GuideItem from './static/GuideItem';
-import {rotate} from './training/LogMetricsCard';
+import {dialog, rotate} from './training/LogMetricsCard';
 
 
 class WalkThrough extends PureComponent {
@@ -24,6 +24,7 @@ class WalkThrough extends PureComponent {
 
   render() {
     return <Card className="md-block-centered">
+      {dialog(this.state.visible, this.hide.bind(this))}
       <CardTitle title="Nirdizati Research"
                  subtitle="A Web Application to Support Research in Predictive Monitoring Tasks">
         <div className="md-cell--right">
