@@ -30,11 +30,10 @@ const webSocketMiddleware = (store) => (next) => {
         }
         case 'XTrace':
         {
-          if(action.payload.data.completed){
+          if (action.payload.data.completed) {
             store.dispatch({type: TRACE_COMPLETED, payload: action.payload.data});
             break;
-          }
-          else{
+          } else {
             store.dispatch({type: TRACE_UPDATED, payload: action.payload.data});
             break;
           }

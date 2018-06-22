@@ -115,7 +115,7 @@ Runtime.propTypes = {
 const mapStateToProps = (state) => ({
   models: state.models.models,
   logs: state.logs,
-  traces: mapTraces(state.traces.byId, state.traces.inter_results, state.traces.final_diff),
+  traces: mapTraces(state.traces.byId, state.traces.interResults, state.traces.finalDiff),
   regressionModels: state.models.regressionModels,
   classificationModels: state.models.classificationModels,
   regModelId: state.models.regselected,

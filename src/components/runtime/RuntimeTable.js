@@ -15,11 +15,11 @@ class RuntimeTable extends PureComponent {
     this.setState({slicedData: this.props.traces.slice(start, start + rowsPerPage)});
   }
 
-  compareTraces (prevtraces, traces) {
+  compareTraces(prevtraces, traces) {
     if (prevtraces.length !== traces.length) return true;
-    for (var i = 0; i < prevtraces.length; i=i+1){
-      if((prevtraces[i].last_event !== traces[i].last_event) || (prevtraces[i].completed !== traces[i].completed) ||
-        (prevtraces[i].n_events !== traces[i].n_events))return true;
+    for (let i = 0; i < prevtraces.length; i=i+1) {
+      if ((prevtraces[i].last_event !== traces[i].last_event) || (prevtraces[i].completed !== traces[i].completed) ||
+        (prevtraces[i].n_events !== traces[i].n_events)) return true;
     }
     return false;
   }

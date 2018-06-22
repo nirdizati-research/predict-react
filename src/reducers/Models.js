@@ -15,7 +15,7 @@ const initialState = {
   classelected: 0,
   regressionModels: [],
   classificationModels: [],
-  pLength:0,
+  pLength: 0,
 };
 
 const filterModels = (modelstmp, plength, method) => {
