@@ -32,10 +32,15 @@ class WalkThrough extends PureComponent {
         </div>
       </CardTitle>
       <CardText>
-        <p>Nirdizati Research is a <span onDoubleClick={this.otherClick.bind(this)}>tool</span> to find the most
-          suitable predictive model for an event log. The general flow
-          to use the application is as follows.</p>
-        <p>Scroll below for various performance comparisons.</p>
+        <p>Nirdizati Research is a <span onDoubleClick={this.otherClick.bind(this)}>tool</span> that aims at supporting
+          expert users in finding the best predictive models suitable for specific datasets and prediction problems. The
+          predictive models can then be used to provide predictions at runtime on incomplete traces or streams of
+          events.</p>
+
+        <p>The tool offers a wide selection of features ranging from event log preprocessing options to hyperparmeter
+          optimization as well as runtime feedback to the user.</p>
+
+        <p>The standard procedure to be followed for using the application is summarized in the steps below.</p>
         {rotate(this.state.other)}
         <div className="md-grid">
           <List className="md-cell md-cell--12">
@@ -63,8 +68,8 @@ class WalkThrough extends PureComponent {
             <GuideItem
               avatar={<Avatar suffix="light-green">4</Avatar>}
               button={<Button flat primary href={'/#/label'}
-                              iconEl={<FontIcon>label_outline</FontIcon>}>Labelling</Button>}
-              title="Labelling"
+                              iconEl={<FontIcon>label_outline</FontIcon>}>Labeling</Button>}
+              title="Labeling"
               text="(Optional) Test the label distribution for a given labeling"
               threeLines
             />
@@ -92,13 +97,13 @@ class WalkThrough extends PureComponent {
               text="Compare the resulting models using different metrics and download the results"
               threeLines
             /><GuideItem
-              avatar={<Avatar suffix="purple">8</Avatar>}
-              title="Prediction"
-              text={'Create a prediction of an incomplete track'}
-              button={<Button flat primary href={'/#/prediction'}
-                              iconEl={<FontIcon>work</FontIcon>}>Prediction</Button>}
-              threeLines
-            />
+            avatar={<Avatar suffix="purple">8</Avatar>}
+            title="Prediction"
+            text={'Create a prediction of an incomplete track'}
+            button={<Button flat primary href={'/#/prediction'}
+                            iconEl={<FontIcon>work</FontIcon>}>Prediction</Button>}
+            threeLines
+          />
             <GuideItem
               avatar={<Avatar suffix="pink">9</Avatar>}
               button={<Button flat primary href={'/#/runtime'}

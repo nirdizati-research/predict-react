@@ -47,7 +47,7 @@ class SplitFormCard extends Component {
       <Card className="md-block-centered">
         <CardTitle title="Create split"/>
         <CardText>
-          <p>Select log and configuration to create test set. The table below will be updated updated when a split has
+          <p>Select log and configuration to create test set. The table below will be updated when a split has
             been successfully created.</p>
           <div className="md-grid">
             <SelectField

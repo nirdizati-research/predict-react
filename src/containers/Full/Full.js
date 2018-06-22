@@ -73,7 +73,7 @@ class Full extends Component {
           component: Link,
           to: '/label',
           active: isActive('/label', pathname),
-          primaryText: 'Labelling',
+          primaryText: 'Labeling',
           leftIcon: <FontIcon>label_outline</FontIcon>,
         }, {
           component: Link,

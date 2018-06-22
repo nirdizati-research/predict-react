@@ -274,7 +274,7 @@ class TrainingFormCard extends Component {
                              id="encodings" onChange={this.checkboxChange.bind(this)} controls={encodingMethods}
                              value={this.state.encodings.join(',')} controlStyle={groupStyle}/> : null;
 
-    const title = this.props.isLabelForm ? 'Labelling' : 'Training';
+    const title = this.props.isLabelForm ? 'Labeling' : 'Training';
 
     const otherSelector = this.props.isLabelForm ? null : <div className="md-cell md-cell--4">
       {predictionControls}

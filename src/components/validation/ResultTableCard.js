@@ -13,7 +13,7 @@ import {makeCSV} from '../../util/csvDownload';
 const opts = {width: '100%', page: 'enable'};
 
 const ResultTableCard = (props) => {
-  const title = `${props.predictionMethod} results`;
+  const title = `${props.predictionMethod.replace(/\b\w/g, l => l.toUpperCase())} results`;
   let chart = null;
   let downloadButton = null;
   if (props.data.length !== 0) {

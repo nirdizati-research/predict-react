@@ -29,11 +29,11 @@ describe('ResultTableCard', () => {
   });
 
   it('renders classification table', () => {
-    expect(element.find(CardTitle).props().title).toMatch(CLASSIFICATION);
+    expect(element.find(CardTitle).props().title).toMatch('Classification');
   });
 
   it('renders regression table', () => {
     element.setProps({predictionMethod: REGRESSION});
-    expect(element.find(CardTitle).props().title).toMatch(REGRESSION);
+    expect(element.find(CardTitle).props().title).toMatch('Regression');
   });
 });

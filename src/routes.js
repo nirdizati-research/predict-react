@@ -21,7 +21,7 @@ export default (
       <Route path="logs" name="Log details" component={Logs}/>
       <Route path="upload" name="Upload" component={Upload}/>
       <Route path="split" name="Split" component={Split}/>
-      <Route path="label" name="Labelling" component={Labelling}/>
+      <Route path="label" name="Labeling" component={Labelling}/>
       <Route path="jobs" name="Task status" component={JobStatus}/>
       <Route path="training" name="Training" component={Training}/>
       <Route path="validation" name="Validation" component={Validation}/>
