@@ -27,6 +27,7 @@ class LogSelector extends Component {
             onChange={this.selectChange.bind(this)}
             value={this.props.logId}
           />
+          <div>Prefix length (maximum {this.props.maxPLength})</div>
           <FetchState fetchState={this.props.fetchState}/>
         </CardText>
       </Card>);
@@ -35,6 +36,7 @@ class LogSelector extends Component {
 
 LogSelector.propTypes = {
   logs: logsStore,
+  maxPLength: PropTypes.number.isRequired,
   fetchState: fetchStatePropType,
   logChange: PropTypes.func.isRequired,
   logId: PropTypes.number.isRequired

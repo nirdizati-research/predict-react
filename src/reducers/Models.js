@@ -15,6 +15,7 @@ const initialState = {
   classelected: 0,
   regressionModels: [],
   classificationModels: [],
+  pLength: 0,
 };
 
 const filterModels = (modelstmp, plength, method) => {
@@ -82,12 +83,14 @@ const models = (state = initialState, action) => {
       const logId = action.logId;
       const regressionModels = filterModels(state.models, action.pLength, REGRESSION);
       const classificationModels = filterModels(state.models, action.pLength, CLASSIFICATION);
+      const pLength = action.pLength;
 
       return {
         ...state,
         logId,
         regressionModels,
         classificationModels,
+        pLength,
       };
     }
 

@@ -20,7 +20,7 @@ class ModelSelector extends Component {
               <h4>Regression Model Selection</h4>
               <SelectField
                 id="log-name-select"
-                placeholder="model.xes"
+                placeholder="model #,Clustering,EncodingMethod,RegressionMethod"
                 className="md-cell"
                 menuItems={this.props.regModelsLabel}
                 position={SelectField.Positions.BELOW}
@@ -32,7 +32,7 @@ class ModelSelector extends Component {
               <h4>Classification Model Selection</h4>
               <SelectField
                 id="log-name-select"
-                placeholder="model.xes"
+                placeholder="model #,Clustering,EncodingMethod,ClassificationMethod"
                 className="md-cell"
                 menuItems={this.props.classModelsLabel}
                 position={SelectField.Positions.BELOW}

@@ -7,6 +7,7 @@ import {
   MESSAGE_RECEIVED
 } from '../actions/WebSocket';
 import {JOB_UPDATED} from '../actions/JobActions';
+import {TRACE_UPDATED, TRACE_COMPLETED} from '../actions/TraceActions';
 
 // Using WebSocket abstraction from basic websocket example
 const webSocketMiddleware = (store) => (next) => {
@@ -26,6 +27,16 @@ const webSocketMiddleware = (store) => (next) => {
         case 'Job': {
           store.dispatch({type: JOB_UPDATED, payload: action.payload.data});
           break;
+        }
+        case 'XTrace':
+        {
+          if (action.payload.data.completed) {
+            store.dispatch({type: TRACE_COMPLETED, payload: action.payload.data});
+            break;
+          } else {
+            store.dispatch({type: TRACE_UPDATED, payload: action.payload.data});
+            break;
+          }
         }
         default:
           return;

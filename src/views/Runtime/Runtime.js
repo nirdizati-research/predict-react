@@ -5,8 +5,10 @@ import {MODEL_CHANGED, modelsRequested} from '../../actions/ModelActions';
 import {LOG_CHANGED, logListRequested} from '../../actions/LogActions';
 import {traceListRequested} from '../../actions/TraceActions';
 import {submitRuntime} from '../../actions/RuntimeActions';
+import {mapTraces} from '../../util/unNormalize';
 import LogSelector from '../../components/prediction/LogSelector';
 import RuntimeTable from '../../components/runtime/RuntimeTable';
+import InterResultTable from '../../components/runtime/InterResultTable';
 import {fetchStatePropType, logsStore, modelPropType, tracePropType} from '../../propTypes';
 import {modelsToString} from '../../util/dataReducers';
 import {CardText} from 'react-md/lib/Cards/index';
@@ -40,8 +42,8 @@ class Runtime extends Component {
     window.location.reload();
   }
 
-  filterTrace(byId) {
-    return byId.filter((trace) => (trace.real_log === this.props.logId));
+  filterTrace() {
+    return this.props.traces.filter((trace) => (trace.real_log === this.props.logId));
   }
 
   Submit() {
@@ -57,13 +59,13 @@ class Runtime extends Component {
     // Only unique splits for selector
     const regModelsLabel = modelsToString(this.props.regressionModels);
     const clasModelsLabel = modelsToString(this.props.classificationModels);
-    const filteredTraces = this.filterTrace(this.props.traces);
 
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
           <LogSelector logs={this.props.logs} fetchState={this.props.logfetchState}
-                       logChange={this.onChangeLog.bind(this)} logId={this.props.logId}/>
+                       logChange={this.onChangeLog.bind(this)} logId={this.props.logId}
+                       maxPLength={this.props.maxPrefixLength}/>
         </div>
         <div className="md-cell md-cell--12">
           <ModelSelector modelChange={this.onModelChange.bind(this)} onSubmit={this.Submit.bind(this)}
@@ -73,9 +75,17 @@ class Runtime extends Component {
         <div className="md-cell md-cell--12">
           <Card>
             <CardText>
-              <RuntimeTable traces={filteredTraces} onRequestTraces={this.requestTraces.bind(this)}/>
+              <h2> Predictive monitoring </h2>
+              <RuntimeTable traces={this.filterTrace()} onRequestTraces={this.requestTraces.bind(this)}/>
             </CardText>
-          </Card></div>
+          </Card>
+          <Card>
+            <CardText>
+              <h2> Prediction report </h2>
+              <InterResultTable traces={this.filterTrace()} onRequestTraces={this.requestTraces.bind(this)}/>
+            </CardText>
+          </Card>
+        </div>
       </div>
     );
   }
@@ -98,12 +108,14 @@ Runtime.propTypes = {
   regModelId: PropTypes.number.isRequired,
   classModelId: PropTypes.number.isRequired,
   logId: PropTypes.number.isRequired,
+  changed: PropTypes.number.isRequired,
+  maxPrefixLength: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   models: state.models.models,
   logs: state.logs,
-  traces: state.traces.byId,
+  traces: mapTraces(state.traces.byId, state.traces.interResults, state.traces.finalDiff),
   regressionModels: state.models.regressionModels,
   classificationModels: state.models.classificationModels,
   regModelId: state.models.regselected,
@@ -111,6 +123,8 @@ const mapStateToProps = (state) => ({
   logId: state.models.logId,
   modfetchState: state.models.fetchState,
   logfetchState: state.logs.fetchState,
+  changed: state.traces.changed,
+  maxPrefixLength: state.models.pLength,
 });
 
 const mapDispatchToProps = (dispatch) => ({

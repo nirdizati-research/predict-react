@@ -55,7 +55,7 @@ const modelList = [{
   }];
 
 const initState = {fetchState: {inFlight: false}, logId: 0, regselected: 0,
-              classelected: 0, models: [], regressionModels: [], classificationModels: []};
+              classelected: 0, models: [], regressionModels: [], classificationModels: [], pLength: 0};
 
 describe('ModelList', () => {
   it('has nothing initially', () => {
@@ -66,7 +66,7 @@ describe('ModelList', () => {
     const state = models(undefined, modelsRequested());
     expect(state).toEqual({classelected: 0, classificationModels: [],
     fetchState: {inFlight: true}, logId: 0, models: [],
-    regressionModels: [], regselected: 0});
+    regressionModels: [], regselected: 0, pLength: 0});
   });
 
   it('adds splits when request completed', () => {
@@ -82,6 +82,6 @@ describe('ModelList', () => {
     const state2 = models(state, modelsFailed('error'));
     expect(state2).toEqual({classelected: 0, classificationModels: [],
      fetchState: {error: 'error', inFlight: false}, logId: 0, models: [],
-     regressionModels: [], regselected: 0});
+     regressionModels: [], regselected: 0, pLength: 0});
    });
 });
