@@ -2,7 +2,7 @@
  * Created by Tõnis Kasekamp on 06.05.2017.
  */
 
-const DEV_SERVER = 'http://192.168.28.82:8000';
+const DEV_SERVER = 'http://localhost:8000';
 const PROD_SERVER = 'http://193.40.11.46';
 const DEV_WEBSOCKET = {
   port: 8000,
