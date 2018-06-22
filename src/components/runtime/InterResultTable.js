@@ -32,7 +32,7 @@ class InterResultTable extends PureComponent {
 
   getHeaderColumns() {
     const headers =
-      ['id', 'Intermediate Result of Duration', 'Actual Duration', 'Intermediate Result of Classification', 'Actual Label'];
+      ['Trace Name', 'Intermediate Result of Duration', 'Actual Duration', 'Intermediate Result of Classification', 'Actual Label'];
 
     return headers.map((header) => {
         return <TableColumn key={header}> {header}</TableColumn>;
@@ -49,12 +49,12 @@ class InterResultTable extends PureComponent {
       </TableHeader>
       <TableBody>
         {this.state.slicedData.map(
-          ({id, inter_result, finalDiff}) => (
+          ({id, name, inter_result, finalDiff}) => (
             <TableRow key={id} selectable={false}>
-              <TableColumn numeric>{id}</TableColumn>
-              <TableColumn>{inter_result.duration}</TableColumn>
-              <TableColumn>{finalDiff.diff}</TableColumn>
-              <TableColumn>{inter_result.class_results}</TableColumn>
+              <TableColumn>{name}</TableColumn>
+              <TableColumn>{JSON.stringify(inter_result.duration)}</TableColumn>
+              <TableColumn>{JSON.stringify(finalDiff.diff)}</TableColumn>
+              <TableColumn>{JSON.stringify(inter_result.class_results)}</TableColumn>
               <TableColumn>{JSON.stringify(finalDiff.class_actual)}</TableColumn>
             </TableRow>
           ))}

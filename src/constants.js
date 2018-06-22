@@ -6,7 +6,7 @@ const DEV_SERVER = 'http://localhost:8000';
 const PROD_SERVER = 'http://193.40.11.46';
 const DEV_WEBSOCKET = {
   port: 8000,
-  host: '192.168.28.82'
+  host: 'localhost'
 };
 const PROD_WEBSOCKET = {
   host: '193.40.11.46'

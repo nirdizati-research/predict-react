@@ -32,8 +32,8 @@ class RuntimeTable extends PureComponent {
 
   getHeaderColumns() {
     const headers =
-      ['id', 'Completed', 'Events Elapsed', 'Start Time', 'Latest event time',
-       'Regression Results', 'Classification Results'];
+      ['Trace Name', 'Completed', 'Events Elapsed', 'Start Time', 'Latest event time',
+       'Regression Prediction', 'Classification Prediction'];
 
     return headers.map((header) => {
         return <TableColumn key={header}> {header}</TableColumn>;
@@ -50,13 +50,13 @@ class RuntimeTable extends PureComponent {
       </TableHeader>
       <TableBody>
         {this.state.slicedData.map(
-          ({id, completed, n_events, first_event, last_event, reg_results, class_results, class_actual, duration, inter_result}) => (
+          ({id, name, completed, n_events, first_event, last_event, reg_results, class_results, class_actual, duration, inter_result}) => (
             <TableRow key={id} selectable={false}>
-              <TableColumn numeric>{id}</TableColumn>
+              <TableColumn>{name}</TableColumn>
               <TableColumn>{completed ? 'True' : 'False'}</TableColumn>
               <TableColumn>{n_events}</TableColumn>
-              <TableColumn>{Date(first_event)}</TableColumn>
-              <TableColumn>{Date(last_event)}</TableColumn>
+              <TableColumn>{new Date(first_event).toLocaleString()}</TableColumn>
+              <TableColumn>{new Date(last_event).toLocaleString()}</TableColumn>
               <TableColumn>{JSON.stringify(reg_results)}</TableColumn>
               <TableColumn>{JSON.stringify(class_results)}</TableColumn>
             </TableRow>
