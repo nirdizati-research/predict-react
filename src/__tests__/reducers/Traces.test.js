@@ -128,7 +128,7 @@ const traceList = [{
     ]
   }];
 
-const initState = {fetchState: {inFlight: false}, byId: [], finalDiff: [], interResults: []};
+const initState = {fetchState: {inFlight: false}, byId: [], changed: 0, finalDiff: [], interResults: []};
 
 describe('TraceList', () => {
   it('has nothing initially', () => {
@@ -138,7 +138,7 @@ describe('TraceList', () => {
   it('changes fetchState when requesting', () => {
     const state = traces(undefined, traceListRequested());
     expect(state).toEqual({fetchState: {inFlight: true}, byId: [],
-      finalDiff: [], interResults: []});
+      finalDiff: [], changed: 0, interResults: []});
   });
 
   it('adds splits when request completed', () => {
@@ -153,6 +153,6 @@ describe('TraceList', () => {
     const state = traces(undefined, traceListRequested());
     const state2 = traces(state, traceListFailed('error'));
     expect(state2).toEqual({byId: [], fetchState: {inFlight: false, error: 'error'},
-    finalDiff: [], interResults: []});
+    finalDiff: [], changed: 0, interResults: []});
   });
 });
