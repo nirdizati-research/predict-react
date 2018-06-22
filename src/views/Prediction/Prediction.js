@@ -69,7 +69,8 @@ class Prediction extends Component {
       <div className="md-grid">
         <div className="md-cell md-cell--12">
           <LogSelector logs={this.props.logs} fetchState={this.props.logfetchState}
-                       logChange={this.onChangeLog.bind(this)} logId={this.props.logId}/>
+                       logChange={this.onChangeLog.bind(this)} logId={this.props.logId}
+                       maxPLength={this.props.maxPrefixLength}/>
         </div>
         <div className="md-cell md-cell--12">
           <ModelSelector modelChange={this.onModelChange.bind(this)} onSubmit={this.Submit.bind(this)}
@@ -106,6 +107,7 @@ Prediction.propTypes = {
   regModelId: PropTypes.number.isRequired,
   classModelId: PropTypes.number.isRequired,
   logId: PropTypes.number.isRequired,
+  maxPrefixLength: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -119,6 +121,7 @@ const mapStateToProps = (state) => ({
   logId: state.models.logId,
   modfetchState: state.models.fetchState,
   logfetchState: state.logs.fetchState,
+  maxPrefixLength: state.models.pLength,
 });
 
 const mapDispatchToProps = (dispatch) => ({

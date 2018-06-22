@@ -5,7 +5,7 @@ import {tracePropType} from '../../propTypes';
 
 /* eslint-disable camelcase */
 /* eslint-disable max-len */
-class RuntimeTable extends PureComponent {
+class InterResultTable extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {slicedData: []};
@@ -32,8 +32,7 @@ class RuntimeTable extends PureComponent {
 
   getHeaderColumns() {
     const headers =
-      ['id', 'Completed', 'Events Elapsed', 'Start Time', 'Latest event time',
-       'Regression Results', 'Classification Results'];
+      ['id', 'Intermediate Result of Duration', 'Actual Duration', 'Intermediate Result of Classification', 'Actual Label'];
 
     return headers.map((header) => {
         return <TableColumn key={header}> {header}</TableColumn>;
@@ -50,15 +49,13 @@ class RuntimeTable extends PureComponent {
       </TableHeader>
       <TableBody>
         {this.state.slicedData.map(
-          ({id, completed, n_events, first_event, last_event, reg_results, class_results, class_actual, duration, inter_result}) => (
+          ({id, inter_result, final_diff}) => (
             <TableRow key={id} selectable={false}>
               <TableColumn numeric>{id}</TableColumn>
-              <TableColumn>{completed ? 'True' : 'False'}</TableColumn>
-              <TableColumn>{n_events}</TableColumn>
-              <TableColumn>{Date(first_event)}</TableColumn>
-              <TableColumn>{Date(last_event)}</TableColumn>
-              <TableColumn>{JSON.stringify(reg_results)}</TableColumn>
-              <TableColumn>{JSON.stringify(class_results)}</TableColumn>
+              <TableColumn>{inter_result.duration}</TableColumn>
+              <TableColumn>{final_diff.diff}</TableColumn>
+              <TableColumn>{inter_result.class_results}</TableColumn>
+              <TableColumn>{JSON.stringify(final_diff.class_actual)}</TableColumn>
             </TableRow>
           ))}
       </TableBody>
@@ -68,9 +65,9 @@ class RuntimeTable extends PureComponent {
   }
 }
 
-RuntimeTable.propTypes = {
+InterResultTable.propTypes = {
   traces: PropTypes.arrayOf(tracePropType).isRequired,
   onRequestTraces: PropTypes.func.isRequired,
 };
 
-export default RuntimeTable;
+export default InterResultTable;

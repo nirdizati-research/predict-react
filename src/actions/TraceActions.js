@@ -10,3 +10,4 @@ export const TRACE_LIST_FAILED = 'TRACE_LIST_FAILED';
 export const traceListFailed = createPayloadForwardingAction(TRACE_LIST_FAILED);
 
 export const TRACE_UPDATED = 'TRACE_UPDATED';
+export const TRACE_COMPLETED = 'TRACE_COMPLETED';
