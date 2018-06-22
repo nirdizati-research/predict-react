@@ -93,7 +93,7 @@ storiesOf('Advanced configuration', module)
           <div className="md-cell md-cell--12">
             <Card className="md-block-centered">
               <CardText>
-                Labelling
+                Labeling
               </CardText>
               <Labelling onChange={console.log} label={label1} traceAttributes={traceAttributes}
                          predictionMethod={CLASSIFICATION}/>

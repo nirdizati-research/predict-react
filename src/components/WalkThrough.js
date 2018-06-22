@@ -68,8 +68,8 @@ class WalkThrough extends PureComponent {
             <GuideItem
               avatar={<Avatar suffix="light-green">4</Avatar>}
               button={<Button flat primary href={'/#/label'}
-                              iconEl={<FontIcon>label_outline</FontIcon>}>Labelling</Button>}
-              title="Labelling"
+                              iconEl={<FontIcon>label_outline</FontIcon>}>Labeling</Button>}
+              title="Labeling"
               text="(Optional) Test the label distribution for a given labeling"
               threeLines
             />

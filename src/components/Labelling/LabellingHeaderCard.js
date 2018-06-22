@@ -26,7 +26,7 @@ const LabellingHeaderCard = (props) => {
   };
 
   return <Card className="md-block-centered">
-    <CardTitle title="Labelling result selection">
+    <CardTitle title="Labeling result selection">
       <SelectField
         id="log-name-select"
         placeholder="log.xes"
