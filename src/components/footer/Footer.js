@@ -11,9 +11,6 @@ const Footer = () => (
       <Button flat primary href="mailto:nirdizati.research@gmail.com" iconChildren="mail">
         Nirdizati Research
       </Button>
-      <Button flat primary href="mailto:tonis.kasekamp@gmail.com" iconChildren="mail">
-        Tõnis Kasekamp
-      </Button>
     </Cell>
     <Cell component="section" size={8}>
       <h4 className="md-title">Source code</h4>
