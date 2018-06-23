@@ -20,8 +20,8 @@ const initialState = {
 
 const filterModels = (modelstmp, plength, method) => {
   const models = modelstmp.filter((model) => (model.type === method));
-  return models.filter((model) => (model.config.encoding.prefix_length >= plength)
-    || ((model.config.padding === 'zero_padding') &&
+  return models.filter((model) => (model.config.encoding.prefix_length === plength)
+    || (((model.config.padding === 'all_in_one') || (model.config.padding === 'zero_padding')) &&
       (model.config.encoding.prefix_length >= plength)));
 };
 

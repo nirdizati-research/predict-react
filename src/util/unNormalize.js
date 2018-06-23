@@ -47,8 +47,8 @@ export const mapTraces = (tracesById, interResults, finalDiff) => {
   return tracesById.map(trace => {
     return {
       ...trace,
-      inter_result: (myIndexOf(interResults, trace) !== -1) ? interResults[myIndexOf(interResults, trace)] : {duration: 'NaN', class_results: 'NaN'},
-      finalDiff: (myIndexOf(finalDiff, trace) !== -1) ? finalDiff[myIndexOf(finalDiff, trace)] : {duration: 'NaN', class_actual: 'NaN'},
+      inter_result: ((myIndexOf(interResults, trace) !== -1) ? interResults[myIndexOf(interResults, trace)] : interResults),
+      finalDiff: ((myIndexOf(finalDiff, trace) !== -1) ? finalDiff[myIndexOf(finalDiff, trace)] : finalDiff),
     };
   });
 };

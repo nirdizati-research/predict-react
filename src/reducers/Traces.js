@@ -11,9 +11,11 @@ const initialState = {
 };
 
 function getIntermediateResults(array, interResults) {
+  // eslint-disable-next-line
   array.map(function (trace) {
     if (trace.n_events === 3) {
-      interResults = addToSet(interResults, {id: trace.id, duration: trace.reg_results + trace.duration,
+      // eslint-disable-next-line
+      interResults = addToSet(interResults, {id: trace.id, duration: parseInt(trace.reg_results + trace.duration),
         class_results: trace.class_results});
     }
   });

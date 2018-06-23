@@ -168,6 +168,7 @@ export const modelPropType = PropTypes.shape({
 
 export const tracePropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
+  name: PropTypes.any.isRequired,
   completed: PropTypes.bool.isrequired,
   first_event: PropTypes.string.isRequired,
   last_event: PropTypes.string.isRequired,
