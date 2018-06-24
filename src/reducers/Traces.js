@@ -15,7 +15,7 @@ function getIntermediateResults(array, interResults) {
   array.map(function (trace) {
     if (trace.n_events === 3) {
       // eslint-disable-next-line
-      interResults = addToSet(interResults, {id: trace.id, duration: parseInt(trace.reg_results + trace.duration),
+      interResults = addToSet(interResults, {id: trace.id, duration: (parseInt(trace.reg_results) + parseInt(trace.duration)),
         class_results: trace.class_results});
     }
   });

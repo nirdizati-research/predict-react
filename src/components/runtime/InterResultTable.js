@@ -32,7 +32,7 @@ class InterResultTable extends PureComponent {
 
   getHeaderColumns() {
     const headers =
-      ['Trace Name', 'Intermediate Result of Duration', 'Actual Duration', 'Intermediate Result of Classification', 'Actual Label'];
+      ['Trace Name', 'Intermediate Prediction of Duration', 'Actual Duration', 'Intermediate Prediction of Classification', 'Actual Label'];
 
     return headers.map((header) => {
         return <TableColumn key={header}> {header}</TableColumn>;
