@@ -23,7 +23,7 @@ class WalkThrough extends PureComponent {
 
 
   render() {
-    return <Card className="md-block-centered">
+    return <Card className="md-cell md-block-centered md-cell--12">
       {dialog(this.state.visible, this.hide.bind(this))}
       <CardTitle title="Nirdizati Research"
                  subtitle="A Web Application to Support Research in Predictive Monitoring Tasks">
@@ -43,7 +43,7 @@ class WalkThrough extends PureComponent {
         <p>The standard procedure to be followed for using the application is summarized in the steps below.</p>
         {rotate(this.state.other)}
         <div className="md-grid">
-          <List className="md-cell md-cell--12">
+          <List className="md-cell md-cell--12 md-cell--8-tablet">
             <GuideItem
               avatar={<Avatar suffix="red">1</Avatar>}
               button={<Button flat primary href={'/#/upload'} iconEl={<FontIcon>backup</FontIcon>}>Upload</Button>}
