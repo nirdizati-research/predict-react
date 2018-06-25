@@ -5,23 +5,18 @@ import EncodingByLogCard from '../components/static/EncodingByLogCard';
 import {ClassificationMethodsCard} from '../components/static/ClassificationMethodsCard';
 import {RegressionMethodsCard} from '../components/static/RegressionMethodsCard';
 import {HyperOptCard} from '../components/static/HyperOptCard';
+import {DemoVideoCard} from '../components/static/DemoVideoCard';
 
 class FrontPage extends Component {
   render() {
     return (
       <div className="md-grid">
-        <div className="md-cell md-cell--12">
-          <WalkThrough/>
-        </div>
-        <div className="md-cell md-cell--12">
-          <EncodingByLogCard/></div>
-        <div className="md-cell md-cell--6">
-          <ClassificationMethodsCard/></div>
-        <div className="md-cell md-cell--6">
-          <RegressionMethodsCard/></div>
-        <div className="md-cell md-cell--12">
-          <HyperOptCard/>
-        </div>
+        <WalkThrough/>
+        <DemoVideoCard/>
+        <HyperOptCard/>
+        <EncodingByLogCard/>
+        <ClassificationMethodsCard/>
+        <RegressionMethodsCard/>
       </div>
     );
   }

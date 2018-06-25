@@ -47,7 +47,7 @@ const dataClass = [
 ];
 
 export const ClassificationMethodsCard = () => {
-  return <Card className="md-block-centered">
+  return <Card className="md-cell md-cell--6 md-cell--8-tablet">
     <CardTitle title="Classification method comparison" subtitle="Tested version 1.0.0" expander/>
     <CardText expandable>
       <p>How long does it take to run various classification methods? This is the answer.</p>

@@ -29,7 +29,7 @@ const dataReg = [
 ];
 
 export const RegressionMethodsCard = () => {
-  return <Card className="md-block-centered">
+  return <Card className="md-cell md-cell--6 md-cell--8-tablet">
     <CardTitle title="Regression method comparison" subtitle="Tested version 1.0.0" expander/>
     <CardText expandable>
       <p>How long does it take to run various regression methods? This is the answer.</p>
