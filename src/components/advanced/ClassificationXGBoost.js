@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {TextField} from 'react-md';
+import {CLASSIFICATION, XGBOOST} from '../../reference';
 
 const defaults = {
   'max_depth': 3,
@@ -9,7 +10,7 @@ const defaults = {
 };
 /* eslint-disable no-invalid-this */
 const ClassificationXGBoost = (props) => {
-  const methodConfig = `classification.xgboost`;
+  const methodConfig = `${CLASSIFICATION}.${XGBOOST}`;
 
   const nEstimators = <TextField
     key="n_estimators"

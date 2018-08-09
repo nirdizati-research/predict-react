@@ -6,6 +6,9 @@ import ClassificationDecisionTree from './ClassificationDecisionTree';
 import {ExpansionList} from 'react-md';
 import GenericConfiguration from './GenericConfiguration';
 import ClassificationRandomForest from './ClassificationRandomForest';
+import ClassificationNaiveBayes from './ClassificationNaiveBayes';
+import ClassificationHoeffdingTree from './ClassificationHoeffdingTree';
+import ClassificationAdaptiveTree from './ClassificationAdaptiveTree';
 import RegressionRandomForest from './RegressionRandomForest';
 import RegressionLasso from './RegressionLasso';
 import RegressionLinear from './RegressionLinear';
@@ -27,6 +30,12 @@ const regressorLasso = 'http://scikit-learn.org/stable/modules/generated/sklearn
 const regressorLinear = 'http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html';
 const regressorXGboost = 'https://xgboost.readthedocs.io/en/latest/python/python_api.html#xgboost.XGBRegressor';
 const classificationXGboost = 'https://xgboost.readthedocs.io/en/latest/python/python_api.html#xgboost.XGBClassifier';
+const classificationNaiveBayes = 'http://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.' +
+    'MultinomialNB.html';
+const classificationHoeffdingTree = 'https://scikit-multiflow.github.io/scikit-multiflow/skmultiflow.classification.' +
+    'trees.hoeffding_tree.html';
+const classificationAdaptiveTree = 'https://scikit-multiflow.github.io/scikit-multiflow/skmultiflow.classification.' +
+    'trees.hoeffding_adaptive_tree.html';
 const kmeansUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html';
 const hyperUrl = 'http://hyperopt.github.io/hyperopt/';
 const AdvancedConfiguration = (props) => {
@@ -37,14 +46,20 @@ const AdvancedConfiguration = (props) => {
 
 
   const classConfigMap = {
-    'classification.knn': makeExpander('K-Neighbors classifier', knnUrl, <ClassificationKnn
-      onChange={props.onChange}/>),
+    'classification.knn': makeExpander('K-Neighbors classifier', knnUrl,
+        <ClassificationKnn onChange={props.onChange}/>),
     'classification.decisionTree': makeExpander('Decision tree classifier', decisionTreeUrl,
       <ClassificationDecisionTree onChange={props.onChange} {...props}/>),
     'classification.randomForest': makeExpander('Random forest classifier', classRandomForest,
       <ClassificationRandomForest onChange={props.onChange} {...props}/>),
     'classification.xgboost': makeExpander('XGBoost classifier', classificationXGboost,
-      <ClassificationXGBoost onChange={props.onChange} {...props}/>)
+      <ClassificationXGBoost onChange={props.onChange} {...props}/>),
+    'classification.incrementalNaiveBayes': makeExpander('Naive Bayes classifier', classificationNaiveBayes,
+      <ClassificationNaiveBayes onChange={props.onChange} {...props}/>),
+    'classification.incrementalHoeffdingTree': makeExpander('Hoeffding Tree classifier', classificationHoeffdingTree,
+      <ClassificationHoeffdingTree onChange={props.onChange} {...props}/>),
+    'classification.incrementalHAT': makeExpander('Adaptive Tree classifier', classificationAdaptiveTree,
+      <ClassificationAdaptiveTree onChange={props.onChange} {...props}/>)
   };
 
   const regressionConfigMap = {

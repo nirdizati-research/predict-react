@@ -9,20 +9,20 @@ import {Checkbox, SelectionControlGroup} from 'react-md/lib/SelectionControls/in
 import {Button} from 'react-md/lib/Buttons/index';
 import FetchState from './FetchState';
 import {
-  CLASSIFICATION,
-  classificationMethods,
-  clusteringMethods,
-  DURATION,
-  encodingMethods,
-  KMEANS,
-  LABELLING,
-  paddingControls,
-  predictionMethods,
-  prefixTypeControls,
-  REGRESSION,
-  regressionMethods,
-  REMAINING_TIME,
-  THRESHOLD_MEAN,
+    CLASSIFICATION,
+    classificationMethods,
+    clusteringMethods,
+    DURATION,
+    encodingMethods,
+    KMEANS,
+    LABELLING, INCREMENTAL_NAIVE_BAYES,
+    paddingControls,
+    predictionMethods,
+    prefixTypeControls,
+    REGRESSION,
+    regressionMethods,
+    REMAINING_TIME,
+    THRESHOLD_MEAN, HOEFFDING_TREE, ADAPTIVE_TREE, KNN, RANDOM_FOREST, DECISION_TREE, XGBOOST, LASSO, LINEAR,
 } from '../reference';
 import CheckboxGroup from './training/CheckboxGroup';
 import {fetchStatePropType, selectLabelProptype, traceAttributeShape} from '../propTypes';
@@ -74,14 +74,17 @@ const initialState = (props) => {
 
 const initialAdvancedConfiguration = () => {
   return {
-    [`${CLASSIFICATION}.knn`]: {},
-    [`${CLASSIFICATION}.randomForest`]: {},
-    [`${CLASSIFICATION}.decisionTree`]: {},
-    [`${CLASSIFICATION}.xgboost`]: {},
-    [`${REGRESSION}.randomForest`]: {},
-    [`${REGRESSION}.lasso`]: {},
-    [`${REGRESSION}.linear`]: {},
-    [`${REGRESSION}.xgboost`]: {}
+    [`${CLASSIFICATION}.${KNN}`]: {},
+    [`${CLASSIFICATION}.${RANDOM_FOREST}`]: {},
+    [`${CLASSIFICATION}.${DECISION_TREE}`]: {},
+    [`${CLASSIFICATION}.${XGBOOST}`]: {},
+    [`${CLASSIFICATION}.${INCREMENTAL_NAIVE_BAYES}`]: {},
+    [`${CLASSIFICATION}.${HOEFFDING_TREE}`]: {},
+    [`${CLASSIFICATION}.${ADAPTIVE_TREE}`]: {},
+    [`${REGRESSION}.${RANDOM_FOREST}`]: {},
+    [`${REGRESSION}.${LASSO}`]: {},
+    [`${REGRESSION}.${LINEAR}`]: {},
+    [`${REGRESSION}.${XGBOOST}`]: {}
   };
 };
 
@@ -223,14 +226,17 @@ class TrainingFormCard extends Component {
         add_elapsed_time: this.state.add_elapsed_time,
         hyperopt: this.state.hyperopt,
         kmeans: this.state.kmeans,
-        [`${CLASSIFICATION}.knn`]: this.state[`${CLASSIFICATION}.knn`],
-        [`${CLASSIFICATION}.randomForest`]: this.state[`${CLASSIFICATION}.randomForest`],
-        [`${CLASSIFICATION}.decisionTree`]: this.state[`${CLASSIFICATION}.decisionTree`],
-        [`${CLASSIFICATION}.xgboost`]: this.state[`${CLASSIFICATION}.xgboost`],
-        [`${REGRESSION}.randomForest`]: this.state[`${REGRESSION}.randomForest`],
-        [`${REGRESSION}.lasso`]: this.state[`${REGRESSION}.lasso`],
-        [`${REGRESSION}.linear`]: this.state[`${REGRESSION}.linear`],
-        [`${REGRESSION}.xgboost`]: this.state[`${REGRESSION}.xgboost`]
+        [`${CLASSIFICATION}.${KNN}`]: this.state[`${CLASSIFICATION}.${KNN}`],
+        [`${CLASSIFICATION}.${RANDOM_FOREST}`]: this.state[`${CLASSIFICATION}.${RANDOM_FOREST}`],
+        [`${CLASSIFICATION}.${DECISION_TREE}`]: this.state[`${CLASSIFICATION}.${DECISION_TREE}`],
+        [`${CLASSIFICATION}.${XGBOOST}`]: this.state[`${CLASSIFICATION}.${XGBOOST}`],
+        [`${CLASSIFICATION}.${INCREMENTAL_NAIVE_BAYES}`]: this.state[`${CLASSIFICATION}.${INCREMENTAL_NAIVE_BAYES}`],
+        [`${CLASSIFICATION}.${HOEFFDING_TREE}`]: this.state[`${CLASSIFICATION}.${HOEFFDING_TREE}`],
+        [`${CLASSIFICATION}.${ADAPTIVE_TREE}`]: this.state[`${CLASSIFICATION}.${ADAPTIVE_TREE}`],
+        [`${REGRESSION}.${RANDOM_FOREST}`]: this.state[`${REGRESSION}.${RANDOM_FOREST}`],
+        [`${REGRESSION}.${LASSO}`]: this.state[`${REGRESSION}.${LASSO}`],
+        [`${REGRESSION}.${LINEAR}`]: this.state[`${REGRESSION}.${LINEAR}`],
+        [`${REGRESSION}.${XGBOOST}`]: this.state[`${REGRESSION}.${XGBOOST}`]
       }
     };
   }

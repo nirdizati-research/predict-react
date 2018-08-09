@@ -11,6 +11,32 @@ export const classificationKnnWeights = [
   }
 ];
 
+export const splitCriterionHoeffding = [
+    {
+        value: 'mc',
+        label: 'Majority Class'
+    },
+    {
+        value: 'nb',
+        label: 'Naive Bayes'
+    },
+    {
+        value: 'nba',
+        label: 'Naive Bayes Adaptive'
+    }
+];
+
+export const leafPredictionHoeffding = [
+    {
+        value: 'gini',
+        label: 'Gini'
+    },
+    {
+        value: 'info_gain',
+        label: 'Information Gain'
+    }
+];
+
 export const regressionMetrics = [
   {
     value: 'rmse',

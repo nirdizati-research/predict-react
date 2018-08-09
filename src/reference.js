@@ -17,6 +17,9 @@ export const KMEANS = 'kmeans';
 export const KNN = 'knn';
 export const DECISION_TREE = 'decisionTree';
 export const RANDOM_FOREST = 'randomForest';
+export const INCREMENTAL_NAIVE_BAYES = 'incrementalNaiveBayes';
+export const HOEFFDING_TREE = 'incrementalHoeffdingTree';
+export const ADAPTIVE_TREE = 'incrementalHAT';
 // regression methods
 export const LINEAR = 'linear';
 export const LASSO = 'lasso';
@@ -77,6 +80,18 @@ const classification = [
     label: 'XGBoost',
     value: XGBOOST
   },
+  {
+    label: 'Naive Bayes',
+    value: INCREMENTAL_NAIVE_BAYES
+  },
+  {
+    label: 'Hoeffding Tree',
+    value: HOEFFDING_TREE
+  },
+  {
+    label: 'Adaptive Tree',
+    value: ADAPTIVE_TREE
+  }
 ];
 
 export const encoding = [
