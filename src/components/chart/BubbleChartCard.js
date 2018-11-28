@@ -4,7 +4,7 @@
 import React from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import PropTypes from 'prop-types';
-import {Chart} from 'react-google-charts';
+import Chart from 'react-google-charts';
 
 const BubbleChartCard = (props) => {
   const opts = {

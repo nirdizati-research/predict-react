@@ -8,7 +8,6 @@ import {applyMiddleware, compose, createStore} from 'redux';
 import reducers from './reducers';
 import {routerMiddleware, syncHistoryWithStore} from 'react-router-redux';
 import serverMiddleware from './middlewares/ServerMiddleware';
-import {chooseServer} from './constants';
 import WebFontLoader from 'webfontloader';
 import trainingMiddleware from './middlewares/TrainingMiddleware';
 import {CONNECT_REQUESTED} from './actions/WebSocket';
@@ -39,7 +38,6 @@ let store = createStore(
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(hashHistory, store);
 
-chooseServer();
 // WS connection
 store.dispatch({type: CONNECT_REQUESTED});
 

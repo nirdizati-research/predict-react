@@ -5,7 +5,30 @@ import React from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import PropTypes from 'prop-types';
 import {Chart} from 'react-google-charts';
-import DEFAULT_CHART_COLORS from 'react-google-charts/lib/constants/DEFAULT_CHART_COLORS';
+
+const DEFAULT_CHART_COLORS = [
+  '#3366CC',
+  '#DC3912',
+  '#FF9900',
+  '#109618',
+  '#990099',
+  '#3B3EAC',
+  '#0099C6',
+  '#DD4477',
+  '#66AA00',
+  '#B82E2E',
+  '#316395',
+  '#994499',
+  '#22AA99',
+  '#AAAA11',
+  '#6633CC',
+  '#E67300',
+  '#8B0707',
+  '#329262',
+  '#5574A6',
+  '#3B3EAC'
+];
+
 // Custom compare because why not
 const compare = (a, b) => {
   if (a[1] > b[1]) {

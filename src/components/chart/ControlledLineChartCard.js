@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import PropTypes from 'prop-types';
-import {Chart} from 'react-google-charts';
 import {jobPropType} from '../../propTypes';
 import {makeLabels, makeTable} from '../../util/dataReducers';
 import SelectField from 'react-md/lib/SelectFields/index';
 import {CLASSIFICATION, REGRESSION} from '../../reference';
+import Chart from 'react-google-charts';
 
 /* eslint-disable no-unused-vars */
 class ControlledLineChartCard extends Component {

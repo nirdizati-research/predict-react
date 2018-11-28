@@ -3,8 +3,8 @@
  */
 import React from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
+import Chart from 'react-google-charts';
 import PropTypes from 'prop-types';
-import {Chart} from 'react-google-charts';
 
 // Custom compare because why not
 const compare = (a, b) => {

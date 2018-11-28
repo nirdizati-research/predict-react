@@ -1,8 +1,8 @@
 import React from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import PropTypes from 'prop-types';
-import {Chart} from 'react-google-charts';
 import {jobPropType} from '../../propTypes';
+import Chart from 'react-google-charts';
 import {labelJobToTable} from '../../util/tableUtil';
 
 /* eslint-disable no-unused-vars */
