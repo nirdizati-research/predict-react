@@ -12,6 +12,7 @@ import WebFontLoader from 'webfontloader';
 import trainingMiddleware from './middlewares/TrainingMiddleware';
 import {CONNECT_REQUESTED} from './actions/WebSocket';
 import webSocketMiddleware from './middlewares/WebSocketMiddleware';
+import './scss/style.scss';
 
 WebFontLoader.load({
   google: {
