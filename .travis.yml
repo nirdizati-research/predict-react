@@ -14,6 +14,7 @@ jobs:
       - npm run test-coveralls
 
     - stage: before_deploy
+      if: branch = master   # Build only the master branch
       language: minimal
       name: Build Docker image and push to Docker Hub registry
       services: docker
@@ -25,6 +26,7 @@ jobs:
       - docker push nirdizatiresearch/predict-react
 
     - stage: deploy
+      if: branch = master   # Deploy only the master branch
       dist: xenial
       name: Server deployment
       language: minimal
@@ -32,7 +34,3 @@ jobs:
         provider: script
         skip_cleanup: true
         script: bash deploy.sh
-
-before_install:
-- openssl aes-256-cbc -K $encrypted_6a567f0c75d9_key -iv $encrypted_6a567f0c75d9_iv
-  -in cloud.key.enc -out ./cloud.key -d
