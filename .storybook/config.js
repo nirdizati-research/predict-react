@@ -1,7 +1,7 @@
 import {configure} from '@storybook/react';
-// Link to the app CSS
-import '../public/css/style.css';
 import WebFontLoader from 'webfontloader';
+
+import '../src/scss/style.scss'; // Link to the app CSS
 
 WebFontLoader.load({
   google: {

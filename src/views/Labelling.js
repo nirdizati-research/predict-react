@@ -31,7 +31,8 @@ class Labelling extends Component {
     };
   }
 
-  componentWillReceiveProps(_) {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps(_) {
     if (this.props.predictionMethod !== LABELLING) {
       this.props.onMethodChange(LABELLING);
     }
