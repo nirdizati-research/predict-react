@@ -1,16 +1,18 @@
-FROM node:8 as builder
+# Build container
+FROM node:10-alpine as builder
 
 WORKDIR /app
 #ENV PATH /app/node_modules/.bin:$PATH
 
-COPY package.json /app/package.json
+COPY package.json package.json
+COPY package-lock.json package-lock.json
 
-RUN npm install
+RUN npm ci
 
 COPY . /app
 RUN npm run build
 
-# production environment
+# Production container with Nginx Alpine
 FROM nginx:1.13.9-alpine
 COPY --from=builder /app/build /usr/share/nginx/html
 
