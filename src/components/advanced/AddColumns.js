@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Checkbox} from 'react-md/lib/index';
+import {Checkbox} from 'react-md';
 import {labelPropType} from '../../propTypes';
 
 // Half of labelling object defined here
