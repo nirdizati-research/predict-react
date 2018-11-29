@@ -14,7 +14,7 @@ jobs:
       - npm run test-coveralls
 
     - stage: before_deploy
-      if: branch = master   # Build only the master branch
+      if: branch = master AND type = push   # Build only the master branch
       language: minimal
       name: Build Docker image and push to Docker Hub registry
       services: docker
@@ -26,7 +26,7 @@ jobs:
       - docker push nirdizatiresearch/predict-react
 
     - stage: deploy
-      if: branch = master   # Deploy only the master branch
+      if: branch = master AND type = push  # Deploy only the master branch
       dist: xenial
       name: Server deployment
       language: minimal
