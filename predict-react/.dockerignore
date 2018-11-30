@@ -1,0 +1,22 @@
+# NPM dependencies
+node_modules
+npm-debug.log
+
+coverage
+.editorconfig
+.eslintrc
+
+# Git files
+.git
+.gitignore
+
+# Docker files
+.dockerignore
+docker-compose.yml
+Dockerfile
+
+.travis.yml
+
+# Repositories files
+README.md
+deploy.sh
