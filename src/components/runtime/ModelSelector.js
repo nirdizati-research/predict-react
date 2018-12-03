@@ -15,17 +15,6 @@ class ModelSelector extends Component {
     const divstyle = {
       display: 'flex',
     };
-    const div1style = {
-      'margin-right':'40px',
-    };
-    const btnstyle = {
-      'margin-top': '50px',
-    };
-    const inputstyle = {
-      width: '220px',
-      height: '40px',
-      'font-size': '20px',
-    };
     return (
       <Card className="md-block-centered">
         <CardText>
@@ -57,8 +46,7 @@ class ModelSelector extends Component {
           </div>
         </CardText>
         <CardText>
-        <div style={divstyle}> 
-        
+        <div style={divstyle}>
         </div>
         <div className="md-cell md-cell--12">
           <Button raised primary swapTheming onClick={this.props.onSubmit}
