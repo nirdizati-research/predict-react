@@ -1,20 +1,91 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
 
-# dependencies
-node_modules
+# Created by https://www.gitignore.io/api/python,django
 
-# testing
-coverage
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+media
 
-# production
-build
+### Python ###
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+*$py.class
 
-#Storybook static page
-storybook-static
-# misc
-.DS_Store
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# pyenv
+.python-version
+
+# Environments
 .env
-npm-debug.log
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
 
-#Idea
-.idea
+.settings/
+model_cache/
+log_cache/BPI2011_20.xes
+log_cache/BPI2011_80.xes
+.dbeaver-data-sources.xml
+rqworker.sh
+supervisord.conf.save
+.project
+.pydevproject
+src/
+
+!.idea
+!.idea/runConfigurations/
+.idea/*
+
+# End of https://www.gitignore.io/api/python,django
+
+dump.rdb
+db/*.sqlite3
+
+*.icloud
+*.sav
+*.DS_Store
+*.ipynb_checkpoints/
+
+*/migrations/*
+
+model_cache/*
