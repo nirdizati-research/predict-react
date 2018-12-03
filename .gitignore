@@ -190,6 +190,8 @@ fabric.properties
 # End of https://www.gitignore.io/api/node,macos,pycharm
 
 
-.idea
+!.idea
+!.idea/runConfigurations/
+.idea/*
 
 build/
