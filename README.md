@@ -4,6 +4,8 @@
 
 Because React is better than Angular!
 
+### Docker build available @ https://hub.docker.com/r/nirdizatiresearch/predict-react/
+
 ## Dependencies
 * [Storybook](https://github.com/storybooks/storybook) for individual components.
 
