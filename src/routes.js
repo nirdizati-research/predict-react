@@ -5,7 +5,7 @@ import Full from './containers/Full/';
 import Upload from './views/Upload/Upload';
 import JobStatus from './views/JobStatus/JobStatus';
 import Training from './views/Training/Training';
-import Validation from './views/Validation/Validation_old';
+import Validation from './views/Validation/Validation';
 import Split from './views/Split';
 import Labelling from './views/Labelling';
 import FrontPage from './views/FrontPage';
