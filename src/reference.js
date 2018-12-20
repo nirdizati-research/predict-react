@@ -10,17 +10,23 @@ export const LABELLING = 'labelling';
 
 export const SPLIT_SINGLE = 'single';
 export const SPLIT_DOUBLE = 'double';
+
 // clustering
 export const NO_CLUSTER = 'noCluster';
 export const KMEANS = 'kmeans';
+
 // classification methods
 export const KNN = 'knn';
 export const DECISION_TREE = 'decisionTree';
 export const RANDOM_FOREST = 'randomForest';
+
 // regression methods
 export const LINEAR = 'linear';
 export const LASSO = 'lasso';
 export const XGBOOST = 'xgboost';
+// export const RNN = 'rnn';
+export const NN = 'nn';
+
 // encoding methods
 export const SIMPLE_INDEX = 'simpleIndex';
 export const BOOLEAN = 'boolean';
@@ -137,6 +143,14 @@ const regression = [
     label: 'XGBoost',
     value: XGBOOST
   },
+  // {
+  //   label: 'RNN',
+  //   value: RNN
+  // },
+  {
+    label: 'NN',
+    value: NN
+  },
 ];
 
 const threshold = [
@@ -162,6 +176,7 @@ const regressionLabelTypes = [
     label: 'Trace number attribute',
   }
 ];
+
 const classificationLabelTypes = [
   {
     value: DURATION,

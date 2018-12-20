@@ -34,7 +34,9 @@ import {
   REMAINING_TIME,
   SIMPLE_INDEX,
   THRESHOLD_MEAN,
-  XGBOOST
+  XGBOOST,
+  // RNN,
+  NN
 } from '../reference';
 import {labelCompare} from '../util/labelCompare';
 import {addListToStore, removeFromStore} from './genericHelpers';
@@ -69,7 +71,7 @@ const initialFilters = {
   encodings: [SIMPLE_INDEX, BOOLEAN, FREQUENCY, COMPLEX, LAST_PAYLOAD],
   clusterings: [NO_CLUSTER, KMEANS],
   classification: [KNN, DECISION_TREE, RANDOM_FOREST, XGBOOST],
-  regression: [LINEAR, LASSO, RANDOM_FOREST, XGBOOST],
+  regression: [LINEAR, LASSO, RANDOM_FOREST, XGBOOST, NN],
   label: initialLabels.remainingTime,
   padding: NO_PADDING
 };

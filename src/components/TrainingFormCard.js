@@ -81,7 +81,9 @@ const initialAdvancedConfiguration = () => {
     [`${REGRESSION}.randomForest`]: {},
     [`${REGRESSION}.lasso`]: {},
     [`${REGRESSION}.linear`]: {},
-    [`${REGRESSION}.xgboost`]: {}
+    [`${REGRESSION}.xgboost`]: {},
+    // [`${REGRESSION}.rnn`]: {},
+    [`${REGRESSION}.nn`]: {}
   };
 };
 
@@ -143,8 +145,8 @@ class TrainingFormCard extends Component {
       // no default
     }
 
-    this.setState((prevState, _) => {
-      return {displayWarning: this.displayWarningCheck(prevState)};
+    this.setState((prevState, ) => {
+      return {displayWarning: TrainingFormCard.displayWarningCheck(prevState)};
     });
   }
 
@@ -158,17 +160,17 @@ class TrainingFormCard extends Component {
       hyperopt: {...this.state.hyperopt, performance_metric}, ...initialAdvancedConfiguration()
     });
     this.setState((prevState, _) => {
-      return {displayWarning: this.displayWarningCheck(prevState)};
+      return {displayWarning: TrainingFormCard.displayWarningCheck(prevState)};
     });
   }
 
-  selectChange(value, _) {
+  selectChange(value, ) {
     this.setState({split_id: value});
     this.props.onSplitChange(value);
   }
 
 
-  displayWarningCheck(prevState) {
+  static displayWarningCheck(prevState) {
     switch (prevState.predictionMethod) {
       case REGRESSION:
         return !(prevState.encodings.length !== 0
@@ -230,7 +232,9 @@ class TrainingFormCard extends Component {
         [`${REGRESSION}.randomForest`]: this.state[`${REGRESSION}.randomForest`],
         [`${REGRESSION}.lasso`]: this.state[`${REGRESSION}.lasso`],
         [`${REGRESSION}.linear`]: this.state[`${REGRESSION}.linear`],
-        [`${REGRESSION}.xgboost`]: this.state[`${REGRESSION}.xgboost`]
+        [`${REGRESSION}.xgboost`]: this.state[`${REGRESSION}.xgboost`],
+        // [`${REGRESSION}.rnn`]: this.state[`${REGRESSION}.rnn`],
+        [`${REGRESSION}.nn`]: this.state[`${REGRESSION}.nn`]
       }
     };
   }

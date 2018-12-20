@@ -42,9 +42,10 @@ npm run start
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app) and [Storybook](https://github.com/storybooks/storybook).
 
 ## Contributors
-- [@TKasekamp](https://github.com/TKasekamp) Tõnis Kasekamp 
 - [@stebranchi](https://github.com/stebranchi) Stefano Branchi
-- [@fmmaggi](https://github.com/fmmaggi) Fabrizio Maggi
 - [@dfmchiara](https://github.com/dfmchiara) Chiara Di Francescomarino 
-- [@williamsrizzi](https://github.com/WilliamsRizzi) Williams Rizzi
+- [@TKasekamp](https://github.com/TKasekamp) Tõnis Kasekamp 
 - [@mrsonuk](https://github.com/mrsonuk) Santosh Kumar
+- [@fmmaggi](https://github.com/fmmaggi) Fabrizio Maggi
+- [@WilliamsRizzi](https://github.com/WilliamsRizzi) Williams Rizzi
+- [@HitLuca](https://github.com/HitLuca) Luca Simonetto

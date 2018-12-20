@@ -7,6 +7,7 @@ const defaults = {
   'max_depth': null,
   'max_features': null
 };
+
 /* eslint-disable no-invalid-this */
 const RegressionRandomForest = (props) => {
   const methodConfig = `regression.randomForest`;

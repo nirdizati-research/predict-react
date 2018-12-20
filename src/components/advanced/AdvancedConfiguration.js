@@ -16,6 +16,8 @@ import AddColumns from './AddColumns';
 import KMeans from './KMeans';
 import RegressionXGBoost from './RegressionXGBoost';
 import ClassificationXGBoost from './ClassificationXGBoost';
+import RegressionRNN from './RegressionRNN';
+import RegressionNN from './RegressionNN';
 
 const knnUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html';
 const decisionTreeUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html';
@@ -27,6 +29,9 @@ const regressorLasso = 'http://scikit-learn.org/stable/modules/generated/sklearn
 const regressorLinear = 'http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html';
 const regressorXGboost = 'https://xgboost.readthedocs.io/en/latest/python/python_api.html#xgboost.XGBRegressor';
 const classificationXGboost = 'https://xgboost.readthedocs.io/en/latest/python/python_api.html#xgboost.XGBClassifier';
+// const regressorRNN = 'https://keras.io/';  // TODO: put meaningful link
+const regressorNN = 'https://keras.io/';  // TODO: put meaningful link
+
 const kmeansUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html';
 const hyperUrl = 'http://hyperopt.github.io/hyperopt/';
 const AdvancedConfiguration = (props) => {
@@ -55,7 +60,11 @@ const AdvancedConfiguration = (props) => {
     'regression.randomForest': makeExpander('Random forest regressor', regressorRF,
       <RegressionRandomForest onChange={props.onChange} {...props}/>),
     'regression.xgboost': makeExpander('XGBoost tree boost regressor', regressorXGboost,
-      <RegressionXGBoost onChange={props.onChange} {...props}/>)
+      <RegressionXGBoost onChange={props.onChange} {...props}/>),
+    // 'regression.rnn': makeExpander('RNN regressor', regressorRNN,
+    //     <RegressionRNN onChange={props.onChange} {...props}/>),
+    'regression.nn': makeExpander('NN regressor', regressorNN,
+        <RegressionNN onChange={props.onChange} {...props}/>)
   };
 
 

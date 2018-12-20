@@ -13,6 +13,7 @@ import HyperOpt from '../src/components/advanced/HyperOpt';
 import Labelling from '../src/components/advanced/Labelling';
 import RegressionXGBoost from '../src/components/advanced/RegressionXGBoost';
 import ClassificationXGBoost from '../src/components/advanced/ClassificationXGBoost';
+import RegressionRNN from '../src/components/advanced/RegressionRNN';
 
 
 export const label1 = {
@@ -81,6 +82,7 @@ storiesOf('Advanced configuration', module)
               <RegressionLasso onChange={console.log}/>
               <RegressionLinear onChange={console.log}/>
               <RegressionXGBoost onChange={console.log}/>
+              <RegressionRNN onChange={console.log}/>
             </Card>
           </div>
         </div>
@@ -134,10 +136,9 @@ storiesOf('Advanced configuration', module)
               <CardText>
                 Some text above
               </CardText>
-              <AdvancedConfiguration predictionMethod={REGRESSION} classification={[]} label={label1}
-                                     traceAttributes={[]} clusterings={[]}
-                                     regression={['randomForest', 'lasso', 'linear', 'xgboost']}
-                                     onChange={console.log}/>
+              <AdvancedConfiguration predictionMethod={REGRESSION} label={label1} traceAttributes={[]}
+                                     regression={['randomForest', 'lasso', 'linear', 'xgboost', 'deepLearning']}
+                                     classification={[]} onChange={console.log} clusterings={[]}/>
             </Card>
           </div>
         </div>
