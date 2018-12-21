@@ -1,6 +1,8 @@
 # Nirdizati Research frontend
 [![Build Status](https://travis-ci.org/nirdizati-research/predict-react.svg?branch=master)](https://travis-ci.org/nirdizati-research/predict-react)
 [![Coverage Status](https://coveralls.io/repos/github/nirdizati-research/predict-react/badge.svg?branch=master)](https://coveralls.io/github/TKasekamp/predict-react?branch=master)
+[![License MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![HitCount](http://hits.dwyl.io/nirdizati-research/predict-react.svg)](http://hits.dwyl.io/nirdizati-research/predict-react)
 
 React frontend to perform Predictive Monitoring analysis over event logs.
 
