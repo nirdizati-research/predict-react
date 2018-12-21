@@ -24,8 +24,10 @@ export const RANDOM_FOREST = 'randomForest';
 export const LINEAR = 'linear';
 export const LASSO = 'lasso';
 export const XGBOOST = 'xgboost';
-// export const RNN = 'rnn';
 export const NN = 'nn';
+
+// rnn methods
+// export const RNN = 'rnn';
 
 // encoding methods
 export const SIMPLE_INDEX = 'simpleIndex';
@@ -82,6 +84,10 @@ const classification = [
   {
     label: 'XGBoost',
     value: XGBOOST
+  },
+  {
+    label: 'NN',
+    value: NN
   },
 ];
 
@@ -143,10 +149,6 @@ const regression = [
     label: 'XGBoost',
     value: XGBOOST
   },
-  // {
-  //   label: 'RNN',
-  //   value: RNN
-  // },
   {
     label: 'NN',
     value: NN

@@ -78,12 +78,13 @@ const initialAdvancedConfiguration = () => {
     [`${CLASSIFICATION}.randomForest`]: {},
     [`${CLASSIFICATION}.decisionTree`]: {},
     [`${CLASSIFICATION}.xgboost`]: {},
+    [`${CLASSIFICATION}.nn`]: {},
     [`${REGRESSION}.randomForest`]: {},
     [`${REGRESSION}.lasso`]: {},
     [`${REGRESSION}.linear`]: {},
     [`${REGRESSION}.xgboost`]: {},
-    // [`${REGRESSION}.rnn`]: {},
-    [`${REGRESSION}.nn`]: {}
+    [`${REGRESSION}.nn`]: {},
+    // [`${REGRESSION}.rnn`]: {}
   };
 };
 
@@ -229,12 +230,13 @@ class TrainingFormCard extends Component {
         [`${CLASSIFICATION}.randomForest`]: this.state[`${CLASSIFICATION}.randomForest`],
         [`${CLASSIFICATION}.decisionTree`]: this.state[`${CLASSIFICATION}.decisionTree`],
         [`${CLASSIFICATION}.xgboost`]: this.state[`${CLASSIFICATION}.xgboost`],
+        [`${CLASSIFICATION}.nn`]: this.state[`${CLASSIFICATION}.nn`],
         [`${REGRESSION}.randomForest`]: this.state[`${REGRESSION}.randomForest`],
         [`${REGRESSION}.lasso`]: this.state[`${REGRESSION}.lasso`],
         [`${REGRESSION}.linear`]: this.state[`${REGRESSION}.linear`],
         [`${REGRESSION}.xgboost`]: this.state[`${REGRESSION}.xgboost`],
-        // [`${REGRESSION}.rnn`]: this.state[`${REGRESSION}.rnn`],
-        [`${REGRESSION}.nn`]: this.state[`${REGRESSION}.nn`]
+        [`${REGRESSION}.nn`]: this.state[`${REGRESSION}.nn`],
+        // [`${REGRESSION}.rnn`]: this.state[`${REGRESSION}.rnn`]
       }
     };
   }

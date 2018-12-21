@@ -70,7 +70,7 @@ const initialState = {
 const initialFilters = {
   encodings: [SIMPLE_INDEX, BOOLEAN, FREQUENCY, COMPLEX, LAST_PAYLOAD],
   clusterings: [NO_CLUSTER, KMEANS],
-  classification: [KNN, DECISION_TREE, RANDOM_FOREST, XGBOOST],
+  classification: [KNN, DECISION_TREE, RANDOM_FOREST, XGBOOST, NN],
   regression: [LINEAR, LASSO, RANDOM_FOREST, XGBOOST, NN],
   label: initialLabels.remainingTime,
   padding: NO_PADDING
