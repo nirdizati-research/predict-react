@@ -17,10 +17,9 @@ const defaults = {
     'remove_poor_atts': false,
     'no_preprune': false,
     'leaf_prediction': 'nba',
-    'nb_threshold': 0,
-    'incremental_trains': 3
+    'nb_threshold': 0
 };
-/* eslint-disable no-invalid-this */
+
 const ClassificationAdaptiveTree = (props) => {
     const methodConfig = `${CLASSIFICATION}.${ADAPTIVE_TREE}`;
 

@@ -1,20 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {TextField} from 'react-md/lib/index';
+import SelectField from 'react-md/lib/SelectFields';
 import {
     CLASSIFICATION,
-    REGRESSION,
 } from '../../reference';
+import {selectLabelProptype} from '../../propTypes';
+import {modelsToString} from '../../util/dataReducers';
 
-const methodConfig = 'incremental_trains';
-/* eslint-disable no-invalid-this */
-/* eslint-disable react/prop-types */
+const defaults = {
+    'incremental_base_model': null
+};
+
+const methodConfig = 'incremental_train';
+
 const Incremental = (props) => {
     const helpText = () => {
         if (props.predictionMethod === CLASSIFICATION) {
             return <div key='key' className="md-cell md-cell--12"><p>
-                When training one might want to simulate a incremental algorithm, feeding the algorithm partial
-                increment of the initial dataset.
+                When training one might want to update a pre-existing model instead of training a brand new model.
             </p>
             </div>;
         } else {
@@ -25,44 +28,31 @@ const Incremental = (props) => {
         }
     };
 
-    const incrementalTrains = (label) => {
-        if (props.predictionMethod === CLASSIFICATION) {
-            const incrementalTrainsN = <TextField
-                key="incremental_trains"
-                id="incremental_trains"
-                label={'incremental_trains'}
-                type="number"
-                value={label.incremental_trains}
-                onChange={props.onChange.bind(this, {methodConfig, key: 'incremental_trains', isNumber: true})}
-                min={0}
-                defaultValue={0}
-                className="md-cell md-cell--3"
-            />;
-
-            return [incrementalTrainsN];
-        } else {
-            const incrementalTrainsN = <TextField
-                key="incremental_trains"
-                id="incremental_trains"
-                label={'incremental_trains'}
-                type="number"
-                value={label.incremental_trains}
-                onChange={props.onChange.bind(this, {methodConfig, key: 'incremental_trains', isNumber: true})}
-                min={0}
-                defaultValue={0}
-                max={0}
-                className="md-cell md-cell--3"
-            />;
-
-            return [incrementalTrainsN];
-        }
+    const makeModelSelector = (onChange) => {
+        const availableModels = modelsToString(props.classificationModels);
+        return [<SelectField
+            key="base_model"
+            id="base_model"
+            label={'Base model'}
+            menuItems={availableModels}
+            defaultValue={defaults.incremental_base_model}
+            position={SelectField.Positions.TOP_LEFT}
+            onChange={onChange.bind(this, {methodConfig, key: 'base_model'})}
+            required
+        />];
     };
 
-    return [helpText(), ...incrementalTrains(props.label)];
+    if (props.predictionMethod === CLASSIFICATION) {
+        return [helpText(), ...makeModelSelector(props.onChange,
+            props.predictionMethod, props.classificationModels)];
+    } else {
+        return [helpText()];
+    }
 };
 
 Incremental.propTypes = {
-    onChange: PropTypes.func.isRequired,
-    predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION]).isRequired
+    baseModel: selectLabelProptype,
+    classificationModels: selectLabelProptype,
+    onChange: PropTypes.func.isRequired
 };
 export default Incremental;

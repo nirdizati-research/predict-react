@@ -31,11 +31,10 @@ import {
     DECISION_TREE,
     XGBOOST,
     LASSO,
-    LINEAR,
-    NUMBER_OF_INCREMENTS,
+    LINEAR
 } from '../reference';
 import CheckboxGroup from './training/CheckboxGroup';
-import {fetchStatePropType, selectLabelProptype, traceAttributeShape} from '../propTypes';
+import {fetchStatePropType, modelPropType, selectLabelProptype, traceAttributeShape} from '../propTypes';
 import PrefixSelector from './training/PrefixSelector';
 import AdvancedConfiguration from './advanced/AdvancedConfiguration';
 import {classificationMetrics, regressionMetrics} from './advanced/advancedConfig';
@@ -70,8 +69,8 @@ const initialState = (props) => {
       add_resources_used: false,
       add_new_traces: false,
     },
-    incremental_trains: {
-      incremental_trains: 0
+    incremental_train: {
+      base_model: null
     },
     displayWarning: false,
     predictionMethod: predictionMethod,
@@ -210,16 +209,8 @@ class TrainingFormCard extends Component {
       case LABELLING:
         this.props.onSubmit(this.getLabellingPayload());
         break;
-      case NUMBER_OF_INCREMENTS:
-        this.props.onSubmit(this.getNumberOfIncrementsPayload());
       // no default
     }
-  }
-
-  getNumberOfIncrementsPayload() {
-    return {
-      incremental_trains: this.state.incremental_trains
-    };
   }
 
   getLabellingPayload() {
@@ -243,7 +234,7 @@ class TrainingFormCard extends Component {
         clusterings: this.state.clusterings,
         methods: methods,
         label: this.state.label,
-        incremental_trains: this.state.incremental_trains,
+        incremental_train: this.state.incremental_train,
         create_models: this.state.create_models,
         add_elapsed_time: this.state.add_elapsed_time,
         hyperopt: this.state.hyperopt,
@@ -330,12 +321,15 @@ class TrainingFormCard extends Component {
                             maxEventsInLog={this.props.maxEventsInLog} isLabelForm={this.props.isLabelForm}/>
           </div>
         </CardText>
-        <AdvancedConfiguration classification={this.state.classification} regression={this.state.regression}
+        <AdvancedConfiguration classification={this.state.classification}
+                               regression={this.state.regression}
                                onChange={this.advanceConfigChange.bind(this)}
-                               incremental_trains={this.state.incremental_trains}
                                label={this.state.label}
-                               traceAttributes={this.props.traceAttributes} clusterings={this.state.clusterings}
-                               predictionMethod={this.state.predictionMethod}/>
+                               traceAttributes={this.props.traceAttributes}
+                               clusterings={this.state.clusterings}
+                               predictionMethod={this.state.predictionMethod}
+                               classificationModels={this.props.classificationModels}
+                               onModelChange={this.props.onModelChange}/>
 
         <CardText>
           <div className="md-grid md-grid--no-spacing">
@@ -364,7 +358,9 @@ TrainingFormCard.propTypes = {
   onSplitChange: PropTypes.func.isRequired,
   maxEventsInLog: PropTypes.number.isRequired,
   isLabelForm: PropTypes.bool,
-  traceAttributes: PropTypes.arrayOf(PropTypes.shape(traceAttributeShape)).isRequired
+  traceAttributes: PropTypes.arrayOf(PropTypes.shape(traceAttributeShape)).isRequired,
+  classificationModels: PropTypes.arrayOf(modelPropType).isRequired,
+  onModelChange: PropTypes.func.isRequired
 };
 
 export default TrainingFormCard;

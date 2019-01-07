@@ -13,7 +13,7 @@ import RegressionRandomForest from './RegressionRandomForest';
 import RegressionLasso from './RegressionLasso';
 import RegressionLinear from './RegressionLinear';
 import HyperOpt from './HyperOpt';
-import {labelPropType, traceAttributeShape, incrementalTrains} from '../../propTypes';
+import {labelPropType, modelPropType, traceAttributeShape} from '../../propTypes';
 import Labelling from './Labelling';
 import AddColumns from './AddColumns';
 import KMeans from './KMeans';
@@ -100,21 +100,30 @@ const AdvancedConfiguration = (props) => {
     <Labelling onChange={props.onChange} label={props.label}
                predictionMethod={props.predictionMethod} {...props}/>, true);
 
-  const incremental = makeExpander('Increments', '',
-      <Incremental onChange={props.onChange}
-               predictionMethod={props.predictionMethod} {...props}/>, true);
+  const incremental = () => {
+      if (props.classification.concat(props.regression)
+          .some(element=> element.includes(['incremental']))) {
+        return [makeExpander('Increments', '',
+            <Incremental onChange={props.onChange}
+                         classificationModels={props.classificationModels} {...props}/>)];
+      } else {
+        return [];
+      }
+  };
 
   const configs = () => {
     if (props.predictionMethod === REGRESSION) {
-      return [addColumns(), ...kmeans(), hyperOpt(), ...configMapper(props.regression, regressionConfigMap)];
+      return [
+          addColumns(), ...kmeans(), hyperOpt(), incremental(), ...configMapper(props.regression, regressionConfigMap)];
     } else if (props.predictionMethod === CLASSIFICATION) {
-      return [addColumns(), ...kmeans(), hyperOpt(), ...configMapper(props.classification, classConfigMap)];
+      return [
+          addColumns(), ...kmeans(), hyperOpt(), incremental(), ...configMapper(props.classification, classConfigMap)];
     } else {
       return [];
     }
   };
 
-  return <ExpansionList>{[label, incremental, ...configs()]}</ExpansionList>;
+  return <ExpansionList>{[label, ...configs()]}</ExpansionList>;
 };
 
 AdvancedConfiguration.propTypes = {
@@ -125,6 +134,7 @@ AdvancedConfiguration.propTypes = {
   label: PropTypes.shape(labelPropType).isRequired,
   predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, LABELLING]).isRequired,
   traceAttributes: PropTypes.arrayOf(PropTypes.shape(traceAttributeShape)).isRequired,
-  incremental_trains: incrementalTrains
+  classificationModels: PropTypes.arrayOf(modelPropType).isRequired,
+  onModelChange: PropTypes.func.isRequired
 };
 export default AdvancedConfiguration;

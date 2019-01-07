@@ -9,7 +9,7 @@ const defaults = {
     'fit_prior': true,
     'incremntalTrains': 3
 };
-/* eslint-disable no-invalid-this */
+
 const ClassificationNaiveBayes = (props) => {
     const methodConfig = `${CLASSIFICATION}.${INCREMENTAL_NAIVE_BAYES}`;
 

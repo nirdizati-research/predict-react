@@ -106,7 +106,7 @@ export default class ServerUpload extends PureComponent {
   };
 
   dismiss = () => {
-    const [,...toasts] = [this.state];
+    const [, ...toasts] = [this.state];
     this.setState({toasts});
   };
 

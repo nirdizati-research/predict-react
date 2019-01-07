@@ -27,8 +27,8 @@ import PropTypes from 'prop-types';
  */
 
 
-export const incrementalTrains = {
-  incremental_trains: PropTypes.number.isRequired
+export const incrementalTrain = {
+  incremental_train: PropTypes.number.isRequired
 };
 
 const hyperOptShape = {

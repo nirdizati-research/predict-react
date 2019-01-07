@@ -44,11 +44,11 @@ const classTableColumns = [
   },
   {
     type: 'number',
-    label: 'Accuracy',
+    label: 'AUC',
   },
   {
     type: 'number',
-    label: 'AUC',
+    label: 'Accuracy',
   },
   {
     type: 'string',
