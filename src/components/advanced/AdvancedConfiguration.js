@@ -20,6 +20,8 @@ import KMeans from './KMeans';
 import RegressionXGBoost from './RegressionXGBoost';
 import ClassificationXGBoost from './ClassificationXGBoost';
 import Incremental from './Incremental';
+import ClassificationSGDClassifier from './ClassificationSGDClassifier';
+import ClassificationPerceptronClassifier from "./ClassificationPerceptron";
 
 const knnUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html';
 const decisionTreeUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html';
@@ -37,6 +39,10 @@ const classificationHoeffdingTree = 'https://scikit-multiflow.github.io/scikit-m
     'trees.hoeffding_tree.html';
 const classificationAdaptiveTree = 'https://scikit-multiflow.github.io/scikit-multiflow/skmultiflow.classification.' +
     'trees.hoeffding_adaptive_tree.html';
+const classificationSGDClassifier = 'https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.' +
+    'SGDClassifier.html#sklearn.linear_model.SGDClassifier';
+const classificationPerceptron = 'https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.' +
+    'Perceptron.html#sklearn.linear_model.Perceptron';
 const kmeansUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html';
 const hyperUrl = 'http://hyperopt.github.io/hyperopt/';
 const AdvancedConfiguration = (props) => {
@@ -60,7 +66,11 @@ const AdvancedConfiguration = (props) => {
     'classification.incrementalHoeffdingTree': makeExpander('Hoeffding Tree classifier', classificationHoeffdingTree,
       <ClassificationHoeffdingTree onChange={props.onChange} {...props}/>),
     'classification.incrementalHAT': makeExpander('Adaptive Tree classifier', classificationAdaptiveTree,
-      <ClassificationAdaptiveTree onChange={props.onChange} {...props}/>)
+      <ClassificationAdaptiveTree onChange={props.onChange} {...props}/>),
+    'classification.incrementalSGDClassifier': makeExpander('SGD Classifier', classificationSGDClassifier,
+      <ClassificationSGDClassifier onChange={props.onChange} {...props}/>),
+    'classification.incrementalPerceptron': makeExpander('Perceptron', classificationPerceptron,
+      <ClassificationPerceptronClassifier onChange={props.onChange} {...props}/>)
   };
 
   const regressionConfigMap = {

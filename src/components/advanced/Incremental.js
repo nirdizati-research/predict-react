@@ -29,7 +29,8 @@ const Incremental = (props) => {
     };
 
     const makeModelSelector = (onChange) => {
-        const availableModels = modelsToString(props.classificationModels);
+        const availableModels = modelsToString(props.classificationModels).concat(
+            [{value: null, label: 'None'}]);
         return [<SelectField
             key="base_model"
             id="base_model"

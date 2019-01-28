@@ -37,6 +37,39 @@ export const leafPredictionHoeffding = [
     }
 ];
 
+export const lossSGDClassifier = [
+    {value: 'hinge', label: 'Hinge'},
+    {value: 'log', abel: 'Log'},
+    {value: 'modified_huber', label: 'Modified huber'},
+    {value: 'squared_hinge', label: 'Squared hinge'},
+    {value: 'perceptron', label: 'Perceptron'},
+    {value: 'squared_loss', label: 'Squared loss'},
+    {value: 'huber', label: 'Huber'},
+    {value: 'epsilon_insensitive', label: 'Epsilon insensitive'},
+    {value: 'squared_epsilon_insensitive', label: 'Squared epsilon insensitive'}
+];
+
+export const penaltySGDClassifier = [
+    {value: 'None', label: 'None'},
+    {value: 'l1', label: 'l1'},
+    {value: 'l2', label: 'l2'},
+    {value: 'elasticnet', label: 'Elastic net'},
+];
+
+export const penaltyPerceptron = [
+    {value: 'None', label: 'None'},
+    {value: 'l1', label: 'l1'},
+    {value: 'l2', label: 'l2'},
+    {value: 'elasticnet', label: 'Elastic net'},
+];
+
+export const learningRateSGDClassifier = [
+    {value: 'constant', label: 'Constant'},
+    {value: 'optimal', label: 'Optimal'},
+    {value: 'invscaling', label: 'Inv scaling'},
+    {value: 'adaptive', label: 'Adaptive'},
+];
+
 export const regressionMetrics = [
   {
     value: 'rmse',

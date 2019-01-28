@@ -16,28 +16,28 @@ import {
 import {MODEL_CHANGED} from '../actions/ModelActions';
 import {JOB_RUN_CHANGED} from '../actions/RuntimeActions';
 import {
-    BOOLEAN,
-    COMPLEX,
-    REMAINING_TIME,
-    SIMPLE_INDEX,
-    NO_PADDING,
-    LASSO,
-    RANDOM_FOREST,
-    XGBOOST,
-    DECISION_TREE,
-    INCREMENTAL_NAIVE_BAYES,
-    ADAPTIVE_TREE,
-    HOEFFDING_TREE,
-    DURATION,
-    FREQUENCY,
-    KMEANS,
-    KNN,
-    LABELLING,
-    LAST_PAYLOAD,
-    LINEAR,
-    NO_CLUSTER,
-    REGRESSION,
-    THRESHOLD_MEAN
+  BOOLEAN,
+  COMPLEX,
+  REMAINING_TIME,
+  SIMPLE_INDEX,
+  NO_PADDING,
+  LASSO,
+  RANDOM_FOREST,
+  XGBOOST,
+  DECISION_TREE,
+  INCREMENTAL_NAIVE_BAYES,
+  ADAPTIVE_TREE,
+  HOEFFDING_TREE,
+  DURATION,
+  FREQUENCY,
+  KMEANS,
+  KNN,
+  LABELLING,
+  LAST_PAYLOAD,
+  LINEAR,
+  NO_CLUSTER,
+  REGRESSION,
+  THRESHOLD_MEAN, SGDCLASSIFIER, PERCEPTRON
 } from '../reference';
 import {labelCompare} from '../util/labelCompare';
 import {addListToStore, removeFromStore} from './genericHelpers';
@@ -71,7 +71,8 @@ const initialState = {
 const initialFilters = {
   encodings: [SIMPLE_INDEX, BOOLEAN, FREQUENCY, COMPLEX, LAST_PAYLOAD],
   clusterings: [NO_CLUSTER, KMEANS],
-  classification: [KNN, DECISION_TREE, RANDOM_FOREST, XGBOOST, INCREMENTAL_NAIVE_BAYES, HOEFFDING_TREE, ADAPTIVE_TREE],
+  classification: [KNN, DECISION_TREE, RANDOM_FOREST, XGBOOST, INCREMENTAL_NAIVE_BAYES, HOEFFDING_TREE, ADAPTIVE_TREE,
+    SGDCLASSIFIER, PERCEPTRON],
   regression: [LINEAR, LASSO, RANDOM_FOREST, XGBOOST],
   label: initialLabels.remainingTime,
   padding: NO_PADDING

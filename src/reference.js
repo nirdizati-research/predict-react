@@ -20,6 +20,8 @@ export const RANDOM_FOREST = 'randomForest';
 export const INCREMENTAL_NAIVE_BAYES = 'incrementalMultinomialNB';
 export const HOEFFDING_TREE = 'incrementalHoeffdingTree';
 export const ADAPTIVE_TREE = 'incrementalHAT';
+export const SGDCLASSIFIER = 'incrementalSGDClassifier';
+export const PERCEPTRON = 'incrementalPerceptron';
 // regression methods
 export const LINEAR = 'linear';
 export const LASSO = 'lasso';
@@ -94,6 +96,14 @@ const classification = [
   {
     label: 'Adaptive Tree',
     value: ADAPTIVE_TREE
+  },
+  {
+    label: 'SGD Classifier',
+    value: SGDCLASSIFIER
+  },
+  {
+    label: 'Perceptron',
+    value: PERCEPTRON
   }
 ];
 
