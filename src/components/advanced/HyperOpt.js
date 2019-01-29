@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Checkbox, TextField} from 'react-md/lib/index';
-import {CLASSIFICATION, REGRESSION} from '../../reference';
-import {classificationMetrics, regressionMetrics} from './advancedConfig';
+import {CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION} from '../../reference';
+import {classificationMetrics, regressionMetrics, timeSeriesPredictionMetrics} from './advancedConfig';
 import SelectField from 'react-md/lib/SelectFields/index';
 
 // Has to be changed in TrainingFormCard
@@ -41,7 +41,14 @@ const HyperOpt = (props) => {
 
   // Terrible hack to force the metric to change when prediction method changes
   const makeMetric = (predictionMethod, onChange) => {
-    const labels = predictionMethod === REGRESSION ? regressionMetrics : classificationMetrics;
+      let labels;
+      if (predictionMethod === REGRESSION) {
+          labels = regressionMetrics;
+      } else if (predictionMethod === CLASSIFICATION) {
+          labels = classificationMetrics;
+      } else if (predictionMethod === TIME_SERIES_PREDICTION) {
+          labels = timeSeriesPredictionMetrics;
+      }
     return <SelectField
       key="performance_metric"
       id="performance_metric"
@@ -59,6 +66,6 @@ const HyperOpt = (props) => {
 
 HyperOpt.propTypes = {
   onChange: PropTypes.func.isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION]).isRequired
+    predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION]).isRequired
 };
 export default HyperOpt;

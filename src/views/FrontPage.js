@@ -6,20 +6,22 @@ import {ClassificationMethodsCard} from '../components/static/ClassificationMeth
 import {RegressionMethodsCard} from '../components/static/RegressionMethodsCard';
 import {HyperOptCard} from '../components/static/HyperOptCard';
 import {DemoVideoCard} from '../components/static/DemoVideoCard';
+import {TimeSeriesPredictionMethodsCard} from '../components/static/TimeSeriesPredictionMethodsCard';
 
 class FrontPage extends Component {
-  render() {
-    return (
-      <div className="md-grid">
-        <WalkThrough/>
-        <DemoVideoCard/>
-        <HyperOptCard/>
-        <EncodingByLogCard/>
-        <ClassificationMethodsCard/>
-        <RegressionMethodsCard/>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div className="md-grid">
+                <WalkThrough/>
+                <DemoVideoCard/>
+                <HyperOptCard/>
+                <EncodingByLogCard/>
+                <ClassificationMethodsCard/>
+                <RegressionMethodsCard/>
+                <TimeSeriesPredictionMethodsCard/>
+            </div>
+        );
+    }
 }
 
 FrontPage.propTypes = {};

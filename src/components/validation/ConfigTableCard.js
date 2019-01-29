@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import PropTypes from 'prop-types';
 import ConfigTable from './ConfigTable';
-import {CLASSIFICATION, LABELLING, REGRESSION} from '../../reference';
+import {CLASSIFICATION, LABELLING, REGRESSION, TIME_SERIES_PREDICTION} from '../../reference';
 import {jobPropType} from '../../propTypes';
 import {jobToValidationTable} from '../../util/dataReducers';
 import LabelConfigTable from './LabelConfigTable';
@@ -19,6 +19,8 @@ class ConfigTableCard extends Component {
         return <ConfigTable jobs={flatJobs}/>;
       case CLASSIFICATION:
         return <ConfigTable jobs={flatJobs}/>;
+        case TIME_SERIES_PREDICTION:
+            return <ConfigTable jobs={flatJobs}/>;
       case LABELLING:
         return <LabelConfigTable jobs={flatJobs} onClick={this.props.onClick}/>;
       // no default
@@ -46,7 +48,7 @@ class ConfigTableCard extends Component {
 
 ConfigTableCard.propTypes = {
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, LABELLING]).isRequired,
+    predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION, LABELLING]).isRequired,
   onClick: PropTypes.func
 };
 export default ConfigTableCard;

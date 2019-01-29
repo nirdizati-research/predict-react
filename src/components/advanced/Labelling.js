@@ -2,17 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {TextField} from 'react-md/lib/index';
 import {
-  ATTRIBUTE_NUMBER,
-  ATTRIBUTE_STRING,
-  CLASSIFICATION,
-  classLabelControls,
-  controlCreator,
-  DURATION,
-  LABELLING,
-  regLabelControls,
-  REGRESSION,
-  REMAINING_TIME,
-  thresholdControls
+    ATTRIBUTE_NUMBER,
+    ATTRIBUTE_STRING,
+    CLASSIFICATION,
+    classLabelControls,
+    controlCreator,
+    DURATION,
+    LABELLING,
+    regLabelControls,
+    REGRESSION,
+    REMAINING_TIME,
+    thresholdControls,
+    TIME_SERIES_PREDICTION,
+    timeSeriesPredLabelControls
 } from '../../reference';
 import SelectField from 'react-md/lib/SelectFields/index';
 import {labelPropType, traceAttributeShape} from '../../propTypes';
@@ -28,7 +30,18 @@ const Labelling = (props) => {
   const helpText = () => {
     if (props.predictionMethod === REGRESSION) {
       return <div key='key' className="md-cell md-cell--12"/>;
-    } else {
+    } else if (props.predictionMethod === CLASSIFICATION) {
+        return <div key='key' className="md-cell md-cell--12"><p>
+            When using duration, the threshold is an integer in seconds. If the remaining time is below this threshold
+            it
+            is classified as <code>True</code> or Fast. Times above the threshold are classified
+            as <code>False</code> or
+            Slow.
+        </p><p>
+            Number attributes below the threshold are set as <code>True</code>.
+        </p>
+        </div>;
+    } else if (props.predictionMethod === TIME_SERIES_PREDICTION) { //TODO: update
       return <div key='key' className="md-cell md-cell--12"><p>
         When using duration, the threshold is an integer in seconds. If the remaining time is below this threshold
         it
@@ -41,9 +54,25 @@ const Labelling = (props) => {
     }
   };
 
-  const controls = () => (props.predictionMethod === REGRESSION ? regLabelControls : classLabelControls);
 
-  const type = <SelectField
+    var temp;
+    switch (props.predictionMethod) {
+        case REGRESSION:
+            temp = regLabelControls;
+            break;
+        case CLASSIFICATION:
+            temp = classLabelControls;
+            break;
+        case TIME_SERIES_PREDICTION:
+            temp = timeSeriesPredLabelControls;
+            break;
+        default:
+            break;
+    }
+    const controls = () => temp;
+
+
+    const type = <SelectField
     key="type"
     id="type"
     label="Label type"
@@ -118,7 +147,7 @@ const Labelling = (props) => {
 Labelling.propTypes = {
   onChange: PropTypes.func.isRequired,
   label: PropTypes.shape(labelPropType).isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, LABELLING]).isRequired,
+    predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION, LABELLING]).isRequired,
   traceAttributes: PropTypes.arrayOf(PropTypes.shape(traceAttributeShape)).isRequired
 };
 export default Labelling;

@@ -5,7 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Chart} from 'react-google-charts';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
-import {CLASSIFICATION, REGRESSION} from '../../reference';
+import {CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION} from '../../reference';
 import {getTableHeader} from './ColumnHelper';
 import {Button} from 'react-md/lib/Buttons/index';
 import {makeCSV} from '../../util/csvDownload';
@@ -43,7 +43,7 @@ const ResultTableCard = (props) => {
 
 ResultTableCard.propTypes = {
   data: PropTypes.arrayOf(PropTypes.any).isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION]),
+    predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION]),
 };
 
 export default ResultTableCard;

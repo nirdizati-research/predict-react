@@ -3,11 +3,7 @@
  */
 
 import models from '../../reducers/Models';
-import {
-  modelsRequested,
-  modelsRetrieved,
-  modelsFailed,
-} from '../../actions/ModelActions';
+import {modelsFailed, modelsRequested, modelsRetrieved,} from '../../actions/ModelActions';
 
 const modelList = [{
     id: 1,
@@ -55,7 +51,9 @@ const modelList = [{
   }];
 
 const initState = {fetchState: {inFlight: false}, logId: 0, regselected: 0,
-              classelected: 0, models: [], regressionModels: [], classificationModels: [], pLength: 0};
+    classelected: 0, timeseriesclasselected: 0, models: [], regressionModels: [], classificationModels: [],
+    timeSeriesPredictionModels: [], pLength: 0
+};
 
 describe('ModelList', () => {
   it('has nothing initially', () => {

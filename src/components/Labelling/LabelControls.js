@@ -1,21 +1,33 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {
-  ATTRIBUTE_NUMBER,
-  ATTRIBUTE_STRING,
-  classLabelControls,
-  DURATION,
-  regLabelControls,
-  REGRESSION,
-  thresholdControls
+    ATTRIBUTE_NUMBER,
+    ATTRIBUTE_STRING,
+    CLASSIFICATION,
+    classLabelControls,
+    DURATION,
+    regLabelControls,
+    REGRESSION,
+    thresholdControls,
+    TIME_SERIES_PREDICTION,
+    timeSeriesPredLabelControls
 } from '../../reference';
 import SelectField from 'react-md/lib/SelectFields/index';
 
 /* eslint-disable no-invalid-this */
 const methodConfig = 'label';
 const LabelControls = (props) => {
-  const controls = () => (props.predictionMethod === REGRESSION ? regLabelControls : classLabelControls);
-  const labelType = <SelectField
+    let temp;
+    if (props.predictionMethod === REGRESSION) {
+        temp = regLabelControls;
+    } else if (props.predictionMethod === CLASSIFICATION) {
+        temp = classLabelControls;
+    } else if (props.predictionMethod === TIME_SERIES_PREDICTION) {
+        temp = timeSeriesPredLabelControls;
+    }
+    const controls = () => temp;
+
+    const labelType = <SelectField
     key="type"
     id="type"
     label="Label type"

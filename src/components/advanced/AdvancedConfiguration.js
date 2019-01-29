@@ -1,5 +1,5 @@
 import React from 'react';
-import {CLASSIFICATION, KMEANS, LABELLING, REGRESSION} from '../../reference';
+import {CLASSIFICATION, KMEANS, LABELLING, REGRESSION, TIME_SERIES_PREDICTION} from '../../reference';
 import PropTypes from 'prop-types';
 import {ExpansionList} from 'react-md';
 import GenericConfiguration from './GenericConfiguration';
@@ -23,8 +23,7 @@ import RegressionLasso from './RegressionLasso';
 import RegressionXGBoost from './RegressionXGBoost';
 import RegressionNN from './RegressionNN';
 
-
-import RegressionRNN from './RegressionRNN';
+import TimeSeriesPredictionRNN from './TimeSeriesPredictionRNN';
 
 
 const KMeansUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html';
@@ -42,8 +41,7 @@ const regressionLassoUrl = 'http://scikit-learn.org/stable/modules/generated/skl
 const regressionXGBoostUrl = 'https://xgboost.readthedocs.io/en/latest/python/python_api.html#xgboost.XGBRegressor';
 const regressionNNUrl = 'https://keras.io/';  // TODO: put meaningful link
 
-
-// const regressionRNNUrl = 'https://keras.io/';  // TODO: put meaningful link
+const timeSeriesPredictionRNNUrl = 'https://keras.io/';  // TODO: put meaningful link
 
 
 const AdvancedConfiguration = (props) => {
@@ -53,7 +51,7 @@ const AdvancedConfiguration = (props) => {
   };
 
 
-  const classConfigMap = {
+    const classificationConfigMap = {
     'classification.knn': makeExpander('K-Neighbors classifier', classificationKnnUrl, <ClassificationKnn
       onChange={props.onChange}/>),
     'classification.decisionTree': makeExpander('Decision tree classifier', classificationDecisionTreeUrl,
@@ -77,15 +75,13 @@ const AdvancedConfiguration = (props) => {
       <RegressionXGBoost onChange={props.onChange} {...props}/>),
     'regression.nn': makeExpander('NN regressor', regressionNNUrl,
         <RegressionNN onChange={props.onChange} {...props}/>)
-    // 'regression.rnn': makeExpander('RNN regressor', regressorRNN,
-    //     <RegressionRNN onChange={props.onChange} {...props}/>),
   };
 
 
-  // const regressionRNNConfigMap = {
-  //   // 'regression.rnn': makeExpander('RNN regressor', regressorRNN,
-  //   //     <RegressionRNN onChange={props.onChange} {...props}/>)
-  // };
+    const timeSeriesPredictionConfigMap = {
+        'timeSeriesPrediction.rnn': makeExpander('RNN classifier', timeSeriesPredictionRNNUrl,
+            <TimeSeriesPredictionRNN onChange={props.onChange} {...props}/>)
+    };
 
 
   const configMapper = (methods, confMap) => methods.map((method) => {
@@ -118,7 +114,9 @@ const AdvancedConfiguration = (props) => {
     if (props.predictionMethod === REGRESSION) {
       return [addColumns(), ...kmeans(), hyperOpt(), ...configMapper(props.regression, regressionConfigMap)];
     } else if (props.predictionMethod === CLASSIFICATION) {
-      return [addColumns(), ...kmeans(), hyperOpt(), ...configMapper(props.classification, classConfigMap)];
+        return [addColumns(), ...kmeans(), hyperOpt(), ...configMapper(props.classification, classificationConfigMap)];
+    } else if (props.predictionMethod === TIME_SERIES_PREDICTION) {
+        return [addColumns(), ...kmeans(), hyperOpt(), ...configMapper(props.timeSeriesPrediction, timeSeriesPredictionConfigMap)];
     } else {
       return [];
     }
@@ -130,10 +128,11 @@ const AdvancedConfiguration = (props) => {
 AdvancedConfiguration.propTypes = {
   classification: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   regression: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    timeSeriesPrediction: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   clusterings: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.shape(labelPropType).isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, LABELLING]).isRequired,
+    predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION, LABELLING]).isRequired,
   traceAttributes: PropTypes.arrayOf(PropTypes.shape(traceAttributeShape)).isRequired
 };
 export default AdvancedConfiguration;

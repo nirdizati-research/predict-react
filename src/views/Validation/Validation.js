@@ -2,14 +2,14 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import ConfigTableCard from '../../components/validation/ConfigTableCard';
-import {CLASSIFICATION, LABELLING, REGRESSION} from '../../reference';
+import {CLASSIFICATION, LABELLING, REGRESSION, TIME_SERIES_PREDICTION} from '../../reference';
 import {
-  FILTER_LABEL_CHANGED,
-  FILTER_OPTION_CHANGED,
-  FILTER_PREDICTION_METHOD_CHANGED,
-  FILTER_PREFIX_LENGTH_CHANGED,
-  FILTER_SPLIT_CHANGED,
-  jobsRequested
+    FILTER_LABEL_CHANGED,
+    FILTER_OPTION_CHANGED,
+    FILTER_PREDICTION_METHOD_CHANGED,
+    FILTER_PREFIX_LENGTH_CHANGED,
+    FILTER_SPLIT_CHANGED,
+    jobsRequested
 } from '../../actions/JobActions';
 import ValidationHeaderCard from '../../components/validation/ValidationHeaderCard';
 import ResultWrapper from '../../components/validation/ResultWrapper';
@@ -88,7 +88,7 @@ Validation.propTypes = {
   filterOptionChange: PropTypes.func.isRequired,
   labelTypeChange: PropTypes.func.isRequired,
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, LABELLING]).isRequired,
+    predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION, LABELLING]).isRequired,
   splitId: PropTypes.number.isRequired,
   prefixLengths: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
   selectedPrefixes: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
@@ -97,6 +97,7 @@ Validation.propTypes = {
     clusterings: PropTypes.arrayOf(PropTypes.string).isRequired,
     classification: PropTypes.arrayOf(PropTypes.string).isRequired,
     regression: PropTypes.arrayOf(PropTypes.string).isRequired,
+      timeSeriesPrediction: PropTypes.arrayOf(PropTypes.string).isRequired,
     label: PropTypes.any.isRequired,
     padding: PropTypes.string.isRequired,
     attributeNames: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -113,11 +114,12 @@ const mapStateToProps = (state) => ({
   prefixLengths: state.jobs.prefixLengths.sort((a, b) => (a - b)),
   selectedPrefixes: state.jobs.selectedPrefixes,
   filterOptions: (
-    ({encodings, clusterings, classification, regression, label, thresholds, attributeNames, padding}) => ({
+      ({encodings, clusterings, classification, regression, timeSeriesPrediction, label, attributeNames, thresholds, padding}) => ({
       encodings,
       clusterings,
       classification,
       regression,
+          timeSeriesPrediction,
       label, attributeNames, thresholds, padding
     }))(state.jobs)
 });

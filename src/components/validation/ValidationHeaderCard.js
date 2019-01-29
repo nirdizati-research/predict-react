@@ -8,14 +8,16 @@ import PropTypes from 'prop-types';
 import FetchState from './../FetchState';
 import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
 import {
-  CLASSIFICATION,
-  classificationMethods,
-  clustering,
-  encoding,
-  padding,
-  predictionMethods,
-  REGRESSION,
-  regressionMethods
+    CLASSIFICATION,
+    classificationMethods,
+    clustering,
+    encoding,
+    padding,
+    predictionMethods,
+    REGRESSION,
+    regressionMethods,
+    TIME_SERIES_PREDICTION,
+    timeSeriesPredictionMethods
 } from '../../reference';
 import {fetchStatePropType, selectLabelProptype} from '../../propTypes';
 import LabelControls from '../Labelling/LabelControls';
@@ -47,11 +49,19 @@ const ValidationHeaderCard = (props) => {
                                     value={props.filterOptions.regression.join(',')}/>;
     } else if (props.predictionMethod === CLASSIFICATION) {
       return <SelectionControlGroup type="checkbox" controls={classificationMethods} id="classification"
-                                    name='classification' className="md-cell md-cell--12"
-                                    label="Classification methods" onChange={props.filterOptionChange} inline
+                                    name='classification' label="Classification methods"
+                                    onChange={props.filterOptionChange} inline
+                                    className="md-cell md-cell--12"
                                     value={props.filterOptions.classification.join(',')}/>;
+    } else if (props.predictionMethod === TIME_SERIES_PREDICTION) {
+        return <SelectionControlGroup type="checkbox" controls={timeSeriesPredictionMethods}
+                                      id="timeSeriesPrediction"
+                                      name='timeSeriesPrediction' className="md-cell md-cell--12"
+                                      label="Time Series Prediction methods" onChange={props.filterOptionChange}
+                                      inline
+                                      value={props.filterOptions.timeSeriesPrediction.join(',')}/>;
     } else {
-      return null;
+        return null;
     }
   };
 
@@ -115,6 +125,7 @@ ValidationHeaderCard.propTypes = {
     clusterings: PropTypes.arrayOf(PropTypes.string).isRequired,
     classification: PropTypes.arrayOf(PropTypes.string).isRequired,
     regression: PropTypes.arrayOf(PropTypes.string).isRequired,
+      timeSeriesPrediction: PropTypes.arrayOf(PropTypes.string).isRequired,
     label: PropTypes.any.isRequired,
     attributeNames: PropTypes.arrayOf(PropTypes.string).isRequired,
     thresholds: PropTypes.arrayOf(PropTypes.number).isRequired,

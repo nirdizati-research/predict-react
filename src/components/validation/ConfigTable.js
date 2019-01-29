@@ -45,8 +45,8 @@ class ConfigTable extends PureComponent {
               <TableColumn style={columnStyle}>{job.id}</TableColumn>
               <TableColumn style={columnStyle}>{job.type}</TableColumn>
               <TableColumn style={columnStyle}>{job.encodingMethod}</TableColumn>
-              <TableColumn style={columnStyle}>{job.clustering}{job.kmeans ?
-                <JsonHolder data={job.kmeans}/> : null}</TableColumn>
+                <TableColumn style={columnStyle}>{job.clustering}{job.kmeans ?
+                    <JsonHolder data={job.kmeans}/> : null}</TableColumn>
               <TableColumn style={columnStyle}>{job.method}</TableColumn>
               <TableColumn style={columnStyle} numeric>{job.prefix_length}</TableColumn>
               <TableColumn style={columnStyle}><JsonHolder data={job.label}/></TableColumn>
