@@ -17,11 +17,11 @@ export const KMEANS = 'kmeans';
 export const KNN = 'knn';
 export const DECISION_TREE = 'decisionTree';
 export const RANDOM_FOREST = 'randomForest';
-export const INCREMENTAL_NAIVE_BAYES = 'incrementalMultinomialNB';
-export const HOEFFDING_TREE = 'incrementalHoeffdingTree';
-export const ADAPTIVE_TREE = 'incrementalHAT';
-export const SGDCLASSIFIER = 'incrementalSGDClassifier';
-export const PERCEPTRON = 'incrementalPerceptron';
+export const MULTINOMIAL_NAIVE_BAYES = 'MultinomialNB';
+export const HOEFFDING_TREE = 'HoeffdingTree';
+export const ADAPTIVE_TREE = 'HAT';
+export const SGDCLASSIFIER = 'SGDClassifier';
+export const PERCEPTRON = 'Perceptron';
 // regression methods
 export const LINEAR = 'linear';
 export const LASSO = 'lasso';
@@ -87,7 +87,7 @@ const classification = [
   },
   {
     label: 'Naive Bayes',
-    value: INCREMENTAL_NAIVE_BAYES
+    value: MULTINOMIAL_NAIVE_BAYES
   },
   {
     label: 'Hoeffding Tree',

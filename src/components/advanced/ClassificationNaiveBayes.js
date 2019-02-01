@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {TextField} from 'react-md/lib/index';
 import {Checkbox} from 'react-md/lib';
-import {CLASSIFICATION, INCREMENTAL_NAIVE_BAYES} from '../../reference';
+import {CLASSIFICATION, MULTINOMIAL_NAIVE_BAYES} from '../../reference';
 
 const defaults = {
     'alpha': 1.0,
@@ -11,7 +11,7 @@ const defaults = {
 };
 
 const ClassificationNaiveBayes = (props) => {
-    const methodConfig = `${CLASSIFICATION}.${INCREMENTAL_NAIVE_BAYES}`;
+    const methodConfig = `${CLASSIFICATION}.${MULTINOMIAL_NAIVE_BAYES}`;
 
     const alpha = <TextField
         key="alpha"

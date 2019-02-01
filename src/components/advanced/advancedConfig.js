@@ -39,7 +39,7 @@ export const leafPredictionHoeffding = [
 
 export const lossSGDClassifier = [
     {value: 'hinge', label: 'Hinge'},
-    {value: 'log', abel: 'Log'},
+    {value: 'log', label: 'Log'},
     {value: 'modified_huber', label: 'Modified huber'},
     {value: 'squared_hinge', label: 'Squared hinge'},
     {value: 'perceptron', label: 'Perceptron'},

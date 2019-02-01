@@ -1,5 +1,13 @@
 import React from 'react';
-import {CLASSIFICATION, KMEANS, LABELLING, REGRESSION} from '../../reference';
+import {
+  ADAPTIVE_TREE,
+  CLASSIFICATION, DECISION_TREE,
+  HOEFFDING_TREE,
+  KMEANS, KNN,
+  LABELLING, LASSO, LINEAR,
+  MULTINOMIAL_NAIVE_BAYES, PERCEPTRON, RANDOM_FOREST,
+  REGRESSION, SGDCLASSIFIER, XGBOOST
+} from '../../reference';
 import PropTypes from 'prop-types';
 import ClassificationKnn from './ClassificationKnn';
 import ClassificationDecisionTree from './ClassificationDecisionTree';
@@ -53,34 +61,34 @@ const AdvancedConfiguration = (props) => {
 
 
   const classConfigMap = {
-    'classification.knn': makeExpander('K-Neighbors classifier', knnUrl,
+    [`${CLASSIFICATION}.${KNN}`]: makeExpander('K-Neighbors classifier', knnUrl,
         <ClassificationKnn onChange={props.onChange}/>),
-    'classification.decisionTree': makeExpander('Decision tree classifier', decisionTreeUrl,
+    [`${CLASSIFICATION}.${DECISION_TREE}`]: makeExpander('Decision tree classifier', decisionTreeUrl,
       <ClassificationDecisionTree onChange={props.onChange} {...props}/>),
-    'classification.randomForest': makeExpander('Random forest classifier', classRandomForest,
+    [`${CLASSIFICATION}.${RANDOM_FOREST}`]: makeExpander('Random forest classifier', classRandomForest,
       <ClassificationRandomForest onChange={props.onChange} {...props}/>),
-    'classification.xgboost': makeExpander('XGBoost classifier', classificationXGboost,
+    [`${CLASSIFICATION}.${XGBOOST}`]: makeExpander('XGBoost classifier', classificationXGboost,
       <ClassificationXGBoost onChange={props.onChange} {...props}/>),
-    'classification.incrementalMultinomialNB': makeExpander('Naive Bayes classifier', classificationNaiveBayes,
+    [`${CLASSIFICATION}.${MULTINOMIAL_NAIVE_BAYES}`]: makeExpander('Naive Bayes classifier', classificationNaiveBayes,
       <ClassificationNaiveBayes onChange={props.onChange} {...props}/>),
-    'classification.incrementalHoeffdingTree': makeExpander('Hoeffding Tree classifier', classificationHoeffdingTree,
+    [`${CLASSIFICATION}.${HOEFFDING_TREE}`]: makeExpander('Hoeffding Tree classifier', classificationHoeffdingTree,
       <ClassificationHoeffdingTree onChange={props.onChange} {...props}/>),
-    'classification.incrementalHAT': makeExpander('Adaptive Tree classifier', classificationAdaptiveTree,
+    [`${CLASSIFICATION}.${ADAPTIVE_TREE}`]: makeExpander('Adaptive Tree classifier', classificationAdaptiveTree,
       <ClassificationAdaptiveTree onChange={props.onChange} {...props}/>),
-    'classification.incrementalSGDClassifier': makeExpander('SGD Classifier', classificationSGDClassifier,
+    [`${CLASSIFICATION}.${SGDCLASSIFIER}`]: makeExpander('SGD Classifier', classificationSGDClassifier,
       <ClassificationSGDClassifier onChange={props.onChange} {...props}/>),
-    'classification.incrementalPerceptron': makeExpander('Perceptron', classificationPerceptron,
+    [`${CLASSIFICATION}.${PERCEPTRON}`]: makeExpander('Perceptron', classificationPerceptron,
       <ClassificationPerceptronClassifier onChange={props.onChange} {...props}/>)
   };
 
   const regressionConfigMap = {
-    'regression.lasso': makeExpander('Lasso regressor', regressorLasso,
+    [`${REGRESSION}.${LASSO}`]: makeExpander('Lasso regressor', regressorLasso,
       <RegressionLasso onChange={props.onChange} {...props}/>),
-    'regression.linear': makeExpander('Linear regressor', regressorLinear,
+    [`${REGRESSION}.${LINEAR}`]: makeExpander('Linear regressor', regressorLinear,
       <RegressionLinear onChange={props.onChange} {...props}/>),
-    'regression.randomForest': makeExpander('Random forest regressor', regressorRF,
+    [`${REGRESSION}.${RANDOM_FOREST}`]: makeExpander('Random forest regressor', regressorRF,
       <RegressionRandomForest onChange={props.onChange} {...props}/>),
-    'regression.xgboost': makeExpander('XGBoost tree boost regressor', regressorXGboost,
+    [`${REGRESSION}.${XGBOOST}`]: makeExpander('XGBoost tree boost regressor', regressorXGboost,
       <RegressionXGBoost onChange={props.onChange} {...props}/>)
   };
 
