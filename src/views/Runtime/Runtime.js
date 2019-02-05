@@ -127,7 +127,7 @@ const mapStateToProps = (state) => ({
     timeSeriesPredictionModels: state.models.timeSeriesPredictionModels,
   regModelId: state.models.regselected,
   classModelId: state.models.classelected,
-    timeSeriesPredModelId: state.models.timeseriesclasselected,
+    timeSeriesPredModelId: state.models.timeseriespredselected,
   logId: state.models.logId,
   modfetchState: state.models.fetchState,
   logfetchState: state.logs.fetchState,

@@ -21,22 +21,22 @@ describe('Reference', () => {
         expect(clusteringMethods.length).toBe(2);
     });
 
-    it('contains 4 classification', () => {
-        expect(classificationMethods.length).toBe(4);
+    it('contains 5 classification', () => {
+        expect(classificationMethods.length).toBe(5);
     });
 
     it('contains 5 encoding', () => {
         expect(encodingMethods.length).toBe(5);
     });
 
-    it('contains 2 predictions', () => {
-        expect(predictionMethods.length).toBe(2);
+    it('contains 3 predictions', () => {
+        expect(predictionMethods.length).toBe(3);
     });
-    it('contains 4 regressions', () => {
-        expect(regressionMethods.length).toBe(4);
+    it('contains 5 regressions', () => {
+        expect(regressionMethods.length).toBe(5);
     });
 
-    it('contains 3 thresholds', () => {
+    it('contains 2 thresholds', () => {
         expect(thresholdControls.length).toBe(2);
     });
 });

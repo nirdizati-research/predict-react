@@ -20,6 +20,7 @@ describe('Regression', () => {
   const element = shallow(<AdvancedConfiguration predictionMethod={REGRESSION} classification={[]} label={label1}
                                                  traceAttributes={[]} clusterings={[]}
                                                  regression={['randomForest', 'lasso', 'linear', 'xgboost']}
+                                                 timeSeriesPrediction={[]}
                                                  onChange={jest.fn()}/>);
 
   it('standard items', () => {
@@ -45,6 +46,7 @@ describe('Classification', () => {
                                                  classification={['knn', 'decisionTree', 'randomForest', 'xgboost']}
                                                  label={label1}
                                                  traceAttributes={[]} clusterings={[KMEANS]} regression={[]}
+                                                 timeSeriesPrediction={[]}
                                                  onChange={jest.fn()}/>);
 
   it('standard items', () => {
@@ -65,10 +67,13 @@ describe('Classification', () => {
 });
 
 
+//TODO: add timeSeriesPrediction tests
+
 describe('Labelling', () => {
   const element = shallow(<AdvancedConfiguration predictionMethod={LABELLING}
                                                  classification={[]} label={label1}
                                                  traceAttributes={[]} clusterings={[KMEANS]} regression={[]}
+                                                 timeSeriesPrediction={[]}
                                                  onChange={jest.fn()}/>);
 
   it('has no hyperopt', () => {

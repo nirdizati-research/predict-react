@@ -8,7 +8,7 @@ const initialState = {
     logId: 0,
     regselected: 0,
     classelected: 0,
-    timeseriesclasselected: 0,
+    timeseriespredselected: 0,
     regressionModels: [],
     classificationModels: [],
     timeSeriesPredictionModels: [],
@@ -76,10 +76,10 @@ const models = (state = initialState, action) => {
                     classelected,
                 };
             } else if (action.method === TIME_SERIES_PREDICTION) {
-                const timeseriesclasselected = action.modelId;
+                const timeseriespredselected = action.modelId;
                 return {
                     ...state,
-                    timeseriesclasselected,
+                    timeseriespredselected,
                 };
             } else {
                 return null;

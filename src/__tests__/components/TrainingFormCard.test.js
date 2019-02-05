@@ -50,10 +50,13 @@ const regressionPayload = {
     'classification.knn': {},
     'classification.randomForest': {},
     'classification.xgboost': {},
+    'classification.nn': {},
     'regression.lasso': {},
     'regression.linear': {},
     'regression.randomForest': {},
     'regression.xgboost': {},
+    'regression.nn': {},
+    'timeSeriesPrediction.rnn': {}
   }
 };
 
