@@ -21,8 +21,8 @@ describe('Reference', () => {
         expect(clusteringMethods.length).toBe(2);
     });
 
-    it('contains 5 classification', () => {
-        expect(classificationMethods.length).toBe(5);
+    it('contains 10 classification', () => {
+        expect(classificationMethods.length).toBe(10);
     });
 
     it('contains 5 encoding', () => {

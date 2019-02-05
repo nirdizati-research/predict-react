@@ -28,6 +28,10 @@ import PropTypes from 'prop-types';
  */
 
 
+export const incrementalTrain = {
+  incremental_train: PropTypes.number.isRequired
+};
+
 const hyperOptShape = {
     use_hyperopt: PropTypes.bool.isRequired,
     max_evals: PropTypes.number.isRequired,

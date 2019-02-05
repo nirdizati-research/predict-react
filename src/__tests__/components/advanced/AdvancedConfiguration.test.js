@@ -15,13 +15,18 @@ import ClassificationDecisionTree from '../../../components/advanced/Classificat
 import RegressionXGBoost from '../../../components/advanced/RegressionXGBoost';
 import ClassificationXGBoost from '../../../components/advanced/ClassificationXGBoost';
 
+const onModelChange = jest.fn();
 
 describe('Regression', () => {
   const element = shallow(<AdvancedConfiguration predictionMethod={REGRESSION} classification={[]} label={label1}
                                                  traceAttributes={[]} clusterings={[]}
                                                  regression={['randomForest', 'lasso', 'linear', 'xgboost']}
                                                  timeSeriesPrediction={[]}
-                                                 onChange={jest.fn()}/>);
+                                                 onChange={jest.fn()}
+                                                 classificationModels={[]}
+                                                 regressionModels={[]}
+                                                 timeSeriesPredictionModels={[]}
+                                                 onModelChange={onModelChange}/>);
 
   it('standard items', () => {
     expect(element.find(HyperOpt).length).toBe(1);
@@ -47,7 +52,11 @@ describe('Classification', () => {
                                                  label={label1}
                                                  traceAttributes={[]} clusterings={[KMEANS]} regression={[]}
                                                  timeSeriesPrediction={[]}
-                                                 onChange={jest.fn()}/>);
+                                                 onChange={jest.fn()}
+                                                 classificationModels={[]}
+                                                 regressionModels={[]}
+                                                 timeSeriesPredictionModels={[]}
+                                                 onModelChange={onModelChange}/>);
 
   it('standard items', () => {
     expect(element.find(HyperOpt).length).toBe(1);
@@ -74,7 +83,11 @@ describe('Labelling', () => {
                                                  classification={[]} label={label1}
                                                  traceAttributes={[]} clusterings={[KMEANS]} regression={[]}
                                                  timeSeriesPrediction={[]}
-                                                 onChange={jest.fn()}/>);
+                                                 onChange={jest.fn()}
+                                                 classificationModels={[]}
+                                                 regressionModels={[]}
+                                                 timeSeriesPredictionModels={[]}
+                                                 onModelChange={onModelChange}/>);
 
   it('has no hyperopt', () => {
     expect(element.find(HyperOpt).length).toBe(0);

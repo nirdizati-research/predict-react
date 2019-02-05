@@ -1,10 +1,28 @@
 import React from 'react';
-import {CLASSIFICATION, KMEANS, LABELLING, REGRESSION, TIME_SERIES_PREDICTION} from '../../reference';
-import PropTypes from 'prop-types';
+import {
+  ADAPTIVE_TREE,
+  CLASSIFICATION,
+  DECISION_TREE,
+  HOEFFDING_TREE,
+  KMEANS,
+  KNN,
+  LABELLING,
+  LASSO,
+  LINEAR,
+  MULTINOMIAL_NAIVE_BAYES,
+  NN,
+  PERCEPTRON,
+  RANDOM_FOREST,
+  REGRESSION,
+  RNN,
+  SGDCLASSIFIER,
+  TIME_SERIES_PREDICTION,
+  XGBOOST
+} from '../../reference';
+
+import {labelPropType, modelPropType, traceAttributeShape} from '../../propTypes';
 import {ExpansionList} from 'react-md';
 import GenericConfiguration from './GenericConfiguration';
-import {labelPropType, traceAttributeShape} from '../../propTypes';
-
 
 import KMeans from './KMeans';
 import HyperOpt from './HyperOpt';
@@ -15,6 +33,11 @@ import ClassificationKnn from './ClassificationKnn';
 import ClassificationDecisionTree from './ClassificationDecisionTree';
 import ClassificationRandomForest from './ClassificationRandomForest';
 import ClassificationXGBoost from './ClassificationXGBoost';
+import ClassificationNaiveBayes from './ClassificationNaiveBayes';
+import ClassificationHoeffdingTree from './ClassificationHoeffdingTree';
+import ClassificationAdaptiveTree from './ClassificationAdaptiveTree';
+import ClassificationSGDClassifier from './ClassificationSGDClassifier';
+import ClassificationPerceptronClassifier from './ClassificationPerceptron';
 import ClassificationNN from './ClassificationNN';
 
 import RegressionLinear from './RegressionLinear';
@@ -25,6 +48,7 @@ import RegressionNN from './RegressionNN';
 
 import TimeSeriesPredictionRNN from './TimeSeriesPredictionRNN';
 
+import Incremental from './Incremental';
 
 const KMeansUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html';
 const HyperOptUrl = 'http://hyperopt.github.io/hyperopt/';
@@ -33,6 +57,11 @@ const classificationKnnUrl = 'http://scikit-learn.org/stable/modules/generated/s
 const classificationDecisionTreeUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html';
 const classificationRandomForestUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html';
 const classificationXGBoostUrl = 'https://xgboost.readthedocs.io/en/latest/python/python_api.html#xgboost.XGBClassifier';
+const classificationNaiveBayes = 'http://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.MultinomialNB.html';
+const classificationHoeffdingTree = 'https://scikit-multiflow.github.io/scikit-multiflow/skmultiflow.classification.trees.hoeffding_tree.html';
+const classificationAdaptiveTree = 'https://scikit-multiflow.github.io/scikit-multiflow/skmultiflow.classification.trees.hoeffding_adaptive_tree.html';
+const classificationSGDClassifier = 'https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDClassifier.html#sklearn.linear_model.SGDClassifier';
+const classificationPerceptron = 'https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Perceptron.html#sklearn.linear_model.Perceptron';
 const classificationNNUrl = 'https://keras.io/';  // TODO: put meaningful link
 
 const regressionLinearUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html';
@@ -52,41 +81,50 @@ const AdvancedConfiguration = (props) => {
 
 
     const classificationConfigMap = {
-    'classification.knn': makeExpander('K-Neighbors classifier', classificationKnnUrl, <ClassificationKnn
-      onChange={props.onChange}/>),
-    'classification.decisionTree': makeExpander('Decision tree classifier', classificationDecisionTreeUrl,
+      [`${CLASSIFICATION}.${KNN}`]: makeExpander('K-Neighbors classifier', classificationKnnUrl,
+          <ClassificationKnn onChange={props.onChange}/>),
+      [`${CLASSIFICATION}.${DECISION_TREE}`]: makeExpander('Decision tree classifier', classificationDecisionTreeUrl,
       <ClassificationDecisionTree onChange={props.onChange} {...props}/>),
-    'classification.randomForest': makeExpander('Random forest classifier', classificationRandomForestUrl,
+      [`${CLASSIFICATION}.${RANDOM_FOREST}`]: makeExpander('Random forest classifier', classificationRandomForestUrl,
       <ClassificationRandomForest onChange={props.onChange} {...props}/>),
-    'classification.xgboost': makeExpander('XGBoost classifier', classificationXGBoostUrl,
+      [`${CLASSIFICATION}.${XGBOOST}`]: makeExpander('XGBoost classifier', classificationXGBoostUrl,
       <ClassificationXGBoost onChange={props.onChange} {...props}/>),
-    'classification.nn': makeExpander('NN classifier', classificationNNUrl,
-      <ClassificationNN onChange={props.onChange} {...props}/>)
+      [`${CLASSIFICATION}.${NN}`]: makeExpander('NN classifier', classificationNNUrl,
+          <ClassificationNN onChange={props.onChange} {...props}/>),
+      [`${CLASSIFICATION}.${MULTINOMIAL_NAIVE_BAYES}`]: makeExpander('Naive Bayes classifier', classificationNaiveBayes,
+          <ClassificationNaiveBayes onChange={props.onChange} {...props}/>),
+      [`${CLASSIFICATION}.${HOEFFDING_TREE}`]: makeExpander('Hoeffding Tree classifier', classificationHoeffdingTree,
+          <ClassificationHoeffdingTree onChange={props.onChange} {...props}/>),
+      [`${CLASSIFICATION}.${ADAPTIVE_TREE}`]: makeExpander('Adaptive Tree classifier', classificationAdaptiveTree,
+          <ClassificationAdaptiveTree onChange={props.onChange} {...props}/>),
+      [`${CLASSIFICATION}.${SGDCLASSIFIER}`]: makeExpander('SGD Classifier', classificationSGDClassifier,
+          <ClassificationSGDClassifier onChange={props.onChange} {...props}/>),
+      [`${CLASSIFICATION}.${PERCEPTRON}`]: makeExpander('Perceptron', classificationPerceptron,
+          <ClassificationPerceptronClassifier onChange={props.onChange} {...props}/>),
   };
 
   const regressionConfigMap = {
-    'regression.linear': makeExpander('Linear regressor', regressionLinearUrl,
+    [`${REGRESSION}.${LINEAR}`]: makeExpander('Linear regressor', regressionLinearUrl,
         <RegressionLinear onChange={props.onChange} {...props}/>),
-    'regression.randomForest': makeExpander('Random forest regressor', regressionRandomForestUrl,
+    [`${REGRESSION}.${RANDOM_FOREST}`]: makeExpander('Random forest regressor', regressionRandomForestUrl,
         <RegressionRandomForest onChange={props.onChange} {...props}/>),
-    'regression.lasso': makeExpander('Lasso regressor', regressionLassoUrl,
+    [`${REGRESSION}.${LASSO}`]: makeExpander('Lasso regressor', regressionLassoUrl,
       <RegressionLasso onChange={props.onChange} {...props}/>),
-    'regression.xgboost': makeExpander('XGBoost tree boost regressor', regressionXGBoostUrl,
+    [`${REGRESSION}.${XGBOOST}`]: makeExpander('XGBoost tree boost regressor', regressionXGBoostUrl,
       <RegressionXGBoost onChange={props.onChange} {...props}/>),
-    'regression.nn': makeExpander('NN regressor', regressionNNUrl,
-        <RegressionNN onChange={props.onChange} {...props}/>)
+    [`${REGRESSION}.${NN}`]: makeExpander('NN regressor', regressionNNUrl,
+        <RegressionNN onChange={props.onChange} {...props}/>),
   };
 
 
     const timeSeriesPredictionConfigMap = {
-        'timeSeriesPrediction.rnn': makeExpander('RNN classifier', timeSeriesPredictionRNNUrl,
-            <TimeSeriesPredictionRNN onChange={props.onChange} {...props}/>)
+      [`${TIME_SERIES_PREDICTION}.${RNN}`]: makeExpander('RNN time series predictor', timeSeriesPredictionRNNUrl,
+            <TimeSeriesPredictionRNN onChange={props.onChange} {...props}/>),
     };
 
 
   const configMapper = (methods, confMap) => methods.map((method) => {
       const configName = `${props.predictionMethod}.${method}`;
-
       return confMap[configName];
     }
   );
@@ -109,14 +147,27 @@ const AdvancedConfiguration = (props) => {
     <Labelling onChange={props.onChange} label={props.label}
                predictionMethod={props.predictionMethod} {...props}/>, true);
 
+  const incremental = () => {
+    if (props.classification.concat(props.regression)
+        .some(element => element.includes(['incremental']))) {
+      return [makeExpander('Increments', '',
+          <Incremental onChange={props.onChange}
+                       classificationModels={props.classificationModels}
+                       regressionModels={props.regressionModels}
+                       timeSeriesPredictionModels={props.timeSeriesPredictionModels}
+                       {...props}/>)];
+    } else {
+      return [];
+    }
+  };
 
   const configs = () => {
     if (props.predictionMethod === REGRESSION) {
-      return [addColumns(), ...kmeans(), hyperOpt(), ...configMapper(props.regression, regressionConfigMap)];
+      return [addColumns(), ...kmeans(), hyperOpt(), incremental(), ...configMapper(props.regression, regressionConfigMap)];
     } else if (props.predictionMethod === CLASSIFICATION) {
-        return [addColumns(), ...kmeans(), hyperOpt(), ...configMapper(props.classification, classificationConfigMap)];
+      return [addColumns(), ...kmeans(), hyperOpt(), incremental(), ...configMapper(props.classification, classificationConfigMap)];
     } else if (props.predictionMethod === TIME_SERIES_PREDICTION) {
-        return [addColumns(), ...kmeans(), hyperOpt(), ...configMapper(props.timeSeriesPrediction, timeSeriesPredictionConfigMap)];
+        return [addColumns(), ...kmeans(), hyperOpt(), incremental(), ...configMapper(props.timeSeriesPrediction, timeSeriesPredictionConfigMap)];
     } else {
       return [];
     }
@@ -128,11 +179,15 @@ const AdvancedConfiguration = (props) => {
 AdvancedConfiguration.propTypes = {
   classification: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   regression: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-    timeSeriesPrediction: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  timeSeriesPrediction: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   clusterings: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.shape(labelPropType).isRequired,
-    predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION, LABELLING]).isRequired,
-  traceAttributes: PropTypes.arrayOf(PropTypes.shape(traceAttributeShape)).isRequired
+  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION, LABELLING]).isRequired,
+  classificationModels: PropTypes.arrayOf(modelPropType).isRequired,
+  regressionModels: PropTypes.arrayOf(modelPropType).isRequired,
+  timeSeriesPredictionModels: PropTypes.arrayOf(modelPropType).isRequired,
+  traceAttributes: PropTypes.arrayOf(PropTypes.shape(traceAttributeShape)).isRequired,
+  onModelChange: PropTypes.func.isRequired
 };
 export default AdvancedConfiguration;

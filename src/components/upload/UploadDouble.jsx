@@ -40,8 +40,7 @@ export default class UploadDouble extends PureComponent {
     if (!testFile || !testFile.name) {
       this.addToast('A test file is required.');
       return;
-    }
-    else if (!trainingFile || !trainingFile.name) {
+    } else if (!trainingFile || !trainingFile.name) {
       this.addToast('A training file is required.');
       return;
     }

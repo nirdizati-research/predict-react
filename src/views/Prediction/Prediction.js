@@ -64,8 +64,8 @@ class Prediction extends Component {
     // Only unique splits for selector
     const filteredJobsRun = this.filterJobRun();
     const regModelsLabel = modelsToString(this.props.regressionModels);
-      const classModelsLabel = modelsToString(this.props.classificationModels);
-      const timeSeriesPredModelsLabel = modelsToString(this.props.timeSeriesPredictionModels);
+    const classModelsLabel = modelsToString(this.props.classificationModels);
+    const timeSeriesPredModelsLabel = modelsToString(this.props.timeSeriesPredictionModels);
 
     return (
       <div className="md-grid">

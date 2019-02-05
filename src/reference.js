@@ -20,6 +20,11 @@ export const KMEANS = 'kmeans';
 export const KNN = 'knn';
 export const DECISION_TREE = 'decisionTree';
 export const RANDOM_FOREST = 'randomForest';
+export const MULTINOMIAL_NAIVE_BAYES = 'MultinomialNB';
+export const HOEFFDING_TREE = 'HoeffdingTree';
+export const ADAPTIVE_TREE = 'HAT';
+export const SGDCLASSIFIER = 'SGDClassifier';
+export const PERCEPTRON = 'Perceptron';
 
 // regression methods
 export const LINEAR = 'linear';
@@ -36,6 +41,9 @@ export const BOOLEAN = 'boolean';
 export const FREQUENCY = 'frequency';
 export const COMPLEX = 'complex';
 export const LAST_PAYLOAD = 'lastPayload';
+
+// incremental sets
+export const NUMBER_OF_INCREMENTS = 'incremental_trains';
 
 // labeling stuff
 export const NEXT_ACTIVITY = 'next_activity';
@@ -85,6 +93,26 @@ const classification = [
     {
         label: 'XGBoost',
         value: XGBOOST
+    },
+    {
+        label: 'Naive Bayes',
+        value: MULTINOMIAL_NAIVE_BAYES
+    },
+    {
+        label: 'Hoeffding Tree',
+        value: HOEFFDING_TREE
+    },
+    {
+        label: 'Adaptive Tree',
+        value: ADAPTIVE_TREE
+    },
+    {
+        label: 'SGD Classifier',
+        value: SGDCLASSIFIER
+    },
+    {
+        label: 'Perceptron',
+        value: PERCEPTRON
     },
     {
         label: 'NN',
@@ -179,6 +207,14 @@ const threshold = [
         value: THRESHOLD_CUSTOM,
         message: 'Use the threshold value below'
     }
+];
+
+const regressionIncrementalTypes = [{}];
+const classificationIncrementalTypes = [
+  {
+    value: NUMBER_OF_INCREMENTS,
+    label: 'Number of Incremental trains'
+  }
 ];
 
 const regressionLabelTypes = [
@@ -307,6 +343,9 @@ export const regressionMethods = controlCreator(regression);
 export const timeSeriesPredictionMethods = controlCreator(timeSeriesPrediction);
 export const predictionMethods = controlCreator(predictions);
 export const thresholdControls = controlCreator(threshold);
+export const regIncrementalControls = controlCreator(regressionIncrementalTypes);
+export const classIncrementalControls = controlCreator(classificationIncrementalTypes);
+export const timeSeriesPredIncrementalControls = controlCreator(classificationIncrementalTypes);
 export const regLabelControls = controlCreator(regressionLabelTypes);
 export const classLabelControls = controlCreator(classificationLabelTypes);
 export const timeSeriesPredLabelControls = controlCreator(timeSeriesPredictionLabelTypes);

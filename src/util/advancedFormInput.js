@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 export const advancedConfigChange = (state, {methodConfig, key, isNumber, isFloat, maybeNumber}, value) => {
     // Only the changed values are put in config. Otherwise merged with config in backend
     // classification.knn weights distance

@@ -23,11 +23,24 @@ import {
     regressionMethods,
     REMAINING_TIME,
     THRESHOLD_MEAN,
+    MULTINOMIAL_NAIVE_BAYES,
+    HOEFFDING_TREE,
+    ADAPTIVE_TREE,
+    SGDCLASSIFIER,
+    PERCEPTRON,
+    KNN,
+    RANDOM_FOREST,
+    DECISION_TREE,
+    XGBOOST,
+    LASSO,
+    LINEAR,
     TIME_SERIES_PREDICTION,
     timeSeriesPredictionMethods,
+    NN,
+    RNN,
 } from '../reference';
 import CheckboxGroup from './training/CheckboxGroup';
-import {fetchStatePropType, selectLabelProptype, traceAttributeShape} from '../propTypes';
+import {fetchStatePropType, modelPropType, selectLabelProptype, traceAttributeShape} from '../propTypes';
 import PrefixSelector from './training/PrefixSelector';
 import AdvancedConfiguration from './advanced/AdvancedConfiguration';
 import {classificationMetrics, regressionMetrics, timeSeriesPredictionMetrics} from './advanced/advancedConfig';
@@ -37,58 +50,68 @@ const defaultPrefix = 1;
 const groupStyle = {height: 'auto'};
 
 const initialState = (props) => {
-    const splitId = props.splitLabels[0] ? props.splitLabels[0].value : 0;
-    const predictionMethod = props.isLabelForm ? LABELLING : REGRESSION;
-    const labelType = props.isLabelForm ? DURATION : REMAINING_TIME;
-    return {
-        split_id: splitId,
-        encodings: [encodingMethods[0].value],
-        clusterings: [clusteringMethods[0].value],
-        classification: [classificationMethods[0].value],
-        regression: [regressionMethods[0].value],
-        timeSeriesPrediction: [timeSeriesPredictionMethods[0].value],
-        encoding: {
-            padding: paddingControls[0].value,
-            generation_type: prefixTypeControls[0].value,
-            prefix_length: defaultPrefix,
-        },
-        label: {
-            type: labelType,
-            attribute_name: '',
-            threshold_type: THRESHOLD_MEAN,
-            threshold: 0,
-            add_remaining_time: false,
-            add_elapsed_time: false,
-            add_executed_events: false,
-            add_resources_used: false,
-            add_new_traces: false,
-        },
-        displayWarning: false,
-        predictionMethod: predictionMethod,
-        kmeans: {},
-        hyperopt: {
-            use_hyperopt: false,
-            max_evals: 10,
-            performance_metric: 'rmse'
-        },
-        create_models: false
-    };
+  const splitId = props.splitLabels[0] ? props.splitLabels[0].value : 0;
+  const predictionMethod = props.isLabelForm ? LABELLING : REGRESSION;
+  const labelType = props.isLabelForm ? DURATION : REMAINING_TIME;
+  return {
+    split_id: splitId,
+    encodings: [encodingMethods[0].value],
+    clusterings: [clusteringMethods[0].value],
+    classification: [classificationMethods[0].value],
+    regression: [regressionMethods[0].value],
+    timeSeriesPrediction: [timeSeriesPredictionMethods[0].value],
+    encoding: {
+      padding: paddingControls[0].value,
+      generation_type: prefixTypeControls[0].value,
+      prefix_length: defaultPrefix,
+    },
+    label: {
+      type: labelType,
+      attribute_name: '',
+      threshold_type: THRESHOLD_MEAN,
+      threshold: 0,
+      add_remaining_time: false,
+      add_elapsed_time: false,
+      add_executed_events: false,
+      add_resources_used: false,
+      add_new_traces: false,
+    },
+    incremental_train: {
+          base_model: null
+    },
+    displayWarning: false,
+    predictionMethod: predictionMethod,
+    kmeans: {},
+    hyperopt: {
+      use_hyperopt: false,
+      max_evals: 10,
+      performance_metric: 'rmse'
+    },
+    create_models: false
+  };
 };
 
 const initialAdvancedConfiguration = () => {
-    return {
-        [`${CLASSIFICATION}.knn`]: {},
-        [`${CLASSIFICATION}.randomForest`]: {},
-        [`${CLASSIFICATION}.decisionTree`]: {},
-        [`${CLASSIFICATION}.xgboost`]: {},
-        [`${CLASSIFICATION}.nn`]: {},
-        [`${REGRESSION}.randomForest`]: {},
-        [`${REGRESSION}.lasso`]: {},
-        [`${REGRESSION}.linear`]: {},
-        [`${REGRESSION}.xgboost`]: {},
-        [`${REGRESSION}.nn`]: {},
-        [`${TIME_SERIES_PREDICTION}.rnn`]: {}
-    };
+  return {
+      [`${CLASSIFICATION}.${KNN}`]: {},
+      [`${CLASSIFICATION}.${RANDOM_FOREST}`]: {},
+      [`${CLASSIFICATION}.${DECISION_TREE}`]: {},
+      [`${CLASSIFICATION}.${XGBOOST}`]: {},
+      [`${CLASSIFICATION}.${MULTINOMIAL_NAIVE_BAYES}`]: {},
+      [`${CLASSIFICATION}.${HOEFFDING_TREE}`]: {},
+      [`${CLASSIFICATION}.${ADAPTIVE_TREE}`]: {},
+      [`${CLASSIFICATION}.${SGDCLASSIFIER}`]: {},
+      [`${CLASSIFICATION}.${PERCEPTRON}`]: {},
+      [`${CLASSIFICATION}.${NN}`]: {},
+
+      [`${REGRESSION}.${RANDOM_FOREST}`]: {},
+      [`${REGRESSION}.${LASSO}`]: {},
+      [`${REGRESSION}.${LINEAR}`]: {},
+      [`${REGRESSION}.${XGBOOST}`]: {},
+      [`${REGRESSION}.${NN}`]: {},
+
+      [`${TIME_SERIES_PREDICTION}.${RNN}`]: {}
+  };
 };
 
 class TrainingFormCard extends Component {
@@ -234,34 +257,42 @@ class TrainingFormCard extends Component {
         };
     }
 
-    getWithMethods(methods) {
-        return {
-            type: this.state.predictionMethod,
-            split_id: this.state.split_id,
-            config: {
-                encoding: this.state.encoding,
-                encodings: this.state.encodings,
-                clusterings: this.state.clusterings,
-                methods: methods,
-                label: this.state.label,
-                create_models: this.state.create_models,
-                add_elapsed_time: this.state.add_elapsed_time,
-                hyperopt: this.state.hyperopt,
-                kmeans: this.state.kmeans,
-                [`${CLASSIFICATION}.knn`]: this.state[`${CLASSIFICATION}.knn`],
-                [`${CLASSIFICATION}.randomForest`]: this.state[`${CLASSIFICATION}.randomForest`],
-                [`${CLASSIFICATION}.decisionTree`]: this.state[`${CLASSIFICATION}.decisionTree`],
-                [`${CLASSIFICATION}.xgboost`]: this.state[`${CLASSIFICATION}.xgboost`],
-                [`${CLASSIFICATION}.nn`]: this.state[`${CLASSIFICATION}.nn`],
-                [`${REGRESSION}.randomForest`]: this.state[`${REGRESSION}.randomForest`],
-                [`${REGRESSION}.lasso`]: this.state[`${REGRESSION}.lasso`],
-                [`${REGRESSION}.linear`]: this.state[`${REGRESSION}.linear`],
-                [`${REGRESSION}.xgboost`]: this.state[`${REGRESSION}.xgboost`],
-                [`${REGRESSION}.nn`]: this.state[`${REGRESSION}.nn`],
-                [`${TIME_SERIES_PREDICTION}.rnn`]: this.state[`${TIME_SERIES_PREDICTION}.rnn`]
-            }
-        };
-    }
+  getWithMethods(methods) {
+    return {
+      type: this.state.predictionMethod,
+      split_id: this.state.split_id,
+      config: {
+        encoding: this.state.encoding,
+        encodings: this.state.encodings,
+        clusterings: this.state.clusterings,
+        methods: methods,
+        label: this.state.label,
+        incremental_train: this.state.incremental_train,
+        create_models: this.state.create_models,
+        add_elapsed_time: this.state.add_elapsed_time,
+        hyperopt: this.state.hyperopt,
+        kmeans: this.state.kmeans,
+          [`${CLASSIFICATION}.${KNN}`]: this.state[`${CLASSIFICATION}.${KNN}`],
+          [`${CLASSIFICATION}.${RANDOM_FOREST}`]: this.state[`${CLASSIFICATION}.${RANDOM_FOREST}`],
+          [`${CLASSIFICATION}.${DECISION_TREE}`]: this.state[`${CLASSIFICATION}.${DECISION_TREE}`],
+          [`${CLASSIFICATION}.${XGBOOST}`]: this.state[`${CLASSIFICATION}.${XGBOOST}`],
+          [`${CLASSIFICATION}.${MULTINOMIAL_NAIVE_BAYES}`]: this.state[`${CLASSIFICATION}.${MULTINOMIAL_NAIVE_BAYES}`],
+          [`${CLASSIFICATION}.${HOEFFDING_TREE}`]: this.state[`${CLASSIFICATION}.${HOEFFDING_TREE}`],
+          [`${CLASSIFICATION}.${ADAPTIVE_TREE}`]: this.state[`${CLASSIFICATION}.${ADAPTIVE_TREE}`],
+          [`${CLASSIFICATION}.${SGDCLASSIFIER}`]: this.state[`${CLASSIFICATION}.${SGDCLASSIFIER}`],
+          [`${CLASSIFICATION}.${PERCEPTRON}`]: this.state[`${CLASSIFICATION}.${PERCEPTRON}`],
+          [`${CLASSIFICATION}.${NN}`]: this.state[`${CLASSIFICATION}.${NN}`],
+
+          [`${REGRESSION}.${RANDOM_FOREST}`]: this.state[`${REGRESSION}.${RANDOM_FOREST}`],
+          [`${REGRESSION}.${LASSO}`]: this.state[`${REGRESSION}.${LASSO}`],
+          [`${REGRESSION}.${LINEAR}`]: this.state[`${REGRESSION}.${LINEAR}`],
+          [`${REGRESSION}.${XGBOOST}`]: this.state[`${REGRESSION}.${XGBOOST}`],
+          [`${REGRESSION}.${NN}`]: this.state[`${REGRESSION}.${NN}`],
+
+          [`${TIME_SERIES_PREDICTION}.${RNN}`]: this.state[`${TIME_SERIES_PREDICTION}.${RNN}`]
+      }
+    };
+  }
 
     onReset() {
         this.setState({...initialState(this.props), ...initialAdvancedConfiguration()});
@@ -313,39 +344,43 @@ class TrainingFormCard extends Component {
 
         const title = this.props.isLabelForm ? 'Labeling' : 'Training';
 
-        const otherSelector = this.props.isLabelForm ? null : <div className="md-cell md-cell--4">
-            {predictionControls}
-            {regressionFragment}
-            {classificationFragment}
-            {timeSeriesPredictionFragment}
-            {clusteringFragment}
-        </div>;
-        return (
-            <Card className="md-block-centered">
-                <CardTitle title={title}>
-                    <SelectField
-                        id="log-name-select"
-                        placeholder="Split id will be here"
-                        className="md-cell"
-                        menuItems={this.props.splitLabels}
-                        position={SelectField.Positions.BELOW}
-                        onChange={this.selectChange.bind(this)}
-                        value={this.state.split_id}
-                    /></CardTitle>
-                <CardText>
-                    <div className="md-grid md-grid--no-spacing">
-                        {otherSelector}
-                        {encodingFragment}
-                        <PrefixSelector encoding={this.state.encoding} onChange={this.advanceConfigChange.bind(this)}
-                                        maxEventsInLog={this.props.maxEventsInLog}
-                                        isLabelForm={this.props.isLabelForm}/>
-                    </div>
-                </CardText>
-                <AdvancedConfiguration classification={this.state.classification} regression={this.state.regression}
-                                       timeSeriesPrediction={this.state.timeSeriesPrediction}
-                                       onChange={this.advanceConfigChange.bind(this)} label={this.state.label}
-                                       traceAttributes={this.props.traceAttributes} clusterings={this.state.clusterings}
-                                       predictionMethod={this.state.predictionMethod}/>
+    const otherSelector = this.props.isLabelForm ? null : <div className="md-cell md-cell--4">
+      {predictionControls}
+      {regressionFragment}
+      {classificationFragment}
+        {timeSeriesPredictionFragment}
+        {clusteringFragment}
+    </div>;
+    return (
+      <Card className="md-block-centered">
+        <CardTitle title={title}>
+          <SelectField
+            id="log-name-select"
+            placeholder="Split id will be here"
+            className="md-cell"
+            menuItems={this.props.splitLabels}
+            position={SelectField.Positions.BELOW}
+            onChange={this.selectChange.bind(this)}
+            value={this.state.split_id}
+          /></CardTitle>
+        <CardText>
+          <div className="md-grid md-grid--no-spacing">
+            {otherSelector}
+            {encodingFragment}
+            <PrefixSelector encoding={this.state.encoding} onChange={this.advanceConfigChange.bind(this)}
+                            maxEventsInLog={this.props.maxEventsInLog}
+                            isLabelForm={this.props.isLabelForm}/>
+          </div>
+        </CardText>
+        <AdvancedConfiguration classification={this.state.classification} regression={this.state.regression}
+                               timeSeriesPrediction={this.state.timeSeriesPrediction}
+                               onChange={this.advanceConfigChange.bind(this)} label={this.state.label}
+                               traceAttributes={this.props.traceAttributes} clusterings={this.state.clusterings}
+                               predictionMethod={this.state.predictionMethod}
+                               classificationModels={this.props.classificationModels}
+                               regressionModels={this.props.regressionModels}
+                               timeSeriesPredictionModels={this.props.timeSeriesPredictionModels}
+                               onModelChange={this.props.onModelChange}/>
 
                 <CardText>
                     <div className="md-grid md-grid--no-spacing">
@@ -374,7 +409,11 @@ TrainingFormCard.propTypes = {
     onSplitChange: PropTypes.func.isRequired,
     maxEventsInLog: PropTypes.number.isRequired,
     isLabelForm: PropTypes.bool,
-    traceAttributes: PropTypes.arrayOf(PropTypes.shape(traceAttributeShape)).isRequired
-};
+    traceAttributes: PropTypes.arrayOf(PropTypes.shape(traceAttributeShape)).isRequired,
+    classificationModels: PropTypes.arrayOf(modelPropType).isRequired,
+    regressionModels: PropTypes.arrayOf(modelPropType).isRequired,
+    timeSeriesPredictionModels: PropTypes.arrayOf(modelPropType).isRequired,
+    onModelChange: PropTypes.func.isRequired
+        };
 
 export default TrainingFormCard;
