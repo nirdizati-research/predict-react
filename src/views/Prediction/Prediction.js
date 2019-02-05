@@ -63,7 +63,7 @@ class Prediction extends Component {
     // Only unique splits for selector
     const filteredJobsRun = this.filterJobRun();
     const regModelsLabel = modelsToString(this.props.regressionModels);
-    const clasModelsLabel = modelsToString(this.props.classificationModels);
+    const classModelsLabel = modelsToString(this.props.classificationModels);
 
     return (
       <div className="md-grid">
@@ -74,7 +74,7 @@ class Prediction extends Component {
         </div>
         <div className="md-cell md-cell--12">
           <ModelSelector modelChange={this.onModelChange.bind(this)} onSubmit={this.Submit.bind(this)}
-                         onReset={this.onReset} classModelsLabel={clasModelsLabel} regModelsLabel={regModelsLabel}
+                         onReset={this.onReset} classModelsLabel={classModelsLabel} regModelsLabel={regModelsLabel}
                          classModelId={this.props.classModelId} regModelId={this.props.regModelId}/>
         </div>
         <div className="md-cell md-cell--12">

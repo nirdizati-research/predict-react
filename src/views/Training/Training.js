@@ -41,6 +41,7 @@ class Training extends Component {
           <TrainingFormCard splitLabels={this.props.splitLabels} fetchState={this.props.fetchState}
                             maxEventsInLog={maxEventsInLog} traceAttributes={traceAttributes}
                             classificationModels={this.props.classificationModels}
+                            regressionModels={this.props.regressionModels}
                             onModelChange={this.onModelChange.bind(this)}
                             onSubmit={this.props.onSubmitTraining} onSplitChange={this.onSplitChange.bind(this)}/>
         </div>
@@ -58,7 +59,8 @@ Training.propTypes = {
   onSubmitTraining: PropTypes.func.isRequired,
   onModelChange: PropTypes.func.isRequired,
   fetchState: fetchStatePropType,
-  classificationModels: PropTypes.arrayOf(modelPropType).isRequired
+  classificationModels: PropTypes.arrayOf(modelPropType).isRequired,
+  regressionModels: PropTypes.arrayOf(modelPropType).isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -66,7 +68,9 @@ const mapStateToProps = (state) => ({
   splitLabels: splitsToLabel(state.logs.byId, state.splits.byId, state.splits.allIds),
   fetchState: state.training.fetchState,
   classificationModels: state.models.classificationModels,
+  regressionModels: state.models.regressionModels,
   classModelId: state.models.classelected,
+  regModelId: state.models.regselected,
   models: state.models.models
 });
 

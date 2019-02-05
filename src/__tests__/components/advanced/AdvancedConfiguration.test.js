@@ -15,12 +15,14 @@ import ClassificationDecisionTree from '../../../components/advanced/Classificat
 import RegressionXGBoost from '../../../components/advanced/RegressionXGBoost';
 import ClassificationXGBoost from '../../../components/advanced/ClassificationXGBoost';
 
+const onModelChange = jest.fn();
 
 describe('Regression', () => {
   const element = shallow(<AdvancedConfiguration predictionMethod={REGRESSION} classification={[]} label={label1}
                                                  traceAttributes={[]} clusterings={[]}
                                                  regression={['randomForest', 'lasso', 'linear', 'xgboost']}
-                                                 onChange={jest.fn()}/>);
+                                                 onChange={jest.fn()} classificationModels={[]}
+                                                 onModelChange={onModelChange}/>);
 
   it('standard items', () => {
     expect(element.find(HyperOpt).length).toBe(1);
@@ -44,8 +46,9 @@ describe('Classification', () => {
   const element = shallow(<AdvancedConfiguration predictionMethod={CLASSIFICATION}
                                                  classification={['knn', 'decisionTree', 'randomForest', 'xgboost']}
                                                  label={label1}
+                                                 classificationModels={[]}
                                                  traceAttributes={[]} clusterings={[KMEANS]} regression={[]}
-                                                 onChange={jest.fn()}/>);
+                                                 onChange={jest.fn()} onModelChange={onModelChange}/>);
 
   it('standard items', () => {
     expect(element.find(HyperOpt).length).toBe(1);
@@ -69,7 +72,8 @@ describe('Labelling', () => {
   const element = shallow(<AdvancedConfiguration predictionMethod={LABELLING}
                                                  classification={[]} label={label1}
                                                  traceAttributes={[]} clusterings={[KMEANS]} regression={[]}
-                                                 onChange={jest.fn()}/>);
+                                                 onChange={jest.fn()} classificationModels={[]}
+                                                 onModelChange={onModelChange}/>);
 
   it('has no hyperopt', () => {
     expect(element.find(HyperOpt).length).toBe(0);

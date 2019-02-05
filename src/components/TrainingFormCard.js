@@ -366,6 +366,7 @@ TrainingFormCard.propTypes = {
   isLabelForm: PropTypes.bool,
   traceAttributes: PropTypes.arrayOf(PropTypes.shape(traceAttributeShape)).isRequired,
   classificationModels: PropTypes.arrayOf(modelPropType).isRequired,
+  regressionModels: PropTypes.arrayOf(modelPropType).isRequired,
   onModelChange: PropTypes.func.isRequired
 };
 
