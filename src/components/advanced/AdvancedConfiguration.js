@@ -20,6 +20,7 @@ import {
   XGBOOST
 } from '../../reference';
 
+import PropTypes from 'prop-types';
 import {labelPropType, modelPropType, traceAttributeShape} from '../../propTypes';
 import {ExpansionList} from 'react-md';
 import GenericConfiguration from './GenericConfiguration';
