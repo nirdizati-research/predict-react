@@ -4,7 +4,7 @@ import SelectField from 'react-md/lib/SelectFields';
 import {
     CLASSIFICATION,
 } from '../../reference';
-import {selectLabelProptype} from '../../propTypes';
+import {modelPropType, selectLabelProptype} from '../../propTypes';
 import {modelsToString} from '../../util/dataReducers';
 
 const defaults = {
@@ -28,9 +28,18 @@ const Incremental = (props) => {
         }
     };
 
+
     const makeModelSelector = (onChange) => {
-        const availableModels = modelsToString(props.classificationModels).concat(
-            [{value: null, label: 'None'}]);
+        const availableModels = modelsToString(
+            props.classificationModels
+            .filter(
+                (obj) => (
+                    props.currentModels.includes(obj.config.method)
+                )
+            )
+        )
+        .concat([{value: null, label: 'None'}]);
+
         return [<SelectField
             key="base_model"
             id="base_model"
@@ -53,7 +62,8 @@ const Incremental = (props) => {
 
 Incremental.propTypes = {
     baseModel: selectLabelProptype,
-    classificationModels: selectLabelProptype,
+    classificationModels: PropTypes.arrayOf(modelPropType).isRequired,
+    currentModels: PropTypes.arrayOf(modelPropType).isRequired,
     onChange: PropTypes.func.isRequired
 };
 export default Incremental;

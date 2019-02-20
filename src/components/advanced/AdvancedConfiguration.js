@@ -2,7 +2,7 @@ import React from 'react';
 import {
   ADAPTIVE_TREE,
   CLASSIFICATION, DECISION_TREE,
-  HOEFFDING_TREE,
+  HOEFFDING_TREE, INCREMENTAL_CLASSIFIERS,
   KMEANS, KNN,
   LABELLING, LASSO, LINEAR,
   MULTINOMIAL_NAIVE_BAYES, PERCEPTRON, RANDOM_FOREST,
@@ -29,7 +29,7 @@ import RegressionXGBoost from './RegressionXGBoost';
 import ClassificationXGBoost from './ClassificationXGBoost';
 import Incremental from './Incremental';
 import ClassificationSGDClassifier from './ClassificationSGDClassifier';
-import ClassificationPerceptronClassifier from "./ClassificationPerceptron";
+import ClassificationPerceptron from './ClassificationPerceptron';
 
 const knnUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html';
 const decisionTreeUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html';
@@ -78,7 +78,7 @@ const AdvancedConfiguration = (props) => {
     [`${CLASSIFICATION}.${SGDCLASSIFIER}`]: makeExpander('SGD Classifier', classificationSGDClassifier,
       <ClassificationSGDClassifier onChange={props.onChange} {...props}/>),
     [`${CLASSIFICATION}.${PERCEPTRON}`]: makeExpander('Perceptron', classificationPerceptron,
-      <ClassificationPerceptronClassifier onChange={props.onChange} {...props}/>)
+      <ClassificationPerceptron onChange={props.onChange} {...props}/>)
   };
 
   const regressionConfigMap = {
@@ -120,10 +120,11 @@ const AdvancedConfiguration = (props) => {
 
   const incremental = () => {
       if (props.classification.concat(props.regression)
-          .some(element=> element.includes(['incremental']))) {
+          .some(element=> INCREMENTAL_CLASSIFIERS.includes(element))) {
         return [makeExpander('Increments', '',
             <Incremental onChange={props.onChange}
-                         classificationModels={props.classificationModels} {...props}/>)];
+                         classificationModels={props.classificationModels}
+                         currentModels={props.classification.concat(props.regression)} {...props}/>)];
       } else {
         return [];
       }

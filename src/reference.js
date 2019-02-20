@@ -22,6 +22,15 @@ export const HOEFFDING_TREE = 'HoeffdingTree';
 export const ADAPTIVE_TREE = 'HAT';
 export const SGDCLASSIFIER = 'SGDClassifier';
 export const PERCEPTRON = 'Perceptron';
+
+export const INCREMENTAL_CLASSIFIERS = [
+  MULTINOMIAL_NAIVE_BAYES,
+  HOEFFDING_TREE,
+  ADAPTIVE_TREE,
+  SGDCLASSIFIER,
+  PERCEPTRON
+];
+
 // regression methods
 export const LINEAR = 'linear';
 export const LASSO = 'lasso';

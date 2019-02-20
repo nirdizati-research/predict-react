@@ -19,7 +19,7 @@ const defaults = {
     'n_iter_no_change': 5
 };
 
-const ClassificationPerceptronClassifier = (props) => {
+const ClassificationPerceptron = (props) => {
     const methodConfig = `${CLASSIFICATION}.${REGRESSION}`;
 
     const penalty = <SelectField
@@ -136,8 +136,8 @@ const ClassificationPerceptronClassifier = (props) => {
     ];
 };
 
-ClassificationPerceptronClassifier.protoTypes = {
+ClassificationPerceptron.protoTypes = {
     onChange: PropTypes.func.isRequired
 };
 
-export default ClassificationPerceptronClassifier;
+export default ClassificationPerceptron;
