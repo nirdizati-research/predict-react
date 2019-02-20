@@ -84,7 +84,8 @@ class WalkThrough extends PureComponent {
                             button={<Button flat primary href={'/#/training'}
                                             iconEl={<FontIcon>build</FontIcon>}>Training</Button>}
                             title="Training"
-                            text="Submit a prediction task to train a predictive model with an array of configuration options"
+                            text="Submit a prediction task to train a predictive model with an array
+                             of configuration options"
                             threeLines
                         />
                         <GuideItem

@@ -193,7 +193,7 @@ class TrainingFormCard extends Component {
             // no default
         }
 
-        this.setState((prevState,) => {
+        this.setState((prevState, ) => {
             return {displayWarning: TrainingFormCard.displayWarningCheck(prevState)};
         });
     }
@@ -218,12 +218,12 @@ class TrainingFormCard extends Component {
             predictionMethod: value, label: {...this.state.label, type: labelType},
             hyperopt: {...this.state.hyperopt, performance_metric}, ...initialAdvancedConfiguration()
         });
-        this.setState((prevState,) => {
+        this.setState((prevState, ) => {
             return {displayWarning: TrainingFormCard.displayWarningCheck(prevState)};
         });
     }
 
-    selectChange(value,) {
+    selectChange(value, ) {
         this.setState({split_id: value});
         this.props.onSplitChange(value);
     }
@@ -277,7 +277,8 @@ class TrainingFormCard extends Component {
                 [`${CLASSIFICATION}.${RANDOM_FOREST}`]: this.state[`${CLASSIFICATION}.${RANDOM_FOREST}`],
                 [`${CLASSIFICATION}.${DECISION_TREE}`]: this.state[`${CLASSIFICATION}.${DECISION_TREE}`],
                 [`${CLASSIFICATION}.${XGBOOST}`]: this.state[`${CLASSIFICATION}.${XGBOOST}`],
-                [`${CLASSIFICATION}.${MULTINOMIAL_NAIVE_BAYES}`]: this.state[`${CLASSIFICATION}.${MULTINOMIAL_NAIVE_BAYES}`],
+                [`${CLASSIFICATION}.${MULTINOMIAL_NAIVE_BAYES}`]:
+                    this.state[`${CLASSIFICATION}.${MULTINOMIAL_NAIVE_BAYES}`],
                 [`${CLASSIFICATION}.${HOEFFDING_TREE}`]: this.state[`${CLASSIFICATION}.${HOEFFDING_TREE}`],
                 [`${CLASSIFICATION}.${ADAPTIVE_TREE}`]: this.state[`${CLASSIFICATION}.${ADAPTIVE_TREE}`],
                 [`${CLASSIFICATION}.${SGDCLASSIFIER}`]: this.state[`${CLASSIFICATION}.${SGDCLASSIFIER}`],

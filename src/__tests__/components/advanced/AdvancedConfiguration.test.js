@@ -76,7 +76,7 @@ describe('Classification', () => {
 });
 
 
-//TODO: add timeSeriesPrediction tests
+// TODO: add timeSeriesPrediction tests
 
 describe('Labelling', () => {
   const element = shallow(<AdvancedConfiguration predictionMethod={LABELLING}

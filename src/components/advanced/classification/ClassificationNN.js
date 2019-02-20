@@ -31,14 +31,14 @@ const defaults = {
 const ClassificationNN = (props) => {
   const methodConfig = `classification.nn`;
 
-  //TODO: which parameters to put?
+  // TODO: which parameters to put?
   const nHiddenLayers = <TextField
     key="n_hidden_layers"
     id="n_hidden_layers"
     label="Hidden layers"
     type="number"
     defaultValue={defaults.n_hidden_layers}
-    onChange={props.onChange.bind(this, {methodConfig, key: "n_hidden_layers", isNumber: true})}
+    onChange={props.onChange.bind(this, {methodConfig, key: 'n_hidden_layers', isNumber: true})}
     min={0}
     className="md-cell md-cell--3"
     required
@@ -50,7 +50,7 @@ const ClassificationNN = (props) => {
       label="Hidden units"
       type="number"
       defaultValue={defaults.n_hidden_units}
-      onChange={props.onChange.bind(this, {methodConfig, key: "Hidden units", isNumber: true})}
+      onChange={props.onChange.bind(this, {methodConfig, key: 'Hidden units', isNumber: true})}
       min={1}
       className="md-cell md-cell--3"
       required
@@ -62,7 +62,7 @@ const ClassificationNN = (props) => {
       label="Epochs"
       type="number"
       defaultValue={defaults.n_epochs}
-      onChange={props.onChange.bind(this, {methodConfig, key: "n_epochs", isNumber: true})}
+      onChange={props.onChange.bind(this, {methodConfig, key: 'n_epochs', isNumber: true})}
       min={1}
       className="md-cell md-cell--3"
       required
@@ -85,7 +85,7 @@ const ClassificationNN = (props) => {
       type="number"
       step="0.1"
       defaultValue={defaults.dropout_rate}
-      onChange={props.onChange.bind(this, {methodConfig, key: "dropout_rate", isFloat: true})}
+      onChange={props.onChange.bind(this, {methodConfig, key: 'dropout_rate', isFloat: true})}
       min={0}
       max={1}
       className="md-cell md-cell--3"

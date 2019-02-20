@@ -3,7 +3,7 @@
  */
 
 import models from '../../reducers/Models';
-import {modelsFailed, modelsRequested, modelsRetrieved,} from '../../actions/ModelActions';
+import {modelsFailed, modelsRequested, modelsRetrieved} from '../../actions/ModelActions';
 
 const modelList = [{
     id: 1,

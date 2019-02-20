@@ -28,7 +28,7 @@ const dataClass = [
     ['KNN', 4.60, '4.60'],
 ];
 
-export const TimeSeriesPredictionMethodsCard = () => {  //TODO: update
+export const TimeSeriesPredictionMethodsCard = () => { // TODO: update
     return <Card className="md-cell md-cell--6 md-cell--8-tablet">
         <CardTitle title="Time Series Prediction method comparison" subtitle="Tested version 1.0.0" expander/>
         <CardText expandable>

@@ -54,24 +54,37 @@ import Incremental from './Incremental';
 const KMeansUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html';
 const HyperOptUrl = 'http://hyperopt.github.io/hyperopt/';
 
-const classificationKnnUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html';
-const classificationDecisionTreeUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html';
-const classificationRandomForestUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html';
-const classificationXGBoostUrl = 'https://xgboost.readthedocs.io/en/latest/python/python_api.html#xgboost.XGBClassifier';
-const classificationNaiveBayes = 'http://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.MultinomialNB.html';
-const classificationHoeffdingTree = 'https://scikit-multiflow.github.io/scikit-multiflow/skmultiflow.classification.trees.hoeffding_tree.html';
-const classificationAdaptiveTree = 'https://scikit-multiflow.github.io/scikit-multiflow/skmultiflow.classification.trees.hoeffding_adaptive_tree.html';
-const classificationSGDClassifier = 'https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDClassifier.html#sklearn.linear_model.SGDClassifier';
-const classificationPerceptron = 'https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Perceptron.html#sklearn.linear_model.Perceptron';
-const classificationNNUrl = 'https://keras.io/';  // TODO: put meaningful link
+const classificationKnnUrl =
+    'http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html';
+const classificationDecisionTreeUrl =
+    'http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html';
+const classificationRandomForestUrl =
+    'http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html';
+const classificationXGBoostUrl =
+    'https://xgboost.readthedocs.io/en/latest/python/python_api.html#xgboost.XGBClassifier';
+const classificationNaiveBayes =
+    'http://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.MultinomialNB.html';
+const classificationHoeffdingTree =
+    'https://scikit-multiflow.github.io/scikit-multiflow/skmultiflow.classification.trees.hoeffding_tree.html';
+const classificationAdaptiveTree =
+    'https://scikit-multiflow.github.io/scikit-multiflow/skmultiflow.classification.trees.hoeffding_adaptive_tree.html';
+const classificationSGDClassifier =
+    'https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.' +
+    'SGDClassifier.html#sklearn.linear_model.SGDClassifier';
+const classificationPerceptron =
+    'https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.' +
+    'Perceptron.html#sklearn.linear_model.Perceptron';
+const classificationNNUrl = 'https://keras.io/'; // TODO: put meaningful link
 
-const regressionLinearUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html';
-const regressionRandomForestUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html';
+const regressionLinearUrl =
+    'http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html';
+const regressionRandomForestUrl =
+    'http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html';
 const regressionLassoUrl = 'http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Lasso.html';
 const regressionXGBoostUrl = 'https://xgboost.readthedocs.io/en/latest/python/python_api.html#xgboost.XGBRegressor';
-const regressionNNUrl = 'https://keras.io/';  // TODO: put meaningful link
+const regressionNNUrl = 'https://keras.io/'; // TODO: put meaningful link
 
-const timeSeriesPredictionRNNUrl = 'https://keras.io/';  // TODO: put meaningful link
+const timeSeriesPredictionRNNUrl = 'https://keras.io/'; // TODO: put meaningful link
 
 
 const AdvancedConfiguration = (props) => {
@@ -164,11 +177,14 @@ const AdvancedConfiguration = (props) => {
 
   const configs = () => {
     if (props.predictionMethod === REGRESSION) {
-      return [addColumns(), ...kmeans(), hyperOpt(), incremental(), ...configMapper(props.regression, regressionConfigMap)];
+      return [addColumns(), ...kmeans(), hyperOpt(), incremental(),
+          ...configMapper(props.regression, regressionConfigMap)];
     } else if (props.predictionMethod === CLASSIFICATION) {
-      return [addColumns(), ...kmeans(), hyperOpt(), incremental(), ...configMapper(props.classification, classificationConfigMap)];
+      return [addColumns(), ...kmeans(), hyperOpt(), incremental(),
+          ...configMapper(props.classification, classificationConfigMap)];
     } else if (props.predictionMethod === TIME_SERIES_PREDICTION) {
-        return [addColumns(), ...kmeans(), hyperOpt(), incremental(), ...configMapper(props.timeSeriesPrediction, timeSeriesPredictionConfigMap)];
+        return [addColumns(), ...kmeans(), hyperOpt(), incremental(),
+            ...configMapper(props.timeSeriesPrediction, timeSeriesPredictionConfigMap)];
     } else {
       return [];
     }

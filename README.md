@@ -1,8 +1,19 @@
 # Nirdizati Research frontend
-[![Build Status](https://travis-ci.org/nirdizati-research/predict-react.svg?branch=master)](https://travis-ci.org/nirdizati-research/predict-react)
-[![Coverage Status](https://coveralls.io/repos/github/nirdizati-research/predict-react/badge.svg?branch=master)](https://coveralls.io/github/TKasekamp/predict-react?branch=master)
+
 [![License MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![HitCount](http://hits.dwyl.io/nirdizati-research/predict-react.svg)](http://hits.dwyl.io/nirdizati-research/predict-react)
+
+Master
+
+[![Build Status](https://travis-ci.org/nirdizati-research/predict-react.svg?branch=master)](https://travis-ci.org/nirdizati-research/predict-react)
+[![codecov](https://codecov.io/gh/nirdizati-research/predict-react/branch/master/graph/badge.svg)](https://codecov.io/gh/nirdizati-research/predict-react)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/nirdizati-research/predict-react.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/nirdizati-research/predict-react/alerts/)
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/nirdizati-research/predict-react.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/nirdizati-research/predict-react/context:javascript)
+
+Development
+
+[![Build Status](https://travis-ci.org/nirdizati-research/predict-react.svg?branch=development)](https://travis-ci.org/nirdizati-research/predict-react)
+[![codecov](https://codecov.io/gh/nirdizati-research/predict-react/branch/development/graph/badge.svg)](https://codecov.io/gh/nirdizati-research/predict-react)
 
 React frontend to perform Predictive Monitoring analysis over event logs.
 

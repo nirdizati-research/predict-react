@@ -45,9 +45,10 @@ class Prediction extends Component {
   }
 
   filterJobRun() {
-    return this.props.jobsrun.filter((job) => (job.config.log_id === this.props.logId) &&
-      ((job.config.model_id === this.props.regModelId) ||
-          (job.config.model_id === this.props.classModelId) || (job.config.model_id === this.props.timeSeriesPredModelId)));
+    return this.props.jobsrun.filter((job) =>
+        (job.config.log_id === this.props.logId) && ((job.config.model_id === this.props.regModelId) ||
+        (job.config.model_id === this.props.classModelId) ||
+        (job.config.model_id === this.props.timeSeriesPredModelId)));
   }
 
   Submit() {

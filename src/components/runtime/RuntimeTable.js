@@ -49,7 +49,7 @@ class RuntimeTable extends PureComponent {
         </TableRow>
       </TableHeader>
       <TableBody>
-          {this.state.slicedData.map( //TODO: update to use timeSeriesPrediction
+          {this.state.slicedData.map( // TODO: update to use timeSeriesPrediction
           ({id, name, completed, n_events, first_event, last_event, reg_results, class_results, class_actual, duration, inter_result}) => (
             <TableRow key={id} selectable={false}>
               <TableColumn>{name}</TableColumn>

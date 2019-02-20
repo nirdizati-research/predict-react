@@ -107,7 +107,7 @@ const getCharts = (data, predictionMethod) => {
 
 const ResultWrapper = (props) => {
   const tableData = prepareData(props.jobs, props.predictionMethod);
-    console.log(tableData);
+    // console.log(tableData);
   let charts = [];
   let prefixChart;
   if (tableData.length > 0) {

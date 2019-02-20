@@ -24,6 +24,7 @@
     "arrow-parens": "off",
     "require-jsdoc": "off",
     "comma-dangle": "off",
+    "no-invalid-this": "off",
     "space-before-function-paren": [
       "error",
       {

@@ -4,7 +4,7 @@ import {TextField} from 'react-md';
 import SelectField from 'react-md/lib/SelectFields';
 
 // TODO: check where to put this
-const rnn_types = [
+const rnnTypes = [
     {
         value: 'lstm',
         label: 'LSTM',
@@ -25,7 +25,7 @@ const defaults = {
 const TimeSeriesPredictionRNN = (props) => {
     const methodConfig = `timeSeriesPrediction.rnn`;
 
-    //TODO: which parameters to put?
+    // TODO: which parameters to put?
     const nUnits = <TextField
         key="n_units"
         id="n_units"
@@ -43,7 +43,7 @@ const TimeSeriesPredictionRNN = (props) => {
         id="rnn_type"
         label="RNN type"
         defaultValue={defaults.rnn_type}
-        menuItems={rnn_types}
+        menuItems={rnnTypes}
         onChange={props.onChange.bind(this, {methodConfig, key: 'rnn_type', isNumber: false})}
         className="md-cell md-cell--3"
     />;

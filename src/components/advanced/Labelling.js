@@ -41,7 +41,7 @@ const Labelling = (props) => {
             Number attributes below the threshold are set as <code>True</code>.
         </p>
         </div>;
-    } else if (props.predictionMethod === TIME_SERIES_PREDICTION) { //TODO: update
+    } else if (props.predictionMethod === TIME_SERIES_PREDICTION) { // TODO: update
       return <div key='key' className="md-cell md-cell--12"><p>
         When using duration, the threshold is an integer in seconds. If the remaining time is below this threshold
         it
@@ -55,7 +55,7 @@ const Labelling = (props) => {
   };
 
 
-    var temp;
+    let temp;
     switch (props.predictionMethod) {
         case REGRESSION:
             temp = regLabelControls;

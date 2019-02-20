@@ -113,7 +113,8 @@ const mapStateToProps = (state) => ({
   prefixLengths: state.jobs.prefixLengths.sort((a, b) => (a - b)),
   selectedPrefixes: state.jobs.selectedPrefixes,
   filterOptions: (
-      ({encodings, clusterings, classification, regression, timeSeriesPrediction, label, attributeNames, thresholds, padding}) => ({
+      ({encodings, clusterings, classification, regression, timeSeriesPrediction,
+         label, attributeNames, thresholds, padding}) => ({
       encodings,
       clusterings,
       classification,

@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {TextField} from 'react-md/lib/index';
-import {Checkbox} from 'react-md/lib';
 import {CLASSIFICATION, SGDCLASSIFIER} from '../../../reference';
 import SelectField from 'react-md/lib/SelectFields';
 import {learningRateSGDClassifier, lossSGDClassifier, penaltySGDClassifier} from '../advancedConfig';
+import {TextField, Checkbox} from 'react-md';
 
 
 const defaults = {

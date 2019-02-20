@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {TextField} from 'react-md/lib/index';
 import {leafPredictionHoeffding, splitCriterionHoeffding} from '../advancedConfig';
 import SelectField from 'react-md/lib/SelectFields/index';
-import {Checkbox} from 'react-md/lib';
 import {CLASSIFICATION, HOEFFDING_TREE} from '../../../reference';
+import {TextField, Checkbox} from 'react-md';
 
 const defaults = {
     'grace_period': 200,

@@ -7,7 +7,7 @@ import {Button, CardText} from 'react-md';
 import {CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION} from '../../reference';
 
 class ModelSelector extends Component {
-    selectChange({method}, value,) {
+    selectChange({method}, value, ) {
     this.props.modelChange({method}, value);
   }
 

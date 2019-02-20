@@ -182,7 +182,8 @@ export const getPrefixChartHeader = (predictionMethod) => {
 const desc = 'Bubble chart by ';
 const regTitles = ['regression method', 'encoding method', 'clustering method'].map((elem) => desc + elem);
 const classTitles = ['classification method', 'encoding method', 'clustering method'].map((elem) => desc + elem);
-const timeSeriesPredTitles = ['time series prediction method', 'encoding method', 'clustering method'].map((elem) => desc + elem);
+const timeSeriesPredTitles = ['time series prediction method', 'encoding method',
+  'clustering method'].map((elem) => desc + elem);
 
 export const getTitles = (predictionMethod) => {
   switch (predictionMethod) {
