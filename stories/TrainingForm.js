@@ -13,16 +13,21 @@ storiesOf('TrainingFormCard', module)
                 <div className="md-grid">
                     <div className="md-cell md-cell--12">
                         <TrainingFormCard splitLabels={splitLabels} fetchState={{inFlight: false}} onSubmit={(_) => _}
-                                          onSplitChange={(_) => _} maxEventsInLog={10} traceAttributes={traceAttributes}/>
+                                          onSplitChange={(_) => _} maxEventsInLog={10} traceAttributes={traceAttributes}
+                                          classificationModels={[]} onModelChange={(_) => _} regressionModels={[]}
+                                          timeSeriesPredictionModels={[]}/>
                     </div>
                     <div className="md-cell md-cell--12">
                         <TrainingFormCard splitLabels={splitLabels} fetchState={{inFlight: true}} onSubmit={(_) => _}
-                                          onSplitChange={(_) => _} maxEventsInLog={10} traceAttributes={[]}/>
+                                          onSplitChange={(_) => _} maxEventsInLog={10} traceAttributes={[]}
+                                          classificationModels={[]} onModelChange={(_) => _} regressionModels={[]}
+                                          timeSeriesPredictionModels={[]}/>
                     </div>
                     <div className="md-cell md-cell--12">
                         <TrainingFormCard splitLabels={[]} fetchState={{inFlight: false, error: 'oh shit'}}
                                           onSubmit={(_) => _} onSplitChange={(_) => _} maxEventsInLog={10}
-                                          traceAttributes={[]}/>
+                                          traceAttributes={[]} classificationModels={[]} onModelChange={(_) => _}
+                                          regressionModels={[]} timeSeriesPredictionModels={[]}/>
                     </div>
                 </div>
             );
@@ -34,7 +39,8 @@ storiesOf('TrainingFormCard', module)
                     <div className="md-cell md-cell--12">
                         <TrainingFormCard splitLabels={splitLabels} fetchState={{inFlight: false}} onSubmit={(_) => _}
                                           onSplitChange={(_) => _} maxEventsInLog={10} traceAttributes={traceAttributes}
-                                          isLabelForm={true}/>
+                                          isLabelForm={true} classificationModels={[]} onModelChange={(_) => _}
+                                          regressionModels={[]} timeSeriesPredictionModels={[]}/>
                     </div>
                 </div>
             );

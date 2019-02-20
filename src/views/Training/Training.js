@@ -42,6 +42,7 @@ class Training extends Component {
                             maxEventsInLog={maxEventsInLog} traceAttributes={traceAttributes}
                             classificationModels={this.props.classificationModels}
                             regressionModels={this.props.regressionModels}
+                            timeSeriesPredictionModels={this.props.timeSeriesPredictionModels}
                             onModelChange={this.onModelChange.bind(this)}
                             onSubmit={this.props.onSubmitTraining} onSplitChange={this.onSplitChange.bind(this)}/>
         </div>
@@ -60,7 +61,8 @@ Training.propTypes = {
   onModelChange: PropTypes.func.isRequired,
   fetchState: fetchStatePropType,
   classificationModels: PropTypes.arrayOf(modelPropType).isRequired,
-  regressionModels: PropTypes.arrayOf(modelPropType).isRequired
+    regressionModels: PropTypes.arrayOf(modelPropType).isRequired,
+    timeSeriesPredictionModels: PropTypes.arrayOf(modelPropType).isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -69,6 +71,7 @@ const mapStateToProps = (state) => ({
   fetchState: state.training.fetchState,
   classificationModels: state.models.classificationModels,
   regressionModels: state.models.regressionModels,
+    timeSeriesPredictionModels: state.models.timeSeriesPredictionModels,
   classModelId: state.models.classelected,
   regModelId: state.models.regselected,
   models: state.models.models

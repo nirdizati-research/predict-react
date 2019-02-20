@@ -5,15 +5,15 @@ import {label1} from '../../../../stories/Advanced';
 import AdvancedConfiguration from '../../../components/advanced/AdvancedConfiguration';
 import HyperOpt from '../../../components/advanced/HyperOpt';
 import KMeans from '../../../components/advanced/KMeans';
-import RegressionRandomForest from '../../../components/advanced/RegressionRandomForest';
-import RegressionLasso from '../../../components/advanced/RegressionLasso';
-import RegressionLinear from '../../../components/advanced/RegressionLinear';
+import RegressionRandomForest from '../../../components/advanced/regression/RegressionRandomForest';
+import RegressionLasso from '../../../components/advanced/regression/RegressionLasso';
+import RegressionLinear from '../../../components/advanced/regression/RegressionLinear';
 import Labelling from '../../../components/advanced/Labelling';
-import ClassificationKnn from '../../../components/advanced/ClassificationKnn';
-import ClassificationRandomForest from '../../../components/advanced/ClassificationRandomForest';
-import ClassificationDecisionTree from '../../../components/advanced/ClassificationDecisionTree';
-import RegressionXGBoost from '../../../components/advanced/RegressionXGBoost';
-import ClassificationXGBoost from '../../../components/advanced/ClassificationXGBoost';
+import ClassificationKnn from '../../../components/advanced/classification/ClassificationKnn';
+import ClassificationRandomForest from '../../../components/advanced/classification/ClassificationRandomForest';
+import ClassificationDecisionTree from '../../../components/advanced/classification/ClassificationDecisionTree';
+import RegressionXGBoost from '../../../components/advanced/regression/RegressionXGBoost';
+import ClassificationXGBoost from '../../../components/advanced/classification/ClassificationXGBoost';
 
 const onModelChange = jest.fn();
 

@@ -1,33 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {CLASSIFICATION, REGRESSION} from '../../reference';
+import {TextField} from 'react-md/lib/index';
+import {Checkbox} from 'react-md/lib';
+import {CLASSIFICATION, SGDCLASSIFIER} from '../../../reference';
 import SelectField from 'react-md/lib/SelectFields';
-import {penaltyPerceptron} from './advancedConfig';
-import TextField from 'react-md/lib/TextFields';
-import Checkbox from 'react-md/lib/SelectionControls/Checkbox';
+import {learningRateSGDClassifier, lossSGDClassifier, penaltySGDClassifier} from '../advancedConfig';
+
 
 const defaults = {
-    'penalty': null,
+    'loss': 'hinge',
+    'penalty': 'l2',
     'alpha': 0.0001,
+    'l1_ratio': 0.15,
     'fit_intercept': true,
-    'max_iter': null,
+    'max_iter': 5,
     'tol': 1e-3,
-    'shuffle': true,
-    'eta0': 1,
+    'eta0': 0.0,
+    'power_t': 0.5,
     'early_stopping': false,
+    'n_iter_no_change': 5,
     'validation_fraction': 0.1,
-    'n_iter_no_change': 5
+    'average': true,
 };
 
-const ClassificationPerceptronClassifier = (props) => {
-    const methodConfig = `${CLASSIFICATION}.${REGRESSION}`;
+const ClassificationSGDClassifier = (props) => {
+    const methodConfig = `${CLASSIFICATION}.${SGDCLASSIFIER}`;
 
+    const loss = <SelectField
+        key="loss"
+        id="loss"
+        label="loss"
+        className="md-cell md-cell--3"
+        menuItems={lossSGDClassifier}
+        defaultValue={defaults.loss}
+        position={SelectField.Positions.BELOW}
+        onChange={props.onChange.bind(this, {methodConfig, key: 'loss'})}
+        required
+    />;
     const penalty = <SelectField
         key="penalty"
         id="penalty"
         label="penalty"
         className="md-cell md-cell--3"
-        menuItems={penaltyPerceptron}
+        menuItems={penaltySGDClassifier}
         defaultValue={defaults.penalty}
         position={SelectField.Positions.BELOW}
         onChange={props.onChange.bind(this, {methodConfig, key: 'penalty'})}
@@ -41,6 +56,16 @@ const ClassificationPerceptronClassifier = (props) => {
         defaultValue={defaults.alpha}
         onChange={props.onChange.bind(this, {methodConfig, key: 'alpha', isNumber: true})}
         min={0}
+        className="md-cell md-cell--3"
+    />;
+    const l1Ratio = <TextField
+        key="l1_ratio"
+        id="l1_ratio"
+        label="l1_ratio"
+        type="number"
+        defaultValue={defaults.l1_ratio}
+        onChange={props.onChange.bind(this, {methodConfig, key: 'l1_ratio', isNumber: true})}
+        min={0.00000001}
         className="md-cell md-cell--3"
     />;
     const fitIntercept = <Checkbox
@@ -73,14 +98,26 @@ const ClassificationPerceptronClassifier = (props) => {
         min={1e-4}
         className="md-cell md-cell--3"
     />;
-    const shuffle = <Checkbox
-        key="shuffle"
-        id="shuffle"
-        name="shuffle"
-        label="shuffle"
+    const epsion = <TextField
+        key="epsion"
+        id="epsion"
+        label="epsion"
+        type="number"
+        defaultValue={defaults.epsion}
+        onChange={props.onChange.bind(this, {methodConfig, key: 'epsion', isNumber: true})}
+        min={1e-4}
         className="md-cell md-cell--3"
-        defaultChecked={defaults.shuffle}
-        onChange={props.onChange.bind(this, {methodConfig, key: 'shuffle'})}
+    />;
+    const learningRate = <SelectField
+        key="learning_rate"
+        id="learning_rate"
+        label="learning_rate"
+        className="md-cell md-cell--3"
+        menuItems={learningRateSGDClassifier}
+        defaultValue={defaults.learning_rate}
+        position={SelectField.Positions.BELOW}
+        onChange={props.onChange.bind(this, {methodConfig, key: 'learning_rate'})}
+        required
     />;
     const eta0 = <TextField
         key="eta0"
@@ -92,6 +129,16 @@ const ClassificationPerceptronClassifier = (props) => {
         min={1}
         className="md-cell md-cell--3"
     />;
+    const powerT = <TextField
+        key="power_t"
+        id="power_t"
+        label="power_t"
+        type="number"
+        defaultValue={defaults.power_t}
+        onChange={props.onChange.bind(this, {methodConfig, key: 'power_t', isNumber: true})}
+        min={0.01}
+        className="md-cell md-cell--3"
+    />;
     const earlyStopping = <Checkbox
         key="early_stopping"
         id="early_stopping"
@@ -100,16 +147,6 @@ const ClassificationPerceptronClassifier = (props) => {
         className="md-cell md-cell--3"
         defaultChecked={defaults.early_stopping}
         onChange={props.onChange.bind(this, {methodConfig, key: 'early_stopping'})}
-    />;
-    const validationFraction = <TextField
-        key="validation_fraction"
-        id="validation_fraction"
-        label="validation_fraction"
-        type="number"
-        defaultValue={defaults.validation_fraction}
-        onChange={props.onChange.bind(this, {methodConfig, key: 'validation_fraction', isNumber: true})}
-        min={0.01}
-        className="md-cell md-cell--3"
     />;
     const nIterNoChange = <TextField
         key="n_iter_no_change"
@@ -121,23 +158,46 @@ const ClassificationPerceptronClassifier = (props) => {
         min={1}
         className="md-cell md-cell--3"
     />;
+    const validationFraction = <TextField
+        key="validation_fraction"
+        id="validation_fraction"
+        label="validation_fraction"
+        type="number"
+        defaultValue={defaults.validation_fraction}
+        onChange={props.onChange.bind(this, {methodConfig, key: 'validation_fraction', isNumber: true})}
+        min={0.01}
+        className="md-cell md-cell--3"
+    />;
+    const average = <Checkbox
+        key="average"
+        id="average"
+        name="average"
+        label="average"
+        className="md-cell md-cell--3"
+        defaultChecked={defaults.average}
+        onChange={props.onChange.bind(this, {methodConfig, key: 'average'})}
+    />;
 
     return [
+        loss,
         penalty,
         alpha,
+        l1Ratio,
         fitIntercept,
         maxIter,
         tol,
-        shuffle,
+        epsion,
+        learningRate,
         eta0,
+        powerT,
         earlyStopping,
+        nIterNoChange,
         validationFraction,
-        nIterNoChange
+        average
     ];
 };
 
-ClassificationPerceptronClassifier.protoTypes = {
+ClassificationSGDClassifier.protoTypes = {
     onChange: PropTypes.func.isRequired
 };
-
-export default ClassificationPerceptronClassifier;
+export default ClassificationSGDClassifier;

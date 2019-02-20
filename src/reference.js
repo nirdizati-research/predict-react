@@ -210,12 +210,15 @@ const threshold = [
 ];
 
 const regressionIncrementalTypes = [{}];
+
 const classificationIncrementalTypes = [
-  {
-    value: NUMBER_OF_INCREMENTS,
-    label: 'Number of Incremental trains'
-  }
+    {
+        value: NUMBER_OF_INCREMENTS,
+        label: 'Number of Incremental trains'
+    }
 ];
+
+const timeSeriesPredictionIncrementalTypes = [{}];
 
 const regressionLabelTypes = [
     {
@@ -345,7 +348,7 @@ export const predictionMethods = controlCreator(predictions);
 export const thresholdControls = controlCreator(threshold);
 export const regIncrementalControls = controlCreator(regressionIncrementalTypes);
 export const classIncrementalControls = controlCreator(classificationIncrementalTypes);
-export const timeSeriesPredIncrementalControls = controlCreator(classificationIncrementalTypes);
+export const timeSeriesPredIncrementalControls = controlCreator(timeSeriesPredictionIncrementalTypes);
 export const regLabelControls = controlCreator(regressionLabelTypes);
 export const classLabelControls = controlCreator(classificationLabelTypes);
 export const timeSeriesPredLabelControls = controlCreator(timeSeriesPredictionLabelTypes);

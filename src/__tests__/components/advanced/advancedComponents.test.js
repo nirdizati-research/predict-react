@@ -3,25 +3,25 @@ import {shallow} from 'enzyme';
 import AddColumns from '../../../components/advanced/AddColumns';
 import {Checkbox, SelectField, TextField} from 'react-md';
 import {label1, traceAttributes} from '../../../../stories/Advanced';
-import ClassificationDecisionTree from '../../../components/advanced/ClassificationDecisionTree';
-import ClassificationKnn from '../../../components/advanced/ClassificationKnn';
-import ClassificationRandomForest from '../../../components/advanced/ClassificationRandomForest';
+import ClassificationDecisionTree from '../../../components/advanced/classification/ClassificationDecisionTree';
+import ClassificationKnn from '../../../components/advanced/classification/ClassificationKnn';
+import ClassificationRandomForest from '../../../components/advanced/classification/ClassificationRandomForest';
 import HyperOpt from '../../../components/advanced/HyperOpt';
 import {
-  ATTRIBUTE_NUMBER,
-  ATTRIBUTE_STRING,
-  CLASSIFICATION,
-  DURATION,
-  NEXT_ACTIVITY,
-  REGRESSION
+    ATTRIBUTE_NUMBER,
+    ATTRIBUTE_STRING,
+    CLASSIFICATION,
+    DURATION,
+    NEXT_ACTIVITY,
+    REGRESSION
 } from '../../../reference';
 import KMeans from '../../../components/advanced/KMeans';
-import RegressionLinear from '../../../components/advanced/RegressionLinear';
-import RegressionLasso from '../../../components/advanced/RegressionLasso';
-import RegressionRandomForest from '../../../components/advanced/RegressionRandomForest';
+import RegressionLinear from '../../../components/advanced/regression/RegressionLinear';
+import RegressionLasso from '../../../components/advanced/regression/RegressionLasso';
+import RegressionRandomForest from '../../../components/advanced/regression/RegressionRandomForest';
 import Labelling from '../../../components/advanced/Labelling';
-import RegressionXGBoost from '../../../components/advanced/RegressionXGBoost';
-import ClassificationXGBoost from '../../../components/advanced/ClassificationXGBoost';
+import RegressionXGBoost from '../../../components/advanced/regression/RegressionXGBoost';
+import ClassificationXGBoost from '../../../components/advanced/classification/ClassificationXGBoost';
 
 const onChange = jest.fn();
 

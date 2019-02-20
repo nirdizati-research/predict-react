@@ -16,34 +16,34 @@ import {
 import {MODEL_CHANGED} from '../actions/ModelActions';
 import {JOB_RUN_CHANGED} from '../actions/RuntimeActions';
 import {
+    ADAPTIVE_TREE,
     BOOLEAN,
     CLASSIFICATION,
     COMPLEX,
     DECISION_TREE,
     DURATION,
     FREQUENCY,
+    HOEFFDING_TREE,
     KMEANS,
     KNN,
     LABELLING,
     LASSO,
     LAST_PAYLOAD,
     LINEAR,
+    MULTINOMIAL_NAIVE_BAYES,
     NN,
     NO_CLUSTER,
     NO_PADDING,
+    PERCEPTRON,
     RANDOM_FOREST,
     REGRESSION,
     REMAINING_TIME,
     RNN,
+    SGDCLASSIFIER,
     SIMPLE_INDEX,
     THRESHOLD_MEAN,
     TIME_SERIES_PREDICTION,
-    XGBOOST,
-    MULTINOMIAL_NAIVE_BAYES,
-    ADAPTIVE_TREE,
-    HOEFFDING_TREE,
-    SGDCLASSIFIER,
-    PERCEPTRON
+    XGBOOST
 } from '../reference';
 import {labelCompare} from '../util/labelCompare';
 import {addListToStore, removeFromStore} from './genericHelpers';

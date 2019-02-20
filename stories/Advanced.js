@@ -1,7 +1,7 @@
 import React from 'react';
 import {storiesOf} from '@storybook/react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
-import ClassificationKnn from '../src/components/advanced/ClassificationKnn';
+import ClassificationKnn from '../src/components/advanced/classification/ClassificationKnn';
 import {
     CLASSIFICATION,
     KMEANS,
@@ -11,16 +11,16 @@ import {
     TIME_SERIES_PREDICTION
 } from '../src/reference';
 import AdvancedConfiguration from '../src/components/advanced/AdvancedConfiguration';
-import ClassificationDecisionTree from '../src/components/advanced/ClassificationDecisionTree';
-import ClassificationRandomForest from '../src/components/advanced/ClassificationRandomForest';
-import RegressionRandomForest from '../src/components/advanced/RegressionRandomForest';
-import RegressionLasso from '../src/components/advanced/RegressionLasso';
-import RegressionLinear from '../src/components/advanced/RegressionLinear';
+import ClassificationDecisionTree from '../src/components/advanced/classification/ClassificationDecisionTree';
+import ClassificationRandomForest from '../src/components/advanced/classification/ClassificationRandomForest';
+import RegressionRandomForest from '../src/components/advanced/regression/RegressionRandomForest';
+import RegressionLasso from '../src/components/advanced/regression/RegressionLasso';
+import RegressionLinear from '../src/components/advanced/regression/RegressionLinear';
 import HyperOpt from '../src/components/advanced/HyperOpt';
 import Labelling from '../src/components/advanced/Labelling';
-import RegressionXGBoost from '../src/components/advanced/RegressionXGBoost';
-import ClassificationXGBoost from '../src/components/advanced/ClassificationXGBoost';
-import TimeSeriesPredictionRNN from '../src/components/advanced/TimeSeriesPredictionRNN';
+import RegressionXGBoost from '../src/components/advanced/regression/RegressionXGBoost';
+import ClassificationXGBoost from '../src/components/advanced/classification/ClassificationXGBoost';
+import TimeSeriesPredictionRNN from '../src/components/advanced/timeSeriesPrediction/TimeSeriesPredictionRNN';
 
 
 export const label1 = {

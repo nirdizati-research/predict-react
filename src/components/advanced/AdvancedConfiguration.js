@@ -1,23 +1,23 @@
 import React from 'react';
 import {
-  ADAPTIVE_TREE,
-  CLASSIFICATION,
-  DECISION_TREE,
-  HOEFFDING_TREE,
-  KMEANS,
-  KNN,
-  LABELLING,
-  LASSO,
-  LINEAR,
-  MULTINOMIAL_NAIVE_BAYES,
-  NN,
-  PERCEPTRON,
-  RANDOM_FOREST,
-  REGRESSION,
-  RNN,
-  SGDCLASSIFIER,
-  TIME_SERIES_PREDICTION,
-  XGBOOST
+    ADAPTIVE_TREE,
+    CLASSIFICATION,
+    DECISION_TREE,
+    HOEFFDING_TREE,
+    KMEANS,
+    KNN,
+    LABELLING,
+    LASSO,
+    LINEAR,
+    MULTINOMIAL_NAIVE_BAYES,
+    NN,
+    PERCEPTRON,
+    RANDOM_FOREST,
+    REGRESSION,
+    RNN,
+    SGDCLASSIFIER,
+    TIME_SERIES_PREDICTION,
+    XGBOOST
 } from '../../reference';
 
 import PropTypes from 'prop-types';
@@ -30,24 +30,24 @@ import HyperOpt from './HyperOpt';
 import Labelling from './Labelling';
 import AddColumns from './AddColumns';
 
-import ClassificationKnn from './ClassificationKnn';
-import ClassificationDecisionTree from './ClassificationDecisionTree';
-import ClassificationRandomForest from './ClassificationRandomForest';
-import ClassificationXGBoost from './ClassificationXGBoost';
-import ClassificationNaiveBayes from './ClassificationNaiveBayes';
-import ClassificationHoeffdingTree from './ClassificationHoeffdingTree';
-import ClassificationAdaptiveTree from './ClassificationAdaptiveTree';
-import ClassificationSGDClassifier from './ClassificationSGDClassifier';
-import ClassificationPerceptronClassifier from './ClassificationPerceptron';
-import ClassificationNN from './ClassificationNN';
+import ClassificationKnn from './classification/ClassificationKnn';
+import ClassificationDecisionTree from './classification/ClassificationDecisionTree';
+import ClassificationRandomForest from './classification/ClassificationRandomForest';
+import ClassificationXGBoost from './classification/ClassificationXGBoost';
+import ClassificationNaiveBayes from './classification/ClassificationNaiveBayes';
+import ClassificationHoeffdingTree from './classification/ClassificationHoeffdingTree';
+import ClassificationAdaptiveTree from './classification/ClassificationAdaptiveTree';
+import ClassificationSGDClassifier from './classification/ClassificationSGDClassifier';
+import ClassificationPerceptronClassifier from './classification/ClassificationPerceptron';
+import ClassificationNN from './classification/ClassificationNN';
 
-import RegressionLinear from './RegressionLinear';
-import RegressionRandomForest from './RegressionRandomForest';
-import RegressionLasso from './RegressionLasso';
-import RegressionXGBoost from './RegressionXGBoost';
-import RegressionNN from './RegressionNN';
+import RegressionLinear from './regression/RegressionLinear';
+import RegressionRandomForest from './regression/RegressionRandomForest';
+import RegressionLasso from './regression/RegressionLasso';
+import RegressionXGBoost from './regression/RegressionXGBoost';
+import RegressionNN from './regression/RegressionNN';
 
-import TimeSeriesPredictionRNN from './TimeSeriesPredictionRNN';
+import TimeSeriesPredictionRNN from './timeSeriesPrediction/TimeSeriesPredictionRNN';
 
 import Incremental from './Incremental';
 
