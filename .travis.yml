@@ -11,7 +11,7 @@ jobs:
           - node_modules
       script:
         - npm run lint
-        - npm run test-coveralls
+        - npm run test-codecov
 
     - stage: before_deploy
       if: repo = nirdizati-research/predict-react AND branch = master AND type = push   # Build only the master branch

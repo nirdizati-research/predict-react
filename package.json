@@ -11,7 +11,7 @@
   "devDependencies": {
     "@storybook/react": "~4.0.0",
     "babel-loader": "^8.0.4",
-    "coveralls": "^3.0.0",
+    "codecov": "^3.2.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16.3": "^1.4.0",
     "eslint-config-google": "^0.9.1",
@@ -40,7 +40,7 @@
     "lint": "eslint src/",
     "test": "react-scripts test",
     "test-coverage": "npm run test -- --coverage",
-    "test-coveralls": "npm run test -- --coverage --coverageReporters=lcov && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
+    "test-codecov": "npm run test -- --coverage --coverageReporters=lcov && cat ./coverage/lcov.info | codecov && rm -rf ./coverage",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9001 -c .storybook",
     "build-storybook": "build-storybook -s public"
