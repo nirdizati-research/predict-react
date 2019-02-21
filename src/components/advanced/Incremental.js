@@ -30,15 +30,14 @@ const Incremental = (props) => {
 
 
     const makeModelSelector = (onChange) => {
-        const availableModels = modelsToString(
+        const availableModels = [{value: null, label: 'None'}].concat(modelsToString(
             props.classificationModels
             .filter(
                 (obj) => (
                     props.currentModels.includes(obj.config.method)
                 )
             )
-        )
-        .concat([{value: null, label: 'None'}]);
+        ));
 
         return [<SelectField
             key="base_model"
