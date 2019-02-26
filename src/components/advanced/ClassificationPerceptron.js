@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {CLASSIFICATION, REGRESSION} from '../../reference';
+import {CLASSIFICATION, PERCEPTRON} from '../../reference';
 import SelectField from 'react-md/lib/SelectFields';
 import {penaltyPerceptron} from './advancedConfig';
 import TextField from 'react-md/lib/TextFields';
@@ -20,7 +20,7 @@ const defaults = {
 };
 
 const ClassificationPerceptron = (props) => {
-    const methodConfig = `${CLASSIFICATION}.${REGRESSION}`;
+    const methodConfig = `${CLASSIFICATION}.${PERCEPTRON}`;
 
     const penalty = <SelectField
         key="penalty"
