@@ -20,134 +20,114 @@ import SelectField from 'react-md/lib/SelectFields/index';
 import {labelPropType, traceAttributeShape} from '../../propTypes';
 
 const traceAttributeToLabel = (traceAttr) => {
-  return {label: traceAttr.name, value: traceAttr.name, message: `First trace value: ${traceAttr.example}`};
+    return {label: traceAttr.name, value: traceAttr.name, message: `First trace value: ${traceAttr.example}`};
 };
 
 const methodConfig = 'label';
-/* eslint-disable no-invalid-this */
-/* eslint-disable react/prop-types */
 const Labelling = (props) => {
-  const helpText = () => {
-    if (props.predictionMethod === REGRESSION) {
-      return <div key='key' className="md-cell md-cell--12"/>;
-    } else if (props.predictionMethod === CLASSIFICATION) {
-        return <div key='key' className="md-cell md-cell--12"><p>
-            When using duration, the threshold is an integer in seconds. If the remaining time is below this threshold
-            it
-            is classified as <code>True</code> or Fast. Times above the threshold are classified
-            as <code>False</code> or
-            Slow.
-        </p><p>
-            Number attributes below the threshold are set as <code>True</code>.
-        </p>
-        </div>;
-    } else if (props.predictionMethod === TIME_SERIES_PREDICTION) { // TODO: update
-      return <div key='key' className="md-cell md-cell--12"><p>
-        When using duration, the threshold is an integer in seconds. If the remaining time is below this threshold
-        it
-        is classified as <code>True</code> or Fast. Times above the threshold are classified as <code>False</code> or
-        Slow.
-      </p><p>
-        Number attributes below the threshold are set as <code>True</code>.
-      </p>
-      </div>;
-    }
-  };
+    const helpText = () => {
+        switch (props.predictionMethod) {
+            case REGRESSION: {
+                return <div key='key' className="md-cell md-cell--12"/>;
+            }
+            case CLASSIFICATION: {
+                return <div key='key' className="md-cell md-cell--12">
+                    <p>
+                        When using duration, the threshold is an integer in seconds. If the remaining time is below this
+                        threshold it is classified as <code>True</code> or Fast. Times above the threshold are
+                        classified
+                        as <code>False</code> or Slow.
+                    </p>
+                    <p>Number attributes below the threshold are set as <code>True</code>.</p>
+                </div>;
+            }
+            case TIME_SERIES_PREDICTION: {
+                return <div key='key' className="md-cell md-cell--12"/>;
+            }
+        }
+    };
 
+    const controls = () => {
+        switch (props.predictionMethod) {
+            case REGRESSION:
+                return regLabelControls;
+            case CLASSIFICATION:
+                return classLabelControls;
+            case TIME_SERIES_PREDICTION:
+                return timeSeriesPredLabelControls;
+        }
+    };
 
-    let temp;
-    switch (props.predictionMethod) {
-        case REGRESSION:
-            temp = regLabelControls;
-            break;
-        case CLASSIFICATION:
-            temp = classLabelControls;
-            break;
-        case TIME_SERIES_PREDICTION:
-            temp = timeSeriesPredLabelControls;
-            break;
-        default:
-            break;
-    }
-    const controls = () => temp;
+    const type = <SelectField key="type" id="type" label="Label type" className="md-cell md-cell--3"
+                              menuItems={controls()} position={SelectField.Positions.BELOW}
+                              onChange={props.onChange.bind(this, {methodConfig, key: 'type'})}
+                              value={props.label.type}/>;
 
+    const threshold = (label) => {
+        if (props.predictionMethod === REGRESSION || props.predictionMethod === TIME_SERIES_PREDICTION) {
+            return [];
+        } else if ([REMAINING_TIME, ATTRIBUTE_NUMBER, DURATION].includes(label.type)) {
+            const thresholdType = <SelectField
+                key="threshold_type"
+                id="threshold_type"
+                label="Threshold type"
+                className="md-cell md-cell--3"
+                menuItems={thresholdControls}
+                position={SelectField.Positions.BELOW}
+                onChange={props.onChange.bind(this, {methodConfig, key: 'threshold_type'})}
+                value={label.threshold_type}
+            />;
 
-    const type = <SelectField
-    key="type"
-    id="type"
-    label="Label type"
-    className="md-cell md-cell--3"
-    menuItems={controls()}
-    position={SelectField.Positions.BELOW}
-    onChange={props.onChange.bind(this, {methodConfig, key: 'type'})}
-    value={props.label.type}
-  />;
+            let thresholdLabel = 'Threshold';
+            if (label.type === DURATION) {
+                thresholdLabel = thresholdLabel + ' (seconds)';
+            }
+            const threshold = <TextField
+                key="threshold"
+                id="threshold"
+                label={thresholdLabel}
+                type="number"
+                value={label.threshold}
+                onChange={props.onChange.bind(this, {methodConfig, key: 'threshold', isNumber: true})}
+                min={0}
+                className="md-cell md-cell--3"
+            />;
 
-  const threshold = (label) => {
-    if (props.predictionMethod === REGRESSION) {
-      return [];
-    } else if ([REMAINING_TIME, ATTRIBUTE_NUMBER, DURATION].includes(label.type)) {
-      const thresholdType = <SelectField
-        key="threshold_type"
-        id="threshold_type"
-        label="Threshold type"
-        className="md-cell md-cell--3"
-        menuItems={thresholdControls}
-        position={SelectField.Positions.BELOW}
-        onChange={props.onChange.bind(this, {methodConfig, key: 'threshold_type'})}
-        value={label.threshold_type}
-      />;
+            return [thresholdType, threshold];
+        } else {
+            return [];
+        }
+    };
 
-      let thresholdLabel = 'Threshold';
-      if (label.type === DURATION) {
-        thresholdLabel = thresholdLabel + ' (seconds)';
-      }
-      const threshold = <TextField
-        key="threshold"
-        id="threshold"
-        label={thresholdLabel}
-        type="number"
-        value={label.threshold}
-        onChange={props.onChange.bind(this, {methodConfig, key: 'threshold', isNumber: true})}
-        min={0}
-        className="md-cell md-cell--3"
-      />;
+    const attributeSelector = ({label, traceAttributes, onChange}) => {
+        let filteredAttributes = [];
+        if (label.type === ATTRIBUTE_NUMBER) {
+            filteredAttributes = traceAttributes.filter((t) => t.type === 'number');
+        } else if (label.type === ATTRIBUTE_STRING) {
+            filteredAttributes = traceAttributes.filter((t) => t.type === 'string');
+        } else {
+            return null;
+        }
+        const traceLabels = controlCreator(filteredAttributes.map(traceAttributeToLabel));
+        return <SelectField
+            key="attribute_name"
+            id="attribute_name"
+            label="Attribute name"
+            className="md-cell md-cell--3"
+            menuItems={traceLabels}
+            position={SelectField.Positions.BELOW}
+            onChange={onChange.bind(this, {methodConfig, key: 'attribute_name'})}
+            value={label.attribute_name}
+        />;
+    };
 
-      return [thresholdType, threshold];
-    } else {
-      return [];
-    }
-  };
-
-  const attributeSelector = ({label, traceAttributes, onChange}) => {
-    let filteredAttributes = [];
-    if (label.type === ATTRIBUTE_NUMBER) {
-      filteredAttributes = traceAttributes.filter((t) => t.type === 'number');
-    } else if (label.type === ATTRIBUTE_STRING) {
-      filteredAttributes = traceAttributes.filter((t) => t.type === 'string');
-    } else {
-      return null;
-    }
-    const traceLabels = controlCreator(filteredAttributes.map(traceAttributeToLabel));
-    return <SelectField
-      key="attribute_name"
-      id="attribute_name"
-      label="Attribute name"
-      className="md-cell md-cell--3"
-      menuItems={traceLabels}
-      position={SelectField.Positions.BELOW}
-      onChange={onChange.bind(this, {methodConfig, key: 'attribute_name'})}
-      value={label.attribute_name}
-    />;
-  };
-
-  return [helpText(), type, attributeSelector(props), ...threshold(props.label)];
+    return [helpText(), type, attributeSelector(props), ...threshold(props.label)];
 };
 
 Labelling.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  label: PropTypes.shape(labelPropType).isRequired,
+    onChange: PropTypes.func.isRequired,
+    label: PropTypes.shape(labelPropType).isRequired,
     predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION, LABELLING]).isRequired,
-  traceAttributes: PropTypes.arrayOf(PropTypes.shape(traceAttributeShape)).isRequired
+    traceAttributes: PropTypes.arrayOf(PropTypes.shape(traceAttributeShape)).isRequired
 };
 export default Labelling;

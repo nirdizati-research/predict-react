@@ -254,28 +254,7 @@ const classificationLabelTypes = [
     },
 ];
 
-const timeSeriesPredictionLabelTypes = [ // TODO: update
-    {
-        value: DURATION,
-        label: 'Trace duration',
-        message: 'Binary classification'
-    },
-    {
-        value: NEXT_ACTIVITY,
-        label: 'Next activity',
-        message: 'Multiclass classification'
-    },
-    {
-        value: ATTRIBUTE_NUMBER,
-        label: 'Trace number attribute',
-        message: 'Binary classification'
-    },
-    {
-        value: ATTRIBUTE_STRING,
-        label: 'Trace string attribute',
-        message: 'Multiclass classification'
-    },
-];
+const timeSeriesPredictionLabelTypes = [];
 
 export const splitTypes = [
     {

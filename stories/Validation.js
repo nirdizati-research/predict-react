@@ -267,9 +267,9 @@ storiesOf('Validation', module)
                     <div className="md-cell md-cell--12">
                         <ValidationHeaderCard splitLabels={splitLabels} fetchState={{inFlight: false}}
                                               splitChange={(_) => _} selectedSplitId={0}
-                                              methodChange={(_) => _} selectedPrefixes={['2']} filterOptions={filterOptions}
-                                              prefixLengths={['1', '2']} prefixChange={(_) => _}
-                                              filterOptionChange={console.log}
+                                              methodChange={(_) => _} selectedPrefixes={['2']}
+                                              filterOptions={filterOptions} prefixLengths={['1', '2']}
+                                              prefixChange={(_) => _} filterOptionChange={console.log}
                                               predictionMethod={REGRESSION} labelChange={console.log}/>
                     </div>
                 </div>
@@ -280,9 +280,9 @@ storiesOf('Validation', module)
             <div className="md-grid">
                 <div className="md-cell md-cell--12">
                     <LabellingHeaderCard splitLabels={splitLabels} fetchState={{inFlight: false}} splitChange={(_) => _}
-                                         selectedPrefixes={['2']} filterOptions={filterOptions} labelChange={console.log}
-                                         prefixLengths={['1', '2']} prefixChange={(_) => _} selectedSplitId={1}
-                                         filterOptionChange={console.log}/>
+                                         selectedPrefixes={['2']} filterOptions={filterOptions}
+                                         labelChange={console.log} prefixLengths={['1', '2']} prefixChange={(_) => _}
+                                         selectedSplitId={1} filterOptionChange={console.log}/>
                 </div>
             </div>
         );

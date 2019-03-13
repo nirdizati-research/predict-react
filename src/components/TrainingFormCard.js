@@ -13,6 +13,7 @@ import {
     CLASSIFICATION,
     classificationMethods,
     clusteringMethods,
+    COMPLEX,
     DECISION_TREE,
     DURATION,
     encodingMethods,
@@ -24,6 +25,7 @@ import {
     LINEAR,
     MULTINOMIAL_NAIVE_BAYES,
     NN,
+    ONLY_THIS,
     paddingControls,
     PERCEPTRON,
     predictionMethods,
@@ -34,10 +36,12 @@ import {
     REMAINING_TIME,
     RNN,
     SGDCLASSIFIER,
+    SIMPLE_INDEX,
     THRESHOLD_MEAN,
     TIME_SERIES_PREDICTION,
     timeSeriesPredictionMethods,
     XGBOOST,
+    ZERO_PADDING,
 } from '../reference';
 import CheckboxGroup from './training/CheckboxGroup';
 import {fetchStatePropType, modelPropType, selectLabelProptype, traceAttributeShape} from '../propTypes';
@@ -213,6 +217,15 @@ class TrainingFormCard extends Component {
         } else if (value === TIME_SERIES_PREDICTION) {
             performance_metric = timeSeriesPredictionMetrics[0].value;
             labelType = DURATION;
+
+            const encodings = this.state.encodings.filter(obj =>
+                [SIMPLE_INDEX, COMPLEX].includes(obj)
+            );
+            const encoding = this.state.encoding;
+            encoding.padding = ZERO_PADDING;
+            encoding.generation_type = ONLY_THIS;
+            this.setState({encodings: encodings});
+            this.setState({encoding: encoding});
         }
         this.setState({
             predictionMethod: value, label: {...this.state.label, type: labelType},
@@ -296,6 +309,27 @@ class TrainingFormCard extends Component {
         };
     }
 
+    getMethodsFragment() {
+        switch (this.state.predictionMethod) {
+            case REGRESSION: {
+                return <CheckboxGroup controls={regressionMethods} id="regression" label="Regression methods"
+                                      onChange={this.checkboxChange.bind(this)}
+                                      value={this.state.regression.join(',')}/>;
+            }
+            case CLASSIFICATION: {
+                return <CheckboxGroup controls={classificationMethods} id="classification"
+                                      label="Classification methods" onChange={this.checkboxChange.bind(this)}
+                                      value={this.state.classification.join(',')}/>;
+            }
+            case TIME_SERIES_PREDICTION: {
+                return <CheckboxGroup controls={timeSeriesPredictionMethods} id="timeSeriesPrediction"
+                                      label="Time Series Prediction methods"
+                                      onChange={this.checkboxChange.bind(this)}
+                                      value={this.state.timeSeriesPrediction.join(',')}/>;
+            }
+        }
+    }
+
     onReset() {
         this.setState({...initialState(this.props), ...initialAdvancedConfiguration()});
     }
@@ -311,22 +345,6 @@ class TrainingFormCard extends Component {
                                    value={this.state.predictionMethod} inline controls={predictionMethods}
                                    onChange={this.onPredictionMethodChange.bind(this)}/>;
 
-        const regressionFragment = this.state.predictionMethod === REGRESSION ?
-            <CheckboxGroup controls={regressionMethods} id="regression" label="Regression methods"
-                           onChange={this.checkboxChange.bind(this)}
-                           value={this.state.regression.join(',')}/> : null;
-
-        const timeSeriesPredictionFragment = this.state.predictionMethod === TIME_SERIES_PREDICTION ?
-            <CheckboxGroup controls={timeSeriesPredictionMethods} id="timeSeriesPrediction"
-                           label="Time Series classification methods"
-                           onChange={this.checkboxChange.bind(this)}
-                           value={this.state.timeSeriesPrediction.join(',')}/> : null;
-
-        const classificationFragment = this.state.predictionMethod === CLASSIFICATION ?
-            <CheckboxGroup controls={classificationMethods} id="classification" label="Classification methods"
-                           onChange={this.checkboxChange.bind(this)}
-                           value={this.state.classification.join(',')}/> : null;
-
         const createModels = !this.props.isLabelForm ?
             <Checkbox id="create_models" name="create_models"
                       label="Create and save models for runtime prediction"
@@ -338,21 +356,46 @@ class TrainingFormCard extends Component {
                                    onChange={this.checkboxChange.bind(this)} controls={clusteringMethods}
                                    value={this.state.clusterings.join(',')} controlStyle={groupStyle}/>;
 
+        const filteredEncodingMethods = encodingMethods.filter(obj =>
+            ((this.state.predictionMethod === TIME_SERIES_PREDICTION && [COMPLEX, SIMPLE_INDEX].includes(obj.value)) ||
+                (this.state.predictionMethod !== TIME_SERIES_PREDICTION))
+        );
+
         const encodingFragment = !this.props.isLabelForm ?
             <SelectionControlGroup type="checkbox" label="Encoding methods" name="encodings"
-                                   className="md-cell md-cell--4"
-                                   id="encodings" onChange={this.checkboxChange.bind(this)} controls={encodingMethods}
+                                   className="md-cell md-cell--4" id="encodings"
+                                   onChange={this.checkboxChange.bind(this)} controls={filteredEncodingMethods}
                                    value={this.state.encodings.join(',')} controlStyle={groupStyle}/> : null;
+
+        const prefixSelector = <PrefixSelector encoding={this.state.encoding}
+                                               onChange={this.advanceConfigChange.bind(this)}
+                                               maxEventsInLog={this.props.maxEventsInLog}
+                                               isLabelForm={this.props.isLabelForm}
+                                               predictionMethod={this.state.predictionMethod}/>;
+
+        const advancedConfiguration =
+            <AdvancedConfiguration classification={this.state.classification}
+                                   regression={this.state.regression}
+                                   timeSeriesPrediction={this.state.timeSeriesPrediction}
+                                   onChange={this.advanceConfigChange.bind(this)}
+                                   label={this.state.label}
+                                   traceAttributes={this.props.traceAttributes}
+                                   clusterings={this.state.clusterings}
+                                   predictionMethod={this.state.predictionMethod}
+                                   classificationModels={this.props.classificationModels}
+                                   regressionModels={this.props.regressionModels}
+                                   timeSeriesPredictionModels={this.props.timeSeriesPredictionModels}
+                                   onModelChange={this.props.onModelChange}/>;
 
         const title = this.props.isLabelForm ? 'Labeling' : 'Training';
 
-        const otherSelector = this.props.isLabelForm ? null : <div className="md-cell md-cell--4">
+        const otherSelector = this.props.isLabelForm ? null :
+            <div className="md-cell md-cell--4">
             {predictionControls}
-            {regressionFragment}
-            {classificationFragment}
-            {timeSeriesPredictionFragment}
+            {this.getMethodsFragment()}
             {clusteringFragment}
-        </div>;
+            </div>;
+
         return (
             <Card className="md-block-centered">
                 <CardTitle title={title}>
@@ -369,21 +412,10 @@ class TrainingFormCard extends Component {
                     <div className="md-grid md-grid--no-spacing">
                         {otherSelector}
                         {encodingFragment}
-                        <PrefixSelector encoding={this.state.encoding} onChange={this.advanceConfigChange.bind(this)}
-                                        maxEventsInLog={this.props.maxEventsInLog}
-                                        isLabelForm={this.props.isLabelForm}/>
+                        {prefixSelector}
                     </div>
                 </CardText>
-                <AdvancedConfiguration classification={this.state.classification} regression={this.state.regression}
-                                       timeSeriesPrediction={this.state.timeSeriesPrediction}
-                                       onChange={this.advanceConfigChange.bind(this)} label={this.state.label}
-                                       traceAttributes={this.props.traceAttributes} clusterings={this.state.clusterings}
-                                       predictionMethod={this.state.predictionMethod}
-                                       classificationModels={this.props.classificationModels}
-                                       regressionModels={this.props.regressionModels}
-                                       timeSeriesPredictionModels={this.props.timeSeriesPredictionModels}
-                                       onModelChange={this.props.onModelChange}/>
-
+                {advancedConfiguration}
                 <CardText>
                     <div className="md-grid md-grid--no-spacing">
                         <div className="md-cell md-cell--12">
