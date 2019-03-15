@@ -183,14 +183,22 @@ const AdvancedConfiguration = (props) => {
       return [addColumns(), ...kmeans(), hyperOpt(), incremental(),
           ...configMapper(props.classification, classificationConfigMap)];
     } else if (props.predictionMethod === TIME_SERIES_PREDICTION) {
-        return [addColumns(), ...kmeans(), hyperOpt(), incremental(),
+        return [...kmeans(), incremental(),
             ...configMapper(props.timeSeriesPrediction, timeSeriesPredictionConfigMap)];
     } else {
       return [];
     }
   };
 
-  return <ExpansionList>{[label, ...configs()]}</ExpansionList>;
+    if (props.predictionMethod === REGRESSION) {
+        return <ExpansionList>{[label, ...configs()]}</ExpansionList>;
+    } else if (props.predictionMethod === CLASSIFICATION) {
+        return <ExpansionList>{[label, ...configs()]}</ExpansionList>;
+    } else if (props.predictionMethod === TIME_SERIES_PREDICTION) {
+        return <ExpansionList>{[...configs()]}</ExpansionList>;
+    } else {
+        return [];
+    }
 };
 
 AdvancedConfiguration.propTypes = {

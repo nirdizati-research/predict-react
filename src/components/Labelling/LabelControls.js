@@ -88,12 +88,16 @@ const LabelControls = (props) => {
     }
   };
 
-  return <div className="md-grid">
-    {labelType}
-    {threshold(props.label)[0]}
-    {threshold(props.label)[1]}
-    {atr()}
-  </div>;
+    if (props.predictionMethod !== TIME_SERIES_PREDICTION) {
+        return <div className="md-grid">
+            {labelType}
+            {threshold(props.label)[0]}
+            {threshold(props.label)[1]}
+            {atr()}
+        </div>;
+    } else {
+        return <div></div>;
+    }
 };
 
 LabelControls.propTypes = {

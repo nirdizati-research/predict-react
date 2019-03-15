@@ -18,7 +18,6 @@ class FrontPage extends Component {
                 <EncodingByLogCard/>
                 <ClassificationMethodsCard/>
                 <RegressionMethodsCard/>
-                <TimeSeriesPredictionMethodsCard/>
             </div>
         );
     }
