@@ -34,7 +34,7 @@ const tableBody = (splits) => {
   return splits.map(({id, trainingLogName, testLogName}) => {
     return (
       <TableRow key={id} selectable={false}>
-        <TableColumn numeric>{id}</TableColumn>
+        <TableColumn>{id}</TableColumn>
         <TableColumn>{trainingLogName}</TableColumn>
         <TableColumn>{testLogName}</TableColumn>
       </TableRow>

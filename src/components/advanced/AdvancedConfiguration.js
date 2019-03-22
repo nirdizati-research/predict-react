@@ -190,14 +190,10 @@ const AdvancedConfiguration = (props) => {
     }
   };
 
-    if (props.predictionMethod === REGRESSION) {
-        return <ExpansionList>{[label, ...configs()]}</ExpansionList>;
-    } else if (props.predictionMethod === CLASSIFICATION) {
-        return <ExpansionList>{[label, ...configs()]}</ExpansionList>;
-    } else if (props.predictionMethod === TIME_SERIES_PREDICTION) {
+    if (props.predictionMethod === TIME_SERIES_PREDICTION) {
         return <ExpansionList>{[...configs()]}</ExpansionList>;
     } else {
-        return [];
+        return <ExpansionList>{[label, ...configs()]}</ExpansionList>;
     }
 };
 

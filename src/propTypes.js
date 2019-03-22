@@ -77,7 +77,7 @@ export const jobPropType = PropTypes.shape({
     config: PropTypes.shape({
         hyperopt: PropTypes.shape(hyperOptShape),
         label: PropTypes.shape(labelPropType).isRequired,
-        method: PropTypes.string,
+        predictive_model: PropTypes.string,
         clustering: PropTypes.string,
         encoding: PropTypes.shape(encodingPropType).isRequired,
         kmeans: PropTypes.objectOf(PropTypes.any),

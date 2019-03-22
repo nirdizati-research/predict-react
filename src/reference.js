@@ -256,22 +256,22 @@ const classificationLabelTypes = [
 
 const timeSeriesPredictionLabelTypes = [];
 
-export const splitTypes = [
+export const splittingMethods = [
     {
         label: 'Sequential order',
-        value: 'split_sequential'
+        value: 'sequential'
     },
     {
         label: 'Temporal order',
-        value: 'split_temporal'
+        value: 'temporal'
     },
     {
         label: 'Random order',
-        value: 'split_random'
+        value: 'random'
     },
     {
         label: 'Strict temporal order',
-        value: 'split_strict_temporal'
+        value: 'strict_temporal'
     },
 ];
 
