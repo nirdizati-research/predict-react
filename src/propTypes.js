@@ -76,7 +76,7 @@ export const jobPropType = PropTypes.shape({
     type: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION, LABELLING]).isRequired,
     config: PropTypes.shape({
         hyperopt: PropTypes.shape(hyperOptShape),
-        label: PropTypes.shape(labelPropType).isRequired,
+        labelling: PropTypes.shape(labelPropType).isRequired,
         predictive_model: PropTypes.string,
         clustering: PropTypes.string,
         encoding: PropTypes.shape(encodingPropType).isRequired,
@@ -110,7 +110,7 @@ export const jobRunPropType = PropTypes.shape({
     type: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION]).isRequired,
     config: PropTypes.shape({
         hyperopt: PropTypes.shape(hyperOptShape),
-        label: PropTypes.shape(labelPropType).isRequired,
+        labelling: PropTypes.shape(labelPropType).isRequired,
         method: PropTypes.string,
         clustering: PropTypes.string,
         encoding: PropTypes.shape(encodingPropType).isRequired,
@@ -131,14 +131,14 @@ export const jobFlatPropType = PropTypes.shape({
     advanced: PropTypes.objectOf(PropTypes.any).isRequired,
     hyperopt: PropTypes.shape(hyperOptShape),
     kmeans: PropTypes.objectOf(PropTypes.any),
-    label: PropTypes.shape(labelPropType).isRequired,
+    labelling: PropTypes.shape(labelPropType).isRequired,
 }).isRequired;
 
 export const labelJobFlat = PropTypes.shape({
     id: PropTypes.number.isRequired,
     encoding: PropTypes.shape(encodingPropType).isRequired,
     result: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
-    label: PropTypes.shape(labelPropType).isRequired,
+    labelling: PropTypes.shape(labelPropType).isRequired,
 }).isRequired;
 
 export const selectLabelProptype = PropTypes.arrayOf(PropTypes.shape({
@@ -163,7 +163,7 @@ export const modelPropType = PropTypes.shape({
     split: PropTypes.any.isRequired,
     config: PropTypes.shape({
         hyperopt: PropTypes.shape(hyperOptShape),
-        label: PropTypes.shape(labelPropType).isRequired,
+        labelling: PropTypes.shape(labelPropType).isRequired,
         method: PropTypes.string,
         clustering: PropTypes.string,
         encoding: PropTypes.shape(encodingPropType).isRequired,

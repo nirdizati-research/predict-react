@@ -21,7 +21,7 @@ const jobs = [
                 'padding': 'no_padding',
                 'generation_type': 'only'
             },
-            'label': label1,
+            'labelling': label1,
             'hyperopt': {
                 'use_hyperopt': true,
                 'max_evals': 100,
@@ -52,7 +52,7 @@ const jobs = [
             },
             'clustering': 'noCluster',
             'method': 'randomForest',
-            'label': label1,
+            'labelling': label1,
             'hyperopt': {
                 'use_hyperopt': true,
                 'max_evals': 100,
@@ -81,7 +81,7 @@ const jobs = [
                 'padding': 'no_padding',
                 'generation_type': 'only'
             },
-            'label': label1,
+            'labelling': label1,
             'hyperopt': {
                 'use_hyperopt': true,
                 'max_evals': 100,

@@ -147,7 +147,7 @@ const AdvancedConfiguration = (props) => {
     <HyperOpt onChange={props.onChange} predictionMethod={props.predictionMethod} {...props}/>));
 
   const addColumns = () => (makeExpander('Temporal and intercase features', '',
-    <AddColumns onChange={props.onChange} label={props.label} {...props}/>));
+      <AddColumns onChange={props.onChange} label={props.labelling} {...props}/>));
 
   const kmeans = () => {
     if (props.clusterings.includes(KMEANS)) {
@@ -158,8 +158,8 @@ const AdvancedConfiguration = (props) => {
   };
 
   const label = makeExpander('Labeling', '',
-    <Labelling onChange={props.onChange} label={props.label}
-               predictionMethod={props.predictionMethod} {...props}/>, true);
+      <Labelling onChange={props.onChange} label={props.labelling}
+                 predictionMethod={props.predictionMethod} {...props}/>, true);
 
   const incremental = () => {
     if (props.classification.concat(props.regression)
@@ -203,7 +203,7 @@ AdvancedConfiguration.propTypes = {
   timeSeriesPrediction: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   clusterings: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   onChange: PropTypes.func.isRequired,
-  label: PropTypes.shape(labelPropType).isRequired,
+    labelling: PropTypes.shape(labelPropType).isRequired,
   predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION, LABELLING]).isRequired,
   classificationModels: PropTypes.arrayOf(modelPropType).isRequired,
   regressionModels: PropTypes.arrayOf(modelPropType).isRequired,

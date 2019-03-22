@@ -35,7 +35,7 @@ export const classJobs = [
                 'generation_type': 'only'
             },
             'create_models': true,
-            'label': label1,
+            'labelling': label1,
             'hyperopt': {
                 'use_hyperopt': true,
                 'max_evals': 100,
@@ -78,7 +78,7 @@ export const classJobs = [
                 'padding': 'no_padding',
                 'generation_type': 'only'
             },
-            'label': label1,
+            'labelling': label1,
             'create_models': true,
             'hyperopt': {
                 'use_hyperopt': false,
@@ -126,7 +126,7 @@ export const timeSeriesPredJobs = [
                 'generation_type': 'only'
             },
             'create_models': true,
-            'label': label1,
+            'labelling': label1,
             'hyperopt': {
                 'use_hyperopt': true,
                 'max_evals': 100,
@@ -161,7 +161,7 @@ const regJobs = [
             'clustering': 'noCluster',
             'method': 'lasso',
             'create_models': false,
-            'label': label1,
+            'labelling': label1,
             'hyperopt': {
                 'use_hyperopt': false,
                 'max_evals': 100,
@@ -193,7 +193,7 @@ const regJobs = [
             'clustering': 'noCluster',
             'method': 'lasso',
             'create_models': false,
-            'label': label1,
+            'labelling': label1,
             'hyperopt': {
                 'use_hyperopt': false,
                 'max_evals': 100,
@@ -230,7 +230,7 @@ const labelJobs = [
                 'padding': 'no_padding',
                 'generation_type': 'only'
             },
-            'label': label1,
+            'labelling': label1,
             'hyperopt': {
                 'use_hyperopt': true,
                 'max_evals': 100,
@@ -254,7 +254,7 @@ const filterOptions = {
     classification: [],
     regression: [],
     timeSeriesPrediction: [],
-    label: {type: DURATION, threshold_type: THRESHOLD_MEAN},
+    labelling: {type: DURATION, threshold_type: THRESHOLD_MEAN},
     thresholds: [1, 3, 4],
     attributeNames: ['name', 'name2'],
     padding: NO_PADDING

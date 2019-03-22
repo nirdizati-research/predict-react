@@ -17,7 +17,7 @@ export const regJobs = [
             'encoding': {'method': 'complex', 'prefix_length': 1, 'padding': 'no_padding', 'generation_type': 'only'},
             'clustering': 'noCluster',
             'method': 'linear',
-            'label': label1
+            'labelling': label1
         },
         'status': 'completed',
         'result': {
@@ -44,7 +44,7 @@ export const regJobs = [
             'regression.linear': {'fit_intercept': true, 'normalize': false, 'copy_X': true},
             'clustering': 'noCluster',
             'method': 'linear',
-            'label': label1
+            'labelling': label1
         },
         'status': 'completed',
         'result': {'rmse': 201.76464727647456, 'mae': 165.3624707580213, 'rscore': 0.12224386445773794, 'mape': 50.34},
@@ -71,7 +71,7 @@ export const regJobs = [
             },
             'clustering': 'noCluster',
             'method': 'randomForest',
-            'label': label1
+            'labelling': label1
         },
         'status': 'completed',
         'result': {'rmse': 191.19102930552305, 'mae': 138.26345747696183, 'rscore': 0.21183208508900764, 'mape': 50.34},
@@ -98,7 +98,7 @@ export const regJobs = [
             },
             'clustering': 'noCluster',
             'method': 'randomForest',
-            'label': label1
+            'labelling': label1
         },
         'status': 'completed',
         'result': {'rmse': 171.19102930552305, 'mae': 128.26345747696183, 'rscore': 0.24183208508900764, 'mape': 50.34},

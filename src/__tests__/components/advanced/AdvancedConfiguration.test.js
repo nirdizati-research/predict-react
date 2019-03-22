@@ -18,15 +18,15 @@ import ClassificationXGBoost from '../../../components/advanced/classification/C
 const onModelChange = jest.fn();
 
 describe('Regression', () => {
-  const element = shallow(<AdvancedConfiguration predictionMethod={REGRESSION} classification={[]} label={label1}
-                                                 traceAttributes={[]} clusterings={[]}
-                                                 regression={['randomForest', 'lasso', 'linear', 'xgboost']}
-                                                 timeSeriesPrediction={[]}
-                                                 onChange={jest.fn()}
-                                                 classificationModels={[]}
-                                                 regressionModels={[]}
-                                                 timeSeriesPredictionModels={[]}
-                                                 onModelChange={onModelChange}/>);
+    const element = shallow(<AdvancedConfiguration predictionMethod={REGRESSION} classification={[]} labelling={label1}
+                                                   traceAttributes={[]} clusterings={[]}
+                                                   regression={['randomForest', 'lasso', 'linear', 'xgboost']}
+                                                   timeSeriesPrediction={[]}
+                                                   onChange={jest.fn()}
+                                                   classificationModels={[]}
+                                                   regressionModels={[]}
+                                                   timeSeriesPredictionModels={[]}
+                                                   onModelChange={onModelChange}/>);
 
   it('standard items', () => {
     expect(element.find(HyperOpt).length).toBe(1);
@@ -49,7 +49,7 @@ describe('Regression', () => {
 describe('Classification', () => {
   const element = shallow(<AdvancedConfiguration predictionMethod={CLASSIFICATION}
                                                  classification={['knn', 'decisionTree', 'randomForest', 'xgboost']}
-                                                 label={label1}
+                                                 labelling={label1}
                                                  traceAttributes={[]} clusterings={[KMEANS]} regression={[]}
                                                  timeSeriesPrediction={[]}
                                                  onChange={jest.fn()}
@@ -80,7 +80,7 @@ describe('Classification', () => {
 
 describe('Labelling', () => {
   const element = shallow(<AdvancedConfiguration predictionMethod={LABELLING}
-                                                 classification={[]} label={label1}
+                                                 classification={[]} labelling={label1}
                                                  traceAttributes={[]} clusterings={[KMEANS]} regression={[]}
                                                  timeSeriesPrediction={[]}
                                                  onChange={jest.fn()}

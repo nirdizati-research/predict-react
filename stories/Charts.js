@@ -70,7 +70,8 @@ const regressor = [
 
 const classData = [
     ['uuid121', 0.7152600170502984, 0.6232374506486181, 'knn_simpleIndex_noCluster_clustering', 0.63384260739574716],
-    ['uuid122', 0.933152664859982, 0.9165256627185561, 'decisionTree_simpleIndex_kmeans_clustering', 0.9605116926217754],
+    ['uuid122', 0.933152664859982, 0.9165256627185561,
+        'decisionTree_simpleIndex_kmeans_clustering', 0.9605116926217754],
     ['uuid123', 0.7300537412153782, 0.6408140814081408, 'knn_boolean_noCluster_clustering', 0.62917375812309062]
 ];
 
@@ -112,7 +113,7 @@ export const labelJobs = [
         'status': 'completed',
         'config': {
             'encoding': encoding1,
-            'label': label1
+            'labelling': label1
         },
         'result': {'rmse': 221, 'mae': 193},
         'type': 'labelling',
@@ -130,7 +131,7 @@ export const labelJobs = [
                 'padding': 'no_padding',
                 'generation_type': 'only'
             },
-            'label': label1
+            'labelling': label1
         },
         'result': {'rmse': 201, 'mae': 165, 'third': 34},
         'type': 'labelling',
@@ -148,7 +149,7 @@ export const labelJobs = [
                 'padding': 'no_padding',
                 'generation_type': 'only'
             },
-            'label': label1
+            'labelling': label1
         },
         'result': {'rmse': 191, 'mae': 138, '0': 23},
         'type': 'labelling',
@@ -166,7 +167,7 @@ export const labelJobs = [
                 'padding': 'no_padding',
                 'generation_type': 'only'
             },
-            'label': label1
+            'labelling': label1
         },
         'result': {'rmse': 171, 'mae': 128},
         'type': 'labelling',

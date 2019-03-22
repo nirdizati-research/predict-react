@@ -83,7 +83,7 @@ class ControlledLineChartCard extends Component {
 
 ControlledLineChartCard.propTypes = {
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
-    predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION]).isRequired,
+  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION]).isRequired,
 };
 
 export default ControlledLineChartCard;

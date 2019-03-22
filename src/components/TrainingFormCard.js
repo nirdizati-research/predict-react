@@ -69,7 +69,7 @@ const initialState = (props) => {
             generation_type: prefixTypeControls[0].value,
             prefix_length: defaultPrefix,
         },
-        label: {
+        labelling: {
             type: labelType,
             attribute_name: '',
             threshold_type: THRESHOLD_MEAN,
@@ -228,7 +228,7 @@ class TrainingFormCard extends Component {
             this.setState({encoding: encoding});
         }
         this.setState({
-            predictionMethod: value, label: {...this.state.label, type: labelType},
+            predictionMethod: value, labelling: {...this.state.labelling, type: labelType},
             hyperopt: {...this.state.hyperopt, performance_metric}, ...initialAdvancedConfiguration()
         });
         this.setState((prevState, ) => {
@@ -266,7 +266,7 @@ class TrainingFormCard extends Component {
             split_id: this.state.split_id,
             config: {
                 encoding: this.state.encoding,
-                label: this.state.label,
+                labelling: this.state.labelling,
             }
         };
     }
@@ -280,7 +280,7 @@ class TrainingFormCard extends Component {
                 encodings: this.state.encodings,
                 clusterings: this.state.clusterings,
                 methods: methods,
-                label: this.state.label,
+                labelling: this.state.labelling,
                 incremental_train: this.state.incremental_train,
                 create_models: this.state.create_models,
                 add_elapsed_time: this.state.add_elapsed_time,
@@ -378,7 +378,7 @@ class TrainingFormCard extends Component {
                                    regression={this.state.regression}
                                    timeSeriesPrediction={this.state.timeSeriesPrediction}
                                    onChange={this.advanceConfigChange.bind(this)}
-                                   label={this.state.label}
+                                   labelling={this.state.labelling}
                                    traceAttributes={this.props.traceAttributes}
                                    clusterings={this.state.clusterings}
                                    predictionMethod={this.state.predictionMethod}

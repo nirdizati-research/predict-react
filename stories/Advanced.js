@@ -118,12 +118,12 @@ storiesOf('Advanced configuration', module)
                             <CardText>
                                 Labeling
                             </CardText>
-                            <Labelling onChange={console.log} label={label1} traceAttributes={traceAttributes}
+                            <Labelling onChange={console.log} labelling={label1} traceAttributes={traceAttributes}
                                        predictionMethod={CLASSIFICATION}/>
-                            <Labelling onChange={console.log} label={label1}
+                            <Labelling onChange={console.log} labelling={label1}
                                        traceAttributes={[]} // TODO: shouldn't this have traceAttributes inside?
                                        predictionMethod={REGRESSION}/>
-                            <Labelling onChange={console.log} label={label1} traceAttributes={[traceAttributes]}
+                            <Labelling onChange={console.log} labelling={label1} traceAttributes={[traceAttributes]}
                                        predictionMethod={TIME_SERIES_PREDICTION}/>
                         </Card>
                     </div>
@@ -150,7 +150,8 @@ storiesOf('Advanced configuration', module)
                             <CardText>
                                 Some text above
                             </CardText>
-                            <AdvancedConfiguration predictionMethod={CLASSIFICATION} label={label1} traceAttributes={[]}
+                            <AdvancedConfiguration predictionMethod={CLASSIFICATION} labelling={label1}
+                                                   traceAttributes={[]}
                                                    classification={['knn', 'decisionTree', 'randomForest', 'xgboost', 'nn']}
                                                    regression={[]} timeSeriesPrediction={[]} onChange={console.log}
                                                    clusterings={[KMEANS]}/>
@@ -163,7 +164,7 @@ storiesOf('Advanced configuration', module)
                             <CardText>
                                 Some text above
                             </CardText>
-                            <AdvancedConfiguration predictionMethod={REGRESSION} label={label1} traceAttributes={[]}
+                            <AdvancedConfiguration predictionMethod={REGRESSION} labelling={label1} traceAttributes={[]}
                                                    regression={['linear', 'randomForest', 'lasso', 'xgboost', 'nn']}
                                                    classification={[]} timeSeriesPrediction={[]}
                                                    onChange={console.log} clusterings={[]}/>
@@ -176,7 +177,7 @@ storiesOf('Advanced configuration', module)
                             <CardText>
                                 Some text above
                             </CardText>
-                            <AdvancedConfiguration predictionMethod={TIME_SERIES_PREDICTION} label={label1}
+                            <AdvancedConfiguration predictionMethod={TIME_SERIES_PREDICTION} labelling={label1}
                                                    traceAttributes={[]}
                                                    regression={[]} timeSeriesPrediction={['rnn']}
                                                    classification={[]} onChange={console.log} clusterings={[]}/>

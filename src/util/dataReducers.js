@@ -30,7 +30,7 @@ export const jobToValidationTable = (job) => {
             padding: job.config.encoding.padding,
             generationType: job.config.encoding.generation_type,
             hyperopt: job.config.hyperopt,
-            label: job.config.label,
+            labelling: job.config.labelling,
             kmeans,
             create_models: job.config.create_models,
             advanced: job.config[`${job.type}.${job.config.method}`]
@@ -39,7 +39,7 @@ export const jobToValidationTable = (job) => {
         return {
             id: job.id,
             encoding: job.config.encoding,
-            label: job.config.label,
+            labelling: job.config.labelling,
             result: job.result
         };
     }

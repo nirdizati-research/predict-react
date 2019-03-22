@@ -90,17 +90,17 @@ describe('Labelling', () => {
   describe('Regression', () => {
     const method = REGRESSION;
     it('remaining time', () => {
-      const element = shallow(<Labelling label={label1} predictionMethod={method} traceAttributes={[]}
-                                         onChange={onChange}/>);
+        const element = shallow(<Labelling labelling={label1} predictionMethod={method} traceAttributes={[]}
+                                           onChange={onChange}/>);
 
       expect(element.find(SelectField).length).toBe(1);
       expect(element.find(SelectField).at(0).props().menuItems.length).toBe(2);
     });
 
     it('number atr', () => {
-      const element = shallow(<Labelling label={{...label1, type: ATTRIBUTE_NUMBER}} predictionMethod={method}
-                                         traceAttributes={[]}
-                                         onChange={onChange}/>);
+        const element = shallow(<Labelling labelling={{...label1, type: ATTRIBUTE_NUMBER}} predictionMethod={method}
+                                           traceAttributes={[]}
+                                           onChange={onChange}/>);
 
       expect(element.find(SelectField).length).toBe(2);
     });
@@ -109,9 +109,9 @@ describe('Labelling', () => {
   describe('class or label', () => {
     const method = CLASSIFICATION;
     it('duration', () => {
-      const element = shallow(<Labelling label={{...label1, type: DURATION}} predictionMethod={method}
-                                         traceAttributes={[]}
-                                         onChange={onChange}/>);
+        const element = shallow(<Labelling labelling={{...label1, type: DURATION}} predictionMethod={method}
+                                           traceAttributes={[]}
+                                           onChange={onChange}/>);
 
       expect(element.find(SelectField).length).toBe(2);
       expect(element.find(TextField).length).toBe(1);
@@ -120,9 +120,9 @@ describe('Labelling', () => {
     });
 
     it('number atr', () => {
-      const element = shallow(<Labelling label={{...label1, type: ATTRIBUTE_NUMBER}} predictionMethod={method}
-                                         traceAttributes={traceAttributes}
-                                         onChange={onChange}/>);
+        const element = shallow(<Labelling labelling={{...label1, type: ATTRIBUTE_NUMBER}} predictionMethod={method}
+                                           traceAttributes={traceAttributes}
+                                           onChange={onChange}/>);
 
       expect(element.find(SelectField).length).toBe(3);
       expect(element.find(TextField).length).toBe(1);
@@ -131,9 +131,9 @@ describe('Labelling', () => {
     });
 
     it('string atr', () => {
-      const element = shallow(<Labelling label={{...label1, type: ATTRIBUTE_STRING}} predictionMethod={method}
-                                         traceAttributes={traceAttributes}
-                                         onChange={onChange}/>);
+        const element = shallow(<Labelling labelling={{...label1, type: ATTRIBUTE_STRING}} predictionMethod={method}
+                                           traceAttributes={traceAttributes}
+                                           onChange={onChange}/>);
 
       expect(element.find(SelectField).length).toBe(2);
       expect(element.find(TextField).length).toBe(0);
@@ -141,9 +141,9 @@ describe('Labelling', () => {
     });
 
     it('next activity', () => {
-      const element = shallow(<Labelling label={{...label1, type: NEXT_ACTIVITY}} predictionMethod={method}
-                                         traceAttributes={[]}
-                                         onChange={onChange}/>);
+        const element = shallow(<Labelling labelling={{...label1, type: NEXT_ACTIVITY}} predictionMethod={method}
+                                           traceAttributes={[]}
+                                           onChange={onChange}/>);
 
       expect(element.find(SelectField).length).toBe(1);
     });

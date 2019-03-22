@@ -49,7 +49,7 @@ const regressionPayload = {
       'max_evals': 10,
       'performance_metric': 'rmse'
     },
-    'label': label,
+      'labelling': label,
     'classification.decisionTree': {},
     'classification.knn': {},
     'classification.randomForest': {},
@@ -72,7 +72,7 @@ const regressionPayload = {
 
 const labelPayload = {
   'config': {
-    'label': {
+      'labelling': {
       'add_elapsed_time': false,
       'add_executed_events': false,
       'add_new_traces': false,

@@ -61,7 +61,7 @@ const Labelling = (props) => {
     const type = <SelectField key="type" id="type" label="Label type" className="md-cell md-cell--3"
                               menuItems={controls()} position={SelectField.Positions.BELOW}
                               onChange={props.onChange.bind(this, {methodConfig, key: 'type'})}
-                              value={props.label.type}/>;
+                              value={props.labelling.type}/>;
 
     const threshold = (label) => {
         if (props.predictionMethod === REGRESSION || props.predictionMethod === TIME_SERIES_PREDICTION) {
@@ -99,11 +99,11 @@ const Labelling = (props) => {
         }
     };
 
-    const attributeSelector = ({label, traceAttributes, onChange}) => {
+    const attributeSelector = ({labelling, traceAttributes, onChange}) => {
         let filteredAttributes = [];
-        if (label.type === ATTRIBUTE_NUMBER) {
+        if (labelling.type === ATTRIBUTE_NUMBER) {
             filteredAttributes = traceAttributes.filter((t) => t.type === 'number');
-        } else if (label.type === ATTRIBUTE_STRING) {
+        } else if (labelling.type === ATTRIBUTE_STRING) {
             filteredAttributes = traceAttributes.filter((t) => t.type === 'string');
         } else {
             return null;
@@ -117,16 +117,16 @@ const Labelling = (props) => {
             menuItems={traceLabels}
             position={SelectField.Positions.BELOW}
             onChange={onChange.bind(this, {methodConfig, key: 'attribute_name'})}
-            value={label.attribute_name}
+            value={labelling.attribute_name}
         />;
     };
 
-    return [helpText(), type, attributeSelector(props), ...threshold(props.label)];
+    return [helpText(), type, attributeSelector(props), ...threshold(props.labelling)];
 };
 
 Labelling.propTypes = {
     onChange: PropTypes.func.isRequired,
-    label: PropTypes.shape(labelPropType).isRequired,
+    labelling: PropTypes.shape(labelPropType).isRequired,
     predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION, LABELLING]).isRequired,
     traceAttributes: PropTypes.arrayOf(PropTypes.shape(traceAttributeShape)).isRequired
 };

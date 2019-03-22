@@ -38,10 +38,10 @@ class LabelConfigTable extends PureComponent {
         {this.state.slicedData.map((job) => (
           <TableRow key={job.id} onClick={this.props.onClick.bind(this, job.id)}>
             <TableColumn style={columnStyle}>{job.id}</TableColumn>
-            <TableColumn style={columnStyle}>{job.label.type}</TableColumn>
-            <TableColumn style={columnStyle}>{job.label.threshold_type}</TableColumn>
-            <TableColumn style={columnStyle} numeric>{job.label.threshold}</TableColumn>
-            <TableColumn style={columnStyle}>{job.label.attribute_name}</TableColumn>
+            <TableColumn style={columnStyle}>{job.labelling.type}</TableColumn>
+            <TableColumn style={columnStyle}>{job.labelling.threshold_type}</TableColumn>
+            <TableColumn style={columnStyle} numeric>{job.labelling.threshold}</TableColumn>
+            <TableColumn style={columnStyle}>{job.labelling.attribute_name}</TableColumn>
             <TableColumn style={columnStyle} numeric>{job.encoding.prefix_length}</TableColumn>
             <TableColumn style={columnStyle} numeric>{job.encoding.padding}</TableColumn>
             <TableColumn style={columnStyle} numeric>{job.encoding.generation_type}</TableColumn>
