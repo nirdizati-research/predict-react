@@ -50,7 +50,7 @@ const RegressionNN = (props) => {
       label="Hidden units"
       type="number"
       defaultValue={defaults.n_hidden_units}
-      onChange={props.onChange.bind(this, {methodConfig, key: 'Hidden units', isNumber: true})}
+      onChange={props.onChange.bind(this, {methodConfig, key: 'n_hidden_units', isNumber: true})}
       min={1}
       className="md-cell md-cell--3"
       required
