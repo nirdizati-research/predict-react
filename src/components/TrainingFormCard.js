@@ -179,9 +179,21 @@ class TrainingFormCard extends Component {
                 break;
             }
             case 'regression[]':
+                if (this.state.regression.includes(NN)) {
+                    const encoding = this.state.encoding;
+                    encoding.padding = ZERO_PADDING;
+                    encoding.generation_type = ONLY_THIS;
+                    this.setState({encoding: encoding});
+                }
                 this.setState({regression: this.addOrRemove(this.state.regression, value)});
                 break;
             case 'classification[]':
+                if (this.state.classification.includes(NN)) {
+                    const encoding = this.state.encoding;
+                    encoding.padding = ZERO_PADDING;
+                    encoding.generation_type = ONLY_THIS;
+                    this.setState({encoding: encoding});
+                }
                 this.setState({classification: this.addOrRemove(this.state.classification, value)});
                 break;
             case 'timeSeriesPrediction[]':
@@ -368,6 +380,8 @@ class TrainingFormCard extends Component {
                                    value={this.state.encodings.join(',')} controlStyle={groupStyle}/> : null;
 
         const prefixSelector = <PrefixSelector encoding={this.state.encoding}
+                                               classification={this.state.classification}
+                                               regression={this.state.regression}
                                                onChange={this.advanceConfigChange.bind(this)}
                                                maxEventsInLog={this.props.maxEventsInLog}
                                                isLabelForm={this.props.isLabelForm}

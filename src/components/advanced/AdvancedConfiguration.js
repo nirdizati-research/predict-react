@@ -198,17 +198,17 @@ const AdvancedConfiguration = (props) => {
 };
 
 AdvancedConfiguration.propTypes = {
-  classification: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  regression: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  timeSeriesPrediction: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  clusterings: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  onChange: PropTypes.func.isRequired,
+    classification: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    regression: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    timeSeriesPrediction: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    clusterings: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    onChange: PropTypes.func.isRequired,
     labelling: PropTypes.shape(labelPropType).isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION, LABELLING]).isRequired,
-  classificationModels: PropTypes.arrayOf(modelPropType).isRequired,
-  regressionModels: PropTypes.arrayOf(modelPropType).isRequired,
-  timeSeriesPredictionModels: PropTypes.arrayOf(modelPropType).isRequired,
-  traceAttributes: PropTypes.arrayOf(PropTypes.shape(traceAttributeShape)).isRequired,
-  onModelChange: PropTypes.func.isRequired
+    predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION, LABELLING]).isRequired,
+    classificationModels: PropTypes.arrayOf(modelPropType).isRequired,
+    regressionModels: PropTypes.arrayOf(modelPropType).isRequired,
+    timeSeriesPredictionModels: PropTypes.arrayOf(modelPropType).isRequired,
+    traceAttributes: PropTypes.arrayOf(PropTypes.shape(traceAttributeShape)).isRequired,
+    onModelChange: PropTypes.func.isRequired
 };
 export default AdvancedConfiguration;

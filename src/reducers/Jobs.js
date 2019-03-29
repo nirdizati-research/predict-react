@@ -82,7 +82,7 @@ const initialFilters = {
         SGDCLASSIFIER, PERCEPTRON, NN],
     regression: [LINEAR, LASSO, RANDOM_FOREST, XGBOOST, NN],
     timeSeriesPrediction: [RNN],
-    label: initialLabels.remainingTime,
+    labelling: initialLabels.remainingTime,
     padding: NO_PADDING
 };
 
@@ -114,8 +114,8 @@ const filterByAllElse = (encodings, clusterings, classification, regression, tim
     }
 };
 
-const filterByLabelType = (predictionMethod, label) => (job) => {
-    return labelCompare(predictionMethod)(label, job.config.label);
+const filterByLabelType = (predictionMethod, labelling) => (job) => {
+    return labelCompare(predictionMethod)(labelling, job.config.labelling);
 };
 
 const addOrRemove = (list, value) => {
@@ -138,17 +138,17 @@ const addOrRemoveString = (list, value) => {
 };
 
 const prefixSet = (jobsById, ids) => [...new Set(ids.map(id => jobsById[id].config.encoding.prefix_length))];
-const thresholdSet = (jobsById) => [...new Set(Object.values(jobsById).map((job) => job.config.label.threshold))];
+const thresholdSet = (jobsById) => [...new Set(Object.values(jobsById).map((job) => job.config.labelling.threshold))];
 const attributeNameSet = (jobsById) =>
-    [...new Set(Object.values(jobsById).map(job => job.config.label.attribute_name).filter(a => a !== undefined))];
+    [...new Set(Object.values(jobsById).map(job => job.config.labelling.attribute_name).filter(a => a !== undefined))];
 
 const applyFilters =
-    ({byId, splitId, predictionMethod, encodings, clusterings, classification, regression, timeSeriesPrediction, label, padding}) => {
+    ({byId, splitId, predictionMethod, encodings, clusterings, classification, regression, timeSeriesPrediction, labelling, padding}) => {
         const commonJobs = Object.values(byId)
             .filter(filterBySplit(splitId))
             .filter(filterByMethod(predictionMethod))
             .filter(filterByPadding(padding))
-            .filter(filterByLabelType(predictionMethod, label));
+            .filter(filterByLabelType(predictionMethod, labelling));
         if (predictionMethod === LABELLING) {
             return commonJobs.map(({id}) => id);
         }
@@ -232,12 +232,12 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
             };
         }
         case FILTER_PREDICTION_METHOD_CHANGED: {
-            const label = action.method === REGRESSION ? initialLabels.remainingTime : initialLabels.duration;
+            const labelling = action.method === REGRESSION ? initialLabels.remainingTime : initialLabels.duration;
             const predictionMethod = action.method;
-            const filteredIds = applyFilters({...state, predictionMethod, ...initialFilters, label});
+            const filteredIds = applyFilters({...state, predictionMethod, ...initialFilters, labelling});
             const prefixLengths = prefixSet(state.byId, filteredIds);
             return {
-                ...state, filteredIds, prefixLengths, ...initialFilters, label,
+                ...state, filteredIds, prefixLengths, ...initialFilters, labelling,
                 predictionMethod, selectedPrefixes: prefixLengths
             };
         }

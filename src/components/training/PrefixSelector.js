@@ -2,7 +2,14 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {TextField} from 'react-md/lib/TextFields/index';
 import {SelectionControlGroup} from 'react-md/lib/SelectionControls/index';
-import {ONLY_THIS, paddingControls, prefixTypeControls, TIME_SERIES_PREDICTION, ZERO_PADDING} from '../../reference';
+import {
+  NN,
+  ONLY_THIS,
+  paddingControls,
+  prefixTypeControls,
+  TIME_SERIES_PREDICTION,
+  ZERO_PADDING
+} from '../../reference';
 import {encodingPropType} from '../../propTypes';
 
 const groupStyle = {height: 'auto'};
@@ -36,15 +43,22 @@ class PrefixSelector extends Component {
     const classes = this.props.isLabelForm ? 'md-grid' : 'md-cell md-cell--4';
     const cl = this.props.isLabelForm ? 'md-cell md-cell--3' : '';
 
-
     const filteredPaddingControls = paddingControls.filter(obj =>
-        ((this.props.predictionMethod === TIME_SERIES_PREDICTION && [ZERO_PADDING].includes(obj.value)) ||
-            (this.props.predictionMethod !== TIME_SERIES_PREDICTION))
+        (((this.props.predictionMethod === TIME_SERIES_PREDICTION && [ZERO_PADDING].includes(obj.value)) ||
+            (this.props.predictionMethod !== TIME_SERIES_PREDICTION)) &&
+            ((this.props.classification.includes(NN) && [ZERO_PADDING].includes(obj.value)) ||
+                (!this.props.classification.includes(NN))) &&
+            ((this.props.regression.includes(NN) && [ZERO_PADDING].includes(obj.value)) ||
+                (!this.props.regression.includes(NN))))
     );
 
     const filteredPrefixTypeControls = prefixTypeControls.filter(obj =>
         ((this.props.predictionMethod === TIME_SERIES_PREDICTION && [ONLY_THIS].includes(obj.value)) ||
-            (this.props.predictionMethod !== TIME_SERIES_PREDICTION))
+            (this.props.predictionMethod !== TIME_SERIES_PREDICTION) &&
+            ((this.props.classification.includes(NN) && [ONLY_THIS].includes(obj.value)) ||
+                (!this.props.classification.includes(NN))) &&
+            ((this.props.regression.includes(NN) && [ONLY_THIS].includes(obj.value)) ||
+                (!this.props.regression.includes(NN))))
     );
 
     const prefixLengthText =
@@ -83,6 +97,8 @@ PrefixSelector.propTypes = {
   onChange: PropTypes.func.isRequired,
   isLabelForm: PropTypes.bool,
   predictionMethod: PropTypes.string.isRequired,
+  classification: PropTypes.arrayOf(PropTypes.string).isRequired,
+  regression: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 export default PrefixSelector;
