@@ -140,7 +140,7 @@ Labelling.propTypes = {
     prefixLengths: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
     selectedPrefixes: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
     filterOptions: PropTypes.shape({
-        label: PropTypes.any.isRequired,
+        labelling: PropTypes.any.isRequired,
         attributeNames: PropTypes.arrayOf(PropTypes.string).isRequired,
         thresholds: PropTypes.arrayOf(PropTypes.number).isRequired,
         padding: PropTypes.string.isRequired
@@ -157,8 +157,8 @@ const mapStateToProps = (state) => ({
     predictionMethod: state.jobs.predictionMethod,
     prefixLengths: state.jobs.prefixLengths.sort((a, b) => (a - b)),
     selectedPrefixes: state.jobs.selectedPrefixes,
-    filterOptions: (({label, attributeNames, thresholds, padding}) => ({
-        label, attributeNames, thresholds, padding
+    filterOptions: (({labelling, attributeNames, thresholds, padding}) => ({
+         labelling, attributeNames, thresholds, padding
     }))(state.jobs)
 });
 

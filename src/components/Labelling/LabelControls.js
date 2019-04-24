@@ -36,7 +36,7 @@ const LabelControls = (props) => {
     menuItems={controls()}
     position={SelectField.Positions.BELOW}
     onChange={props.labelChange.bind(this, {methodConfig, key: 'type'})}
-    value={props.label.type}
+    value={props.labelling.type}
   />;
 
   const threshold = (label) => {
@@ -51,7 +51,7 @@ const LabelControls = (props) => {
         menuItems={thresholdControls}
         position={SelectField.Positions.BELOW}
         onChange={props.labelChange.bind(this, {methodConfig, key: 'threshold_type'})}
-        value={props.label.threshold_type}
+        value={props.labelling.threshold_type}
       />;
 
       const thresholdLabels = props.thresholds.map((a) => ({label: a, value: a}));
@@ -63,7 +63,7 @@ const LabelControls = (props) => {
         menuItems={thresholdLabels}
         position={SelectField.Positions.BELOW}
         onChange={props.labelChange.bind(this, {methodConfig, key: 'threshold'})}
-        value={props.label.threshold}
+        value={props.labelling.threshold}
       />;
       return [thresholdType, thresholdSelect];
     } else {
@@ -72,7 +72,7 @@ const LabelControls = (props) => {
   };
 
   const atr = () => {
-    if ([ATTRIBUTE_NUMBER, ATTRIBUTE_STRING].includes(props.label.type)) {
+    if ([ATTRIBUTE_NUMBER, ATTRIBUTE_STRING].includes(props.labelling.type)) {
       const atrLabels = props.attributeNames.map((a) => ({label: a, value: a}));
       return <SelectField
         key="attribute_name"
@@ -82,7 +82,7 @@ const LabelControls = (props) => {
         menuItems={atrLabels}
         position={SelectField.Positions.BELOW}
         onChange={props.labelChange.bind(this, {methodConfig, key: 'attribute_name'})}
-        value={props.label.attribute_name}
+        value={props.labelling.attribute_name}
       />;
     } else {
       return null;
@@ -92,8 +92,8 @@ const LabelControls = (props) => {
     if (props.predictionMethod !== TIME_SERIES_PREDICTION) {
         return <div className="md-grid">
             {labelType}
-            {threshold(props.label)[0]}
-            {threshold(props.label)[1]}
+            {threshold(props.labelling)[0]}
+            {threshold(props.labelling)[1]}
             {atr()}
         </div>;
     } else {
@@ -102,7 +102,7 @@ const LabelControls = (props) => {
 };
 
 LabelControls.propTypes = {
-  label: PropTypes.any.isRequired,
+  labelling: PropTypes.any.isRequired,
   attributeNames: PropTypes.arrayOf(PropTypes.string).isRequired,
   thresholds: PropTypes.arrayOf(PropTypes.number).isRequired,
   labelChange: PropTypes.func.isRequired,

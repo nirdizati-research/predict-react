@@ -114,13 +114,13 @@ const mapStateToProps = (state) => ({
   selectedPrefixes: state.jobs.selectedPrefixes,
   filterOptions: (
       ({encodings, clusterings, classification, regression, timeSeriesPrediction,
-         label, attributeNames, thresholds, padding}) => ({
+         labelling, attributeNames, thresholds, padding}) => ({
       encodings,
       clusterings,
       classification,
       regression,
-          timeSeriesPrediction,
-      label, attributeNames, thresholds, padding
+        timeSeriesPrediction,
+      labelling, attributeNames, thresholds, padding
     }))(state.jobs)
 });
 

@@ -146,7 +146,7 @@ ValidationHeaderCard.propTypes = {
     classification: PropTypes.arrayOf(PropTypes.string).isRequired,
     regression: PropTypes.arrayOf(PropTypes.string).isRequired,
     timeSeriesPrediction: PropTypes.arrayOf(PropTypes.string).isRequired,
-    label: PropTypes.any.isRequired,
+    labelling: PropTypes.any.isRequired,
     attributeNames: PropTypes.arrayOf(PropTypes.string).isRequired,
     thresholds: PropTypes.arrayOf(PropTypes.number).isRequired,
     padding: PropTypes.string.isRequired
