@@ -128,6 +128,13 @@ export const classificationMetrics = [
   },
 ];
 
+export const timeSeriesPredictionMetrics = [
+    {
+        value: 'nlevenshtein',
+        label: 'nlevenshtein'
+    },
+];
+
 export const kmeansAlgorithm = [
   {
     value: 'auto',

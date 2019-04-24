@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {TextField} from 'react-md/lib/index';
-import {Checkbox} from 'react-md/lib';
-import {CLASSIFICATION, MULTINOMIAL_NAIVE_BAYES} from '../../reference';
+import {TextField, Checkbox} from 'react-md';
+import {CLASSIFICATION, MULTINOMIAL_NAIVE_BAYES} from '../../../reference';
 
 const defaults = {
     'alpha': 1.0,
     'fit_prior': true,
-    'incremntalTrains': 3
+    'incrementalTrains': 3
 };
 
 const ClassificationNaiveBayes = (props) => {

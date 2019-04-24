@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import {CLASSIFICATION, REGRESSION} from '../../reference';
+import {CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION} from '../../reference';
 import ResultTableCard from './ResultTableCard';
 import {getChartHeader, getPrefixChartHeader, getTitles} from './ColumnHelper';
 import BubbleChartCard from '../chart/BubbleChartCard';
@@ -30,12 +30,20 @@ const classMap = (jobs) => {
   });
 };
 
+const timeSeriesPredMap = (jobs) => {
+    return jobs.map((job) => {
+        return [job.id + '', toRun(job), job.result.nlevenshtein, job.config.encoding.prefix_length];
+    });
+};
+
 const prepareData = (jobs, predictionMethod) => {
   switch (predictionMethod) {
     case REGRESSION:
       return regressionMap(jobs);
     case CLASSIFICATION:
       return classMap(jobs);
+      case TIME_SERIES_PREDICTION:
+          return timeSeriesPredMap(jobs);
     default:
       return [];
   }
@@ -99,6 +107,7 @@ const getCharts = (data, predictionMethod) => {
 
 const ResultWrapper = (props) => {
   const tableData = prepareData(props.jobs, props.predictionMethod);
+    // console.log(tableData);
   let charts = [];
   let prefixChart;
   if (tableData.length > 0) {
@@ -114,7 +123,7 @@ const ResultWrapper = (props) => {
 
 ResultWrapper.propTypes = {
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION]).isRequired,
+    predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION]).isRequired,
 };
 
 export default ResultWrapper;

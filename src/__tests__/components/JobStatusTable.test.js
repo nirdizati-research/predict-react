@@ -12,7 +12,7 @@ const jobs = [{
   config: {
     'method': 'method',
     'encoding': {'method': 'simpleIndex', 'prefix_length': 1, 'padding': 'no_padding', 'generation_type': 'only'},
-    'label': label1,
+      'labelling': label1,
     'hyperopt': {
       'use_hyperopt': true,
       'max_evals': 100,

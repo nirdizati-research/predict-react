@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {CLASSIFICATION, PERCEPTRON} from '../../reference';
+import {CLASSIFICATION, PERCEPTRON} from '../../../reference';
 import SelectField from 'react-md/lib/SelectFields';
-import {penaltyPerceptron} from './advancedConfig';
+import {penaltyPerceptron} from '../advancedConfig';
 import TextField from 'react-md/lib/TextFields';
 import Checkbox from 'react-md/lib/SelectionControls/Checkbox';
 

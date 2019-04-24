@@ -4,7 +4,7 @@ import SelectField from 'react-md/lib/SelectFields';
 import PropTypes from 'prop-types';
 import {selectLabelProptype} from '../../propTypes';
 import {Button, CardText} from 'react-md';
-import {CLASSIFICATION, REGRESSION} from '../../reference';
+import {CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION} from '../../reference';
 
 class ModelSelector extends Component {
   selectChange({method}, value, _) {
@@ -40,6 +40,18 @@ class ModelSelector extends Component {
                 value={this.props.classModelId}
               />
             </div>
+              <div className="md-cell md-cell--6">
+                  <h4>Time Series Prediction Model Selection</h4>
+                  <SelectField
+                      id="log-name-select"
+                      placeholder="model #,Clustering,EncodingMethod,TimeSeriesPredictionMethod"
+                      className="md-cell"
+                      menuItems={this.props.timeSeriesPredModelsLabel}
+                      position={SelectField.Positions.BELOW}
+                      onChange={this.selectChange.bind(this, {method: TIME_SERIES_PREDICTION})}
+                      value={this.props.timeSeriesPredModelId}
+                  />
+              </div>
             <div className="md-cell md-cell--12">
               <Button raised primary swapTheming onClick={this.props.onSubmit}
                       className="buttons__group">Submit</Button>
@@ -56,10 +68,12 @@ class ModelSelector extends Component {
 ModelSelector.propTypes = {
   regModelsLabel: selectLabelProptype,
   classModelsLabel: selectLabelProptype,
+    timeSeriesPredModelsLabel: selectLabelProptype,
   modelChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onReset: PropTypes.func.isRequired,
   classModelId: PropTypes.number.isRequired,
-  regModelId: PropTypes.number.isRequired
+    regModelId: PropTypes.number.isRequired,
+    timeSeriesPredModelId: PropTypes.number.isRequired
 };
 export default ModelSelector;

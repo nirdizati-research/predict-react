@@ -50,7 +50,8 @@ class Runtime extends Component {
     const logId = this.props.logId;
     const regId = this.props.regModelId;
     const classId = this.props.classModelId;
-    const payload = logId + '&' + regId + '&' + classId;
+      const timeSeriesPredId = this.props.timeSeriesPredModelId;
+      const payload = logId + '&' + regId + '&' + classId + '&' + timeSeriesPredId;
     this.props.onSubmitRuntime(payload);
     this.props.onRequestTraces();
   }
@@ -58,7 +59,8 @@ class Runtime extends Component {
   render() {
     // Only unique splits for selector
     const regModelsLabel = modelsToString(this.props.regressionModels);
-    const clasModelsLabel = modelsToString(this.props.classificationModels);
+    const classModelsLabel = modelsToString(this.props.classificationModels);
+    const timeSeriesPredModelsLabel = modelsToString(this.props.timeSeriesPredictionModels);
 
     return (
       <div className="md-grid">
@@ -69,8 +71,10 @@ class Runtime extends Component {
         </div>
         <div className="md-cell md-cell--12">
           <ModelSelector modelChange={this.onModelChange.bind(this)} onSubmit={this.Submit.bind(this)}
-                         onReset={this.onReset} classModelsLabel={clasModelsLabel} regModelsLabel={regModelsLabel}
-                         classModelId={this.props.classModelId} regModelId={this.props.regModelId}/>
+                         onReset={this.onReset} classModelsLabel={classModelsLabel} regModelsLabel={regModelsLabel}
+                         timeSeriesPredModelsLabel={timeSeriesPredModelsLabel}
+                         classModelId={this.props.classModelId} regModelId={this.props.regModelId}
+                         timeSeriesPredModelId={this.props.timeSeriesPredModelId}/>
         </div>
         <div className="md-cell md-cell--12">
           <Card>
@@ -105,8 +109,10 @@ Runtime.propTypes = {
   traces: PropTypes.arrayOf(tracePropType).isRequired,
   regressionModels: PropTypes.arrayOf(modelPropType).isRequired,
   classificationModels: PropTypes.arrayOf(modelPropType).isRequired,
+    timeSeriesPredictionModels: PropTypes.arrayOf(modelPropType).isRequired,
   regModelId: PropTypes.number.isRequired,
   classModelId: PropTypes.number.isRequired,
+    timeSeriesPredModelId: PropTypes.number.isRequired,
   logId: PropTypes.number.isRequired,
   changed: PropTypes.number.isRequired,
   maxPrefixLength: PropTypes.number.isRequired,
@@ -118,8 +124,10 @@ const mapStateToProps = (state) => ({
   traces: mapTraces(state.traces.byId, state.traces.interResults, state.traces.finalDiff),
   regressionModels: state.models.regressionModels,
   classificationModels: state.models.classificationModels,
+    timeSeriesPredictionModels: state.models.timeSeriesPredictionModels,
   regModelId: state.models.regselected,
   classModelId: state.models.classelected,
+    timeSeriesPredModelId: state.models.timeseriespredselected,
   logId: state.models.logId,
   modfetchState: state.models.fetchState,
   logfetchState: state.logs.fetchState,

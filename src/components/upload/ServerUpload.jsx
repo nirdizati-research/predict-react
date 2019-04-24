@@ -57,7 +57,7 @@ export default class ServerUpload extends PureComponent {
     this.setState({sending: true});
   };
 
-  /**
+  /*
    * There is no native support for watching progress with fetch, so you can do it by getting the
    * reader from the response and looping over the results.
    */

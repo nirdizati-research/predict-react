@@ -26,6 +26,7 @@ const dataReg = [
   ['Linear', 0.09, '0.09'],
   ['Lasso', 0.15, '0.15'],
   ['Random forest', 0.35, '0.35'],
+    // TODO: add XGBoost? add DeepLearning?
 ];
 
 export const RegressionMethodsCard = () => {

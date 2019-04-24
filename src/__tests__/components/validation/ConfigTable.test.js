@@ -27,7 +27,7 @@ const regJobs = [{
     'encoding': encoding1,
     'clustering': 'noCluster',
     'method': 'linear',
-    'label': label1,
+      'labelling': label1,
     'hyperopt': {
       'use_hyperopt': true,
       'max_evals': 100,
@@ -50,7 +50,7 @@ const classJobs = [{
     'encoding': encoding1,
     'clustering': 'noCluster',
     'method': 'randomForest',
-    'label': label1,
+      'labelling': label1,
     'hyperopt': {
       'use_hyperopt': true,
       'max_evals': 100,
@@ -71,7 +71,7 @@ const labelJobs = [{
   'modified_date': '2018-02-07T09:13:52.964256Z',
   'config': {
     'encoding': encoding1,
-    'label': label1,
+      'labelling': label1,
   },
   'status': 'created',
   'result': {},

@@ -19,7 +19,7 @@ const classJobs = [
       'clustering': 'kmeans',
       'method': 'knn',
       'encoding': encoding1,
-      'label': label1,
+        'labelling': label1,
       'hyperopt': {
         'use_hyperopt': true,
         'max_evals': 100,
@@ -44,7 +44,7 @@ const classJobs = [
       'clustering': 'kmeans',
       'method': 'knn',
       'encoding': encoding1,
-      'label': label1,
+        'labelling': label1,
       'hyperopt': {
         'use_hyperopt': true,
         'max_evals': 100,
@@ -70,7 +70,7 @@ const regJobs = [{
     'encoding': encoding1,
     'clustering': 'noCluster',
     'method': 'linear',
-    'label': label1,
+      'labelling': label1,
     'hyperopt': {
       'use_hyperopt': true,
       'max_evals': 100,

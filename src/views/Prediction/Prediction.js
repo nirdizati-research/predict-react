@@ -45,16 +45,18 @@ class Prediction extends Component {
   }
 
   filterJobRun() {
-    return this.props.jobsrun.filter((job) => (job.config.log_id === this.props.logId) &&
-      ((job.config.model_id === this.props.regModelId) ||
-        (job.config.model_id === this.props.classModelId)));
+    return this.props.jobsrun.filter((job) =>
+        (job.config.log_id === this.props.logId) && ((job.config.model_id === this.props.regModelId) ||
+        (job.config.model_id === this.props.classModelId) ||
+        (job.config.model_id === this.props.timeSeriesPredModelId)));
   }
 
   Submit() {
     const logId = this.props.logId;
     const regId = this.props.regModelId;
     const classId = this.props.classModelId;
-    const payload = logId + '&' + regId + '&' + classId;
+      const timeSeriesPredId = this.props.timeSeriesPredModelId;
+      const payload = logId + '&' + regId + '&' + classId + '&' + timeSeriesPredId;
     this.props.onSubmitPrediction(payload);
     this.props.onRequestJobs();
   }
@@ -63,7 +65,8 @@ class Prediction extends Component {
     // Only unique splits for selector
     const filteredJobsRun = this.filterJobRun();
     const regModelsLabel = modelsToString(this.props.regressionModels);
-    const clasModelsLabel = modelsToString(this.props.classificationModels);
+    const classModelsLabel = modelsToString(this.props.classificationModels);
+    const timeSeriesPredModelsLabel = modelsToString(this.props.timeSeriesPredictionModels);
 
     return (
       <div className="md-grid">
@@ -74,8 +77,9 @@ class Prediction extends Component {
         </div>
         <div className="md-cell md-cell--12">
           <ModelSelector modelChange={this.onModelChange.bind(this)} onSubmit={this.Submit.bind(this)}
-                         onReset={this.onReset} classModelsLabel={clasModelsLabel} regModelsLabel={regModelsLabel}
-                         classModelId={this.props.classModelId} regModelId={this.props.regModelId}/>
+                         onReset={this.onReset} classModelsLabel={classModelsLabel} regModelsLabel={regModelsLabel}
+                         timeSeriesPredModelsLabel={timeSeriesPredModelsLabel} classModelId={this.props.classModelId}
+                         regModelId={this.props.regModelId} timeSeriesPredModelId={this.props.timeSeriesPredModelId}/>
         </div>
         <div className="md-cell md-cell--12">
           <Card>
@@ -104,8 +108,10 @@ Prediction.propTypes = {
   jobsrun: PropTypes.arrayOf(jobRunPropType).isRequired,
   regressionModels: PropTypes.arrayOf(modelPropType).isRequired,
   classificationModels: PropTypes.arrayOf(modelPropType).isRequired,
+    timeSeriesPredictionModels: PropTypes.arrayOf(modelPropType).isRequired,
   regModelId: PropTypes.number.isRequired,
   classModelId: PropTypes.number.isRequired,
+    timeSeriesPredModelId: PropTypes.number.isRequired,
   logId: PropTypes.number.isRequired,
   maxPrefixLength: PropTypes.number.isRequired,
 };
@@ -116,8 +122,10 @@ const mapStateToProps = (state) => ({
   jobsrun: mapJobs(state.logs.byId, state.splits.byId, state.jobs.byId, state.jobs.runIds),
   regressionModels: state.models.regressionModels,
   classificationModels: state.models.classificationModels,
+    timeSeriesPredictionModels: state.models.timeSeriesPredictionModels,
   regModelId: state.models.regselected,
   classModelId: state.models.classelected,
+    timeSeriesPredModelId: state.models.timeseriespredselected,
   logId: state.models.logId,
   modfetchState: state.models.fetchState,
   logfetchState: state.logs.fetchState,

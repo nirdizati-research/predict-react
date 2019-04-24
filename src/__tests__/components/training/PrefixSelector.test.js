@@ -2,13 +2,15 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import PrefixSelector from '../../../components/training/PrefixSelector';
 import {SelectionControlGroup, TextField} from 'react-md';
+import {REGRESSION} from '../../../reference';
 
 let element;
 let onChange;
 beforeEach(() => {
   onChange = jest.fn();
-  element = shallow(<PrefixSelector onChange={onChange} maxEventsInLog={123}
-                                    encoding={{prefix_length: 1, padding: 'no_padding', generation_type: 'up_to'}}/>);
+  element = shallow(<PrefixSelector onChange={onChange} maxEventsInLog={123} predictionMethod={REGRESSION}
+                                    encoding={{prefix_length: 1, padding: 'no_padding', generation_type: 'up_to'}}
+                                    classification={[]} regression={[]}/>);
 });
 
 it('renders', () => {

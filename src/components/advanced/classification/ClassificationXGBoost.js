@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {TextField} from 'react-md';
-import {CLASSIFICATION, XGBOOST} from '../../reference';
+import {CLASSIFICATION, XGBOOST} from '../../../reference';
 
 const defaults = {
   'max_depth': 3,

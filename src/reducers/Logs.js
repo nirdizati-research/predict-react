@@ -6,38 +6,38 @@ import {LOG_LIST_FAILED, LOG_LIST_REQUESTED, LOG_LIST_RETRIEVED} from '../action
 import {listRetrieved} from './genericHelpers';
 
 const initialState = {
-  fetchState: {inFlight: false},
-  byId: {},
-  allIds: []
+    fetchState: {inFlight: false},
+    byId: {},
+    allIds: []
 };
 
 const logs = (state = initialState, action) => {
-    switch (action.type) {
-      case LOG_LIST_REQUESTED: {
-        return {
-          ...state,
-          fetchState: {inFlight: true},
-        };
-      }
+        switch (action.type) {
+            case LOG_LIST_REQUESTED: {
+                return {
+                    ...state,
+                    fetchState: {inFlight: true},
+                };
+            }
 
-      case LOG_LIST_RETRIEVED: {
-        return {
-          ...state,
-          fetchState: {inFlight: false},
-          ...listRetrieved(action.payload)
-        };
-      }
+            case LOG_LIST_RETRIEVED: {
+                return {
+                    ...state,
+                    fetchState: {inFlight: false},
+                    ...listRetrieved(action.payload)
+                };
+            }
 
-      case LOG_LIST_FAILED: {
-        return {
-          ...state,
-          fetchState: {inFlight: false, error: action.payload},
-        };
-      }
-      default:
-        return state;
+            case LOG_LIST_FAILED: {
+                return {
+                    ...state,
+                    fetchState: {inFlight: false, error: action.payload},
+                };
+            }
+            default:
+                return state;
+        }
     }
-  }
 ;
 
 export default logs;

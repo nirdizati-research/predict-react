@@ -1,21 +1,33 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {
-  ATTRIBUTE_NUMBER,
-  ATTRIBUTE_STRING,
-  classLabelControls,
-  DURATION,
-  regLabelControls,
-  REGRESSION,
-  thresholdControls
+    ATTRIBUTE_NUMBER,
+    ATTRIBUTE_STRING,
+    CLASSIFICATION,
+    classLabelControls,
+    DURATION,
+    regLabelControls,
+    REGRESSION,
+    thresholdControls,
+    TIME_SERIES_PREDICTION,
+    timeSeriesPredLabelControls
 } from '../../reference';
 import SelectField from 'react-md/lib/SelectFields/index';
 
 /* eslint-disable no-invalid-this */
 const methodConfig = 'label';
 const LabelControls = (props) => {
-  const controls = () => (props.predictionMethod === REGRESSION ? regLabelControls : classLabelControls);
-  const labelType = <SelectField
+    let temp;
+    if (props.predictionMethod === REGRESSION) {
+        temp = regLabelControls;
+    } else if (props.predictionMethod === CLASSIFICATION) {
+        temp = classLabelControls;
+    } else if (props.predictionMethod === TIME_SERIES_PREDICTION) {
+        temp = timeSeriesPredLabelControls;
+    }
+    const controls = () => temp;
+
+    const labelType = <SelectField
     key="type"
     id="type"
     label="Label type"
@@ -27,7 +39,7 @@ const LabelControls = (props) => {
   />;
 
   const threshold = (label) => {
-    if (props.predictionMethod === REGRESSION) {
+    if (props.predictionMethod === REGRESSION || props.predictionMethod === TIME_SERIES_PREDICTION) {
       return [null, null];
     } else if ([ATTRIBUTE_NUMBER, DURATION].includes(label.type)) {
       const thresholdType = <SelectField
@@ -76,12 +88,16 @@ const LabelControls = (props) => {
     }
   };
 
-  return <div className="md-grid">
-    {labelType}
-    {threshold(props.label)[0]}
-    {threshold(props.label)[1]}
-    {atr()}
-  </div>;
+    if (props.predictionMethod !== TIME_SERIES_PREDICTION) {
+        return <div className="md-grid">
+            {labelType}
+            {threshold(props.label)[0]}
+            {threshold(props.label)[1]}
+            {atr()}
+        </div>;
+    } else {
+        return <div></div>;
+    }
 };
 
 LabelControls.propTypes = {
