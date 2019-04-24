@@ -6,6 +6,7 @@ import {
     CLASSIFICATION,
     classLabelControls,
     DURATION,
+    LABELLING,
     regLabelControls,
     REGRESSION,
     thresholdControls,
@@ -15,7 +16,7 @@ import {
 import SelectField from 'react-md/lib/SelectFields/index';
 
 /* eslint-disable no-invalid-this */
-const methodConfig = 'label';
+const methodConfig = LABELLING;
 const LabelControls = (props) => {
     let temp;
     if (props.predictionMethod === REGRESSION) {

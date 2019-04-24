@@ -23,7 +23,7 @@ const traceAttributeToLabel = (traceAttr) => {
     return {label: traceAttr.name, value: traceAttr.name, message: `First trace value: ${traceAttr.example}`};
 };
 
-const methodConfig = 'label';
+const methodConfig = LABELLING;
 const Labelling = (props) => {
     const helpText = () => {
         switch (props.predictionMethod) {
