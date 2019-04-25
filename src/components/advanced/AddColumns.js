@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Checkbox} from 'react-md/lib/index';
 import {labelPropType} from '../../propTypes';
+import {LABELLING} from '../../reference';
 
 // Half of labelling object defined here
-const methodConfig = 'label';
+const methodConfig = LABELLING;
 /* eslint-disable no-invalid-this */
 const AddColumns = (props) => {
   const header1 = <div key='h1' className="md-cell md-cell--12">
@@ -17,7 +18,7 @@ const AddColumns = (props) => {
     name="add_remaining_time"
     label="Add remaining time"
     className="md-cell md-cell--3"
-    checked={props.label.add_remaining_time}
+    checked={props.labelling.add_remaining_time}
     onChange={props.onChange.bind(this, {methodConfig, key: 'add_remaining_time'})}
   />;
 
@@ -27,7 +28,7 @@ const AddColumns = (props) => {
     name="add_elapsed_time"
     label="Add elapsed time"
     className="md-cell md-cell--3"
-    checked={props.label.add_elapsed_time}
+    checked={props.labelling.add_elapsed_time}
     onChange={props.onChange.bind(this, {methodConfig, key: 'add_elapsed_time'})}/>;
 
   const header2 = <div key='h2' className="md-cell md-cell--12">
@@ -41,7 +42,7 @@ const AddColumns = (props) => {
     name="add_executed_events"
     label="Add executed events"
     className="md-cell md-cell--3"
-    checked={props.label.add_executed_events}
+    checked={props.labelling.add_executed_events}
     onChange={props.onChange.bind(this, {methodConfig, key: 'add_executed_events'})}
   />;
 
@@ -51,7 +52,7 @@ const AddColumns = (props) => {
     name="add_resources_used"
     label="Add resources used"
     className="md-cell md-cell--3"
-    checked={props.label.add_resources_used}
+    checked={props.labelling.add_resources_used}
     onChange={props.onChange.bind(this, {methodConfig, key: 'add_resources_used'})}
   />;
 
@@ -61,7 +62,7 @@ const AddColumns = (props) => {
     name="add_new_traces"
     label="Add new traces"
     className="md-cell md-cell--3"
-    checked={props.label.add_new_traces}
+    checked={props.labelling.add_new_traces}
     onChange={props.onChange.bind(this, {methodConfig, key: 'add_new_traces'})}
   />;
 
@@ -70,6 +71,6 @@ const AddColumns = (props) => {
 
 AddColumns.propTypes = {
   onChange: PropTypes.func.isRequired,
-  label: PropTypes.shape(labelPropType).isRequired
+  labelling: PropTypes.shape(labelPropType).isRequired
 };
 export default AddColumns;
