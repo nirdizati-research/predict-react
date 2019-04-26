@@ -20,11 +20,11 @@ export const KMEANS = 'kmeans';
 export const KNN = 'knn';
 export const DECISION_TREE = 'decisionTree';
 export const RANDOM_FOREST = 'randomForest';
-export const MULTINOMIAL_NAIVE_BAYES = 'MultinomialNB';
-export const HOEFFDING_TREE = 'HoeffdingTree';
-export const ADAPTIVE_TREE = 'HAT';
+export const MULTINOMIAL_NAIVE_BAYES = 'multinomialNB';
+export const HOEFFDING_TREE = 'hoeffdingTree';
+export const ADAPTIVE_TREE = 'adaptiveTree';
 export const SGDCLASSIFIER = 'SGDClassifier';
-export const PERCEPTRON = 'Perceptron';
+export const PERCEPTRON = 'perceptron';
 
 export const INCREMENTAL_CLASSIFIERS = [
   MULTINOMIAL_NAIVE_BAYES,
