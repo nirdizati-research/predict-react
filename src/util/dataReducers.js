@@ -11,7 +11,10 @@ export const modelsToString = (models) => {
 
 export const modelToString = (model) => {
     let label;
-    label = `Model #${model.id}, ${model.split.type}, ${model.config.encoding.method}, ${model.config.method}`;
+    label = `Model #${model.id},
+    ${model.config.split.type},
+    ${model.config.encoding.method}, 
+    ${model.config.predictive_model['prediction_method']}`;
     return label;
 };
 
