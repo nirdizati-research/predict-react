@@ -34,10 +34,22 @@ const Incremental = (props) => {
             props.classificationModels
             .filter(
                 (obj) => (
-                    props.currentModels.includes(obj.config.method)
+                    props.classification.includes(obj.config.predictive_model['prediction_method'])
                 )
-            )
-        ));
+            ))).concat(modelsToString(
+            props.regressionModels
+            .filter(
+                (obj) => (
+                    props.regression.includes(obj.config.predictive_model['prediction_method'])
+                )
+            ))).concat(modelsToString(
+            props.timeSeriesPredictionModels
+            .filter(
+                (obj) => (
+                    props.timeSeriesPrediction.includes(obj.config.predictive_model['prediction_method'])
+                )
+            ))
+        );
 
         return [<SelectField
             key="base_model"
