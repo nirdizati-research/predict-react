@@ -20,40 +20,37 @@ export const modelToString = (model) => {
 
 
 export const jobToValidationTable = (job) => {
-    const kmeans = job.config.kmeans;
-    // TODO refactor this
-    if (job.type === REGRESSION || job.type === CLASSIFICATION || job.type === TIME_SERIES_PREDICTION) {
+    if (job.config.predictive_model.predictive_model === REGRESSION || job.config.predictive_model.predictive_model === CLASSIFICATION || job.config.predictive_model.predictive_model === TIME_SERIES_PREDICTION) {
         return {
             id: job.id,
             type: job.type,
-            encodingMethod: job.config.encoding.method,
-            clustering: job.config.clustering,
-            method: job.config.method,
+            encodingMethod: job.config.encoding.value_encoding,
+            clustering: job.config.clustering.clustering_method,
+            method: job.config.predictive_model.prediction_method,
             prefix_length: job.config.encoding.prefix_length,
             padding: job.config.encoding.padding,
-            generationType: job.config.encoding.generation_type,
-            hyperopt: job.config.hyperopt,
+            generationType: job.config.encoding.task_generation_type,
+            hyperopt: job.config.hyperparameter_optimizer,
             labelling: job.config.labelling,
-            kmeans,
-            create_models: job.config.create_models,
-            advanced: job.config[`${job.type}.${job.config.method}`]
+            clustering_hyperparameters: job.config.clustering,
+            predictive_model_hyperparameters: job.config.predictive_model
         };
     } else {
         return {
             id: job.id,
             encoding: job.config.encoding,
             labelling: job.config.labelling,
-            result: job.result
+            result: job.config.evaluation
         };
     }
 };
 
 export const toRun = (job) => {
-    return `${job.config.method}_${job.config.encoding.method}_${job.config.clustering}`;
+    return `${job.config.predictive_model.prediction_method}_${job.config.encoding.value_encoding}_${job.config.clustering.clustering_method}`;
 };
 
 const toLineObject = (job, metricName) => {
-    const metric = job.result[metricName];
+    const metric = job.config.evaluation[metricName];
     return {run: toRun(job), prefix_length: job.config.encoding.prefix_length, metric};
 };
 
@@ -109,7 +106,7 @@ export const makeLabels = (jobs) => {
     if (jobs.length === 0) {
         return [];
     }
-    return Object.keys(jobs[0].result).map((metric) => {
+    return Object.keys(jobs[0].config.evaluation).map((metric) => {
         return {label: metric, value: metric};
     });
 };

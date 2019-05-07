@@ -43,7 +43,7 @@ import {
     SIMPLE_INDEX,
     THRESHOLD_MEAN,
     TIME_SERIES_PREDICTION,
-    XGBOOST
+    XGBOOST, ZERO_PADDING
 } from '../reference';
 import {labelCompare} from '../util/labelCompare';
 import {addListToStore, removeFromStore} from './genericHelpers';
@@ -88,11 +88,11 @@ const initialFilters = {
 
 
 const filterBySplit = (splitId) => (job) => {
-    return job.split_id === splitId;
+    return job.config.split.id === splitId;
 };
 
 const filterByMethod = (predictionMethod) => (job) => {
-    return (job.type === predictionMethod) && (job.status === 'completed');
+    return (job.config.predictive_model.predictive_model === predictionMethod) && (job.status === 'completed');
 };
 
 const filterByPrefix = (selectedPrefixes) => (job) => {
@@ -100,17 +100,17 @@ const filterByPrefix = (selectedPrefixes) => (job) => {
 };
 
 const filterByPadding = (padding) => (job) => {
-    return job.config.encoding.padding === padding;
+    return padding === ZERO_PADDING ? job.config.encoding.padding : !job.config.encoding.padding;
 };
 
 const filterByAllElse = (encodings, clusterings, classification, regression, timeSeriesPrediction, predictionMethod) => (job) => {
-    const firstHalf = encodings.includes(job.config.encoding.method) && clusterings.includes(job.config.clustering);
+    const firstHalf = encodings.includes(job.config.encoding.value_encoding) && clusterings.includes(job.config.clustering.clustering_method);
     if (predictionMethod === REGRESSION) {
-        return firstHalf && regression.includes(job.config.method);
+        return firstHalf && regression.includes(job.config.predictive_model.prediction_method);
     } else if (predictionMethod === CLASSIFICATION) {
-        return firstHalf && classification.includes(job.config.method);
+        return firstHalf && classification.includes(job.config.predictive_model.prediction_method);
     } else if (predictionMethod === TIME_SERIES_PREDICTION) {
-        return firstHalf && timeSeriesPrediction.includes(job.config.method);
+        return firstHalf && timeSeriesPrediction.includes(job.config.predictive_model.prediction_method);
     }
 };
 
@@ -177,7 +177,7 @@ const checkboxChange = (target, state) => {
 };
 
 const completedUniqueSplits = (jobsById) =>
-    [...new Set(Object.values(jobsById).filter(job => job.status === 'completed').map((job => job.split_id)))];
+    [...new Set(Object.values(jobsById).filter(job => job.status === 'completed').map((job => job.config.split.id)))];
 
 const jobs = (state = {...initialState, ...initialFilters}, action) => {
     switch (action.type) {

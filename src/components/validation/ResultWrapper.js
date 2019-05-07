@@ -13,26 +13,29 @@ import {toRun} from '../../util/dataReducers';
 
 const regressionMap = (jobs) => {
   return jobs.map((job) => [job.id + '', toRun(job),
-    job.result.mae, job.result.rmse, job.result.mape, job.config.encoding.prefix_length + '', job.result.rscore]);
+    job.config.evaluation.mae, job.config.evaluation.rmse, job.config.evaluation.mape, job.config.encoding.prefix_length + '', job.config.evaluation.rscore]);
 };
 
 const classMap = (jobs) => {
   return jobs.map((job) => {
-    const recall = job.result.recall || 0;
-    const precision = job.result.precision || 0;
-    const truePositive = job.result.true_positive || 0;
-    const trueNegative = job.result.true_negative || 0;
-    const falsePositive = job.result.false_positive || 0;
-    const falseNegative = job.result.false_negative || 0;
-    return [job.id + '', toRun(job), job.result.f1score, job.result.auc, job.result.acc,
-      job.config.encoding.prefix_length + '', precision, recall,
+    const recall = job.config.evaluation.recall || 0;
+    const precision = job.config.evaluation.precision || 0;
+    const auc = job.config.evaluation.auc || 0;
+    const acc = job.config.evaluation.acc || 0;
+    const f1_score = job.config.evaluation.f1_score || 0;
+    const prefix_length = job.config.encoding.prefix_length + '';
+    const truePositive = job.config.evaluation.true_positive || 0;
+    const trueNegative = job.config.evaluation.true_negative || 0;
+    const falsePositive = job.config.evaluation.false_positive || 0;
+    const falseNegative = job.config.evaluation.false_negative || 0;
+    return [job.id + '', toRun(job), f1_score, auc, acc, prefix_length, precision, recall,
       truePositive, trueNegative, falsePositive, falseNegative];
   });
 };
 
 const timeSeriesPredMap = (jobs) => {
     return jobs.map((job) => {
-        return [job.id + '', toRun(job), job.result.nlevenshtein, job.config.encoding.prefix_length];
+        return [job.id + '', toRun(job), job.config.evaluation.nlevenshtein, job.config.encoding.prefix_length];
     });
 };
 
