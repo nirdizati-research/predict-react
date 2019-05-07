@@ -59,7 +59,7 @@ LabellingHeaderCard.propTypes = {
   labelChange: PropTypes.func.isRequired,
   filterOptionChange: PropTypes.func.isRequired,
   filterOptions: PropTypes.shape({
-    label: PropTypes.any.isRequired,
+    labelling: PropTypes.any.isRequired,
     attributeNames: PropTypes.arrayOf(PropTypes.string).isRequired,
     thresholds: PropTypes.arrayOf(PropTypes.number).isRequired,
     padding: PropTypes.string.isRequired

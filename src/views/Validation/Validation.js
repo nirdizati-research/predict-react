@@ -87,7 +87,7 @@ Validation.propTypes = {
   filterOptionChange: PropTypes.func.isRequired,
   labelTypeChange: PropTypes.func.isRequired,
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
-    predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION, LABELLING]).isRequired,
+  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION, LABELLING]).isRequired,
   splitId: PropTypes.number.isRequired,
   prefixLengths: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
   selectedPrefixes: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
@@ -96,8 +96,8 @@ Validation.propTypes = {
     clusterings: PropTypes.arrayOf(PropTypes.string).isRequired,
     classification: PropTypes.arrayOf(PropTypes.string).isRequired,
     regression: PropTypes.arrayOf(PropTypes.string).isRequired,
-      timeSeriesPrediction: PropTypes.arrayOf(PropTypes.string).isRequired,
-    label: PropTypes.any.isRequired,
+    timeSeriesPrediction: PropTypes.arrayOf(PropTypes.string).isRequired,
+    labelling: PropTypes.any.isRequired,
     padding: PropTypes.string.isRequired,
     attributeNames: PropTypes.arrayOf(PropTypes.string).isRequired,
     thresholds: PropTypes.arrayOf(PropTypes.number).isRequired
@@ -115,12 +115,15 @@ const mapStateToProps = (state) => ({
   filterOptions: (
       ({encodings, clusterings, classification, regression, timeSeriesPrediction,
          labelling, attributeNames, thresholds, padding}) => ({
-      encodings,
-      clusterings,
-      classification,
-      regression,
+        encodings,
+        clusterings,
+        classification,
+        regression,
         timeSeriesPrediction,
-      labelling, attributeNames, thresholds, padding
+        labelling,
+        attributeNames,
+        thresholds,
+        padding
     }))(state.jobs)
 });
 
