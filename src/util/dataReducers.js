@@ -25,6 +25,8 @@ export const jobToValidationTable = (job) => {
             id: job.id,
             type: job.type,
             encodingMethod: job.config.encoding.value_encoding,
+            encoding: job.config.encoding,
+            features: job.config.encoding.features,
             clustering: job.config.clustering.clustering_method,
             method: job.config.predictive_model.prediction_method,
             prefix_length: job.config.encoding.prefix_length,

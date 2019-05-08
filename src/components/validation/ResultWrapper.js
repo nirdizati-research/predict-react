@@ -12,8 +12,14 @@ import ControlledLineChartCard from '../chart/ControlledLineChartCard';
 import {toRun} from '../../util/dataReducers';
 
 const regressionMap = (jobs) => {
-  return jobs.map((job) => [job.id + '', toRun(job),
-    job.config.evaluation.mae, job.config.evaluation.rmse, job.config.evaluation.mape, job.config.encoding.prefix_length + '', job.config.evaluation.rscore]);
+  return jobs.map((job) => [
+      job.id + '',
+      toRun(job),
+      job.config.evaluation.mae,
+      job.config.evaluation.rmse,
+      job.config.evaluation.mape,
+      job.config.encoding.prefix_length + '',
+      job.config.evaluation.rscore]);
 };
 
 const classMap = (jobs) => {
@@ -21,7 +27,7 @@ const classMap = (jobs) => {
     const recall = job.config.evaluation.recall || 0;
     const precision = job.config.evaluation.precision || 0;
     const auc = job.config.evaluation.auc || 0;
-    const acc = job.config.evaluation.acc || 0;
+    const acc = job.config.evaluation.accuracy || 0;
     const f1_score = job.config.evaluation.f1_score || 0;
     const prefix_length = job.config.encoding.prefix_length + '';
     const truePositive = job.config.evaluation.true_positive || 0;

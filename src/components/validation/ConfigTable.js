@@ -30,9 +30,9 @@ class ConfigTable extends PureComponent {
 
   render() {
     const headers =
-      ['id', 'Type', 'Encoding', 'Clustering', 'Method', 'Prefix length', 'Label',
+      ['id', 'Type', 'Encoding Method', 'Clustering', 'Method', 'Prefix length', 'Encoding', 'Label',
         'Padding', 'Generation type', 'Hyperparameter Optimizer', 'Clustering Hyperparameters',
-        'Predictive Model Hyperparameters'];
+        'Predictive Model Hyperparameters', 'Features'];
     return (<DataTable baseId="simple-pagination" selectableRows={false}>
       <TableHeader>
         <TableRow>
@@ -49,12 +49,16 @@ class ConfigTable extends PureComponent {
               <TableColumn style={columnStyle}>{job.clustering}</TableColumn>
               <TableColumn style={columnStyle}>{job.method}</TableColumn>
               <TableColumn style={columnStyle} numeric>{job.prefix_length}</TableColumn>
+              <TableColumn style={columnStyle}><JsonHolder data={job.encoding}/></TableColumn>
               <TableColumn style={columnStyle}><JsonHolder data={job.labelling}/></TableColumn>
               <TableColumn style={columnStyle}>{job.padding.toString()}</TableColumn>
               <TableColumn style={columnStyle}>{job.generationType}</TableColumn>
-              <TableColumn style={columnStyle}><JsonHolder data={job.hyperopt}/></TableColumn>
+              <TableColumn style={columnStyle}>
+                {job.hyperopt ? <JsonHolder data={job.hyperopt}/> : 'Not Done'}
+              </TableColumn>
               <TableColumn style={columnStyle}><JsonHolder data={job.clustering_hyperparameters}/></TableColumn>
               <TableColumn style={columnStyle}><JsonHolder data={job.predictive_model_hyperparameters}/></TableColumn>
+              <TableColumn style={columnStyle}><JsonHolder data={job.features}/></TableColumn>
             </TableRow>
           ))}
       </TableBody>
