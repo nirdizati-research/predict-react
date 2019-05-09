@@ -79,6 +79,10 @@ const classTableColumns = [
     type: 'number',
     label: 'False negative',
   },
+  {
+    type: 'number',
+    label: 'Elapsed Time (s)',
+  },
 ];
 
 const regColumns = [

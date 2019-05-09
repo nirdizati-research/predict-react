@@ -34,8 +34,9 @@ const classMap = (jobs) => {
     const trueNegative = job.config.evaluation.true_negative || 0;
     const falsePositive = job.config.evaluation.false_positive || 0;
     const falseNegative = job.config.evaluation.false_negative || 0;
+    const elapsed_time = job.config.evaluation.elapsed_time || 0;
     return [job.id + '', toRun(job), f1_score, auc, acc, prefix_length, precision, recall,
-      truePositive, trueNegative, falsePositive, falseNegative];
+      truePositive, trueNegative, falsePositive, falseNegative, elapsed_time];
   });
 };
 
