@@ -1,32 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Checkbox, TextField} from 'react-md/lib/index';
+import {TextField} from 'react-md/lib/index';
 import {CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION} from '../../reference';
-import {classificationMetrics, regressionMetrics, timeSeriesPredictionMetrics} from './advancedConfig';
+import {
+    classificationMetrics,
+    hyperparameterOptmizerLabels,
+    regressionMetrics,
+    timeSeriesPredictionMetrics
+} from './advancedConfig';
 import SelectField from 'react-md/lib/SelectFields/index';
 
 // Has to be changed in TrainingFormCard
 const defaults = {
-  use_hyperopt: false,
-  max_evals: 10
+    type: false,
+    max_evals: 10
 };
 /* eslint-disable no-invalid-this */
 const HyperOpt = (props) => {
-  const methodConfig = 'hyperopt';
+  const methodConfig = 'hyperparameter_optimizer';
 
   const helpText = <p key="gristel" className="md-cell md-cell--12">
     Hyper optimization tries to guess the optimal method configuration
     to achieve the best performance metric value. It tries to optimize all the method values visible here.
     Maximum evaluations should be high to achieve the best result.</p>;
-  const useHyperopt = <Checkbox
-    key="use_hyperopt"
-    id="use_hyperopt"
-    name="use_hyperopt"
-    label="Enable Hyper optimization"
+
+  const hyperparameterOptmizer = <SelectField
+    key="type"
+    id="type"
+    label="Hyperparameter Optmizer"
     className="md-cell md-cell--3"
-    defaultChecked={defaults.use_hyperopt}
-    onChange={props.onChange.bind(this, {methodConfig, key: 'use_hyperopt'})}
+    menuItems={hyperparameterOptmizerLabels}
+    defaultValue={hyperparameterOptmizerLabels[0].value}
+    position={SelectField.Positions.BELOW}
+    onChange={props.onChange.bind(this, {methodConfig, key: 'type'})}
+    required
   />;
+
   const maxEvals = <TextField
     key="max_evals"
     id="max_evals"
@@ -53,7 +62,7 @@ const HyperOpt = (props) => {
       key="performance_metric"
       id="performance_metric"
       label="Performance metric"
-      className="md-cell md-cell--3"
+      className="md-cell md-cell--4"
       menuItems={labels}
       position={SelectField.Positions.BELOW}
       onChange={onChange.bind(this, {methodConfig, key: 'performance_metric'})}
@@ -61,7 +70,7 @@ const HyperOpt = (props) => {
     />;
   };
 
-  return [helpText, useHyperopt, maxEvals, makeMetric(props.predictionMethod, props.onChange)];
+  return [helpText, hyperparameterOptmizer, maxEvals, makeMetric(props.predictionMethod, props.onChange)];
 };
 
 HyperOpt.propTypes = {
