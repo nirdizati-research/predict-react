@@ -13,7 +13,7 @@ import SelectField from 'react-md/lib/SelectFields/index';
 // Has to be changed in TrainingFormCard
 const defaults = {
     type: false,
-    max_evals: 10
+    max_evaluations: 10
 };
 /* eslint-disable no-invalid-this */
 const HyperOpt = (props) => {
@@ -41,8 +41,8 @@ const HyperOpt = (props) => {
     id="max_evals"
     label="Number of evaluation runs"
     type="number"
-    defaultValue={defaults.max_evals}
-    onChange={props.onChange.bind(this, {methodConfig, key: 'max_evals', isNumber: true})}
+    defaultValue={defaults.max_evaluations}
+    onChange={props.onChange.bind(this, {methodConfig, key: 'max_evaluations', isNumber: true})}
     min={1}
     className="md-cell md-cell--3"
     required

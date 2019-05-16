@@ -88,7 +88,7 @@ const initialState = (props) => {
         kmeans: {},
         hyperparameter_optimizer: {
             type: 'none',
-            max_evals: 10,
+            max_evaluations: 10,
             performance_metric: 'rmse'
         },
         create_models: false
