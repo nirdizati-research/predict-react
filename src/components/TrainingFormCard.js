@@ -86,8 +86,8 @@ const initialState = (props) => {
         displayWarning: false,
         predictionMethod: predictionMethod,
         kmeans: {},
-        hyperopt: {
-            use_hyperopt: false,
+        hyperparameter_optimizer: {
+            type: 'none',
             max_evals: 10,
             performance_metric: 'rmse'
         },
@@ -241,7 +241,7 @@ class TrainingFormCard extends Component {
         }
         this.setState({
             predictionMethod: value, labelling: {...this.state.labelling, type: labelType},
-            hyperopt: {...this.state.hyperopt, performance_metric}, ...initialAdvancedConfiguration()
+            hyperparameter_optimizer: {...this.state.hyperparameter_optimizer, performance_metric}, ...initialAdvancedConfiguration()
         });
         this.setState((prevState, ) => {
             return {displayWarning: TrainingFormCard.displayWarningCheck(prevState)};
@@ -296,7 +296,7 @@ class TrainingFormCard extends Component {
                 incremental_train: this.state.incremental_train,
                 create_models: this.state.create_models,
                 add_elapsed_time: this.state.add_elapsed_time,
-                hyperopt: this.state.hyperopt,
+                hyperparameter_optimizer: this.state.hyperparameter_optimizer,
                 kmeans: this.state.kmeans,
                 [`${CLASSIFICATION}.${KNN}`]: this.state[`${CLASSIFICATION}.${KNN}`],
                 [`${CLASSIFICATION}.${RANDOM_FOREST}`]: this.state[`${CLASSIFICATION}.${RANDOM_FOREST}`],

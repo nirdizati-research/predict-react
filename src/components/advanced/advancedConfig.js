@@ -11,6 +11,22 @@ export const classificationKnnWeights = [
   }
 ];
 
+export const maxFeaturesRandomForest = [
+    {
+        value: 'auto',
+        label: 'auto'
+    },{
+        value: 'sqrt',
+        label: 'sqrt'
+    },{
+        value: 'log2',
+        label: 'log2'
+    },{
+        value: null,
+        label: 'none'
+    },
+];
+
 export const splitCriterionHoeffding = [
     {
         value: 'mc',
@@ -148,4 +164,15 @@ export const kmeansAlgorithm = [
     value: 'elkan',
     label: 'elkan'
   },
+];
+
+export const hyperparameterOptmizerLabels = [
+    {
+        value: 'none',
+        label: 'None'
+    },
+    {
+        value: 'hyperopt',
+        label: 'HyperOpt'
+    }
 ];
