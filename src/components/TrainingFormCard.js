@@ -68,6 +68,7 @@ const initialState = (props) => {
             padding: paddingControls[0].value,
             generation_type: prefixTypeControls[0].value,
             prefix_length: defaultPrefix,
+            features: []
         },
         labelling: {
             type: labelType,
