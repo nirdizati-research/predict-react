@@ -92,7 +92,11 @@ const filterBySplit = (splitId) => (job) => {
 };
 
 const filterByMethod = (predictionMethod) => (job) => {
-    return (job.config.predictive_model.predictive_model === predictionMethod) && (job.status === 'completed');
+    if ('null' !== job.config.predictive_model.predictive_model) {
+        return (job.config.predictive_model.predictive_model === predictionMethod) && (job.status === 'completed');
+    } else {
+        return false;
+    }
 };
 
 const filterByPrefix = (selectedPrefixes) => (job) => {
