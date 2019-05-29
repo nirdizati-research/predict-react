@@ -176,3 +176,14 @@ export const hyperparameterOptmizerLabels = [
         label: 'HyperOpt'
     }
 ];
+
+export const hyperparameterOptimizerAlgorithms = [
+    {
+        value: 'tpe',
+        label: 'Tree Parzen Estimator'
+    },
+    {
+        value: 'random_search',
+        label: 'Random Search'
+    }
+];

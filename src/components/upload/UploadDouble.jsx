@@ -188,7 +188,7 @@ export default class UploadDouble extends PureComponent {
             id="server-upload-training"
             label="Choose training set"
             required
-            accept=".xes, .mxml, .gz"
+            accept=".xes, .xes.gz"
             onLoad={this.handleTrainingLoad}
             onLoadStart={this.handleTrainingLoadStart}
             onProgress={this.handleTrainingProgress}
@@ -212,7 +212,7 @@ export default class UploadDouble extends PureComponent {
             id="server-upload-test"
             label="Choose test set"
             required
-            accept=".xes, .mxml, .gz"
+            accept=".xes, .xes.gz"
             onLoad={this.handleTestLoad}
             onLoadStart={this.handleTestLoadStart}
             onProgress={this.handleTestProgress}
