@@ -55,6 +55,8 @@ const Labelling = (props) => {
                 return classLabelControls;
             case TIME_SERIES_PREDICTION:
                 return timeSeriesPredLabelControls;
+            default:
+                return classLabelControls;
         }
     };
 

@@ -3,6 +3,7 @@ import {
     ATTRIBUTE_STRING,
     CLASSIFICATION,
     DURATION,
+    LABELLING,
     NEXT_ACTIVITY,
     REGRESSION,
     REMAINING_TIME,
@@ -73,6 +74,8 @@ export const labelCompare = (predictionMethod) => (a, b) => {
             return classificationCompare(a, b);
         } else if (predictionMethod === TIME_SERIES_PREDICTION) {
             return timeSeriesPredictionCompare(a, b);
+        } else if (predictionMethod === LABELLING) {
+            return classificationCompare(a, b);
         }
     }
     return false;

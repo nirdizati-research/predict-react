@@ -71,7 +71,7 @@ class Logs extends Component {
     const executionChart = this.getLineChart('events', 'Number of events executed per day', 'Number of events');
     const resourceChart = this.getLineChart('resources', 'Number of resources employed per day', 'Number of resources');
     const newTracesChart = this.getLineChart('newTraces', 'Number of new traces started per day', 'Number of traces');
-    const newPetriNet = this.getPetriNet('alpha_miner_result', 'Alpha Miner discovered Petri Net')
+    // const newPetriNet = this.getPetriNet('alpha_miner_result', 'Alpha Miner discovered Petri Net')
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
@@ -88,9 +88,9 @@ class Logs extends Component {
         <div className="md-cell md-cell--12">
           {newTracesChart}
         </div>
-        <div className="md-cell md-cell--12">
-          {newPetriNet}
-        </div>
+        {/* <div className="md-cell md-cell--12">*/}
+          {/* {newPetriNet}*/}
+        {/* </div>*/}
       </div>
     );
   }

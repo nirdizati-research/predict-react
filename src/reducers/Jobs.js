@@ -92,10 +92,10 @@ const filterBySplit = (splitId) => (job) => {
 };
 
 const filterByMethod = (predictionMethod) => (job) => {
-    if ('null' !== job.config.predictive_model.predictive_model) {
+    if (job.type !== LABELLING) {
         return (job.config.predictive_model.predictive_model === predictionMethod) && (job.status === 'completed');
     } else {
-        return false;
+        return true;
     }
 };
 

@@ -1,7 +1,7 @@
 /**
  * Created by Tõnis Kasekamp on 18.12.2017.
  */
-import {CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION} from '../reference';
+import {CLASSIFICATION, LABELLING, REGRESSION, TIME_SERIES_PREDICTION} from '../reference';
 
 export const modelsToString = (models) => {
     return models.map((model) => {
@@ -20,15 +20,18 @@ export const modelToString = (model) => {
 
 
 export const jobToValidationTable = (job) => {
-    if (job.config.predictive_model.predictive_model === REGRESSION || job.config.predictive_model.predictive_model === CLASSIFICATION || job.config.predictive_model.predictive_model === TIME_SERIES_PREDICTION) {
+    if (job.type === LABELLING ||
+        job.config.predictive_model.predictive_model === REGRESSION ||
+        job.config.predictive_model.predictive_model === CLASSIFICATION ||
+        job.config.predictive_model.predictive_model === TIME_SERIES_PREDICTION) {
         return {
             id: job.id,
             type: job.type,
             encodingMethod: job.config.encoding.value_encoding,
             encoding: job.config.encoding,
             features: job.config.encoding.features,
-            clustering: job.config.clustering.clustering_method,
-            method: job.config.predictive_model.prediction_method,
+            clustering: job.config.clustering !== null && job.config.clustering.clustering_method,
+            method: job.config.predictive_model !== null && job.config.predictive_model.prediction_method,
             prefix_length: job.config.encoding.prefix_length,
             padding: job.config.encoding.padding,
             generationType: job.config.encoding.task_generation_type,
