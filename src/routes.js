@@ -25,8 +25,8 @@ export default (
             <Route path="jobs" name="Task status" component={JobStatus}/>
             <Route path="training" name="Training" component={Training}/>
             <Route path="validation" name="Validation" component={Validation}/>
-            <Route path="prediction" name="Prediction" component={Prediction}/>
-            <Route path="runtime" name="Runtime" component={Runtime}/>
+            {/*<Route path="prediction" name="Prediction" component={Prediction}/>*/}
+            {/*<Route path="runtime" name="Runtime" component={Runtime}/>*/}
         </Route>
     </Router>
 );
