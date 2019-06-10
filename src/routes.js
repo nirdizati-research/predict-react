@@ -10,8 +10,8 @@ import Split from './views/Split';
 import Labelling from './views/Labelling';
 import FrontPage from './views/FrontPage';
 import Logs from './views/Logs/Logs';
-import Prediction from './views/Prediction/Prediction';
-import Runtime from './views/Runtime/Runtime';
+// import Prediction from './views/Prediction/Prediction';
+// import Runtime from './views/Runtime/Runtime';
 
 export default (
     <Router history={hashHistory}>
@@ -25,8 +25,8 @@ export default (
             <Route path="jobs" name="Task status" component={JobStatus}/>
             <Route path="training" name="Training" component={Training}/>
             <Route path="validation" name="Validation" component={Validation}/>
-            {/*<Route path="prediction" name="Prediction" component={Prediction}/>*/}
-            {/*<Route path="runtime" name="Runtime" component={Runtime}/>*/}
+            {/* <Route path="prediction" name="Prediction" component={Prediction}/>*/}
+            {/* <Route path="runtime" name="Runtime" component={Runtime}/>*/}
         </Route>
     </Router>
 );

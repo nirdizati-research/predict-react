@@ -83,7 +83,12 @@ const HyperOpt = (props) => {
     />;
   };
 
-  return [helpText, hyperparameterOptmizer, optimizerAlgorithm, maxEvals, makeMetric(props.predictionMethod, props.onChange)];
+  return [
+      helpText,
+      hyperparameterOptmizer,
+      optimizerAlgorithm,
+      maxEvals,
+      makeMetric(props.predictionMethod, props.onChange)];
 };
 
 HyperOpt.propTypes = {

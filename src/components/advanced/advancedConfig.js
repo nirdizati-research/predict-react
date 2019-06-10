@@ -15,13 +15,16 @@ export const maxFeaturesRandomForest = [
     {
         value: 'auto',
         label: 'auto'
-    },{
+    },
+    {
         value: 'sqrt',
         label: 'sqrt'
-    },{
+    },
+    {
         value: 'log2',
         label: 'log2'
-    },{
+    },
+    {
         value: null,
         label: 'none'
     },

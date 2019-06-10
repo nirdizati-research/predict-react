@@ -28,15 +28,15 @@ const classMap = (jobs) => {
     const precision = job.config.evaluation.precision || 0;
     const auc = job.config.evaluation.auc || 0;
     const acc = job.config.evaluation.accuracy || 0;
-    const f1_score = job.config.evaluation.f1_score || 0;
-    const prefix_length = job.config.encoding.prefix_length + '';
+    const f1Score = job.config.evaluation.f1_score || 0;
+    const prefixLength = job.config.encoding.prefix_length + '';
     const truePositive = job.config.evaluation.true_positive || 0;
     const trueNegative = job.config.evaluation.true_negative || 0;
     const falsePositive = job.config.evaluation.false_positive || 0;
     const falseNegative = job.config.evaluation.false_negative || 0;
-    const elapsed_time = job.config.evaluation.elapsed_time || 0;
-    return [job.id + '', toRun(job), f1_score, auc, acc, prefix_length, precision, recall,
-      truePositive, trueNegative, falsePositive, falseNegative, elapsed_time];
+    const elapsedTime = job.config.evaluation.elapsed_time || 0;
+    return [job.id + '', toRun(job), f1Score, auc, acc, prefixLength, precision, recall,
+      truePositive, trueNegative, falsePositive, falseNegative, elapsedTime];
   });
 };
 

@@ -243,7 +243,8 @@ class TrainingFormCard extends Component {
         }
         this.setState({
             predictionMethod: value, labelling: {...this.state.labelling, type: labelType},
-            hyperparameter_optimizer: {...this.state.hyperparameter_optimizer, performance_metric}, ...initialAdvancedConfiguration()
+            hyperparameter_optimizer: {
+                ...this.state.hyperparameter_optimizer, performance_metric}, ...initialAdvancedConfiguration()
         });
         this.setState((prevState, ) => {
             return {displayWarning: TrainingFormCard.displayWarningCheck(prevState)};
