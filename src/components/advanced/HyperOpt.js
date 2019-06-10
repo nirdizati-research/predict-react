@@ -4,6 +4,7 @@ import {TextField} from 'react-md/lib/index';
 import {CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION} from '../../reference';
 import {
     classificationMetrics,
+    hyperparameterOptimizerAlgorithms,
     hyperparameterOptmizerLabels,
     regressionMetrics,
     timeSeriesPredictionMetrics
@@ -33,6 +34,18 @@ const HyperOpt = (props) => {
     defaultValue={hyperparameterOptmizerLabels[0].value}
     position={SelectField.Positions.BELOW}
     onChange={props.onChange.bind(this, {methodConfig, key: 'type'})}
+    required
+  />;
+
+  const optimizerAlgorithm = <SelectField
+    key="type"
+    id="type"
+    label="Optmizer Algorithm"
+    className="md-cell md-cell--3"
+    menuItems={hyperparameterOptimizerAlgorithms}
+    defaultValue={hyperparameterOptimizerAlgorithms[0].value}
+    position={SelectField.Positions.BELOW}
+    onChange={props.onChange.bind(this, {methodConfig, key: 'algorithm_type'})}
     required
   />;
 
@@ -70,7 +83,7 @@ const HyperOpt = (props) => {
     />;
   };
 
-  return [helpText, hyperparameterOptmizer, maxEvals, makeMetric(props.predictionMethod, props.onChange)];
+  return [helpText, hyperparameterOptmizer, optimizerAlgorithm, maxEvals, makeMetric(props.predictionMethod, props.onChange)];
 };
 
 HyperOpt.propTypes = {

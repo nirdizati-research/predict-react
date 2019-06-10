@@ -27,7 +27,8 @@ class Validation extends Component {
     this.props.onSplitChange(splitId);
   }
 
-  componentWillReceiveProps(_) {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps(_) {
     if (this.props.predictionMethod === LABELLING) {
       this.props.onMethodChange(REGRESSION);
     }

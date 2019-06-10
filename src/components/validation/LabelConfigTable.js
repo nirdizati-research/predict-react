@@ -44,8 +44,8 @@ class LabelConfigTable extends PureComponent {
             <TableColumn style={columnStyle}>{job.labelling.attribute_name}</TableColumn>
             <TableColumn style={columnStyle} numeric>{job.encoding.prefix_length}</TableColumn>
             <TableColumn style={columnStyle} numeric>{job.encoding.padding}</TableColumn>
-            <TableColumn style={columnStyle} numeric>{job.encoding.generation_type}</TableColumn>
-            <TableColumn style={columnStyle} grow><JsonHolder data={job.result}/></TableColumn>
+            <TableColumn style={columnStyle} numeric>{job.encoding.value_encoding}</TableColumn>
+            <TableColumn style={columnStyle} grow><JsonHolder data={job.labelling.results}/></TableColumn>
           </TableRow>
         ))}
       </TableBody>

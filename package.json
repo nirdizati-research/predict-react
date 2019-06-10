@@ -18,10 +18,11 @@
     "react-scripts": "^2.1.5"
   },
   "dependencies": {
-    "node-sass": "^4.10.0",
+    "node-sass": "^4.12.0",
     "prop-types": "^15.6.0",
     "react": "16.3.2",
     "react-dom": "16.3.3",
+    "react-html-parser": "^1.0.3",
     "react-google-charts": "^2.0.29",
     "react-json-tree": "^0.11.0",
     "react-md": "^1.2.9",
@@ -31,6 +32,7 @@
     "react-router-redux": "^4.0.8",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
+    "viz.js": "^1.8.0",
     "webfontloader": "^1.6.27",
     "webpack": "4.28.3"
   },

@@ -68,6 +68,7 @@ const initialState = (props) => {
             padding: paddingControls[0].value,
             generation_type: prefixTypeControls[0].value,
             prefix_length: defaultPrefix,
+            features: []
         },
         labelling: {
             type: labelType,
@@ -88,6 +89,7 @@ const initialState = (props) => {
         kmeans: {},
         hyperparameter_optimizer: {
             type: 'none',
+            algorithm_type: 'tpe',
             max_evaluations: 10,
             performance_metric: 'rmse'
         },

@@ -55,6 +55,8 @@ const Labelling = (props) => {
                 return classLabelControls;
             case TIME_SERIES_PREDICTION:
                 return timeSeriesPredLabelControls;
+            default:
+                return classLabelControls;
         }
     };
 
@@ -120,6 +122,11 @@ const Labelling = (props) => {
             value={labelling.attribute_name}
         />;
     };
+    attributeSelector.propTypes = {
+        onChange: PropTypes.func.isRequired,
+        labelling: PropTypes.shape(labelPropType).isRequired,
+        traceAttributes: PropTypes.arrayOf(PropTypes.shape(traceAttributeShape)).isRequired
+    };
 
     return [helpText(), type, attributeSelector(props), ...threshold(props.labelling)];
 };
@@ -130,4 +137,5 @@ Labelling.propTypes = {
     predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION, LABELLING]).isRequired,
     traceAttributes: PropTypes.arrayOf(PropTypes.shape(traceAttributeShape)).isRequired
 };
+
 export default Labelling;

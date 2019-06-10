@@ -73,7 +73,7 @@ class Labelling extends Component {
             const a = job ? job.id : '';
             const prefix = job ? job.config.encoding.prefix_length : '';
             return <div className="md-cell md-cell--4">
-                <BarChartCard data={job ? job.result : {}}
+                <BarChartCard data={job ? job.config.labelling.results : {}}
                               cardTitle={`Labels for task ${a}, prefix length ${prefix}`}
                               hTitle="Label count"
                               chartTitle="Label"/></div>;

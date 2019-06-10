@@ -24,11 +24,11 @@ const filterModels = (modelstmp, plength, method) => {
 
 const mergeIncomingModels = (incoming, existing) => {
     // From https://stackoverflow.com/a/34963663
-    const a3 = existing.concat(incoming).reduce((acc, x) => {
+    const mergedIncoming = existing.concat(incoming).reduce((acc, x) => {
         acc[x.id] = Object.assign(acc[x.id] || {}, x);
         return acc;
     }, {});
-    return Object.keys(a3).map((key) => a3[key]);
+    return Object.keys(mergedIncoming).map((key) => mergedIncoming[key]);
 };
 
 const models = (state = initialState, action) => {
@@ -42,9 +42,12 @@ const models = (state = initialState, action) => {
 
         case MODELS_RETRIEVED: {
             const models = mergeIncomingModels(action.payload, state.models);
-            const regressionModels = models.filter((model) => (model.type === REGRESSION));
-            const classificationModels = models.filter((model) => (model.type === CLASSIFICATION));
-            const timeSeriesPredictionModels = models.filter((model) => (model.type === TIME_SERIES_PREDICTION));
+            const regressionModels = models.filter((model) => (
+                model.config.predictive_model['predictive_model'] === REGRESSION));
+            const classificationModels = models.filter((model) => (
+                model.config.predictive_model['predictive_model'] === CLASSIFICATION));
+            const timeSeriesPredictionModels = models.filter((model) => (
+                model.config.predictive_model['predictive_model'] === TIME_SERIES_PREDICTION));
             return {
                 ...state,
                 fetchState: {inFlight: false},

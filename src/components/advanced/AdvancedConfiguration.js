@@ -17,7 +17,8 @@ import {
     RNN,
     SGDCLASSIFIER,
     TIME_SERIES_PREDICTION,
-    XGBOOST
+    XGBOOST,
+    INCREMENTAL_CLASSIFIERS
 } from '../../reference';
 
 import PropTypes from 'prop-types';
@@ -161,9 +162,10 @@ const AdvancedConfiguration = (props) => {
       <Labelling onChange={props.onChange} label={props.labelling}
                  predictionMethod={props.predictionMethod} {...props}/>, true);
 
+
   const incremental = () => {
     if (props.classification.concat(props.regression)
-        .some(element => element.includes(['incremental']))) {
+        .some(element => INCREMENTAL_CLASSIFIERS.includes(element))) {
       return [makeExpander('Increments', '',
           <Incremental onChange={props.onChange}
                        classificationModels={props.classificationModels}

@@ -18,15 +18,17 @@ import SelectField from 'react-md/lib/SelectFields/index';
 /* eslint-disable no-invalid-this */
 const methodConfig = LABELLING;
 const LabelControls = (props) => {
-    let temp;
-    if (props.predictionMethod === REGRESSION) {
-        temp = regLabelControls;
-    } else if (props.predictionMethod === CLASSIFICATION) {
-        temp = classLabelControls;
-    } else if (props.predictionMethod === TIME_SERIES_PREDICTION) {
-        temp = timeSeriesPredLabelControls;
-    }
-    const controls = () => temp;
+    const controls = () => {
+        if (props.predictionMethod === REGRESSION) {
+            return regLabelControls;
+        } else if (props.predictionMethod === CLASSIFICATION) {
+            return classLabelControls;
+        } else if (props.predictionMethod === TIME_SERIES_PREDICTION) {
+             return timeSeriesPredLabelControls;
+        } else {
+            return classLabelControls;
+        }
+    };
 
     const labelType = <SelectField
     key="type"
