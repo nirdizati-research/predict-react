@@ -49,18 +49,23 @@ export const fetchStatePropType = PropTypes.shape({
     error: PropTypes.any
 }).isRequired;
 
+export const splitPropType = PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    type: PropTypes.oneOf(['single', 'double']).isRequired,
+    originalLogName: PropTypes.string,
+    trainingLogName: PropTypes.string,
+    testLogName: PropTypes.string,
+    original_log: PropTypes.number,
+    training_log: PropTypes.number,
+    test_log: PropTypes.number,
+    config: PropTypes.object.isRequired,
+});
+
 export const encodingPropType = {
     method: PropTypes.oneOf([SIMPLE_INDEX, BOOLEAN, FREQUENCY, COMPLEX, LAST_PAYLOAD]),
     padding: PropTypes.oneOf([ZERO_PADDING, NO_PADDING]).isRequired,
     generation_type: PropTypes.oneOf([UP_TO, ONLY_THIS, ALL_IN_ONE]).isRequired,
-    prefix_length: PropTypes.number.isRequired
-};
-
-export const labelPropType = {
-    type: PropTypes.oneOf([NEXT_ACTIVITY, REMAINING_TIME, ATTRIBUTE_NUMBER, ATTRIBUTE_STRING, DURATION]).isRequired,
-    attribute_name: PropTypes.string,
-    threshold_type: PropTypes.oneOf([THRESHOLD_MEAN, THRESHOLD_CUSTOM]).isRequired,
-    threshold: PropTypes.number.isRequired,
+    prefix_length: PropTypes.number.isRequired,
     add_remaining_time: PropTypes.bool.isRequired,
     add_elapsed_time: PropTypes.bool.isRequired,
     add_executed_events: PropTypes.bool.isRequired,
@@ -68,10 +73,17 @@ export const labelPropType = {
     add_new_traces: PropTypes.bool.isRequired,
 };
 
+export const labelPropType = {
+    type: PropTypes.oneOf([NEXT_ACTIVITY, REMAINING_TIME, ATTRIBUTE_NUMBER, ATTRIBUTE_STRING, DURATION]).isRequired,
+    attribute_name: PropTypes.string,
+    threshold_type: PropTypes.oneOf([THRESHOLD_MEAN, THRESHOLD_CUSTOM]).isRequired,
+    threshold: PropTypes.number.isRequired
+};
+
 export const jobPropType = PropTypes.shape({
     id: PropTypes.number.isRequired,
     status: PropTypes.string.isRequired,
-    split_id: PropTypes.number.isRequired,
+    split: PropTypes.objectOf(splitPropType).isRequired,
     splitName: PropTypes.string,
     type: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION, LABELLING]).isRequired,
     config: PropTypes.shape({
@@ -105,7 +117,7 @@ export const jobPropType = PropTypes.shape({
 export const jobRunPropType = PropTypes.shape({
     id: PropTypes.number.isRequired,
     status: PropTypes.string.isRequired,
-    split_id: PropTypes.number.isRequired,
+    split: PropTypes.objectOf(splitPropType).isRequired,
     splitName: PropTypes.string,
     type: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION]).isRequired,
     config: PropTypes.shape({
@@ -160,7 +172,7 @@ export const logPropType = PropTypes.shape({
 
 export const modelPropType = PropTypes.shape({
     id: PropTypes.number.isRequired,
-    split: PropTypes.any.isRequired,
+    split: PropTypes.objectOf(splitPropType).isRequired,
     config: PropTypes.shape({
         hyperopt: PropTypes.shape(hyperOptShape),
         labelling: PropTypes.shape(labelPropType).isRequired,
@@ -187,18 +199,6 @@ export const tracePropType = PropTypes.shape({
     class_actual: PropTypes.any,
     timeSeriesPred_actual: PropTypes.any,
     duration: PropTypes.number.isRequired
-});
-
-export const splitPropType = PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    type: PropTypes.oneOf(['single', 'double']).isRequired,
-    originalLogName: PropTypes.string,
-    trainingLogName: PropTypes.string,
-    testLogName: PropTypes.string,
-    original_log: PropTypes.number,
-    training_log: PropTypes.number,
-    test_log: PropTypes.number,
-    config: PropTypes.object.isRequired,
 });
 
 export const logsStore = PropTypes.shape({

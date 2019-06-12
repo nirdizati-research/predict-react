@@ -51,9 +51,8 @@ export const jobToValidationTable = (job) => {
 };
 
 export const toRun = (job) => {
-    return `${job.config.predictive_model.prediction_method}_
-            ${job.config.encoding.value_encoding}_
-            ${job.config.clustering.clustering_method}`;
+    return `${job.config.predictive_model.prediction_method}_` +
+        `${job.config.encoding.value_encoding}_${job.config.clustering.clustering_method}`;
 };
 
 const toLineObject = (job, metricName) => {

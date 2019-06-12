@@ -38,8 +38,8 @@ const HyperOpt = (props) => {
   />;
 
   const optimizerAlgorithm = <SelectField
-    key="type"
-    id="type"
+    key="algorithm_type"
+    id="algorithm_type"
     label="Optmizer Algorithm"
     className="md-cell md-cell--3"
     menuItems={hyperparameterOptimizerAlgorithms}

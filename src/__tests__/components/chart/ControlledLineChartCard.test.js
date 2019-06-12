@@ -30,8 +30,8 @@ it('when updating', () => {
   const upEl = shallow(<ControlledLineChartCard predictionMethod={REGRESSION} jobs={regJobs}/>);
   upEl.setProps({predictionMethod: CLASSIFICATION, jobs: classJobs});
 
-  expect(upEl.find(SelectField).props().menuItems.length).toBe(9);
-  expect(upEl.find(SelectField).props().value).toBe('f1score');
+  expect(upEl.find(SelectField).props().menuItems.length).toBe(10);
+  expect(upEl.find(SelectField).props().value).toBe('accuracy');
 
   const chartProps = element.find(Chart).props();
   expect(chartProps.rows.length).toBe(3);

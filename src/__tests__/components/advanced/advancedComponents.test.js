@@ -22,11 +22,12 @@ import RegressionRandomForest from '../../../components/advanced/regression/Regr
 import Labelling from '../../../components/advanced/Labelling';
 import RegressionXGBoost from '../../../components/advanced/regression/RegressionXGBoost';
 import ClassificationXGBoost from '../../../components/advanced/classification/ClassificationXGBoost';
+import {encoding1} from '../validation/ConfigTable.test';
 
 const onChange = jest.fn();
 
 it('AddColumns has 5 checkboxes', () => {
-  const element = shallow(<AddColumns label={label1} onChange={onChange}/>);
+  const element = shallow(<AddColumns label={label1} encoding={encoding1} onChange={onChange}/>);
   expect(element.find(Checkbox).length).toBe(5);
 });
 
@@ -43,14 +44,13 @@ it('ClassificationKnn', () => {
 
 it('ClassificationRandomForest', () => {
   const element = shallow(<ClassificationRandomForest onChange={onChange}/>);
-  expect(element.find(TextField).length).toBe(3);
+  expect(element.find(TextField).length).toBe(2);
 });
 
 it('HyperOpt', () => {
   const element = shallow(<HyperOpt predictionMethod={CLASSIFICATION} onChange={onChange}/>);
   expect(element.find(TextField).length).toBe(1);
-  expect(element.find(SelectField).length).toBe(1);
-  expect(element.find(Checkbox).length).toBe(1);
+  expect(element.find(SelectField).length).toBe(3);
 });
 
 it('Kmeans', () => {
@@ -72,7 +72,7 @@ it('RegressionLasso', () => {
 
 it('RegressionRandomForest', () => {
   const element = shallow(<RegressionRandomForest onChange={onChange}/>);
-  expect(element.find(TextField).length).toBe(3);
+  expect(element.find(TextField).length).toBe(2);
 });
 
 it('RegressionXGBoost', () => {

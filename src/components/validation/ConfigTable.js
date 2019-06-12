@@ -45,7 +45,7 @@ class ConfigTable extends PureComponent {
             <TableRow key={job.id}>
               <TableColumn style={columnStyle}>{job.id}</TableColumn>
               <TableColumn style={columnStyle}>{job.type}</TableColumn>
-              <TableColumn style={columnStyle}>{job.encodingMethod}</TableColumn>
+              <TableColumn style={columnStyle}>{job.encoding.method}</TableColumn>
               <TableColumn style={columnStyle}>{job.clustering}</TableColumn>
               <TableColumn style={columnStyle}>{job.method}</TableColumn>
               <TableColumn style={columnStyle} numeric>{job.prefix_length}</TableColumn>

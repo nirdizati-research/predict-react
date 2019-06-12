@@ -21,11 +21,6 @@ const label = {
   attribute_name: '',
   threshold_type: THRESHOLD_MEAN,
   threshold: 0,
-  add_remaining_time: false,
-  add_elapsed_time: false,
-  add_executed_events: false,
-  add_resources_used: false,
-  add_new_traces: false,
 };
 const regressionPayload = {
   'type': 'regression',
@@ -37,6 +32,12 @@ const regressionPayload = {
       'padding': 'no_padding',
       'prefix_length': 1,
       'generation_type': 'only',
+      'add_remaining_time': false,
+      'add_elapsed_time': false,
+      'add_executed_events': false,
+      'add_resources_used': false,
+      'add_new_traces': false,
+      'features': [],
     },
     'create_models': false,
     'methods': ['linear'],
@@ -44,19 +45,20 @@ const regressionPayload = {
     'incremental_train': {
       'base_model': null,
     },
-    'hyperopt': {
-      'use_hyperopt': false,
-      'max_evals': 10,
-      'performance_metric': 'rmse'
+    'hyperparameter_optimizer': {
+      'algorithm_type': 'tpe',
+      'max_evaluations': 10,
+      'performance_metric': 'rmse',
+      'type': 'none',
     },
       'labelling': label,
     'classification.decisionTree': {},
     'classification.knn': {},
     'classification.randomForest': {},
-    'classification.HAT': {},
-    'classification.HoeffdingTree': {},
-    'classification.MultinomialNB': {},
-    'classification.Perceptron': {},
+    'classification.adaptiveTree': {},
+    'classification.hoeffdingTree': {},
+    'classification.multinomialNB': {},
+    'classification.perceptron': {},
     'classification.SGDClassifier': {},
     'classification.xgboost': {},
     'classification.nn': {},
@@ -73,17 +75,21 @@ const regressionPayload = {
 const labelPayload = {
   'config': {
       'labelling': {
-      'add_elapsed_time': false,
-      'add_executed_events': false,
-      'add_new_traces': false,
-      'add_remaining_time': false,
-      'add_resources_used': false,
       'attribute_name': '',
       'threshold': 0,
       'threshold_type': 'threshold_mean',
       'type': 'duration'
     },
-    'encoding': {'padding': 'no_padding', 'prefix_length': 1, 'generation_type': 'only'}
+    'encoding': {
+      'padding': 'no_padding',
+      'prefix_length': 1,
+      'generation_type': 'only',
+      'add_remaining_time': false,
+      'add_elapsed_time': false,
+      'add_executed_events': false,
+      'add_resources_used': false,
+      'add_new_traces': false,
+      'features': []}
   },
   'split_id': 1,
   'type': 'labelling'

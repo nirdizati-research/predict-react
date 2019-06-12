@@ -7,6 +7,7 @@ import React from 'react';
 export const CLASSIFICATION = 'classification';
 export const REGRESSION = 'regression';
 export const LABELLING = 'labelling';
+export const ENCODING = 'encoding';
 export const TIME_SERIES_PREDICTION = 'timeSeriesPrediction';
 
 export const SPLIT_SINGLE = 'single';

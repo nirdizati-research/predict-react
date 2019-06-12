@@ -68,18 +68,18 @@ const initialState = (props) => {
             padding: paddingControls[0].value,
             generation_type: prefixTypeControls[0].value,
             prefix_length: defaultPrefix,
-            features: []
-        },
-        labelling: {
-            type: labelType,
-            attribute_name: '',
-            threshold_type: THRESHOLD_MEAN,
-            threshold: 0,
+            features: [],
             add_remaining_time: false,
             add_elapsed_time: false,
             add_executed_events: false,
             add_resources_used: false,
             add_new_traces: false,
+        },
+        labelling: {
+            type: labelType,
+            attribute_name: '',
+            threshold_type: THRESHOLD_MEAN,
+            threshold: 0
         },
         incremental_train: {
             base_model: null
@@ -395,6 +395,7 @@ class TrainingFormCard extends Component {
                                    regression={this.state.regression}
                                    timeSeriesPrediction={this.state.timeSeriesPrediction}
                                    onChange={this.advanceConfigChange.bind(this)}
+                                   encoding={this.state.encoding}
                                    labelling={this.state.labelling}
                                    traceAttributes={this.props.traceAttributes}
                                    clusterings={this.state.clusterings}

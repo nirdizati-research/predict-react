@@ -3,19 +3,24 @@
  */
 import React from 'react';
 import {storiesOf} from '@storybook/react';
-import {label1} from './Advanced';
 import PrefixLineChart from '../src/components/chart/PrefixLineChart';
 import LineChartCard from '../src/components/chart/LineChartCard';
 import BarChartCard from '../src/components/chart/BarChartCard';
 import BubbleChartCard from '../src/components/chart/BubbleChartCard';
 import {getChartHeader} from '../src/components/validation/ColumnHelper';
-import {CLASSIFICATION, REGRESSION} from '../src/reference';
+import {
+    CLASSIFICATION,
+    LABELLING,
+    REGRESSION,
+    REMAINING_TIME,
+    THRESHOLD_MEAN
+} from '../src/reference';
 
 
 const encoding1 = {
     'method': 'simpleIndex',
     'prefix_length': 1,
-    'padding': 'zero_padding',
+    'padding': true,
     'generation_type': 'only'
 };
 
@@ -104,73 +109,155 @@ const someColumns = [
     }
 ];
 
+
 export const labelJobs = [
     {
+        'config': {
+            'clustering': null,
+            'encoding': {
+                'value_encoding': 'simpleIndex',
+                'prefix_length': 1,
+                'padding': true,
+                'generation_type': 'only'
+            },
+            'evaluation': null,
+            'hyperparameter_optimizer': null,
+            'incremental_train': null,
+            'labelling': {
+                'type': REMAINING_TIME,
+                'attribute_name': null,
+                'threshold_type': THRESHOLD_MEAN,
+                'threshold': 0,
+                'results': {
+                    'rmse': 221, 'mae': 193
+                }
+            },
+            'predictive_model': null,
+            'split': {
+                'id': 1,
+                'original_log_path': 'cache/log_cache/80-100_15597426103830981.xes',
+                'splitting_method': 'strict_temporal',
+                'test_size': 0.2,
+                'type': 'single'
+            }
+        },
+        'created_date': '2017-11-14T20:52:36.469000Z',
+        'error': '',
         'id': 4,
-        'split_id': 1,
-        'created_date': '2017-11-14T20:52:36.469000Z',
         'modified_date': '2017-12-05T14:57:28.344216Z',
         'status': 'completed',
-        'config': {
-            'encoding': encoding1,
-            'labelling': label1
-        },
-        'result': {'rmse': 221, 'mae': 193},
-        'type': 'labelling',
+        'type': LABELLING
     },
     {
-        'id': 5,
-        'split_id': 1,
-        'created_date': '2017-11-14T20:52:36.469000Z',
-        'modified_date': '2017-12-05T14:57:28.344216Z',
-        'status': 'completed',
         'config': {
+            'clustering': null,
             'encoding': {
-                'method': 'simpleIndex',
-                'prefix_length': 4,
-                'padding': 'no_padding',
-                'generation_type': 'only'
-            },
-            'labelling': label1
-        },
-        'result': {'rmse': 201, 'mae': 165, 'third': 34},
-        'type': 'labelling',
-    },
-    {
-        'id': 6,
-        'split_id': 1,
-        'created_date': '2017-11-14T20:52:36.469000Z',
-        'modified_date': '2017-12-05T14:57:28.344216Z',
-        'status': 'completed',
-        'config': {
-            'encoding': {
-                'method': 'simpleIndex',
+                'value_encoding': 'simpleIndex',
                 'prefix_length': 3,
-                'padding': 'no_padding',
+                'padding': true,
                 'generation_type': 'only'
             },
-            'labelling': label1
+            'evaluation': null,
+            'hyperparameter_optimizer': null,
+            'incremental_train': null,
+            'labelling': {
+                'type': REMAINING_TIME,
+                'attribute_name': null,
+                'threshold_type': THRESHOLD_MEAN,
+                'threshold': 0,
+                'results': {
+                    'rmse': 191, 'mae': 138, '0': 23
+                }
+            },
+            'predictive_model': null,
+            'split': {
+                'id': 1,
+                'original_log_path': 'cache/log_cache/80-100_15597426103830981.xes',
+                'splitting_method': 'strict_temporal',
+                'test_size': 0.2,
+                'type': 'single'
+            }
         },
-        'result': {'rmse': 191, 'mae': 138, '0': 23},
-        'type': 'labelling',
-    },
-    {
-        'id': 7,
-        'split_id': 1,
         'created_date': '2017-11-14T20:52:36.469000Z',
+        'error': '',
+        'id': 5,
         'modified_date': '2017-12-05T14:57:28.344216Z',
         'status': 'completed',
+        'type': LABELLING
+    },
+    {
         'config': {
+            'clustering': null,
             'encoding': {
-                'method': 'simpleIndex',
-                'prefix_length': 5,
-                'padding': 'no_padding',
+                'value_encoding': 'simpleIndex',
+                'prefix_length': 4,
+                'padding': true,
                 'generation_type': 'only'
             },
-            'labelling': label1
+            'evaluation': null,
+            'hyperparameter_optimizer': null,
+            'incremental_train': null,
+            'labelling': {
+                'type': REMAINING_TIME,
+                'attribute_name': null,
+                'threshold_type': THRESHOLD_MEAN,
+                'threshold': 0,
+                'results': {
+                    'rmse': 201, 'mae': 165, 'third': 34
+                }
+            },
+            'predictive_model': null,
+            'split': {
+                'id': 1,
+                'original_log_path': 'cache/log_cache/80-100_15597426103830981.xes',
+                'splitting_method': 'strict_temporal',
+                'test_size': 0.2,
+                'type': 'single'
+            }
         },
-        'result': {'rmse': 171, 'mae': 128},
-        'type': 'labelling',
+        'created_date': '2017-11-14T20:52:36.469000Z',
+        'error': '',
+        'id': 6,
+        'modified_date': '2017-12-05T14:57:28.344216Z',
+        'status': 'completed',
+        'type': LABELLING
+    },
+    {
+        'config': {
+            'clustering': null,
+            'encoding': {
+                'value_encoding': 'simpleIndex',
+                'prefix_length': 5,
+                'padding': true,
+                'generation_type': 'only'
+            },
+            'evaluation': null,
+            'hyperparameter_optimizer': null,
+            'incremental_train': null,
+            'labelling': {
+                'type': REMAINING_TIME,
+                'attribute_name': null,
+                'threshold_type': THRESHOLD_MEAN,
+                'threshold': 0,
+                'results': {
+                    'rmse': 171, 'mae': 128
+                }
+            },
+            'predictive_model': null,
+            'split': {
+                'id': 1,
+                'original_log_path': 'cache/log_cache/80-100_15597426103830981.xes',
+                'splitting_method': 'strict_temporal',
+                'test_size': 0.2,
+                'type': 'single'
+            }
+        },
+        'created_date': '2017-11-14T20:52:36.469000Z',
+        'error': '',
+        'id': 7,
+        'modified_date': '2017-12-05T14:57:28.344216Z',
+        'status': 'completed',
+        'type': LABELLING
     }
 ];
 

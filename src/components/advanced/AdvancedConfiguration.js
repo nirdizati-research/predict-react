@@ -22,7 +22,7 @@ import {
 } from '../../reference';
 
 import PropTypes from 'prop-types';
-import {labelPropType, modelPropType, traceAttributeShape} from '../../propTypes';
+import {encodingPropType, labelPropType, modelPropType, traceAttributeShape} from '../../propTypes';
 import {ExpansionList} from 'react-md';
 import GenericConfiguration from './GenericConfiguration';
 
@@ -148,7 +148,7 @@ const AdvancedConfiguration = (props) => {
     <HyperOpt onChange={props.onChange} predictionMethod={props.predictionMethod} {...props}/>));
 
   const addColumns = () => (makeExpander('Temporal and intercase features', '',
-      <AddColumns onChange={props.onChange} label={props.labelling} {...props}/>));
+      <AddColumns onChange={props.onChange} label={props.labelling} encoding={props.encoding} {...props}/>));
 
   const kmeans = () => {
     if (props.clusterings.includes(KMEANS)) {
@@ -206,6 +206,7 @@ AdvancedConfiguration.propTypes = {
     clusterings: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
     onChange: PropTypes.func.isRequired,
     labelling: PropTypes.shape(labelPropType).isRequired,
+    encoding: PropTypes.shape(encodingPropType).isRequired,
     predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION, LABELLING]).isRequired,
     classificationModels: PropTypes.arrayOf(modelPropType).isRequired,
     regressionModels: PropTypes.arrayOf(modelPropType).isRequired,
