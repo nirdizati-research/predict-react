@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {TextField} from 'react-md/lib/index';
 import SelectField from 'react-md/lib/SelectFields/index';
-import {classificationKnnWeights} from './advancedConfig';
+import {classificationKnnWeights} from '../advancedConfig';
+import {CLASSIFICATION, KNN} from '../../../reference';
 
 const defaults = {
   n_neighbors: 10,
@@ -10,7 +11,7 @@ const defaults = {
 };
 /* eslint-disable no-invalid-this */
 const ClassificationKnn = (props) => {
-  const methodConfig = `classification.knn`;
+  const methodConfig = `${CLASSIFICATION}.${KNN}`;
 
   const weights = <SelectField
     key="weights"

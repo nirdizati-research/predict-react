@@ -8,11 +8,11 @@ import models from './Models';
 import traces from './Traces';
 
 export default combineReducers({
-  routing: routerReducer,
-  jobs,
-  logs,
-  models,
-  training,
-  splits,
-  traces
+    routing: routerReducer,
+    jobs,
+    logs,
+    models,
+    training,
+    splits,
+    traces
 });

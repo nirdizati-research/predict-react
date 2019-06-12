@@ -33,7 +33,7 @@ class RuntimeTable extends PureComponent {
   getHeaderColumns() {
     const headers =
       ['Trace Name', 'Completed', 'Events Elapsed', 'Start Time', 'Latest event time',
-       'Regression Prediction', 'Classification Prediction'];
+          'Regression Prediction', 'Classification Prediction', 'Time Series Prediction Prediction'];
 
     return headers.map((header) => {
         return <TableColumn key={header}> {header}</TableColumn>;
@@ -49,7 +49,7 @@ class RuntimeTable extends PureComponent {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {this.state.slicedData.map(
+          {this.state.slicedData.map( // TODO: update to use timeSeriesPrediction
           ({id, name, completed, n_events, first_event, last_event, reg_results, class_results, class_actual, duration, inter_result}) => (
             <TableRow key={id} selectable={false}>
               <TableColumn>{name}</TableColumn>

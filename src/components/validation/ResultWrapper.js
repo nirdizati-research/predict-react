@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import {CLASSIFICATION, REGRESSION} from '../../reference';
+import {CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION} from '../../reference';
 import ResultTableCard from './ResultTableCard';
 import {getChartHeader, getPrefixChartHeader, getTitles} from './ColumnHelper';
 import BubbleChartCard from '../chart/BubbleChartCard';
@@ -12,22 +12,38 @@ import ControlledLineChartCard from '../chart/ControlledLineChartCard';
 import {toRun} from '../../util/dataReducers';
 
 const regressionMap = (jobs) => {
-  return jobs.map((job) => [job.id + '', toRun(job),
-    job.result.mae, job.result.rmse, job.result.mape, job.config.encoding.prefix_length + '', job.result.rscore]);
+  return jobs.map((job) => [
+      job.id + '',
+      toRun(job),
+      job.config.evaluation.mae,
+      job.config.evaluation.rmse,
+      job.config.evaluation.mape,
+      job.config.encoding.prefix_length + '',
+      job.config.evaluation.rscore]);
 };
 
 const classMap = (jobs) => {
   return jobs.map((job) => {
-    const recall = job.result.recall || 0;
-    const precision = job.result.precision || 0;
-    const truePositive = job.result.true_positive || 0;
-    const trueNegative = job.result.true_negative || 0;
-    const falsePositive = job.result.false_positive || 0;
-    const falseNegative = job.result.false_negative || 0;
-    return [job.id + '', toRun(job), job.result.f1score, job.result.auc, job.result.acc,
-      job.config.encoding.prefix_length + '', precision, recall,
-      truePositive, trueNegative, falsePositive, falseNegative];
+    const recall = job.config.evaluation.recall || 0;
+    const precision = job.config.evaluation.precision || 0;
+    const auc = job.config.evaluation.auc || 0;
+    const acc = job.config.evaluation.accuracy || 0;
+    const f1Score = job.config.evaluation.f1_score || 0;
+    const prefixLength = job.config.encoding.prefix_length + '';
+    const truePositive = job.config.evaluation.true_positive || 0;
+    const trueNegative = job.config.evaluation.true_negative || 0;
+    const falsePositive = job.config.evaluation.false_positive || 0;
+    const falseNegative = job.config.evaluation.false_negative || 0;
+    const elapsedTime = job.config.evaluation.elapsed_time || 0;
+    return [job.id + '', toRun(job), f1Score, auc, acc, prefixLength, precision, recall,
+      truePositive, trueNegative, falsePositive, falseNegative, elapsedTime];
   });
+};
+
+const timeSeriesPredMap = (jobs) => {
+    return jobs.map((job) => {
+        return [job.id + '', toRun(job), job.config.evaluation.nlevenshtein, job.config.encoding.prefix_length];
+    });
 };
 
 const prepareData = (jobs, predictionMethod) => {
@@ -36,6 +52,8 @@ const prepareData = (jobs, predictionMethod) => {
       return regressionMap(jobs);
     case CLASSIFICATION:
       return classMap(jobs);
+      case TIME_SERIES_PREDICTION:
+          return timeSeriesPredMap(jobs);
     default:
       return [];
   }
@@ -99,6 +117,7 @@ const getCharts = (data, predictionMethod) => {
 
 const ResultWrapper = (props) => {
   const tableData = prepareData(props.jobs, props.predictionMethod);
+    // console.log(tableData);
   let charts = [];
   let prefixChart;
   if (tableData.length > 0) {
@@ -114,7 +133,7 @@ const ResultWrapper = (props) => {
 
 ResultWrapper.propTypes = {
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
-  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION]).isRequired,
+    predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION]).isRequired,
 };
 
 export default ResultWrapper;

@@ -8,7 +8,7 @@ import FetchState from '../FetchState';
 import SelectField from 'react-md/lib/SelectFields/index';
 import Button from 'react-md/lib/Buttons/Button';
 import {CardActions, Slider} from 'react-md';
-import {splitTypes} from '../../reference';
+import {splittingMethods} from '../../reference';
 import {fetchStatePropType, logPropType} from '../../propTypes';
 
 class SplitFormCard extends Component {
@@ -16,11 +16,9 @@ class SplitFormCard extends Component {
     super(props);
 
     this.state = {
-      original_log: 0,
-      config: {
-        split_type: splitTypes[0].value,
-        test_size: 0.2
-      }
+      original_log: 1,
+      splitting_method: splittingMethods[0].value,
+      test_size: 0.2
     };
   }
 
@@ -32,12 +30,12 @@ class SplitFormCard extends Component {
     this.setState({original_log: value});
   }
 
-  splitTypeChange(value, _) {
-    this.setState({config: {...this.state.config, split_type: value}});
+  splittingMethodChange(value, _) {
+    this.setState({splitting_method: value});
   }
 
   testSizeChange(value, _) {
-    this.setState({config: {...this.state.config, test_size: value}});
+    this.setState({test_size: value});
   }
 
   render() {
@@ -63,10 +61,10 @@ class SplitFormCard extends Component {
               id="split-type-select"
               className="md-cell md-cell--4"
               label="How to split the log"
-              menuItems={splitTypes}
+              menuItems={splittingMethods}
               position={SelectField.Positions.BELOW}
-              onChange={this.splitTypeChange.bind(this)}
-              value={this.state.config.split_type}
+              onChange={this.splittingMethodChange.bind(this)}
+              value={this.state.splitting_method}
             />
             <div className="md-cell md-cell--4">
               <Slider
@@ -75,7 +73,7 @@ class SplitFormCard extends Component {
                 min={0}
                 max={1}
                 step={0.05}
-                value={this.state.config.test_size}
+                value={this.state.test_size}
                 valuePrecision={2}
                 discrete
                 onChange={this.testSizeChange.bind(this)}

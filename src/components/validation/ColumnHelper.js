@@ -1,7 +1,7 @@
 /**
  * Created by tonis.kasekamp on 10/11/17.
  */
-import {CLASSIFICATION, REGRESSION} from '../../reference';
+import {CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION} from '../../reference';
 
 const tableColumns = [
   {
@@ -36,6 +36,7 @@ const classColumns = [
     label: 'Accuracy',
   }
 ];
+
 const classTableColumns = [
   ...tableColumns,
   {
@@ -77,6 +78,10 @@ const classTableColumns = [
   {
     type: 'number',
     label: 'False negative',
+  },
+  {
+    type: 'number',
+    label: 'Elapsed Time (s)',
   },
 ];
 
@@ -127,12 +132,41 @@ const regTableColumns = [
   },
 ];
 
+const timeSeriesPredColumns = [
+    {
+        type: 'string',
+        label: 'ID',
+    },
+    {
+        type: 'number',
+        label: 'nlevenshtein',
+    },
+    {
+        type: 'string',
+        label: 'Method',
+    },
+];
+
+const timeSeriesPredTableColumns = [
+    ...tableColumns,
+    {
+        type: 'number',
+        label: 'Nlevenshtein',
+    },
+    {
+        type: 'string',
+        label: 'Prefix length',
+    },
+];
+
 export const getChartHeader = (predictionMethod) => {
   switch (predictionMethod) {
     case REGRESSION:
       return regColumns;
     case CLASSIFICATION:
       return classColumns;
+      case TIME_SERIES_PREDICTION:
+          return timeSeriesPredColumns;
     // no default
   }
 };
@@ -143,13 +177,17 @@ export const getPrefixChartHeader = (predictionMethod) => {
       return prefixColumnsReg;
     case CLASSIFICATION:
       return prefixColumnsClass;
+      case TIME_SERIES_PREDICTION:
+          return prefixColumnsTimeSeriesPred;
     // no default
   }
 };
 
 const desc = 'Bubble chart by ';
-const regTitles = ['regression method', 'encoding method', 'clustering method'].map((elem) => desc + elem);
-const classTitles = ['classification method', 'encoding method', 'clustering method'].map((elem) => desc + elem);
+const regTitles = ['regression method', 'encoding type', 'clustering method'].map((elem) => desc + elem);
+const classTitles = ['classification method', 'encoding type', 'clustering method'].map((elem) => desc + elem);
+const timeSeriesPredTitles = ['time series prediction method', 'encoding type',
+  'clustering method'].map((elem) => desc + elem);
 
 export const getTitles = (predictionMethod) => {
   switch (predictionMethod) {
@@ -157,6 +195,8 @@ export const getTitles = (predictionMethod) => {
       return regTitles;
     case CLASSIFICATION:
       return classTitles;
+      case TIME_SERIES_PREDICTION:
+          return timeSeriesPredTitles;
     // no default
   }
 };
@@ -167,6 +207,8 @@ export const getTableHeader = (predictionMethod) => {
       return regTableColumns;
     case CLASSIFICATION:
       return classTableColumns;
+      case TIME_SERIES_PREDICTION:
+          return timeSeriesPredTableColumns;
     // no default
   }
 };
@@ -192,6 +234,21 @@ const prefixColumnsClass = [
     type: 'number',
     label: 'AUC',
   }
+];
+
+const prefixColumnsTimeSeriesPred = [
+    {
+        type: 'string',
+        label: 'id',
+    },
+    {
+        type: 'string',
+        label: 'Prefix length',
+    },
+    {
+        type: 'number',
+        label: 'Nlevenshtein',
+    },
 ];
 
 const prefixColumnsReg = [

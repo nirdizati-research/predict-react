@@ -19,7 +19,6 @@ import {
   DURATION,
   LABELLING,
   NO_CLUSTER,
-  NO_PADDING,
   ONLY_THIS,
   RANDOM_FOREST,
   REGRESSION,
@@ -32,114 +31,498 @@ import {
 
 const jobList = [
   {
+    config: {
+      clustering: {clustering_method: NO_CLUSTER},
+      encoding: {
+        add_elapsed_time: false,
+        add_executed_events: false,
+        add_new_traces: false,
+        add_remaining_time: false,
+        add_resources_used: false,
+        data_encoding: 'label_encoder',
+        features: ['prefix_1', 'prefix_2', 'label'],
+        padding: false,
+        prefix_length: 2,
+        task_generation_type: ONLY_THIS,
+        value_encoding: SIMPLE_INDEX
+      },
+      evaluation: {},
+      hyperparameter_optimizer: {},
+      incremental_train: null,
+      labelling: {
+        results: {},
+        threshold: 0,
+        threshold_type: THRESHOLD_MEAN,
+        type: DURATION
+      },
+      predictive_model: {
+        model_path: '',
+        prediction_method: RANDOM_FOREST,
+        predictive_model: CLASSIFICATION
+      },
+      split: {
+        id: 1,
+        splitting_method: 'strict_temporal',
+        test_log_path: 'cache/log_cache/80-100_1559742742743335.xes',
+        test_size: 0.2,
+        train_log_path: 'cache/log_cache/0-80_1559742738260318.xes',
+        type: 'double'
+      },
+    },
+    created_date: '2019-06-05T13:51:55.034402Z',
+    error: '',
     id: 1,
+    modified_date: '2019-06-05T13:52:24.902133Z',
     status: 'created',
-    type: CLASSIFICATION,
-    config: {
-      encoding: {method: SIMPLE_INDEX, prefix_length: 2, padding: NO_PADDING, generation_type: ONLY_THIS},
-      method: RANDOM_FOREST,
-      label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
-      clustering: NO_CLUSTER
-    },
-    split_id: 1
+    type: 'prediction'
   },
   {
+    config: {
+      clustering: {clustering_method: NO_CLUSTER},
+      encoding: {
+        add_elapsed_time: false,
+        add_executed_events: false,
+        add_new_traces: false,
+        add_remaining_time: false,
+        add_resources_used: false,
+        data_encoding: 'label_encoder',
+        features: ['prefix_1', 'prefix_2', 'label'],
+        padding: false,
+        prefix_length: 2,
+        task_generation_type: ONLY_THIS,
+        value_encoding: SIMPLE_INDEX
+      },
+      evaluation: {
+        accuracy: 0.5435,
+        auc: 0.6667,
+        elapsed_time: '0.045728',
+        f1_score: 0.5158,
+        false_negative: 18,
+        false_positive: 3,
+        precision: 0.6,
+        recall: 0.5686,
+        true_negative: 18,
+        true_positive: 7
+      },
+      hyperparameter_optimizer: {},
+      incremental_train: null,
+      labelling: {
+        results: {},
+        threshold: 0,
+        threshold_type: THRESHOLD_MEAN,
+        type: DURATION
+      },
+      predictive_model: {
+        model_path: 'cache/model_cache/job_2-split_4-predictive_model-prediction-v0.sav',
+        prediction_method: RANDOM_FOREST,
+        predictive_model: CLASSIFICATION
+      },
+      split: {
+        id: 1,
+        splitting_method: 'strict_temporal',
+        test_log_path: 'cache/log_cache/80-100_1559742742743335.xes',
+        test_size: 0.2,
+        train_log_path: 'cache/log_cache/0-80_1559742738260318.xes',
+        type: 'double'
+      },
+    },
+    created_date: '2019-06-05T13:51:55.034402Z',
+    error: '',
     id: 2,
+    modified_date: '2019-06-05T13:52:24.902133Z',
     status: 'completed',
-    type: CLASSIFICATION,
-    config: {
-      encoding: {method: SIMPLE_INDEX, prefix_length: 2, padding: NO_PADDING, generation_type: ONLY_THIS},
-      method: RANDOM_FOREST,
-      label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
-      clustering: NO_CLUSTER
-    },
-    split_id: 1
+    type: 'prediction'
   },
   {
+    config: {
+      clustering: {clustering_method: NO_CLUSTER},
+      encoding: {
+        add_elapsed_time: false,
+        add_executed_events: false,
+        add_new_traces: false,
+        add_remaining_time: false,
+        add_resources_used: false,
+        data_encoding: 'label_encoder',
+        features: ['prefix_1', 'label'],
+        padding: false,
+        prefix_length: 1,
+        task_generation_type: ONLY_THIS,
+        value_encoding: SIMPLE_INDEX
+      },
+      evaluation: {
+        accuracy: 0.5435,
+        auc: 0.6667,
+        elapsed_time: '0.045728',
+        f1_score: 0.5158,
+        false_negative: 18,
+        false_positive: 3,
+        precision: 0.6,
+        recall: 0.5686,
+        true_negative: 18,
+        true_positive: 7
+      },
+      hyperparameter_optimizer: {},
+      incremental_train: null,
+      labelling: {
+        results: {},
+        threshold: 0,
+        threshold_type: THRESHOLD_MEAN,
+        type: REMAINING_TIME
+      },
+      predictive_model: {
+        model_path: 'cache/model_cache/job_2-split_4-predictive_model-prediction-v0.sav',
+        prediction_method: RANDOM_FOREST,
+        predictive_model: REGRESSION
+      },
+      split: {
+        id: 2,
+        splitting_method: 'strict_temporal',
+        test_log_path: 'cache/log_cache/80-100_1559742742743335.xes',
+        test_size: 0.2,
+        train_log_path: 'cache/log_cache/0-80_1559742738260318.xes',
+        type: 'double'
+      },
+    },
+    created_date: '2019-06-05T13:51:55.034402Z',
+    error: '',
     id: 3,
+    modified_date: '2019-06-05T13:52:24.902133Z',
     status: 'completed',
-    type: REGRESSION,
-    config: {
-      encoding: {method: SIMPLE_INDEX, prefix_length: 1, padding: NO_PADDING, generation_type: ONLY_THIS},
-      method: RANDOM_FOREST,
-      label: {type: REMAINING_TIME, threshold: 0},
-      clustering: NO_CLUSTER
-    },
-    split_id: 2
+    type: 'prediction'
   },
   {
+    config: {
+      clustering: {clustering_method: NO_CLUSTER},
+      encoding: {
+        add_elapsed_time: false,
+        add_executed_events: false,
+        add_new_traces: false,
+        add_remaining_time: false,
+        add_resources_used: false,
+        data_encoding: 'label_encoder',
+        features: ['prefix_1', 'prefix_2', 'prefix_3', 'prefix_4', 'prefix_5', 'label'],
+        padding: false,
+        prefix_length: 5,
+        task_generation_type: ONLY_THIS,
+        value_encoding: SIMPLE_INDEX
+      },
+      evaluation: {},
+      hyperparameter_optimizer: {},
+      incremental_train: null,
+      labelling: {
+        results: {},
+        threshold: 0,
+        threshold_type: THRESHOLD_MEAN,
+        type: DURATION
+      },
+      predictive_model: {
+        model_path: '',
+        prediction_method: RANDOM_FOREST,
+        predictive_model: CLASSIFICATION
+      },
+      split: {
+        id: 4,
+        splitting_method: 'strict_temporal',
+        test_log_path: 'cache/log_cache/80-100_1559742742743335.xes',
+        test_size: 0.2,
+        train_log_path: 'cache/log_cache/0-80_1559742738260318.xes',
+        type: 'double'
+      },
+    },
+    created_date: '2019-06-05T13:51:55.034402Z',
+    error: '',
     id: 4,
+    modified_date: '2019-06-05T13:52:24.902133Z',
     status: 'created',
-    type: CLASSIFICATION,
-    config: {
-      encoding: {method: SIMPLE_INDEX, prefix_length: 5, padding: NO_PADDING, generation_type: ONLY_THIS},
-      method: RANDOM_FOREST,
-      label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
-      clustering: NO_CLUSTER
-    },
-    split_id: 4
+    type: 'prediction'
   },
   {
+    config: {
+      clustering: {clustering_method: NO_CLUSTER},
+      encoding: {
+        add_elapsed_time: false,
+        add_executed_events: false,
+        add_new_traces: false,
+        add_remaining_time: false,
+        add_resources_used: false,
+        data_encoding: 'label_encoder',
+        features: ['prefix_1', 'prefix_2', 'prefix_3', 'prefix_4', 'label'],
+        padding: false,
+        prefix_length: 4,
+        task_generation_type: ONLY_THIS,
+        value_encoding: SIMPLE_INDEX
+      },
+      evaluation: {
+        accuracy: 0.5435,
+        auc: 0.6667,
+        elapsed_time: '0.045728',
+        f1_score: 0.5158,
+        false_negative: 18,
+        false_positive: 3,
+        precision: 0.6,
+        recall: 0.5686,
+        true_negative: 18,
+        true_positive: 7
+      },
+      hyperparameter_optimizer: {},
+      incremental_train: null,
+      labelling: {
+        results: {},
+        threshold: 0,
+        threshold_type: THRESHOLD_MEAN,
+        type: DURATION
+      },
+      predictive_model: {
+        model_path: 'cache/model_cache/job_2-split_4-predictive_model-prediction-v0.sav',
+        prediction_method: RANDOM_FOREST,
+        predictive_model: CLASSIFICATION
+      },
+      split: {
+        id: 1,
+        splitting_method: 'strict_temporal',
+        test_log_path: 'cache/log_cache/80-100_1559742742743335.xes',
+        test_size: 0.2,
+        train_log_path: 'cache/log_cache/0-80_1559742738260318.xes',
+        type: 'double'
+      },
+    },
+    created_date: '2019-06-05T13:51:55.034402Z',
+    error: '',
     id: 5,
+    modified_date: '2019-06-05T13:52:24.902133Z',
     status: 'completed',
-    type: CLASSIFICATION,
-    config: {
-      encoding: {method: SIMPLE_INDEX, prefix_length: 4, padding: NO_PADDING, generation_type: ONLY_THIS},
-      method: RANDOM_FOREST,
-      label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
-      clustering: NO_CLUSTER
-    },
-    split_id: 1
+    type: 'prediction'
   },
   {
+    config: {
+      clustering: {clustering_method: NO_CLUSTER},
+      encoding: {
+        add_elapsed_time: false,
+        add_executed_events: false,
+        add_new_traces: false,
+        add_remaining_time: false,
+        add_resources_used: false,
+        data_encoding: 'label_encoder',
+        features: ['prefix_1', 'prefix_2', 'label'],
+        padding: false,
+        prefix_length: 2,
+        task_generation_type: ONLY_THIS,
+        value_encoding: SIMPLE_INDEX
+      },
+      evaluation: {
+        accuracy: 0.5435,
+        auc: 0.6667,
+        elapsed_time: '0.045728',
+        f1_score: 0.5158,
+        false_negative: 18,
+        false_positive: 3,
+        precision: 0.6,
+        recall: 0.5686,
+        true_negative: 18,
+        true_positive: 7
+      },
+      hyperparameter_optimizer: {},
+      incremental_train: null,
+      labelling: {
+        results: {},
+        threshold: 0,
+        type: REMAINING_TIME
+      },
+      predictive_model: {
+        model_path: 'cache/model_cache/job_2-split_4-predictive_model-prediction-v0.sav',
+        prediction_method: RANDOM_FOREST,
+        predictive_model: REGRESSION
+      },
+      split: {
+        id: 1,
+        splitting_method: 'strict_temporal',
+        test_log_path: 'cache/log_cache/80-100_1559742742743335.xes',
+        test_size: 0.2,
+        train_log_path: 'cache/log_cache/0-80_1559742738260318.xes',
+        type: 'double'
+      },
+    },
+    created_date: '2019-06-05T13:51:55.034402Z',
+    error: '',
     id: 6,
+    modified_date: '2019-06-05T13:52:24.902133Z',
     status: 'completed',
-    type: REGRESSION,
-    config: {
-      encoding: {method: SIMPLE_INDEX, prefix_length: 2, padding: NO_PADDING, generation_type: ONLY_THIS},
-      method: RANDOM_FOREST,
-      label: {type: REMAINING_TIME, threshold: 0},
-      clustering: NO_CLUSTER
-    },
-    split_id: 1
+    type: 'prediction'
   },
   {
+    config: {
+      clustering: {clustering_method: NO_CLUSTER},
+      encoding: {
+        add_elapsed_time: false,
+        add_executed_events: false,
+        add_new_traces: false,
+        add_remaining_time: false,
+        add_resources_used: false,
+        data_encoding: 'label_encoder',
+        features: ['prefix_1', 'prefix_2', 'prefix_3', 'prefix_4', 'label'],
+        padding: false,
+        prefix_length: 4,
+        task_generation_type: ONLY_THIS,
+        value_encoding: SIMPLE_INDEX
+      },
+      evaluation: {
+        accuracy: 0.5435,
+        auc: 0.6667,
+        elapsed_time: '0.045728',
+        f1_score: 0.5158,
+        false_negative: 18,
+        false_positive: 3,
+        precision: 0.6,
+        recall: 0.5686,
+        true_negative: 18,
+        true_positive: 7
+      },
+      hyperparameter_optimizer: {},
+      incremental_train: null,
+      labelling: {
+        results: {},
+        threshold: 100,
+        threshold_type: THRESHOLD_CUSTOM,
+        type: DURATION
+      },
+      predictive_model: {
+        model_path: 'cache/model_cache/job_2-split_4-predictive_model-prediction-v0.sav',
+        prediction_method: RANDOM_FOREST,
+        predictive_model: CLASSIFICATION
+      },
+      split: {
+        id: 1,
+        splitting_method: 'strict_temporal',
+        test_log_path: 'cache/log_cache/80-100_1559742742743335.xes',
+        test_size: 0.2,
+        train_log_path: 'cache/log_cache/0-80_1559742738260318.xes',
+        type: 'double'
+      },
+    },
+    created_date: '2019-06-05T13:51:55.034402Z',
+    error: '',
     id: 75,
+    modified_date: '2019-06-05T13:52:24.902133Z',
     status: 'completed',
-    type: CLASSIFICATION,
-    config: {
-      encoding: {method: SIMPLE_INDEX, prefix_length: 4, padding: NO_PADDING, generation_type: ONLY_THIS},
-      method: RANDOM_FOREST,
-      label: {type: DURATION, threshold_type: THRESHOLD_CUSTOM, threshold: 100},
-      clustering: NO_CLUSTER
-    },
-    split_id: 1
+    type: 'prediction'
   },
   {
-    id: 76,
-    status: 'completed',
-    type: CLASSIFICATION,
     config: {
-      encoding: {method: SIMPLE_INDEX, prefix_length: 4, padding: NO_PADDING, generation_type: ONLY_THIS},
-      method: RANDOM_FOREST,
-      label: {type: ATTRIBUTE_NUMBER, threshold_type: THRESHOLD_MEAN, attribute_name: 'name', threshold: 0},
-      clustering: NO_CLUSTER
+      clustering: {clustering_method: NO_CLUSTER},
+      encoding: {
+        add_elapsed_time: false,
+        add_executed_events: false,
+        add_new_traces: false,
+        add_remaining_time: false,
+        add_resources_used: false,
+        data_encoding: 'label_encoder',
+        features: ['prefix_1', 'prefix_2', 'prefix_3', 'prefix_4', 'label'],
+        padding: false,
+        prefix_length: 4,
+        task_generation_type: ONLY_THIS,
+        value_encoding: SIMPLE_INDEX
+      },
+      evaluation: {
+        accuracy: 0.5435,
+        auc: 0.6667,
+        elapsed_time: '0.045728',
+        f1_score: 0.5158,
+        false_negative: 18,
+        false_positive: 3,
+        precision: 0.6,
+        recall: 0.5686,
+        true_negative: 18,
+        true_positive: 7
+      },
+      hyperparameter_optimizer: {},
+      incremental_train: null,
+      labelling: {
+        results: {},
+        threshold: 100,
+        threshold_type: THRESHOLD_MEAN,
+        attribute_name: 'name',
+        type: ATTRIBUTE_NUMBER
+      },
+      predictive_model: {
+        model_path: 'cache/model_cache/job_2-split_4-predictive_model-prediction-v0.sav',
+        prediction_method: RANDOM_FOREST,
+        predictive_model: CLASSIFICATION
+      },
+      split: {
+        id: 1,
+        splitting_method: 'strict_temporal',
+        test_log_path: 'cache/log_cache/80-100_1559742742743335.xes',
+        test_size: 0.2,
+        train_log_path: 'cache/log_cache/0-80_1559742738260318.xes',
+        type: 'double'
+      },
     },
-    split_id: 1
-  },
+    created_date: '2019-06-05T13:51:55.034402Z',
+    error: '',
+    id: 76,
+    modified_date: '2019-06-05T13:52:24.902133Z',
+    status: 'completed',
+    type: 'prediction'
+  }
 ];
 
 const changedJob = {
-  id: 1,
-  status: 'completed',
-  type: CLASSIFICATION,
   config: {
-    encoding: {method: SIMPLE_INDEX, prefix_length: 2, padding: NO_PADDING, generation_type: ONLY_THIS},
-    method: RANDOM_FOREST,
-    label: {type: DURATION, threshold_type: THRESHOLD_MEAN, threshold: 0},
-    clustering: NO_CLUSTER
+    clustering: {clustering_method: NO_CLUSTER},
+    encoding: {
+      add_elapsed_time: false,
+      add_executed_events: false,
+      add_new_traces: false,
+      add_remaining_time: false,
+      add_resources_used: false,
+      data_encoding: 'label_encoder',
+      features: ['prefix_1', 'prefix_2', 'label'],
+      padding: false,
+      prefix_length: 2,
+      task_generation_type: ONLY_THIS,
+      value_encoding: SIMPLE_INDEX
+    },
+    evaluation: {
+      accuracy: 0.5435,
+      auc: 0.6667,
+      elapsed_time: '0.045728',
+      f1_score: 0.5158,
+      false_negative: 18,
+      false_positive: 3,
+      precision: 0.6,
+      recall: 0.5686,
+      true_negative: 18,
+      true_positive: 7
+    },
+    hyperparameter_optimizer: {},
+    incremental_train: null,
+    labelling: {
+      results: {},
+      threshold: 0,
+      threshold_type: THRESHOLD_MEAN,
+      attribute_name: 'name',
+      type: DURATION
+    },
+    predictive_model: {
+      model_path: 'cache/model_cache/job_2-split_4-predictive_model-prediction-v0.sav',
+      prediction_method: RANDOM_FOREST,
+      predictive_model: CLASSIFICATION
+    },
+    split: {
+      id: 1,
+      splitting_method: 'strict_temporal',
+      test_log_path: 'cache/log_cache/80-100_1559742742743335.xes',
+      test_size: 0.2,
+      train_log_path: 'cache/log_cache/0-80_1559742738260318.xes',
+      type: 'double'
+    },
   },
-  split_id: 1
+  created_date: '2019-06-05T13:51:55.034402Z',
+  error: '',
+  id: 76,
+  modified_date: '2019-06-05T13:52:24.902133Z',
+  status: 'completed',
+  type: 'prediction'
 };
 
 const initState = {fetchState: {inFlight: false}, byId: {}, allIds: [], filteredIds: []};
@@ -177,7 +560,7 @@ describe('JobsReducer', () => {
     const {allIds, byId} = state2;
     expect(allIds).toEqual([1, 2, 3, 4, 5, 6, 75, 76]);
     expect(Object.keys(byId).length).toEqual(8);
-    expect(byId[1].split_id).toBe(1);
+    expect(byId[1].config.split.id).toBe(1);
   });
 
   it('updates job list by id', () => {
@@ -186,7 +569,7 @@ describe('JobsReducer', () => {
     const {allIds, byId} = state2;
     expect(Object.keys(byId).length).toEqual(8);
     expect(allIds.length).toEqual(8);
-    expect(byId[1].status).toBe('completed');
+    expect(byId[1].status).toBe('created');
   });
 
   it('stores error message', () => {
@@ -264,8 +647,8 @@ describe('Validation filter', () => {
     it('resets filter options', () => {
       let state3 = jobs(state2, {type: FILTER_SPLIT_CHANGED, splitId: 2});
       state3 = jobs(state3, {type: FILTER_PREDICTION_METHOD_CHANGED, method: CLASSIFICATION});
-      expect(state3.classification.length).toEqual(4);
-      expect(state3.regression.length).toEqual(4);
+      expect(state3.classification.length).toEqual(10);
+      expect(state3.regression.length).toEqual(5);
       expect(state3.clusterings.length).toEqual(2);
       expect(state3.encodings.length).toEqual(5);
     });
@@ -273,17 +656,17 @@ describe('Validation filter', () => {
     it('has label remaining type for regression', () => {
       let state3 = jobs(state2, {type: FILTER_SPLIT_CHANGED, splitId: 2});
       state3 = jobs(state3, {type: FILTER_PREDICTION_METHOD_CHANGED, method: REGRESSION});
-      expect(state3.label).toEqual({type: REMAINING_TIME});
+      expect(state3.labelling).toEqual({type: REMAINING_TIME});
     });
 
     it('has label duration for classification', () => {
       let state3 = jobs(stateClass, {type: FILTER_SPLIT_CHANGED, splitId: 2});
-      expect(state3.label).toEqual({type: DURATION, threshold_type: THRESHOLD_MEAN});
+      expect(state3.labelling).toEqual({type: DURATION, threshold_type: THRESHOLD_MEAN});
     });
 
     it('has label duration for labelling', () => {
       const state3 = jobs(state2, {type: FILTER_PREDICTION_METHOD_CHANGED, method: LABELLING});
-      expect(state3.label).toEqual({type: DURATION, threshold_type: THRESHOLD_MEAN});
+      expect(state3.labelling).toEqual({type: DURATION, threshold_type: THRESHOLD_MEAN});
       expect(state3.filteredIds).toEqual([]);
     });
   });
@@ -319,7 +702,7 @@ describe('Validation filter', () => {
         type: FILTER_OPTION_CHANGED,
         payload: {value: RANDOM_FOREST, name: 'classification[]'}
       });
-      expect(state3.classification.length).toEqual(3);
+      expect(state3.classification.length).toEqual(9);
       expect(state3.filteredIds).toEqual([]);
     });
 
@@ -328,7 +711,7 @@ describe('Validation filter', () => {
         type: FILTER_OPTION_CHANGED,
         payload: {value: RANDOM_FOREST, name: 'regression[]'}
       });
-      expect(state3.regression.length).toEqual(3);
+      expect(state3.regression.length).toEqual(4);
       expect(state3.filteredIds).toEqual([]);
     });
 
@@ -365,26 +748,26 @@ describe('Validation filter', () => {
     it('changes the label', () => {
       const state3 = jobs(stateClass, {
         type: FILTER_LABEL_CHANGED,
-        payload: {config: {methodConfig: 'label', key: 'type'}, value: DURATION}
+        payload: {config: {methodConfig: 'labelling', key: 'type'}, value: DURATION}
       });
-      expect(state3.label).toEqual({type: DURATION, threshold_type: THRESHOLD_MEAN});
+      expect(state3.labelling).toEqual({type: DURATION, threshold_type: THRESHOLD_MEAN});
       expect(state3.filteredIds).toEqual([2, 5]);
     });
 
     it('filters for custom threshold', () => {
       let state3 = jobs(stateClass, {
         type: FILTER_LABEL_CHANGED,
-        payload: {config: {methodConfig: 'label', key: 'type'}, value: DURATION}
+        payload: {config: {methodConfig: 'labelling', key: 'type'}, value: DURATION}
       });
       state3 = jobs(state3, {
         type: FILTER_LABEL_CHANGED,
-        payload: {config: {methodConfig: 'label', key: 'threshold_type'}, value: THRESHOLD_CUSTOM}
+        payload: {config: {methodConfig: 'labelling', key: 'threshold_type'}, value: THRESHOLD_CUSTOM}
       });
       state3 = jobs(state3, {
         type: FILTER_LABEL_CHANGED,
-        payload: {config: {methodConfig: 'label', key: 'threshold', isNumber: true}, value: '100'}
+        payload: {config: {methodConfig: 'labelling', key: 'threshold', isNumber: true}, value: '100'}
       });
-      expect(state3.label).toEqual({type: DURATION, threshold_type: THRESHOLD_CUSTOM, threshold: 100});
+      expect(state3.labelling).toEqual({type: DURATION, threshold_type: THRESHOLD_CUSTOM, threshold: 100});
       expect(state3.filteredIds).toEqual([75]);
       expect(state3.thresholds).toEqual([0, 100]);
     });
@@ -392,17 +775,17 @@ describe('Validation filter', () => {
     it('filters for attribute names', () => {
       let state34 = jobs(stateClass, {
         type: FILTER_LABEL_CHANGED,
-        payload: {config: {methodConfig: 'label', key: 'type'}, value: ATTRIBUTE_NUMBER}
+        payload: {config: {methodConfig: 'labelling', key: 'type'}, value: ATTRIBUTE_NUMBER}
       });
       state34 = jobs(state34, {
         type: FILTER_LABEL_CHANGED,
-        payload: {config: {methodConfig: 'label', key: 'threshold_type'}, value: THRESHOLD_MEAN}
+        payload: {config: {methodConfig: 'labelling', key: 'threshold_type'}, value: THRESHOLD_MEAN}
       });
       state34 = jobs(state34, {
         type: FILTER_LABEL_CHANGED,
-        payload: {config: {methodConfig: 'label', key: 'attribute_name'}, value: 'name'}
+        payload: {config: {methodConfig: 'labelling', key: 'attribute_name'}, value: 'name'}
       });
-      expect(state34.label).toMatchObject({
+      expect(state34.labelling).toMatchObject({
         type: ATTRIBUTE_NUMBER,
         threshold_type: THRESHOLD_MEAN,
         attribute_name: 'name'

@@ -30,8 +30,9 @@ class ConfigTable extends PureComponent {
 
   render() {
     const headers =
-      ['id', 'Type', 'Encoding', 'Clustering', 'Method', 'Prefix length', 'Label',
-        'Padding', 'Generation type', 'Create models', 'HyperOpt', 'Advanced configuration'];
+      ['id', 'Type', 'Encoding Method', 'Clustering', 'Method', 'Prefix length', 'Encoding', 'Label',
+        'Padding', 'Generation type', 'Hyperparameter Optimizer', 'Clustering Hyperparameters',
+        'Predictive Model Hyperparameters', 'Features'];
     return (<DataTable baseId="simple-pagination" selectableRows={false}>
       <TableHeader>
         <TableRow>
@@ -44,17 +45,20 @@ class ConfigTable extends PureComponent {
             <TableRow key={job.id}>
               <TableColumn style={columnStyle}>{job.id}</TableColumn>
               <TableColumn style={columnStyle}>{job.type}</TableColumn>
-              <TableColumn style={columnStyle}>{job.encodingMethod}</TableColumn>
-              <TableColumn style={columnStyle}>{job.clustering}{job.kmeans ?
-                <JsonHolder data={job.kmeans}/> : null}</TableColumn>
+              <TableColumn style={columnStyle}>{job.encoding.method}</TableColumn>
+              <TableColumn style={columnStyle}>{job.clustering}</TableColumn>
               <TableColumn style={columnStyle}>{job.method}</TableColumn>
               <TableColumn style={columnStyle} numeric>{job.prefix_length}</TableColumn>
-              <TableColumn style={columnStyle}><JsonHolder data={job.label}/></TableColumn>
-              <TableColumn style={columnStyle}>{job.padding}</TableColumn>
+              <TableColumn style={columnStyle}><JsonHolder data={job.encoding}/></TableColumn>
+              <TableColumn style={columnStyle}><JsonHolder data={job.labelling}/></TableColumn>
+              <TableColumn style={columnStyle}>{job.padding.toString()}</TableColumn>
               <TableColumn style={columnStyle}>{job.generationType}</TableColumn>
-              <TableColumn style={columnStyle}>{JSON.stringify(job.create_models, null, 1)}</TableColumn>
-              <TableColumn style={columnStyle}><JsonHolder data={job.hyperopt}/></TableColumn>
-              <TableColumn style={columnStyle}><JsonHolder data={job.advanced}/></TableColumn>
+              <TableColumn style={columnStyle}>
+                {job.hyperopt ? <JsonHolder data={job.hyperopt}/> : 'Not Done'}
+              </TableColumn>
+              <TableColumn style={columnStyle}><JsonHolder data={job.clustering_hyperparameters}/></TableColumn>
+              <TableColumn style={columnStyle}><JsonHolder data={job.predictive_model_hyperparameters}/></TableColumn>
+              <TableColumn style={columnStyle}><JsonHolder data={job.features}/></TableColumn>
             </TableRow>
           ))}
       </TableBody>

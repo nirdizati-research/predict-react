@@ -19,6 +19,7 @@ const filterOptions = {
   clusterings: [],
   classification: [],
   regression: [],
+  timeSeriesPrediction: [],
   label: {type: 'remaining_time'},
   thresholds: [],
   attributeNames: [],

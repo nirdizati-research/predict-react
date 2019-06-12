@@ -8,18 +8,18 @@ import {HyperOptCard} from '../components/static/HyperOptCard';
 import {DemoVideoCard} from '../components/static/DemoVideoCard';
 
 class FrontPage extends Component {
-  render() {
-    return (
-      <div className="md-grid">
-        <WalkThrough/>
-        <DemoVideoCard/>
-        <HyperOptCard/>
-        <EncodingByLogCard/>
-        <ClassificationMethodsCard/>
-        <RegressionMethodsCard/>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div className="md-grid">
+                <WalkThrough/>
+                <DemoVideoCard/>
+                <HyperOptCard/>
+                <EncodingByLogCard/>
+                <ClassificationMethodsCard/>
+                <RegressionMethodsCard/>
+            </div>
+        );
+    }
 }
 
 FrontPage.propTypes = {};

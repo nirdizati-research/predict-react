@@ -8,7 +8,7 @@ import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import {splitPropType} from '../../propTypes';
 
 const SingleSplitTableCard = (props) => {
-  const headers = ['id', 'Log', 'Split type', 'Test set %'];
+  const headers = ['id', 'Log', 'Splitting method', 'Test set %'];
 
   return (
     <Card className="md-block-centered">
@@ -30,13 +30,13 @@ const SingleSplitTableCard = (props) => {
 
 /* eslint-disable camelcase */
 const tableBody = (splits) => {
-  return splits.map(({id, originalLogName, config}) => {
+  return splits.map(({id, originalLogName, splitting_method, test_size}) => {
     return (
       <TableRow key={id} selectable={false}>
-        <TableColumn numeric>{id}</TableColumn>
+        <TableColumn>{id}</TableColumn>
         <TableColumn>{originalLogName}</TableColumn>
-        <TableColumn>{config.split_type}</TableColumn>
-        <TableColumn numeric>{Math.round(config.test_size * 100) / 100}</TableColumn>
+        <TableColumn>{splitting_method}</TableColumn>
+        <TableColumn>{Math.round(test_size * 100) / 100}</TableColumn>
       </TableRow>
     );
   });

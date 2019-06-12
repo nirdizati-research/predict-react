@@ -15,25 +15,25 @@ import webSocketMiddleware from './middlewares/WebSocketMiddleware';
 import './scss/style.scss';
 
 WebFontLoader.load({
-  google: {
-    families: ['Roboto:400', 'Material Icons'],
-  },
+    google: {
+        families: ['Roboto:400', 'Material Icons'],
+    },
 });
 
 const composeStoreEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const routerMiddle = routerMiddleware(hashHistory);
 let store = createStore(
-  reducers,
-  composeStoreEnhancers(
-    applyMiddleware(
-      routerMiddle,
-      thunk,
-      serverMiddleware,
-      webSocketMiddleware,
-      trainingMiddleware
+    reducers,
+    composeStoreEnhancers(
+        applyMiddleware(
+            routerMiddle,
+            thunk,
+            serverMiddleware,
+            webSocketMiddleware,
+            trainingMiddleware
+        )
     )
-  )
 );
 
 // Create an enhanced history that syncs navigation events with the store
@@ -43,8 +43,8 @@ const history = syncHistoryWithStore(hashHistory, store);
 store.dispatch({type: CONNECT_REQUESTED});
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Router routes={routes} history={history}/>
-  </Provider>,
-  document.getElementById('root')
+    <Provider store={store}>
+        <Router routes={routes} history={history}/>
+    </Provider>,
+    document.getElementById('root')
 );

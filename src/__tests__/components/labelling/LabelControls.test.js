@@ -16,7 +16,7 @@ import LabelControls from '../../../components/Labelling/LabelControls';
 const onChange = jest.fn();
 
 const filterOptions = {
-  label: {type: DURATION, threshold_type: THRESHOLD_MEAN},
+  labelling: {type: DURATION, threshold_type: THRESHOLD_MEAN},
   thresholds: [1, 3, 4],
   attributeNames: ['name', 'name2']
 };
@@ -38,7 +38,7 @@ describe('Regression', () => {
                                            label={{...label1, type: ATTRIBUTE_NUMBER}}
                                            labelChange={onChange}/>).first();
 
-    expect(element.find(SelectField).length).toBe(2);
+    expect(element.find(SelectField).length).toBe(1);
   });
 });
 
@@ -56,16 +56,17 @@ describe('class or label', () => {
     const element = shallow(<LabelControls {...filterOptions} label={{...label1, type: ATTRIBUTE_NUMBER}}
                                            predictionMethod={method} labelChange={onChange}/>).first();
 
-    expect(element.find(SelectField).length).toBe(4);
+    expect(element.find(SelectField).length).toBe(3);
+    expect(element.find(SelectField).at(0).props().menuItems.length).toBe(4);
+    expect(element.find(SelectField).at(1).props().menuItems.length).toBe(2);
     expect(element.find(SelectField).at(2).props().menuItems.length).toBe(3);
-    expect(element.find(SelectField).at(3).props().menuItems.length).toBe(2);
   });
 
   it('string atr', () => {
     const element = shallow(<LabelControls {...filterOptions} label={{...label1, type: ATTRIBUTE_STRING}}
                                            predictionMethod={method} labelChange={onChange}/>).first();
 
-    expect(element.find(SelectField).length).toBe(2);
+    expect(element.find(SelectField).length).toBe(3);
     expect(element.find(SelectField).at(1).props().menuItems.length).toBe(2);
   });
 
@@ -73,6 +74,6 @@ describe('class or label', () => {
     const element = shallow(<LabelControls {...filterOptions} predictionMethod={method}
                                            label={{...label1, type: NEXT_ACTIVITY}} labelChange={onChange}/>).first();
 
-    expect(element.find(SelectField).length).toBe(1);
+    expect(element.find(SelectField).length).toBe(3);
   });
 });

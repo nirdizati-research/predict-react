@@ -3,7 +3,12 @@
  */
 import React from 'react';
 import {mount} from 'enzyme';
-import {CLASSIFICATION, REGRESSION} from '../../../reference';
+import {
+  CLASSIFICATION,
+  KMEANS, KNN, LINEAR,
+  NO_CLUSTER,
+  REGRESSION
+} from '../../../reference';
 import ResultTableCard from '../../../components/validation/ResultTableCard';
 import ResultWrapper from '../../../components/validation/ResultWrapper';
 import BubbleChartCard from '../../../components/chart/BubbleChartCard';
@@ -12,85 +17,137 @@ import {encoding1} from './ConfigTable.test';
 
 const classJobs = [
   {
-    'id': 1,
-    'created_date': '2017-11-14T20:52:36.469000Z',
-    'modified_date': '2017-12-05T14:57:28.344216Z',
     'config': {
-      'clustering': 'kmeans',
-      'method': 'knn',
+      'clustering': {'clustering_method': KMEANS},
       'encoding': encoding1,
-      'label': label1,
-      'hyperopt': {
+      'evaluation': {
+        'accuracy': 0.5435,
+        'auc': 0.6667,
+        'elapsed_time': '0.045728',
+        'f1_score': 0.5158,
+        'false_negative': 18,
+        'false_positive': 3,
+        'precision': 0.6,
+        'recall': 0.5686,
+        'true_negative': 18,
+        'true_positive': 7
+      },
+      'hyperparameter_optimizer': {
         'use_hyperopt': true,
         'max_evals': 100,
         'performance_metric': 'acc'
       },
+      'incremental_train': null,
+      'labelling': label1,
+      'predictive_model': {
+        'model_path': 'cache/model_cache/job_2-split_4-predictive_model-prediction-v0.sav',
+        'prediction_method': KNN,
+        'predictive_model': CLASSIFICATION
+      },
+      'split': {
+        'id': 1,
+        'splitting_method': 'strict_temporal',
+        'test_log_path': 'cache/log_cache/80-100_1559742742743335.xes',
+        'test_size': 0.2,
+        'train_log_path': 'cache/log_cache/0-80_1559742738260318.xes',
+        'type': 'double'
+      },
     },
+    'created_date': '2019-06-05T13:51:55.034402Z',
+    'error': '',
+    'id': 1,
+    'modified_date': '2019-06-05T13:52:24.902133Z',
     'status': 'completed',
-    'result': {
-      'f1score': 123,
-      'acc': 111,
-      'auc': 3
-    },
-    'type': 'classification',
-    'split_id': 1,
-    'error': ''
+    'type': 'prediction'
   },
   {
-    'id': 3,
-    'created_date': '2017-11-14T20:52:36.469000Z',
-    'modified_date': '2017-12-05T14:57:28.344216Z',
     'config': {
-      'clustering': 'kmeans',
-      'method': 'knn',
+      'clustering': {'clustering_method': KMEANS},
       'encoding': encoding1,
-      'label': label1,
-      'hyperopt': {
+      'evaluation': {
+        'accuracy': 0.5435,
+        'auc': 0.6667,
+        'elapsed_time': '0.045728',
+        'f1_score': 0.5158,
+        'false_negative': 18,
+        'false_positive': 3,
+        'precision': 0.6,
+        'recall': 0.5686,
+        'true_negative': 18,
+        'true_positive': 7
+      },
+      'hyperparameter_optimizer': {
         'use_hyperopt': true,
         'max_evals': 100,
         'performance_metric': 'acc'
       },
+      'incremental_train': null,
+      'labelling': label1,
+      'predictive_model': {
+        'model_path': 'cache/model_cache/job_2-split_4-predictive_model-prediction-v0.sav',
+        'prediction_method': KNN,
+        'predictive_model': CLASSIFICATION
+      },
+      'split': {
+        'id': 1,
+        'splitting_method': 'strict_temporal',
+        'test_log_path': 'cache/log_cache/80-100_1559742742743335.xes',
+        'test_size': 0.2,
+        'train_log_path': 'cache/log_cache/0-80_1559742738260318.xes',
+        'type': 'double'
+      },
     },
+    'created_date': '2019-06-05T13:51:55.034402Z',
+    'error': '',
+    'id': 3,
+    'modified_date': '2019-06-05T13:52:24.902133Z',
     'status': 'completed',
-    'result': {
-      'f1score': 1230,
-      'acc': 1110,
-      'auc': 30
-    },
-    'type': 'classification',
-    'split_id': 1,
-    'error': ''
+    'type': 'prediction'
   }];
 
-const regJobs = [{
-  'id': 53,
-  'created_date': '2018-02-07T22:47:32.146583Z',
-  'modified_date': '2018-02-07T22:47:32.149647Z',
-  'config': {
-    'encoding': encoding1,
-    'clustering': 'noCluster',
-    'method': 'linear',
-    'label': label1,
-    'hyperopt': {
-      'use_hyperopt': true,
-      'max_evals': 100,
-      'performance_metric': 'acc'
+const regJobs = [
+  {
+    'config': {
+      'clustering': {'clustering_method': NO_CLUSTER},
+      'encoding': encoding1,
+      'evaluation': {
+        'mae': 11,
+        'rmse': 12,
+        'rscore': 13,
+        'mape': 14
+      },
+      'hyperparameter_optimizer': {
+        'use_hyperopt': true,
+        'max_evals': 100,
+        'performance_metric': 'acc'
+      },
+      'incremental_train': null,
+      'labelling': label1,
+      'predictive_model': {
+        'model_path': 'cache/model_cache/job_2-split_4-predictive_model-prediction-v0.sav',
+        'prediction_method': LINEAR,
+        'predictive_model': REGRESSION
+      },
+      'split': {
+        'id': 1,
+        'splitting_method': 'strict_temporal',
+        'test_log_path': 'cache/log_cache/80-100_1559742742743335.xes',
+        'test_size': 0.2,
+        'train_log_path': 'cache/log_cache/0-80_1559742738260318.xes',
+        'type': 'double'
+      },
     },
-  },
-  'status': 'created',
-  'result': {
-    'mae': 11,
-    'rmse': 12,
-    'rscore': 13,
-    'mape': 14
-  },
-  'type': 'regression',
-  'split_id': 1,
-  'error': ''
-}];
+    'created_date': '2019-06-05T13:51:55.034402Z',
+    'error': '',
+    'id': 53,
+    'modified_date': '2019-06-05T13:52:24.902133Z',
+    'status': 'completed',
+    'type': 'prediction'
+  }];
+
 const classData = [
-  ['1', 'knn_simpleIndex_kmeans', 123, 3, 111, '1', 0, 0, 0, 0, 0, 0],
-  ['3', 'knn_simpleIndex_kmeans', 1230, 30, 1110, '1', 0, 0, 0, 0, 0, 0],
+  ['1', 'knn_simpleIndex_kmeans', 0.5158, 0.6667, 0.5435, '1', 0.6, 0.5686, 7, 18, 3, 18, '0.045728'],
+  ['3', 'knn_simpleIndex_kmeans', 0.5158, 0.6667, 0.5435, '1', 0.6, 0.5686, 7, 18, 3, 18, '0.045728'],
 ];
 
 let element = null;

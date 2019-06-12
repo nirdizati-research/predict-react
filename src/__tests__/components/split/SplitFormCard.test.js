@@ -31,8 +31,9 @@ it('calls selectChange', () => {
   // Actually should be 4, but this test is broken
   // expect(onSubmit).toHaveBeenCalledWith({'config': {}, 'original_log': 4});
   expect(onSubmit).toHaveBeenCalledWith({
-    'config': {split_type: 'split_random', test_size: 0.2},
-    'original_log': 'nonlocal.mxml.gz'
+    original_log: 'nonlocal.mxml.gz',
+    splitting_method: 'split_random',
+    test_size: 0.2
   });
 });
 

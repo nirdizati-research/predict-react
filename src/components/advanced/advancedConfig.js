@@ -11,6 +11,84 @@ export const classificationKnnWeights = [
   }
 ];
 
+export const maxFeaturesRandomForest = [
+    {
+        value: 'auto',
+        label: 'auto'
+    },
+    {
+        value: 'sqrt',
+        label: 'sqrt'
+    },
+    {
+        value: 'log2',
+        label: 'log2'
+    },
+    {
+        value: null,
+        label: 'none'
+    },
+];
+
+export const splitCriterionHoeffding = [
+    {
+        value: 'mc',
+        label: 'Majority Class'
+    },
+    {
+        value: 'nb',
+        label: 'Naive Bayes'
+    },
+    {
+        value: 'nba',
+        label: 'Naive Bayes Adaptive'
+    }
+];
+
+export const leafPredictionHoeffding = [
+    {
+        value: 'gini',
+        label: 'Gini'
+    },
+    {
+        value: 'info_gain',
+        label: 'Information Gain'
+    }
+];
+
+export const lossSGDClassifier = [
+    {value: 'hinge', label: 'Hinge'},
+    {value: 'log', label: 'Log'},
+    {value: 'modified_huber', label: 'Modified huber'},
+    {value: 'squared_hinge', label: 'Squared hinge'},
+    {value: 'perceptron', label: 'Perceptron'},
+    {value: 'squared_loss', label: 'Squared loss'},
+    {value: 'huber', label: 'Huber'},
+    {value: 'epsilon_insensitive', label: 'Epsilon insensitive'},
+    {value: 'squared_epsilon_insensitive', label: 'Squared epsilon insensitive'}
+];
+
+export const penaltySGDClassifier = [
+    {value: 'None', label: 'None'},
+    {value: 'l1', label: 'l1'},
+    {value: 'l2', label: 'l2'},
+    {value: 'elasticnet', label: 'Elastic net'},
+];
+
+export const penaltyPerceptron = [
+    {value: 'None', label: 'None'},
+    {value: 'l1', label: 'l1'},
+    {value: 'l2', label: 'l2'},
+    {value: 'elasticnet', label: 'Elastic net'},
+];
+
+export const learningRateSGDClassifier = [
+    {value: 'constant', label: 'Constant'},
+    {value: 'optimal', label: 'Optimal'},
+    {value: 'invscaling', label: 'Inv scaling'},
+    {value: 'adaptive', label: 'Adaptive'},
+];
+
 export const regressionMetrics = [
   {
     value: 'rmse',
@@ -69,6 +147,13 @@ export const classificationMetrics = [
   },
 ];
 
+export const timeSeriesPredictionMetrics = [
+    {
+        value: 'nlevenshtein',
+        label: 'nlevenshtein'
+    },
+];
+
 export const kmeansAlgorithm = [
   {
     value: 'auto',
@@ -82,4 +167,26 @@ export const kmeansAlgorithm = [
     value: 'elkan',
     label: 'elkan'
   },
+];
+
+export const hyperparameterOptmizerLabels = [
+    {
+        value: 'none',
+        label: 'None'
+    },
+    {
+        value: 'hyperopt',
+        label: 'HyperOpt'
+    }
+];
+
+export const hyperparameterOptimizerAlgorithms = [
+    {
+        value: 'tpe',
+        label: 'Tree Parzen Estimator'
+    },
+    {
+        value: 'random_search',
+        label: 'Random Search'
+    }
 ];

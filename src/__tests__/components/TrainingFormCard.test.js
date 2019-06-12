@@ -14,17 +14,13 @@ const fetchState = {inFlight: false};
 const splitLabels = [{value: 1, label: 'Split #1'}, {value: 2, label: 'Split #2'}];
 const onSubmit = jest.fn();
 const onSplitChange = jest.fn();
+const onModelChange = jest.fn();
 
 const label = {
   type: REMAINING_TIME,
   attribute_name: '',
   threshold_type: THRESHOLD_MEAN,
   threshold: 0,
-  add_remaining_time: false,
-  add_elapsed_time: false,
-  add_executed_events: false,
-  add_resources_used: false,
-  add_new_traces: false,
 };
 const regressionPayload = {
   'type': 'regression',
@@ -36,51 +32,77 @@ const regressionPayload = {
       'padding': 'no_padding',
       'prefix_length': 1,
       'generation_type': 'only',
+      'add_remaining_time': false,
+      'add_elapsed_time': false,
+      'add_executed_events': false,
+      'add_resources_used': false,
+      'add_new_traces': false,
+      'features': [],
     },
     'create_models': false,
     'methods': ['linear'],
     'kmeans': {},
-    'hyperopt': {
-      'use_hyperopt': false,
-      'max_evals': 10,
-      'performance_metric': 'rmse'
+    'incremental_train': {
+      'base_model': null,
     },
-    'label': label,
+    'hyperparameter_optimizer': {
+      'algorithm_type': 'tpe',
+      'max_evaluations': 10,
+      'performance_metric': 'rmse',
+      'type': 'none',
+    },
+      'labelling': label,
     'classification.decisionTree': {},
     'classification.knn': {},
     'classification.randomForest': {},
+    'classification.adaptiveTree': {},
+    'classification.hoeffdingTree': {},
+    'classification.multinomialNB': {},
+    'classification.perceptron': {},
+    'classification.SGDClassifier': {},
     'classification.xgboost': {},
+    'classification.nn': {},
     'regression.lasso': {},
     'regression.linear': {},
     'regression.randomForest': {},
     'regression.xgboost': {},
+    'regression.nn': {},
+    'timeSeriesPrediction.rnn': {}
   }
 };
 
 
 const labelPayload = {
   'config': {
-    'label': {
-      'add_elapsed_time': false,
-      'add_executed_events': false,
-      'add_new_traces': false,
-      'add_remaining_time': false,
-      'add_resources_used': false,
+      'labelling': {
       'attribute_name': '',
       'threshold': 0,
       'threshold_type': 'threshold_mean',
       'type': 'duration'
     },
-    'encoding': {'padding': 'no_padding', 'prefix_length': 1, 'generation_type': 'only'}
+    'encoding': {
+      'padding': 'no_padding',
+      'prefix_length': 1,
+      'generation_type': 'only',
+      'add_remaining_time': false,
+      'add_elapsed_time': false,
+      'add_executed_events': false,
+      'add_resources_used': false,
+      'add_new_traces': false,
+      'features': []}
   },
   'split_id': 1,
   'type': 'labelling'
 };
 const shallowElement = shallow(<TrainingFormCard fetchState={fetchState} splitLabels={splitLabels} maxEventsInLog={10}
                                                  onSubmit={onSubmit} onSplitChange={onSplitChange}
-                                                 traceAttributes={[]}/>);
+                                                 traceAttributes={[]} classificationModels={[]} regressionModels={[]}
+                                                 timeSeriesPredictionModels={[]} onModelChange={onModelChange}/>);
+
 const element = mount(<TrainingFormCard fetchState={fetchState} splitLabels={splitLabels} onSubmit={onSubmit}
-                                        onSplitChange={onSplitChange} maxEventsInLog={10} traceAttributes={[]}/>);
+                                        onSplitChange={onSplitChange} maxEventsInLog={10} traceAttributes={[]}
+                                        classificationModels={[]} regressionModels={[]}
+                                        timeSeriesPredictionModels={[]} onModelChange={onModelChange}/>);
 describe('TrainingFormCard', () => {
   afterEach(() => {
     onSubmit.mockClear();
@@ -182,9 +204,11 @@ describe('TrainingFormCard', () => {
 });
 
 describe('labelForm', () => {
-  const labelEl = mount(<TrainingFormCard fetchState={fetchState} splitLabels={splitLabels} onSubmit={onSubmit}
-                                          isLabelForm={true}
-                                          onSplitChange={onSplitChange} maxEventsInLog={10} traceAttributes={[]}/>);
+  const labelEl = mount(<TrainingFormCard fetchState={fetchState} splitLabels={splitLabels} maxEventsInLog={10}
+                                          onSubmit={onSubmit} onSplitChange={onSplitChange} isLabelForm={true}
+                                          traceAttributes={[]} classificationModels={[]} regressionModels={[]}
+                                          timeSeriesPredictionModels={[]} onModelChange={onModelChange}/>);
+
   afterEach(() => {
     onSubmit.mockClear();
   });
