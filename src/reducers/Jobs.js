@@ -108,13 +108,14 @@ const filterByPadding = (padding) => (job) => {
 };
 
 const filterByAllElse = (encodings, clusterings, classification, regression, timeSeriesPrediction, predictionMethod) => (job) => {
-    const firstHalf = encodings.includes(job.config.encoding.value_encoding) && clusterings.includes(job.config.clustering.clustering_method);
+    const firstHalf = encodings.includes(job.config.encoding.value_encoding);
+    const secondHalf = job.config.clustering !== null && clusterings.includes(job.config.clustering.clustering_method);
     if (predictionMethod === REGRESSION) {
-        return firstHalf && regression.includes(job.config.predictive_model.prediction_method);
+        return firstHalf && secondHalf && regression.includes(job.config.predictive_model.prediction_method);
     } else if (predictionMethod === CLASSIFICATION) {
-        return firstHalf && classification.includes(job.config.predictive_model.prediction_method);
+        return firstHalf && secondHalf && classification.includes(job.config.predictive_model.prediction_method);
     } else if (predictionMethod === TIME_SERIES_PREDICTION) {
-        return firstHalf && timeSeriesPrediction.includes(job.config.predictive_model.prediction_method);
+        return firstHalf && secondHalf && timeSeriesPrediction.includes(job.config.predictive_model.prediction_method);
     }
 };
 

@@ -15,7 +15,6 @@ import {
     TIME_SERIES_PREDICTION
 } from '../src/reference';
 import ResultWrapper from '../src/components/validation/ResultWrapper';
-import {label1} from './Advanced';
 import LabellingHeaderCard from '../src/components/Labelling/LabellingHeaderCard';
 
 const splitLabels = [{value: 1, label: 'Split #1'}, {value: 2, label: 'Split #2'}];

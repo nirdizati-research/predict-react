@@ -67,7 +67,7 @@ const regressionPayload = {
     'regression.randomForest': {},
     'regression.xgboost': {},
     'regression.nn': {},
-    'timeSeriesPrediction.rnn': {}
+    'time_series_prediction.rnn': {}
   }
 };
 
