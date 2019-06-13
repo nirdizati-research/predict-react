@@ -77,7 +77,7 @@ export const clustering = [
     {
         label: 'None',
         value: NO_CLUSTER,
-        message: 'No clustering and train a single model'
+        message: 'No clustering is applied and a single model is trained'
     },
     {
         label: 'K-means clustering',
@@ -288,12 +288,12 @@ export const padding = [
     {
         label: 'No padding',
         value: NO_PADDING,
-        message: 'Traces with length less then the specified prefix length will be discarded'
+        message: 'Traces with length lower than the specified prefix length will be discarded'
     },
     {
         label: 'With 0 padding',
         value: ZERO_PADDING,
-        message: 'Traces with length less then the specified prefix length will padded with 0'
+        message: 'Traces with length lower than the specified prefix length will be padded with 0'
     }
 ];
 
@@ -305,12 +305,12 @@ const prefixTypes = [
     {
         label: 'Up to the prefix length',
         value: UP_TO,
-        message: 'Create multiple tasks from the specified prefix length 1 up to this value'
+        message: 'A different task per prefix length: from prefix length 1 up to the specified prefix length'
     },
     {
         label: 'All in one dataset',
         value: ALL_IN_ONE,
-        message: 'Creates one task with all prefixes up to the specified prefix length in one dataset'
+        message: 'A single task for all the prefix lengths: from prefix length 1 up to the specified prefix length'
     }
 ];
 

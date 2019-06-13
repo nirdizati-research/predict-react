@@ -17,7 +17,9 @@ const Incremental = (props) => {
     const helpText = () => {
         if (props.predictionMethod === CLASSIFICATION) {
             return <div key='key' className="md-cell md-cell--12"><p>
-                When training one might want to update a pre-existing model instead of training a brand new model.
+                Incremental learning allows for updating an already trained predictive model with new training
+                traces at runtime. The algorithms incrementally update the starting predictive model rather than
+                creating a new one from scratch.
             </p>
             </div>;
         } else {

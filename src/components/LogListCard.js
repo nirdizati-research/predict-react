@@ -16,7 +16,7 @@ const LogListCard = (props) => {
             <p>Choose a log to see the details</p>
             <SelectField
                 id="log-name-select"
-                placeholder="log.xes"
+                placeholder="No log selected"
                 className="md-cell"
                 menuItems={itemsWithLabel}
                 position={SelectField.Positions.BELOW}
