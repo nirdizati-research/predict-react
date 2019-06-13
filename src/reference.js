@@ -8,7 +8,7 @@ export const CLASSIFICATION = 'classification';
 export const REGRESSION = 'regression';
 export const LABELLING = 'labelling';
 export const ENCODING = 'encoding';
-export const TIME_SERIES_PREDICTION = 'timeSeriesPrediction';
+export const TIME_SERIES_PREDICTION = 'time_series_prediction';
 
 export const SPLIT_SINGLE = 'single';
 export const SPLIT_DOUBLE = 'double';
