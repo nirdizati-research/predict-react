@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {TextField} from 'react-md';
 import SelectField from 'react-md/lib/SelectFields';
+import {RNN, TIME_SERIES_PREDICTION} from '../../../reference';
 
 // TODO: check where to put this
 const rnnTypes = [
@@ -23,7 +24,7 @@ const defaults = {
 
 /* eslint-disable no-invalid-this */
 const TimeSeriesPredictionRNN = (props) => {
-    const methodConfig = `timeSeriesPrediction.rnn`;
+    const methodConfig = `${TIME_SERIES_PREDICTION}.${RNN}`;
 
     // TODO: which parameters to put?
     const nUnits = <TextField

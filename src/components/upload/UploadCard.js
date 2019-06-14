@@ -6,7 +6,7 @@ const UploadCard = () => {
   return <Card className="md-block-centered">
     <CardTitle title="Single log file upload"/>
     <CardText>
-      <h3>After upload create a Split with this log!</h3>
+      <h3>Once uploaded, you can split the log into training and validation log files.</h3>
       <p>Supported log file format are <span className="md-font-semibold">.xes and .xes.gz</span></p>
       Upload a single log file.
       Metrics for the charts on Log details page will be calculated during the upload and this process may take

@@ -21,9 +21,9 @@ const HyperOpt = (props) => {
   const methodConfig = 'hyperparameter_optimizer';
 
   const helpText = <p key="gristel" className="md-cell md-cell--12">
-    Hyper optimization tries to guess the optimal method configuration
-    to achieve the best performance metric value. It tries to optimize all the method values visible here.
-    Maximum evaluations should be high to achieve the best result.</p>;
+    Hyperparameter optimization aims at identifying the optimal method configuration to achieve the best performance
+      metric value. It aims at optimizing the value of all the reported hyperparameters. The maximum number of
+      evaluation runs should be high enough to achieve good results.</p>;
 
   const hyperparameterOptmizer = <SelectField
     key="type"

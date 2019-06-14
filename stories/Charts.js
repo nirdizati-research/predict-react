@@ -16,14 +16,6 @@ import {
     THRESHOLD_MEAN
 } from '../src/reference';
 
-
-const encoding1 = {
-    'method': 'simpleIndex',
-    'prefix_length': 1,
-    'padding': true,
-    'generation_type': 'only'
-};
-
 const traces = {
     '2011-10-01': 23,
     '2011-10-03': 119,
