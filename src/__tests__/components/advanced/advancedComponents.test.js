@@ -114,7 +114,7 @@ describe('Labelling', () => {
                                            onChange={onChange}/>);
 
       expect(element.find(SelectField).length).toBe(2);
-      expect(element.find(TextField).length).toBe(1);
+      expect(element.find(TextField).length).toBe(0);
       expect(element.find(SelectField).at(0).props().menuItems.length).toBe(4);
       expect(element.find(TextField).at(0).props().label).toBe('Threshold (seconds)');
     });
@@ -125,7 +125,7 @@ describe('Labelling', () => {
                                            onChange={onChange}/>);
 
       expect(element.find(SelectField).length).toBe(3);
-      expect(element.find(TextField).length).toBe(1);
+      expect(element.find(TextField).length).toBe(0);
       expect(element.find(SelectField).at(1).props().menuItems.length).toBe(2);
       expect(element.find(TextField).at(0).props().label).toBe('Threshold');
     });
