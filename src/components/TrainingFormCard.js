@@ -11,9 +11,9 @@ import FetchState from './FetchState';
 import {
     ADAPTIVE_TREE,
     CLASSIFICATION,
-    classificationMethods,
+    classificationMethods, clustering,
     clusteringMethods,
-    COMPLEX,
+    COMPLEX, controlCreator,
     DECISION_TREE,
     DURATION,
     encodingMethods,
@@ -362,14 +362,18 @@ class TrainingFormCard extends Component {
 
         const createModels = !this.props.isLabelForm ?
             <Checkbox id="create_models" name="create_models"
-                      label="Create and save models for runtime prediction"
+                      label="Create and save models for runtime and incremental prediction"
                       checked={this.state.create_models} inline
                       onChange={this.checkboxChange.bind(this)}/> : null;
 
-        const clusteringFragment =
+        const clusteringFragment = this.state.predictionMethod !== TIME_SERIES_PREDICTION ?
             <SelectionControlGroup type="checkbox" label="Clustering methods" name="clusterings" id="clusterings"
                                    onChange={this.checkboxChange.bind(this)} controls={clusteringMethods}
+                                   value={this.state.clusterings.join(',')} controlStyle={groupStyle}/>:
+            <SelectionControlGroup type="checkbox" label="Clustering methods" name="clusterings" id="clusterings"
+                                   onChange={this.checkboxChange.bind(this)} controls={controlCreator([clustering[0]])}
                                    value={this.state.clusterings.join(',')} controlStyle={groupStyle}/>;
+
 
         const filteredEncodingMethods = encodingMethods.filter(obj =>
             ((this.state.predictionMethod === TIME_SERIES_PREDICTION && [COMPLEX, SIMPLE_INDEX].includes(obj.value)) ||

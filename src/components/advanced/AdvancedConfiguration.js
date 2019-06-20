@@ -185,7 +185,7 @@ const AdvancedConfiguration = (props) => {
       return [addColumns(), ...kmeans(), hyperOpt(), incremental(),
           ...configMapper(props.classification, classificationConfigMap)];
     } else if (props.predictionMethod === TIME_SERIES_PREDICTION) {
-        return [...kmeans(), incremental(),
+        return [
             ...configMapper(props.timeSeriesPrediction, timeSeriesPredictionConfigMap)];
     } else {
       return [];
