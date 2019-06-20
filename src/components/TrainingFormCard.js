@@ -11,17 +11,21 @@ import FetchState from './FetchState';
 import {
     ADAPTIVE_TREE,
     CLASSIFICATION,
-    classificationMethods, clustering,
+    classificationMethods,
+    clustering,
     clusteringMethods,
-    COMPLEX, controlCreator,
+    COMPLEX,
+    controlCreator,
     DECISION_TREE,
     DURATION,
     encodingMethods,
+    FREQUENCY,
     HOEFFDING_TREE,
     KMEANS,
     KNN,
     LABELLING,
     LASSO,
+    LAST_PAYLOAD,
     LINEAR,
     MULTINOMIAL_NAIVE_BAYES,
     NN,
@@ -376,8 +380,18 @@ class TrainingFormCard extends Component {
 
 
         const filteredEncodingMethods = encodingMethods.filter(obj =>
-            ((this.state.predictionMethod === TIME_SERIES_PREDICTION && [COMPLEX, SIMPLE_INDEX].includes(obj.value)) ||
-                (this.state.predictionMethod !== TIME_SERIES_PREDICTION))
+            (
+                // eslint-disable-next-line max-len
+                (this.state.predictionMethod === TIME_SERIES_PREDICTION && [COMPLEX, SIMPLE_INDEX].includes(obj.value)) ||
+                // eslint-disable-next-line max-len
+                (this.state.predictionMethod !== TIME_SERIES_PREDICTION && this.state.classification.includes(NN) && [COMPLEX, SIMPLE_INDEX, FREQUENCY, LAST_PAYLOAD].includes(obj.value)) ||
+                // eslint-disable-next-line max-len
+                (this.state.predictionMethod !== TIME_SERIES_PREDICTION && this.state.classification.includes(HOEFFDING_TREE) && [COMPLEX, SIMPLE_INDEX, FREQUENCY, LAST_PAYLOAD].includes(obj.value)) ||
+                // eslint-disable-next-line max-len
+                (this.state.predictionMethod !== TIME_SERIES_PREDICTION && this.state.classification.includes(ADAPTIVE_TREE) && [COMPLEX, SIMPLE_INDEX, FREQUENCY, LAST_PAYLOAD].includes(obj.value)) ||
+                // eslint-disable-next-line max-len
+                (this.state.predictionMethod !== TIME_SERIES_PREDICTION && !(this.state.classification.includes(ADAPTIVE_TREE) || this.state.classification.includes(HOEFFDING_TREE) || this.state.classification.includes(NN)))
+            )
         );
 
         const encodingFragment = !this.props.isLabelForm ?
