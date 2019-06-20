@@ -12,6 +12,7 @@ import {
     regLabelControls,
     REGRESSION,
     REMAINING_TIME,
+    THRESHOLD_MEAN,
     thresholdControls,
     TIME_SERIES_PREDICTION,
     timeSeriesPredLabelControls
@@ -84,7 +85,7 @@ const Labelling = (props) => {
             if (label.type === DURATION) {
                 thresholdLabel = thresholdLabel + ' (seconds)';
             }
-            const threshold = <TextField
+            const threshold = label.threshold_type !== THRESHOLD_MEAN ? <TextField
                 key="threshold"
                 id="threshold"
                 label={thresholdLabel}
@@ -93,7 +94,7 @@ const Labelling = (props) => {
                 onChange={props.onChange.bind(this, {methodConfig, key: 'threshold', isNumber: true})}
                 min={0}
                 className="md-cell md-cell--3"
-            />;
+            /> : null;
 
             return [thresholdType, threshold];
         } else {
