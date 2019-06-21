@@ -54,7 +54,7 @@ import AdvancedConfiguration from './advanced/AdvancedConfiguration';
 import {classificationMetrics, regressionMetrics, timeSeriesPredictionMetrics} from './advanced/advancedConfig';
 import {advancedConfigChange} from '../util/advancedFormInput';
 
-const defaultPrefix = 1;
+const defaultPrefix = 2;
 const groupStyle = {height: 'auto'};
 
 const initialState = (props) => {

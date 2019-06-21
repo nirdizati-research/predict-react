@@ -80,12 +80,12 @@ class PrefixSelector extends Component {
           type="number"
           value={this.props.encoding.prefix_length}
           onChange={this.onPrefixChange.bind(this)}
-          min={0}
+          min={2}
           max={this.props.maxEventsInLog}
           required
           className={cl}
           error={this.state.error}
-          errorText={`Can't be greater than log maximum prefix length ${this.props.maxEventsInLog}`}
+          errorText={`Can't be greater than log maximum prefix length ${this.props.maxEventsInLog} and smaller then 2`}
       />
     </div>;
   }
