@@ -30,7 +30,7 @@ const regressionPayload = {
     'encodings': ['simpleIndex'],
     'encoding': {
       'padding': 'no_padding',
-      'prefix_length': 1,
+      'prefix_length': 2,
       'generation_type': 'only',
       'add_remaining_time': false,
       'add_elapsed_time': false,
@@ -82,7 +82,7 @@ const labelPayload = {
     },
     'encoding': {
       'padding': 'no_padding',
-      'prefix_length': 1,
+      'prefix_length': 2,
       'generation_type': 'only',
       'add_remaining_time': false,
       'add_elapsed_time': false,
