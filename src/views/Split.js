@@ -9,6 +9,7 @@ import SingleSplitTableCard from '../components/split/SingleSplitTableCard';
 import DoubleSplitTableCard from '../components/split/DoubleSplitTableCard';
 import {fetchStatePropType, logPropType, splitPropType} from '../propTypes';
 import {mergeSplitWithLogName} from '../util/unNormalize';
+import ReactGA from 'react-ga';
 
 class Split extends Component {
     componentDidMount() {
@@ -16,6 +17,7 @@ class Split extends Component {
         this.props.onRequestLogList();
         // Request on every page refresh. Not ideal
         this.props.onRequestSplitList();
+        ReactGA.initialize('UA-143444044-1');
     }
 
     render() {

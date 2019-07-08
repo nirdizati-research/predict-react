@@ -36,10 +36,11 @@ const Labelling = (props) => {
                     <p>
                         When using duration, the threshold is an integer in seconds. If the remaining time is below this
                         threshold it is classified as <code>True</code> or Fast. Times above the threshold are
-                        classified
-                        as <code>False</code> or Slow.
+                        classified as <code>False</code> or Slow.
                     </p>
                     <p>Number attributes below the threshold are set as <code>True</code>.</p>
+                    <p className="md-red-500">Please remember that a threshold too low, or too high, could end up with a
+                       labeling with only <code>True</code>, or <code>False</code>, labels.</p>
                 </div>;
             }
             case TIME_SERIES_PREDICTION: {

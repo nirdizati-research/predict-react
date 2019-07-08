@@ -21,6 +21,7 @@ import {getLogProperties} from '../util/splitStuff';
 import PrefixLineChart from '../components/chart/PrefixLineChart';
 import {mapJobs, splitsToLabel} from '../util/unNormalize';
 import {logListRequested} from '../actions/LogActions';
+import ReactGA from 'react-ga';
 
 class Labelling extends Component {
     constructor(props) {
@@ -48,6 +49,7 @@ class Labelling extends Component {
             this.props.onRequestSplitList();
             this.props.onRequestJobs();
         }
+        ReactGA.initialize('UA-143444044-1');
     }
 
     onJobClick(id) {

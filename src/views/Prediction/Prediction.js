@@ -14,6 +14,7 @@ import {mapJobs} from '../../util/unNormalize';
 import {CardText} from 'react-md/lib/Cards/index';
 import ModelSelector from '../../components/prediction/ModelSelector';
 import {Card} from 'react-md';
+import ReactGA from 'react-ga';
 
 class Prediction extends Component {
   onChangeLog(logId) {
@@ -34,6 +35,7 @@ class Prediction extends Component {
       this.props.onRequestLogList();
       this.props.onRequestJobs();
     }
+    ReactGA.initialize('UA-143444044-1');
   }
 
   requestJobsRun() {

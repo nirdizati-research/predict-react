@@ -9,6 +9,7 @@ import {fetchStatePropType, modelPropType, selectLabelProptype} from '../../prop
 import {getLogProperties} from '../../util/splitStuff';
 import {logListRequested} from '../../actions/LogActions';
 import {MODEL_CHANGED, modelsRequested} from '../../actions/ModelActions';
+import ReactGA from 'react-ga';
 
 class Training extends Component {
   constructor() {
@@ -23,6 +24,7 @@ class Training extends Component {
     this.props.onRequestModels();
     this.props.onRequestLogList();
     this.props.onRequestSplitList();
+    ReactGA.initialize('UA-143444044-1');
   }
 
   onSplitChange(value) {

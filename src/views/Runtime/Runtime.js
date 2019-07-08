@@ -14,6 +14,7 @@ import {modelsToString} from '../../util/dataReducers';
 import {CardText} from 'react-md/lib/Cards/index';
 import ModelSelector from '../../components/prediction/ModelSelector';
 import {Card} from 'react-md';
+import ReactGA from 'react-ga';
 
 class Runtime extends Component {
   onChangeLog(logId) {
@@ -32,6 +33,7 @@ class Runtime extends Component {
       this.props.onRequestLogList();
       this.props.onRequestTraces();
     }
+    ReactGA.initialize('UA-143444044-1');
   }
 
   requestTraces() {

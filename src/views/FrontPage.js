@@ -6,6 +6,7 @@ import {ClassificationMethodsCard} from '../components/static/ClassificationMeth
 import {RegressionMethodsCard} from '../components/static/RegressionMethodsCard';
 import {HyperOptCard} from '../components/static/HyperOptCard';
 import {DemoVideoCard} from '../components/static/DemoVideoCard';
+import ReactGA from 'react-ga';
 
 class FrontPage extends Component {
     render() {
@@ -19,6 +20,9 @@ class FrontPage extends Component {
                 <RegressionMethodsCard/>
             </div>
         );
+    }
+    componentDidMount() {
+       ReactGA.initialize('UA-143444044-1');
     }
 }
 
