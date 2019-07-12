@@ -19,6 +19,7 @@ class Upload extends Component {
     }
     componentDidMount() {
         ReactGA.initialize('UA-143444044-1');
+        ReactGA.pageview(window.location.pathname + window.location.search);
     }
 }
 

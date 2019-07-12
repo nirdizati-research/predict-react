@@ -11,6 +11,7 @@ import {Checkbox} from 'react-md/lib/SelectionControls/index';
 import {logListRequested} from '../../actions/LogActions';
 import {splitsRequested} from '../../actions/SplitActions';
 import {mapJobs} from '../../util/unNormalize';
+import ReactGA from 'react-ga';
 
 // Greater numbers first
 const compare = (a, b) => {
@@ -42,6 +43,8 @@ class JobStatus extends Component {
     }
 
     this.createInterval();
+    ReactGA.initialize('UA-143444044-1');
+    ReactGA.pageview(window.location.pathname + window.location.search);
   }
 
   createInterval() {

@@ -54,7 +54,7 @@ class JobStatusTable extends PureComponent {
             </TableHeader>
             <TableBody>
                 {this.state.slicedData.map(
-                    ({id, type, status, created_date, modified_date, splitName, config, error}) => (
+                    ({id, type, status, created_date, modified_date, split, config, error}) => (
                         <TableRow key={id} selectable={false}>
                             <TableColumn numeric>{id}</TableColumn>
                             {this.props.showDeleteButton ?
@@ -65,7 +65,7 @@ class JobStatusTable extends PureComponent {
                             <TableColumn>{type}</TableColumn>
                             <TableColumn>{new Date(created_date).toLocaleString()}</TableColumn>
                             <TableColumn>{new Date(modified_date).toLocaleString()}</TableColumn>
-                            <TableColumn>{splitName}</TableColumn>
+                            <TableColumn>{split.id}</TableColumn>
                             <TableColumn>{error}</TableColumn>
                             <TableColumn grow><JsonHolder data={config}/></TableColumn>
                         </TableRow>
