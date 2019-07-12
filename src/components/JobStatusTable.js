@@ -65,7 +65,7 @@ class JobStatusTable extends PureComponent {
                             <TableColumn>{type}</TableColumn>
                             <TableColumn>{new Date(created_date).toLocaleString()}</TableColumn>
                             <TableColumn>{new Date(modified_date).toLocaleString()}</TableColumn>
-                            <TableColumn>{split.id}</TableColumn>
+                            <TableColumn grow><JsonHolder data={split}/></TableColumn>
                             <TableColumn>{error}</TableColumn>
                             <TableColumn grow><JsonHolder data={config}/></TableColumn>
                         </TableRow>
