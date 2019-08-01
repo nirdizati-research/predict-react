@@ -8,11 +8,11 @@ import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import {splitPropType} from '../../propTypes';
 
 const SingleSplitTableCard = (props) => {
-  const headers = ['id', 'Log', 'Splitting method', 'Test set %'];
+  const headers = ['id', 'Log', 'Splitting method', 'Validation set %'];
 
   return (
     <Card className="md-block-centered">
-      <CardTitle title="Split configurations from single logs"/>
+      <CardTitle title="Training and validation log failes from single log"/>
       <CardText>
         <DataTable baseId="simple-pagination" plain>
           <TableHeader>

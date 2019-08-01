@@ -43,10 +43,10 @@ class SplitFormCard extends Component {
 
     return (
       <Card className="md-block-centered">
-        <CardTitle title="Create split"/>
+        <CardTitle title="Split a log file into training and validation log"/>
         <CardText>
-          <p>Select log and configuration to create test set. The table below will be updated when a split has
-            been successfully created.</p>
+          <p>Select a log file and a configuration to split it. The table &quot;Training and validation log file from
+            single log&quot; will be updated once the log file has been successfully split.</p>
           <div className="md-grid">
             <SelectField
               id="log-name-select"
@@ -60,7 +60,7 @@ class SplitFormCard extends Component {
             <SelectField
               id="split-type-select"
               className="md-cell md-cell--4"
-              label="How to split the log"
+              label="Splitting method"
               menuItems={splittingMethods}
               position={SelectField.Positions.BELOW}
               onChange={this.splittingMethodChange.bind(this)}

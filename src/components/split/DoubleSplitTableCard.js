@@ -8,13 +8,13 @@ import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import {splitPropType} from '../../propTypes';
 
 const DoubleSplitTableCard = (props) => {
-  const headers = ['id', 'Training log', 'Test log'];
+  const headers = ['id', 'Training log', 'Validation log'];
 
   return (
     <Card className="md-block-centered">
-      <CardTitle title="Predefined splits"/>
+      <CardTitle title="Training and validation log files from separate log files"/>
       <CardText>
-        Logs uploaded as a separate training and test set.
+        Logs uploaded as separate training and validation log files
         <DataTable baseId="simple-pagination" plain>
           <TableHeader>
             <TableRow selectable={false}>

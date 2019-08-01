@@ -38,7 +38,7 @@ export default class UploadDouble extends PureComponent {
     const testFile = data.get('testSet');
     const trainingFile = data.get('trainingSet');
     if (!testFile || !testFile.name) {
-      this.addToast('A test file is required.');
+      this.addToast('A validation file is required.');
       return;
     } else if (!trainingFile || !trainingFile.name) {
       this.addToast('A training file is required.');
@@ -210,7 +210,7 @@ export default class UploadDouble extends PureComponent {
           {progressTestBar}
           <FileUpload
             id="server-upload-test"
-            label="Choose test set"
+            label="Choose validation set"
             required
             accept=".xes, .xes.gz"
             onLoad={this.handleTestLoad}

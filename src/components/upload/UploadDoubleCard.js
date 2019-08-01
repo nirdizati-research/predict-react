@@ -4,7 +4,7 @@ import UploadDouble from './UploadDouble.jsx';
 
 const UploadDoubleCard = () => {
   return <Card className="md-block-centered">
-    <CardTitle title="Training and test set upload"/>
+    <CardTitle title="Training and validation log upload"/>
     <CardText>
       <p>Supported log file formats are <span className="md-font-semibold">.xes and .xes.gz</span></p>
       Upload two log files.
