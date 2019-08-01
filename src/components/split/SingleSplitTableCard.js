@@ -12,7 +12,7 @@ const SingleSplitTableCard = (props) => {
 
   return (
     <Card className="md-block-centered">
-      <CardTitle title="Training and validation log failes from single log"/>
+      <CardTitle title="Training and validation log files from single log"/>
       <CardText>
         <DataTable baseId="simple-pagination" plain>
           <TableHeader>
