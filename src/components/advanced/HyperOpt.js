@@ -52,7 +52,7 @@ const HyperOpt = (props) => {
   const maxEvals = <TextField
     key="max_evals"
     id="max_evals"
-    label="Number of evaluation runs"
+    label="Maximum number of evaluation runs"
     type="number"
     defaultValue={defaults.max_evaluations}
     onChange={props.onChange.bind(this, {methodConfig, key: 'max_evaluations', isNumber: true})}

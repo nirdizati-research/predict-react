@@ -69,7 +69,7 @@ class SplitFormCard extends Component {
             <div className="md-cell md-cell--4">
               <Slider
                 id="test-size"
-                label="Test set percentage. Default 0.2.  Min = 0, Max = 1, Step = 0.05"
+                label="Validation log percentage. Default 0.2.  Min = 0, Max = 1, Step = 0.05"
                 min={0}
                 max={1}
                 step={0.05}

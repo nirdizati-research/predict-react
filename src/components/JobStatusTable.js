@@ -30,9 +30,10 @@ class JobStatusTable extends PureComponent {
     }
 
     getHeaderColumns() {
-        let headers = ['id', 'Status', 'Type', 'Created date', 'Modified date', 'Split', 'Error', 'Configuration'];
+        let headers = [
+            'id', 'Status', 'Type', 'Creation date', 'Update date', 'Split configuration', 'Error', 'Configuration'];
         if (this.props.showDeleteButton) {
-            headers = ['id', '', 'Status', 'Type', 'Created date', 'Modified date', 'Split', 'Error', 'Configuration'];
+            headers = ['id', '', 'Status', 'Type', 'Creation date', 'Update date', 'Split', 'Error', 'Configuration'];
         }
 
         return headers.map((header) => {

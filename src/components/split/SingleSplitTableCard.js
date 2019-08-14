@@ -8,7 +8,7 @@ import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import {splitPropType} from '../../propTypes';
 
 const SingleSplitTableCard = (props) => {
-  const headers = ['id', 'Log', 'Splitting method', 'Validation set %'];
+  const headers = ['id', 'Log', 'Splitting method', 'Validation log %'];
 
   return (
     <Card className="md-block-centered">

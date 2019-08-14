@@ -214,7 +214,7 @@ const threshold = [
     {
         label: 'Custom',
         value: THRESHOLD_CUSTOM,
-        message: 'Use the threshold value below'
+        message: 'Use the threshold value nearby'
     }
 ];
 
@@ -236,7 +236,7 @@ const regressionLabelTypes = [
     },
     {
         value: ATTRIBUTE_NUMBER,
-        label: 'Trace number attribute',
+        label: 'Trace numerical attributes',
     }
 ];
 
@@ -253,7 +253,7 @@ const classificationLabelTypes = [
     },
     {
         value: ATTRIBUTE_NUMBER,
-        label: 'Trace number attribute',
+        label: 'Trace numerical attributes',
         message: 'Binary classification'
     },
     {

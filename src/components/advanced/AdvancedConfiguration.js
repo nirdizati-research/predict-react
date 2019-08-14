@@ -166,7 +166,7 @@ const AdvancedConfiguration = (props) => {
   const incremental = () => {
     if (props.classification.concat(props.regression)
         .some(element => INCREMENTAL_CLASSIFIERS.includes(element))) {
-      return [makeExpander('Increments', '',
+      return [makeExpander('Incremental learning', '',
           <Incremental onChange={props.onChange}
                        classificationModels={props.classificationModels}
                        regressionModels={props.regressionModels}

@@ -20,7 +20,7 @@ export default (
             <Route path="home" name="Home" component={FrontPage}/>
             <Route path="logs" name="Log details" component={Logs}/>
             <Route path="upload" name="Upload" component={Upload}/>
-            <Route path="split" name="Split" component={Split}/>
+            <Route path="split" name="Splitting" component={Split}/>
             <Route path="label" name="Labeling" component={Labelling}/>
             <Route path="jobs" name="Task status" component={JobStatus}/>
             <Route path="training" name="Training" component={Training}/>

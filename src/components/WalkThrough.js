@@ -66,7 +66,7 @@ class WalkThrough extends PureComponent {
                         <GuideItem
                             avatar={<Avatar suffix="yellow">3</Avatar>}
                             button={<Button flat primary href={'/#/split'}
-                                            iconEl={<FontIcon>swap_horiz</FontIcon>}>Split</Button>}
+                                            iconEl={<FontIcon>swap_horiz</FontIcon>}>Splitting</Button>}
                             title="Splitting"
                             text="Split the log file into training and validation log files"
                             threeLines

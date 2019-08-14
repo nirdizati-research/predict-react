@@ -102,7 +102,7 @@ const ValidationHeaderCard = (props) => {
     <CardTitle title="Validation selection">
       <SelectField
           id="log-name-select"
-          placeholder="log.xes"
+          placeholder="No log selected"
           className="md-cell"
           menuItems={props.splitLabels}
           position={SelectField.Positions.BELOW}

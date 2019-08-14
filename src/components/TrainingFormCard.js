@@ -356,7 +356,7 @@ class TrainingFormCard extends Component {
     render() {
         let warning = null;
         if (this.state.displayWarning) {
-            warning = <p className="md-text md-text--error">Select at least one from every option</p>;
+            warning = <p className="md-text md-text--error">Select at least one option for each method</p>;
         }
 
         const predictionControls =
