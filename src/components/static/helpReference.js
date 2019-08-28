@@ -6,8 +6,8 @@ const helpReference = [
   },
   {
     pathname: '/upload',
-    texts: ['The upload page is used for uploading a log file. The user has two options when uploading the log file: it can be either a single log file or it can be two log files, where one is a training and the other is a test set. When uploading a single log file the user must specify how the training and test set are generated. This is configured in the splitting phase. Uploading two log files allows the user to fine-tune the contents of the training and test set. When uploading two log files the user can proceed to the Labelling or Training pages without creating the split.',
-      'The log files can be in plain and gzip compressed XES and MXML formats. During the upload process, a record of the log file is made in the database and the log file is processed to extract the data to create the charts on the Log details page.']
+    texts: ['The upload page is used for uploading a log file. The user has two options when uploading the log file: it can be either a single log file or it can be two log files, where one is a training and the other is a validation set. When uploading a single log file the user must specify how the training and validation set are generated. This is configured in the splitting phase. Uploading two log files allows the user to fine-tune the contents of the training and validation set. When uploading two log files the user can proceed to the Labelling or Training pages without creating the split.',
+      'The log files can be in plain and gzip compressed XES formats. During the upload process, a record of the log file is made in the database and the log file is processed to extract the data to create the charts on the Log details page.']
   },
   {
     pathname: '/logs',
@@ -15,14 +15,14 @@ const helpReference = [
   },
   {
     pathname: '/split',
-    texts: ['The splitting page is used to split an uploaded log file into a training and a test set. A split is a single log file with a configuration for separating it into a training and test set. A split can also represent a training log and test log file, which are uploaded separately. This allows the user to reuse the same split configuration with multiple labelling and training tasks.',
-      'To create a split, the user must select a log file, a split type and the training/test set percentage. The application supports four split types: sequential order, temporal order, random order and strict temporal order.',
+    texts: ['The splitting page is used to split an uploaded log file into a training and a validation set. A split is a single log file with a configuration for separating it into a training and validation set. A split can also represent a training log and validation log file, which are uploaded separately. This allows the user to reuse the same split configuration with multiple labelling and training tasks.',
+      'To create a split, the user must select a log file, a split type and the training/validation set percentage. The application supports four split types: sequential order, temporal order, random order and strict temporal order.',
       'After the splits have been created, the configuration can be verified in the split page tables.'
     ]
   },
   {
     pathname: '/label',
-    texts: ['Nirdizati Research uses classification methods on an event log to predict the value of a given label. Due to the amount of configuration options, the application provides a page to try out different configurations for labelling types, prefix lengths and log padding types. This allows the user to see the distribution of labels in an encoded log file before applying data mining methods. For example, using the "no padding" option will mean that a high prefix length will decrease the amount of total traces in the training sets, leading to different label counts.',
+    texts: ['Nirdizati Research uses classification methods on an event log to predict the value of a given label. Due to the amount of configuration options, the application provides a page to try out different configurations for labelling types, prefix lengths and log padding types. This allows the user to see the distribution of labels in an encoded log file before applying data mining methods.',
       'After selecting the labelling configuration and submitting the labelling task, the user is directed to the Tasks page. When the labelling task has been completed, the results can be viewed on the Labelling page.',
       'The labelling task results can be filtered by the Split, the label type, the threshold type, the attribute name and prefix lengths. All available custom thresholds are available in a dropdown menu, so the user does not have to remember the exact threshold value.',
       'Below the filtering options there is a line chart that provides a high level overview of the count of labels.',
@@ -31,7 +31,7 @@ const helpReference = [
   },
   {
     pathname: '/training',
-    texts: ['The training page is where the user creates tasks to apply machine learning methods on an event log. First the user must choose the Split that contains the training and test set. The next choice, depending on the prediction task type, is whether to use regression to predict numeric values or classification to predict categorical values. The application also offers a choice for encoding options, clustering methods, learning methods and labelling.',
+    texts: ['The training page is where the user creates tasks to apply machine learning methods on an event log. First the user must choose the Split that contains the training and validation set. The next choice, depending on the prediction task type, is whether to use regression to predict numeric values or classification to predict categorical values. The application also offers a choice for encoding options, clustering methods, learning methods and labelling.',
       'The application uses default parameters for each machine mining method. However, users can change the selection of these parameters or find the best configuration using hyperparameter optimization. Additional temporal and inter-case features can be added to the encoded log file.',
       'After choosing the all the required inputs, the prediction task will be visible on the Task status page.',
       'Multiple prediction tasks can be generated all together. A task will be created for each selected learning method, clustering method, encoding method and prefix length. By choosing all available options with hyperparameter optimization, the user can create all possible prediction tasks with the most suitable configuration by clicking the "Submit" button only once.'

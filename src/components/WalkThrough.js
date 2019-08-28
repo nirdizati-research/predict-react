@@ -44,7 +44,7 @@ class WalkThrough extends PureComponent {
                     hyperparmeter
                     optimization as well as runtime feedback to the user.</p>
 
-                <p>The standard procedure to be followed for using the application is summarized in the steps below.</p>
+                <p>The standard procedure to be followed to use the application is summarized in the steps below.</p>
                 {rotate(this.state.other)}
                 <div className="md-grid">
                     <List className="md-cell md-cell--12 md-cell--8-tablet">

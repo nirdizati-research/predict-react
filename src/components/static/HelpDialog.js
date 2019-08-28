@@ -5,10 +5,10 @@ import {DialogContainer} from 'react-md';
 
 const contentProps = {id: 'scrolling-content-dialog-content'};
 
-const thesisUrl = 'https://comserv.cs.ut.ee/ati_thesis/datasheet.php?id=62131&year=2018';
+const thesisUrl = 'http://nirdizati.org/nirdizati-research/';
 
 const actions = [{
-  label: 'Thesis Documentation',
+  label: 'Online Resources',
   primary: true,
   onClick: () => window.open(thesisUrl),
 }];
@@ -19,11 +19,7 @@ const HelpDialog = (props) => {
       {text}
     </p>
   ));
-  const header = <p key={0} className='md-caption md-text-justify'>This documentation is based on the Master thesis by
-    <span className="md-font-semibold"> Tõnis Kasekamp </span>
-    called "A Web Application to Support Researchers in Predictive Process Monitoring Tasks". The thesis contains better
-    documentation about the functionality, so look there for a full explanation about the configuration
-    options.</p>;
+  const header = <p key={0} className='md-caption md-text-justify'> </p>;
 
   return <DialogContainer
     id="help-dialog"

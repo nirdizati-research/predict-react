@@ -99,7 +99,7 @@ const ValidationHeaderCard = (props) => {
                              // TODO: fix value not changing
 
   return <Card className="md-block-centered">
-    <CardTitle title="Validation selection">
+    <CardTitle title="Validation">
       <SelectField
           id="log-name-select"
           placeholder="No log selected"
