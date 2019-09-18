@@ -69,8 +69,11 @@ const Labelling = (props) => {
 
     const threshold = (label) => {
         if (props.predictionMethod === REGRESSION || props.predictionMethod === TIME_SERIES_PREDICTION) {
+            label.threshold_type = 'none';
+            label.threshold = 0;
             return [];
         } else if ([REMAINING_TIME, ATTRIBUTE_NUMBER, DURATION].includes(label.type)) {
+            label.threshold_type = thresholdControls[0].value;
             const thresholdType = <SelectField
                 key="threshold_type"
                 id="threshold_type"
