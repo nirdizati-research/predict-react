@@ -6,6 +6,7 @@ import {logListRequested} from '../../actions/LogActions';
 import LineChartCard from '../../components/chart/LineChartCard';
 import {fetchStatePropType, logsStore} from '../../propTypes';
 import PetriNet from '../../components/chart/PetriNet';
+import ReactGA from 'react-ga';
 
 class Logs extends Component {
   constructor(props) {
@@ -22,6 +23,8 @@ class Logs extends Component {
       // set first log by default
       this.setState({log: this.props.logs.byId[this.props.logs.allIds[0]]});
     }
+    ReactGA.initialize('UA-143444044-1');
+    ReactGA.pageview(window.location.hash);
   }
 
 

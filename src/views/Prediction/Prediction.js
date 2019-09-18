@@ -36,6 +36,7 @@ class Prediction extends Component {
       this.props.onRequestJobs();
     }
     ReactGA.initialize('UA-143444044-1');
+    ReactGA.pageview(window.location.hash);
   }
 
   requestJobsRun() {

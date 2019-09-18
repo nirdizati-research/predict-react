@@ -34,6 +34,7 @@ class Runtime extends Component {
       this.props.onRequestTraces();
     }
     ReactGA.initialize('UA-143444044-1');
+    ReactGA.pageview(window.location.hash);
   }
 
   requestTraces() {
