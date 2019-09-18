@@ -44,7 +44,7 @@ class JobStatus extends Component {
 
     this.createInterval();
     ReactGA.initialize('UA-143444044-1');
-    ReactGA.pageview(window.location.hash);
+    ReactGA.pageview('/job_status');
   }
 
   createInterval() {
