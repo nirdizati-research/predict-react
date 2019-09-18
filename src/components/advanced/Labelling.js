@@ -40,7 +40,7 @@ const Labelling = (props) => {
                     </p>
                     <p>Numeric attributes below the threshold are set as <code>True</code>.</p>
                     <p className="md-red-500">A threshold too low, or too high, could end up with a
-                       labeling with only <code>True</code>, or <code>False</code>, labels.</p>
+                        labeling with only <code>True</code>, or <code>False</code>, labels.</p>
                 </div>;
             }
             case TIME_SERIES_PREDICTION: {

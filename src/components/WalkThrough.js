@@ -104,21 +104,37 @@ class WalkThrough extends PureComponent {
                             text="Compare the resulting models using different metrics and download the results"
                             threeLines
                         />
+                        <GuideItem
+                            avatar={<Avatar suffix="grey">8</Avatar>}
+                            button={<Button flat primary href={'/#/explanation'}
+                                            iconEl={<FontIcon>highlight</FontIcon>}>Explanation</Button>}
+                            title="Explanation"
+                            text="Create ante-hot and post-hoc explanation for the provided predictions"
+                            threeLines
+                        />
                         {/* <GuideItem*/}
-                            {/* avatar={<Avatar suffix="purple">8</Avatar>}*/}
-                            {/* title="Prediction"*/}
-                            {/* text={'Create a prediction of an incomplete trace'}*/}
-                            {/* button={<Button flat primary href={'/#/prediction'}*/}
-                            {/* iconEl={<FontIcon>work</FontIcon>}>Prediction</Button>}*/}
-                            {/* threeLines*/}
+                        {/* avatar={<Avatar suffix="purple">9</Avatar>}*/}
+                        {/* title="Prediction"*/}
+                        {/* text={'Create a prediction of an incomplete trace'}*/}
+                        {/* button={<Button flat primary href={'/#/prediction'}*/}
+                        {/* iconEl={<FontIcon>work</FontIcon>}>Prediction</Button>}*/}
+                        {/* threeLines*/}
                         {/* />*/}
                         {/* <GuideItem*/}
-                            {/* avatar={<Avatar suffix="pink">9</Avatar>}*/}
-                            {/* button={<Button flat primary href={'/#/runtime'}*/}
-                            {/* iconEl={<FontIcon>flash_on</FontIcon>}>Runtime</Button>}*/}
-                            {/* title="Runtime"*/}
-                            {/* text="Create continuous predictions for a stream of events"*/}
-                            {/* threeLines*/}
+                        {/* avatar={<Avatar suffix="pink">10</Avatar>}*/}
+                        {/* button={<Button flat primary href={'/#/runtime'}*/}
+                        {/* iconEl={<FontIcon>all_inclusive</FontIcon>}>Runtime</Button>}*/}
+                        {/* title="Runtime"*/}
+                        {/* text="Create continuous predictions for a stream of events"*/}
+                        {/* threeLines*/}
+                        {/* />*/}
+                        {/* <GuideItem*/}
+                        {/* avatar={<Avatar suffix="violet">11</Avatar>}*/}
+                        {/* button={<Button flat primary href={'/#/recommender'}*/}
+                        {/* iconEl={<FontIcon>directions</FontIcon>}>Recommender</Button>}*/}
+                        {/* title="Recommender"*/}
+                        {/* text="Recommend items based on the wishable situations"*/}
+                        {/* threeLines*/}
                         {/* />*/}
                     </List>
                 </div>

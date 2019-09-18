@@ -102,13 +102,13 @@ class Full extends Component {
                         primaryText: 'Validation',
                         leftIcon: <FontIcon>insert_chart</FontIcon>,
                     },
-                    // {
-                    //   component: Link,
-                    //   to: '/explanation',
-                    //   active: isActive('/explanation', pathname),
-                    //   primaryText: 'Model Explanation',
-                    //   leftIcon: <FontIcon>highlight</FontIcon>,
-                    // },
+                    {
+                        component: Link,
+                        to: '/explanation',
+                        active: isActive('/explanation', pathname),
+                        primaryText: 'Model Explanation',
+                        leftIcon: <FontIcon>highlight</FontIcon>,
+                    },
                     // {
                     //   component: Link,
                     //   to: '/prediction',
@@ -121,7 +121,14 @@ class Full extends Component {
                     //   to: '/runtime',
                     //   active: isActive('/runtime', pathname),
                     //   primaryText: 'Runtime',
-                    //   leftIcon: <FontIcon>flash_on</FontIcon>,
+                    //   leftIcon: <FontIcon>all_inclusive</FontIcon>,
+                    // },
+                    // {
+                    //   component: Link,
+                    //   to: '/recommender',
+                    //   active: isActive('/recommender', pathname),
+                    //   primaryText: 'Recommender',
+                    //   leftIcon: <FontIcon>directions</FontIcon>,
                     // },
                 ]}
 

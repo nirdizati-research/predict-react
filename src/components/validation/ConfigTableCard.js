@@ -12,43 +12,43 @@ import LabelConfigTable from './LabelConfigTable';
 
 
 class ConfigTableCard extends Component {
-  getTable() {
-    const flatJobs = this.props.jobs.map(jobToValidationTable);
-    switch (this.props.predictionMethod) {
-      case REGRESSION:
-        return <ConfigTable jobs={flatJobs}/>;
-      case CLASSIFICATION:
-        return <ConfigTable jobs={flatJobs}/>;
-        case TIME_SERIES_PREDICTION:
-            return <ConfigTable jobs={flatJobs}/>;
-      case LABELLING:
-        return <LabelConfigTable jobs={flatJobs} onClick={this.props.onClick}/>;
-      // no default
+    getTable() {
+        const flatJobs = this.props.jobs.map(jobToValidationTable);
+        switch (this.props.predictionMethod) {
+            case REGRESSION:
+                return <ConfigTable jobs={flatJobs}/>;
+            case CLASSIFICATION:
+                return <ConfigTable jobs={flatJobs}/>;
+            case TIME_SERIES_PREDICTION:
+                return <ConfigTable jobs={flatJobs}/>;
+            case LABELLING:
+                return <LabelConfigTable jobs={flatJobs} onClick={this.props.onClick}/>;
+            // no default
+        }
     }
-  }
 
-  getHelpText() {
-    if (this.props.predictionMethod === LABELLING) {
-      return <p>Select a row to see the corresponding label distribution on the histogram above on the right.</p>;
+    getHelpText() {
+        if (this.props.predictionMethod === LABELLING) {
+            return <p>Select a row to see the corresponding label distribution on the histogram above on the right.</p>;
+        }
+        return null;
     }
-    return null;
-  }
 
-  render() {
-    const table = this.props.jobs.length > 0 ? this.getTable() : null;
-    return <Card className="md-block-centered">
-      <CardTitle title="Configuration overview"/>
-      <CardText>
-        {this.getHelpText()}
-        {table}
-      </CardText>
-    </Card>;
-  }
+    render() {
+        const table = this.props.jobs.length > 0 ? this.getTable() : null;
+        return <Card className="md-block-centered">
+            <CardTitle title="Configuration overview"/>
+            <CardText>
+                {this.getHelpText()}
+                {table}
+            </CardText>
+        </Card>;
+    }
 }
 
 ConfigTableCard.propTypes = {
-  jobs: PropTypes.arrayOf(jobPropType).isRequired,
+    jobs: PropTypes.arrayOf(jobPropType).isRequired,
     predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION, LABELLING]).isRequired,
-  onClick: PropTypes.func
+    onClick: PropTypes.func
 };
 export default ConfigTableCard;

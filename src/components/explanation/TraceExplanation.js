@@ -5,43 +5,46 @@ import React from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import SelectField from 'react-md/lib/SelectFields';
 import PropTypes from 'prop-types';
-import FetchState from './../FetchState';
 import {fetchStatePropType, jobPropType, selectLabelProptype} from '../../propTypes';
-import LabelConfigTable from '../validation/LabelConfigTable';
-import {jobToValidationTable} from '../../util/dataReducers';
-// import ConfigTable from './ConfigTable';
+import {Button} from 'react-md';
 
-const ExplanationHeaderCard = (props) => {
-
-    // const checkBoxChange = (value, event) => {
-    //   props.prefixChange(event.target.value);
-    // };
-
+const TraceExplanation = (props) => {
     const selectChange = (value, _) => {
         props.splitChange(value);
     };
 
+    // const createEventChoosers = (position) => {
+    //     ...
+    // };
+
     return <Card className="md-block-centered">
-        <CardTitle title="Model Explanation">
+        <CardTitle title="Trace Explanation"/>
+        <CardText>
+            <h5>Visualising model number {props.clickedJobId}</h5>
+            <h4>Select the trace composition</h4>
             <SelectField
-                id="log-name-select"
-                placeholder="No log selected"
-                className="md-cell"
-                menuItems={props.splitLabels}
+                id="event 1"
+                placeholder="No event selected"
+                className="md-cell md-cell--1"
+                menuItems={
+                    [
+                        {value: '1', name: '1'},
+                        {value: '2', name: '2'}
+                    ]
+                }
                 position={SelectField.Positions.BELOW}
                 onChange={selectChange}
                 value={props.selectedSplitId}
-            /></CardTitle>
-        <CardText>
-            <h4>Available models</h4>
-            <LabelConfigTable jobs={props.jobs.map(jobToValidationTable)} onClick={props.onClick}/>
-            <FetchState fetchState={props.fetchState}/>
+            />
+            <h4>Resulting labeling</h4>
+            <Button raised secondary swapTheming onClick={null} className="buttons__group">THIS IS THE RESULTING
+                LABEL</Button>
         </CardText>
     </Card>;
 };
 
 
-ExplanationHeaderCard.propTypes = {
+TraceExplanation.propTypes = {
     jobs: PropTypes.arrayOf(jobPropType).isRequired,
     splitLabels: selectLabelProptype,
     fetchState: fetchStatePropType,
@@ -65,6 +68,6 @@ ExplanationHeaderCard.propTypes = {
         padding: PropTypes.string.isRequired
     }).isRequired,
     predictionMethod: PropTypes.string.isRequired,
-    onClick: PropTypes.func
+    clickedJobId: PropTypes.number.isRequired
 };
-export default ExplanationHeaderCard;
+export default TraceExplanation;

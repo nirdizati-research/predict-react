@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {TextField, Checkbox} from 'react-md';
+import {Checkbox, TextField} from 'react-md';
 import {CLASSIFICATION, MULTINOMIAL_NAIVE_BAYES} from '../../../reference';
 
 const defaults = {

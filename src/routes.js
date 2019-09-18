@@ -10,7 +10,7 @@ import Split from './views/Split';
 import Labelling from './views/Labelling';
 import FrontPage from './views/FrontPage';
 import Logs from './views/Logs/Logs';
-// import Explanation from './views/Explanation/Explanation';
+import Explanation from './views/Explanation/Explanation';
 // import Prediction from './views/Prediction/Prediction';
 // import Runtime from './views/Runtime/Runtime';
 
@@ -26,7 +26,7 @@ export default (
             <Route path="jobs" name="Task status" component={JobStatus}/>
             <Route path="training" name="Training" component={Training}/>
             <Route path="validation" name="Validation" component={Validation}/>
-            {/* <Route path="explanation" name="Explanation" component={Explanation}/>*/}
+            <Route path="explanation" name="Explanation" component={Explanation}/>
             {/* <Route path="prediction" name="Prediction" component={Prediction}/>*/}
             {/* <Route path="runtime" name="Runtime" component={Runtime}/>*/}
         </Route>

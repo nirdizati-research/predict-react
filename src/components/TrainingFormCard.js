@@ -215,7 +215,7 @@ class TrainingFormCard extends Component {
             // no default
         }
 
-        this.setState((prevState, ) => {
+        this.setState((prevState,) => {
             return {displayWarning: TrainingFormCard.displayWarningCheck(prevState)};
         });
     }
@@ -248,14 +248,15 @@ class TrainingFormCard extends Component {
         this.setState({
             predictionMethod: value, labelling: {...this.state.labelling, type: labelType},
             hyperparameter_optimizer: {
-                ...this.state.hyperparameter_optimizer, performance_metric}, ...initialAdvancedConfiguration()
+                ...this.state.hyperparameter_optimizer, performance_metric
+            }, ...initialAdvancedConfiguration()
         });
-        this.setState((prevState, ) => {
+        this.setState((prevState,) => {
             return {displayWarning: TrainingFormCard.displayWarningCheck(prevState)};
         });
     }
 
-    selectChange(value, ) {
+    selectChange(value,) {
         this.setState({split_id: value});
         this.props.onSplitChange(value);
     }
@@ -373,7 +374,7 @@ class TrainingFormCard extends Component {
         const clusteringFragment = this.state.predictionMethod !== TIME_SERIES_PREDICTION ?
             <SelectionControlGroup type="checkbox" label="Clustering methods" name="clusterings" id="clusterings"
                                    onChange={this.checkboxChange.bind(this)} controls={clusteringMethods}
-                                   value={this.state.clusterings.join(',')} controlStyle={groupStyle}/>:
+                                   value={this.state.clusterings.join(',')} controlStyle={groupStyle}/> :
             <SelectionControlGroup type="checkbox" label="Clustering methods" name="clusterings" id="clusterings"
                                    onChange={this.checkboxChange.bind(this)} controls={controlCreator([clustering[0]])}
                                    value={this.state.clusterings.join(',')} controlStyle={groupStyle}/>;
@@ -427,9 +428,9 @@ class TrainingFormCard extends Component {
 
         const otherSelector = this.props.isLabelForm ? null :
             <div className="md-cell md-cell--4">
-            {predictionControls}
-            {this.getMethodsFragment()}
-            {clusteringFragment}
+                {predictionControls}
+                {this.getMethodsFragment()}
+                {clusteringFragment}
             </div>;
 
         return (

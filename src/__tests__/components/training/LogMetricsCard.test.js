@@ -5,9 +5,9 @@ import {log} from '../../../../stories/Logs';
 
 let element;
 beforeEach(() => {
-  element = shallow(<LogMetricsCard log={log}/>);
+    element = shallow(<LogMetricsCard log={log}/>);
 });
 
 it('renders', () => {
-  expect(element).toBeDefined();
+    expect(element).toBeDefined();
 });

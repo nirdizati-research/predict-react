@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SelectField from 'react-md/lib/SelectFields';
-import {
-    CLASSIFICATION,
-} from '../../reference';
+import {CLASSIFICATION,} from '../../reference';
 import {selectLabelProptype} from '../../propTypes';
 import {modelsToString} from '../../util/dataReducers';
 
@@ -34,23 +32,23 @@ const Incremental = (props) => {
     const makeModelSelector = (onChange) => {
         const availableModels = [{value: null, label: 'None'}].concat(modelsToString(
             props.classificationModels
-            .filter(
-                (obj) => (
-                    props.classification.includes(obj.config.predictive_model['prediction_method'])
-                )
-            ))).concat(modelsToString(
+                .filter(
+                    (obj) => (
+                        props.classification.includes(obj.config.predictive_model['prediction_method'])
+                    )
+                ))).concat(modelsToString(
             props.regressionModels
-            .filter(
-                (obj) => (
-                    props.regression.includes(obj.config.predictive_model['prediction_method'])
-                )
-            ))).concat(modelsToString(
+                .filter(
+                    (obj) => (
+                        props.regression.includes(obj.config.predictive_model['prediction_method'])
+                    )
+                ))).concat(modelsToString(
             props.timeSeriesPredictionModels
-            .filter(
-                (obj) => (
-                    props.timeSeriesPrediction.includes(obj.config.predictive_model['prediction_method'])
-                )
-            ))
+                .filter(
+                    (obj) => (
+                        props.timeSeriesPrediction.includes(obj.config.predictive_model['prediction_method'])
+                    )
+                ))
         );
 
         return [<SelectField
