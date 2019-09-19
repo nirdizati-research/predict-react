@@ -42,7 +42,7 @@ class Validation extends Component {
             this.props.onRequestJobs();
         }
         ReactGA.initialize('UA-143444044-1');
-        ReactGA.pageview('/validation');
+        ReactGA.pageview(window.location.hash);
     }
 
     onChangeMethod(method) {

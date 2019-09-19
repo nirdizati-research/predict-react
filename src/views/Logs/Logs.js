@@ -24,7 +24,7 @@ class Logs extends Component {
       this.setState({log: this.props.logs.byId[this.props.logs.allIds[0]]});
     }
     ReactGA.initialize('UA-143444044-1');
-    ReactGA.pageview('/logs');
+    ReactGA.pageview(window.location.hash);
   }
 
 

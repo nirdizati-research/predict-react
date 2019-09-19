@@ -25,7 +25,7 @@ class Training extends Component {
     this.props.onRequestLogList();
     this.props.onRequestSplitList();
     ReactGA.initialize('UA-143444044-1');
-    ReactGA.pageview('/training');
+    ReactGA.pageview(window.location.hash);
   }
 
   onSplitChange(value) {
