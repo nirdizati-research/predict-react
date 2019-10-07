@@ -1,4 +1,4 @@
-import {MODEL_CHANGED, MODELS_FAILED, MODELS_REQUESTED, MODELS_RETRIEVED} from '../actions/ModelActions';
+import {REPLAY_MODEL_CHANGED, MODELS_FAILED, MODELS_REQUESTED, MODELS_RETRIEVED} from '../actions/ModelActions';
 import {LOG_CHANGED} from '../actions/LogActions';
 import {CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION} from '../reference';
 
@@ -65,7 +65,7 @@ const models = (state = initialState, action) => {
             };
         }
 
-        case MODEL_CHANGED: {
+        case REPLAY_MODEL_CHANGED: {
             if (action.method === REGRESSION) {
                 const regselected = action.modelId;
                 return {

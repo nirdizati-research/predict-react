@@ -8,12 +8,14 @@ import {
     FILTER_PREDICTION_METHOD_CHANGED,
     FILTER_PREFIX_LENGTH_CHANGED,
     FILTER_SPLIT_CHANGED,
+    REPLAY_SPLIT_CHANGED,
+    PREDICTION_SPLIT_CHANGED,
     JOB_DELETED,
     JOBS_FAILED,
     JOBS_REQUESTED,
     JOBS_RETRIEVED
 } from '../actions/JobActions';
-import {MODEL_CHANGED} from '../actions/ModelActions';
+import {PREDICTION_MODEL_CHANGED} from '../actions/ModelActions';
 import {JOB_RUN_CHANGED} from '../actions/RuntimeActions';
 import {
     ADAPTIVE_TREE,
@@ -67,6 +69,8 @@ const initialState = {
     prefixLengths: [],
     selectedPrefixes: [],
     logId: -100,
+    predictionSplitId: -100,
+    replaySplitId: -100,
     regId: 0,
     classId: 0,
     timeSeriesPredId: 0,
@@ -236,6 +240,18 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
                 ...state, filteredIds, prefixLengths, splitId, selectedPrefixes: prefixLengths
             };
         }
+        case PREDICTION_SPLIT_CHANGED: {
+            const predictionSplitId = action.splitId;
+            return {
+                ...state, predictionSplitId,
+            };
+        }
+        case REPLAY_SPLIT_CHANGED: {
+            const replaySplitId = action.splitId;
+            return {
+                ...state, replaySplitId,
+            };
+        }
         case FILTER_PREDICTION_METHOD_CHANGED: {
             const labelling = action.method === REGRESSION ? initialLabels.remainingTime : initialLabels.duration;
             const predictionMethod = action.method;
@@ -269,7 +285,7 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
                 logId: logId
             };
         }
-        case MODEL_CHANGED: {
+        case PREDICTION_MODEL_CHANGED: {
             if (action.method === REGRESSION) {
                 const regId = action.modelId;
                 return {

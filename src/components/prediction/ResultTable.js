@@ -39,6 +39,7 @@ class ResultTable extends PureComponent {
 
     return headers.map((header) => {
         let grow = false;
+        let width = ""
         if (header === 'Configuration') {
           grow = true;
         }
@@ -56,16 +57,16 @@ class ResultTable extends PureComponent {
       </TableHeader>
       <TableBody>
         {this.state.slicedData.map(
-          ({id, type, status, created_date, modified_date, splitName, config, error, result}) => (
+          ({id, type, status, created_date, modified_date, config, error, results}) => (
             <TableRow key={id} selectable={false}>
               <TableColumn numeric>{id}</TableColumn>
               <TableColumn>{status}</TableColumn>
               <TableColumn>{type}</TableColumn>
               <TableColumn>{new Date(created_date).toLocaleString()}</TableColumn>
               <TableColumn>{new Date(modified_date).toLocaleString()}</TableColumn>
-              <TableColumn>{splitName}</TableColumn>
+              <TableColumn>{config.split.id}</TableColumn>
               <TableColumn>{error}</TableColumn>
-              <TableColumn>{JSON.stringify(result)}</TableColumn>
+              <TableColumn width="20%">{JSON.stringify(results.result)}</TableColumn>
               <TableColumn grow><JsonHolder data={config}/></TableColumn>
             </TableRow>
           ))}

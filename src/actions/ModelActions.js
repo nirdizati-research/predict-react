@@ -10,3 +10,5 @@ export const MODELS_FAILED = 'MODELS_FAILED';
 export const modelsFailed = createPayloadForwardingAction(MODELS_FAILED);
 
 export const MODEL_CHANGED = 'MODEL_CHANGED';
+export const REPLAY_MODEL_CHANGED = 'REPLAY_MODEL_CHANGED';
+export const PREDICTION_MODEL_CHANGED = 'PREDICTION_MODEL_CHANGED';
