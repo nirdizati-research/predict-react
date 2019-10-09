@@ -45,7 +45,7 @@ class Runtime extends Component {
 
     filterJobRun() {
         return this.props.jobs.filter((job) =>
-            (job.type === 'predict'));
+            (job.type === 'replay_predict'));
     }
 
   /*filterTrace() {
