@@ -1,11 +1,17 @@
-import React, {Component} from 'react';
-import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
+import React, { Component } from 'react';
+import { Card, CardText, CardTitle } from 'react-md/lib/Cards/index';
 import PropTypes from 'prop-types';
-import {jobPropType} from '../../propTypes';
-import {makeLabels, makeTable} from '../../util/dataReducers';
+import { jobPropType } from '../../propTypes';
+import { makeLabels, makeTable, getPrefixLengthValues, getAllPrefixValuesAllConfig,getRadarChartValues} from '../../util/dataReducers';
 import SelectField from 'react-md/lib/SelectFields/index';
-import {CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION} from '../../reference';
+import { CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION } from '../../reference';
 import Chart from 'react-google-charts';
+import { Container, Row, Col } from 'react-grid-system';
+import 'react-svg-radar-chart/build/css/index.css'
+import RadarChartCard from './RadarChartCard';
+import {getRadarChartLabels} from './RadarChartCard';
+
+
 
 /* eslint-disable no-unused-vars */
 class ControlledLineChartCard extends Component {
@@ -14,9 +20,11 @@ class ControlledLineChartCard extends Component {
 
     const labels = makeLabels(this.props.jobs);
     const metricName = labels.length > 0 ? labels[0].label : null;
+    const prefixLengthValue = "average"
     this.state = {
-      metricName, labels,
-      predictionMethod: this.props.predictionMethod
+      metricName, labels, prefixLengthValue,
+      predictionMethod: this.props.predictionMethod,
+      radarCharLabels: getRadarChartLabels()
     };
   }
 
@@ -24,63 +32,99 @@ class ControlledLineChartCard extends Component {
     if (prevProps.predictionMethod !== this.props.predictionMethod) {
       const labels = makeLabels(this.props.jobs);
       const metricName = labels.length > 0 ? labels[0].label : null;
-      this.setState({labels, metricName, predictionMethod: this.props.predictionMethod});
+      const prefixLengthValue = "average"
+      this.setState({ labels, metricName, prefixLengthValue, predictionMethod: this.props.predictionMethod });
     }
   }
 
-  selectChange(value) {
-    this.setState({metricName: value});
+  selectMetricNameChange(value) {
+    this.setState({ metricName: value });
   }
 
-  getSelector() {
+  selectPrefixLengthValueChange(value) {
+    this.setState({ prefixLengthValue: value });
+  }
+
+  getMetricNameSelector() {
     return <SelectField
       id="metric-select"
       placeholder="Metric name"
       className="md-cell"
       menuItems={this.state.labels}
       position={SelectField.Positions.BELOW}
-      onChange={this.selectChange.bind(this)}
+      onChange={this.selectMetricNameChange.bind(this)}
       value={this.state.metricName}
+    />;
+  }
+  getPrefixLengthValuesSelector(rows) {
+    const arr = getPrefixLengthValues(rows)
+    arr.push("average")
+    return <SelectField
+      id="prefix-length-select"
+      placeholder="Prefix length values"
+      className="md-cell"
+      menuItems={arr}
+      position={SelectField.Positions.BELOW}
+      onChange={this.selectPrefixLengthValueChange.bind(this)}
+      value={this.state.prefixLengthValue}
     />;
   }
 
   render() {
     const data = makeTable(this.props.jobs, this.state.metricName);
+
     const columns = data[0].map((label) => {
-      return {type: 'number', label};
+      return { type: 'number', label };
     });
     const [_, ...rows] = data;
     const opts = {
       vAxis: {
-        title: this.state.metricName
+        title: this.state.metricName,
+        minValue: rows[0][0]
+
       },
       hAxis: {
-        title: 'Prefix length',
-        minValue: rows[0][0]
+        title: 'Prefix length'
       },
       interpolateNulls: true,
-      legend: {textStyle: {fontSize: 12}},
-      chartArea: {right: 250, left: 100}
+      legend: { position: 'top' },
     };
-
-    const chart = <Chart
+    
+    const lineChart = <Chart
       chartType="LineChart"
       rows={rows}
       columns={columns}
       options={opts}
-      graph_id="rasdasfas"
+      graph_id="line_chart"
       width="100%"
       legend_toggle
     />;
+    const radarChartObjects = getAllPrefixValuesAllConfig(this.props.jobs, this.state.radarCharLabels)
+
+    const radarChart = <RadarChartCard
+      data={getRadarChartValues(this.state.radarCharLabels,radarChartObjects,rows,this.state.prefixLengthValue)}
+      labels={this.state.radarCharLabels} />
+
     return <Card className="md-block-centered">
-      <CardTitle title={`Prefix length by `}>{this.getSelector()}</CardTitle>
-      <CardText>
-        {rows.length === 0 ? 'No data' : chart}
-      </CardText>
-    </Card>;
+      <Container>
+        <Row>
+          <Col>
+            <CardTitle className="md-cell md-cell--6" title={`Prefix length by `}>{this.getMetricNameSelector()}</CardTitle>
+            <CardText style={{ marginTop: "30px", justifyContent: 'center', }} className="md-cell md-cell--12">
+              {rows.length === 0 ? 'No data' : lineChart}
+            </CardText>
+          </Col>
+          <Col>
+            <CardTitle className="md-cell md-cell--6" title={`Select prefix `}>{this.getPrefixLengthValuesSelector(rows)}</CardTitle>
+            <CardText style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }} className="md-cell md-cell--12">
+              {rows.length === 0 ? 'No data' : radarChart}
+            </CardText>
+          </Col>
+        </Row>
+      </Container>
+    </Card>
   }
 }
-
 ControlledLineChartCard.propTypes = {
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
   predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION]).isRequired,

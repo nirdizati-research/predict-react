@@ -1,11 +1,11 @@
 /**
  * Created by Tõnis Kasekamp on 18.12.2017.
  */
-import {CLASSIFICATION, LABELLING, REGRESSION, TIME_SERIES_PREDICTION} from '../reference';
+import { CLASSIFICATION, LABELLING, REGRESSION, TIME_SERIES_PREDICTION } from '../reference';
 
 export const modelsToString = (models) => {
     return models.map((model) => {
-        return {value: model.id, label: modelToString(model)};
+        return { value: model.id, label: modelToString(model) };
     });
 };
 
@@ -57,7 +57,7 @@ export const toRun = (job) => {
 
 const toLineObject = (job, metricName) => {
     const metric = job.config.evaluation[metricName];
-    return {run: toRun(job), prefix_length: job.config.encoding.prefix_length, metric};
+    return { run: toRun(job), prefix_length: job.config.encoding.prefix_length, metric };
 };
 
 const uniqEs6 = (arrArg) => {
@@ -77,7 +77,7 @@ const uniquePrefixes = (lineObjects) => {
 };
 
 const makeEmptyPrefixRows = (uniqPrefs, columnSize) => {
-    return uniqPrefs.map((u) => [u, ...Array.from({length: columnSize}, (_) => null)]);
+    return uniqPrefs.map((u) => [u, ...Array.from({ length: columnSize }, (_) => null)]);
 };
 
 const compareByPrefix = (a, b) => {
@@ -113,6 +113,46 @@ export const makeLabels = (jobs) => {
         return [];
     }
     return Object.keys(jobs[0].config.evaluation).map((metric) => {
-        return {label: metric, value: metric};
+        return { label: metric, value: metric };
     });
 };
+
+export const getRowValues =(rows) =>{
+    var i,x=1
+    return rows.map((row) => {
+        while(row[row.length - x]==null)
+            x=x+1;
+        return row[row.length-x]
+    });
+};
+
+export const getPrefixLengthValues =(rows) =>{
+
+    return rows.map((row) => {
+        return row[0].toString();
+    });
+};
+
+export const getAllPrefixValuesAllConfig=(jobs,metricNames) =>{
+    return metricNames.map((metricName) => {
+        const data = makeTable(jobs, metricName);
+        const [_, ...rows] = data;
+        return {[metricName]: getRowValues(rows)}
+        
+    });
+};
+
+export const getRadarChartValues = (radarCharLabels,radarChartObjects,rows,prefixLengthValue)=>{
+    var i;
+    var radarChartDatas =[]
+    for (i = 0; i < radarCharLabels.length; i++) {
+      if (isNaN(Number(prefixLengthValue))) {
+        const val = radarChartObjects[i][radarCharLabels[i]].reduce((a, b) => a + b)
+        radarChartDatas.push(val / (rows.length * 1.0))
+      }
+      else {
+        radarChartDatas.push(radarChartObjects[i][radarCharLabels[i]][prefixLengthValue - 1])
+      }
+    }
+    return radarChartDatas
+  };

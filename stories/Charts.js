@@ -261,6 +261,10 @@ storiesOf('Charts', module)
                     <PrefixLineChart
                         jobs={labelJobs}/>
                 </div>
+                <div className="md-cell md-cell--12">
+                    <PrefixLineChart
+                        jobs={labelJobs}/>
+                </div>
             </div>
         );
     })
