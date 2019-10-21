@@ -56,6 +56,7 @@ class ControlledLineChartCard extends Component {
       value={this.state.metricName}
     />;
   }
+  
   getPrefixLengthValuesSelector(rows) {
     const arr = getPrefixLengthValues(rows)
     arr.push("average")
