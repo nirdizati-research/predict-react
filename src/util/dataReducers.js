@@ -127,7 +127,6 @@ export const getRowValues =(rows) =>{
 };
 
 export const getPrefixLengthValues =(rows) =>{
-
     return rows.map((row) => {
         return row[0].toString();
     });
@@ -142,16 +141,17 @@ export const getAllPrefixValuesAllConfig=(jobs,metricNames) =>{
     });
 };
 
-export const getRadarChartValues = (radarCharLabels,radarChartObjects,rows,prefixLengthValue)=>{
+export const getRadarChartValues = (radarCharLabels,radarChartObjects,rows,prefixLengthValue, position)=>{
     var i;
     var radarChartDatas =[]
+    console.log("Position  "+position);
     for (i = 0; i < radarCharLabels.length; i++) {
       if (isNaN(Number(prefixLengthValue))) {
         const val = radarChartObjects[i][radarCharLabels[i]].reduce((a, b) => a + b)
         radarChartDatas.push(val / (rows.length * 1.0))
       }
       else {
-        radarChartDatas.push(radarChartObjects[i][radarCharLabels[i]][prefixLengthValue - 1])
+        radarChartDatas.push(radarChartObjects[i][radarCharLabels[i]][position])
       }
     }
     return radarChartDatas

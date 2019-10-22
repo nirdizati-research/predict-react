@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { Card, CardText, CardTitle } from 'react-md/lib/Cards/index';
 import PropTypes from 'prop-types';
 import { jobPropType } from '../../propTypes';
-import { makeLabels, makeTable, getPrefixLengthValues, getAllPrefixValuesAllConfig,getRadarChartValues} from '../../util/dataReducers';
+import { makeLabels, makeTable, getPrefixLengthValues, getAllPrefixValuesAllConfig, getRadarChartValues } from '../../util/dataReducers';
 import SelectField from 'react-md/lib/SelectFields/index';
 import { CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION } from '../../reference';
 import Chart from 'react-google-charts';
 import { Container, Row, Col } from 'react-grid-system';
 import 'react-svg-radar-chart/build/css/index.css'
 import RadarChartCard from './RadarChartCard';
-import {getRadarChartLabels} from './RadarChartCard';
+import { getRadarChartLabels } from './RadarChartCard';
+
 
 
 
@@ -20,11 +21,16 @@ class ControlledLineChartCard extends Component {
 
     const labels = makeLabels(this.props.jobs);
     const metricName = labels.length > 0 ? labels[0].label : null;
+    const data = makeTable(this.props.jobs, metricName);
+    const [_, ...rows] = data;
     const prefixLengthValue = "average"
+    const prefixValues = getPrefixLengthValues(rows)
+    prefixValues.push("average")
     this.state = {
       metricName, labels, prefixLengthValue,
       predictionMethod: this.props.predictionMethod,
-      radarCharLabels: getRadarChartLabels()
+      radarCharLabels: getRadarChartLabels(),
+      prefixValues: prefixValues
     };
   }
 
@@ -56,15 +62,14 @@ class ControlledLineChartCard extends Component {
       value={this.state.metricName}
     />;
   }
-  
+
   getPrefixLengthValuesSelector(rows) {
-    const arr = getPrefixLengthValues(rows)
-    arr.push("average")
+ 
     return <SelectField
       id="prefix-length-select"
       placeholder="Prefix length values"
       className="md-cell"
-      menuItems={arr}
+      menuItems={this.state.prefixValues}
       position={SelectField.Positions.BELOW}
       onChange={this.selectPrefixLengthValueChange.bind(this)}
       value={this.state.prefixLengthValue}
@@ -90,7 +95,7 @@ class ControlledLineChartCard extends Component {
       interpolateNulls: true,
       legend: { position: 'top' },
     };
-    
+
     const lineChart = <Chart
       chartType="LineChart"
       rows={rows}
@@ -101,12 +106,14 @@ class ControlledLineChartCard extends Component {
       legend_toggle
     />;
     const radarChartObjects = getAllPrefixValuesAllConfig(this.props.jobs, this.state.radarCharLabels)
-
+   
     const radarChart = <RadarChartCard
-      data={getRadarChartValues(this.state.radarCharLabels,radarChartObjects,rows,this.state.prefixLengthValue)}
+      data={getRadarChartValues(this.state.radarCharLabels, radarChartObjects, rows,
+        this.state.prefixLengthValue, this.state.prefixValues.indexOf(this.state.prefixLengthValue))}
       labels={this.state.radarCharLabels} />
 
-    return <Card className="md-block-centered">
+
+    return <Card>
       <Container>
         <Row>
           <Col>
