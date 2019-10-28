@@ -12,12 +12,24 @@ class ModelSelector extends Component {
   }
 
   render() {
-      const regJobsLabels = this.props.regJobs.map(job => { return {value: job. id, label:job.id + ' ' + job.config.encoding.data_encoding + ' '  + job.config.encoding.value_encoding + ' '
-          + job.config.encoding.prefix_length + ' '  + job.config.encoding.task_generation_type + ' '  + job.config.labelling.type}});
-      const classJobsLabels = this.props.classJobs.map(job => { return {value: job. id, label:job.id + ' ' + job.config.encoding.data_encoding + ' '  + job.config.encoding.value_encoding + ' '
-          + job.config.encoding.prefix_length + ' '  + job.config.encoding.task_generation_type + ' '  + job.config.labelling.type}});
-      const timeSeriesJobsLabels = this.props.timeSeriesPredJobs.map(job => { return {value: job. id, label:job.id + ' ' + job.config.encoding.data_encoding + ' '  + job.config.encoding.value_encoding + ' '
-          + job.config.encoding.prefix_length + ' '  + job.config.encoding.task_generation_type + ' '  + job.config.labelling.type}});
+      const regJobsLabels = this.props.regJobs.map(job => {
+          return {value: job. id, label: job.id + ' '
+              + job.config.encoding.data_encoding + ' ' + job.config.encoding.value_encoding + ' '
+              + job.config.encoding.prefix_length + ' ' + job.config.encoding.task_generation_type + ' '
+              + job.config.labelling.type};
+      });
+      const classJobsLabels = this.props.classJobs.map(job => {
+          return {value: job. id, label: job.id + ' '
+              + job.config.encoding.data_encoding + ' ' + job.config.encoding.value_encoding + ' '
+              + job.config.encoding.prefix_length + ' ' + job.config.encoding.task_generation_type + ' '
+              + job.config.labelling.type};
+      });
+      const timeSeriesJobsLabels = this.props.timeSeriesPredJobs.map(job => {
+          return {value: job. id,
+              label: job.id + ' ' + job.config.encoding.data_encoding + ' ' + job.config.encoding.value_encoding + ' '
+              + job.config.encoding.prefix_length + ' ' + job.config.encoding.task_generation_type + ' '
+              + job.config.labelling.type};
+      });
     return (
       <Card className="md-block-centered">
         <CardText>

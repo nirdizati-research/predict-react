@@ -7,9 +7,9 @@ class Checkbox extends Component {
   };
 
   toggleCheckboxChange = () => {
-    const { handleCheckboxChange, label } = this.props;
+    const {handleCheckboxChange, label} = this.props;
 
-    this.setState(({ isChecked }) => (
+    this.setState(({isChecked}) => (
       {
         isChecked: !isChecked,
       }
@@ -19,21 +19,17 @@ class Checkbox extends Component {
   };
 
   render() {
-    const { label } = this.props;
-    const { isChecked } = this.state;
+    const {label} = this.props;
+    const {isChecked} = this.state;
 
     return (
       <div className="checkbox">
-        <label>
           <input
-                            type="checkbox"
-                            value={label}
-                            checked={isChecked}
-                            onChange={this.toggleCheckboxChange}
-                        />
-
-          {label}
-        </label>
+              type="checkbox"
+              value={label}
+              checked={isChecked}
+              onChange={this.toggleCheckboxChange}
+          />
       </div>
     );
   }

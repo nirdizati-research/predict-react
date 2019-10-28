@@ -39,7 +39,6 @@ class ResultTable extends PureComponent {
 
     return headers.map((header) => {
         let grow = false;
-        let width = ""
         if (header === 'Configuration') {
           grow = true;
         }

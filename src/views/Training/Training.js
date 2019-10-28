@@ -42,8 +42,9 @@ class Training extends Component {
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
-          <TrainingFormCard splitLabels={this.props.splitLabels} fetchState={this.props.fetchState} jobs={this.props.jobs}
-                            maxEventsInLog={maxEventsInLog} traceAttributes={traceAttributes}
+          <TrainingFormCard splitLabels={this.props.splitLabels} fetchState={this.props.fetchState}
+                            jobs={this.props.jobs} maxEventsInLog={maxEventsInLog}
+                            traceAttributes={traceAttributes}
                             classificationModels={this.props.classificationModels}
                             regressionModels={this.props.regressionModels}
                             timeSeriesPredictionModels={this.props.timeSeriesPredictionModels}
@@ -62,6 +63,7 @@ Training.propTypes = {
   getLogProperties: PropTypes.func.isRequired,
   onRequestSplitList: PropTypes.func.isRequired,
   onRequestModels: PropTypes.func.isRequired,
+  onRequestJobs: PropTypes.func.isRequired,
   onSubmitTraining: PropTypes.func.isRequired,
   onModelChange: PropTypes.func.isRequired,
   fetchState: fetchStatePropType,

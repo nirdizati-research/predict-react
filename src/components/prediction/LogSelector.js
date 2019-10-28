@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import FetchState from '../FetchState';
 import SelectField from 'react-md/lib/SelectFields/index';
-import {logsStore, fetchStatePropType, selectLabelProptype} from '../../propTypes';
+import {fetchStatePropType, selectLabelProptype} from '../../propTypes';
 
 class LogSelector extends Component {
   selectChange(value, _) {
@@ -11,7 +11,6 @@ class LogSelector extends Component {
   }
 
   render() {
-
     return (
       <Card className="md-block-centered">
         <CardTitle title="Select the Log"/>

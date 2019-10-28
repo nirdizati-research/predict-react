@@ -1,18 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SelectField from 'react-md/lib/SelectFields';
 import {
     CLASSIFICATION,
 } from '../../reference';
 import {jobPropType, selectLabelProptype} from '../../propTypes';
-import {modelsToString} from '../../util/dataReducers';
-import IncrementalTable from "./IncrementalTable";
+import IncrementalTable from './IncrementalTable';
 
-const defaults = {
-    'incremental_base_model': null
-};
-
-const methodConfig = 'incremental_train';
 
 const compare = (a, b) => {
   if (a.id < b.id) {
@@ -43,13 +36,14 @@ const Incremental = (props) => {
 
 
     const makeModelSelector = (onClickCheckbox) => {
-        const availableJobs = props.jobs.filter((job) => ((props.timeSeriesPrediction.includes(job.config.predictive_model['prediction_method']) ||
-                                                               props.regression.includes(job.config.predictive_model['prediction_method']) ||
-                                                               props.classification.includes(job.config.predictive_model['prediction_method'])) &&
-                                                               job.type === 'prediction' && job.status === 'completed'));
+        const availableJobs = props.jobs.filter((job) => (
+            (props.timeSeriesPrediction.includes(job.config.predictive_model['prediction_method']) ||
+             props.regression.includes(job.config.predictive_model['prediction_method']) ||
+             props.classification.includes(job.config.predictive_model['prediction_method'])) &&
+             job.type === 'prediction' && job.status === 'completed'));
      return [
-        <IncrementalTable jobs={availableJobs.sort(compare)} onClickCheckbox={onClickCheckbox}/>
-        ]
+        <IncrementalTable key={availableJobs.id} jobs={availableJobs.sort(compare)} onClickCheckbox={onClickCheckbox}/>
+        ];
     };
 
     if (props.predictionMethod === CLASSIFICATION) {
@@ -57,7 +51,6 @@ const Incremental = (props) => {
     } else {
         return [helpText()];
     }
-
 };
 
 Incremental.propTypes = {

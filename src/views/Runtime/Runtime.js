@@ -8,9 +8,9 @@ import LogSelector from '../../components/prediction/LogSelector';
 import {fetchStatePropType, jobPropType, modelPropType, selectLabelProptype} from '../../propTypes';
 import ModelSelector from '../../components/prediction/ModelSelector';
 import ReactGA from 'react-ga';
-import {CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION} from "../../reference";
-import {jobsRequested, REPLAY_SPLIT_CHANGED} from "../../actions/JobActions";
-import {splitsRequested} from "../../actions/SplitActions";
+import {CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION} from '../../reference';
+import {jobsRequested, REPLAY_SPLIT_CHANGED} from '../../actions/JobActions';
+import {splitsRequested} from '../../actions/SplitActions';
 import ResultTable from '../../components/prediction/ResultTable';
 
 class Runtime extends Component {
@@ -35,10 +35,6 @@ class Runtime extends Component {
         ReactGA.pageview(window.location.hash);
     }
 
-    requestTraces() {
-        this.props.onRequestTraces();
-    }
-
     onReset() {
         window.location.reload();
     }
@@ -48,29 +44,25 @@ class Runtime extends Component {
             (job.type === 'replay_predict' && job.config.split.id === this.props.splitId));
     }
 
-  /*filterTrace() {
-    return this.props.traces.filter((trace) => (trace.real_log === this.props.logId));
-  }*/
-
      Submit() {
         if (this.props.regModelId > 0) {
             const payload = {
-                splitId : this.props.splitId,
-                modelId : this.props.regModelId,
+                splitId: this.props.splitId,
+                modelId: this.props.regModelId,
             };
             this.props.onSubmitReplay(payload);
         }
         if (this.props.classModelId > 0) {
             const payload = {
-                splitId : this.props.splitId,
-                modelId : this.props.classModelId,
+                splitId: this.props.splitId,
+                modelId: this.props.classModelId,
             };
             this.props.onSubmitReplay(payload);
         }
         if (this.props.timeSeriesPredModelId > 0) {
             const payload = {
-                splitId : this.props.splitId,
-                modelId : this.props.timeSeriesPredModelId,
+                splitId: this.props.splitId,
+                modelId: this.props.timeSeriesPredModelId,
             };
             this.props.onSubmitReplay(payload);
         }
@@ -79,11 +71,14 @@ class Runtime extends Component {
 
     render() {
     // Only unique splits for selector
-        const filteredJobsRun = this.filterJobRun()
+        const filteredJobsRun = this.filterJobRun();
         let jobsModel = this.props.jobs.filter(job => (job.type === 'prediction' && job.status === 'completed'));
-        const regJobsLabel = jobsModel.filter(job => job.config.predictive_model.predictive_model === REGRESSION );
-        const classJobsLabel = jobsModel.filter(job => job.config.predictive_model.predictive_model === CLASSIFICATION);
-        const timeSeriesPredJobsLabel = jobsModel.filter(job => job.config.predictive_model.predictive_model === TIME_SERIES_PREDICTION);
+        const regJobsLabel = jobsModel.filter(job =>
+            job.config.predictive_model.predictive_model === REGRESSION );
+        const classJobsLabel = jobsModel.filter(job =>
+            job.config.predictive_model.predictive_model === CLASSIFICATION);
+        const timeSeriesPredJobsLabel = jobsModel.filter(job =>
+            job.config.predictive_model.predictive_model === TIME_SERIES_PREDICTION);
 
         return (
           <div className="md-grid">
@@ -94,9 +89,10 @@ class Runtime extends Component {
             </div>
             <div className="md-cell md-cell--12">
               <ModelSelector modelChange={this.onModelChange.bind(this)} onSubmit={this.Submit.bind(this)}
-                                       onReset={this.onReset} classJobs={classJobsLabel} regJobs={regJobsLabel}
-                                       timeSeriesPredJobs={timeSeriesPredJobsLabel} classModelId={this.props.classModelId}
-                                       regModelId={this.props.regModelId} timeSeriesPredModelId={this.props.timeSeriesPredModelId}/>
+                                        onReset={this.onReset} classJobs={classJobsLabel} regJobs={regJobsLabel}
+                                        timeSeriesPredJobs={timeSeriesPredJobsLabel}
+                                        classModelId={this.props.classModelId} regModelId={this.props.regModelId}
+                                        timeSeriesPredModelId={this.props.timeSeriesPredModelId}/>
             </div>
             <div className="md-cell md-cell--12">
                 <ResultTable jobs={filteredJobsRun} onRequestJobs={this.requestJobsRun.bind(this)}/>
@@ -155,19 +151,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Runtime);
-
-
-        /*<div className="md-cell md-cell--12">
-          <Card>
-            <CardText>
-              <h2> Predictive monitoring </h2>
-              <RuntimeTable traces={this.filterTrace()} onRequestTraces={this.requestTraces.bind(this)}/>
-            </CardText>
-          </Card>
-          <Card>
-            <CardText>
-              <h2> Prediction report </h2>
-              <InterResultTable traces={this.filterTrace()} onRequestTraces={this.requestTraces.bind(this)}/>
-            </CardText>
-          </Card>
-        </div>*/

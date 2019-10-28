@@ -161,15 +161,12 @@ class TrainingFormCard extends Component {
     }
 
     onClickCheckbox(id) {
-        let inc_models = this.state['incremental_train'];
-        let index = inc_models.indexOf(id);
+        let incModels = this.state['incremental_train'];
+        let index = incModels.indexOf(id);
         if (index !== -1) {
-            inc_models.splice(index, 1);
-            this.setState({...this.state, incremental_train: inc_models}, () => {
-                        console.log(this.state.incremental_train, 'incremental_train');
-                        });
-        }
-        else {
+            incModels.splice(index, 1);
+            this.setState({...this.state, incremental_train: incModels});
+        } else {
             this.state['incremental_train'].push(id);
         }
     }

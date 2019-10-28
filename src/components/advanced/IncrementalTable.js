@@ -35,7 +35,8 @@ class IncrementalTable extends PureComponent {
 
     getHeaderColumns() {
         let headers = [
-            'ID', 'Status', 'Type', 'Creation date', 'Update date', 'Split configuration', 'Error', 'Configuration'];
+            'Selected', 'ID', 'Status', 'Type', 'Creation date', 'Update date',
+            'Split configuration', 'Error', 'Configuration'];
 
         return headers.map((header) => {
                 let grow = false;
@@ -63,6 +64,7 @@ class IncrementalTable extends PureComponent {
                                           handleCheckboxChange={this.toggleCheckbox}
                                           key={id}/>
                             </TableColumn>
+                            <TableColumn numeric>{id}</TableColumn>
                             <TableColumn>{status}</TableColumn>
                             <TableColumn>{type}</TableColumn>
                             <TableColumn>{new Date(created_date).toLocaleString()}</TableColumn>

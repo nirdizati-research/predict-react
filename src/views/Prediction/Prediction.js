@@ -9,7 +9,6 @@ import ResultTable from '../../components/prediction/ResultTable';
 import {
     fetchStatePropType,
     jobPropType,
-    jobRunPropType,
     selectLabelProptype
 } from '../../propTypes';
 import {splitsRequested} from '../../actions/SplitActions';
@@ -18,8 +17,8 @@ import {CardText} from 'react-md/lib/Cards/index';
 import ModelSelector from '../../components/prediction/ModelSelector';
 import {Card} from 'react-md';
 import ReactGA from 'react-ga';
-import {getLogProperties} from "../../util/splitStuff";
-import {CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION} from "../../reference";
+import {getLogProperties} from '../../util/splitStuff';
+import {CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION} from '../../reference';
 
 class Prediction extends Component {
     onChangeSplit(splitId) {
@@ -55,23 +54,23 @@ class Prediction extends Component {
     Submit() {
         if (this.props.regJobId > 0) {
             const payload = {
-                splitId : this.props.splitId,
-                modelId : this.props.regJobId,
-            }
+                splitId: this.props.splitId,
+                modelId: this.props.regJobId,
+            };
             this.props.onSubmitPrediction(payload);
         }
         if (this.props.classJobId > 0) {
             const payload = {
-                splitId : this.props.splitId,
-                modelId : this.props.classJobId,
-            }
+                splitId: this.props.splitId,
+                modelId: this.props.classJobId,
+            };
             this.props.onSubmitPrediction(payload);
         }
         if (this.props.timeSeriesPredJobId > 0) {
             const payload = {
-                splitId : this.props.splitId,
-                modelId : this.props.timeSeriesPredJobId,
-            }
+                splitId: this.props.splitId,
+                modelId: this.props.timeSeriesPredJobId,
+            };
             this.props.onSubmitPrediction(payload);
         }
         this.props.onRequestJobs();
@@ -83,13 +82,14 @@ class Prediction extends Component {
         let jobsModel = this.props.jobs.filter(job => (job.type === 'prediction' && job.status === 'completed'));
         const regJobsLabel = jobsModel.filter(job => job.config.predictive_model.predictive_model === REGRESSION );
         const classJobsLabel = jobsModel.filter(job => job.config.predictive_model.predictive_model === CLASSIFICATION);
-        const timeSeriesPredJobsLabel = jobsModel.filter(job => job.config.predictive_model.predictive_model === TIME_SERIES_PREDICTION);
+        const timeSeriesPredJobsLabel = jobsModel.filter(job =>
+            job.config.predictive_model.predictive_model === TIME_SERIES_PREDICTION);
 
         return (
             <div className="md-grid">
                 <div className="md-cell md-cell--12">
                     <LogSelector splitLabels={this.props.splitLabels} fetchState={this.props.logfetchState}
-                                 splitChange={this.onChangeSplit.bind(this)} logId={this.props.logId}
+                                 splitChange={this.onChangeSplit.bind(this)} logId={this.props.splitId}
                                  maxPLength={this.props.maxPrefixLength}/>
                 </div>
                 <div className="md-cell md-cell--12">
