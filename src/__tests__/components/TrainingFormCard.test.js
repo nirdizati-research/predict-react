@@ -42,9 +42,7 @@ const regressionPayload = {
     'create_models': false,
     'methods': ['linear'],
     'kmeans': {},
-    'incremental_train': {
-      'base_model': null,
-    },
+    'incremental_train': [],
     'hyperparameter_optimizer': {
       'algorithm_type': 'tpe',
       'max_evaluations': 10,

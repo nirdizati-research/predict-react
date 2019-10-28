@@ -2,15 +2,15 @@ import {
   PREDICTION_SUBMITTED,
   PREDICTION_SUCCEEDED,
   PREDICTION_FAILED,
-  RUNTIME_SUBMITTED,
-  RUNTIME_SUCCEEDED,
-  RUNTIME_FAILED,
+  REPLAY_SUBMITTED,
+  REPLAY_SUCCEEDED,
+  REPLAY_FAILED,
   submitPrediction,
   predictionSucceeded,
   predictionFailed,
-  submitRuntime,
-  runtimeSucceeded,
-  runtimeFailed
+  submitReplay,
+  replaySucceeded,
+  replayFailed
 } from '../../actions/RuntimeActions';
 
 describe('RuntimeActions', () => {
@@ -31,17 +31,17 @@ describe('RuntimeActions', () => {
   });
   describe('submitRuntime', () => {
     it('has correct payload type', () => {
-      expect(submitRuntime().type).toBe(RUNTIME_SUBMITTED);
+      expect(submitReplay().type).toBe(REPLAY_SUBMITTED);
     });
   });
   describe('runtimeSucceeded', () => {
     it('has correct payload type', () => {
-      expect(runtimeSucceeded().type).toBe(RUNTIME_SUCCEEDED);
+      expect(replaySucceeded().type).toBe(REPLAY_SUCCEEDED);
     });
   });
   describe('runtimeFailed', () => {
     it('has correct payload type', () => {
-      expect(runtimeFailed().type).toBe(RUNTIME_FAILED);
+      expect(replayFailed().type).toBe(REPLAY_FAILED);
     });
   });
 });
