@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import TrainingFormCard from '../../components/TrainingFormCard';
-import {submitTraining} from '../../actions/JobActions';
-import {splitsToLabel} from '../../util/unNormalize';
+import {jobsRequested, submitTraining} from '../../actions/JobActions';
+import {mapJobs, splitsToLabel} from '../../util/unNormalize';
 import {splitsRequested} from '../../actions/SplitActions';
-import {fetchStatePropType, modelPropType, selectLabelProptype} from '../../propTypes';
+import {fetchStatePropType, jobPropType, modelPropType, selectLabelProptype} from '../../propTypes';
 import {getLogProperties} from '../../util/splitStuff';
 import {logListRequested} from '../../actions/LogActions';
 import {MODEL_CHANGED, modelsRequested} from '../../actions/ModelActions';
@@ -24,6 +24,7 @@ class Training extends Component {
     this.props.onRequestModels();
     this.props.onRequestLogList();
     this.props.onRequestSplitList();
+    this.props.onRequestJobs();
     ReactGA.initialize('UA-143444044-1');
     ReactGA.pageview(window.location.hash);
   }
@@ -41,7 +42,7 @@ class Training extends Component {
     return (
       <div className="md-grid">
         <div className="md-cell md-cell--12">
-          <TrainingFormCard splitLabels={this.props.splitLabels} fetchState={this.props.fetchState}
+          <TrainingFormCard splitLabels={this.props.splitLabels} fetchState={this.props.fetchState} jobs={this.props.jobs}
                             maxEventsInLog={maxEventsInLog} traceAttributes={traceAttributes}
                             classificationModels={this.props.classificationModels}
                             regressionModels={this.props.regressionModels}
@@ -51,10 +52,11 @@ class Training extends Component {
         </div>
       </div>
     );
-  }
+  }z
 }
 
 Training.propTypes = {
+  jobs: PropTypes.arrayOf(jobPropType).isRequired,
   splitLabels: selectLabelProptype,
   onRequestLogList: PropTypes.func.isRequired,
   getLogProperties: PropTypes.func.isRequired,
@@ -69,6 +71,7 @@ Training.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+  jobs: mapJobs(state.logs.byId, state.splits.byId, state.jobs.byId, state.jobs.allIds),
   getLogProperties: getLogProperties(state.splits.byId, state.logs.byId),
   splitLabels: splitsToLabel(state.logs.byId, state.splits.byId, state.splits.allIds),
   fetchState: state.training.fetchState,
@@ -81,6 +84,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  onRequestJobs: () => dispatch(jobsRequested()),
   onRequestSplitList: () => dispatch(splitsRequested()),
   onRequestLogList: () => dispatch(logListRequested()),
   onSubmitTraining: (payload) => dispatch(submitTraining(payload)),

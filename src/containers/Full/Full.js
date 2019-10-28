@@ -93,7 +93,7 @@ class Full extends Component {
           active: isActive('/validation', pathname),
           primaryText: 'Validation',
           leftIcon: <FontIcon>insert_chart</FontIcon>,
-        },
+        }/*,
         {
           component: Link,
           to: '/prediction',
@@ -106,7 +106,7 @@ class Full extends Component {
           active: isActive('/runtime', pathname),
           primaryText: 'Runtime',
           leftIcon: <FontIcon>flash_on</FontIcon>,
-        }]}
+        }*/]}
       >
         <HelpDialog texts={getHelpText(pathname)} visible={this.state.visible} hide={this.hide.bind(this)}/>
         {children ? React.cloneElement(children, {key: pathname}) : null}

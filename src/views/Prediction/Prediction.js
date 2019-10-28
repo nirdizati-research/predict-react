@@ -80,9 +80,10 @@ class Prediction extends Component {
     render() {
         // Only unique splits for selector
         const filteredJobsRun = this.filterJobRun();
-        const regJobsLabel = this.props.jobs.filter(job => job.config.predictive_model.predictive_model === REGRESSION && job.status === 'completed' && job.type === 'prediction');
-        const classJobsLabel = this.props.jobs.filter(job => job.config.predictive_model.predictive_model === CLASSIFICATION&& job.status === 'completed' && job.type === 'prediction');
-        const timeSeriesPredJobsLabel = this.props.jobs.filter(job => job.config.predictive_model.predictive_model === TIME_SERIES_PREDICTION && job.status === 'completed' && job.type === 'prediction');
+        let jobsModel = this.props.jobs.filter(job => (job.type === 'prediction' && job.status === 'completed'));
+        const regJobsLabel = jobsModel.filter(job => job.config.predictive_model.predictive_model === REGRESSION );
+        const classJobsLabel = jobsModel.filter(job => job.config.predictive_model.predictive_model === CLASSIFICATION);
+        const timeSeriesPredJobsLabel = jobsModel.filter(job => job.config.predictive_model.predictive_model === TIME_SERIES_PREDICTION);
 
         return (
             <div className="md-grid">

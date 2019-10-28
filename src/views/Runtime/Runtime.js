@@ -45,7 +45,7 @@ class Runtime extends Component {
 
     filterJobRun() {
         return this.props.jobs.filter((job) =>
-            (job.type === 'replay_predict'));
+            (job.type === 'replay_predict' && job.config.split.id === this.props.splitId));
     }
 
   /*filterTrace() {
@@ -80,9 +80,10 @@ class Runtime extends Component {
     render() {
     // Only unique splits for selector
         const filteredJobsRun = this.filterJobRun()
-        const regJobsLabel = this.props.jobs.filter(job => job.config.predictive_model.predictive_model === REGRESSION);
-        const classJobsLabel = this.props.jobs.filter(job => job.config.predictive_model.predictive_model === CLASSIFICATION);
-        const timeSeriesPredJobsLabel = this.props.jobs.filter(job => job.config.predictive_model.predictive_model === TIME_SERIES_PREDICTION);
+        let jobsModel = this.props.jobs.filter(job => (job.type === 'prediction' && job.status === 'completed'));
+        const regJobsLabel = jobsModel.filter(job => job.config.predictive_model.predictive_model === REGRESSION );
+        const classJobsLabel = jobsModel.filter(job => job.config.predictive_model.predictive_model === CLASSIFICATION);
+        const timeSeriesPredJobsLabel = jobsModel.filter(job => job.config.predictive_model.predictive_model === TIME_SERIES_PREDICTION);
 
         return (
           <div className="md-grid">
@@ -123,6 +124,7 @@ Runtime.propTypes = {
     timeSeriesPredModelId: PropTypes.number.isRequired,
     jobs: PropTypes.arrayOf(jobPropType).isRequired,
     logId: PropTypes.number.isRequired,
+    splitId: PropTypes.number.isRequired,
     changed: PropTypes.number.isRequired,
     maxPrefixLength: PropTypes.number.isRequired,
 };

@@ -48,7 +48,7 @@ import {
     ZERO_PADDING,
 } from '../reference';
 import CheckboxGroup from './training/CheckboxGroup';
-import {fetchStatePropType, modelPropType, selectLabelProptype, traceAttributeShape} from '../propTypes';
+import {fetchStatePropType, jobPropType, modelPropType, selectLabelProptype, traceAttributeShape} from '../propTypes';
 import PrefixSelector from './training/PrefixSelector';
 import AdvancedConfiguration from './advanced/AdvancedConfiguration';
 import {classificationMetrics, regressionMetrics, timeSeriesPredictionMetrics} from './advanced/advancedConfig';
@@ -85,9 +85,7 @@ const initialState = (props) => {
             threshold_type: THRESHOLD_MEAN,
             threshold: 0
         },
-        incremental_train: {
-            base_model: null
-        },
+        incremental_train: [],
         displayWarning: false,
         predictionMethod: predictionMethod,
         kmeans: {},
@@ -160,6 +158,20 @@ class TrainingFormCard extends Component {
 
     advanceConfigChange(config, value) {
         this.setState(advancedConfigChange(this.state, config, value));
+    }
+
+    onClickCheckbox(id) {
+        let inc_models = this.state['incremental_train'];
+        let index = inc_models.indexOf(id);
+        if (index !== -1) {
+            inc_models.splice(index, 1);
+            this.setState({...this.state, incremental_train: inc_models}, () => {
+                        console.log(this.state.incremental_train, 'incremental_train');
+                        });
+        }
+        else {
+            this.state['incremental_train'].push(id);
+        }
     }
 
     addOrRemove(list, value) {
@@ -410,9 +422,11 @@ class TrainingFormCard extends Component {
 
         const advancedConfiguration =
             <AdvancedConfiguration classification={this.state.classification}
+                                   jobs={this.props.jobs}
                                    regression={this.state.regression}
                                    timeSeriesPrediction={this.state.timeSeriesPrediction}
                                    onChange={this.advanceConfigChange.bind(this)}
+                                   onClickCheckbox={this.onClickCheckbox.bind(this)}
                                    encoding={this.state.encoding}
                                    labelling={this.state.labelling}
                                    traceAttributes={this.props.traceAttributes}
@@ -473,6 +487,7 @@ class TrainingFormCard extends Component {
 }
 
 TrainingFormCard.propTypes = {
+    jobs: PropTypes.arrayOf(jobPropType).isRequired,
     splitLabels: selectLabelProptype,
     fetchState: fetchStatePropType,
     onSubmit: PropTypes.func.isRequired,
