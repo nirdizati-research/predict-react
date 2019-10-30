@@ -23,8 +23,15 @@ class Prediction extends Component {
         this.props.onSplitChange(splitId);
     }
 
-    onChangeJob(jobId) {
-        this.props.onJobChange(jobId);
+    onClickCheckbox(id) {
+        let incJobs = this.props.jobId;
+        let index = incJobs.indexOf(id);
+        if (index !== -1) {
+            incJobs.splice(index, 1);
+            this.setState({...this.state, jobSelected: incJobs});
+        } else {
+            this.props.jobId.push(id);
+        }
     }
 
     componentDidMount() {
@@ -50,13 +57,19 @@ class Prediction extends Component {
     }
 
      Submit() {
-        if (this.props.jobId > 0) {
-            const payload = {
+        if (this.props.jobId !== []) {
+            this.props.jobId.forEach((item) =>{
+                this.submitRequest(item);
+            });
+        }
+     }
+
+     submitRequest(item) {
+        const payload = {
                 splitId: this.props.splitId,
-                jobId: this.props.jobId,
+                jobId: item,
             };
             this.props.onSubmitPrediction(payload);
-        }
      }
 
     render() {
@@ -72,9 +85,8 @@ class Prediction extends Component {
                                  maxPLength={this.props.maxPrefixLength}/>
                 </div>
                 <div className="md-cell md-cell--12">
-                    <ModelSelector jobChange={this.onChangeJob.bind(this)} onSubmit={this.Submit.bind(this)}
-                             onReset={this.onReset} jobs={jobs}
-                             jobId={this.props.jobId}/>
+                    <ModelSelector onClickCheckbox={this.onClickCheckbox.bind(this)} onSubmit={this.Submit.bind(this)}
+                             onReset={this.onReset} jobs={jobs}/>
                 </div>
                 <div className="md-cell md-cell--12">
                     <Card>
@@ -100,7 +112,7 @@ Prediction.propTypes = {
     onRequestJobs: PropTypes.func.isRequired,
     jobs: PropTypes.arrayOf(jobPropType).isRequired,
     getLogProperties: PropTypes.func.isRequired,
-    jobId: PropTypes.number.isRequired,
+    jobId: PropTypes.arrayOf(PropTypes.number).isRequired,
     splitId: PropTypes.number.isRequired,
     maxPrefixLength: PropTypes.number.isRequired,
 };

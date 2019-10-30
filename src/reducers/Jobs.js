@@ -71,7 +71,7 @@ const initialState = {
     logId: -100,
     predictionSplitId: -100,
     replaySplitId: -100,
-    predictionJobId: 0,
+    predictionJobId: [],
     thresholds: [],
     attributeNames: [],
     splitId: -100

@@ -7,7 +7,7 @@ const initialState = {
     fetchState: {inFlight: false},
     models: [],
     logId: 0,
-    jobSelected: 0,
+    jobSelected: [],
     regressionModels: [],
     classificationModels: [],
     timeSeriesPredictionModels: [],

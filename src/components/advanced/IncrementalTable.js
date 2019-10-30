@@ -77,7 +77,8 @@ class IncrementalTable extends PureComponent {
             </TableBody>
             <TablePagination rows={this.props.jobs.length} rowsPerPageLabel={'Rows per page'}
                              onPagination={this.handlePagination.bind(this)}/>
-        </DataTable>
+            </DataTable>
+
         );
     }
 }
