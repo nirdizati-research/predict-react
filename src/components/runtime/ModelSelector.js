@@ -40,7 +40,7 @@ class ModelSelector extends Component {
                 menuItems={this.props.classModelsLabel}
                 position={SelectField.Positions.BELOW}
                 onChange={this.selectChange.bind(this, {method: CLASSIFICATION})}
-                value={this.props.classModelId}
+                value={this.props.classJobId}
               />
             </div>
               <div className="md-cell md-cell--6">
@@ -52,7 +52,7 @@ class ModelSelector extends Component {
                       menuItems={this.props.timeSeriesPredModelsLabel}
                       position={SelectField.Positions.BELOW}
                       onChange={this.selectChange.bind(this, {method: TIME_SERIES_PREDICTION})}
-                      value={this.props.timeSeriesPredModelId}
+                      value={this.props.timeSeriesPredJobId}
                   />
               </div>
           </div>
@@ -79,8 +79,8 @@ ModelSelector.propTypes = {
   modelChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onReset: PropTypes.func.isRequired,
-  classModelId: PropTypes.number.isRequired,
+  classJobId: PropTypes.number.isRequired,
     regModelId: PropTypes.number.isRequired,
-    timeSeriesPredModelId: PropTypes.number.isRequired
+    timeSeriesPredJobId: PropTypes.number.isRequired
 };
 export default ModelSelector;

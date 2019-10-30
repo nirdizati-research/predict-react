@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {PREDICTION_MODEL_CHANGED} from '../../actions/ModelActions';
-import {PREDICTION_SPLIT_CHANGED, jobsRequested} from '../../actions/JobActions';
+import {PREDICTION_JOB_CHANGED, PREDICTION_SPLIT_CHANGED, jobsRequested} from '../../actions/JobActions';
 import {JOB_RUN_CHANGED, submitPrediction} from '../../actions/RuntimeActions';
 import LogSelector from '../../components/prediction/LogSelector';
 import ResultTable from '../../components/prediction/ResultTable';
@@ -18,15 +17,14 @@ import ModelSelector from '../../components/prediction/ModelSelector';
 import {Card} from 'react-md';
 import ReactGA from 'react-ga';
 import {getLogProperties} from '../../util/splitStuff';
-import {CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION} from '../../reference';
 
 class Prediction extends Component {
     onChangeSplit(splitId) {
         this.props.onSplitChange(splitId);
     }
 
-    onModelChange({method}, modelId) {
-        this.props.onModelChange({method}, modelId);
+    onChangeJob(jobId) {
+        this.props.onJobChange(jobId);
     }
 
     componentDidMount() {
@@ -51,52 +49,32 @@ class Prediction extends Component {
             (job.config.split.id === this.props.splitId) && job.type === 'runtime');
     }
 
-    Submit() {
-        if (this.props.regJobId > 0) {
+     Submit() {
+        if (this.props.jobId > 0) {
             const payload = {
                 splitId: this.props.splitId,
-                modelId: this.props.regJobId,
+                jobId: this.props.jobId,
             };
             this.props.onSubmitPrediction(payload);
         }
-        if (this.props.classJobId > 0) {
-            const payload = {
-                splitId: this.props.splitId,
-                modelId: this.props.classJobId,
-            };
-            this.props.onSubmitPrediction(payload);
-        }
-        if (this.props.timeSeriesPredJobId > 0) {
-            const payload = {
-                splitId: this.props.splitId,
-                modelId: this.props.timeSeriesPredJobId,
-            };
-            this.props.onSubmitPrediction(payload);
-        }
-        this.props.onRequestJobs();
-    }
+     }
 
     render() {
         // Only unique splits for selector
         const filteredJobsRun = this.filterJobRun();
-        let jobsModel = this.props.jobs.filter(job => (job.type === 'prediction' && job.status === 'completed'));
-        const regJobsLabel = jobsModel.filter(job => job.config.predictive_model.predictive_model === REGRESSION );
-        const classJobsLabel = jobsModel.filter(job => job.config.predictive_model.predictive_model === CLASSIFICATION);
-        const timeSeriesPredJobsLabel = jobsModel.filter(job =>
-            job.config.predictive_model.predictive_model === TIME_SERIES_PREDICTION);
+        let jobs = this.props.jobs.filter(job => (job.type === 'prediction' && job.status === 'completed'));
 
         return (
             <div className="md-grid">
                 <div className="md-cell md-cell--12">
                     <LogSelector splitLabels={this.props.splitLabels} fetchState={this.props.logfetchState}
-                                 splitChange={this.onChangeSplit.bind(this)} logId={this.props.splitId}
+                                 splitChange={this.onChangeSplit.bind(this)} splitId={this.props.splitId}
                                  maxPLength={this.props.maxPrefixLength}/>
                 </div>
                 <div className="md-cell md-cell--12">
-                    <ModelSelector modelChange={this.onModelChange.bind(this)} onSubmit={this.Submit.bind(this)}
-                                   onReset={this.onReset} classJobs={classJobsLabel} regJobs={regJobsLabel}
-                                   timeSeriesPredJobs={timeSeriesPredJobsLabel} classJobId={this.props.classJobId}
-                                   regJobId={this.props.regJobId} timeSeriesPredJobId={this.props.timeSeriesPredJobId}/>
+                    <ModelSelector jobChange={this.onChangeJob.bind(this)} onSubmit={this.Submit.bind(this)}
+                             onReset={this.onReset} jobs={jobs}
+                             jobId={this.props.jobId}/>
                 </div>
                 <div className="md-cell md-cell--12">
                     <Card>
@@ -116,18 +94,13 @@ Prediction.propTypes = {
     onChangeJRun: PropTypes.func.isRequired,
     onRequestModels: PropTypes.func.isRequired,
     onRequestSplitList: PropTypes.func.isRequired,
-    onModelChange: PropTypes.func.isRequired,
+    onJobChange: PropTypes.func.isRequired,
     onSplitChange: PropTypes.func.isRequired,
     onSubmitPrediction: PropTypes.func.isRequired,
     onRequestJobs: PropTypes.func.isRequired,
     jobs: PropTypes.arrayOf(jobPropType).isRequired,
     getLogProperties: PropTypes.func.isRequired,
-    regJobId: PropTypes.number.isRequired,
-    classJobId: PropTypes.number.isRequired,
-    timeSeriesPredJobId: PropTypes.number.isRequired,
-    regModelId: PropTypes.number.isRequired,
-    classModelId: PropTypes.number.isRequired,
-    timeSeriesPredModelId: PropTypes.number.isRequired,
+    jobId: PropTypes.number.isRequired,
     splitId: PropTypes.number.isRequired,
     maxPrefixLength: PropTypes.number.isRequired,
 };
@@ -138,12 +111,7 @@ const mapStateToProps = (state) => ({
     splitLabels: splitsToLabel(state.logs.byId, state.splits.byId, state.splits.allIds),
     splitId: state.jobs.predictionSplitId,
     jobsrun: mapJobs(state.logs.byId, state.splits.byId, state.jobs.byId, state.jobs.runIds),
-    regJobId: state.jobs.regId,
-    classJobId: state.jobs.classId,
-    timeSeriesPredJobId: state.jobs.timeSeriesPredId,
-    regModelId: state.models.regmodel,
-    classModelId: state.models.classmodel,
-    timeSeriesPredModelId: state.models.timeseriespredmodel,
+    jobId: state.jobs.predictionJobId,
     modfetchState: state.models.fetchState,
     logfetchState: state.logs.fetchState,
     maxPrefixLength: state.models.pLength,
@@ -152,7 +120,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     onRequestJobs: () => dispatch(jobsRequested()),
     onRequestSplitList: () => dispatch(splitsRequested()),
-    onModelChange: ({method}, modelId) => dispatch({type: PREDICTION_MODEL_CHANGED, method, modelId}),
+    onJobChange: (jobId) => dispatch({type: PREDICTION_JOB_CHANGED, jobId}),
     onSplitChange: (splitId) => dispatch({type: PREDICTION_SPLIT_CHANGED, splitId}),
     onChangeJRun: (logId) => dispatch({type: JOB_RUN_CHANGED, logId}),
     onSubmitPrediction: (payload) => dispatch(submitPrediction({payload}))

@@ -80,8 +80,6 @@ const mapStateToProps = (state) => ({
   classificationModels: state.models.classificationModels,
   regressionModels: state.models.regressionModels,
   timeSeriesPredictionModels: state.models.timeSeriesPredictionModels,
-  classModelId: state.models.classelected,
-  regModelId: state.models.regselected,
   models: state.models.models
 });
 
