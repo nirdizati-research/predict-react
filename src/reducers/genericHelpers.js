@@ -8,6 +8,22 @@ export const listRetrieved = (objectList) => {
     return {allIds, byId};
 };
 
+export const logListRetrieved = (objectList) => {
+    if (objectList.length === 0) {
+        return {allIds: [], byId: {}};
+    }
+    const allIds = objectList.map(({id}) => id);
+    const byId = Object.assign(...objectList.map((obj) => (
+        {
+            [obj.id]: {
+                'id': obj.id,
+                'name': obj.name,
+                'properties': JSON.parse(obj.properties)
+            }
+        })));
+    return {allIds, byId};
+};
+
 // partial update of objects
 export const addListToStore = ({allIds, byId}, objectList) => {
     const newObjs = listRetrieved(objectList);
