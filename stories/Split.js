@@ -49,41 +49,47 @@ export const logList = [
         'id': 1,
         'name': 'general_example.xes',
         'properties':
-            {
+            JSON.stringify({
                 'events': {},
                 'resources': {},
                 'newTraces': {},
                 'traceAttributes': [],
                 'maxEventsInLog': 1
-            }
+            })
     },
     {
         'id': 4,
         'name': 'nonlocal.mxml.gz',
         'properties':
-            {
+            JSON.stringify({
                 'events': {},
                 'resources': {},
                 'newTraces': {},
                 'traceAttributes': [],
                 'maxEventsInLog': 123
-            }
+            })
     },
     {
         'id': 123,
         'name': 'nonlocal2.mxml.gz',
         'properties':
-            {
+            JSON.stringify({
                 'events': {},
                 'resources': {},
                 'newTraces': {},
                 'traceAttributes': [],
                 'maxEventsInLog': 1
-            }
+            })
     }
 ];
 
-export const logsById = Object.assign(...logList.map((log) => ({[log.id]: log})));
+export const logsById = Object.assign(...logList.map((log) => ({
+            [log.id]: {
+                'id': log.id,
+                'name': log.name,
+                'properties': JSON.parse(log.properties)
+            }
+        })));
 export const splitsById = Object.assign(...splits.map((split) => ({[split.id]: split})));
 export const splitLabels = splitsToLabel(logsById, splitsById, [1, 2]);
 
