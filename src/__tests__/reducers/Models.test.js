@@ -77,8 +77,8 @@ const modelList = [
     type: 'prediction'
   }];
 
-const initState = {fetchState: {inFlight: false}, logId: 0, regselected: 0,
-    classelected: 0, timeseriespredselected: 0, models: [], regressionModels: [], classificationModels: [],
+const initState = {fetchState: {inFlight: false}, logId: 0, jobSelected: [],
+    models: [], regressionModels: [], classificationModels: [],
     timeSeriesPredictionModels: [], pLength: 0
 };
 
@@ -89,10 +89,9 @@ describe('ModelList', () => {
 
   it('changes fetchState when requesting', () => {
     const state = models(undefined, modelsRequested());
-    expect(state).toEqual({classelected: 0, classificationModels: [],
+    expect(state).toEqual({jobSelected: [], classificationModels: [],
     fetchState: {inFlight: true}, logId: 0, models: [],
-        regressionModels: [], regselected: 0, pLength: 0,
-        timeseriespredselected: 0, timeSeriesPredictionModels: []
+        regressionModels: [], pLength: 0, timeSeriesPredictionModels: []
     });
   });
 
@@ -108,10 +107,10 @@ describe('ModelList', () => {
   it('stores error message', () => {
     const state = models(undefined, modelsRequested());
     const state2 = models(state, modelsFailed('error'));
-    expect(state2).toEqual({classelected: 0, classificationModels: [],
+    expect(state2).toEqual({classificationModels: [],
      fetchState: {error: 'error', inFlight: false}, logId: 0, models: [],
-        regressionModels: [], regselected: 0, pLength: 0,
-        timeseriespredselected: 0, timeSeriesPredictionModels: []
+        regressionModels: [], jobSelected: [], pLength: 0,
+        timeSeriesPredictionModels: []
     });
    });
 });

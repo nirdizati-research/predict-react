@@ -104,7 +104,7 @@ class WalkThrough extends PureComponent {
                             text="Compare the resulting models using different metrics and download the results"
                             threeLines
                         />
-                        {/* <GuideItem*/}
+                         {/* <GuideItem*/}
                             {/* avatar={<Avatar suffix="purple">8</Avatar>}*/}
                             {/* title="Prediction"*/}
                             {/* text={'Create a prediction of an incomplete trace'}*/}

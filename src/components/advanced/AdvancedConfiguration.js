@@ -22,7 +22,7 @@ import {
 } from '../../reference';
 
 import PropTypes from 'prop-types';
-import {encodingPropType, labelPropType, modelPropType, traceAttributeShape} from '../../propTypes';
+import {encodingPropType, jobPropType, labelPropType, modelPropType, traceAttributeShape} from '../../propTypes';
 import {ExpansionList} from 'react-md';
 import GenericConfiguration from './GenericConfiguration';
 
@@ -167,10 +167,11 @@ const AdvancedConfiguration = (props) => {
     if (props.classification.concat(props.regression)
         .some(element => INCREMENTAL_CLASSIFIERS.includes(element))) {
       return [makeExpander('Incremental learning', '',
-          <Incremental onChange={props.onChange}
-                       classificationModels={props.classificationModels}
-                       regressionModels={props.regressionModels}
-                       timeSeriesPredictionModels={props.timeSeriesPredictionModels}
+          <Incremental onClickCheckbox={props.onClickCheckbox}
+                       jobs={props.jobs}
+                       classification={props.classification}
+                       regression={props.regression}
+                       timeSeriesPrediction={props.timeSeriesPrediction}
                        {...props}/>)];
     } else {
       return [];
@@ -200,11 +201,13 @@ const AdvancedConfiguration = (props) => {
 };
 
 AdvancedConfiguration.propTypes = {
+    jobs: PropTypes.arrayOf(jobPropType).isRequired,
     classification: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
     regression: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
     timeSeriesPrediction: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
     clusterings: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
     onChange: PropTypes.func.isRequired,
+    onClickCheckbox: PropTypes.func.isRequired,
     labelling: PropTypes.shape(labelPropType).isRequired,
     encoding: PropTypes.shape(encodingPropType).isRequired,
     predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION, LABELLING]).isRequired,

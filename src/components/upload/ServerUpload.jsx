@@ -152,7 +152,7 @@ export default class ServerUpload extends PureComponent {
           id="server-upload-file"
           label="Choose file"
           required
-          accept=".xes, .mxml, .gz"
+          accept=".xes, .mxml"
           onLoad={this.handleLoad}
           onLoadStart={this.handleLoadStart}
           onProgress={this.handleProgress}
