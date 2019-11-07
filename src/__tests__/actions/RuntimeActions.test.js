@@ -1,47 +1,47 @@
 import {
-    PREDICTION_FAILED,
-    PREDICTION_SUBMITTED,
-    PREDICTION_SUCCEEDED,
-    predictionFailed,
-    predictionSucceeded,
-    RUNTIME_FAILED,
-    RUNTIME_SUBMITTED,
-    RUNTIME_SUCCEEDED,
-    runtimeFailed,
-    runtimeSucceeded,
-    submitPrediction,
-    submitRuntime
+  PREDICTION_SUBMITTED,
+  PREDICTION_SUCCEEDED,
+  PREDICTION_FAILED,
+  REPLAY_SUBMITTED,
+  REPLAY_SUCCEEDED,
+  REPLAY_FAILED,
+  submitPrediction,
+  predictionSucceeded,
+  predictionFailed,
+  submitReplay,
+  replaySucceeded,
+  replayFailed
 } from '../../actions/RuntimeActions';
 
 describe('RuntimeActions', () => {
-    describe('submitPrediction', () => {
-        it('has correct payload type', () => {
-            expect(submitPrediction().type).toBe(PREDICTION_SUBMITTED);
-        });
+  describe('submitPrediction', () => {
+    it('has correct payload type', () => {
+      expect(submitPrediction().type).toBe(PREDICTION_SUBMITTED);
     });
-    describe('predictionSucceeded', () => {
-        it('has correct payload type', () => {
-            expect(predictionSucceeded().type).toBe(PREDICTION_SUCCEEDED);
-        });
+  });
+  describe('predictionSucceeded', () => {
+    it('has correct payload type', () => {
+      expect(predictionSucceeded().type).toBe(PREDICTION_SUCCEEDED);
     });
-    describe('predictionFailed', () => {
-        it('has correct payload type', () => {
-            expect(predictionFailed().type).toBe(PREDICTION_FAILED);
-        });
+  });
+  describe('predictionFailed', () => {
+    it('has correct payload type', () => {
+      expect(predictionFailed().type).toBe(PREDICTION_FAILED);
     });
-    describe('submitRuntime', () => {
-        it('has correct payload type', () => {
-            expect(submitRuntime().type).toBe(RUNTIME_SUBMITTED);
-        });
+  });
+  describe('submitRuntime', () => {
+    it('has correct payload type', () => {
+      expect(submitReplay().type).toBe(REPLAY_SUBMITTED);
     });
-    describe('runtimeSucceeded', () => {
-        it('has correct payload type', () => {
-            expect(runtimeSucceeded().type).toBe(RUNTIME_SUCCEEDED);
-        });
+  });
+  describe('runtimeSucceeded', () => {
+    it('has correct payload type', () => {
+      expect(replaySucceeded().type).toBe(REPLAY_SUCCEEDED);
     });
-    describe('runtimeFailed', () => {
-        it('has correct payload type', () => {
-            expect(runtimeFailed().type).toBe(RUNTIME_FAILED);
-        });
+  });
+  describe('runtimeFailed', () => {
+    it('has correct payload type', () => {
+      expect(replayFailed().type).toBe(REPLAY_FAILED);
     });
+  });
 });

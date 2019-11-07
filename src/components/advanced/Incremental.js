@@ -1,15 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SelectField from 'react-md/lib/SelectFields';
-import {CLASSIFICATION,} from '../../reference';
-import {selectLabelProptype} from '../../propTypes';
-import {modelsToString} from '../../util/dataReducers';
+import {
+    CLASSIFICATION,
+} from '../../reference';
+import {jobPropType, selectLabelProptype} from '../../propTypes';
+import IncrementalTable from './IncrementalTable';
 
-const defaults = {
-    'incremental_base_model': null
+
+const compare = (a, b) => {
+  if (a.id < b.id) {
+    return 1;
+  }
+  if (a.id > b.id) {
+    return -1;
+  }
+  return 0;
 };
-
-const methodConfig = 'incremental_train';
 
 const Incremental = (props) => {
     const helpText = () => {
@@ -29,43 +35,19 @@ const Incremental = (props) => {
     };
 
 
-    const makeModelSelector = (onChange) => {
-        const availableModels = [{value: null, label: 'None'}].concat(modelsToString(
-            props.classificationModels
-                .filter(
-                    (obj) => (
-                        props.classification.includes(obj.config.predictive_model['prediction_method'])
-                    )
-                ))).concat(modelsToString(
-            props.regressionModels
-                .filter(
-                    (obj) => (
-                        props.regression.includes(obj.config.predictive_model['prediction_method'])
-                    )
-                ))).concat(modelsToString(
-            props.timeSeriesPredictionModels
-                .filter(
-                    (obj) => (
-                        props.timeSeriesPrediction.includes(obj.config.predictive_model['prediction_method'])
-                    )
-                ))
-        );
-
-        return [<SelectField
-            key="base_model"
-            id="base_model"
-            label={'Base model'}
-            menuItems={availableModels}
-            defaultValue={defaults.incremental_base_model}
-            position={SelectField.Positions.TOP_LEFT}
-            onChange={onChange.bind(this, {methodConfig, key: 'base_model'})}
-            required
-        />];
+    const makeModelSelector = (onClickCheckbox) => {
+        const availableJobs = props.jobs.filter((job) => (
+            (props.timeSeriesPrediction.includes(job.config.predictive_model['prediction_method']) ||
+             props.regression.includes(job.config.predictive_model['prediction_method']) ||
+             props.classification.includes(job.config.predictive_model['prediction_method'])) &&
+             job.type === 'prediction' && job.status === 'completed'));
+     return [
+        <IncrementalTable key={availableJobs.id} jobs={availableJobs.sort(compare)} onClickCheckbox={onClickCheckbox}/>
+        ];
     };
 
     if (props.predictionMethod === CLASSIFICATION) {
-        return [helpText(), ...makeModelSelector(props.onChange,
-            props.predictionMethod, props.classificationModels)];
+        return [helpText(), ...makeModelSelector(props.onClickCheckbox)];
     } else {
         return [helpText()];
     }
@@ -73,9 +55,10 @@ const Incremental = (props) => {
 
 Incremental.propTypes = {
     baseModel: selectLabelProptype,
-    classificationModels: selectLabelProptype,
-    regressionModels: selectLabelProptype,
-    timeSeriesPredictionModels: selectLabelProptype,
-    onChange: PropTypes.func.isRequired
+    classification: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    regression: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    timeSeriesPrediction: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    jobs: PropTypes.arrayOf(jobPropType).isRequired,
+    onClickCheckbox: PropTypes.func.isRequired
 };
 export default Incremental;

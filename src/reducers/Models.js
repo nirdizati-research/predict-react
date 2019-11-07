@@ -1,4 +1,5 @@
-import {MODEL_CHANGED, MODELS_FAILED, MODELS_REQUESTED, MODELS_RETRIEVED} from '../actions/ModelActions';
+import {MODELS_FAILED, MODELS_REQUESTED, MODELS_RETRIEVED} from '../actions/ModelActions';
+import {REPLAY_JOB_CHANGED} from '../actions/JobActions';
 import {LOG_CHANGED} from '../actions/LogActions';
 import {CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION} from '../reference';
 
@@ -6,9 +7,7 @@ const initialState = {
     fetchState: {inFlight: false},
     models: [],
     logId: 0,
-    regselected: 0,
-    classelected: 0,
-    timeseriespredselected: 0,
+    jobSelected: [],
     regressionModels: [],
     classificationModels: [],
     timeSeriesPredictionModels: [],
@@ -65,28 +64,12 @@ const models = (state = initialState, action) => {
             };
         }
 
-        case MODEL_CHANGED: {
-            if (action.method === REGRESSION) {
-                const regselected = action.modelId;
-                return {
-                    ...state,
-                    regselected,
-                };
-            } else if (action.method === CLASSIFICATION) {
-                const classelected = action.modelId;
-                return {
-                    ...state,
-                    classelected,
-                };
-            } else if (action.method === TIME_SERIES_PREDICTION) {
-                const timeseriespredselected = action.modelId;
-                return {
-                    ...state,
-                    timeseriespredselected,
-                };
-            } else {
-                return null;
-            }
+        case REPLAY_JOB_CHANGED: {
+            const jobSelected = action.jobId;
+            return {
+                ...state,
+                jobSelected,
+            };
         }
 
         case LOG_CHANGED: {
@@ -99,7 +82,7 @@ const models = (state = initialState, action) => {
             return {
                 ...state,
                 logId,
-                regressionModels,
+                regressionModels: regressionModels,
                 classificationModels,
                 timeSeriesPredictionModels,
                 pLength,

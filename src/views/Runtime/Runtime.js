@@ -1,138 +1,126 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {MODEL_CHANGED, modelsRequested} from '../../actions/ModelActions';
-import {LOG_CHANGED, logListRequested} from '../../actions/LogActions';
-import {traceListRequested} from '../../actions/TraceActions';
-import {submitRuntime} from '../../actions/RuntimeActions';
-import {mapTraces} from '../../util/unNormalize';
+import {submitReplay} from '../../actions/RuntimeActions';
+import {mapJobs, splitsToLabel} from '../../util/unNormalize';
 import LogSelector from '../../components/prediction/LogSelector';
-import RuntimeTable from '../../components/runtime/RuntimeTable';
-import InterResultTable from '../../components/runtime/InterResultTable';
-import {fetchStatePropType, logsStore, modelPropType, tracePropType} from '../../propTypes';
-import {modelsToString} from '../../util/dataReducers';
-import {CardText} from 'react-md/lib/Cards/index';
+import {fetchStatePropType, jobPropType, selectLabelProptype} from '../../propTypes';
 import ModelSelector from '../../components/prediction/ModelSelector';
-import {Card} from 'react-md';
 import ReactGA from 'react-ga';
+import {REPLAY_JOB_CHANGED, jobsRequested, REPLAY_SPLIT_CHANGED} from '../../actions/JobActions';
+import {splitsRequested} from '../../actions/SplitActions';
+import ResultTable from '../../components/prediction/ResultTable';
+
+const compare = (a, b) => {
+  if (a.id < b.id) {
+    return 1;
+  }
+  if (a.id > b.id) {
+    return -1;
+  }
+  return 0;
+};
 
 class Runtime extends Component {
-    onChangeLog(logId) {
-        const log = this.props.logs.byId[logId];
-        const pLength = log.properties.maxEventsInLog;
-        this.props.onLogChange(logId, pLength);
+    onChangeSplit(splitId) {
+        this.props.onSplitChange(splitId);
     }
 
-    onModelChange({method}, modelId) {
-        this.props.onModelChange({method}, modelId);
+    onClickCheckbox(id) {
+        let incJobs = this.props.jobId;
+        let index = incJobs.indexOf(id);
+        if (index !== -1) {
+            incJobs.splice(index, 1);
+            this.setState({...this.state, jobSelected: incJobs});
+        } else {
+            this.props.jobId.push(id);
+        }
+    }
+
+    requestJobsRun() {
+    this.props.onRequestJobs();
     }
 
     componentDidMount() {
-        if (this.props.models.length === 0) {
-            this.props.onRequestModels();
-            this.props.onRequestLogList();
-            this.props.onRequestTraces();
+        if (this.props.jobs.length === 0) {
+            this.props.onRequestSplitList();
+            this.props.onRequestJobs();
         }
         ReactGA.initialize('UA-143444044-1');
-    }
-
-    requestTraces() {
-        this.props.onRequestTraces();
+        ReactGA.pageview(window.location.hash);
     }
 
     onReset() {
         window.location.reload();
     }
 
-    filterTrace() {
-        return this.props.traces.filter((trace) => (trace.real_log === this.props.logId));
+    filterJobRun() {
+        return this.props.jobs.filter((job) =>
+            (job.type === 'replay_predict' && job.config.split.id === this.props.splitId));
     }
 
-    Submit() {
-        const logId = this.props.logId;
-        const regId = this.props.regModelId;
-        const classId = this.props.classModelId;
-        const timeSeriesPredId = this.props.timeSeriesPredModelId;
-        const payload = logId + '&' + regId + '&' + classId + '&' + timeSeriesPredId;
-        this.props.onSubmitRuntime(payload);
-        this.props.onRequestTraces();
-    }
+     Submit() {
+        if (this.props.jobId !== []) {
+            this.props.jobId.forEach((item) =>{
+                this.submitRequest(item);
+            });
+        }
+     }
+
+     submitRequest(item) {
+        const payload = {
+                splitId: this.props.splitId,
+                jobId: item,
+            };
+            this.props.onSubmitReplay(payload);
+     }
 
     render() {
-        // Only unique splits for selector
-        const regModelsLabel = modelsToString(this.props.regressionModels);
-        const classModelsLabel = modelsToString(this.props.classificationModels);
-        const timeSeriesPredModelsLabel = modelsToString(this.props.timeSeriesPredictionModels);
+    // Only unique splits for selector
+        const filteredJobsRun = this.filterJobRun();
+        let jobs = this.props.jobs.filter(job => (job.type === 'prediction' && job.status === 'completed' &&
+            (job.config.predictive_model.model_path !== '' || job.config.predictive_model.model_path != null)));
 
         return (
-            <div className="md-grid">
-                <div className="md-cell md-cell--12">
-                    <LogSelector logs={this.props.logs} fetchState={this.props.logfetchState}
-                                 logChange={this.onChangeLog.bind(this)} logId={this.props.logId}
-                                 maxPLength={this.props.maxPrefixLength}/>
-                </div>
-                <div className="md-cell md-cell--12">
-                    <ModelSelector modelChange={this.onModelChange.bind(this)} onSubmit={this.Submit.bind(this)}
-                                   onReset={this.onReset} classModelsLabel={classModelsLabel}
-                                   regModelsLabel={regModelsLabel}
-                                   timeSeriesPredModelsLabel={timeSeriesPredModelsLabel}
-                                   classModelId={this.props.classModelId} regModelId={this.props.regModelId}
-                                   timeSeriesPredModelId={this.props.timeSeriesPredModelId}/>
-                </div>
-                <div className="md-cell md-cell--12">
-                    <Card>
-                        <CardText>
-                            <h2> Predictive monitoring </h2>
-                            <RuntimeTable traces={this.filterTrace()} onRequestTraces={this.requestTraces.bind(this)}/>
-                        </CardText>
-                    </Card>
-                    <Card>
-                        <CardText>
-                            <h2> Prediction report </h2>
-                            <InterResultTable traces={this.filterTrace()}
-                                              onRequestTraces={this.requestTraces.bind(this)}/>
-                        </CardText>
-                    </Card>
-                </div>
+          <div className="md-grid">
+            <div className="md-cell md-cell--12">
+              <LogSelector splitLabels={this.props.splitLabels} fetchState={this.props.logfetchState}
+                                     splitChange={this.onChangeSplit.bind(this)} splitId={this.props.splitId}
+                                     maxPLength={this.props.maxPrefixLength}/>
             </div>
-        );
+            <div className="md-cell md-cell--12">
+              <ModelSelector onClickCheckbox={this.onClickCheckbox.bind(this)} onSubmit={this.Submit.bind(this)}
+                             onReset={this.onReset} jobs={jobs}/>
+            </div>
+            <div className="md-cell md-cell--12">
+                <ResultTable jobs={filteredJobsRun.sort(compare)} onRequestJobs={this.requestJobsRun.bind(this)}/>
+            </div>
+        </div>
+);
     }
 }
 
 Runtime.propTypes = {
+    splitLabels: selectLabelProptype,
     logfetchState: fetchStatePropType,
     modfetchState: fetchStatePropType,
-    onRequestModels: PropTypes.func.isRequired,
-    onModelChange: PropTypes.func.isRequired,
-    onLogChange: PropTypes.func.isRequired,
-    onSubmitRuntime: PropTypes.func.isRequired,
-    onRequestTraces: PropTypes.func.isRequired,
-    onRequestLogList: PropTypes.func.isRequired,
-    models: PropTypes.arrayOf(modelPropType).isRequired,
-    logs: logsStore,
-    traces: PropTypes.arrayOf(tracePropType).isRequired,
-    regressionModels: PropTypes.arrayOf(modelPropType).isRequired,
-    classificationModels: PropTypes.arrayOf(modelPropType).isRequired,
-    timeSeriesPredictionModels: PropTypes.arrayOf(modelPropType).isRequired,
-    regModelId: PropTypes.number.isRequired,
-    classModelId: PropTypes.number.isRequired,
-    timeSeriesPredModelId: PropTypes.number.isRequired,
-    logId: PropTypes.number.isRequired,
+    onRequestJobs: PropTypes.func.isRequired,
+    onJobChange: PropTypes.func.isRequired,
+    onSplitChange: PropTypes.func.isRequired,
+    onSubmitReplay: PropTypes.func.isRequired,
+    onRequestSplitList: PropTypes.func.isRequired,
+    jobId: PropTypes.arrayOf(PropTypes.number).isRequired,
+    jobs: PropTypes.arrayOf(jobPropType).isRequired,
+    splitId: PropTypes.number.isRequired,
     changed: PropTypes.number.isRequired,
     maxPrefixLength: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-    models: state.models.models,
-    logs: state.logs,
-    traces: mapTraces(state.traces.byId, state.traces.interResults, state.traces.finalDiff),
-    regressionModels: state.models.regressionModels,
-    classificationModels: state.models.classificationModels,
-    timeSeriesPredictionModels: state.models.timeSeriesPredictionModels,
-    regModelId: state.models.regselected,
-    classModelId: state.models.classelected,
-    timeSeriesPredModelId: state.models.timeseriespredselected,
-    logId: state.models.logId,
+    jobs: mapJobs(state.logs.byId, state.splits.byId, state.jobs.byId, state.jobs.allIds),
+    splitLabels: splitsToLabel(state.logs.byId, state.splits.byId, state.splits.allIds),
+    jobId: state.models.jobSelected,
+    splitId: state.jobs.replaySplitId,
     modfetchState: state.models.fetchState,
     logfetchState: state.logs.fetchState,
     changed: state.traces.changed,
@@ -140,12 +128,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    onRequestTraces: () => dispatch(traceListRequested()),
-    onRequestModels: () => dispatch(modelsRequested()),
-    onRequestLogList: (changeVisible) => dispatch(logListRequested({changeVisible, requestInfo: false})),
-    onModelChange: ({method}, modelId) => dispatch({type: MODEL_CHANGED, method, modelId}),
-    onLogChange: (logId, pLength) => dispatch({type: LOG_CHANGED, logId, pLength}),
-    onSubmitRuntime: (payload) => dispatch(submitRuntime({payload}))
+    onRequestJobs: () => dispatch(jobsRequested()),
+    onRequestSplitList: () => dispatch(splitsRequested()),
+    onJobChange: (jobId) => dispatch({type: REPLAY_JOB_CHANGED, jobId}),
+    onSplitChange: (splitId) => dispatch({type: REPLAY_SPLIT_CHANGED, splitId}),
+    onSubmitReplay: (payload) => dispatch(submitReplay({payload}))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Runtime);

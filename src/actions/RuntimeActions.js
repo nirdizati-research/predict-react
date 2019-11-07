@@ -9,13 +9,13 @@ export const predictionSucceeded = createPayloadForwardingAction(PREDICTION_SUCC
 export const PREDICTION_FAILED = 'PREDICTION_FAILED';
 export const predictionFailed = createPayloadForwardingAction(PREDICTION_FAILED);
 
-export const RUNTIME_SUBMITTED = 'RUNTIME_SUBMITTED';
-export const submitRuntime = createPayloadForwardingAction(RUNTIME_SUBMITTED);
+export const REPLAY_SUBMITTED = 'REPLAY_SUBMITTED';
+export const submitReplay = createPayloadForwardingAction(REPLAY_SUBMITTED);
 
-export const RUNTIME_SUCCEEDED = 'RUNTIME_SUCCEEDED';
-export const runtimeSucceeded = createPayloadForwardingAction(RUNTIME_SUCCEEDED);
+export const REPLAY_SUCCEEDED = 'REPLAY_SUCCEEDED';
+export const replaySucceeded = createPayloadForwardingAction(REPLAY_SUCCEEDED);
 
-export const RUNTIME_FAILED = 'RUNTIME_FAILED';
-export const runtimeFailed = createPayloadForwardingAction(RUNTIME_FAILED);
+export const REPLAY_FAILED = 'REPLAY_FAILED';
+export const replayFailed = createPayloadForwardingAction(REPLAY_FAILED);
 
 export const JOB_RUN_CHANGED = 'JOB_RUN_CHANGED';

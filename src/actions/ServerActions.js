@@ -5,7 +5,7 @@ import {logInfoFailed, logInfoRetrieved, logListFailed, logListsRetrieved} from 
 import {traceListFailed, traceListRetrieved} from './TraceActions';
 import {splitFailed, splitsFailed, splitsRetrieved, splitSucceeded} from './SplitActions';
 import {modelsFailed, modelsRetrieved} from './ModelActions';
-import {predictionFailed, predictionSucceeded, runtimeFailed, runtimeSucceeded} from './RuntimeActions';
+import {predictionFailed, predictionSucceeded, replayFailed, replaySucceeded} from './RuntimeActions';
 
 export const getJobs = () => (dispatch) => {
     jsonAjax(
@@ -94,23 +94,23 @@ export const getModels = () => (dispatch) => {
     );
 };
 
-export const getPrediction = ({payload}) => (dispatch) => {
+export const postPrediction = ({payload}) => (dispatch) => {
     jsonAjax(
-        SERVER_URL + `/runtime/prediction/${payload}`,
-        'GET',
-        null,
+        SERVER_URL + `/runtime/prediction/`,
+        'POST',
+        payload,
         (job) => dispatch(predictionSucceeded(job)),
         ({error}) => dispatch(predictionFailed(error))
     );
 };
 
-export const getRuntime = ({payload}) => (dispatch) => {
+export const postReplay = ({payload}) => (dispatch) => {
     jsonAjax(
-        SERVER_URL + `/runtime/demo/${payload}`,
-        'GET',
-        null,
-        (job) => dispatch(runtimeSucceeded(job)),
-        ({error}) => dispatch(runtimeFailed(error))
+        SERVER_URL + `/runtime/replay/`,
+        'POST',
+        payload,
+        (job) => dispatch(replaySucceeded(job)),
+        ({error}) => dispatch(replayFailed(error))
     );
 };
 

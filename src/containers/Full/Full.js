@@ -10,140 +10,115 @@ import RunningTasks from '../RunningTasks';
 
 
 const helpButton = (click) => (
-    <Button flat swapTheming onClick={click} iconBefore={false} iconEl={<FontIcon>help</FontIcon>}>
-        Help
-    </Button>);
+  <Button flat swapTheming onClick={click} iconBefore={false} iconEl={<FontIcon>help</FontIcon>}>
+    Help
+  </Button>);
 
 function isActive(to, path) {
-    return to === path;
+  return to === path;
 }
 
 class Full extends Component {
-    state = {visible: false};
+  state = {visible: false};
 
-    click() {
-        this.setState({visible: true});
-    }
+  click() {
+    this.setState({visible: true});
+  }
 
-    hide() {
-        this.setState({visible: false});
-    }
+  hide() {
+    this.setState({visible: false});
+  }
 
-    render() {
-        const {
-            location: {pathname},
-            children,
-        } = this.props;
+  render() {
+    const {
+      location: {pathname},
+      children,
+    } = this.props;
 
-        return (
-            <NavigationDrawer
-                // defaultVisible={true}
-                mobileDrawerType={NavigationDrawer.DrawerTypes.TEMPORARY_MINI}
-                tabletDrawerType={NavigationDrawer.DrawerTypes.PERSISTENT_MINI}
-                desktopDrawerType={NavigationDrawer.DrawerTypes.PERSISTENT_MINI}
-                toolbarTitle='Nirdizati Research'
+    return (
+      <NavigationDrawer
+        // defaultVisible={true}
+        mobileDrawerType={NavigationDrawer.DrawerTypes.TEMPORARY_MINI}
+        tabletDrawerType={NavigationDrawer.DrawerTypes.PERSISTENT_MINI}
+        desktopDrawerType={NavigationDrawer.DrawerTypes.PERSISTENT_MINI}
+        toolbarTitle='Nirdizati Research'
 
-                toolbarActions={[<RunningTasks key="running"/>, helpButton(this.click.bind(this))]}
-                defaultVisible={false}
-                navItems={[
-                    {
-                        component: IndexLink,
-                        to: '/',
-                        active: isActive('/', pathname),
-                        primaryText: 'Home',
-                        leftIcon: <FontIcon>home</FontIcon>,
-                    },
-                    {
-                        component: Link,
-                        to: '/upload',
-                        active: isActive('/upload', pathname),
-                        primaryText: 'Upload',
-                        leftIcon: <FontIcon>backup</FontIcon>,
-                    },
-                    {
-                        component: Link,
-                        to: '/logs',
-                        active: isActive('/logs', pathname),
-                        primaryText: 'Log details',
-                        leftIcon: <FontIcon>description</FontIcon>,
-                    },
-                    {
-                        component: Link,
-                        to: '/split',
-                        active: isActive('/split', pathname),
-                        primaryText: 'Split',
-                        leftIcon: <FontIcon>swap_horiz</FontIcon>,
-                    },
-                    {
-                        component: Link,
-                        to: '/label',
-                        active: isActive('/label', pathname),
-                        primaryText: 'Labeling',
-                        leftIcon: <FontIcon>label_outline</FontIcon>,
-                    },
-                    {
-                        component: Link,
-                        to: '/training',
-                        active: isActive('/training', pathname),
-                        primaryText: 'Training',
-                        leftIcon: <FontIcon>build</FontIcon>,
-                    },
-                    {
-                        component: Link,
-                        to: '/jobs',
-                        active: isActive('/jobs', pathname),
-                        primaryText: 'Task status',
-                        leftIcon: <FontIcon>list</FontIcon>,
-                    },
-                    {
-                        component: Link,
-                        to: '/validation',
-                        active: isActive('/validation', pathname),
-                        primaryText: 'Validation',
-                        leftIcon: <FontIcon>insert_chart</FontIcon>,
-                    },
-                    {
-                        component: Link,
-                        to: '/explanation',
-                        active: isActive('/explanation', pathname),
-                        primaryText: 'Model Explanation',
-                        leftIcon: <FontIcon>highlight</FontIcon>,
-                    },
-                    // {
-                    //   component: Link,
-                    //   to: '/prediction',
-                    //   active: isActive('/prediction', pathname),
-                    //   primaryText: 'Prediction',
-                    //   leftIcon: <FontIcon>work</FontIcon>,
-                    // },
-                    // {
-                    //   component: Link,
-                    //   to: '/runtime',
-                    //   active: isActive('/runtime', pathname),
-                    //   primaryText: 'Runtime',
-                    //   leftIcon: <FontIcon>all_inclusive</FontIcon>,
-                    // },
-                    // {
-                    //   component: Link,
-                    //   to: '/recommender',
-                    //   active: isActive('/recommender', pathname),
-                    //   primaryText: 'Recommender',
-                    //   leftIcon: <FontIcon>directions</FontIcon>,
-                    // },
-                ]}
-
-            >
-                <HelpDialog texts={getHelpText(pathname)} visible={this.state.visible} hide={this.hide.bind(this)}/>
-                {children ? React.cloneElement(children, {key: pathname}) : null}
-                <Footer/>
-            </NavigationDrawer>
-        );
-    }
+        toolbarActions={[<RunningTasks key="running"/>, helpButton(this.click.bind(this))]}
+        defaultVisible={false}
+        navItems={[{
+          component: IndexLink,
+          to: '/',
+          active: isActive('/', pathname),
+          primaryText: 'Home',
+          leftIcon: <FontIcon>home</FontIcon>,
+        }, {
+          component: Link,
+          to: '/upload',
+          active: isActive('/upload', pathname),
+          primaryText: 'Upload',
+          leftIcon: <FontIcon>backup</FontIcon>,
+        }, {
+          component: Link,
+          to: '/logs',
+          active: isActive('/logs', pathname),
+          primaryText: 'Log details',
+          leftIcon: <FontIcon>description</FontIcon>,
+        }, {
+          component: Link,
+          to: '/split',
+          active: isActive('/split', pathname),
+          primaryText: 'Split',
+          leftIcon: <FontIcon>swap_horiz</FontIcon>,
+        }, {
+          component: Link,
+          to: '/label',
+          active: isActive('/label', pathname),
+          primaryText: 'Labeling',
+          leftIcon: <FontIcon>label_outline</FontIcon>,
+        }, {
+          component: Link,
+          to: '/training',
+          active: isActive('/training', pathname),
+          primaryText: 'Training',
+          leftIcon: <FontIcon>build</FontIcon>,
+        }, {
+          component: Link,
+          to: '/jobs',
+          active: isActive('/jobs', pathname),
+          primaryText: 'Task status',
+          leftIcon: <FontIcon>list</FontIcon>,
+        }, {
+          component: Link,
+          to: '/validation',
+          active: isActive('/validation', pathname),
+          primaryText: 'Validation',
+          leftIcon: <FontIcon>insert_chart</FontIcon>,
+        }/* ,
+        {
+          component: Link,
+          to: '/prediction',
+          active: isActive('/prediction', pathname),
+          primaryText: 'Prediction',
+          leftIcon: <FontIcon>work</FontIcon>,
+        }, {
+          component: Link,
+          to: '/runtime',
+          active: isActive('/runtime', pathname),
+          primaryText: 'Runtime',
+          leftIcon: <FontIcon>flash_on</FontIcon>,
+        }*/]}
+      >
+        <HelpDialog texts={getHelpText(pathname)} visible={this.state.visible} hide={this.hide.bind(this)}/>
+        {children ? React.cloneElement(children, {key: pathname}) : null}
+        <Footer/>
+      </NavigationDrawer>
+    );
+  }
 }
 
 Full.propTypes = {
-    location: PropTypes.object.isRequired,
-    children: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
+  children: PropTypes.object.isRequired
 };
 
 export default Full;

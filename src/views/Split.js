@@ -18,6 +18,7 @@ class Split extends Component {
         // Request on every page refresh. Not ideal
         this.props.onRequestSplitList();
         ReactGA.initialize('UA-143444044-1');
+        ReactGA.pageview(window.location.hash);
     }
 
     render() {

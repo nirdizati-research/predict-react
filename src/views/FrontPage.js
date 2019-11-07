@@ -21,10 +21,9 @@ class FrontPage extends Component {
             </div>
         );
     }
-
     componentDidMount() {
-        ReactGA.initialize('UA-143444044-1');
-        ReactGA.pageview(window.location.pathname + window.location.search);
+       ReactGA.initialize('UA-143444044-1');
+       ReactGA.pageview(window.location.hash);
     }
 }
 

@@ -3,7 +3,7 @@
  */
 
 import {LOG_LIST_FAILED, LOG_LIST_REQUESTED, LOG_LIST_RETRIEVED} from '../actions/LogActions';
-import {listRetrieved} from './genericHelpers';
+import {logListRetrieved} from './genericHelpers';
 
 const initialState = {
     fetchState: {inFlight: false},
@@ -24,7 +24,7 @@ const logs = (state = initialState, action) => {
                 return {
                     ...state,
                     fetchState: {inFlight: false},
-                    ...listRetrieved(action.payload)
+                    ...logListRetrieved(action.payload)
                 };
             }
 
