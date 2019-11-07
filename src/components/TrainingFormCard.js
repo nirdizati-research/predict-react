@@ -224,7 +224,7 @@ class TrainingFormCard extends Component {
             // no default
         }
 
-        this.setState((prevState,) => {
+        this.setState((prevState, ) => {
             return {displayWarning: TrainingFormCard.displayWarningCheck(prevState)};
         });
     }
@@ -260,12 +260,12 @@ class TrainingFormCard extends Component {
                 ...this.state.hyperparameter_optimizer, performance_metric
             }, ...initialAdvancedConfiguration()
         });
-        this.setState((prevState,) => {
+        this.setState((prevState, ) => {
             return {displayWarning: TrainingFormCard.displayWarningCheck(prevState)};
         });
     }
 
-    selectChange(value,) {
+    selectChange(value, ) {
         this.setState({split_id: value});
         this.props.onSplitChange(value);
     }

@@ -7,7 +7,7 @@ import {TableRow} from 'react-md/lib/DataTables/index';
 import {TableColumn} from 'react-md';
 import ConfigTable from '../../../components/validation/ConfigTable';
 import ConfigTableCard from '../../../components/validation/ConfigTableCard';
-import {CLASSIFICATION, LABELLING, LINEAR, NO_CLUSTER, RANDOM_FOREST, REGRESSION,} from '../../../reference';
+import {CLASSIFICATION, LABELLING, LINEAR, NO_CLUSTER, RANDOM_FOREST, REGRESSION} from '../../../reference';
 import {jobToValidationTable} from '../../../util/dataReducers';
 import {label1} from '../../../../stories/Advanced';
 import LabelConfigTable from '../../../components/validation/LabelConfigTable';

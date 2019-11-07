@@ -8,9 +8,9 @@ import FetchState from './../FetchState';
 import {fetchStatePropType, jobPropType, selectLabelProptype} from '../../propTypes';
 
 const AnteHocExplanation = (props) => {
-    const selectChange = (value, _) => {
-        props.splitChange(value);
-    };
+    // const selectChange = (value, _) => {
+    //     props.splitChange(value);
+    // };
 
     return <Card className="md-block-centered">
         <CardTitle title="Ante Hoc"/>

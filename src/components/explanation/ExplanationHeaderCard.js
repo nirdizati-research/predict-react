@@ -12,7 +12,6 @@ import {jobToValidationTable} from '../../util/dataReducers';
 // import ConfigTable from './ConfigTable';
 
 const ExplanationHeaderCard = (props) => {
-
     // const checkBoxChange = (value, event) => {
     //   props.prefixChange(event.target.value);
     // };
