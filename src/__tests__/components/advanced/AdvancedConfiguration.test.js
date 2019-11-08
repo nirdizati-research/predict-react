@@ -28,76 +28,76 @@ describe('Regression', () => {
                                                    timeSeriesPredictionModels={[]}
                                                    onModelChange={onModelChange}/>);
 
-  it('standard items', () => {
-    expect(element.find(HyperOpt).length).toBe(1);
-    expect(element.find(Labelling).length).toBe(1);
-  });
+    it('standard items', () => {
+        expect(element.find(HyperOpt).length).toBe(1);
+        expect(element.find(Labelling).length).toBe(1);
+    });
 
-  it('has no clustering', () => {
-    expect(element.find(KMeans).length).toBe(0);
-  });
+    it('has no clustering', () => {
+        expect(element.find(KMeans).length).toBe(0);
+    });
 
-  it('has all regression methods', () => {
-    expect(element.find(RegressionRandomForest).length).toBe(1);
-    expect(element.find(RegressionLasso).length).toBe(1);
-    expect(element.find(RegressionLinear).length).toBe(1);
-    expect(element.find(RegressionXGBoost).length).toBe(1);
-  });
+    it('has all regression methods', () => {
+        expect(element.find(RegressionRandomForest).length).toBe(1);
+        expect(element.find(RegressionLasso).length).toBe(1);
+        expect(element.find(RegressionLinear).length).toBe(1);
+        expect(element.find(RegressionXGBoost).length).toBe(1);
+    });
 });
 
 
 describe('Classification', () => {
-  const element = shallow(<AdvancedConfiguration predictionMethod={CLASSIFICATION}
-                                                 classification={['knn', 'decisionTree', 'randomForest', 'xgboost']}
-                                                 labelling={label1}
-                                                 traceAttributes={[]} clusterings={[KMEANS]} regression={[]}
-                                                 timeSeriesPrediction={[]}
-                                                 onChange={jest.fn()}
-                                                 classificationModels={[]}
-                                                 regressionModels={[]}
-                                                 timeSeriesPredictionModels={[]}
-                                                 onModelChange={onModelChange}/>);
+    const element = shallow(<AdvancedConfiguration predictionMethod={CLASSIFICATION}
+                                                   classification={['knn', 'decisionTree', 'randomForest', 'xgboost']}
+                                                   labelling={label1}
+                                                   traceAttributes={[]} clusterings={[KMEANS]} regression={[]}
+                                                   timeSeriesPrediction={[]}
+                                                   onChange={jest.fn()}
+                                                   classificationModels={[]}
+                                                   regressionModels={[]}
+                                                   timeSeriesPredictionModels={[]}
+                                                   onModelChange={onModelChange}/>);
 
-  it('standard items', () => {
-    expect(element.find(HyperOpt).length).toBe(1);
-    expect(element.find(Labelling).length).toBe(1);
-  });
+    it('standard items', () => {
+        expect(element.find(HyperOpt).length).toBe(1);
+        expect(element.find(Labelling).length).toBe(1);
+    });
 
-  it('has clustering', () => {
-    expect(element.find(KMeans).length).toBe(1);
-  });
+    it('has clustering', () => {
+        expect(element.find(KMeans).length).toBe(1);
+    });
 
-  it('has all classification methods', () => {
-    expect(element.find(ClassificationKnn).length).toBe(1);
-    expect(element.find(ClassificationRandomForest).length).toBe(1);
-    expect(element.find(ClassificationDecisionTree).length).toBe(1);
-    expect(element.find(ClassificationXGBoost).length).toBe(1);
-  });
+    it('has all classification methods', () => {
+        expect(element.find(ClassificationKnn).length).toBe(1);
+        expect(element.find(ClassificationRandomForest).length).toBe(1);
+        expect(element.find(ClassificationDecisionTree).length).toBe(1);
+        expect(element.find(ClassificationXGBoost).length).toBe(1);
+    });
 });
 
 
 // TODO: add timeSeriesPrediction tests
 
 describe('Labelling', () => {
-  const element = shallow(<AdvancedConfiguration predictionMethod={LABELLING}
-                                                 classification={[]} labelling={label1}
-                                                 traceAttributes={[]} clusterings={[KMEANS]} regression={[]}
-                                                 timeSeriesPrediction={[]}
-                                                 onChange={jest.fn()}
-                                                 classificationModels={[]}
-                                                 regressionModels={[]}
-                                                 timeSeriesPredictionModels={[]}
-                                                 onModelChange={onModelChange}/>);
+    const element = shallow(<AdvancedConfiguration predictionMethod={LABELLING}
+                                                   classification={[]} labelling={label1}
+                                                   traceAttributes={[]} clusterings={[KMEANS]} regression={[]}
+                                                   timeSeriesPrediction={[]}
+                                                   onChange={jest.fn()}
+                                                   classificationModels={[]}
+                                                   regressionModels={[]}
+                                                   timeSeriesPredictionModels={[]}
+                                                   onModelChange={onModelChange}/>);
 
-  it('has no hyperopt', () => {
-    expect(element.find(HyperOpt).length).toBe(0);
-  });
+    it('has no hyperopt', () => {
+        expect(element.find(HyperOpt).length).toBe(0);
+    });
 
-  it('has label', () => {
-    expect(element.find(Labelling).length).toBe(1);
-  });
+    it('has label', () => {
+        expect(element.find(Labelling).length).toBe(1);
+    });
 
-  it('has no clustering', () => {
-    expect(element.find(KMeans).length).toBe(0);
-  });
+    it('has no clustering', () => {
+        expect(element.find(KMeans).length).toBe(0);
+    });
 });
