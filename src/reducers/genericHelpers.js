@@ -18,7 +18,7 @@ export const logListRetrieved = (objectList) => {
             [obj.id]: {
                 'id': obj.id,
                 'name': obj.name,
-                'properties': JSON.parse(obj.properties)
+                'properties': obj.properties
             }
         })));
     return {allIds, byId};
