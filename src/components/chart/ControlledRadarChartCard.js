@@ -1,33 +1,33 @@
-import React, { Component } from "react";
-import { Card, CardText, CardTitle } from "react-md/lib/Cards/index";
-import PropTypes from "prop-types";
-import { jobPropType } from "../../propTypes";
+import React, {Component} from 'react';
+import {CardText, CardTitle} from 'react-md/lib/Cards/index';
+import PropTypes from 'prop-types';
+import {jobPropType} from '../../propTypes';
 import {
   makeTable,
   getPrefixLengthValues,
   getAllPrefixValuesAllConfig,
   getRadarChartValues,
   getColumnNames
-} from "../../util/dataReducers";
-import SelectField from "react-md/lib/SelectFields/index";
+} from '../../util/dataReducers';
+import SelectField from 'react-md/lib/SelectFields/index';
 import {
   CLASSIFICATION,
   REGRESSION,
   TIME_SERIES_PREDICTION
-} from "../../reference";
-import { Row, Col, Container } from "react-grid-system";
-import "react-svg-radar-chart/build/css/index.css";
-import RadarChartCard from "./RadarChartCard";
-import { getRadarChartHeaders } from "../validation/ColumnHelper";
+} from '../../reference';
+import {Row, Col, Container} from 'react-grid-system';
+import 'react-svg-radar-chart/build/css/index.css';
+import RadarChartCard from './RadarChartCard';
+import {getRadarChartHeaders} from '../validation/ColumnHelper';
 
 class ControlledRadarChartCard extends Component {
   constructor(props) {
     super(props);
 
     const data = makeTable(this.props.jobs, getRadarChartHeaders(this.props.predictionMethod)[0]);
-    const [_, ...rows] = data;
+    const [, ...rows] = data;
     const prefixValues = getPrefixLengthValues(rows);
-    if (prefixValues.length > 1) prefixValues.push("average");
+    if (prefixValues.length > 1) prefixValues.push('average');
     const prefixLengthValue = prefixValues[0];
     const columnNames = getColumnNames(data);
     columnNames.shift();
@@ -45,9 +45,9 @@ class ControlledRadarChartCard extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps.predictionMethod !== this.props.predictionMethod) {
       const data = makeTable(this.props.jobs, getRadarChartHeaders(this.props.predictionMethod)[0]);
-      const [_, ...rows] = data;
+      const [, ...rows] = data;
       const prefixValues = getPrefixLengthValues(rows);
-      if (prefixValues.length > 1) prefixValues.push("average");
+      if (prefixValues.length > 1) prefixValues.push('average');
       const prefixLengthValue = prefixValues[0];
       const columnNames = getColumnNames(data);
       columnNames.shift();
@@ -64,11 +64,11 @@ class ControlledRadarChartCard extends Component {
   }
 
   selectPrefixLengthValueChange(value) {
-    this.setState({ prefixLengthValue: value });
+    this.setState({prefixLengthValue: value});
   }
 
   selectColumnValueChange(value) {
-    this.setState({ columnName: value });
+    this.setState({columnName: value});
   }
 
   getPrefixLengthValuesSelector() {
@@ -116,9 +116,9 @@ class ControlledRadarChartCard extends Component {
       />
     );
     const style = {
-      flexDirection: "row",
-      justifyContent: "center",
-      alignItems: "center"
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center'
     };
     return (
       <div>
