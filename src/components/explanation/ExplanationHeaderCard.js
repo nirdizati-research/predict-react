@@ -44,25 +44,8 @@ ExplanationHeaderCard.propTypes = {
     jobs: PropTypes.arrayOf(jobPropType).isRequired,
     splitLabels: selectLabelProptype,
     fetchState: fetchStatePropType,
-    methodChange: PropTypes.func.isRequired,
     splitChange: PropTypes.func.isRequired,
-    prefixLengths: PropTypes.arrayOf(PropTypes.string).isRequired,
-    prefixChange: PropTypes.func.isRequired,
-    selectedPrefixes: PropTypes.arrayOf(PropTypes.number).isRequired,
     selectedSplitId: PropTypes.number.isRequired,
-    filterOptionChange: PropTypes.func.isRequired,
-    labelChange: PropTypes.func.isRequired,
-    filterOptions: PropTypes.shape({
-        encodings: PropTypes.arrayOf(PropTypes.string).isRequired,
-        clusterings: PropTypes.arrayOf(PropTypes.string).isRequired,
-        classification: PropTypes.arrayOf(PropTypes.string).isRequired,
-        regression: PropTypes.arrayOf(PropTypes.string).isRequired,
-        timeSeriesPrediction: PropTypes.arrayOf(PropTypes.string).isRequired,
-        labelling: PropTypes.any.isRequired,
-        attributeNames: PropTypes.arrayOf(PropTypes.string).isRequired,
-        thresholds: PropTypes.arrayOf(PropTypes.number).isRequired,
-        padding: PropTypes.string.isRequired
-    }).isRequired,
     predictionMethod: PropTypes.string.isRequired,
     onClick: PropTypes.func
 };

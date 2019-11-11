@@ -89,7 +89,7 @@ class Full extends Component {
           leftIcon: <FontIcon>list</FontIcon>,
         }, {
           component: Link,
-          to: '/validation',
+          to: '/validatiajon',
           active: isActive('/validation', pathname),
           primaryText: 'Validation',
           leftIcon: <FontIcon>insert_chart</FontIcon>,

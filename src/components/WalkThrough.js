@@ -120,6 +120,14 @@ class WalkThrough extends PureComponent {
                             {/* text="Create continuous predictions for a stream of events"*/}
                             {/* threeLines*/}
                         {/* />*/}
+                         <GuideItem
+                            avatar={<Avatar suffix="pink">8</Avatar>}
+                            button={<Button flat primary href={'/#/explanation'}
+                                            iconEl={<FontIcon>insert_chart</FontIcon>}>Explanation</Button>}
+                             title="Explanation"
+                             text="Explanation"
+                             threeLines
+                        />
                     </List>
                 </div>
             </CardText>
