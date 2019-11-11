@@ -16,7 +16,6 @@ import {
   TIME_SERIES_PREDICTION
 } from '../../reference';
 import {Row, Col, Container} from 'react-grid-system';
-import 'react-svg-radar-chart/build/css/index.css';
 import RadarChartCard from './RadarChartCard';
 import {getRadarChartHeaders} from '../validation/ColumnHelper';
 
