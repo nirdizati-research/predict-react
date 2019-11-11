@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import ReactApexChart from "react-apexcharts";
+import React from 'react';
+import PropTypes from 'prop-types';
+import ReactApexChart from 'react-apexcharts';
 
 const RadarChartCard = props => {
-  var radarstates = {
+  let radarstates = {
     options: {
       chart: {
         toolbar: {
@@ -15,23 +15,23 @@ const RadarChartCard = props => {
         radar: {
           size: 98,
           polygons: {
-            strokeColor: "#e9e9e9",
+            strokeColor: '#e9e9e9',
             fill: {
-              colors: ["#f8f8f8", "#fff"]
+              colors: ['#f8f8f8', '#fff']
             }
           }
         }
       },
-      colors: ["#FF4560"],
+      colors: ['#FF4560'],
       markers: {
         size: 3,
-        colors: ["#fff"],
-        strokeColor: "#FF4560",
+        colors: ['#fff'],
+        strokeColor: '#FF4560',
         strokeWidth: 1
       },
       tooltip: {
         y: {
-          formatter: function(val) {
+          formatter: function (val) {
             return val;
           }
         }
@@ -39,15 +39,15 @@ const RadarChartCard = props => {
       yaxis: {
         tickAmount: 5,
         labels: {
-          formatter: function(val, i) {
-            return "";
+          formatter: function (val, i) {
+            return '';
           }
         }
       }
     },
     series: [
       {
-        name: "Value",
+        name: 'Value',
         data: props.data
       }
     ]
@@ -58,7 +58,7 @@ const RadarChartCard = props => {
       options={radarstates.options}
       series={radarstates.series}
       type="radar"
-      height="360"
+      height ="250em"
     />
   );
 };
