@@ -15,7 +15,7 @@ import {
   REGRESSION,
   TIME_SERIES_PREDICTION
 } from '../../reference';
-import {Row, Col, Container} from 'react-grid-system';
+import {Row} from 'react-grid-system';
 import RadarChartCard from './RadarChartCard';
 import {getRadarChartHeaders} from '../validation/ColumnHelper';
 
@@ -121,20 +121,20 @@ class ControlledRadarChartCard extends Component {
     };
     return (
       <div>
-          <Container>
+          <div>
             <Row>
-              <Col>
+              <div>
                 <CardTitle title={`Prefix length`}>
                   {this.getPrefixLengthValuesSelector()}
                 </CardTitle>
-              </Col>
-              <Col>
+              </div>
+              <div>
                 <CardTitle title={`Column name `}>
                   {this.getColumnValuesSelector()}
                 </CardTitle>
-              </Col>
+              </div>
             </Row>
-          </Container>
+          </div>
           <CardText style={style}>{radarChart}</CardText>
       </div>
     );
@@ -142,11 +142,7 @@ class ControlledRadarChartCard extends Component {
 }
 ControlledRadarChartCard.propTypes = {
   jobs: PropTypes.arrayOf(jobPropType).isRequired,
-  predictionMethod: PropTypes.oneOf([
-    CLASSIFICATION,
-    REGRESSION,
-    TIME_SERIES_PREDICTION
-  ]).isRequired
+  predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION]).isRequired,
 };
 
 export default ControlledRadarChartCard;
