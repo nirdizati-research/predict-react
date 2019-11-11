@@ -45,7 +45,8 @@ import {
     SIMPLE_INDEX,
     THRESHOLD_MEAN,
     TIME_SERIES_PREDICTION,
-    XGBOOST, ZERO_PADDING
+    XGBOOST,
+    ZERO_PADDING
 } from '../reference';
 import {labelCompare} from '../util/labelCompare';
 import {addListToStore, removeFromStore} from './genericHelpers';

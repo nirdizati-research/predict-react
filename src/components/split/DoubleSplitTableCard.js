@@ -8,42 +8,42 @@ import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import {splitPropType} from '../../propTypes';
 
 const DoubleSplitTableCard = (props) => {
-  const headers = ['id', 'Training log', 'Validation log'];
+    const headers = ['id', 'Training log', 'Validation log'];
 
-  return (
-    <Card className="md-block-centered">
-      <CardTitle title="Training and validation log files from separate log files"/>
-      <CardText>
-        Logs uploaded as separate training and validation log files
-        <DataTable baseId="simple-pagination" plain>
-          <TableHeader>
-            <TableRow selectable={false}>
-              {headers.map((header) => <TableColumn key={header}> {header}</TableColumn>)}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {tableBody(props.splits)}
-          </TableBody>
-        </DataTable>
-      </CardText>
-    </Card>);
+    return (
+        <Card className="md-block-centered">
+            <CardTitle title="Training and validation log files from separate log files"/>
+            <CardText>
+                Logs uploaded as separate training and validation log files
+                <DataTable baseId="simple-pagination" plain>
+                    <TableHeader>
+                        <TableRow selectable={false}>
+                            {headers.map((header) => <TableColumn key={header}> {header}</TableColumn>)}
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {tableBody(props.splits)}
+                    </TableBody>
+                </DataTable>
+            </CardText>
+        </Card>);
 };
 
 /* eslint-disable camelcase */
 const tableBody = (splits) => {
-  return splits.map(({id, trainingLogName, testLogName}) => {
-    return (
-      <TableRow key={id} selectable={false}>
-        <TableColumn>{id}</TableColumn>
-        <TableColumn>{trainingLogName}</TableColumn>
-        <TableColumn>{testLogName}</TableColumn>
-      </TableRow>
-    );
-  });
+    return splits.map(({id, trainingLogName, testLogName}) => {
+        return (
+            <TableRow key={id} selectable={false}>
+                <TableColumn>{id}</TableColumn>
+                <TableColumn>{trainingLogName}</TableColumn>
+                <TableColumn>{testLogName}</TableColumn>
+            </TableRow>
+        );
+    });
 };
 
 DoubleSplitTableCard.propTypes = {
-  splits: PropTypes.arrayOf(splitPropType).isRequired
+    splits: PropTypes.arrayOf(splitPropType).isRequired
 };
 
 export default DoubleSplitTableCard;

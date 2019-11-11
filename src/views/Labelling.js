@@ -161,7 +161,7 @@ const mapStateToProps = (state) => ({
     prefixLengths: state.jobs.prefixLengths.sort((a, b) => (a - b)),
     selectedPrefixes: state.jobs.selectedPrefixes,
     filterOptions: (({labelling, attributeNames, thresholds, padding}) => ({
-         labelling, attributeNames, thresholds, padding
+        labelling, attributeNames, thresholds, padding
     }))(state.jobs)
 });
 

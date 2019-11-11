@@ -9,26 +9,26 @@ import ServerUpload from '../../../components/upload/ServerUpload.jsx';
 import UploadDouble from '../../../components/upload/UploadDouble.jsx';
 
 it('renders single card', () => {
-  const element = shallow(<UploadCard/>);
-  expect(element).toBeDefined();
-  expect(element.find(ServerUpload).length).toBe(1);
+    const element = shallow(<UploadCard/>);
+    expect(element).toBeDefined();
+    expect(element.find(ServerUpload).length).toBe(1);
 });
 
 it('renders upload single', () => {
-  const element = shallow(<ServerUpload/>);
-  expect(element).toBeDefined();
-  expect(element.find(TextField).length).toBe(1);
+    const element = shallow(<ServerUpload/>);
+    expect(element).toBeDefined();
+    expect(element.find(TextField).length).toBe(1);
 });
 
 it('renders double card', () => {
-  const element = shallow(<UploadDoubleCard/>);
-  expect(element).toBeDefined();
-  expect(element.find(UploadDouble).length).toBe(1);
+    const element = shallow(<UploadDoubleCard/>);
+    expect(element).toBeDefined();
+    expect(element.find(UploadDouble).length).toBe(1);
 });
 
 
 it('renders upload double', () => {
-  const element = shallow(<UploadDouble/>);
-  expect(element).toBeDefined();
-  expect(element.find(TextField).length).toBe(2);
+    const element = shallow(<UploadDouble/>);
+    expect(element).toBeDefined();
+    expect(element.find(TextField).length).toBe(2);
 });

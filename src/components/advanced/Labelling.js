@@ -40,7 +40,7 @@ const Labelling = (props) => {
                     </p>
                     <p>Numeric attributes below the threshold are set as <code>True</code>.</p>
                     <p className="md-red-500">A threshold too low, or too high, could end up with a
-                       labeling with only <code>True</code>, or <code>False</code>, labels.</p>
+                        labeling with only <code>True</code>, or <code>False</code>, labels.</p>
                 </div>;
             }
             case TIME_SERIES_PREDICTION: {
@@ -69,8 +69,11 @@ const Labelling = (props) => {
 
     const threshold = (label) => {
         if (props.predictionMethod === REGRESSION || props.predictionMethod === TIME_SERIES_PREDICTION) {
+            label.threshold_type = 'none';
+            label.threshold = 0;
             return [];
         } else if ([REMAINING_TIME, ATTRIBUTE_NUMBER, DURATION].includes(label.type)) {
+            label.threshold_type = thresholdControls[0].value;
             const thresholdType = <SelectField
                 key="threshold_type"
                 id="threshold_type"

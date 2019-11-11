@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {CLASSIFICATION, SGDCLASSIFIER} from '../../../reference';
 import SelectField from 'react-md/lib/SelectFields';
 import {learningRateSGDClassifier, lossSGDClassifier, penaltySGDClassifier} from '../advancedConfig';
-import {TextField, Checkbox} from 'react-md';
+import {Checkbox, TextField} from 'react-md';
 
 
 const defaults = {
