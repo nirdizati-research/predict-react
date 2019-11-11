@@ -11,7 +11,7 @@ import {jobPropType} from '../../propTypes';
 import ControlledLineChartCard from '../chart/ControlledLineChartCard';
 import {toRun} from '../../util/dataReducers';
 import ControlledRadarChartCard from '../chart/ControlledRadarChartCard';
-import {Row, Col} from 'react-grid-system';
+import {Row} from 'react-grid-system';
 import {Card} from 'react-md/lib/Cards/index';
 
 const regressionMap = (jobs) => {
@@ -134,12 +134,12 @@ const ResultWrapper = (props) => {
   </div>,
   <Card className="md-cell md-cell--12" key="023">
     <Row>
-    <Col className="md-cell md-cell--6">
+    <div className="md-cell md-cell--6">
     {prefixChart}
-    </Col>
-    <Col className="md-cell md-cell--6">
+    </div>
+    <div className="md-cell md-cell--6">
       {radarChart}
-    </Col>
+    </div>
     </Row>
     </Card>,
      ...charts];
