@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import ReactApexChart from "react-apexcharts";
+import React from 'react';
+import PropTypes from 'prop-types';
+import ReactApexChart from 'react-apexcharts';
 
 class HorizontalBarChartCard extends React.Component {
   constructor(props) {
@@ -16,8 +16,8 @@ class HorizontalBarChartCard extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.data !== this.props.data) {
-      this.setState({ data: this.props.data });
-      this.setState({ labels: this.props.labels });
+      this.setState({data: this.props.data});
+      this.setState({labels: this.props.labels});
     }
   }
   render() {
@@ -32,8 +32,8 @@ class HorizontalBarChartCard extends React.Component {
           bar: {
             horizontal: true,
             distributed: true,
-            columnWidth: "80%",
-            barHeight: "80%"
+            columnWidth: '80%',
+            barHeight: '80%'
           }
         },
         dataLabels: {
@@ -43,15 +43,15 @@ class HorizontalBarChartCard extends React.Component {
           show: true,
           axisBorder: {
             show: true,
-            color: "#78909C",
+            color: '#78909C',
             offsetX: 0,
             offsetY: 0
           },
           labels: {
-            align: "left",
+            align: 'left',
             style: {
               color: undefined,
-              fontSize: "8px"
+              fontSize: '10px'
             },
             offsetX: 0,
             offsetY: 0
@@ -72,21 +72,22 @@ class HorizontalBarChartCard extends React.Component {
       },
       series: [
         {
-          name: "Value",
+          name: 'Value',
           data: this.state.data
         }
       ]
     };
+    const height = this.state.labels.length * 45;
     const chart = (
       <ReactApexChart
         options={graph.options}
         series={graph.series}
         type="bar"
-        height="450"
+        height={height}
       />
     );
 
-    return <div id="chart">{this.state.data.length === 0 ? "" : chart}</div>;
+    return <div id="chart">{this.state.data.length === 0 ? '' : chart}</div>;
   }
 }
 
