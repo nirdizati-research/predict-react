@@ -72,6 +72,7 @@ class ControlledLineChartCard extends Component {
             width="100%"
             legend_toggle
         />;
+
         return <div className="md-block-centered">
             <CardTitle title={`Prefix length by `}>{this.getSelector()}</CardTitle>
             <CardText>

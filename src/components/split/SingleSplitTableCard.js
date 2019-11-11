@@ -8,42 +8,42 @@ import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import {splitPropType} from '../../propTypes';
 
 const SingleSplitTableCard = (props) => {
-  const headers = ['id', 'Log', 'Splitting method', 'Validation log %'];
+    const headers = ['id', 'Log', 'Splitting method', 'Validation log %'];
 
-  return (
-    <Card className="md-block-centered">
-      <CardTitle title="Training and validation log files from single log"/>
-      <CardText>
-        <DataTable baseId="simple-pagination" plain>
-          <TableHeader>
-            <TableRow selectable={false}>
-              {headers.map((header) => <TableColumn key={header}> {header}</TableColumn>)}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {tableBody(props.splits)}
-          </TableBody>
-        </DataTable>
-      </CardText>
-    </Card>);
+    return (
+        <Card className="md-block-centered">
+            <CardTitle title="Training and validation log files from single log"/>
+            <CardText>
+                <DataTable baseId="simple-pagination" plain>
+                    <TableHeader>
+                        <TableRow selectable={false}>
+                            {headers.map((header) => <TableColumn key={header}> {header}</TableColumn>)}
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {tableBody(props.splits)}
+                    </TableBody>
+                </DataTable>
+            </CardText>
+        </Card>);
 };
 
 /* eslint-disable camelcase */
 const tableBody = (splits) => {
-  return splits.map(({id, originalLogName, splitting_method, test_size}) => {
-    return (
-      <TableRow key={id} selectable={false}>
-        <TableColumn>{id}</TableColumn>
-        <TableColumn>{originalLogName}</TableColumn>
-        <TableColumn>{splitting_method}</TableColumn>
-        <TableColumn>{Math.round(test_size * 100) / 100}</TableColumn>
-      </TableRow>
-    );
-  });
+    return splits.map(({id, originalLogName, splitting_method, test_size}) => {
+        return (
+            <TableRow key={id} selectable={false}>
+                <TableColumn>{id}</TableColumn>
+                <TableColumn>{originalLogName}</TableColumn>
+                <TableColumn>{splitting_method}</TableColumn>
+                <TableColumn>{Math.round(test_size * 100) / 100}</TableColumn>
+            </TableRow>
+        );
+    });
 };
 
 SingleSplitTableCard.propTypes = {
-  splits: PropTypes.arrayOf(splitPropType).isRequired
+    splits: PropTypes.arrayOf(splitPropType).isRequired
 };
 
 export default SingleSplitTableCard;
