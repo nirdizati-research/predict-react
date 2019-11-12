@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
+import {CardText, CardTitle} from 'react-md/lib/Cards/index';
 import PropTypes from 'prop-types';
 import {jobPropType} from '../../propTypes';
 import {makeLabels, makeTable} from '../../util/dataReducers';
@@ -72,12 +72,12 @@ class ControlledLineChartCard extends Component {
             width="100%"
             legend_toggle
         />;
-        return <Card className="md-block-centered">
+        return <div className="md-block-centered">
             <CardTitle title={`Prefix length by `}>{this.getSelector()}</CardTitle>
             <CardText>
                 {rows.length === 0 ? 'No data' : chart}
             </CardText>
-        </Card>;
+        </div>;
     }
 }
 
