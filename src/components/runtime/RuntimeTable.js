@@ -24,6 +24,30 @@ class RuntimeTable extends PureComponent {
     }
   }
 
+  getGraphicTraceData(case_id) {
+      const higher_id = this.props.jobs[0].config.parent_job;
+      let filtered_replay_job = this.props.jobs.filter((job) => case_id in job.case_id
+                                                                  && job.config.parent_job === higher_id);
+      let gold_value = 0;
+      let list_values = [];
+      filtered_replay_job.sort(function (a, b) {
+         if (a.id < b.id) {
+             return -1;
+         } else {
+             return 1;
+         }
+      });
+      filtered_replay_job.map((job) => {
+            if (case_id in job.results) {
+                list_values.push(...job.results[case_id]);
+            }
+            if (case_id in job.gold_value) {
+                gold_value = job.gold_value[case_id];
+            }
+         });
+      return [list_values, gold_value];
+  }
+
   createTableData() {
       try {
           const higher_id = this.props.jobs[0].config.parent_job;
@@ -67,6 +91,16 @@ class RuntimeTable extends PureComponent {
           return 0;
       }
   }
+
+  /*    showGraph(case_id) { Function to call in onClick on Tablerow
+      let values = this.getGraphicTraceData(case_id);
+      values[0] are the values given during the reproduction of the trace
+      vales[1] gold_value
+      Use this values as input of graph as in validation/ResultWrapper
+      A possible way to implement charts can be that this function will create charts and put them as a props of this
+      class and in render create a variable if the prop contains graphs and show them
+      }
+  }*/
 
   componentDidMount() {
     const intervalId = setInterval(() => {
