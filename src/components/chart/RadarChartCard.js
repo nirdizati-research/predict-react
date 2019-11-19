@@ -38,6 +38,8 @@ const RadarChartCard = props => {
       },
       yaxis: {
         tickAmount: 5,
+        min: 0,
+        max: 1,
         labels: {
           formatter: function (val, i) {
             return '';
