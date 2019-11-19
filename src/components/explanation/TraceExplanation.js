@@ -27,12 +27,28 @@ const TraceExplanation = props => {
       />
     );
   };
+
+  const getMethods = () => {
+    return (
+      <SelectField
+        id="method-select"
+        placeholder="Method id"
+        className="md-cell"
+        menuItems={['Method 1', 'Method 2']}
+        position={SelectField.Positions.BELOW}
+      />
+    );
+  };
   return (
     <Card className="md-block-centered">
       <CardTitle title="Trace Explanation" />
       <CardText>
         <h4>Select the trace composition</h4>
         {getTraceSelector()}
+      </CardText>
+      <CardText>
+        <h4>Models</h4>
+        {getMethods()}
       </CardText>
       <CardText>
         <h2>Trace table</h2>

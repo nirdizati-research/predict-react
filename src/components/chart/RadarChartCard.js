@@ -37,6 +37,8 @@ const RadarChartCard = props => {
         }
       },
       yaxis: {
+        max: 1,
+        min: 0,
         tickAmount: 5,
         labels: {
           formatter: function (val, i) {
