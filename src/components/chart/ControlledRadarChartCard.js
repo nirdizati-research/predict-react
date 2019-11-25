@@ -6,7 +6,8 @@ import {
   makeTable,
   getPrefixLengthValues,
   getAllPrefixValuesAllConfig,
-  getRadarChartValues,
+  getRadarChartValuesForSingleColumn,
+  getRadarChartValuesForAllColumns,
   getColumnNames
 } from '../../util/dataReducers';
 import SelectField from 'react-md/lib/SelectFields/index';
@@ -30,6 +31,7 @@ class ControlledRadarChartCard extends Component {
     const prefixLengthValue = prefixValues[0];
     const columnNames = getColumnNames(data);
     columnNames.shift();
+    if (columnNames.length > 1) columnNames.push('All');
     const columnName = columnNames[0];
     this.state = {
       prefixLengthValue,
@@ -50,6 +52,7 @@ class ControlledRadarChartCard extends Component {
       const prefixLengthValue = prefixValues[0];
       const columnNames = getColumnNames(data);
       columnNames.shift();
+      if (columnNames.length > 1) columnNames.push('All');
       const columnName = columnNames[1];
       this.setState({
         prefixLengthValue: prefixLengthValue,
@@ -103,14 +106,26 @@ class ControlledRadarChartCard extends Component {
       this.props.jobs,
       this.state.radarCharLabels
     );
+    let radarChartData = [];
+    if (this.state.columnName != 'All') {
+      radarChartData = getRadarChartValuesForSingleColumn(
+        this.state.radarCharLabels,
+        radarChartObjects,
+        this.state.prefixLengthValue,
+        this.state.columnNames.indexOf(this.state.columnName) + 1,
+        this.state.columnName
+      );
+    } else {
+      radarChartData = getRadarChartValuesForAllColumns(
+        this.state.radarCharLabels,
+        radarChartObjects,
+        this.state.prefixLengthValue,
+        this.state.columnNames
+      );
+    }
     const radarChart = (
       <RadarChartCard
-        data={getRadarChartValues(
-          this.state.radarCharLabels,
-          radarChartObjects,
-          this.state.prefixLengthValue,
-          this.state.columnNames.indexOf(this.state.columnName) + 1
-        )}
+        data={radarChartData}
         labels={this.state.radarCharLabels}
       />
     );

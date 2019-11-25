@@ -126,7 +126,7 @@ import {
       return sum / (radarChartObject.length * 1.0);
     };
 
-    const getValueForColumnName = (radarChartObject, prefixLengthValue, columnNamePosition) => {
+  const getValueForColumnName = (radarChartObject, prefixLengthValue, columnNamePosition) => {
       let j = 0;
       let value = 0;
       for (j = 0; j < radarChartObject.length; j++) {
@@ -136,8 +136,10 @@ import {
             val[columnNamePosition] === null ||
             typeof val[columnNamePosition] === 'undefined'
           ) {
-value = 0;
-} else value = val[columnNamePosition];
+            value = 0;
+            } else {
+            value = val[columnNamePosition];
+            }
           break;
         }
       }
@@ -200,11 +202,12 @@ value = 0;
     });
   };
 
-  export const getRadarChartValues = (
+  export const getRadarChartValuesForSingleColumn = (
     radarCharLabels,
     radarChartObjects,
     prefixLengthValue,
-    columnNamePosition
+    columnNamePosition,
+    columnName
   ) => {
     let i;
     let radarChartDatas = [];
@@ -223,5 +226,37 @@ value = 0;
       }
     }
 
-    return radarChartDatas;
+    return [{name: columnName, data: radarChartDatas}];
+  };
+
+  export const getRadarChartValuesForAllColumns = (
+    radarCharLabels,
+    radarChartObjects,
+    prefixLengthValue,
+    columnNames
+  ) => {
+    let i; let j;
+    let allValues =[];
+    for (j = 0; j < columnNames.length; j++) {
+      if (columnNames[j] != 'All') {
+        let radarChartDatas = [];
+        for (i = 0; i < radarCharLabels.length; i++) {
+          const radarChartObject = radarChartObjects[i];
+          if (isNaN(Number(prefixLengthValue))) {
+            radarChartDatas.push(getAverage(radarChartObject, j));
+          } else {
+            radarChartDatas.push(
+              getValueForColumnName(
+                radarChartObject,
+                prefixLengthValue,
+                j+1
+              )
+            );
+          }
+        }
+        allValues.push({name: columnNames[j], data: radarChartDatas});
+      }
+  }
+
+    return allValues;
   };

@@ -8,7 +8,7 @@ const RadarChartCard = props => {
       chart: {
         toolbar: {
           show: false
-        }
+        },
       },
       labels: props.labels,
       plotOptions: {
@@ -17,12 +17,11 @@ const RadarChartCard = props => {
           polygons: {
             strokeColor: '#e9e9e9',
             fill: {
-              colors: ['#f8f8f8', '#fff']
             }
           }
         }
       },
-      colors: ['#FF4560'],
+      colors: ['#546E7A', '#66DA26', '#546E7A', '#E91E63', '#FF9800'],
       markers: {
         size: 3,
         colors: ['#fff'],
@@ -46,19 +45,13 @@ const RadarChartCard = props => {
           }
         }
       }
-    },
-    series: [
-      {
-        name: 'Value',
-        data: props.data
-      }
-    ]
+    }
   };
 
   return (
     <ReactApexChart
       options={radarstates.options}
-      series={radarstates.series}
+      series={props.data}
       type="radar"
       height ="250em"
     />
