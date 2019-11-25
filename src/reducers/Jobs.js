@@ -14,7 +14,8 @@ import {
     JOB_DELETED,
     JOBS_FAILED,
     JOBS_REQUESTED,
-    JOBS_RETRIEVED
+    JOBS_RETRIEVED,
+    TRACE_CHANGED
 } from '../actions/JobActions';
 import {JOB_RUN_CHANGED} from '../actions/RuntimeActions';
 import {
@@ -289,6 +290,12 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
             return {
                 ...state,
                 predictionJobId,
+            };
+        }
+        case TRACE_CHANGED: {
+            const selectedTrace = action.trace;
+            return {
+                ...state, selectedTrace
             };
         }
 

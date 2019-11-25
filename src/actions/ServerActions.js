@@ -3,6 +3,7 @@ import jsonAjax from '../JSONAjaxRequest';
 import {JOB_DELETED, jobsFailed, jobsRetrieved, trainingFailed, trainingSucceeded} from './JobActions';
 import {logInfoFailed, logInfoRetrieved, logListFailed, logListsRetrieved} from './LogActions';
 import {traceListFailed, traceListRetrieved} from './TraceActions';
+import {limeValueListFailed, limeValueListRetrieved} from './LimeActions';
 import {splitFailed, splitsFailed, splitsRetrieved, splitSucceeded} from './SplitActions';
 import {modelsFailed, modelsRetrieved} from './ModelActions';
 import {predictionFailed, predictionSucceeded, replayFailed, replaySucceeded} from './RuntimeActions';
@@ -123,5 +124,17 @@ export const getTraceList = () => (dispatch) => {
             dispatch(traceListRetrieved(logList));
         },
         ({error}) => dispatch(traceListFailed(error))
+    );
+};
+
+export const getLimeValues = () => (dispatch) => {
+    jsonAjax(
+        SERVER_URL + `/explanation/lime/1&2/`,
+        'GET',
+        null,
+        (limeList) => {
+            dispatch(limeValueListRetrieved(limeList));
+        },
+        ({error}) => dispatch(limeValueListFailed(error))
     );
 };

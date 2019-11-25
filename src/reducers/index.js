@@ -6,6 +6,8 @@ import training from './Training';
 import splits from './Splits';
 import models from './Models';
 import traces from './Traces';
+import lime from './Lime';
+
 
 export default combineReducers({
     routing: routerReducer,
@@ -14,5 +16,6 @@ export default combineReducers({
     models,
     training,
     splits,
-    traces
+    traces,
+    lime
 });
