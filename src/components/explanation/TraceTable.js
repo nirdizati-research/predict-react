@@ -7,42 +7,30 @@ class TraceTable extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      prefixValues: this.props.jobs.traceList.slice(0, 10),
-      traceValues: this.props.jobs.traceAttributes
+      events: this.props.traceArr.events.slice(0, 10),
+      // traceValues: this.props.jobs.traceAttributes
     };
   }
 
   handlePagination(start, rowsPerPage) {
     this.setState({
-      prefixValues: this.props.jobs.traceList.slice(start, start + rowsPerPage)
+      events: this.props.traceArr.events.slice(start, start + rowsPerPage)
     });
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.jobs.traceAttributes!=null && this.props.jobs.traceAttributes!=null) {
-      if (prevProps.jobs.traceAttributes.trace_id != this.props.jobs.traceAttributes.trace_id) {
-        this.setState({prefixValues: this.props.jobs.traceList.slice(0, 10)});
-        this.setState({traceValues: this.props.jobs.traceAttributes});
-    }
-  }
-    if (prevProps.jobs.traceList.length !== this.props.jobs.traceList.length) {
-      this.setState({prefixValues: this.props.jobs.traceList.slice(0, 10)});
-      this.setState({traceValues: this.props.jobs.traceAttributes});
+  //   if (prevProps.jobs.traceAttributes!=null && this.props.jobs.traceAttributes!=null) {
+  //     if (prevProps.jobs.traceAttributes.trace_id != this.props.jobs.traceAttributes.trace_id) {
+  //       this.setState({events: this.props.traceArr.events.slice(0, 10)});
+  //   }
+  // }
+    if (prevProps.traceArr.events.length !== this.props.traceArr.events.length) {
+      this.setState({events: this.props.traceArr.events.slice(0, 10)});
     }
   }
 
   getHeaderColumnsPrefixValues() {
-    const headers = [
-      'id',
-      'Prefix',
-      'Activity code',
-      'Number of execution',
-      'Producer code',
-      'Section',
-      'Specialism code',
-      'Group',
-      'Lifecycle:transition'
-    ];
+    const headers = this.props.traceEventsHeaders;
 
     return headers.map(header => {
       let grow = false;
@@ -59,18 +47,7 @@ class TraceTable extends PureComponent {
   }
 
   getHeaderColumnsTraceValues() {
-    const headers = [
-      'Trace_id',
-      'Age',
-      'Diagnosis',
-      'Diagnosis Treatment Combination ID',
-      'Diagnosis code',
-      'End date',
-      'Specialism code',
-      'Start date',
-      'Treatment code',
-      'Label'
-    ];
+    const headers = this.props.traceAttributesHeader;
 
     return headers.map(header => {
       let grow = false;
@@ -86,7 +63,7 @@ class TraceTable extends PureComponent {
     });
   }
 
-  getTraceValuesTable(traceValues) {
+  getTraceValuesTable(attributes) {
     return (
       <DataTable baseId="simple-pagination" plain>
         <TableHeader>
@@ -95,26 +72,20 @@ class TraceTable extends PureComponent {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow key={traceValues.trace_id} selectable={false}>
-            <TableColumn>{traceValues.trace_id}</TableColumn>
-            <TableColumn>{traceValues.Age}</TableColumn>
-            <TableColumn>{traceValues.Diagnosis}</TableColumn>
-            <TableColumn>
-              {traceValues.Diagnosis_Treatment_Combination_ID}
-            </TableColumn>
-            <TableColumn>{traceValues.Diagnosis_code}</TableColumn>
-            <TableColumn>{traceValues.End_date}</TableColumn>
-            <TableColumn>{traceValues.Start_date}</TableColumn>
-            <TableColumn>{traceValues.Specialism_code}</TableColumn>
-            <TableColumn>{traceValues.Treatment_code}</TableColumn>
-            <TableColumn>{traceValues.label}</TableColumn>
+        <TableRow selectable={false}>
+          {attributes.map(
+            (value) => (
+                <TableColumn key={value}>{value}</TableColumn>
+            )
+          )}
           </TableRow>
+
         </TableBody>
       </DataTable>
     );
   }
 
-  getPrefixValuesTable() {
+  getPrefixValuesTable(values) {
     return (
       <DataTable baseId="simple-pagination" plain>
         <TableHeader>
@@ -123,34 +94,20 @@ class TraceTable extends PureComponent {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {this.state.prefixValues.map(
-            ({
-              id,
-              prefix,
-              activity_code,
-              number_of_execution,
-              producer_code,
-              section,
-              specialism_code,
-              group,
-              lifecycle
-            }) => (
-              <TableRow key={id} selectable={false}>
-                <TableColumn>{id}</TableColumn>
-                <TableColumn>{prefix}</TableColumn>
-                <TableColumn>{activity_code}</TableColumn>
-                <TableColumn>{number_of_execution}</TableColumn>
-                <TableColumn>{producer_code}</TableColumn>
-                <TableColumn>{section}</TableColumn>
-                <TableColumn>{specialism_code}</TableColumn>
-                <TableColumn>{group}</TableColumn>
-                <TableColumn>{lifecycle}</TableColumn>
+        {values.map(
+            (value, index) => (
+              <TableRow key={index} selectable={false}>
+              {value.map(
+                (v) => (
+                    <TableColumn key={value}>{v}</TableColumn>
+                )
+              )}
               </TableRow>
-            )
+              )
           )}
         </TableBody>
         <TablePagination
-          rows={this.state.prefixValues.length}
+          rows={this.props.traceArr.events.length}
           rowsPerPageLabel={'Rows per page'}
           onPagination={this.handlePagination.bind(this)}
         ></TablePagination>
@@ -158,16 +115,18 @@ class TraceTable extends PureComponent {
     );
   }
   render() {
-    const traceValues = this.state.traceValues;
-    if (traceValues != null) {
-      return <div>{this.getTraceValuesTable(traceValues)} {this.getPrefixValuesTable()}</div>;
+    if (this.props.traceArr.events.length > 0) {
+      return <div>{this.getTraceValuesTable(this.props.traceArr.attributes)}
+       {this.getPrefixValuesTable(this.state.events)}</div>;
     }
-    return <div>{this.getPrefixValuesTable()}</div>;
+    return <div>{this.getPrefixValuesTable(this.state.events)}</div>;
   }
 }
 
 TraceTable.propTypes = {
-  jobs: PropTypes.any.isRequired
+  traceAttributesHeader: PropTypes.any.isRequired,
+  traceEventsHeaders: PropTypes.any.isRequired,
+  traceArr: PropTypes.any.isRequired
 };
 
 export default TraceTable;

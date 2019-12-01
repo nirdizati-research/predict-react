@@ -18,18 +18,15 @@ import {fetchStatePropType, jobPropType, selectLabelProptype} from '../../propTy
 import {mapJobs, splitsToLabel} from '../../util/unNormalize';
 import {logListRequested} from '../../actions/LogActions';
 import {splitsRequested} from '../../actions/SplitActions';
-import {limeValueListRequested} from '../../actions/LimeActions';
+import {traceListRequested} from '../../actions/TraceActions';
 import ReactGA from 'react-ga';
 import ExplanationHeaderCard from '../../components/explanation/ExplanationHeaderCard';
-import PostHocExplanation from '../../components/explanation/post_hoc';
 import TraceExplanation from '../../components/explanation/TraceExplanation';
-import data from '../../mock-json/example.json';
-import example4 from '../../mock-json/example4.json';
 
 class Explanation extends Component {
     constructor(props) {
         const selectedTrace = '';
-        const logName ='';
+        const logName = 0;
         super(props);
         this.state = {
           selectedTrace,
@@ -43,6 +40,23 @@ class Explanation extends Component {
     onChangeSplit(splitId) {
         this.props.onSplitChange(splitId);
         this.setState({logName: splitId});
+        this.props.onRequestTraces(this.getTrainLogId(splitId));
+    }
+
+    getTrainLogId(splitId) {
+      let splits = this.props.splits;
+      let logId = 0;
+      let keys = Object.keys(splits);
+
+      keys.forEach(function (key) {
+        let split = splits[key];
+
+        if ( split.id == splitId) {
+          logId = split.training_log;
+        }
+      });
+
+      return logId;
     }
 
     onChangeTrace(trace) {
@@ -55,7 +69,6 @@ class Explanation extends Component {
             this.props.onRequestLogList();
             this.props.onRequestSplitList();
             this.props.onRequestJobs();
-            this.props.onRequestLime();
         }
         ReactGA.initialize('UA-143444044-1');
         ReactGA.pageview(window.location.pathname + window.location.search);
@@ -66,134 +79,74 @@ class Explanation extends Component {
     }
 
     onJobClick(id) {
-        // console.log(id);
         // this.props.clickedJobId = id; //TODO correct state
     }
-    getTranceIdList(logName='eventLog1') {
-        let traceIdList = [];
-        let eventLog = data[logName];
-        if (eventLog != null) {
-for (let i = 0; i < eventLog.length; i++) {
-            const trace = eventLog[i];
-            traceIdList.push(trace['trace_id']);
+
+      getTraceIds() {
+        let logs = this.props.logs;
+        let logKeys = Object.keys(logs);
+        let traceIds = [];
+
+        let trainLogId = this.getTrainLogId(this.state.logName);
+        logKeys.forEach(function (logKey) {
+          let log = logs[logKey];
+          if (log.id == trainLogId) {
+              traceIds = traceIds.concat(log.properties.trace_IDs);
           }
-}
-        return traceIdList;
+        });
+        return traceIds;
       }
 
-      getTraceAttribute() {
-        let logName='eventLog1';
-        let traceId = this.state.selectedTrace;
-        let traceList = [];
-        let traceAttributes;
-        let eventLog = data[logName];
-        if (eventLog != null) {
-for (let i = 0; i < eventLog.length; i++) {
-            const trace = eventLog[i];
-            if (trace['trace_id'] === traceId) {
-              traceAttributes = {
-                trace_id: trace['trace_id'],
-                Age: trace['Age'],
-                Diagnosis: trace['Diagnosis'],
-                Diagnosis_Treatment_Combination_ID:
-                  trace['Diagnosis Treatment Combination ID'],
-                Diagnosis_code: trace['Diagnosis code'],
-                End_date: trace['End date'],
-                Start_date: trace['Start date'],
-                Specialism_code: trace['Specialism code'],
-                Treatment_code: trace['Treatment code'],
-                label: trace['label']
-              };
-              let count = 0;
-              for (let key in trace) if (trace.hasOwnProperty(key)) count++;
-              const size = (count - 10) / 8;
-              for (let j = 1; j <= size; j++) {
-                const val = {
-                  id: j,
-                  prefix: trace['prefix_' + j],
-                  activity_code: trace['Activity code_' + j],
-                  number_of_execution: trace['Number of executions_' + j],
-                  producer_code: trace['Producer code_' + j],
-                  section: trace['Section_' + j],
-                  specialism_code: trace['Specialism code_' + j],
-                  group: trace['group_' + j],
-                  lifecycle: trace['lifecycle:transition_' + j]
-                };
-                traceList.push(val);
-              }
-              break;
-            }
-          }
-}
-        return {
-          traceList: traceList,
-          traceAttributes: traceAttributes
-        };
-      }
+      // getLimeValues() {
+      //   let labels = [];
+      //   let values = [];
+      //   let eventLog = example4['eventLog1'];
 
-      getLimeValues() {
-        let labels = [];
-        let values = [];
-        let eventLog = example4['eventLog1'];
-
-        if (eventLog != null) {
-          for (let i = 0; i < eventLog.length; i++) {
-            let log = eventLog[i];
-            let traceName = Object.keys(log)[i];
-            if (traceName == this.state.selectedTrace) {
-              for (let i = 0; i < log[traceName].length; i++) {
-                labels.push(
-                   log[traceName][i][0],
-                );
-                values.push(
-                     log[traceName][i][1]
-                  );
-              }
-              break;
-            }
-          }
-        }
-        return ({labels: labels, values: values});
-      }
+      //   if (eventLog != null) {
+      //     for (let i = 0; i < eventLog.length; i++) {
+      //       let log = eventLog[i];
+      //       let traceName = Object.keys(log)[i];
+      //       if (traceName == this.state.selectedTrace) {
+      //         for (let i = 0; i < log[traceName].length; i++) {
+      //           labels.push(
+      //              log[traceName][i][0],
+      //           );
+      //           values.push(
+      //                log[traceName][i][1]
+      //             );
+      //         }
+      //         break;
+      //       }
+      //     }
+      //   }
+      //   return ({labels: labels, values: values});
+      // }
 
     render() {
         return (
             <div className="md-grid">
                 <div className="md-cell md-cell--12">
-                    <ExplanationHeaderCard jobs={this.props.jobs}
+                    <ExplanationHeaderCard jobs={this.props.filteredJobs}
                                            splitLabels={this.props.splitLabels}
                                            fetchState={this.props.fetchState}
                                            splitChange={this.onChangeSplit.bind(this)}
                                            selectedSplitId={this.props.splitId}
                                            predictionMethod={this.props.predictionMethod}
-                                           onClick={this.onJobClick.bind(this)}/>
+                                           onClick={this.onJobClick.bind(this)}
+                                          />
                 </div>
                 <div className="md-cell md-cell--12">
                     <TraceExplanation jobs={this.props.jobs}
                                       traceChange={this.onChangeTrace.bind(this)}
-                                      traceList={this.getTranceIdList()}
-                                      selectedTrace={this.state.selectedTrace}
-                                      traceAttributes={this.getTraceAttribute()}
+                                      traceIdList={this.getTraceIds()}
+                                      selectedTrace={this.props.selectedTrace}
+                                      traceList={this.props.traceList}
                                       />
                 </div>
-                <div className="md-cell md-cell--12">
+                {/* <div className="md-cell md-cell--12">
                     <PostHocExplanation jobs={this.props.jobs}
                                         predictionMethod={this.props.predictionMethod}
                                         limeGraphValues={this.getLimeValues()}/>
-                </div>
-                {/* <div className="md-cell md-cell--12">
-                    <AnteHocExplanation jobs={this.props.jobs}
-                                        splitLabels={this.props.splitLabels} fetchState={this.props.fetchState}
-                                        methodChange={this.onChangeMethod.bind(this)}
-                                        splitChange={this.onChangeSplit.bind(this)}
-                                        prefixLengths={prefixStrings}
-                                        predictionMethod={this.props.predictionMethod}
-                                        selectedPrefixes={this.props.selectedPrefixes}
-                                        prefixChange={this.onChangePrefix.bind(this)}
-                                        selectedSplitId={this.props.splitId}
-                                        filterOptionChange={this.props.filterOptionChange}
-                                        filterOptions={this.props.filterOptions}
-                                        labelChange={this.props.labelTypeChange}/>
                 </div> */}
             </div>
         );
@@ -206,11 +159,11 @@ Explanation.propTypes = {
     onRequestLogList: PropTypes.func.isRequired,
     onRequestSplitList: PropTypes.func.isRequired,
     onRequestJobs: PropTypes.func.isRequired,
-    onRequestLime: PropTypes.func.isRequired,
     onSplitChange: PropTypes.func.isRequired,
     onMethodChange: PropTypes.func.isRequired,
     onTraceChange: PropTypes.func.isRequired,
     onPrefixChange: PropTypes.func.isRequired,
+    onRequestTraces: PropTypes.func.isRequired,
     filterOptionChange: PropTypes.func.isRequired,
     labelTypeChange: PropTypes.func.isRequired,
     jobs: PropTypes.arrayOf(jobPropType).isRequired,
@@ -230,18 +183,30 @@ Explanation.propTypes = {
         thresholds: PropTypes.arrayOf(PropTypes.number).isRequired
     }).isRequired,
     clickedJobId: PropTypes.number,
-    limeValueList: PropTypes.any
+    limeValueList: PropTypes.any,
+    traceList: PropTypes.any,
+    logs: PropTypes.any,
+    splits: PropTypes.any,
+    jobsById: PropTypes.any,
+    selectedTrace: PropTypes.any,
+    filteredJobs: PropTypes.any,
 };
 
 const mapStateToProps = (state) => ({
-    jobs: mapJobs(state.logs.byId, state.splits.byId, state.jobs.byId, state.jobs.filteredIds),
+    jobs: mapJobs(state.logs.byId, state.splits.byId, state.jobs.byId, state.jobs.allIds),
     splitLabels: splitsToLabel(state.logs.byId, state.splits.byId, state.jobs.uniqueSplits),
     fetchState: state.jobs.fetchState,
+    filteredJobs: state.jobs.filteredJobs,
+    logs: state.logs.byId,
+    splits: state.splits.byId,
     splitId: state.jobs.splitId,
     limeValueList: state.lime.limeValueList,
+    traceList: state.traces.byId,
     predictionMethod: state.jobs.predictionMethod,
     prefixLengths: state.jobs.prefixLengths.sort((a, b) => (a - b)),
     selectedPrefixes: state.jobs.selectedPrefixes,
+    jobsById: state.jobs.byId,
+    selectedTrace: state.jobs.selectedTrace,
     filterOptions: (
         ({
              encodings, clusterings, classification, regression, timeSeriesPrediction,
@@ -258,12 +223,11 @@ const mapStateToProps = (state) => ({
             padding
         }))(state.jobs)
 });
-
 const mapDispatchToProps = (dispatch) => ({
     onRequestLogList: () => dispatch(logListRequested()),
     onRequestSplitList: () => dispatch(splitsRequested()),
     onRequestJobs: () => dispatch(jobsRequested()),
-    onRequestLime: () => dispatch(limeValueListRequested()),
+    onRequestTraces: (id) => dispatch(traceListRequested({id})),
     filterOptionChange: (_, event) => dispatch({
         type: FILTER_OPTION_CHANGED,
         payload: {name: event.target.name, value: event.target.value}
@@ -276,7 +240,6 @@ const mapDispatchToProps = (dispatch) => ({
     onMethodChange: (method) => dispatch({type: FILTER_PREDICTION_METHOD_CHANGED, method}),
     onPrefixChange: (prefixLength) => dispatch({type: FILTER_PREFIX_LENGTH_CHANGED, prefixLength}),
     onTraceChange: (trace) => dispatch({type: TRACE_CHANGED, trace})
-
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Explanation);

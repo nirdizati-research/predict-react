@@ -76,7 +76,9 @@ const initialState = {
     predictionJobId: [],
     thresholds: [],
     attributeNames: [],
-    splitId: -100
+    splitId: -100,
+    filteredJobs: [],
+    selectedTrace: ''
 };
 
 const initialFilters = {
@@ -184,6 +186,12 @@ const checkboxChange = (target, state) => {
     }
     return state;
 };
+const getFilteredJobs =
+    ({byId, splitId}) => {
+        const commonJobs = Object.values(byId)
+            .filter(filterBySplit(splitId));
+            return commonJobs;
+    };
 
 const completedUniqueSplits = (jobsById) =>
     [...new Set(Object.values(jobsById).filter(job => job.status === 'completed').map((job => job.config.split.id)))];
@@ -236,8 +244,9 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
             const splitId = action.splitId;
             const filteredIds = applyFilters({...state, splitId});
             const prefixLengths = prefixSet(state.byId, filteredIds);
+            const filteredJobs = getFilteredJobs({...state, splitId});
             return {
-                ...state, filteredIds, prefixLengths, splitId, selectedPrefixes: prefixLengths
+                ...state, filteredIds, prefixLengths, splitId, selectedPrefixes: prefixLengths, filteredJobs: filteredJobs
             };
         }
         case PREDICTION_SPLIT_CHANGED: {

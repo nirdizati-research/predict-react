@@ -123,7 +123,7 @@ class WalkThrough extends PureComponent {
                          <GuideItem
                             avatar={<Avatar suffix="pink">8</Avatar>}
                             button={<Button flat primary href={'/#/explanation'}
-                                            iconEl={<FontIcon>insert_chart</FontIcon>}>Explanation</Button>}
+                                            iconEl={<FontIcon>work</FontIcon>}>Explanation</Button>}
                              title="Explanation"
                              text="Explanation"
                              threeLines

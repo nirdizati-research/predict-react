@@ -21,7 +21,8 @@ it('renders', () => {
 it('maps jobs to chart', () => {
   const radarChartProps = element.find(RadarChartCard).props();
   expect(radarChartProps.labels).toContain('rmse');
-  expect(radarChartProps.data.length).toBe(4);
+  expect(radarChartProps.data.length).toBe(1);
+  expect(radarChartProps.data[0].data.length).toBe(4);
   expect(radarChartProps.labels.length).toBe(4);
 });
 
@@ -34,8 +35,9 @@ it('when updating', () => {
 
   const radarChartProps = upEl.find(RadarChartCard).props();
   expect(radarChartProps.labels).toContain('f1_score');
-  expect(radarChartProps.data.length).toBe(5);
+  expect(radarChartProps.data.length).toBe(1);
+  expect(radarChartProps.data[0].data.length).toBe(5);
   expect(radarChartProps.labels.length).toBe(5);
-  expect(Math.max(...radarChartProps.data)).toBeLessThanOrEqual(1);
-  expect(Math.min(...radarChartProps.data)).toBeGreaterThanOrEqual(0);
+  expect(Math.max(...radarChartProps.data[0].data)).toBeLessThanOrEqual(1);
+  expect(Math.min(...radarChartProps.data[0].data)).toBeGreaterThanOrEqual(0);
 });

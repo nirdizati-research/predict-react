@@ -115,9 +115,9 @@ export const postReplay = ({payload}) => (dispatch) => {
     );
 };
 
-export const getTraceList = () => (dispatch) => {
+export const getTraceList = ({id}) => (dispatch) => {
     jsonAjax(
-        SERVER_URL + '/runtime/traces/',
+        SERVER_URL + `/logs/traces/${id}`,
         'GET',
         null,
         (logList) => {
@@ -129,7 +129,7 @@ export const getTraceList = () => (dispatch) => {
 
 export const getLimeValues = () => (dispatch) => {
     jsonAjax(
-        SERVER_URL + `/explanation/lime/1&2/`,
+        SERVER_URL + `/logs/lime/1&2/`,
         'GET',
         null,
         (limeList) => {

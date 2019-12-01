@@ -19,9 +19,14 @@ const ExplanationHeaderCard = (props) => {
     const selectChange = (value, _) => {
         props.splitChange(value);
     };
-
+    const getJobIds = () => {
+       let jobIds = props.jobs.map((job) =>{
+            return job.id;
+        });
+        return jobIds;
+      };
     return <Card className="md-block-centered">
-        <CardTitle title="Model Explanation">
+        <CardTitle title="Select event log">
             <SelectField
                 id="log-name-select"
                 placeholder="No log selected"
@@ -31,11 +36,21 @@ const ExplanationHeaderCard = (props) => {
                 onChange={selectChange}
                 value={props.selectedSplitId}
             /></CardTitle>
+
         <CardText>
             <h4>Available models</h4>
             <LabelConfigTable jobs={props.jobs.map(jobToValidationTable)} onClick={props.onClick}/>
             <FetchState fetchState={props.fetchState}/>
         </CardText>
+        <CardTitle title="Select job id">
+            <SelectField
+               id="method-select"
+               placeholder="Method id"
+               className="md-cell"
+               menuItems={getJobIds()}
+               position={SelectField.Positions.BELOW}
+            />
+        </CardTitle>
     </Card>;
 };
 

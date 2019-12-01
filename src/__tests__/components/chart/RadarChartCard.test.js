@@ -16,11 +16,7 @@ describe('RadarChartCard', () => {
   it('maps and sorts data', () => {
     const element = shallow(<RadarChartCard data={values} labels={labels}/>);
     const chartProps = element.find(ReactApexChart).props();
-    expect(chartProps.series[0].data.length).toBe(5);
     expect(chartProps.options.labels.length).toBe(5);
-
-    expect(chartProps.series[0].data[0]).toEqual(1);
-    expect(chartProps.series[0].data[4]).toEqual(0);
     expect(chartProps.options.labels[0]).toEqual('f1_score');
     expect(chartProps.options.labels[4]).toEqual('auc');
   });
