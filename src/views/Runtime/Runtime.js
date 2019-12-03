@@ -9,7 +9,7 @@ import ModelSelector from '../../components/prediction/ModelSelector';
 import ReactGA from 'react-ga';
 import {REPLAY_JOB_CHANGED, jobsRequested, REPLAY_SPLIT_CHANGED} from '../../actions/JobActions';
 import {splitsRequested} from '../../actions/SplitActions';
-import ResultTable from '../../components/prediction/ResultTable';
+import RuntimeTable from '../../components/runtime/RuntimeTable';
 
 const compare = (a, b) => {
   if (a.id < b.id) {
@@ -93,7 +93,7 @@ class Runtime extends Component {
                              onReset={this.onReset} jobs={jobs}/>
             </div>
             <div className="md-cell md-cell--12">
-                <ResultTable jobs={filteredJobsRun.sort(compare)} onRequestJobs={this.requestJobsRun.bind(this)}/>
+                <RuntimeTable jobs={filteredJobsRun.sort(compare)} onRequestJobs={this.requestJobsRun.bind(this)}/>
             </div>
         </div>
 );
