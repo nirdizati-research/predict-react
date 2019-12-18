@@ -15,7 +15,9 @@ it('renders', () => {
   expect(element.find(SelectField).length).toBe(2);
 
   expect(element.find(SelectField).at(0).props().menuItems.length).toBeGreaterThanOrEqual(1);
+  expect(element.find(SelectField).at(0).props().menuItems).toContain('average');
   expect(element.find(SelectField).at(1).props().menuItems.length).toBeGreaterThanOrEqual(1);
+  expect(element.find(SelectField).at(1).props().menuItems).toContain('All');
 });
 
 it('maps jobs to chart', () => {
@@ -41,3 +43,4 @@ it('when updating', () => {
   expect(Math.max(...radarChartProps.data[0].data)).toBeLessThanOrEqual(1);
   expect(Math.min(...radarChartProps.data[0].data)).toBeGreaterThanOrEqual(0);
 });
+

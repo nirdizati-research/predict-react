@@ -252,3 +252,90 @@ export const getRadarChartValuesForAllColumns = (
 
   return allValues;
 };
+
+
+export const getTraceIdsFromLogs = (logs, trainLogId) => {
+  let logKeys = Object.keys(logs);
+  let traceIds = [];
+
+  logKeys.forEach(function (logKey) {
+    let log = logs[logKey];
+    if (log.id == trainLogId) {
+        traceIds = traceIds.concat(log.properties.trace_IDs);
+    }
+  });
+  return traceIds;
+};
+
+export const parseLimeResult = (limeValueList) => {
+  let labels = [];
+  let values = [];
+  let keys = Object.keys(limeValueList);
+
+  if (keys != null) {
+    for (let i = 0; i < keys.length; i++) {
+        for (let i = 0; i < limeValueList[keys[0]].length; i++) {
+          labels.push(
+            limeValueList[keys[0]][i][0],
+          );
+          values.push(
+            limeValueList[keys[0]][i][1]
+            );
+        }
+    }
+  }
+  return ({labels: labels, values: values});
+};
+
+export const getTraceAttributes = (traceList, selectedTrace) =>{
+  let i=0;
+  if (traceList === undefined) {
+    traceList = [];
+  }
+  let traceAttributesHeader = getTraceAttributesHeader(traceList);
+  let traceEventsHeaders = getTraceEventsHeader(traceList);
+  let traceArr = {'attributes': [], 'events': []};
+  i=0;
+  for (i =0; i<traceList.length; i++) {
+    if (traceList[i]['attributes']['concept:name'] == selectedTrace) {
+      let attrValues = [];
+      let traceEvents = [];
+      let events = [];
+      traceAttributesHeader.map((key) => {
+        attrValues.push(traceList[i]['attributes'][key]);
+      });
+      traceList[i]['events'].map((event) => {
+        events = [];
+        traceEventsHeaders.map((key) => {
+          events.push(event[key]);
+        });
+        traceEvents.push(events);
+      });
+      traceArr = {'attributes': attrValues, 'events': traceEvents};
+      break;
+    }
+  }
+
+  return {traceArr: traceArr, traceAttributesHeader: traceAttributesHeader, traceEventsHeaders: traceEventsHeaders};
+};
+
+const getTraceAttributesHeader = (traceList) =>{
+  let i=0;
+  let traceAttributesHeader = [];
+  for (i =0; i<traceList.length; i++) {
+    traceAttributesHeader = Object.keys(traceList[0]['attributes']);
+    break;
+  }
+  return traceAttributesHeader;
+};
+
+
+const getTraceEventsHeader = (traceList) =>{
+  let i=0;
+  let traceEventsHeaders = [];
+  for (i =0; i<traceList.length; i++) {
+    traceEventsHeaders = Object.keys(traceList[0]['events'][0]);
+    break;
+  }
+  return traceEventsHeaders;
+};

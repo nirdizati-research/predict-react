@@ -12,16 +12,20 @@ import {
     FILTER_PREFIX_LENGTH_CHANGED,
     FILTER_SPLIT_CHANGED,
     jobsRequested,
-    TRACE_CHANGED
+    TRACE_CHANGED,
+    PREDICTION_JOB_CHANGED
 } from '../../actions/JobActions';
 import {fetchStatePropType, jobPropType, selectLabelProptype} from '../../propTypes';
 import {mapJobs, splitsToLabel} from '../../util/unNormalize';
 import {logListRequested} from '../../actions/LogActions';
 import {splitsRequested} from '../../actions/SplitActions';
 import {traceListRequested} from '../../actions/TraceActions';
+import {limeValueListRequested} from '../../actions/LimeActions';
 import ReactGA from 'react-ga';
 import ExplanationHeaderCard from '../../components/explanation/ExplanationHeaderCard';
+import PostHocExplanation from '../../components/explanation/post_hoc';
 import TraceExplanation from '../../components/explanation/TraceExplanation';
+import {getTraceIdsFromLogs, parseLimeResult} from '../../util/dataReducers';
 
 class Explanation extends Component {
     constructor(props) {
@@ -51,7 +55,7 @@ class Explanation extends Component {
       keys.forEach(function (key) {
         let split = splits[key];
 
-        if ( split.id == splitId) {
+        if (split.id == splitId) {
           logId = split.training_log;
         }
       });
@@ -62,6 +66,12 @@ class Explanation extends Component {
     onChangeTrace(trace) {
         this.props.onTraceChange(trace);
         this.setState({selectedTrace: trace});
+        this.props.onRequestLimeValues(this.props.jobId, trace);
+    }
+
+    onChangeJob(id) {
+        this.props.onJobChange(id);
+        this.props.onRequestLimeValues(id, this.props.selectedTrace);
     }
 
     componentDidMount() {
@@ -82,46 +92,6 @@ class Explanation extends Component {
         // this.props.clickedJobId = id; //TODO correct state
     }
 
-      getTraceIds() {
-        let logs = this.props.logs;
-        let logKeys = Object.keys(logs);
-        let traceIds = [];
-
-        let trainLogId = this.getTrainLogId(this.state.logName);
-        logKeys.forEach(function (logKey) {
-          let log = logs[logKey];
-          if (log.id == trainLogId) {
-              traceIds = traceIds.concat(log.properties.trace_IDs);
-          }
-        });
-        return traceIds;
-      }
-
-      // getLimeValues() {
-      //   let labels = [];
-      //   let values = [];
-      //   let eventLog = example4['eventLog1'];
-
-      //   if (eventLog != null) {
-      //     for (let i = 0; i < eventLog.length; i++) {
-      //       let log = eventLog[i];
-      //       let traceName = Object.keys(log)[i];
-      //       if (traceName == this.state.selectedTrace) {
-      //         for (let i = 0; i < log[traceName].length; i++) {
-      //           labels.push(
-      //              log[traceName][i][0],
-      //           );
-      //           values.push(
-      //                log[traceName][i][1]
-      //             );
-      //         }
-      //         break;
-      //       }
-      //     }
-      //   }
-      //   return ({labels: labels, values: values});
-      // }
-
     render() {
         return (
             <div className="md-grid">
@@ -133,21 +103,23 @@ class Explanation extends Component {
                                            selectedSplitId={this.props.splitId}
                                            predictionMethod={this.props.predictionMethod}
                                            onClick={this.onJobClick.bind(this)}
+                                           jobChange={this.onChangeJob.bind(this)}
+                                           jobId={this.props.jobId}
                                           />
                 </div>
                 <div className="md-cell md-cell--12">
                     <TraceExplanation jobs={this.props.jobs}
                                       traceChange={this.onChangeTrace.bind(this)}
-                                      traceIdList={this.getTraceIds()}
+                                      traceIdList={
+                                          getTraceIdsFromLogs(this.props.logs, this.getTrainLogId(this.state.logName))}
                                       selectedTrace={this.props.selectedTrace}
                                       traceList={this.props.traceList}
                                       />
                 </div>
-                {/* <div className="md-cell md-cell--12">
+                <div className="md-cell md-cell--12">
                     <PostHocExplanation jobs={this.props.jobs}
-                                        predictionMethod={this.props.predictionMethod}
-                                        limeGraphValues={this.getLimeValues()}/>
-                </div> */}
+                                        limeValueList={parseLimeResult(this.props.limeValueList)}/>
+                </div>
             </div>
         );
     }
@@ -164,6 +136,8 @@ Explanation.propTypes = {
     onTraceChange: PropTypes.func.isRequired,
     onPrefixChange: PropTypes.func.isRequired,
     onRequestTraces: PropTypes.func.isRequired,
+    onJobChange: PropTypes.func.isRequired,
+    onRequestLimeValues: PropTypes.func.isRequired,
     filterOptionChange: PropTypes.func.isRequired,
     labelTypeChange: PropTypes.func.isRequired,
     jobs: PropTypes.arrayOf(jobPropType).isRequired,
@@ -190,6 +164,7 @@ Explanation.propTypes = {
     jobsById: PropTypes.any,
     selectedTrace: PropTypes.any,
     filteredJobs: PropTypes.any,
+    jobId: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -206,6 +181,7 @@ const mapStateToProps = (state) => ({
     prefixLengths: state.jobs.prefixLengths.sort((a, b) => (a - b)),
     selectedPrefixes: state.jobs.selectedPrefixes,
     jobsById: state.jobs.byId,
+    jobId: state.jobs.predictionJobId,
     selectedTrace: state.jobs.selectedTrace,
     filterOptions: (
         ({
@@ -228,6 +204,7 @@ const mapDispatchToProps = (dispatch) => ({
     onRequestSplitList: () => dispatch(splitsRequested()),
     onRequestJobs: () => dispatch(jobsRequested()),
     onRequestTraces: (id) => dispatch(traceListRequested({id})),
+    onRequestLimeValues: (jobId, traceId) => dispatch(limeValueListRequested({jobId, traceId})),
     filterOptionChange: (_, event) => dispatch({
         type: FILTER_OPTION_CHANGED,
         payload: {name: event.target.name, value: event.target.value}
@@ -239,7 +216,8 @@ const mapDispatchToProps = (dispatch) => ({
     onSplitChange: (splitId) => dispatch({type: FILTER_SPLIT_CHANGED, splitId}),
     onMethodChange: (method) => dispatch({type: FILTER_PREDICTION_METHOD_CHANGED, method}),
     onPrefixChange: (prefixLength) => dispatch({type: FILTER_PREFIX_LENGTH_CHANGED, prefixLength}),
-    onTraceChange: (trace) => dispatch({type: TRACE_CHANGED, trace})
+    onTraceChange: (trace) => dispatch({type: TRACE_CHANGED, trace}),
+    onJobChange: (jobId) => dispatch({type: PREDICTION_JOB_CHANGED, jobId}),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Explanation);

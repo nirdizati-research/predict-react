@@ -283,8 +283,9 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
         case FILTER_OPTION_CHANGED: {
             state = checkboxChange(action.payload, state);
             const filteredIds = applyFilters({...state});
+            const prefixLengths = prefixSet(state.byId, filteredIds);
             return {
-                ...state, filteredIds
+                ...state, filteredIds, prefixLengths, selectedPrefixes: prefixLengths
             };
         }
         case JOB_RUN_CHANGED: {

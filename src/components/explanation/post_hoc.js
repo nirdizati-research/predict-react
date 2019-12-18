@@ -9,14 +9,13 @@ import HorizontalBarChartCard from '../../components/chart/HorizontalBarChartCar
 
 const PostHocExplanation = (props) => {
     const horizontalBarChart = <HorizontalBarChartCard
-    data = {props.limeGraphValues.values}
-    labels = {props.limeGraphValues.labels}/>;
-
+    data = {props.limeValueList.values}
+    labels = {props.limeValueList.labels}/>;
     return <Card className="md-block-centered">
         <CardTitle title="Graphs"/>
         <CardText>
             <div className="md-cell md-cell--12" key="1">
-                {horizontalBarChart}
+                {props.limeValueList.values.length > 0 ? horizontalBarChart : null}
             </div>
         </CardText>
     </Card>;
@@ -25,7 +24,6 @@ const PostHocExplanation = (props) => {
 
 PostHocExplanation.propTypes = {
     jobs: PropTypes.arrayOf(jobPropType).isRequired,
-    limeGraphValues: PropTypes.any.isRequired,
-    predictionMethod: PropTypes.string.isRequired
+    limeValueList: PropTypes.any.isRequired,
 };
 export default PostHocExplanation;

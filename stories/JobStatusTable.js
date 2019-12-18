@@ -7,7 +7,7 @@ import JobStatusTable from '../src/components/JobStatusTable';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import {label1} from './Advanced';
 
-const jobs = [
+export const jobs = [
     {
         'id': 1,
         'created_date': '2017-11-14T20:52:36.469000Z',

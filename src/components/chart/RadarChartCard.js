@@ -5,6 +5,7 @@ import ReactApexChart from 'react-apexcharts';
 const RadarChartCard = props => {
   let radarstates = {
     options: {
+      type: 'radar',
       chart: {
         toolbar: {
           show: false
@@ -21,7 +22,6 @@ const RadarChartCard = props => {
           }
         }
       },
-      colors: ['#546E7A', '#66DA26', '#546E7A', '#E91E63', '#FF9800'],
       markers: {
         size: 3,
         colors: ['#fff'],

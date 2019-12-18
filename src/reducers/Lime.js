@@ -6,10 +6,6 @@ import {
 
 const initialState = {
     fetchState: {inFlight: false},
-    changed: 0,
-    byId: [],
-    interResults: [],
-    finalDiff: [],
     limeValueList: {}
 };
 
@@ -33,9 +29,11 @@ const lime = (state = initialState, action) => {
             }
 
             case LIME_VALUE_LIST_FAILED: {
+                const limeValueList = initialState.limeValueList;
                 return {
                     ...state,
                     fetchState: {inFlight: false, error: action.payload},
+                    limeValueList
                 };
             }
             default:

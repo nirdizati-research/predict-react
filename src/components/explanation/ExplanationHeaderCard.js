@@ -19,6 +19,11 @@ const ExplanationHeaderCard = (props) => {
     const selectChange = (value, _) => {
         props.splitChange(value);
     };
+
+    const jobChange = (value, _) => {
+        props.jobChange(value);
+    };
+
     const getJobIds = () => {
        let jobIds = props.jobs.map((job) =>{
             return job.id;
@@ -48,7 +53,9 @@ const ExplanationHeaderCard = (props) => {
                placeholder="Method id"
                className="md-cell"
                menuItems={getJobIds()}
+               onChange={jobChange}
                position={SelectField.Positions.BELOW}
+               value={props.jobId}
             />
         </CardTitle>
     </Card>;
@@ -62,6 +69,9 @@ ExplanationHeaderCard.propTypes = {
     splitChange: PropTypes.func.isRequired,
     selectedSplitId: PropTypes.number.isRequired,
     predictionMethod: PropTypes.string.isRequired,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    jobId: PropTypes.number.isRequired,
+    jobChange: PropTypes.func.isRequired,
+
 };
 export default ExplanationHeaderCard;

@@ -27,7 +27,7 @@ class ControlledRadarChartCard extends Component {
     const data = makeTable(this.props.jobs, getRadarChartHeaders(this.props.predictionMethod)[0]);
     const [, ...rows] = data;
     const prefixValues = getPrefixLengthValues(rows);
-    if (prefixValues.length > 1) prefixValues.push('average');
+    if (prefixValues.length > 1) prefixValues.push('Average');
     const prefixLengthValue = prefixValues[0];
     const columnNames = getColumnNames(data);
     columnNames.shift();
@@ -44,16 +44,16 @@ class ControlledRadarChartCard extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.predictionMethod !== this.props.predictionMethod) {
+    if (prevProps.jobs !== this.props.jobs) {
       const data = makeTable(this.props.jobs, getRadarChartHeaders(this.props.predictionMethod)[0]);
       const [, ...rows] = data;
       const prefixValues = getPrefixLengthValues(rows);
-      if (prefixValues.length > 1) prefixValues.push('average');
+      if (prefixValues.length > 1) prefixValues.push('Average');
       const prefixLengthValue = prefixValues[0];
       const columnNames = getColumnNames(data);
       columnNames.shift();
       if (columnNames.length > 1) columnNames.push('All');
-      const columnName = columnNames[1];
+      const columnName = columnNames[0];
       this.setState({
         prefixLengthValue: prefixLengthValue,
         prefixValues: prefixValues,
@@ -144,7 +144,7 @@ class ControlledRadarChartCard extends Component {
                 </CardTitle>
               </div>
               <div>
-                <CardTitle title={`Column name `}>
+                <CardTitle title={`Task identity `}>
                   {this.getColumnValuesSelector()}
                 </CardTitle>
               </div>

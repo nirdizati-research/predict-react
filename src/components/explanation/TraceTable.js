@@ -29,26 +29,7 @@ class TraceTable extends PureComponent {
     }
   }
 
-  getHeaderColumnsPrefixValues() {
-    const headers = this.props.traceEventsHeaders;
-
-    return headers.map(header => {
-      let grow = false;
-      if (header === 'Configuration') {
-        grow = true;
-      }
-      return (
-        <TableColumn key={header} grow={grow}>
-          {''}
-          {header}
-        </TableColumn>
-      );
-    });
-  }
-
-  getHeaderColumnsTraceValues() {
-    const headers = this.props.traceAttributesHeader;
-
+  getHeaderColumns(headers) {
     return headers.map(header => {
       let grow = false;
       if (header === 'Configuration') {
@@ -68,7 +49,7 @@ class TraceTable extends PureComponent {
       <DataTable baseId="simple-pagination" plain>
         <TableHeader>
           <TableRow selectable={false}>
-            {this.getHeaderColumnsTraceValues()}
+            {this.getHeaderColumns(this.props.traceAttributesHeader)}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -90,7 +71,7 @@ class TraceTable extends PureComponent {
       <DataTable baseId="simple-pagination" plain>
         <TableHeader>
           <TableRow selectable={false}>
-            {this.getHeaderColumnsPrefixValues()}
+            {this.getHeaderColumns(this.props.traceEventsHeaders)}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -119,7 +100,7 @@ class TraceTable extends PureComponent {
       return <div>{this.getTraceValuesTable(this.props.traceArr.attributes)}
        {this.getPrefixValuesTable(this.state.events)}</div>;
     }
-    return <div>{this.getPrefixValuesTable(this.state.events)}</div>;
+    return null;
   }
 }
 
