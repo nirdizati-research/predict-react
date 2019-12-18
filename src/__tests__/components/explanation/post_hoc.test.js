@@ -9,7 +9,7 @@ describe('TraceTable', () => {
     it('renders without data', () => {
         const element = shallow(<PostHocExplanation
                                     jobs={[]}
-                                    limeValueList={[]}/>);
+                                    limeValueList={{labels: [], values: []}}/>);
         expect(element).toBeDefined();
         expect(element.find(HorizontalBarChartCard).length).toBe(0);
     });
