@@ -90,12 +90,16 @@ export const jobPropType = PropTypes.shape({
         hyperopt: PropTypes.shape(hyperOptShape),
         labelling: PropTypes.shape(labelPropType).isRequired,
         predictive_model: PropTypes.string,
-        results: PropTypes.string,
+        results: PropTypes.objectOf(PropTypes.any),
         clustering: PropTypes.string,
+        parent_job: PropTypes.string.isRequired,
         encoding: PropTypes.shape(encodingPropType).isRequired,
         kmeans: PropTypes.objectOf(PropTypes.any),
     }).isRequired,
     created_date: PropTypes.string.isRequired,
+    case_id: PropTypes.arrayOf(PropTypes.number),
+    event_number: PropTypes.objectOf(PropTypes.any),
+    gold_values: PropTypes.objectOf(PropTypes.any),
     modified_date: PropTypes.string.isRequired,
     result: PropTypes.shape({
         mae: PropTypes.number,
@@ -113,25 +117,6 @@ export const jobPropType = PropTypes.shape({
         recall: PropTypes.number,
         nlevenshtein: PropTypes.number
     })
-}).isRequired;
-
-export const jobRunPropType = PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    status: PropTypes.string.isRequired,
-    split: PropTypes.objectOf(splitPropType).isRequired,
-    splitName: PropTypes.string,
-    type: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION]).isRequired,
-    config: PropTypes.shape({
-        hyperopt: PropTypes.shape(hyperOptShape),
-        labelling: PropTypes.shape(labelPropType).isRequired,
-        method: PropTypes.string,
-        clustering: PropTypes.string,
-        encoding: PropTypes.shape(encodingPropType).isRequired,
-        kmeans: PropTypes.objectOf(PropTypes.any),
-    }).isRequired,
-    created_date: PropTypes.string.isRequired,
-    modified_date: PropTypes.string.isRequired,
-    result: PropTypes.any.isRequired,
 }).isRequired;
 
 export const jobFlatPropType = PropTypes.shape({

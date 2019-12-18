@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import {DataTable, TableBody, TableColumn, TableHeader, TablePagination, TableRow} from 'react-md/lib/DataTables/index';
 import PropTypes from 'prop-types';
-import {jobRunPropType} from '../../propTypes';
+import {jobPropType} from '../../propTypes';
 import JsonHolder from '../validation/JsonHolder';
 
 /* eslint-disable camelcase */
@@ -77,7 +77,7 @@ class ResultTable extends PureComponent {
 }
 
 ResultTable.propTypes = {
-  jobs: PropTypes.arrayOf(jobRunPropType).isRequired,
+  jobs: PropTypes.arrayOf(jobPropType).isRequired,
   onRequestJobs: PropTypes.func.isRequired,
 };
 
