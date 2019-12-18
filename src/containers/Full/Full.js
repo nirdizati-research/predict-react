@@ -94,6 +94,7 @@ class Full extends Component {
           primaryText: 'Validation',
           leftIcon: <FontIcon>insert_chart</FontIcon>,
         },
+        /*
         {
           component: Link,
           to: '/explanation',
@@ -101,7 +102,7 @@ class Full extends Component {
           primaryText: 'explanation',
           leftIcon: <FontIcon>work</FontIcon>,
         },
-        /* ,
+        ,
         {
           component: Link,
           to: '/prediction',
