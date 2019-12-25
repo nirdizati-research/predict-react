@@ -235,7 +235,7 @@ export const getRadarChartValuesForAllColumns = (
       for (i = 0; i < radarCharLabels.length; i++) {
         const radarChartObject = radarChartObjects[i];
         if (isNaN(Number(prefixLengthValue))) {
-          radarChartDatas.push(getAverage(radarChartObject, j));
+          radarChartDatas.push(getAverage(radarChartObject, j+1));
         } else {
           radarChartDatas.push(
             getValueForColumnName(

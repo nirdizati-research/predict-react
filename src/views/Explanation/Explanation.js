@@ -26,6 +26,7 @@ import ExplanationHeaderCard from '../../components/explanation/ExplanationHeade
 import PostHocExplanation from '../../components/explanation/post_hoc';
 import TraceExplanation from '../../components/explanation/TraceExplanation';
 import {getTraceIdsFromLogs, parseLimeResult} from '../../util/dataReducers';
+import JobModelsTable from '../../components/explanation/JobModelsTable';
 
 class Explanation extends Component {
     constructor(props) {
@@ -115,6 +116,15 @@ class Explanation extends Component {
                                       selectedTrace={this.props.selectedTrace}
                                       traceList={this.props.traceList}
                                       />
+                </div>
+                <div className="md-cell md-cell--12">
+                <JobModelsTable jobs={this.props.filteredJobs}
+                                           fetchState={this.props.fetchState}
+                                           predictionMethod={this.props.predictionMethod}
+                                           onClick={this.onJobClick.bind(this)}
+                                           jobChange={this.onChangeJob.bind(this)}
+                                           jobId={this.props.jobId}
+                                          />
                 </div>
                 <div className="md-cell md-cell--12">
                     <PostHocExplanation jobs={this.props.jobs}
