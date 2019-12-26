@@ -67,12 +67,16 @@ class Explanation extends Component {
     onChangeTrace(trace) {
         this.props.onTraceChange(trace);
         this.setState({selectedTrace: trace});
-        this.props.onRequestLimeValues(this.props.jobId, trace);
+        if (this.props.jobId.length != 0) {
+            this.props.onRequestLimeValues(this.props.jobId, trace);
+        }
     }
 
     onChangeJob(id) {
         this.props.onJobChange(id);
-        this.props.onRequestLimeValues(id, this.props.selectedTrace);
+        if (this.props.selectedTrace !== '') {
+            this.props.onRequestLimeValues(id, this.props.selectedTrace);
+        }
     }
 
     componentDidMount() {
@@ -128,7 +132,9 @@ class Explanation extends Component {
                 </div>
                 <div className="md-cell md-cell--12">
                     <PostHocExplanation jobs={this.props.jobs}
-                                        limeValueList={parseLimeResult(this.props.limeValueList)}/>
+                                        fetchState={this.props.fetchState}
+                                        limeValueList={parseLimeResult(this.props.limeValueList)}
+                                        isLimeValuesLoaded={this.props.isLimeValuesLoaded}/>
                 </div>
             </div>
         );
@@ -175,6 +181,7 @@ Explanation.propTypes = {
     selectedTrace: PropTypes.any,
     filteredJobs: PropTypes.any,
     jobId: PropTypes.number.isRequired,
+    isLimeValuesLoaded: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -186,6 +193,7 @@ const mapStateToProps = (state) => ({
     splits: state.splits.byId,
     splitId: state.jobs.splitId,
     limeValueList: state.lime.limeValueList,
+    isLimeValuesLoaded: state.lime.isLimeValuesLoaded,
     traceList: state.traces.byId,
     predictionMethod: state.jobs.predictionMethod,
     prefixLengths: state.jobs.prefixLengths.sort((a, b) => (a - b)),

@@ -64,7 +64,7 @@ class HorizontalBarChartCard extends React.Component {
         }
       ]
     };
-    const height = this.props.labels.length * 45;
+    const height = this.props.labels.length * 65;
     const chart = (
       <ReactApexChart
         options={graph.options}

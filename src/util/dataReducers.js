@@ -273,15 +273,11 @@ export const parseLimeResult = (limeValueList) => {
   let keys = Object.keys(limeValueList);
 
   if (keys != null) {
-    for (let i = 0; i < keys.length; i++) {
-        for (let i = 0; i < limeValueList[keys[0]].length; i++) {
-          labels.push(
-            limeValueList[keys[0]][i][0],
-          );
-          values.push(
-            limeValueList[keys[0]][i][1]
-            );
-        }
+    for (let j = 0; j < keys.length; j++) {
+      if (limeValueList[keys[j]].length == 2) {
+        labels.push(limeValueList[keys[j]][0]);
+        values.push(limeValueList[keys[j]][1]);
+      }
     }
   }
   return ({labels: labels, values: values});

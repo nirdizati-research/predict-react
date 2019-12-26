@@ -77,10 +77,10 @@ class TraceTable extends PureComponent {
         <TableBody>
         {values.map(
             (value, index) => (
-              <TableRow key={index} selectable={false}>
+              <TableRow key={value+index} selectable={false}>
               {value.map(
                 (v) => (
-                    <TableColumn key={value}>{v}</TableColumn>
+                    <TableColumn key={v}>{v}</TableColumn>
                 )
               )}
               </TableRow>

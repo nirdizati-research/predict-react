@@ -6,7 +6,8 @@ import {
 
 const initialState = {
     fetchState: {inFlight: false},
-    limeValueList: {}
+    limeValueList: {},
+    isLimeValuesLoaded: true
 };
 
 const lime = (state = initialState, action) => {
@@ -15,6 +16,7 @@ const lime = (state = initialState, action) => {
                 return {
                     ...state,
                     fetchState: {inFlight: true},
+                    isLimeValuesLoaded: false,
 
                 };
             }
@@ -24,7 +26,8 @@ const lime = (state = initialState, action) => {
                 return {
                     ...state,
                     fetchState: {inFlight: false},
-                    limeValueList
+                    limeValueList,
+                    isLimeValuesLoaded: true
                 };
             }
 
@@ -33,7 +36,8 @@ const lime = (state = initialState, action) => {
                 return {
                     ...state,
                     fetchState: {inFlight: false, error: action.payload},
-                    limeValueList
+                    limeValueList,
+                    isLimeValuesLoaded: true
                 };
             }
             default:

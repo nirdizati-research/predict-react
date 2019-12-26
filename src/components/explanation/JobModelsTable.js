@@ -20,11 +20,6 @@ const JobModelsTable = (props) => {
         return jobIds;
       };
     return <Card className="md-block-centered">
-        <CardText>
-            <h4>Available models</h4>
-            <LabelConfigTable jobs={props.jobs.map(jobToValidationTable)} onClick={props.onClick}/>
-            <FetchState fetchState={props.fetchState}/>
-        </CardText>
         <CardTitle title="Select job id">
             <SelectField
                id="method-select"
@@ -36,6 +31,11 @@ const JobModelsTable = (props) => {
                value={props.jobId}
             />
         </CardTitle>
+        <CardText>
+            <h4>Available models</h4>
+            <LabelConfigTable jobs={props.jobs.map(jobToValidationTable)} onClick={props.onClick}/>
+            <FetchState fetchState={props.fetchState}/>
+        </CardText>
     </Card>;
 };
 
