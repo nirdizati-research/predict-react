@@ -283,6 +283,18 @@ export const parseLimeResult = (limeValueList) => {
   return ({labels: labels, values: values});
 };
 
+export const parsePredictionResultList = (predictionList) => {
+  let data = [];
+  let keys = Object.keys(predictionList);
+
+  if (keys != null) {
+    for (let j = 0; j < keys.length; j++) {
+      data.push(predictionList[keys[j]]);
+      }
+    }
+  return ({data: data, categories: keys});
+};
+
 export const getTraceAttributes = (traceList, selectedTrace) =>{
   let i=0;
   if (traceList === undefined) {

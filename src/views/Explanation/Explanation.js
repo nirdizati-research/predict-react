@@ -27,6 +27,8 @@ import PostHocExplanation from '../../components/explanation/post_hoc';
 import TraceExplanation from '../../components/explanation/TraceExplanation';
 import {getTraceIdsFromLogs, parseLimeResult} from '../../util/dataReducers';
 import JobModelsTable from '../../components/explanation/JobModelsTable';
+import PredictionLineChartCard from '../../components/explanation/PredictionLineChartCard';
+import {predictionListRequested } from '../../actions/PredictionAction';
 
 class Explanation extends Component {
     constructor(props) {
@@ -67,6 +69,7 @@ class Explanation extends Component {
     onChangeTrace(trace) {
         this.props.onTraceChange(trace);
         this.setState({selectedTrace: trace});
+        this.props.onRequestPredictionList(1, 1);
         if (this.props.jobId.length != 0) {
             this.props.onRequestLimeValues(this.props.jobId, trace);
         }
@@ -76,10 +79,12 @@ class Explanation extends Component {
         this.props.onJobChange(id);
         if (this.props.selectedTrace !== '') {
             this.props.onRequestLimeValues(id, this.props.selectedTrace);
+            this.props.onRequestPredictionList(id, this.props.selectedTrace);
         }
     }
 
     componentDidMount() {
+        this.props.onRequestPredictionList(1, 1);
         if (this.props.jobs.length === 0) {
             this.props.onRequestLogList();
             this.props.onRequestSplitList();
@@ -134,7 +139,14 @@ class Explanation extends Component {
                     <PostHocExplanation jobs={this.props.jobs}
                                         fetchState={this.props.fetchState}
                                         limeValueList={parseLimeResult(this.props.limeValueList)}
-                                        isLimeValuesLoaded={this.props.isLimeValuesLoaded}/>
+                                        isLimeValuesLoaded={this.props.isLimeValuesLoaded}
+                                        traceId={this.props.selectedTrace}/>
+                </div>
+                <div className="md-cell md-cell--12">
+                    <PredictionLineChartCard
+                    data={this.props.predictionList}
+                    traceId={this.props.selectedTrace}
+                    jobId={this.props.jobId}/>
                 </div>
             </div>
         );
@@ -154,6 +166,7 @@ Explanation.propTypes = {
     onRequestTraces: PropTypes.func.isRequired,
     onJobChange: PropTypes.func.isRequired,
     onRequestLimeValues: PropTypes.func.isRequired,
+    onRequestPredictionList: PropTypes.func.isRequired,
     filterOptionChange: PropTypes.func.isRequired,
     labelTypeChange: PropTypes.func.isRequired,
     jobs: PropTypes.arrayOf(jobPropType).isRequired,
@@ -181,7 +194,8 @@ Explanation.propTypes = {
     selectedTrace: PropTypes.any,
     filteredJobs: PropTypes.any,
     jobId: PropTypes.number.isRequired,
-    isLimeValuesLoaded: PropTypes.bool.isRequired
+    isLimeValuesLoaded: PropTypes.bool.isRequired,
+    predictionList: PropTypes.any
 };
 
 const mapStateToProps = (state) => ({
@@ -201,6 +215,7 @@ const mapStateToProps = (state) => ({
     jobsById: state.jobs.byId,
     jobId: state.jobs.predictionJobId,
     selectedTrace: state.jobs.selectedTrace,
+    predictionList: state.predictions.predictionList,
     filterOptions: (
         ({
              encodings, clusterings, classification, regression, timeSeriesPrediction,
@@ -223,6 +238,7 @@ const mapDispatchToProps = (dispatch) => ({
     onRequestJobs: () => dispatch(jobsRequested()),
     onRequestTraces: (id) => dispatch(traceListRequested({id})),
     onRequestLimeValues: (jobId, traceId) => dispatch(limeValueListRequested({jobId, traceId})),
+    onRequestPredictionList: (jobId, traceId) => dispatch(predictionListRequested({jobId, traceId})),
     filterOptionChange: (_, event) => dispatch({
         type: FILTER_OPTION_CHANGED,
         payload: {name: event.target.name, value: event.target.value}

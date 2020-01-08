@@ -7,6 +7,7 @@ import splits from './Splits';
 import models from './Models';
 import traces from './Traces';
 import lime from './Lime';
+import predictions from './Predictions';
 
 
 export default combineReducers({
@@ -17,5 +18,6 @@ export default combineReducers({
     training,
     splits,
     traces,
-    lime
+    lime,
+    predictions
 });

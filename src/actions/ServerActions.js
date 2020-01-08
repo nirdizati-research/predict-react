@@ -7,6 +7,7 @@ import {limeValueListFailed, limeValueListRetrieved} from './LimeActions';
 import {splitFailed, splitsFailed, splitsRetrieved, splitSucceeded} from './SplitActions';
 import {modelsFailed, modelsRetrieved} from './ModelActions';
 import {predictionFailed, predictionSucceeded, replayFailed, replaySucceeded} from './RuntimeActions';
+import {predictionListRetrieved, predictionListFailed} from './PredictionAction';
 
 export const getJobs = () => (dispatch) => {
     jsonAjax(
@@ -136,5 +137,17 @@ export const getLimeValues = ({jobId, traceId}) => (dispatch) => {
             dispatch(limeValueListRetrieved(limeList));
         },
         ({error}) => dispatch(limeValueListFailed(error))
+    );
+};
+
+export const getPredictionValues = ({jobId, traceId}) => (dispatch) => {
+    jsonAjax(
+        `http://localhost:8083/api/test`,
+        'GET',
+        null,
+        (predictionList) => {
+            dispatch(predictionListRetrieved(predictionList));
+        },
+        ({error}) => dispatch(predictionListFailed(error))
     );
 };
