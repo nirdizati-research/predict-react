@@ -4,7 +4,7 @@
 import React from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import PropTypes from 'prop-types';
-import {jobPropType, fetchStatePropType} from '../../propTypes';
+import {jobPropType} from '../../propTypes';
 import HorizontalBarChartCard from '../../components/chart/HorizontalBarChartCard';
 import CircularProgress from 'react-md/lib/Progress/CircularProgress';
 
@@ -32,7 +32,6 @@ PostHocExplanation.propTypes = {
     jobs: PropTypes.arrayOf(jobPropType).isRequired,
     limeValueList: PropTypes.any.isRequired,
     isLimeValuesLoaded: PropTypes.bool.isRequired,
-    fetchState: fetchStatePropType,
     traceId: PropTypes.any
 
 };

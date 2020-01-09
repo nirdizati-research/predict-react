@@ -28,7 +28,7 @@ import TraceExplanation from '../../components/explanation/TraceExplanation';
 import {getTraceIdsFromLogs, parseLimeResult} from '../../util/dataReducers';
 import JobModelsTable from '../../components/explanation/JobModelsTable';
 import PredictionLineChartCard from '../../components/explanation/PredictionLineChartCard';
-import {predictionListRequested } from '../../actions/PredictionAction';
+import {predictionListRequested} from '../../actions/PredictionAction';
 
 class Explanation extends Component {
     constructor(props) {
@@ -137,7 +137,6 @@ class Explanation extends Component {
                 </div>
                 <div className="md-cell md-cell--12">
                     <PostHocExplanation jobs={this.props.jobs}
-                                        fetchState={this.props.fetchState}
                                         limeValueList={parseLimeResult(this.props.limeValueList)}
                                         isLimeValuesLoaded={this.props.isLimeValuesLoaded}
                                         traceId={this.props.selectedTrace}/>

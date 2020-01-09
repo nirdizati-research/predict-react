@@ -5,7 +5,8 @@ import {limeList} from '../../../stories/Explanation';
 
 const initialState = {
     fetchState: {inFlight: false},
-    limeValueList: {}
+    limeValueList: {},
+    isLimeValuesLoaded: true
 };
 describe('LimeReducer', () => {
     it('has nothing initially', () => {

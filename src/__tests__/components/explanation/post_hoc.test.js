@@ -9,6 +9,8 @@ describe('TraceTable', () => {
     it('renders without data', () => {
         const element = shallow(<PostHocExplanation
                                     jobs={[]}
+                                    isLimeValuesLoaded={true}
+                                    traceId={1}
                                     limeValueList={{labels: [], values: []}}/>);
         expect(element).toBeDefined();
         expect(element.find(HorizontalBarChartCard).length).toBe(0);
@@ -17,6 +19,8 @@ describe('TraceTable', () => {
     it('renders with data', () => {
         const element = shallow(<PostHocExplanation
                                     jobs={[]}
+                                    isLimeValuesLoaded={true}
+                                    traceId={1}
                                     limeValueList={parseLimeResult(limeList)}/>);
         expect(element).toBeDefined();
         expect(element.find(HorizontalBarChartCard).length).toBe(1);

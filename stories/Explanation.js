@@ -1,28 +1,41 @@
 export const limeList =
-{
-    '1': [
+[
+    [
         [
-            8,
-            0.1429
+            'prefix_1',
+            '0'
         ],
+        -0.1116
+    ],
+    [
         [
-            5,
-            -0.1157
+            'prefix_2',
+            '0'
         ],
+        0.0970
+    ],
+    [
         [
-            4,
-            0.0943
+            'prefix_3',
+            '0'
         ],
+        0.0262
+    ],
+    [
         [
-            2,
-            0.0623
+            'prefix_4',
+            'administrative fee - the first pol'
         ],
+        0.0262
+    ],
+    [
         [
-            3,
-            0.0319
-        ]
+            'prefix_5',
+            'outpatient follow-up consultation'
+        ],
+        0.0262
     ]
-};
+];
 
 export const traceList = [{
     'attributes': {

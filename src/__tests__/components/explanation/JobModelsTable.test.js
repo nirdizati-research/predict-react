@@ -1,16 +1,16 @@
 import React from 'react';
 import {shallow} from 'enzyme';
+import FetchState from '../../../components/FetchState';
 import SelectField from 'react-md/lib/SelectFields';
-import ExplanationHeaderCard from '../../../components/explanation/ExplanationHeaderCard';
+import JobModelsTable from '../../../components/explanation/JobModelsTable';
 import {CLASSIFICATION, LABELLING, REGRESSION, LINEAR, NO_CLUSTER} from '../../../reference';
+import LabelConfigTable from '../../../components/validation/LabelConfigTable';
 import {label1} from '../../../../stories/Advanced';
 
 const fetchState = {
     inFlight: false
 };
-const splitChange = jest.fn();
 const jobChange = jest.fn();
-const splitLabels = [{value: 1, label: 'Split #1'}, {value: 2, label: 'Split #2'}];
 
 const jobs = [{
         'config': {
@@ -47,64 +47,56 @@ const jobs = [{
     }];
 describe('ExplanationHeaderCard', () => {
     it('renders', () => {
-        const element = shallow(<ExplanationHeaderCard jobs={jobs}
-                                                        splitLabels={splitLabels}
+        const element = shallow(<JobModelsTable jobs={jobs}
                                                         fetchState={fetchState}
-                                                        splitChange={splitChange}
-                                                        selectedSplitId={1}
                                                         predictionMethod={REGRESSION}
                                                         onClick={jest.fn()}
                                                         jobChange={jobChange}
                                                         jobId={53}/>);
         expect(element).toBeDefined();
+        expect(element.find(LabelConfigTable).length).toBe(1);
+        expect(element.find(FetchState).length).toBe(1);
         expect(element.find(SelectField).length).toBe(1);
-        expect(element.find(SelectField).at(0).props().menuItems.length).toBe(splitLabels.length);
-        expect(element.find(SelectField).at(0).props().menuItems).toBe(splitLabels);
+        expect(element.find(SelectField).at(0).props().menuItems.length).toBe(1);
     });
 
     it('empty jobs with classification method', () => {
-        const element = shallow(<ExplanationHeaderCard jobs={[]}
-                                                        splitLabels={splitLabels}
+        const element = shallow(<JobModelsTable jobs={[]}
                                                         fetchState={fetchState}
-                                                        splitChange={splitChange}
-                                                        selectedSplitId={1}
                                                         predictionMethod={CLASSIFICATION}
                                                         onClick={jest.fn()}
                                                         jobChange={jest.fn()}
                                                         jobId={0}/>);
         expect(element).toBeDefined();
+        expect(element.find(LabelConfigTable).length).toBe(1);
+        expect(element.find(FetchState).length).toBe(1);
         expect(element.find(SelectField).length).toBe(1);
-        expect(element.find(SelectField).at(0).props().menuItems.length).toBe(splitLabels.length);
-        expect(element.find(SelectField).at(0).props().menuItems).toBe(splitLabels);
+        expect(element.find(SelectField).at(0).props().menuItems.length).toBe(0);
     });
 
     it('empty jobs with labelling method', () => {
-        const element = shallow(<ExplanationHeaderCard jobs={[]}
-                                                        splitLabels={splitLabels}
+        const element = shallow(<JobModelsTable jobs={[]}
                                                         fetchState={fetchState}
-                                                        splitChange={splitChange}
-                                                        selectedSplitId={1}
                                                         predictionMethod={LABELLING}
                                                         onClick={jest.fn()}
                                                         jobChange={jest.fn()}
                                                         jobId={1}/>);
         expect(element).toBeDefined();
+        expect(element.find(LabelConfigTable).length).toBe(1);
+        expect(element.find(FetchState).length).toBe(1);
         expect(element.find(SelectField).length).toBe(1);
-        expect(element.find(SelectField).at(0).props().menuItems.length).toBe(splitLabels.length);
-        expect(element.find(SelectField).at(0).props().menuItems).toBe(splitLabels);
+        expect(element.find(SelectField).at(0).props().menuItems.length).toBe(0);
     });
 
-    it('calls splitChange', () => {
-        const element = shallow(<ExplanationHeaderCard jobs={jobs}
-                                                        splitLabels={splitLabels}
+
+    it('calls jobChange', () => {
+        const element = shallow(<JobModelsTable jobs={jobs}
                                                         fetchState={fetchState}
-                                                        splitChange={splitChange}
-                                                        selectedSplitId={1}
                                                         predictionMethod={REGRESSION}
                                                         onClick={jest.fn()}
                                                         jobChange={jobChange}
                                                         jobId={53}/>);
-        element.find(SelectField).at(0).simulate('change', 'Split #2');
-        expect(splitChange).toHaveBeenCalledWith('Split #2');
+        element.find(SelectField).at(0).simulate('change', '53');
+        expect(jobChange).toHaveBeenCalledWith('53');
     });
 });

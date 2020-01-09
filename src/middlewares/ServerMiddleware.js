@@ -20,7 +20,7 @@ import {LIME_VALUE_LIST_REQUESTED} from '../actions/LimeActions';
 import {SPLIT_SUBMITTED, SPLITS_REQUESTED} from '../actions/SplitActions';
 import {MODELS_REQUESTED} from '../actions/ModelActions';
 import {PREDICTION_SUBMITTED, REPLAY_SUBMITTED} from '../actions/RuntimeActions';
-import { PREDICTION_LIST_REQUESTED } from '../actions/PredictionAction';
+import {PREDICTION_LIST_REQUESTED} from '../actions/PredictionAction';
 
 const ACTION_TYPE_TO_SERVER_ACTION = {
     [JOBS_REQUESTED]: getJobs,

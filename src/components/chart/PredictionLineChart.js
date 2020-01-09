@@ -60,7 +60,7 @@ class PredictionLineChart extends React.Component {
               height={height}
             />
           );
-            return <div id="chart">{chart}</div>;
+          return <div id="chart">{this.props.data.length === 0 ? '' : chart}</div>;
         }
 }
 PredictionLineChart.propTypes = {
