@@ -29,11 +29,9 @@ const ValidationHeaderCard = (props) => {
     const prefixControls = props.prefixLengths.map((prefix) => ({label: prefix, value: prefix}));
 
     const defaultValue = ',' + props.selectedPrefixes.join(',');
-
     const checkBoxChange = (value, event) => {
         props.prefixChange(event.target.value);
     };
-
     const checkies = props.prefixLengths.length > 0 ?
         <SelectionControlGroup type="checkbox" label="Prefix lengths" name="prefixLengths" id="prefixLengths"
                                onChange={checkBoxChange} controls={prefixControls} inline value={defaultValue}/> : null;

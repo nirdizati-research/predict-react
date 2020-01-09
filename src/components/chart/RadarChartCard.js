@@ -5,10 +5,11 @@ import ReactApexChart from 'react-apexcharts';
 const RadarChartCard = props => {
   let radarstates = {
     options: {
+      type: 'radar',
       chart: {
         toolbar: {
           show: false
-        }
+        },
       },
       labels: props.labels,
       plotOptions: {
@@ -17,12 +18,10 @@ const RadarChartCard = props => {
           polygons: {
             strokeColor: '#e9e9e9',
             fill: {
-              colors: ['#f8f8f8', '#fff']
             }
           }
         }
       },
-      colors: ['#FF4560'],
       markers: {
         size: 3,
         colors: ['#fff'],
@@ -38,25 +37,21 @@ const RadarChartCard = props => {
       },
       yaxis: {
         tickAmount: 5,
+        min: 0,
+        max: 1,
         labels: {
           formatter: function (val, i) {
             return '';
           }
         }
       }
-    },
-    series: [
-      {
-        name: 'Value',
-        data: props.data
-      }
-    ]
+    }
   };
 
   return (
     <ReactApexChart
       options={radarstates.options}
-      series={radarstates.series}
+      series={props.data}
       type="radar"
       height ="250em"
     />

@@ -5,21 +5,8 @@ import ReactApexChart from 'react-apexcharts';
 class HorizontalBarChartCard extends React.Component {
   constructor(props) {
     super(props);
-    let data = this.props.data;
-    let labels = this.props.labels;
-
-    this.state = {
-      labels,
-      data
-    };
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.data !== this.props.data) {
-      this.setState({data: this.props.data});
-      this.setState({labels: this.props.labels});
-    }
-  }
   render() {
     let graph = {
       options: {
@@ -67,17 +54,17 @@ class HorizontalBarChartCard extends React.Component {
           axisTicks: {
             show: true
           },
-          categories: this.state.labels
+          categories: this.props.labels
         }
       },
       series: [
         {
           name: 'Value',
-          data: this.state.data
+          data: this.props.data
         }
       ]
     };
-    const height = this.state.labels.length * 45;
+    const height = this.props.labels.length * 65;
     const chart = (
       <ReactApexChart
         options={graph.options}
@@ -87,7 +74,7 @@ class HorizontalBarChartCard extends React.Component {
       />
     );
 
-    return <div id="chart">{this.state.data.length === 0 ? '' : chart}</div>;
+    return <div id="chart">{this.props.data.length === 0 ? '' : chart}</div>;
   }
 }
 
