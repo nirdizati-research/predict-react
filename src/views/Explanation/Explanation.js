@@ -27,9 +27,8 @@ import PostHocExplanation from '../../components/explanation/post_hoc';
 import TraceExplanation from '../../components/explanation/TraceExplanation';
 import {getTraceIdsFromLogs, parseLimeResult} from '../../util/dataReducers';
 import JobModelsTable from '../../components/explanation/JobModelsTable';
-import PredictionLineChartCard from '../../components/explanation/PredictionLineChartCard';
-import {predictionListRequested} from '../../actions/PredictionAction';
-
+import PredictionLineChartCard from '../../components/explanation/TemporalStability';
+import {temporalPredictionListRequested, temporalLimePredictionListRequested} from '../../actions/PredictionAction';
 class Explanation extends Component {
     constructor(props) {
         const selectedTrace = '';
@@ -59,7 +58,7 @@ class Explanation extends Component {
         let split = splits[key];
 
         if (split.id == splitId) {
-          logId = split.training_log;
+          logId = split.test_log;
         }
       });
 
@@ -69,9 +68,10 @@ class Explanation extends Component {
     onChangeTrace(trace) {
         this.props.onTraceChange(trace);
         this.setState({selectedTrace: trace});
-        this.props.onRequestPredictionList(1, 1);
         if (this.props.jobId.length != 0) {
             this.props.onRequestLimeValues(this.props.jobId, trace);
+            this.props.onRequestLimeTemporalList(this.props.jobId, trace);
+            this.props.onRequestPredictionTemporalList(this.props.jobId, trace);
         }
     }
 
@@ -79,12 +79,12 @@ class Explanation extends Component {
         this.props.onJobChange(id);
         if (this.props.selectedTrace !== '') {
             this.props.onRequestLimeValues(id, this.props.selectedTrace);
-            this.props.onRequestPredictionList(id, this.props.selectedTrace);
+            this.props.onRequestLimeTemporalList(id, this.props.selectedTrace);
+            this.props.onRequestPredictionTemporalList(id, this.props.selectedTrace);
         }
     }
 
     componentDidMount() {
-        this.props.onRequestPredictionList(1, 1);
         if (this.props.jobs.length === 0) {
             this.props.onRequestLogList();
             this.props.onRequestSplitList();
@@ -136,15 +136,18 @@ class Explanation extends Component {
                                           />
                 </div>
                 <div className="md-cell md-cell--12">
-                    <PostHocExplanation jobs={this.props.jobs}
+                <PostHocExplanation jobs={this.props.jobs}
                                         limeValueList={parseLimeResult(this.props.limeValueList)}
                                         isLimeValuesLoaded={this.props.isLimeValuesLoaded}
                                         traceId={this.props.selectedTrace}/>
                 </div>
                 <div className="md-cell md-cell--12">
-                    <PredictionLineChartCard
-                    data={this.props.predictionList}
+                <PredictionLineChartCard
+                    limeTemporalChartData={this.props.limeTempStabilityList}
+                    predictionTemportalChartData={this.props.predictionTempStabilityList}
                     traceId={this.props.selectedTrace}
+                    isLimeTempStabilityLoaded={this.props.isLimeTempStabilityLoaded}
+                    isPredictionTempStabilityLoaded={this.props.isPredictionTempStabilityLoaded}
                     jobId={this.props.jobId}/>
                 </div>
             </div>
@@ -165,7 +168,8 @@ Explanation.propTypes = {
     onRequestTraces: PropTypes.func.isRequired,
     onJobChange: PropTypes.func.isRequired,
     onRequestLimeValues: PropTypes.func.isRequired,
-    onRequestPredictionList: PropTypes.func.isRequired,
+    onRequestPredictionTemporalList: PropTypes.func.isRequired,
+    onRequestLimeTemporalList: PropTypes.func.isRequired,
     filterOptionChange: PropTypes.func.isRequired,
     labelTypeChange: PropTypes.func.isRequired,
     jobs: PropTypes.arrayOf(jobPropType).isRequired,
@@ -193,8 +197,11 @@ Explanation.propTypes = {
     selectedTrace: PropTypes.any,
     filteredJobs: PropTypes.any,
     jobId: PropTypes.number.isRequired,
+    isLimeTempStabilityLoaded: PropTypes.bool.isRequired,
+    isPredictionTempStabilityLoaded: PropTypes.bool.isRequired,
     isLimeValuesLoaded: PropTypes.bool.isRequired,
-    predictionList: PropTypes.any
+    limeTempStabilityList: PropTypes.any,
+    predictionTempStabilityList: PropTypes.any
 };
 
 const mapStateToProps = (state) => ({
@@ -214,7 +221,10 @@ const mapStateToProps = (state) => ({
     jobsById: state.jobs.byId,
     jobId: state.jobs.predictionJobId,
     selectedTrace: state.jobs.selectedTrace,
-    predictionList: state.predictions.predictionList,
+    limeTempStabilityList: state.predictions.limeTempStabilityList,
+    predictionTempStabilityList: state.predictions.predictionTempStabilityList,
+    isLimeTempStabilityLoaded: state.predictions.isLimeTempStabilityLoaded,
+    isPredictionTempStabilityLoaded: state.predictions.isPredictionTempStabilityLoaded,
     filterOptions: (
         ({
              encodings, clusterings, classification, regression, timeSeriesPrediction,
@@ -237,7 +247,10 @@ const mapDispatchToProps = (dispatch) => ({
     onRequestJobs: () => dispatch(jobsRequested()),
     onRequestTraces: (id) => dispatch(traceListRequested({id})),
     onRequestLimeValues: (jobId, traceId) => dispatch(limeValueListRequested({jobId, traceId})),
-    onRequestPredictionList: (jobId, traceId) => dispatch(predictionListRequested({jobId, traceId})),
+    onRequestPredictionTemporalList: (jobId, traceId) =>
+        dispatch(temporalPredictionListRequested({jobId, traceId})),
+    onRequestLimeTemporalList: (jobId, traceId) =>
+        dispatch(temporalLimePredictionListRequested({jobId, traceId})),
     filterOptionChange: (_, event) => dispatch({
         type: FILTER_OPTION_CHANGED,
         payload: {name: event.target.name, value: event.target.value}

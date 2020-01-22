@@ -8,59 +8,74 @@ class PredictionLineChart extends React.Component {
     }
     render() {
         let graph = {
-            series: [{
-                name: 'Value',
-                data: this.props.data
-            }],
-            options: {
-              chart: {
-                height: 50,
-                type: 'line',
-                toolbar: {
-                    show: false
-                  },
-                zoom: {
-                  enabled: false
-                }
-              },
-              dataLabels: {
-                enabled: false
-              },
-              stroke: {
-                curve: 'straight'
-              },
-              title: {
-                align: 'left'
-              },
-              grid: {
-                row: {
-                  colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-                  opacity: 0.5
-                },
-              },
-              xaxis: {
-                categories: this.props.categories,
-                title: {
-                  text: 'Event number',
-                },
-              },
-              yaxis: {
-                title: {
-                  text: 'Prediction value',
-                },
+          options: {
+            chart: {
+              height: 350,
+              type: 'line',
+
+              toolbar: {
+                show: false
               }
+            },
+            stroke: {
+              curve: 'smooth',
+              show: true,
+              width: 2
+            },
+            dataLabels: {
+              enabled: false,
+            },
+            title: {
+              align: 'left'
+            },
+            markers: {
+              size: 5
+            },
+            xaxis: {
+              min: 0,
+              max: this.props.data.length +1,
+              tickAmount: this.props.data.length +1,
+              title: {
+                text: 'Time'
+              }
+            },
+            yaxis: {
+              title: {
+                text: 'Prediction'
+              },
+              min: -1,
+              max: 2,
+              tickAmount: 3,
+              axisBorder: {
+                show: true,
+                color: '#000000',
+                offsetX: 0,
+                offsetY: 0
+              },
+              labels: {
+                formatter: function (val, i) {
+                  return val;
+                }
+              }
+            },
+            legend: {
+              position: 'top',
+              horizontalAlign: 'right',
+              floating: true,
             }
-          };
-          const height = 4 * 65;
+          },
+        };
+          const height = '350em';
           const chart = (
             <ReactApexChart
               options={graph.options}
-              series={graph.series}
+              series={this.props.data}
               type="line"
               height={height}
             />
           );
-          return <div id="chart">{this.props.data.length === 0 ? '' : chart}</div>;
+          return <div id="chart">{this.props.data.length === 0 || this.props.data[0].length === 0
+              ? '' : chart}</div>;
         }
 }
 PredictionLineChart.propTypes = {

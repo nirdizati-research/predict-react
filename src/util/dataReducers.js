@@ -283,16 +283,40 @@ export const parseLimeResult = (limeValueList) => {
   return ({labels: labels, values: values});
 };
 
-export const parsePredictionResultList = (predictionList) => {
-  let data = [];
-  let keys = Object.keys(predictionList);
-
-  if (keys != null) {
-    for (let j = 0; j < keys.length; j++) {
-      data.push(predictionList[keys[j]]);
+export const parseTemporalStabilityLimeResultList = (predictionList, traceId) => {
+  let data = [[]];
+  let prefixs = [];
+  if (predictionList[traceId] != null || predictionList[traceId] != undefined) {
+    const traceAttr = predictionList[traceId];
+    prefixs = Object.keys(traceAttr);
+    data.pop();
+    for (let j = 0; j < prefixs.length; j++) {
+      const prefixValues = traceAttr[prefixs[j]];
+      for (let k = 1; k <= Object.keys(prefixValues).length; k++) {
+        const value = prefixValues['prefix_'+k];
+      if (j == 0) data.push({name: 'prefix_'+k, data: []});
+      data[k-1]['data'].push(value['importance']);
       }
     }
-  return ({data: data, categories: keys});
+  }
+    return ({data: data, categories: prefixs});
+  };
+
+export const parseTemporalStabilityPredictionResultList = (predictionList, traceId) => {
+  let predictions = [];
+  let prefixs = [];
+  if (predictionList[traceId] != null || predictionList[traceId] != undefined) {
+    const traceAttr = predictionList[traceId];
+    prefixs = Object.keys(traceAttr);
+    for (let j = 0; j < prefixs.length; j++) {
+      const prediction = traceAttr[prefixs[j]]['predicted'];
+      if (prediction == 'true') {
+        predictions.push(2);
+      } else predictions.push(1);
+    }
+  }
+
+  return predictions;
 };
 
 export const getTraceAttributes = (traceList, selectedTrace) =>{
