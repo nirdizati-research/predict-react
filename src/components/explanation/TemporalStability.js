@@ -6,11 +6,13 @@ import {parseTemporalStabilityLimeResultList, parseTemporalStabilityPredictionRe
 from '../../util/dataReducers';
 import ScatterChartCard from '../chart/ScatterChartCard';
 import {Row} from 'react-grid-system';
+import CircularProgress from 'react-md/lib/Progress/CircularProgress';
 
 const TemporalStability = (props) => {
-    const temporalStabilityLimeResult = parseTemporalStabilityLimeResultList(props.limeTemporalChartData, '00000912');
+    const temporalStabilityLimeResult =
+        parseTemporalStabilityLimeResultList(props.limeTemporalChartData, props.traceId);
     const temporalStabilityPredictionResult =
-        parseTemporalStabilityPredictionResultList(props.predictionTemportalChartData, '00000916');
+        parseTemporalStabilityPredictionResultList(props.predictionTemportalChartData, props.traceId);
 
     return <div className="md-cell md-cell--12">
         <Row>
@@ -20,6 +22,8 @@ const TemporalStability = (props) => {
                     { props.traceId != '' && props.jobId != '' ?
                         'Temporal stability result with trace id: '+ props.traceId +' and job id: '+ props.jobId: ''}
                 </CardText>
+                {!props.isLimeTempStabilityLoaded ? <CircularProgress id="query-indeterminate-progress"/> : null}
+
                 <CardText>
                     <div>
                     <ScatterChartCard
@@ -33,6 +37,8 @@ const TemporalStability = (props) => {
                 { props.traceId != '' && props.jobId != '' ?
                     'Temporal stability result with trace id: '+ props.traceId +' and job id: '+ props.jobId: ''}
             </CardText>
+            {!props.isPredictionTempStabilityLoaded ? <CircularProgress id="query-indeterminate-progress"/> : null}
+
             <CardText>
                 <div>
                 <PredictionLineChart
@@ -49,6 +55,8 @@ TemporalStability.propTypes = {
     limeTemporalChartData: PropTypes.any.isRequired,
     predictionTemportalChartData: PropTypes.any.isRequired,
     traceId: PropTypes.any,
-    jobId: PropTypes.any
+    jobId: PropTypes.any,
+    isPredictionTempStabilityLoaded: PropTypes.bool.isRequired,
+    isLimeTempStabilityLoaded: PropTypes.bool.isRequired
 };
 export default TemporalStability;

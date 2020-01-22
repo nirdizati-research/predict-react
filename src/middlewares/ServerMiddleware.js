@@ -11,7 +11,8 @@ import {
     postSplit,
     postTraining,
     getLimeValues,
-    getPredictionValues
+    getLimeTemporalStabilityValues,
+    getPredictionTemporalStabilityValues
 } from '../actions/ServerActions';
 import {JOB_DELETE_REQUESTED, JOBS_REQUESTED, TRAINING_SUBMITTED} from '../actions/JobActions';
 import {TRACE_LIST_REQUESTED} from '../actions/TraceActions';
@@ -20,7 +21,8 @@ import {LIME_VALUE_LIST_REQUESTED} from '../actions/LimeActions';
 import {SPLIT_SUBMITTED, SPLITS_REQUESTED} from '../actions/SplitActions';
 import {MODELS_REQUESTED} from '../actions/ModelActions';
 import {PREDICTION_SUBMITTED, REPLAY_SUBMITTED} from '../actions/RuntimeActions';
-import {PREDICTION_LIST_REQUESTED} from '../actions/PredictionAction';
+import {TEMPORAL_STABILITY_LIME_PREDICTION_LIST_REQUESTED, TEMPORAL_STABILITY_PREDICTION_LIST_REQUESTED}
+    from '../actions/PredictionAction';
 
 const ACTION_TYPE_TO_SERVER_ACTION = {
     [JOBS_REQUESTED]: getJobs,
@@ -35,7 +37,8 @@ const ACTION_TYPE_TO_SERVER_ACTION = {
     [MODELS_REQUESTED]: getModels,
     [JOB_DELETE_REQUESTED]: deleteJob,
     [LIME_VALUE_LIST_REQUESTED]: getLimeValues,
-    [PREDICTION_LIST_REQUESTED]: getPredictionValues,
+    [TEMPORAL_STABILITY_LIME_PREDICTION_LIST_REQUESTED]: getLimeTemporalStabilityValues,
+    [TEMPORAL_STABILITY_PREDICTION_LIST_REQUESTED]: getPredictionTemporalStabilityValues,
 
 };
 

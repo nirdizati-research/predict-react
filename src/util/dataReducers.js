@@ -285,7 +285,6 @@ export const parseLimeResult = (limeValueList) => {
 
 export const parseTemporalStabilityLimeResultList = (predictionList, traceId) => {
   let data = [[]];
-  let labels = [[]];
   let prefixs = [];
   if (predictionList[traceId] != null || predictionList[traceId] != undefined) {
     const traceAttr = predictionList[traceId];
@@ -295,10 +294,8 @@ export const parseTemporalStabilityLimeResultList = (predictionList, traceId) =>
       const prefixValues = traceAttr[prefixs[j]];
       for (let k = 1; k <= Object.keys(prefixValues).length; k++) {
         const value = prefixValues['prefix_'+k];
-        // console.log("Heer" +value);
-      if (j == 0) data.push({name: prefixs[k-1], data: []});
+      if (j == 0) data.push({name: 'prefix_'+k, data: []});
       data[k-1]['data'].push(value['importance']);
-        // labels[j].push(value['value']);
       }
     }
   }

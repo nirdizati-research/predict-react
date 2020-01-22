@@ -46,15 +46,17 @@ const ScatterChartCard = props => {
       }
     };
 
-    return (<ReactApexChart
+    let chart = <ReactApexChart
         options={scatterChartState.options}
         // series={props.data}
         series={scatterChartState.series}
         type="scatter"
         height ="350em"
-      />
-    );
+      />;
+      return <div id="chart">{props.data.length === 0
+        ? '' : chart}</div>;
   };
+
 
   ScatterChartCard.propTypes = {
     data: PropTypes.arrayOf(PropTypes.any.isRequired).isRequired,

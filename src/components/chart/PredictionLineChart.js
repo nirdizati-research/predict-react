@@ -29,7 +29,7 @@ class PredictionLineChart extends React.Component {
               align: 'left'
             },
             markers: {
-              size: 1
+              size: 5
             },
             xaxis: {
               min: 0,
@@ -46,13 +46,18 @@ class PredictionLineChart extends React.Component {
               min: -1,
               max: 2,
               tickAmount: 3,
+              axisBorder: {
+                show: true,
+                color: '#000000',
+                offsetX: 0,
+                offsetY: 0
+              },
               labels: {
                 formatter: function (val, i) {
                   return val;
                 }
               }
             },
-           
             legend: {
               position: 'top',
               horizontalAlign: 'right',
@@ -60,7 +65,7 @@ class PredictionLineChart extends React.Component {
             }
           },
         };
-          const height = 4 * 65;
+          const height = '350em';
           const chart = (
             <ReactApexChart
               options={graph.options}
@@ -69,7 +74,8 @@ class PredictionLineChart extends React.Component {
               height={height}
             />
           );
-          return <div id="chart">{this.props.data.length === 0 ? '' : chart}</div>;
+          return <div id="chart">{this.props.data.length === 0 || this.props.data[0].length === 0
+              ? '' : chart}</div>;
         }
 }
 PredictionLineChart.propTypes = {

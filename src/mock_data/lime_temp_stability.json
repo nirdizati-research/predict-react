@@ -1,160 +1,17 @@
-
 {
     "00000912": {
         "prefix_1": {
-            "prefix_5": {
-                "value": "",
-                "importance": -0.3940
-            },
-            "prefix_4": {
-                "value": "",
-                "importance": 0.3617
-            },
-            "prefix_6": {
-                "value": "",
-                "importance": -0.2556
-            },
             "prefix_3": {
-                "value": "",
-                "importance": 0.2555
-            },
-            "prefix_1": {
                 "value": "assumption laboratory",
-                "importance": -0.1376
-            },
-            "prefix_2": {
-                "value": "",
-                "importance": 0.0487
-            }
-        },
-        "prefix_2": {
-            "prefix_5": {
-                "value": "",
-                "importance": -0.3982
-            },
-            "prefix_4": {
-                "value": "",
-                "importance": 0.3659
-            },
-            "prefix_3": {
-                "value": "",
-                "importance": 0.2504
-            },
-            "prefix_6": {
-                "value": "",
-                "importance": -0.2432
-            },
-            "prefix_1": {
-                "value": "assumption laboratory",
-                "importance": -0.1728
+                "importance": 0.1981
             },
             "prefix_2": {
                 "value": "assumption laboratory",
-                "importance": 0.0185
-            }
-        },
-        "prefix_3": {
-            "prefix_5": {
-                "value": "",
-                "importance": -0.4257
-            },
-            "prefix_4": {
-                "value": "",
-                "importance": 0.3563
-            },
-            "prefix_6": {
-                "value": "",
-                "importance": -0.2771
+                "importance": 0.1144
             },
             "prefix_1": {
                 "value": "assumption laboratory",
-                "importance": -0.1742
-            },
-            "prefix_2": {
-                "value": "assumption laboratory",
-                "importance": 0.0261
-            },
-            "prefix_3": {
-                "value": "assumption laboratory",
-                "importance": -0.0122
-            }
-        },
-        "prefix_4": {
-            "prefix_5": {
-                "value": "",
-                "importance": -0.4123
-            },
-            "prefix_4": {
-                "value": "unconjugated bilirubin",
-                "importance": -0.3366
-            },
-            "prefix_6": {
-                "value": "",
-                "importance": -0.2850
-            },
-            "prefix_1": {
-                "value": "assumption laboratory",
-                "importance": -0.1372
-            },
-            "prefix_2": {
-                "value": "assumption laboratory",
-                "importance": 0.0221
-            },
-            "prefix_3": {
-                "value": "assumption laboratory",
-                "importance": -0.0186
-            }
-        },
-        "prefix_5": {
-            "prefix_4": {
-                "value": "unconjugated bilirubin",
-                "importance": -0.3972
-            },
-            "prefix_6": {
-                "value": "",
-                "importance": -0.2697
-            },
-            "prefix_5": {
-                "value": "bilirubin - total",
-                "importance": 0.2425
-            },
-            "prefix_1": {
-                "value": "assumption laboratory",
-                "importance": -0.1511
-            },
-            "prefix_3": {
-                "value": "assumption laboratory",
-                "importance": -0.0348
-            },
-            "prefix_2": {
-                "value": "assumption laboratory",
-                "importance": 0.0185
-            }
-        },
-        "prefix_6": {
-            "prefix_4": {
-                "value": "unconjugated bilirubin",
-                "importance": -0.4288
-            },
-            "prefix_6": {
-                "value": "glucose",
-                "importance": 0.2189
-            },
-            "prefix_1": {
-                "value": "assumption laboratory",
-                "importance": -0.1775
-            },
-            "prefix_5": {
-                "value": "bilirubin - total",
-                "importance": 0.1382
-            },
-            "prefix_2": {
-                "value": "assumption laboratory",
-                "importance": 0.0370
-            },
-            "prefix_3": {
-                "value": "assumption laboratory",
-                "importance": -0.0039
+                "importance": 0.0194
             }
         }
     }

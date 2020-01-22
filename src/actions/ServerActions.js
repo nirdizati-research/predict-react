@@ -7,7 +7,8 @@ import {limeValueListFailed, limeValueListRetrieved} from './LimeActions';
 import {splitFailed, splitsFailed, splitsRetrieved, splitSucceeded} from './SplitActions';
 import {modelsFailed, modelsRetrieved} from './ModelActions';
 import {predictionFailed, predictionSucceeded, replayFailed, replaySucceeded} from './RuntimeActions';
-import {predictionListRetrieved, predictionListFailed} from './PredictionAction';
+import {temporalLimePredictionListRetrieved, temporalLimePredictionListFailed, 
+    temporalPredictionListRetrieved, temporalPredictionListFailed} from './PredictionAction';
 
 export const getJobs = () => (dispatch) => {
     jsonAjax(
@@ -140,14 +141,26 @@ export const getLimeValues = ({jobId, traceId}) => (dispatch) => {
     );
 };
 
-export const getPredictionValues = ({jobId, traceId}) => (dispatch) => {
+export const getLimeTemporalStabilityValues = ({jobId, traceId}) => (dispatch) => {
     jsonAjax(
-        `http://localhost:8083/api/test`,
+        SERVER_URL + `/explanation/lime_temporal_stability/${jobId}&${traceId}/`,
         'GET',
         null,
         (predictionList) => {
-            dispatch(predictionListRetrieved(predictionList));
+            dispatch(temporalLimePredictionListRetrieved(predictionList));
         },
-        ({error}) => dispatch(predictionListFailed(error))
+        ({error}) => dispatch(temporalLimePredictionListFailed(error))
+    );
+};
+
+export const getPredictionTemporalStabilityValues = ({jobId, traceId}) => (dispatch) => {
+    jsonAjax(
+        SERVER_URL + `/explanation/temporal_stability/${jobId}&${traceId}/`,
+        'GET',
+        null,
+        (predictionList) => {
+            dispatch(temporalPredictionListRetrieved(predictionList));
+        },
+        ({error}) => dispatch(temporalPredictionListFailed(error))
     );
 };

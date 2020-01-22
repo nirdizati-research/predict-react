@@ -1,7 +1,21 @@
 import {createPayloadForwardingAction} from './index';
-export const PREDICTION_LIST_REQUESTED = 'PREDICTION_LIST_REQUESTED';
-export const predictionListRequested = createPayloadForwardingAction(PREDICTION_LIST_REQUESTED);
-export const PREDICTION_LIST_RETRIEVED = 'PREDICTION_LIST_RETRIEVED';
-export const predictionListRetrieved = createPayloadForwardingAction(PREDICTION_LIST_RETRIEVED);
-export const PREDICTION_LIST_FAILED = 'PREDICTION_LIST_FAILED';
-export const predictionListFailed = createPayloadForwardingAction(PREDICTION_LIST_FAILED);
+export const TEMPORAL_STABILITY_PREDICTION_LIST_REQUESTED = 'TEMPORAL_STABILITY_PREDICTION_LIST_REQUESTED';
+export const temporalPredictionListRequested =
+    createPayloadForwardingAction(TEMPORAL_STABILITY_PREDICTION_LIST_REQUESTED);
+export const TEMPORAL_STABILITY_PREDICTION_LIST_RETRIEVED = 'TEMPORAL_STABILITY_PREDICTION_LIST_RETRIEVED';
+export const temporalPredictionListRetrieved =
+    createPayloadForwardingAction(TEMPORAL_STABILITY_PREDICTION_LIST_RETRIEVED);
+export const TEMPORAL_STABILITY_PREDICTION_LIST_FAILED = 'TEMPORAL_STABILITY_PREDICTION_LIST_FAILED';
+export const temporalPredictionListFailed =
+    createPayloadForwardingAction(TEMPORAL_STABILITY_PREDICTION_LIST_FAILED);
+
+
+export const TEMPORAL_STABILITY_LIME_PREDICTION_LIST_REQUESTED = 'LIME_PREDICTION_LIST_REQUESTED';
+export const temporalLimePredictionListRequested =
+    createPayloadForwardingAction(TEMPORAL_STABILITY_LIME_PREDICTION_LIST_REQUESTED);
+export const TEMPORAL_STABILITY_LIME_PREDICTION_LIST_RETRIEVED = 'TEMPORAL_STABILITY_LIME_PREDICTION_LIST_RETRIEVED';
+export const temporalLimePredictionListRetrieved =
+    createPayloadForwardingAction(TEMPORAL_STABILITY_LIME_PREDICTION_LIST_RETRIEVED);
+export const TEMPORAL_STABILITY_LIME_PREDICTION_LIST_FAILED = 'TEMPORAL_STABILITY_LIME_PREDICTION_LIST_FAILED';
+export const temporalLimePredictionListFailed =
+    createPayloadForwardingAction(TEMPORAL_STABILITY_LIME_PREDICTION_LIST_FAILED);
