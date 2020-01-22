@@ -29,8 +29,6 @@ import {getTraceIdsFromLogs, parseLimeResult} from '../../util/dataReducers';
 import JobModelsTable from '../../components/explanation/JobModelsTable';
 import PredictionLineChartCard from '../../components/explanation/TemporalStability';
 import {temporalPredictionListRequested, temporalLimePredictionListRequested} from '../../actions/PredictionAction';
-// import limeTempStability from '../../mock_data/lime_temp_stability.json';
-// import predictionTempStability from '../../mock_data/prediction_temp_stability.json';
 class Explanation extends Component {
     constructor(props) {
         const selectedTrace = '';
@@ -71,16 +69,16 @@ class Explanation extends Component {
         this.props.onTraceChange(trace);
         this.setState({selectedTrace: trace});
         if (this.props.jobId.length != 0) {
-            // this.props.onRequestLimeValues(this.props.jobId, trace);
+            this.props.onRequestLimeValues(this.props.jobId, trace);
             this.props.onRequestLimeTemporalList(this.props.jobId, trace);
-             this.props.onRequestPredictionTemporalList(this.props.jobId, trace);
+            this.props.onRequestPredictionTemporalList(this.props.jobId, trace);
         }
     }
 
     onChangeJob(id) {
         this.props.onJobChange(id);
         if (this.props.selectedTrace !== '') {
-            // this.props.onRequestLimeValues(id, this.props.selectedTrace);
+            this.props.onRequestLimeValues(id, this.props.selectedTrace);
             this.props.onRequestLimeTemporalList(id, this.props.selectedTrace);
             this.props.onRequestPredictionTemporalList(id, this.props.selectedTrace);
         }
@@ -105,8 +103,6 @@ class Explanation extends Component {
     }
 
     render() {
-        console.log(this.props.predictionTempStabilityList)
-        console.log(this.props.limeTempStabilityList)
         return (
             <div className="md-grid">
                 <div className="md-cell md-cell--12">

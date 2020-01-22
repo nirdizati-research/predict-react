@@ -7,7 +7,7 @@ import {limeValueListFailed, limeValueListRetrieved} from './LimeActions';
 import {splitFailed, splitsFailed, splitsRetrieved, splitSucceeded} from './SplitActions';
 import {modelsFailed, modelsRetrieved} from './ModelActions';
 import {predictionFailed, predictionSucceeded, replayFailed, replaySucceeded} from './RuntimeActions';
-import {temporalLimePredictionListRetrieved, temporalLimePredictionListFailed, 
+import {temporalLimePredictionListRetrieved, temporalLimePredictionListFailed,
     temporalPredictionListRetrieved, temporalPredictionListFailed} from './PredictionAction';
 
 export const getJobs = () => (dispatch) => {
