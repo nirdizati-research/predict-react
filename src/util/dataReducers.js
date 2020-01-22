@@ -290,18 +290,17 @@ export const parseTemporalStabilityLimeResultList = (predictionList, traceId) =>
   if (predictionList[traceId] != null || predictionList[traceId] != undefined) {
     const traceAttr = predictionList[traceId];
     prefixs = Object.keys(traceAttr);
+    data.pop();
     for (let j = 0; j < prefixs.length; j++) {
-      let arr = [];
       const prefixValues = traceAttr[prefixs[j]];
       for (let k = 1; k <= Object.keys(prefixValues).length; k++) {
         const value = prefixValues['prefix_'+k];
         // console.log("Heer" +value);
-       arr.push(value['importance']);
+      if (j == 0) data.push({name: prefixs[k-1], data: []});
+      data[k-1]['data'].push(value['importance']);
         // labels[j].push(value['value']);
       }
-      data.push({name: prefixs[j], data: arr});
     }
-    data.shift();
   }
     return ({data: data, categories: prefixs});
   };

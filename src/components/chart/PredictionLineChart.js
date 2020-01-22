@@ -8,11 +8,6 @@ class PredictionLineChart extends React.Component {
     }
     render() {
         let graph = {
-          series: [
-            {name: "prefix_1",
-            data: [-0.1376, 0.0487, 0.2555, 0.3617, -0.394, -0.2556]
-          }
-          ],
           options: {
             chart: {
               height: 350,
@@ -22,11 +17,13 @@ class PredictionLineChart extends React.Component {
                 show: false
               }
             },
+            stroke: {
+              curve: 'smooth',
+              show: true,
+              width: 2
+            },
             dataLabels: {
               enabled: false,
-            },
-            stroke: {
-              curve: 'smooth'
             },
             title: {
               align: 'left'
@@ -55,6 +52,7 @@ class PredictionLineChart extends React.Component {
                 }
               }
             },
+           
             legend: {
               position: 'top',
               horizontalAlign: 'right',
