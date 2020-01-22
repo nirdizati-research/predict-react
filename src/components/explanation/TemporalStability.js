@@ -2,12 +2,15 @@ import React from 'react';
 import {Card, CardTitle, CardText} from 'react-md/lib/Cards/index';
 import PredictionLineChart from '../chart/PredictionLineChart';
 import PropTypes from 'prop-types';
-import {parseTemporalStabilityLimeResultList} from '../../util/dataReducers';
+import {parseTemporalStabilityLimeResultList, parseTemporalStabilityPredictionResultList}
+from '../../util/dataReducers';
 import ScatterChartCard from '../chart/ScatterChartCard';
 import {Row} from 'react-grid-system';
 
 const TemporalStability = (props) => {
-    const predictionData = parseTemporalStabilityLimeResultList(props.limeTemporalChartData);
+    const temporalStabilityLimeResult = parseTemporalStabilityLimeResultList(props.limeTemporalChartData, '00000912');
+    const temporalStabilityPredictionResult =
+        parseTemporalStabilityPredictionResultList(props.predictionTemportalChartData, '00000916');
 
     return <div className="md-cell md-cell--12">
         <Row>
@@ -20,7 +23,7 @@ const TemporalStability = (props) => {
                 <CardText>
                     <div>
                     <ScatterChartCard
-                    data = {props.predictionTemportalChartData}/>
+                    data = {temporalStabilityPredictionResult}/>
                     </div>
                 </CardText>
         </Card>
@@ -33,8 +36,8 @@ const TemporalStability = (props) => {
             <CardText>
                 <div>
                 <PredictionLineChart
-                data = {predictionData.data}
-                categories = {predictionData.categories}/>
+                data = {temporalStabilityLimeResult.data}
+                categories = {temporalStabilityLimeResult.categories}/>
                 </div>
             </CardText>
         </Card>

@@ -8,6 +8,11 @@ class PredictionLineChart extends React.Component {
     }
     render() {
         let graph = {
+          series: [
+            {name: "prefix_1",
+            data: [-0.1376, 0.0487, 0.2555, 0.3617, -0.394, -0.2556]
+          }
+          ],
           options: {
             chart: {
               height: 350,
@@ -17,7 +22,6 @@ class PredictionLineChart extends React.Component {
                 show: false
               }
             },
-            colors: ['#77B6EA', '#545454'],
             dataLabels: {
               enabled: false,
             },
@@ -25,7 +29,6 @@ class PredictionLineChart extends React.Component {
               curve: 'smooth'
             },
             title: {
-              text: 'Average High & Low Temperature',
               align: 'left'
             },
             markers: {
@@ -36,7 +39,7 @@ class PredictionLineChart extends React.Component {
               max: this.props.data.length +1,
               tickAmount: this.props.data.length +1,
               title: {
-                text: 'Month'
+                text: 'Time'
               }
             },
             yaxis: {
@@ -56,8 +59,6 @@ class PredictionLineChart extends React.Component {
               position: 'top',
               horizontalAlign: 'right',
               floating: true,
-              offsetY: -25,
-              offsetX: -5
             }
           },
         };

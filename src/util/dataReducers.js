@@ -283,28 +283,44 @@ export const parseLimeResult = (limeValueList) => {
   return ({labels: labels, values: values});
 };
 
-export const parseTemporalStabilityResultList = (predictionList) => {
-  let data = [];
-  let keys = Object.keys(predictionList);
-
-  if (keys != null) {
-    for (let j = 0; j < keys.length; j++) {
-      data.push(predictionList[keys[j]]);
+export const parseTemporalStabilityLimeResultList = (predictionList, traceId) => {
+  let data = [[]];
+  let labels = [[]];
+  let prefixs = [];
+  if (predictionList[traceId] != null || predictionList[traceId] != undefined) {
+    const traceAttr = predictionList[traceId];
+    prefixs = Object.keys(traceAttr);
+    for (let j = 0; j < prefixs.length; j++) {
+      let arr = [];
+      const prefixValues = traceAttr[prefixs[j]];
+      for (let k = 1; k <= Object.keys(prefixValues).length; k++) {
+        const value = prefixValues['prefix_'+k];
+        // console.log("Heer" +value);
+       arr.push(value['importance']);
+        // labels[j].push(value['value']);
       }
+      data.push({name: prefixs[j], data: arr});
     }
-    return ({data: data, categories: keys});
+    data.shift();
+  }
+    return ({data: data, categories: prefixs});
   };
 
-export const parseTemporalStabilityLimeResultList = (predictionList) => {
-  let data = [];
-  let keys = Object.keys(predictionList);
-
-  if (keys != null) {
-    for (let j = 0; j < keys.length; j++) {
-      data.push(predictionList[keys[j]]);
-      }
+export const parseTemporalStabilityPredictionResultList = (predictionList, traceId) => {
+  let predictions = [];
+  let prefixs = [];
+  if (predictionList[traceId] != null || predictionList[traceId] != undefined) {
+    const traceAttr = predictionList[traceId];
+    prefixs = Object.keys(traceAttr);
+    for (let j = 0; j < prefixs.length; j++) {
+      const prediction = traceAttr[prefixs[j]]['predicted'];
+      if (prediction == 'true') {
+        predictions.push(2);
+      } else predictions.push(1);
     }
-  return ({data: [{data: data, name: 'prefix_1'}, {data: data, name: 'prefix_2'}], categories: keys});
+  }
+
+  return predictions;
 };
 
 export const getTraceAttributes = (traceList, selectedTrace) =>{

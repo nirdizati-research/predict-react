@@ -29,8 +29,8 @@ import {getTraceIdsFromLogs, parseLimeResult} from '../../util/dataReducers';
 import JobModelsTable from '../../components/explanation/JobModelsTable';
 import PredictionLineChartCard from '../../components/explanation/TemporalStability';
 import {predictionListRequested} from '../../actions/PredictionAction';
-import ScatterChartCard from '../../components/chart/ScatterChartCard';
-
+import limeTempStability from '../../mock_data/lime_temp_stability.json';
+import predictionTempStability from '../../mock_data/prediction_temp_stability.json';
 class Explanation extends Component {
     constructor(props) {
         const selectedTrace = '';
@@ -144,9 +144,8 @@ class Explanation extends Component {
                 </div>
                 <div className="md-cell md-cell--12">
                     <PredictionLineChartCard
-                    limeTemporalChartData={this.props.predictionList}
-                    predictionTemportalChartData={[
-                        [1, 2], [2, 2], [3, 2], [4, 2], [5, 2]]}
+                    limeTemporalChartData={limeTempStability}
+                    predictionTemportalChartData={predictionTempStability}
                     traceId={this.props.selectedTrace}
                     jobId={this.props.jobId}/>
                 </div>
