@@ -17,7 +17,6 @@ describe('PredictionLineChart', () => {
     const element = shallow(<PredictionLineChart data={values} categories={[]}/>);
     expect(element).toBeDefined();
     expect(element.find(ReactApexChart).length).toBe(1);
-
   });
 
   it('renders with non empty data and label', () => {
