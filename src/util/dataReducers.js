@@ -283,7 +283,7 @@ export const parseLimeResult = (limeValueList) => {
   return ({labels: labels, values: values});
 };
 
-export const parsePredictionResultList = (predictionList) => {
+export const parseTemporalStabilityResultList = (predictionList) => {
   let data = [];
   let keys = Object.keys(predictionList);
 
@@ -292,7 +292,19 @@ export const parsePredictionResultList = (predictionList) => {
       data.push(predictionList[keys[j]]);
       }
     }
-  return ({data: data, categories: keys});
+    return ({data: data, categories: keys});
+  };
+
+export const parseTemporalStabilityLimeResultList = (predictionList) => {
+  let data = [];
+  let keys = Object.keys(predictionList);
+
+  if (keys != null) {
+    for (let j = 0; j < keys.length; j++) {
+      data.push(predictionList[keys[j]]);
+      }
+    }
+  return ({data: [{data: data, name: 'prefix_1'}, {data: data, name: 'prefix_2'}], categories: keys});
 };
 
 export const getTraceAttributes = (traceList, selectedTrace) =>{

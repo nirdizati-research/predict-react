@@ -8,54 +8,64 @@ class PredictionLineChart extends React.Component {
     }
     render() {
         let graph = {
-            series: [{
-                name: 'Value',
-                data: this.props.data
-            }],
-            options: {
-              chart: {
-                height: 50,
-                type: 'line',
-                toolbar: {
-                    show: false
-                  },
-                zoom: {
-                  enabled: false
-                }
-              },
-              dataLabels: {
-                enabled: false
-              },
-              stroke: {
-                curve: 'straight'
-              },
-              title: {
-                align: 'left'
-              },
-              grid: {
-                row: {
-                  colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-                  opacity: 0.5
-                },
-              },
-              xaxis: {
-                categories: this.props.categories,
-                title: {
-                  text: 'Event number',
-                },
-              },
-              yaxis: {
-                title: {
-                  text: 'Prediction value',
-                },
+          options: {
+            chart: {
+              height: 350,
+              type: 'line',
+
+              toolbar: {
+                show: false
               }
+            },
+            colors: ['#77B6EA', '#545454'],
+            dataLabels: {
+              enabled: false,
+            },
+            stroke: {
+              curve: 'smooth'
+            },
+            title: {
+              text: 'Average High & Low Temperature',
+              align: 'left'
+            },
+            markers: {
+              size: 1
+            },
+            xaxis: {
+              min: 0,
+              max: this.props.data.length +1,
+              tickAmount: this.props.data.length +1,
+              title: {
+                text: 'Month'
+              }
+            },
+            yaxis: {
+              title: {
+                text: 'Prediction'
+              },
+              min: -1,
+              max: 2,
+              tickAmount: 3,
+              labels: {
+                formatter: function (val, i) {
+                  return val;
+                }
+              }
+            },
+            legend: {
+              position: 'top',
+              horizontalAlign: 'right',
+              floating: true,
+              offsetY: -25,
+              offsetX: -5
             }
-          };
+          },
+        };
           const height = 4 * 65;
           const chart = (
             <ReactApexChart
               options={graph.options}
-              series={graph.series}
+              series={this.props.data}
               type="line"
               height={height}
             />
