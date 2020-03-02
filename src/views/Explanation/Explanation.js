@@ -29,7 +29,6 @@ import {getTraceIdsFromLogs, parseLimeResult, parseICEResult} from '../../util/d
 import JobModelsTable from '../../components/explanation/JobModelsTable';
 import TemporalStability from '../../components/explanation/TemporalStability';
 import {temporalPredictionListRequested, temporalLimePredictionListRequested} from '../../actions/PredictionAction';
-import DecisionTree from '../../components/chart/DecisionTree';
 import VerticalBarChartCard from '../../components/chart/VerticalBarChartCard';
 import R3DecisionTree from '../../components/chart/R3DecisionTree';
 
@@ -107,6 +106,7 @@ class Explanation extends Component {
     }
 
     render() {
+        // eslint-disable-next-line max-len
         const iceResult = parseICEResult([{'value': 'First outpatient consultation', 'label': 1.25, 'count': 48}, {'value': 'aspiration cytology behalf by p', 'label': 1.6666666666666667, 'count': 3}, {'value': 'assumption laboratory', 'label': 1.6923076923076923, 'count': 130}, {'value': 'compartment for inspection', 'label': 1.6666666666666667, 'count': 12}, {'value': 'ct abdomen', 'label': 2.0, 'count': 2}, {'value': 'cytology - abdominal tumor puncture', 'label': 1.0, 'count': 1}, {'value': 'cytology - ectocervix -', 'label': 1.32, 'count': 25}, {'value': 'cytology - vagina -', 'label': 1.2222222222222223, 'count': 9}, {'value': 'day care - all spec.beh.kind.-rev.', 'label': 1.0, 'count': 2}, {'value': 'demurrage - all spec.beh.kinderg.-Reval.', 'label': 1.7142857142857142, 'count': 28}, {'value': 'e.c.g. - Electrocardiography', 'label': 1.5, 'count': 22}, {'value': 'histological examination - biopsies nno', 'label': 1.3076923076923077, 'count': 13}, {'value': 'immuno-pathology', 'label': 1.25, 'count': 4}, {'value': 'inwend.geneesk. Out-year card costs', 'label': 2.0, 'count': 1}, {'value': 'inwend.geneesk. short-out card cost', 'label': 1.375, 'count': 8}, {'value': 'mammography chest wall', 'label': 1.3333333333333333, 'count': 3}, {'value': 'outpatient follow-up consultation', 'label': 1.087719298245614, 'count': 228}, {'value': 'telephone consultation', 'label': 1.0769230769230769, 'count': 13}, {'value': 'thorax', 'label': 1.375, 'count': 8}, {'value': 'treatment time - Unit t2 - megavolt', 'label': 1.0, 'count': 1}, {'value': 'treatment time - Unit t3 - megavolt', 'label': 1.0, 'count': 1}, {'value': 'ultrasound - internal genitals', 'label': 1.6333333333333333, 'count': 30}]
         );
         return (
@@ -125,7 +125,7 @@ class Explanation extends Component {
                 </div>
                 {/* <div className="md-cell md-cell--12">
                     <DecisionTree></DecisionTree>
-                </div> */}              
+                </div> */}
                 <div className="md-cell md-cell--12">
                 <VerticalBarChartCard
                         data = {iceResult.values}

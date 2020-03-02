@@ -315,7 +315,6 @@ export const parseTemporalStabilityLimeResultList = (predictionList, traceId) =>
   };
 
 export const parseTemporalStabilityPredictionResultList = (predictionList, traceId) => {
-
   let predictions = [];
   let prefixs = [];
   if (predictionList[traceId] != null || predictionList[traceId] != undefined) {
