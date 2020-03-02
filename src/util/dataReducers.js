@@ -283,6 +283,18 @@ export const parseLimeResult = (limeValueList) => {
   return ({labels: labels, values: values});
 };
 
+export const parseICEResult = (iceResult) => {
+  let labels = [];
+  let values = [];
+  let count = [];
+    for (let j = 0; j < iceResult.length; j++) {
+        labels.push(iceResult[j].value);
+        values.push(iceResult[j].label - 1).toFixed(2);
+        count.push(iceResult[j].count | 0);
+    }
+  return ({labels: labels, values: values, count: count});
+};
+
 export const parseTemporalStabilityLimeResultList = (predictionList, traceId) => {
   let data = [[]];
   let prefixs = [];
@@ -303,6 +315,7 @@ export const parseTemporalStabilityLimeResultList = (predictionList, traceId) =>
   };
 
 export const parseTemporalStabilityPredictionResultList = (predictionList, traceId) => {
+
   let predictions = [];
   let prefixs = [];
   if (predictionList[traceId] != null || predictionList[traceId] != undefined) {

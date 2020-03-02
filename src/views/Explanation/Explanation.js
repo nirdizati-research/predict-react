@@ -25,10 +25,14 @@ import ReactGA from 'react-ga';
 import ExplanationHeaderCard from '../../components/explanation/ExplanationHeaderCard';
 import PostHocExplanation from '../../components/explanation/post_hoc';
 import TraceExplanation from '../../components/explanation/TraceExplanation';
-import {getTraceIdsFromLogs, parseLimeResult} from '../../util/dataReducers';
+import {getTraceIdsFromLogs, parseLimeResult, parseICEResult} from '../../util/dataReducers';
 import JobModelsTable from '../../components/explanation/JobModelsTable';
-import PredictionLineChartCard from '../../components/explanation/TemporalStability';
+import TemporalStability from '../../components/explanation/TemporalStability';
 import {temporalPredictionListRequested, temporalLimePredictionListRequested} from '../../actions/PredictionAction';
+import DecisionTree from '../../components/chart/DecisionTree';
+import VerticalBarChartCard from '../../components/chart/VerticalBarChartCard';
+import R3DecisionTree from '../../components/chart/R3DecisionTree';
+
 class Explanation extends Component {
     constructor(props) {
         const selectedTrace = '';
@@ -103,6 +107,8 @@ class Explanation extends Component {
     }
 
     render() {
+        const iceResult = parseICEResult([{'value': 'First outpatient consultation', 'label': 1.25, 'count': 48}, {'value': 'aspiration cytology behalf by p', 'label': 1.6666666666666667, 'count': 3}, {'value': 'assumption laboratory', 'label': 1.6923076923076923, 'count': 130}, {'value': 'compartment for inspection', 'label': 1.6666666666666667, 'count': 12}, {'value': 'ct abdomen', 'label': 2.0, 'count': 2}, {'value': 'cytology - abdominal tumor puncture', 'label': 1.0, 'count': 1}, {'value': 'cytology - ectocervix -', 'label': 1.32, 'count': 25}, {'value': 'cytology - vagina -', 'label': 1.2222222222222223, 'count': 9}, {'value': 'day care - all spec.beh.kind.-rev.', 'label': 1.0, 'count': 2}, {'value': 'demurrage - all spec.beh.kinderg.-Reval.', 'label': 1.7142857142857142, 'count': 28}, {'value': 'e.c.g. - Electrocardiography', 'label': 1.5, 'count': 22}, {'value': 'histological examination - biopsies nno', 'label': 1.3076923076923077, 'count': 13}, {'value': 'immuno-pathology', 'label': 1.25, 'count': 4}, {'value': 'inwend.geneesk. Out-year card costs', 'label': 2.0, 'count': 1}, {'value': 'inwend.geneesk. short-out card cost', 'label': 1.375, 'count': 8}, {'value': 'mammography chest wall', 'label': 1.3333333333333333, 'count': 3}, {'value': 'outpatient follow-up consultation', 'label': 1.087719298245614, 'count': 228}, {'value': 'telephone consultation', 'label': 1.0769230769230769, 'count': 13}, {'value': 'thorax', 'label': 1.375, 'count': 8}, {'value': 'treatment time - Unit t2 - megavolt', 'label': 1.0, 'count': 1}, {'value': 'treatment time - Unit t3 - megavolt', 'label': 1.0, 'count': 1}, {'value': 'ultrasound - internal genitals', 'label': 1.6333333333333333, 'count': 30}]
+        );
         return (
             <div className="md-grid">
                 <div className="md-cell md-cell--12">
@@ -117,7 +123,20 @@ class Explanation extends Component {
                                            jobId={this.props.jobId}
                                           />
                 </div>
+                {/* <div className="md-cell md-cell--12">
+                    <DecisionTree></DecisionTree>
+                </div> */}              
                 <div className="md-cell md-cell--12">
+                <VerticalBarChartCard
+                        data = {iceResult.values}
+                        count = {iceResult.count}
+                        labels = {iceResult.labels}>
+                </VerticalBarChartCard>
+                </div>
+
+                <div className="md-cell md-cell--12">
+                    <R3DecisionTree></R3DecisionTree>
+                </div>                <div className="md-cell md-cell--12">
                     <TraceExplanation jobs={this.props.jobs}
                                       traceChange={this.onChangeTrace.bind(this)}
                                       traceIdList={
@@ -142,7 +161,7 @@ class Explanation extends Component {
                                         traceId={this.props.selectedTrace}/>
                 </div>
                 <div className="md-cell md-cell--12">
-                <PredictionLineChartCard
+                <TemporalStability
                     limeTemporalChartData={this.props.limeTempStabilityList}
                     predictionTemportalChartData={this.props.predictionTempStabilityList}
                     traceId={this.props.selectedTrace}
