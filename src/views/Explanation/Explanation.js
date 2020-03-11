@@ -30,7 +30,8 @@ import JobModelsTable from '../../components/explanation/JobModelsTable';
 import TemporalStability from '../../components/explanation/TemporalStability';
 import {temporalPredictionListRequested, temporalLimePredictionListRequested} from '../../actions/PredictionAction';
 import VerticalBarChartCard from '../../components/chart/VerticalBarChartCard';
-import R3DecisionTree from '../../components/chart/R3DecisionTree';
+import viz from '../../viz.svg';
+import AspectRatio from 'react-aspect-ratio';
 
 class Explanation extends Component {
     constructor(props) {
@@ -133,10 +134,16 @@ class Explanation extends Component {
                         labels = {iceResult.labels}>
                 </VerticalBarChartCard>
                 </div>
+                <div className="md-cell md-cell--6" >
+                    <a href={viz}
+                        style={{display: 'table-cell'}}
+                        rel="noopener noreferrer"
+                        target='_blank'>
+                        <img src={viz} className="md-cell md-cell--12" alt="svg" />
+                    </a>
 
+                </div>
                 <div className="md-cell md-cell--12">
-                    <R3DecisionTree></R3DecisionTree>
-                </div>                <div className="md-cell md-cell--12">
                     <TraceExplanation jobs={this.props.jobs}
                                       traceChange={this.onChangeTrace.bind(this)}
                                       traceIdList={
