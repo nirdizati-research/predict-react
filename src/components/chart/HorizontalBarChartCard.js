@@ -54,7 +54,7 @@ class HorizontalBarChartCard extends React.Component {
           axisTicks: {
             show: true
           },
-          categories: this.props.labels
+          categories: this.props.labels,
         }
       },
       series: [

@@ -29,9 +29,12 @@ import {getTraceIdsFromLogs, parseLimeResult, parseICEResult} from '../../util/d
 import JobModelsTable from '../../components/explanation/JobModelsTable';
 import TemporalStability from '../../components/explanation/TemporalStability';
 import {temporalPredictionListRequested, temporalLimePredictionListRequested} from '../../actions/PredictionAction';
-import VerticalBarChartCard from '../../components/chart/VerticalBarChartCard';
-import viz from '../../viz.svg';
-import AspectRatio from 'react-aspect-ratio';
+import ShapResult from '../../components/explanation/ShapResult';
+import ICEResult from '../../components/explanation/ICEResult';
+import SkaterResult from '../../components/explanation/SkaterResult';
+import FairMLResult from '../../components/explanation/FairMLResult';
+import {Row} from 'react-grid-system';
+import {Card, CardTitle, CardText} from 'react-md/lib/Cards/index';
 
 class Explanation extends Component {
     constructor(props) {
@@ -108,7 +111,7 @@ class Explanation extends Component {
 
     render() {
         // eslint-disable-next-line max-len
-        const iceResult = parseICEResult([{'value': 'First outpatient consultation', 'label': 1.25, 'count': 48}, {'value': 'aspiration cytology behalf by p', 'label': 1.6666666666666667, 'count': 3}, {'value': 'assumption laboratory', 'label': 1.6923076923076923, 'count': 130}, {'value': 'compartment for inspection', 'label': 1.6666666666666667, 'count': 12}, {'value': 'ct abdomen', 'label': 2.0, 'count': 2}, {'value': 'cytology - abdominal tumor puncture', 'label': 1.0, 'count': 1}, {'value': 'cytology - ectocervix -', 'label': 1.32, 'count': 25}, {'value': 'cytology - vagina -', 'label': 1.2222222222222223, 'count': 9}, {'value': 'day care - all spec.beh.kind.-rev.', 'label': 1.0, 'count': 2}, {'value': 'demurrage - all spec.beh.kinderg.-Reval.', 'label': 1.7142857142857142, 'count': 28}, {'value': 'e.c.g. - Electrocardiography', 'label': 1.5, 'count': 22}, {'value': 'histological examination - biopsies nno', 'label': 1.3076923076923077, 'count': 13}, {'value': 'immuno-pathology', 'label': 1.25, 'count': 4}, {'value': 'inwend.geneesk. Out-year card costs', 'label': 2.0, 'count': 1}, {'value': 'inwend.geneesk. short-out card cost', 'label': 1.375, 'count': 8}, {'value': 'mammography chest wall', 'label': 1.3333333333333333, 'count': 3}, {'value': 'outpatient follow-up consultation', 'label': 1.087719298245614, 'count': 228}, {'value': 'telephone consultation', 'label': 1.0769230769230769, 'count': 13}, {'value': 'thorax', 'label': 1.375, 'count': 8}, {'value': 'treatment time - Unit t2 - megavolt', 'label': 1.0, 'count': 1}, {'value': 'treatment time - Unit t3 - megavolt', 'label': 1.0, 'count': 1}, {'value': 'ultrasound - internal genitals', 'label': 1.6333333333333333, 'count': 30}]
+        const iceResult = parseICEResult([{'label': 'First outpatient consultation', 'value': 1.25, 'count': 48}, {'label': 'aspiration cytology behalf by p', 'value': 1.6666666666666667, 'count': 3}, {'label': 'assumption laboratory', 'value': 1.6923076923076923, 'count': 130}, {'label': 'compartment for inspection', 'value': 1.6666666666666667, 'count': 12}, {'label': 'ct abdomen', 'value': 2.0, 'count': 2}, {'label': 'cytology - abdominal tumor puncture', 'value': 1.0, 'count': 1}, {'label': 'cytology - ectocervix -', 'value': 1.32, 'count': 25}, {'label': 'cytology - vagina -', 'value': 1.2222222222222223, 'count': 9}, {'label': 'day care - all spec.beh.kind.-rev.', 'value': 1.0, 'count': 2}, {'label': 'demurrage - all spec.beh.kinderg.-Reval.', 'value': 1.7142857142857142, 'count': 28}, {'label': 'e.c.g. - Electrocardiography', 'value': 1.5, 'count': 22}, {'label': 'histological examination - biopsies nno', 'value': 1.3076923076923077, 'count': 13}, {'label': 'immuno-pathology', 'value': 1.25, 'count': 4}, {'label': 'inwend.geneesk. Out-year card costs', 'value': 2.0, 'count': 1}, {'label': 'inwend.geneesk. short-out card cost', 'value': 1.375, 'count': 8}, {'label': 'mammography chest wall', 'value': 1.3333333333333333, 'count': 3}, {'label': 'outpatient follow-up consultation', 'value': 1.087719298245614, 'count': 228}, {'label': 'telephone consultation', 'value': 1.0769230769230769, 'count': 13}, {'label': 'thorax', 'value': 1.375, 'count': 8}, {'label': 'treatment time - Unit t2 - megavolt', 'value': 1.0, 'count': 1}, {'label': 'treatment time - Unit t3 - megavolt', 'value': 1.0, 'count': 1}, {'label': 'ultrasound - internal genitals', 'value': 1.6333333333333333, 'count': 30}]
         );
         return (
             <div className="md-grid">
@@ -127,22 +130,7 @@ class Explanation extends Component {
                 {/* <div className="md-cell md-cell--12">
                     <DecisionTree></DecisionTree>
                 </div> */}
-                <div className="md-cell md-cell--12">
-                <VerticalBarChartCard
-                        data = {iceResult.values}
-                        count = {iceResult.count}
-                        labels = {iceResult.labels}>
-                </VerticalBarChartCard>
-                </div>
-                <div className="md-cell md-cell--6" >
-                    <a href={viz}
-                        style={{display: 'table-cell'}}
-                        rel="noopener noreferrer"
-                        target='_blank'>
-                        <img src={viz} className="md-cell md-cell--12" alt="svg" />
-                    </a>
-
-                </div>
+               
                 <div className="md-cell md-cell--12">
                     <TraceExplanation jobs={this.props.jobs}
                                       traceChange={this.onChangeTrace.bind(this)}
@@ -175,6 +163,24 @@ class Explanation extends Component {
                     isLimeTempStabilityLoaded={this.props.isLimeTempStabilityLoaded}
                     isPredictionTempStabilityLoaded={this.props.isPredictionTempStabilityLoaded}
                     jobId={this.props.jobId}/>
+                </div>
+                <Card className="md-cell md-cell--12">
+                    <ICEResult
+                        iceResult = {iceResult}>
+                    </ICEResult>
+                </Card >
+               <div className="md-cell md-cell--12">
+                   <Row className="md-cell md-cell--12">
+                    <Card className="md-cell md-cell--6">
+                        <FairMLResult/>
+                    </Card>
+                    <Card className="md-cell md-cell--6" >
+                        <SkaterResult/>
+                    </Card>
+                    </Row>
+                </div>
+                <div className="md-cell md-cell--12" >
+                    <ShapResult/>
                 </div>
             </div>
         );

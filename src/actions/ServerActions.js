@@ -141,6 +141,42 @@ export const getLimeValues = ({jobId, traceId}) => (dispatch) => {
     );
 };
 
+export const getShapValues = ({jobId, traceId}) => (dispatch) => {
+    jsonAjax(
+        SERVER_URL + `/explanation/shap/${jobId}&${traceId}/`,
+        'GET',
+        null,
+        (limeList) => {
+            dispatch(limeValueListRetrieved(limeList));
+        },
+        ({error}) => dispatch(limeValueListFailed(error))
+    );
+};
+
+export const getSkaterValues = ({jobId, traceId}) => (dispatch) => {
+    jsonAjax(
+        SERVER_URL + `/explanation/skater/${jobId}&${traceId}/`,
+        'GET',
+        null,
+        (limeList) => {
+            dispatch(limeValueListRetrieved(limeList));
+        },
+        ({error}) => dispatch(limeValueListFailed(error))
+    );
+};
+
+export const getIceValues = ({jobId, traceId}) => (dispatch) => {
+    jsonAjax(
+        SERVER_URL + `/explanation/ice/${jobId}&${traceId}/`,
+        'GET',
+        null,
+        (limeList) => {
+            dispatch(limeValueListRetrieved(limeList));
+        },
+        ({error}) => dispatch(limeValueListFailed(error))
+    );
+};
+
 export const getLimeTemporalStabilityValues = ({jobId, traceId}) => (dispatch) => {
     jsonAjax(
         SERVER_URL + `/explanation/lime_temporal_stability/${jobId}&${traceId}/`,
