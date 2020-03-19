@@ -1,10 +1,9 @@
 import React, {PureComponent} from 'react';
 import {Card, CardTitle, CardText} from 'react-md/lib/Cards/index';
 import PropTypes from 'prop-types';
-import {Row} from 'react-grid-system';
 import SelectField from 'react-md/lib/SelectFields';
-import scratch from '../../mock_data/scratch.png';
-import dependencePlot from '../../mock_data/dependence_plot.png';
+import InlineSVG from 'svg-inline-react';
+import CircularProgress from 'react-md/lib/Progress/CircularProgress';
 
 class ShapResult extends PureComponent {
     constructor(props) {
@@ -13,46 +12,33 @@ class ShapResult extends PureComponent {
       };
     }
 
-    getTraceSelector() {
-        return (
-          <SelectField
-            id="trace-select"
-            placeholder="Trace id"
-            className="md-cell"
-            menuItems={["00000001","00000002","00000003","00000004"]}
-            position={SelectField.Positions.BELOW}
-            value={"00000001"}
-          />
-        );
-      }
         render() {
             return (
-                <div className="md-cell md-cell--12">
-                    <Row className="md-cell md-cell--12">
-                        <Card className="md-cell md-cell--6">
-                                <CardTitle title="SHAP dependence plot"></CardTitle>
-                                <img src={dependencePlot} className="md-cell md-cell--12" alt="svg" />
-                        </Card>
-                        <Card className="md-cell md-cell--6">
-                            <CardTitle title="SHAP Result for a single trace"></CardTitle>
-                            <CardText>
-                                <h4>Select the trace composition</h4>
-                                {this.getTraceSelector()}
-                            </CardText>
-                            <img src={scratch} className="md-cell md-cell--12" alt="svg" />
-                        </Card>                  
-                </Row>
-                </div>
+              <Card className="md-block-centered">
+                <CardTitle title="SHAP Result for a single trace"></CardTitle>
+                <CardText>
+                  { this.props.traceId != '' && this.props.jobId != '' ?
+                  'SHAP result with trace id: '+ this.props.traceId
+                   +' and job id: '+ this.props.jobId: ''}
+              </CardText>
+                <CardText>
+                  {!this.props.isShapValuesLoaded ? <CircularProgress id="query-indeterminate-progress"/> : null}
+                  {JSON.stringify(this.props.shapValueList) !='{}'? <InlineSVG
+                    style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+                    href preserveAspectRatio="xMidYMid slice"
+                    className="md-cell md-cell--12" alt="svg"
+                    src={this.props.shapValueList }/>
+                    : null}
+                </CardText>
+              </Card>
             );
         }
 }
 ShapResult.propTypes = {
-    shapGeneralResult: PropTypes.any.isRequired,
-    shapSpecificTraceIdResult: PropTypes.any.isRequired,
-    shapSummaryPlotResult: PropTypes.any.isRequired,
-    traceId: PropTypes.any,
-    jobId: PropTypes.any,
-    traceIdList: PropTypes.any.isRequired,
-    shapSelectedTrace: PropTypes.string.isRequired
+  shapValueList: PropTypes.any.isRequired,
+  traceId: PropTypes.any,
+  jobId: PropTypes.any,
+  shapSelectedTrace: PropTypes.string.isRequired,
+  isShapValuesLoaded: PropTypes.bool.isRequired,
 };
 export default ShapResult;

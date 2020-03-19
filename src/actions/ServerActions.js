@@ -1,6 +1,6 @@
 import {SERVER_URL} from '../constants';
 import jsonAjax from '../JSONAjaxRequest';
-import {JOB_DELETED, jobsFailed, jobsRetrieved, trainingFailed, trainingSucceeded} from './JobActions';
+import {JOB_DELETED, jobsFailed, jobsRetrieved, trainingFailed, trainingSucceeded, decodingtRetrieved, decodingFailed} from './JobActions';
 import {logInfoFailed, logInfoRetrieved, logListFailed, logListsRetrieved} from './LogActions';
 import {traceListFailed, traceListRetrieved} from './TraceActions';
 import {limeValueListFailed, limeValueListRetrieved} from './LimeActions';
@@ -9,6 +9,7 @@ import {modelsFailed, modelsRetrieved} from './ModelActions';
 import {predictionFailed, predictionSucceeded, replayFailed, replaySucceeded} from './RuntimeActions';
 import {temporalLimePredictionListRetrieved, temporalLimePredictionListFailed,
     temporalPredictionListRetrieved, temporalPredictionListFailed} from './PredictionAction';
+import { shapValueListRetrieved, shapValueListFailed, skaterValueListRetrieved, skaterValueListFailed, iceValueListRequested, iceValueListFailed, iceValueListRetrieved } from './ExplanationActions';
 
 export const getJobs = () => (dispatch) => {
     jsonAjax(
@@ -51,6 +52,18 @@ export const postTraining = (payload) => (dispatch) => {
         payload,
         (jobs) => dispatch(trainingSucceeded(jobs)),
         ({error}) => dispatch(trainingFailed(error))
+    );
+};
+
+export const getDecodingDf = ({id}) => (dispatch) => {
+    jsonAjax(
+        SERVER_URL + `/jobs/decode/${id}`,
+        'GET',
+        null,
+        (resultList) => {
+            dispatch(decodingtRetrieved(resultList));
+        },
+        ({error}) => dispatch(decodingFailed(error))
     );
 };
 
@@ -146,34 +159,34 @@ export const getShapValues = ({jobId, traceId}) => (dispatch) => {
         SERVER_URL + `/explanation/shap/${jobId}&${traceId}/`,
         'GET',
         null,
-        (limeList) => {
-            dispatch(limeValueListRetrieved(limeList));
+        (shapResult) => {
+            dispatch(shapValueListRetrieved(shapResult));
         },
-        ({error}) => dispatch(limeValueListFailed(error))
+        ({error}) => dispatch(shapValueListFailed(error))
     );
 };
 
-export const getSkaterValues = ({jobId, traceId}) => (dispatch) => {
+export const getSkaterValues = ({jobId}) => (dispatch) => {
     jsonAjax(
-        SERVER_URL + `/explanation/skater/${jobId}&${traceId}/`,
+        SERVER_URL + `/explanation/skater/${jobId}/`,
         'GET',
         null,
-        (limeList) => {
-            dispatch(limeValueListRetrieved(limeList));
+        (skaterResult) => {
+            dispatch(skaterValueListRetrieved(skaterResult));
         },
-        ({error}) => dispatch(limeValueListFailed(error))
+        ({error}) => dispatch(skaterValueListFailed(error))
     );
 };
 
-export const getIceValues = ({jobId, traceId}) => (dispatch) => {
+export const getIceValues = ({jobId, attribute}) => (dispatch) => {
     jsonAjax(
-        SERVER_URL + `/explanation/ice/${jobId}&${traceId}/`,
+        SERVER_URL + `/explanation/ice/${jobId}&${attribute}/`,
         'GET',
         null,
-        (limeList) => {
-            dispatch(limeValueListRetrieved(limeList));
+        (iceList) => {
+            dispatch(iceValueListRetrieved(iceList));
         },
-        ({error}) => dispatch(limeValueListFailed(error))
+        ({error}) => dispatch(iceValueListFailed(error))
     );
 };
 

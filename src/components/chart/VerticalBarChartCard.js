@@ -21,7 +21,7 @@ class HorizontalBarChartCard extends React.Component {
           bar: {
             horizontal: false,
             distributed: false,
-            columnWidth: '30%',
+            columnWidth: '10%',
             barHeight: '80%'
           }
         },

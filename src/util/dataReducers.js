@@ -275,7 +275,7 @@ export const parseLimeResult = (limeValueList) => {
   if (keys != null) {
     for (let j = 0; j < keys.length; j++) {
       if (limeValueList[keys[j]].length == 2) {
-        labels.push(limeValueList[keys[j]][0]);
+        labels.push(keys[j] +' = '+ limeValueList[keys[j]][0]);
         values.push(limeValueList[keys[j]][1]);
       }
     }
@@ -289,7 +289,9 @@ export const parseICEResult = (iceResult) => {
   let count = [];
     for (let j = 0; j < iceResult.length; j++) {
         labels.push(iceResult[j].label);
-        values.push(iceResult[j].value - 1).toFixed(2);
+        if (isNaN(parseFloat(iceResult[j].value))) values.push(iceResult[j].value);
+        else values.push(iceResult[j].value).toFixed(2);
+
         count.push(iceResult[j].count | 0);
     }
   return ({labels: labels, values: values, count: count});
@@ -316,10 +318,11 @@ export const parseTemporalStabilityLimeResultList = (predictionList, traceId) =>
     data.pop();
     for (let j = 0; j < prefixs.length; j++) {
       const prefixValues = traceAttr[prefixs[j]];
-      for (let k = 1; k <= Object.keys(prefixValues).length; k++) {
-        const value = prefixValues['prefix_'+k];
-      if (j == 0) data.push({name: 'prefix_'+k, data: []});
-      data[k-1]['data'].push(value['importance']);
+      for (let k = 0; k <= Object.keys(prefixValues).length-1; k++) {
+        const value = prefixValues[Object.keys(prefixValues)[k]];
+        console.log(Object.keys(prefixValues)[k])
+      if (j == 0) data.push({name: (Object.keys(prefixValues)[k].concat(' = ', value['value'])), data: []});
+      data[k]['data'].push(value['importance']);
       }
     }
   }
@@ -394,4 +397,37 @@ const getTraceEventsHeader = (traceList) =>{
     break;
   }
   return traceEventsHeaders;
+};
+
+
+export const getIceResultListTable = (iceResultList) =>{
+  let i=0;
+  let result = [];
+  for (i = 0; i<iceResultList.length; i++) {
+    let arr = [];
+    arr.push(iceResultList[i]['label']);
+    arr.push(iceResultList[i]['value']);
+    arr.push(iceResultList[i]['count']);
+    result.push(arr);
+  }
+  return result;
+};
+
+export const getDecodedDFTable = (dfResult) =>{
+  let i=0; let j=0;
+  let result = [];
+  let keys = Object.keys(dfResult);
+  if (keys.length>0) {
+    for (j = 0; j < dfResult[keys[0]].length; j++) {
+      let arr = [];
+      arr.push(j+1);
+
+      for (i = 0; i<keys.length; i++) {
+          arr.push(dfResult[keys[i]][j]);
+        }
+        result.push(arr);
+    }
+    keys = ['id'].concat(keys);
+}
+  return {data: result, headers: keys};
 };

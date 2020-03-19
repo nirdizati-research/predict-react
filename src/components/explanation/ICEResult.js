@@ -3,6 +3,8 @@ import {Card, CardTitle, CardText} from 'react-md/lib/Cards/index';
 import PropTypes from 'prop-types';
 import VerticalBarChartCard from '../../components/chart/VerticalBarChartCard';
 import SelectField from 'react-md/lib/SelectFields';
+import CircularProgress from 'react-md/lib/Progress/CircularProgress';
+import IceResultTable from './IceResultTable';
 
 class ShapResult extends PureComponent {
     constructor(props) {
@@ -10,37 +12,57 @@ class ShapResult extends PureComponent {
       this.state = {
       };
     }
+    onChangeFeature(value, _) {
+      this.props.onChangeFeature(value);
+    }
     getTraceSelector() {
         return (
           <SelectField
             id="trace-select"
-            placeholder="Trace id"
+            placeholder="Feature Name"
             className="md-cell"
-            menuItems={['prefix_1', 'prefix_2', 'prefix_3']}
+            menuItems={this.props.attributes}
             position={SelectField.Positions.BELOW}
-            value={'prefix_1'}
+            onChange={this.onChangeFeature.bind(this)}
+
           />
         );
       }
     render() {
         return (
-            <div className="md-cell md-cell--12">
-                    <div> <h2>ICE result</h2></div>
-                    <div>
-                        <h4>Select the prefix</h4>
-                        {this.getTraceSelector()}
-                    </div>
+               <Card className="md-block-centered">
+                 <CardTitle title="ICE Result for a single attribute: "></CardTitle>
+                 <CardText>
+                  <h4>Select the feature</h4>
+                  {this.getTraceSelector()}
+                </CardText>
+                {!this.props.isIceValuesLoaded ? <CircularProgress id="query-indeterminate-progress"/> : null}
+                  <CardText>
+                    {this.props.iceValueList.count.length != 0 ?
+                    this.props.iceValueList.count.length < 70 ?
                     <VerticalBarChartCard
-                        data = {this.props.iceResult.values}
-                        count = {this.props.iceResult.count}
-                        labels = {this.props.iceResult.labels}>
+                        labels = {this.props.iceValueList.values}
+                        count = {this.props.iceValueList.count}
+                        data = {this.props.iceValueList.labels}>
                     </VerticalBarChartCard>
-            </div>
+                    :
+                    <IceResultTable
+                      iceResultList = {this.props.originalList}>
+                    </IceResultTable>
+                    : null
+                    }
+                  </CardText>
+              </Card>
         );
     }
 }
 ShapResult.propTypes = {
-    iceResult: PropTypes.any,
-    jobId: PropTypes.any,
+  iceValueList: PropTypes.any,
+  jobId: PropTypes.any,
+  isIceValuesLoaded: PropTypes.bool,
+  selectedAttribute: PropTypes.any,
+  attributes: PropTypes.any,
+  onChangeFeature: PropTypes.func,
+  originalList: PropTypes.any
 };
 export default ShapResult;
