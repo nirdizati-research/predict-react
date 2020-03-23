@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {Card, CardTitle, CardText} from 'react-md/lib/Cards/index';
 import CircularProgress from 'react-md/lib/Progress/CircularProgress';
 
-class IceResultTable extends PureComponent {
+class DecodedDFTable extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -49,6 +49,7 @@ class IceResultTable extends PureComponent {
       </CardText>
       {!this.props.isDecodedValueLoaded ? <CircularProgress id="query-indeterminate-progress"/> : null}
       <CardText>
+      {this.props.values.length>0 ?
       <DataTable baseId="simple-pagination" plain>
         <TableHeader>
           <TableRow selectable={false}>
@@ -72,7 +73,8 @@ class IceResultTable extends PureComponent {
           rows={this.props.values.length}
           rowsPerPageLabel={'Rows per page'}
           onPagination={this.handlePagination.bind(this)}/>
-      </DataTable>
+      </DataTable> : null
+      }
       </CardText>
       </Card>
     );
@@ -84,11 +86,11 @@ class IceResultTable extends PureComponent {
     }
 }
 
-IceResultTable.propTypes = {
+DecodedDFTable.propTypes = {
   values: PropTypes.array.isRequired,
   headers: PropTypes.array.isRequired,
   isDecodedValueLoaded: PropTypes.bool.isRequired,
   jobId: PropTypes.any.isRequired,
 };
 
-export default IceResultTable;
+export default DecodedDFTable;

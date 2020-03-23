@@ -75,3 +75,75 @@ export const traceList = [{
         }
     ]
 }];
+
+export const decodedDFResultList = {
+        'prefix_1': [
+            'Register',
+            'Register',
+            'Register'],
+        'prefix_2': [
+            'Register',
+            'Register',
+            'Register'],
+        'org:resource_1': [
+            'PR3',
+            'PR3',
+            'PR3']
+};
+
+export const iceResultList = [
+        'False',
+        [
+            {
+                'value': '12.0',
+                'label': 1.0000,
+                'count': 1
+            },
+            {
+                'value': '16.0',
+                'label': 1.0000,
+                'count': 1
+            },
+            {
+                'value': '18.0',
+                'label': 2.0000,
+                'count': 1
+            },
+        ]
+];
+
+export const shapResult = [
+    'False',
+    ''
+];
+
+export const skaterResult = [
+    'False',
+    ''
+];
+
+export const limeTemporalStabilityResult = {
+    '2_3301': {
+        'prefix_1': {
+            'prefix_2': {
+                'value': 'High Insurance Check',
+                'importance': -35642.4310
+            },
+            'prefix_1': {
+                'value': 'Register',
+                'importance': 0.0000
+            }
+        }
+    }
+};
+
+export const temporalStabilityResult = {
+    '2_3301': {
+        'prefix_1': {
+            'value': 'Register',
+            'predicted': 0
+        }
+    }
+};
+
+

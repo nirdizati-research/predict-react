@@ -32,7 +32,7 @@ import TraceExplanation from '../../components/explanation/TraceExplanation';
 import {getTraceIdsFromLogs, parseLimeResult, parseICEResult, getDecodedDFTable} from '../../util/dataReducers';
 import JobModelsTable from '../../components/explanation/JobModelsTable';
 import TemporalStability from '../../components/explanation/TemporalStability';
-import {temporalPredictionListRequested, temporalLimePredictionListRequested, 
+import {temporalPredictionListRequested, temporalLimePredictionListRequested,
     temporalLimePredictionListFailed, temporalPredictionListFailed} from '../../actions/PredictionAction';
 import ShapResult from '../../components/explanation/ShapResult';
 import ICEResult from '../../components/explanation/ICEResult';

@@ -13,8 +13,7 @@ const TemporalStability = (props) => {
         parseTemporalStabilityLimeResultList(props.limeTemporalChartData, props.traceId);
     const temporalStabilityPredictionResult =
         parseTemporalStabilityPredictionResultList(props.predictionTemportalChartData, props.traceId);
-
-    return <div className="md-cell md-cell--12">
+  return <div className="md-cell md-cell--12">
         <Row>
              <Card className="md-cell md-cell--6">
                 <CardTitle title="Lime result with temporal stability"></CardTitle>

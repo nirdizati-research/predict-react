@@ -1,7 +1,6 @@
 import React, {PureComponent} from 'react';
 import {Card, CardTitle, CardText} from 'react-md/lib/Cards/index';
 import PropTypes from 'prop-types';
-import SelectField from 'react-md/lib/SelectFields';
 import InlineSVG from 'svg-inline-react';
 import CircularProgress from 'react-md/lib/Progress/CircularProgress';
 

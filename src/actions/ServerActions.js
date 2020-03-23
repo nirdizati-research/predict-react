@@ -1,6 +1,7 @@
 import {SERVER_URL} from '../constants';
 import jsonAjax from '../JSONAjaxRequest';
-import {JOB_DELETED, jobsFailed, jobsRetrieved, trainingFailed, trainingSucceeded, decodingtRetrieved, decodingFailed} from './JobActions';
+import {JOB_DELETED, jobsFailed, jobsRetrieved, trainingFailed,
+    trainingSucceeded, decodingtRetrieved, decodingFailed} from './JobActions';
 import {logInfoFailed, logInfoRetrieved, logListFailed, logListsRetrieved} from './LogActions';
 import {traceListFailed, traceListRetrieved} from './TraceActions';
 import {limeValueListFailed, limeValueListRetrieved} from './LimeActions';
@@ -9,7 +10,8 @@ import {modelsFailed, modelsRetrieved} from './ModelActions';
 import {predictionFailed, predictionSucceeded, replayFailed, replaySucceeded} from './RuntimeActions';
 import {temporalLimePredictionListRetrieved, temporalLimePredictionListFailed,
     temporalPredictionListRetrieved, temporalPredictionListFailed} from './PredictionAction';
-import { shapValueListRetrieved, shapValueListFailed, skaterValueListRetrieved, skaterValueListFailed, iceValueListRequested, iceValueListFailed, iceValueListRetrieved } from './ExplanationActions';
+import {shapValueListRetrieved, shapValueListFailed, skaterValueListRetrieved,
+    skaterValueListFailed, iceValueListFailed, iceValueListRetrieved} from './ExplanationActions';
 
 export const getJobs = () => (dispatch) => {
     jsonAjax(

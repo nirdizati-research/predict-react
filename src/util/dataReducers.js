@@ -312,6 +312,7 @@ export const parseFairMLResult = (iceResult) => {
 export const parseTemporalStabilityLimeResultList = (predictionList, traceId) => {
   let data = [[]];
   let prefixs = [];
+
   if (predictionList[traceId] != null || predictionList[traceId] != undefined) {
     const traceAttr = predictionList[traceId];
     prefixs = Object.keys(traceAttr);
@@ -320,7 +321,6 @@ export const parseTemporalStabilityLimeResultList = (predictionList, traceId) =>
       const prefixValues = traceAttr[prefixs[j]];
       for (let k = 0; k <= Object.keys(prefixValues).length-1; k++) {
         const value = prefixValues[Object.keys(prefixValues)[k]];
-        console.log(Object.keys(prefixValues)[k])
       if (j == 0) data.push({name: (Object.keys(prefixValues)[k].concat(' = ', value['value'])), data: []});
       data[k]['data'].push(value['importance']);
       }
@@ -410,6 +410,7 @@ export const getIceResultListTable = (iceResultList) =>{
     arr.push(iceResultList[i]['count']);
     result.push(arr);
   }
+
   return result;
 };
 

@@ -36,16 +36,13 @@ class PredictionLineChart extends React.Component {
               max: this.props.data.length +1,
               tickAmount: this.props.data.length +1,
               title: {
-                text: 'Time'
+                text: 'Feature'
               }
             },
             yaxis: {
               title: {
-                text: 'Prediction'
+                text: 'Importance'
               },
-              min: -1,
-              max: 2,
-              tickAmount: 3,
               axisBorder: {
                 show: true,
                 color: '#000000',
@@ -59,13 +56,13 @@ class PredictionLineChart extends React.Component {
               }
             },
             legend: {
-              position: 'top',
+              position: 'bottom',
               horizontalAlign: 'right',
-              floating: true,
+              floating: false,
             }
           },
         };
-          const height = '350em';
+          const height = '450em';
           const chart = (
             <ReactApexChart
               options={graph.options}
