@@ -1,73 +1,73 @@
 /**
  * Created by Williams.Rizzi on 9/9/19.
  */
-import React from 'react';
+import React, {PureComponent} from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import SelectField from 'react-md/lib/SelectFields';
 import PropTypes from 'prop-types';
-import {fetchStatePropType, jobPropType, selectLabelProptype} from '../../propTypes';
-import {Button} from 'react-md';
+import TraceTable from '../../components/explanation/TraceTable';
+import CircularProgress from 'react-md/lib/Progress/CircularProgress';
+import {getTraceAttributes} from '../../util/dataReducers';
 
-const TraceExplanation = (props) => {
-    const selectChange = (value, _) => {
-        props.splitChange(value);
+class TraceExplanation extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tableProgressBar: false,
     };
+  }
 
-    // const createEventChoosers = (position) => {
-    //     ...
-    // };
+  componentDidUpdate(prevProps) {
+      if (this.props.traceList.length>0) {
+        this.setState({tableProgressBar: false});
+      }
+  }
 
-    return <Card className="md-block-centered">
-        <CardTitle title="Trace Explanation"/>
+  selectTraceChange(value, _) {
+    this.props.traceChange(value);
+    this.setState({tableProgressBar: true});
+  }
+
+  getTraceSelector() {
+    return (
+      <SelectField
+        id="trace-select"
+        placeholder="Trace id"
+        className="md-cell"
+        menuItems={this.props.traceIdList}
+        position={SelectField.Positions.BELOW}
+        onChange={this.selectTraceChange.bind(this)}
+        value={this.props.selectedTrace}
+      />
+    );
+  }
+
+  render() {
+    const attrs = getTraceAttributes(this.props.traceList, this.props.selectedTrace);
+    return (
+      <Card className="md-block-centered">
+        <CardTitle title="Trace Explanation" />
         <CardText>
-            <h5>Visualising model number {props.clickedJobId}</h5>
-            <h4>Select the trace composition</h4>
-            <SelectField
-                id="event 1"
-                placeholder="No event selected"
-                className="md-cell md-cell--1"
-                menuItems={
-                    [
-                        {value: '1', name: '1'},
-                        {value: '2', name: '2'}
-                    ]
-                }
-                position={SelectField.Positions.BELOW}
-                onChange={selectChange}
-                value={props.selectedSplitId}
-            />
-            <h4>Resulting labeling</h4>
-            <Button raised secondary swapTheming onClick={null} className="buttons__group">THIS IS THE RESULTING
-                LABEL</Button>
+          <h4>Select the trace composition</h4>
+          {this.getTraceSelector()}
         </CardText>
-    </Card>;
-};
-
+        <CardText>
+          <h2>Trace table</h2>
+          <TraceTable
+            traceAttributesHeader={attrs.traceAttributesHeader}
+            traceEventsHeaders={attrs.traceEventsHeaders}
+            traceArr={attrs.traceArr} />
+            {this.state.tableProgressBar ? <CircularProgress id="query-indeterminate-progress"/> : null}
+        </CardText>
+      </Card>
+    );
+    }
+}
 
 TraceExplanation.propTypes = {
-    jobs: PropTypes.arrayOf(jobPropType).isRequired,
-    splitLabels: selectLabelProptype,
-    fetchState: fetchStatePropType,
-    methodChange: PropTypes.func.isRequired,
-    splitChange: PropTypes.func.isRequired,
-    prefixLengths: PropTypes.arrayOf(PropTypes.string).isRequired,
-    prefixChange: PropTypes.func.isRequired,
-    selectedPrefixes: PropTypes.arrayOf(PropTypes.number).isRequired,
-    selectedSplitId: PropTypes.number.isRequired,
-    filterOptionChange: PropTypes.func.isRequired,
-    labelChange: PropTypes.func.isRequired,
-    filterOptions: PropTypes.shape({
-        encodings: PropTypes.arrayOf(PropTypes.string).isRequired,
-        clusterings: PropTypes.arrayOf(PropTypes.string).isRequired,
-        classification: PropTypes.arrayOf(PropTypes.string).isRequired,
-        regression: PropTypes.arrayOf(PropTypes.string).isRequired,
-        timeSeriesPrediction: PropTypes.arrayOf(PropTypes.string).isRequired,
-        labelling: PropTypes.any.isRequired,
-        attributeNames: PropTypes.arrayOf(PropTypes.string).isRequired,
-        thresholds: PropTypes.arrayOf(PropTypes.number).isRequired,
-        padding: PropTypes.string.isRequired
-    }).isRequired,
-    predictionMethod: PropTypes.string.isRequired,
-    clickedJobId: PropTypes.number.isRequired
+  traceChange: PropTypes.func.isRequired,
+  traceList: PropTypes.array.isRequired,
+  traceIdList: PropTypes.any.isRequired,
+  selectedTrace: PropTypes.string.isRequired
 };
 export default TraceExplanation;

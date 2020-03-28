@@ -53,8 +53,13 @@ export const log = {
             '2011-01-24': 1
         },
         'maxEventsInLog': 13,
-        'traceAttributes': []
-    }
+        'traceAttributes': [],
+        'trace_IDs': [
+            '00000912',
+            '00000913',
+            '00000914',
+            '00000915']
+        }
 };
 storiesOf('LogMetricsCard', module)
     .add('this', () => {
