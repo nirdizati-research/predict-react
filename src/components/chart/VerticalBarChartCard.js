@@ -11,39 +11,48 @@ class HorizontalBarChartCard extends React.Component {
     let graph = {
       options: {
         chart: {
+          height: 350,
+          type: 'line',
           toolbar: {
             show: false
           }
         },
         plotOptions: {
           bar: {
-            horizontal: true,
-            distributed: true,
-            columnWidth: '80%',
+            horizontal: false,
+            distributed: false,
+            columnWidth: '10%',
             barHeight: '80%'
           }
         },
         dataLabels: {
-          enabled: false
+
+          enabled: true,
+          enabledOnSeries: [1],
+          formatter: function (val, opts) {
+            return val.toFixed(2);
+        }
         },
-        yaxis: {
-          show: true,
-          axisBorder: {
-            show: true,
-            color: '#78909C',
-            offsetX: 0,
-            offsetY: 0
-          },
+        yaxis: [{
           labels: {
-            align: 'left',
-            style: {
-              color: undefined,
-              fontSize: '10px'
-            },
-            offsetX: 0,
-            offsetY: 0
+            formatter: function (val, index) {
+              return val.toFixed(2);
+            }
+          },
+          title: {
+            text: 'Count',
+          },
+        }, {
+          labels: {
+            formatter: function (val, index) {
+              return val.toFixed(2);
+            }
+          },
+          opposite: true,
+          title: {
+            text: 'Label: 0 means False, 1 means True'
           }
-        },
+        }],
         xaxis: {
           labels: {
             show: true
@@ -54,22 +63,27 @@ class HorizontalBarChartCard extends React.Component {
           axisTicks: {
             show: true
           },
-          categories: this.props.labels,
+          categories: this.props.labels
         }
       },
       series: [
         {
-          name: 'Value',
+          name: 'Count',
+          type: 'column',
+          data: this.props.count
+        },
+        {
+          name: 'Label',
+          type: 'line',
           data: this.props.data
         }
       ]
     };
-    const height = this.props.labels.length * 45;
+    const height = 400;
     const chart = (
       <ReactApexChart
         options={graph.options}
         series={graph.series}
-        type="bar"
         height={height}
       />
     );
@@ -80,6 +94,7 @@ class HorizontalBarChartCard extends React.Component {
 
 HorizontalBarChartCard.propTypes = {
   data: PropTypes.any.isRequired,
-  labels: PropTypes.any.isRequired
+  labels: PropTypes.any.isRequired,
+  count: PropTypes.any.isRequired
 };
 export default HorizontalBarChartCard;

@@ -5,7 +5,7 @@ import HorizontalBarChartCard from '../../../components/chart/HorizontalBarChart
 import {parseLimeResult} from '../../../util/dataReducers';
 import {limeList} from '../../../../stories/Explanation';
 
-describe('TraceTable', () => {
+describe('Lime result', () => {
     it('renders without data', () => {
         const element = shallow(<PostHocExplanation
                                     jobs={[]}

@@ -23,7 +23,7 @@ const JobModelsTable = (props) => {
         <CardTitle title="Select job id">
             <SelectField
                id="method-select"
-               placeholder="Method id"
+               placeholder="Job id"
                className="md-cell"
                menuItems={getJobIds()}
                onChange={jobChange}
