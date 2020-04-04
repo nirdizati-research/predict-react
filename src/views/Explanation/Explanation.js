@@ -1,6 +1,3 @@
-/**
- * Created by Williams.Rizzi on 9/9/19.
- */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
@@ -14,7 +11,8 @@ import {
     jobsRequested,
     TRACE_CHANGED,
     PREDICTION_JOB_CHANGED,
-    decodingRequested
+    decodingRequested,
+    decodingFailed
 } from '../../actions/JobActions';
 import {fetchStatePropType, jobPropType, selectLabelProptype} from '../../propTypes';
 import {mapJobs, splitsToLabel} from '../../util/unNormalize';
@@ -66,6 +64,7 @@ class Explanation extends Component {
         this.props.onRequestFailShapValues(null, null);
         this.props.onRequestFailSkaterValues(null);
         this.props.onRequestFailIceValues(null, null);
+        this.props.onRequestFailDecodeDF(null);
     }
 
     onChangeTrace(trace) {
@@ -94,7 +93,7 @@ class Explanation extends Component {
         }
         this.props.onRequestSkaterValues(id);
         this.props.onRequestDecoding(id);
-        this.props.onRequestFailIceValues();
+        this.props.onRequestIceValues(this.props.jobId, this.props.selectedAttribute);
     }
 
     componentDidMount() {
@@ -259,6 +258,7 @@ Explanation.propTypes = {
     onRequestFailShapValues: PropTypes.func.isRequired,
     onRequestFailSkaterValues: PropTypes.func.isRequired,
     onRequestFailIceValues: PropTypes.func.isRequired,
+    onRequestFailDecodeDF: PropTypes.func.isRequired,
     filterOptionChange: PropTypes.func.isRequired,
     labelTypeChange: PropTypes.func.isRequired,
     jobs: PropTypes.arrayOf(jobPropType).isRequired,
@@ -370,6 +370,8 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(temporalPredictionListFailed(null)),
     onRequestFailLimeTemporalList: () =>
         dispatch(temporalLimePredictionListFailed(null)),
+    onRequestFailDecodeDF: () =>
+        dispatch(decodingFailed(null)),
     filterOptionChange: (_, event) => dispatch({
         type: FILTER_OPTION_CHANGED,
         payload: {name: event.target.name, value: event.target.value}
