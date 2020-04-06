@@ -15,7 +15,10 @@ import {
     JOBS_FAILED,
     JOBS_REQUESTED,
     JOBS_RETRIEVED,
-    TRACE_CHANGED
+    TRACE_CHANGED,
+    DECODING_REQUESTED,
+    DECODING_FAILED,
+    DECODING_RETRIEVED
 } from '../actions/JobActions';
 import {JOB_RUN_CHANGED} from '../actions/RuntimeActions';
 import {
@@ -78,7 +81,11 @@ const initialState = {
     attributeNames: [],
     splitId: -100,
     filteredJobs: [],
-    selectedTrace: ''
+    selectedTrace: '',
+    jobsById: {},
+    decodedDf: {},
+    isDecodingLoaded: true
+
 };
 
 const initialFilters = {
@@ -315,6 +322,30 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
             const prefixLengths = prefixSet(state.byId, filteredIds);
             return {
                 ...modifiedState, filteredIds, prefixLengths, selectedPrefixes: prefixLengths
+            };
+        }
+
+        case DECODING_REQUESTED: {
+            return {
+                ...state,
+                isDecodingLoaded: false,
+                decodedDf: {}
+            };
+        }
+
+        case DECODING_FAILED: {
+            return {
+                ...state,
+                isDecodingLoaded: true,
+                decodedDf: initialState.decodedDf
+            };
+        }
+        case DECODING_RETRIEVED: {
+            const resultList = action.payload;
+            return {
+                ...state,
+                isDecodingLoaded: true,
+                decodedDf: resultList
             };
         }
 

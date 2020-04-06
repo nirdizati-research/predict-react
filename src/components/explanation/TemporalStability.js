@@ -13,8 +13,7 @@ const TemporalStability = (props) => {
         parseTemporalStabilityLimeResultList(props.limeTemporalChartData, props.traceId);
     const temporalStabilityPredictionResult =
         parseTemporalStabilityPredictionResultList(props.predictionTemportalChartData, props.traceId);
-
-    return <div className="md-cell md-cell--12">
+  return <div className="md-cell md-cell--12">
         <Row>
              <Card className="md-cell md-cell--6">
                 <CardTitle title="Lime result with temporal stability"></CardTitle>
@@ -26,10 +25,11 @@ const TemporalStability = (props) => {
 
                 <CardText>
                     <div>
-                    <ScatterChartCard
-                    data = {temporalStabilityPredictionResult}/>
+                    <PredictionLineChart
+                    data = {temporalStabilityLimeResult.data}
+                    categories = {temporalStabilityLimeResult.categories}/>
                     </div>
-                </CardText>
+            </CardText>
         </Card>
         <Card className="md-cell md-cell--6">
             <CardTitle title="Prediction"></CardTitle>
@@ -40,11 +40,10 @@ const TemporalStability = (props) => {
             {!props.isPredictionTempStabilityLoaded ? <CircularProgress id="query-indeterminate-progress"/> : null}
 
             <CardText>
-                <div>
-                <PredictionLineChart
-                data = {temporalStabilityLimeResult.data}
-                categories = {temporalStabilityLimeResult.categories}/>
-                </div>
+                    <div>
+                    <ScatterChartCard
+                    data = {temporalStabilityPredictionResult}/>
+                    </div>
             </CardText>
         </Card>
     </Row>
