@@ -432,3 +432,39 @@ export const getDecodedDFTable = (dfResult) =>{
 }
   return {data: result, headers: keys};
 };
+
+export const getFeatureNames = (dfResult) =>{
+  let keys = Object.keys(dfResult);
+  return keys;
+};
+
+export const getUniqueFeatureValues = (dfResult) =>{
+  let i=0; let j=0;
+  let encodedResult = {};
+  let decodedResult = {};
+  let keys = Object.keys(dfResult);
+  if (keys.length>0) {
+    for (i = 0; i<keys.length; i++) {
+      let arr = [];
+      let key = keys[i];
+      let decodedKeys = Object.keys(dfResult[key]);
+      for (j = 0; j < decodedKeys.length; j++) {
+        arr.push(dfResult[key][decodedKeys[j]]);
+    }
+    encodedResult[key] = arr;
+    decodedResult[key] = decodedKeys;
+    }
+  }
+
+  return {'encodedResult': encodedResult, 'decodedResult': decodedResult};
+};
+
+export const parseCfFeedbackResult = (result) =>{
+  let keys = Object.keys(result);
+
+  if (keys.length>0) {
+    return {'tp': result['freq_seqs_after_filter']['tp'], 'tn': result['freq_seqs_after_filter']['tn'],
+      'fp': result['freq_seqs_after_filter']['fp'], 'fn': result['freq_seqs_after_filter']['fn']};
+  }
+  return {'tp': '', 'tn': '', 'fp': '', 'fn': ''};
+};

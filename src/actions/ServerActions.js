@@ -1,7 +1,7 @@
 import {SERVER_URL} from '../constants';
 import jsonAjax from '../JSONAjaxRequest';
 import {JOB_DELETED, jobsFailed, jobsRetrieved, trainingFailed,
-    trainingSucceeded, decodingtRetrieved, decodingFailed} from './JobActions';
+    trainingSucceeded, decodingtRetrieved, decodingFailed, encodedUniqueValuesRetrieved, encodedUniqueValuesFailed} from './JobActions';
 import {logInfoFailed, logInfoRetrieved, logListFailed, logListsRetrieved} from './LogActions';
 import {traceListFailed, traceListRetrieved} from './TraceActions';
 import {limeValueListFailed, limeValueListRetrieved} from './LimeActions';
@@ -11,7 +11,7 @@ import {predictionFailed, predictionSucceeded, replayFailed, replaySucceeded} fr
 import {temporalLimePredictionListRetrieved, temporalLimePredictionListFailed,
     temporalPredictionListRetrieved, temporalPredictionListFailed} from './PredictionAction';
 import {shapValueListRetrieved, shapValueListFailed, skaterValueListRetrieved,
-    skaterValueListFailed, iceValueListFailed, iceValueListRetrieved} from './ExplanationActions';
+    skaterValueListFailed, iceValueListFailed, iceValueListRetrieved, cffeedbackValueListRetrieved, cffeedbackValueListFailed, retrainValueListRetrieved, retrainValueListFailed} from './ExplanationActions';
 
 export const getJobs = () => (dispatch) => {
     jsonAjax(
@@ -66,6 +66,18 @@ export const getDecodingDf = ({id}) => (dispatch) => {
             dispatch(decodingtRetrieved(resultList));
         },
         ({error}) => dispatch(decodingFailed(error))
+    );
+};
+
+export const getEncodedUniqueValues = ({id}) => (dispatch) => {
+    jsonAjax(
+        SERVER_URL + `/jobs/unique-values/${id}`,
+        'GET',
+        null,
+        (resultList) => {
+            dispatch(encodedUniqueValuesRetrieved(resultList));
+        },
+        ({error}) => dispatch(encodedUniqueValuesFailed(error))
     );
 };
 
@@ -189,6 +201,30 @@ export const getIceValues = ({jobId, attribute}) => (dispatch) => {
             dispatch(iceValueListRetrieved(iceList));
         },
         ({error}) => dispatch(iceValueListFailed(error))
+    );
+};
+
+export const getCfFeedbackValues = ({jobId, attribute}) => (dispatch) => {
+    jsonAjax(
+        SERVER_URL + `/explanation/cffeedback/${jobId}&${attribute}/`,
+        'GET',
+        null,
+        (resul) => {
+            dispatch(cffeedbackValueListRetrieved(resul));
+        },
+        ({error}) => dispatch(cffeedbackValueListFailed(error))
+    );
+};
+
+export const getRetrainValues = ({jobId, featureNames, featureValues}) => (dispatch) => {
+    jsonAjax(
+        SERVER_URL + `/explanation/retrain/${jobId}&${featureNames}&${featureValues}/`,
+        'GET',
+        null,
+        (resul) => {
+            dispatch(retrainValueListRetrieved(resul));
+        },
+        ({error}) => dispatch(retrainValueListFailed(error))
     );
 };
 

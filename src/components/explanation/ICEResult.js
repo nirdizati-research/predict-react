@@ -6,7 +6,7 @@ import SelectField from 'react-md/lib/SelectFields';
 import CircularProgress from 'react-md/lib/Progress/CircularProgress';
 import IceResultTable from './IceResultTable';
 
-class ShapResult extends PureComponent {
+class ICEResult extends PureComponent {
     constructor(props) {
       super(props);
       this.state = {
@@ -56,7 +56,7 @@ class ShapResult extends PureComponent {
         );
     }
 }
-ShapResult.propTypes = {
+ICEResult.propTypes = {
   iceValueList: PropTypes.any,
   jobId: PropTypes.any,
   isIceValuesLoaded: PropTypes.bool,
@@ -65,4 +65,4 @@ ShapResult.propTypes = {
   onChangeFeature: PropTypes.func,
   originalList: PropTypes.any
 };
-export default ShapResult;
+export default ICEResult;

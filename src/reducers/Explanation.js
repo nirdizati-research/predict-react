@@ -13,7 +13,15 @@ import {
 
     ICE_VALUE_LIST_FAILED,
     ICE_VALUE_LIST_REQUESTED,
-    ICE_VALUE_LIST_RETRIEVED
+    ICE_VALUE_LIST_RETRIEVED,
+
+    CFFEEFBACK_VALUE_LIST_FAILED,
+    CFFEEDBACK_VALUE_LIST_REQUESTED,
+    CFFEEFBACK_VALUE_LIST_RETRIEVED,
+
+    RETRAIN_VALUE_LIST_FAILED,
+    RETRAIN_VALUE_LIST_REQUESTED,
+    RETRAIN_VALUE_LIST_RETRIEVED
 } from '../actions/ExplanationActions';
 
 const initialState = {
@@ -22,10 +30,14 @@ const initialState = {
     shapValueList: {},
     iceValueList: {},
     skaterValueList: {},
+    cfFeedbackValue: {},
+    retrainValue: {},
     isLimeValuesLoaded: true,
     isShapValuesLoaded: true,
     isSkaterValuesLoaded: true,
     isIceValuesLoaded: true,
+    isCfFeedbackLoaded: true,
+    isRetrainLoaded: true,
 };
 
 const explanation = (state = initialState, action) => {
@@ -143,6 +155,64 @@ const explanation = (state = initialState, action) => {
                     fetchState: {inFlight: false, error: action.payload},
                     iceValueList,
                     isIceValuesLoaded: true
+                };
+            }
+
+            case CFFEEDBACK_VALUE_LIST_REQUESTED: {
+                return {
+                    ...state,
+                    fetchState: {inFlight: true},
+                    isCfFeedbackLoaded: false,
+
+                };
+            }
+
+            case CFFEEFBACK_VALUE_LIST_RETRIEVED: {
+                const cfFeedbackValue = action.payload[1];
+                return {
+                    ...state,
+                    fetchState: {inFlight: false},
+                    cfFeedbackValue,
+                    isCfFeedbackLoaded: true
+                };
+            }
+
+            case CFFEEFBACK_VALUE_LIST_FAILED: {
+                const cfFeedbackValue = initialState.cfFeedbackValue;
+                return {
+                    ...state,
+                    fetchState: {inFlight: false, error: action.payload},
+                    cfFeedbackValue,
+                    isCfFeedbackLoaded: true
+                };
+            }
+
+            case RETRAIN_VALUE_LIST_REQUESTED: {
+                return {
+                    ...state,
+                    fetchState: {inFlight: true},
+                    isRetrainLoaded: false,
+
+                };
+            }
+
+            case RETRAIN_VALUE_LIST_RETRIEVED: {
+                const retrainValue = action.payload[1];
+                return {
+                    ...state,
+                    fetchState: {inFlight: false},
+                    retrainValue,
+                    isRetrainLoaded: true
+                };
+            }
+
+            case RETRAIN_VALUE_LIST_FAILED: {
+                const retrainValue = initialState.retrainValue;
+                return {
+                    ...state,
+                    fetchState: {inFlight: false, error: action.payload},
+                    retrainValue,
+                    isRetrainLoaded: true
                 };
             }
 
