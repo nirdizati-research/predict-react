@@ -11,7 +11,14 @@ import {
     JOB_DELETED,
     jobsFailed,
     jobsRequested,
-    jobsRetrieved
+    jobsRetrieved,
+    decodingRequested,
+    decodingtRetrieved,
+    decodingFailed,
+    encodedUniqueValuesRetrieved,
+    encodedUniqueValuesRequested,
+    encodedUniqueValuesFailed
+
 } from '../../actions/JobActions';
 import {
     ATTRIBUTE_NUMBER,
@@ -525,7 +532,10 @@ const changedJob = {
     type: 'prediction'
 };
 
-const initState = {fetchState: {inFlight: false}, byId: {}, allIds: [], filteredIds: []};
+const initState = {fetchState: {inFlight: false}, byId: {}, allIds: [], filteredIds: [], decodedDf: {},
+    encodedUniqueValues: {},
+    isDecodingLoaded: true,
+    isEncodedUniqueValuesLoaded: true};
 describe('JobsReducer', () => {
     let state;
 
@@ -792,6 +802,52 @@ describe('Validation filter', () => {
             });
             expect(state34.filteredIds).toEqual([76]);
             expect(state34.attributeNames).toEqual(['name']);
+        });
+    });
+
+    describe('Decoded dataframe list requested', () => {
+        const stateWithRequest = jobs(undefined, decodingRequested());
+
+        it('changes fetchState when decoded dataframe requesting', () => {
+            expect(stateWithRequest.fetchState).toEqual({inFlight: false});
+            expect(stateWithRequest.isDecodingLoaded).toEqual(false);
+        });
+
+        it('changes fetchState when decoded dataframe completed', () => {
+            const state2 = jobs(stateWithRequest, decodingtRetrieved([12, 12]));
+            expect(state2.fetchState).toEqual({inFlight: false});
+            expect(state2.isDecodingLoaded).toEqual(true);
+            const {decodedDf} = state2;
+            expect(decodedDf).toEqual([12, 12]);
+        });
+
+        it('changes fetchState when decoded dataframe request failed', () => {
+            const state2 = jobs(stateWithRequest, decodingFailed('error'));
+            expect(state2.fetchState).toEqual({inFlight: false});
+            expect(state2.isDecodingLoaded).toEqual(true);
+        });
+    });
+
+    describe('Encoded unique values list requested', () => {
+        const stateWithRequest = jobs(undefined, encodedUniqueValuesRequested());
+
+        it('changes fetchState when en encoded unique values requesting', () => {
+            expect(stateWithRequest.fetchState).toEqual({inFlight: false});
+            expect(stateWithRequest.isEncodedUniqueValuesLoaded).toEqual(false);
+        });
+
+        it('changes fetchState when encoded unique values completed', () => {
+            const state2 = jobs(stateWithRequest, encodedUniqueValuesRetrieved([12, 12]));
+            expect(state2.fetchState).toEqual({inFlight: false});
+            expect(state2.isEncodedUniqueValuesLoaded).toEqual(true);
+            const {encodedUniqueValues} = state2;
+            expect(encodedUniqueValues).toEqual([12, 12]);
+        });
+
+        it('changes fetchState when encoded unique values request failed', () => {
+            const state2 = jobs(stateWithRequest, encodedUniqueValuesFailed('error'));
+            expect(state2.fetchState).toEqual({inFlight: false});
+            expect(state2.isEncodedUniqueValuesLoaded).toEqual(true);
         });
     });
 });
