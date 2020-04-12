@@ -21,7 +21,8 @@ import {
     getRetrainValues,
     getEncodedUniqueValues
 } from '../actions/ServerActions';
-import {JOB_DELETE_REQUESTED, JOBS_REQUESTED, TRAINING_SUBMITTED, DECODING_REQUESTED, ENCODED_UNIQUE_VALUES_REQUESTED} from '../actions/JobActions';
+import {JOB_DELETE_REQUESTED, JOBS_REQUESTED, TRAINING_SUBMITTED,
+     DECODING_REQUESTED, ENCODED_UNIQUE_VALUES_REQUESTED} from '../actions/JobActions';
 import {TRACE_LIST_REQUESTED} from '../actions/TraceActions';
 import {LOG_INFO_REQUESTED, LOG_LIST_REQUESTED} from '../actions/LogActions';
 import {LIME_VALUE_LIST_REQUESTED, SHAP_VALUE_LIST_REQUESTED,

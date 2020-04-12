@@ -91,6 +91,18 @@ export const decodedDFResultList = {
             'PR3']
 };
 
+export const encodedUniqueDFResultList = {
+    'prefix_1': {
+        'assumption laboratory': 0,
+        'day care - all spec.beh.kind.-rev.': 1,
+        'inwend.geneesk. short-out card cost': 2,
+        'cytology - ectocervix -': 3},
+    'prefix_2': {
+            'assumption laboratory': 0,
+            'day care - all spec.beh.kind.-rev.': 1,
+            'inwend.geneesk. short-out card cost': 2,
+            'cytology - ectocervix -': 3}            
+};
 export const iceResultList = [
         'False',
         [

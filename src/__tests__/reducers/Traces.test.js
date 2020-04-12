@@ -3,7 +3,8 @@
  */
 
 import traces from '../../reducers/Traces';
-import {traceListFailed, traceListRequested, traceListRetrieved, TRACE_UPDATED, TRACE_COMPLETED} from '../../actions/TraceActions';
+import {traceListFailed, traceListRequested, traceListRetrieved,
+     TRACE_UPDATED, TRACE_COMPLETED} from '../../actions/TraceActions';
 
 const traceList = [{
     id: 5,

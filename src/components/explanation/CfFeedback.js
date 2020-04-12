@@ -166,15 +166,15 @@ class CfFeedback extends PureComponent {
       let i = 0;
       let featureNames = [];
       let featureValues = [];
-      // for (i = 0; i<this.state.numberOfDropdown; i++) {
-      //   if (!this.state.removedIndex.includes(i) && document.getElementById('features_'+i) != null) {
-      //     featureNames.push((document.getElementById('features_'+i)).value);
-      //     let arr = this.props.featureValues['decodedResult'][(document.getElementById('features_'+i)).value];
-      //     const index = arr.indexOf((document.getElementById('value_'+i)).value);
-      //     featureValues.push(this.props.featureValues['encodedResult'][(document.getElementById('features_'+i))
-      //       .value][index]);
-      //   }
-      // }
+      for (i = 0; i<this.state.numberOfDropdown; i++) {
+        if (!this.state.removedIndex.includes(i) && document.getElementById('features_'+i) != null) {
+          featureNames.push((document.getElementById('features_'+i)).value);
+          let arr = this.props.featureValues['decodedResult'][(document.getElementById('features_'+i)).value];
+          const index = arr.indexOf((document.getElementById('value_'+i)).value);
+          featureValues.push(this.props.featureValues['encodedResult'][(document.getElementById('features_'+i))
+            .value][index]);
+        }
+      }
       this.props.onSubmitFeatureNamesAndValues(featureNames, featureValues);
     }
     initialResult(result) {
@@ -221,7 +221,7 @@ class CfFeedback extends PureComponent {
                     <RetrainResultTable
                       initialResultValue={this.props.retrainValue['Initial result']}
                       retrainResultValue={this.props.retrainValue['Retrain result']}/> : null}</div>
-                  <div style={{display: 'flex',  justifyContent: 'center', alignItems: 'center'}}>
+                  <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                   {this.evaluateFeatureButton()}
                   </div>
                 </CardText>

@@ -4,7 +4,8 @@ import {limeValueListRequested, limeValueListRetrieved, limeValueListFailed,
     iceValueListFailed, iceValueListRequested, iceValueListRetrieved,
     skaterValueListFailed, skaterValueListRequested, skaterValueListRetrieved,
     cffeedbackValueListFailed, cffeedbackValueListRequested, cffeedbackValueListRetrieved,
-    retrainValueListFailed, retrainValueListRequested, retrainValueListRetrieved} from '../../actions/ExplanationActions';
+    retrainValueListFailed, retrainValueListRequested,
+    retrainValueListRetrieved} from '../../actions/ExplanationActions';
 import {limeList, shapResult, iceResultList, skaterResult,
      retrainResult, cfFeedbackResult} from '../../../stories/Explanation';
 

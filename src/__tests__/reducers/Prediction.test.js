@@ -1,6 +1,7 @@
 import prediction from '../../reducers/Predictions';
 import {temporalLimePredictionListFailed, temporalLimePredictionListRequested, temporalLimePredictionListRetrieved,
-    temporalPredictionListFailed, temporalPredictionListRequested, temporalPredictionListRetrieved} from '../../actions/PredictionAction';
+    temporalPredictionListFailed, temporalPredictionListRequested,
+    temporalPredictionListRetrieved} from '../../actions/PredictionAction';
 import {limeTemporalStabilityResult, temporalStabilityResult} from '../../../stories/Explanation';
 
 

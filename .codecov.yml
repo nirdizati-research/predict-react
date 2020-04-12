@@ -7,3 +7,5 @@ ignore:
   - "src/views/**/*.js"
   - "src/views/Split.js"
   - "src/views/Labelling.js"
+  - "src/components/upload/ServerUpload.jsx"
+  - "src/components/upload/UploadDouble.jsx"

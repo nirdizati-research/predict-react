@@ -117,10 +117,10 @@ class Explanation extends Component {
             this.props.onRequestPredictionTemporalList(id, this.props.selectedTrace);
             this.props.onRequestShapValues(id, this.props.selectedTrace);
         }
-        // this.props.onRequestSkaterValues(id);
-        // this.props.onRequestDecoding(id);
+        this.props.onRequestSkaterValues(id);
+        this.props.onRequestDecoding(id);
         this.props.onRequestEncodeUniqueValuesDF(id);
-        // this.props.onRequestIceValues(id, this.state.selectedAttribute);
+        this.props.onRequestIceValues(id, this.state.selectedAttribute);
     }
 
     componentDidMount() {
@@ -173,9 +173,6 @@ class Explanation extends Component {
                                            jobId={this.props.jobId}
                                           />
                 </div>
-                {/* <div className="md-cell md-cell--12">
-                    <DecisionTree></DecisionTree>
-                </div> */}
                  <div className="md-cell md-cell--12">
                     <JobModelsTable jobs={this.props.filteredJobs}
                                             fetchState={this.props.fetchState}
