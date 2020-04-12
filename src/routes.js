@@ -12,6 +12,7 @@ import FrontPage from './views/FrontPage';
 import Logs from './views/Logs/Logs';
 import Prediction from './views/Prediction/Prediction';
 import Runtime from './views/Runtime/Runtime';
+import Explanation from './views/Explanation/Explanation';
 
 export default (
     <Router history={hashHistory}>
@@ -27,6 +28,7 @@ export default (
             <Route path="validation" name="Validation" component={Validation}/>
             <Route path="prediction" name="Prediction" component={Prediction}/>
             <Route path="runtime" name="Runtime" component={Runtime}/>
+            <Route path="explanation" name="Explanation" component={Explanation}/>
         </Route>
     </Router>
 );

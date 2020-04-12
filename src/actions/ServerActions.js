@@ -1,11 +1,17 @@
 import {SERVER_URL} from '../constants';
 import jsonAjax from '../JSONAjaxRequest';
-import {JOB_DELETED, jobsFailed, jobsRetrieved, trainingFailed, trainingSucceeded} from './JobActions';
+import {JOB_DELETED, jobsFailed, jobsRetrieved, trainingFailed,
+    trainingSucceeded, decodingtRetrieved, decodingFailed} from './JobActions';
 import {logInfoFailed, logInfoRetrieved, logListFailed, logListsRetrieved} from './LogActions';
 import {traceListFailed, traceListRetrieved} from './TraceActions';
+import {limeValueListFailed, limeValueListRetrieved} from './LimeActions';
 import {splitFailed, splitsFailed, splitsRetrieved, splitSucceeded} from './SplitActions';
 import {modelsFailed, modelsRetrieved} from './ModelActions';
 import {predictionFailed, predictionSucceeded, replayFailed, replaySucceeded} from './RuntimeActions';
+import {temporalLimePredictionListRetrieved, temporalLimePredictionListFailed,
+    temporalPredictionListRetrieved, temporalPredictionListFailed} from './PredictionAction';
+import {shapValueListRetrieved, shapValueListFailed, skaterValueListRetrieved,
+    skaterValueListFailed, iceValueListFailed, iceValueListRetrieved} from './ExplanationActions';
 
 export const getJobs = () => (dispatch) => {
     jsonAjax(
@@ -48,6 +54,18 @@ export const postTraining = (payload) => (dispatch) => {
         payload,
         (jobs) => dispatch(trainingSucceeded(jobs)),
         ({error}) => dispatch(trainingFailed(error))
+    );
+};
+
+export const getDecodingDf = ({id}) => (dispatch) => {
+    jsonAjax(
+        SERVER_URL + `/jobs/decode/${id}`,
+        'GET',
+        null,
+        (resultList) => {
+            dispatch(decodingtRetrieved(resultList));
+        },
+        ({error}) => dispatch(decodingFailed(error))
     );
 };
 
@@ -114,14 +132,86 @@ export const postReplay = ({payload}) => (dispatch) => {
     );
 };
 
-export const getTraceList = () => (dispatch) => {
+export const getTraceList = ({id}) => (dispatch) => {
     jsonAjax(
-        SERVER_URL + '/runtime/traces/',
+        SERVER_URL + `/logs/${id}/traces`,
         'GET',
         null,
         (logList) => {
             dispatch(traceListRetrieved(logList));
         },
         ({error}) => dispatch(traceListFailed(error))
+    );
+};
+
+export const getLimeValues = ({jobId, traceId}) => (dispatch) => {
+    jsonAjax(
+        SERVER_URL + `/explanation/lime/${jobId}&${traceId}/`,
+        'GET',
+        null,
+        (limeList) => {
+            dispatch(limeValueListRetrieved(limeList));
+        },
+        ({error}) => dispatch(limeValueListFailed(error))
+    );
+};
+
+export const getShapValues = ({jobId, traceId}) => (dispatch) => {
+    jsonAjax(
+        SERVER_URL + `/explanation/shap/${jobId}&${traceId}/`,
+        'GET',
+        null,
+        (shapResult) => {
+            dispatch(shapValueListRetrieved(shapResult));
+        },
+        ({error}) => dispatch(shapValueListFailed(error))
+    );
+};
+
+export const getSkaterValues = ({jobId}) => (dispatch) => {
+    jsonAjax(
+        SERVER_URL + `/explanation/skater/${jobId}/`,
+        'GET',
+        null,
+        (skaterResult) => {
+            dispatch(skaterValueListRetrieved(skaterResult));
+        },
+        ({error}) => dispatch(skaterValueListFailed(error))
+    );
+};
+
+export const getIceValues = ({jobId, attribute}) => (dispatch) => {
+    jsonAjax(
+        SERVER_URL + `/explanation/ice/${jobId}&${attribute}/`,
+        'GET',
+        null,
+        (iceList) => {
+            dispatch(iceValueListRetrieved(iceList));
+        },
+        ({error}) => dispatch(iceValueListFailed(error))
+    );
+};
+
+export const getLimeTemporalStabilityValues = ({jobId, traceId}) => (dispatch) => {
+    jsonAjax(
+        SERVER_URL + `/explanation/lime_temporal_stability/${jobId}&${traceId}/`,
+        'GET',
+        null,
+        (predictionList) => {
+            dispatch(temporalLimePredictionListRetrieved(predictionList));
+        },
+        ({error}) => dispatch(temporalLimePredictionListFailed(error))
+    );
+};
+
+export const getPredictionTemporalStabilityValues = ({jobId, traceId}) => (dispatch) => {
+    jsonAjax(
+        SERVER_URL + `/explanation/temporal_stability/${jobId}&${traceId}/`,
+        'GET',
+        null,
+        (predictionList) => {
+            dispatch(temporalPredictionListRetrieved(predictionList));
+        },
+        ({error}) => dispatch(temporalPredictionListFailed(error))
     );
 };

@@ -10,6 +10,9 @@ import BubbleChartCard from '../chart/BubbleChartCard';
 import {jobPropType} from '../../propTypes';
 import ControlledLineChartCard from '../chart/ControlledLineChartCard';
 import {toRun} from '../../util/dataReducers';
+import ControlledRadarChartCard from '../chart/ControlledRadarChartCard';
+import {Row} from 'react-grid-system';
+import {Card} from 'react-md/lib/Cards/index';
 
 const regressionMap = (jobs) => {
   return jobs.map((job) => [
@@ -117,18 +120,29 @@ const getCharts = (data, predictionMethod) => {
 
 const ResultWrapper = (props) => {
   const tableData = prepareData(props.jobs, props.predictionMethod);
-    // console.log(tableData);
   let charts = [];
-  let prefixChart;
+  let prefixChart; let radarChart;
   if (tableData.length > 0) {
     charts = getCharts(tableData, props.predictionMethod);
   }
   if (props.jobs.length > 0) {
     prefixChart = <ControlledLineChartCard jobs={props.jobs} predictionMethod={props.predictionMethod}/>;
+    radarChart = <ControlledRadarChartCard jobs={props.jobs} predictionMethod={props.predictionMethod}/>;
   }
   return [<div className="md-cell md-cell--12" key="0">
     <ResultTableCard data={tableData} predictionMethod={props.predictionMethod}/>
-  </div>, <div className="md-cell md-cell--12" key="023">{prefixChart}</div>, ...charts];
+  </div>,
+  <Card className="md-cell md-cell--12" key="023">
+    <Row>
+    <div className="md-cell md-cell--6">
+    {prefixChart}
+    </div>
+    <div className="md-cell md-cell--6">
+      {radarChart}
+    </div>
+    </Row>
+    </Card>,
+     ...charts];
 };
 
 ResultWrapper.propTypes = {

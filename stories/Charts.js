@@ -8,13 +8,7 @@ import LineChartCard from '../src/components/chart/LineChartCard';
 import BarChartCard from '../src/components/chart/BarChartCard';
 import BubbleChartCard from '../src/components/chart/BubbleChartCard';
 import {getChartHeader} from '../src/components/validation/ColumnHelper';
-import {
-    CLASSIFICATION,
-    LABELLING,
-    REGRESSION,
-    REMAINING_TIME,
-    THRESHOLD_MEAN
-} from '../src/reference';
+import {CLASSIFICATION, LABELLING, REGRESSION, REMAINING_TIME, THRESHOLD_MEAN} from '../src/reference';
 
 const traces = {
     '2011-10-01': 23,

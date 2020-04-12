@@ -63,7 +63,8 @@ class Validation extends Component {
                     <ValidationHeaderCard splitLabels={this.props.splitLabels} fetchState={this.props.fetchState}
                                           methodChange={this.onChangeMethod.bind(this)}
                                           splitChange={this.onChangeSplit.bind(this)}
-                                          prefixLengths={prefixStrings} predictionMethod={this.props.predictionMethod}
+                                          prefixLengths={prefixStrings}
+                                          predictionMethod={this.props.predictionMethod}
                                           selectedPrefixes={this.props.selectedPrefixes}
                                           prefixChange={this.onChangePrefix.bind(this)}
                                           selectedSplitId={this.props.splitId}
@@ -118,8 +119,10 @@ const mapStateToProps = (state) => ({
     prefixLengths: state.jobs.prefixLengths.sort((a, b) => (a - b)),
     selectedPrefixes: state.jobs.selectedPrefixes,
     filterOptions: (
-        ({encodings, clusterings, classification, regression, timeSeriesPrediction,
-             labelling, attributeNames, thresholds, padding}) => ({
+        ({
+             encodings, clusterings, classification, regression, timeSeriesPrediction,
+             labelling, attributeNames, thresholds, padding
+         }) => ({
             encodings,
             clusterings,
             classification,

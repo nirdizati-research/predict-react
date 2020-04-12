@@ -6,11 +6,11 @@ import PropTypes from 'prop-types';
 const getItemString = (type, data, itemType, itemString) => ('');
 
 const JsonHolder = (props) => {
-  return <JSONTree data={props.data} shouldExpandNode={() => false} theme="bright" getItemString={getItemString}/>;
+    return <JSONTree data={props.data} shouldExpandNode={() => false} theme="bright" getItemString={getItemString}/>;
 };
 
 JsonHolder.propTypes = {
-  data: PropTypes.any.isRequired
+    data: PropTypes.any.isRequired
 };
 
 export default JsonHolder;

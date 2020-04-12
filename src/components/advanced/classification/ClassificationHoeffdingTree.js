@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {leafPredictionHoeffding, splitCriterionHoeffding} from '../advancedConfig';
 import SelectField from 'react-md/lib/SelectFields/index';
 import {CLASSIFICATION, HOEFFDING_TREE} from '../../../reference';
-import {TextField, Checkbox} from 'react-md';
+import {Checkbox, TextField} from 'react-md';
 
 const defaults = {
     'grace_period': 200,
@@ -32,7 +32,7 @@ const ClassificationHoeffdingTree = (props) => {
         min={0}
         className="md-cell md-cell--3"
     />;
-     const splitCriterion = <SelectField
+    const splitCriterion = <SelectField
         key="split_criterion"
         id="split_criterion"
         label="split_criterion"
@@ -42,7 +42,7 @@ const ClassificationHoeffdingTree = (props) => {
         position={SelectField.Positions.BELOW}
         onChange={props.onChange.bind(this, {methodConfig, key: 'split_criterion'})}
         required
-     />;
+    />;
     const splitConfidence = <TextField
         key="split_confidence"
         id="split_confidence"

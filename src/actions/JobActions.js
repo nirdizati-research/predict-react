@@ -21,6 +21,14 @@ export const trainingSucceeded = createPayloadForwardingAction(TRAINING_SUCCEEDE
 export const TRAINING_FAILED = 'TRAINING_FAILED';
 export const trainingFailed = createPayloadForwardingAction(TRAINING_FAILED);
 
+
+export const DECODING_REQUESTED = 'DECODING_REQUESTED';
+export const decodingRequested = createPayloadForwardingAction(DECODING_REQUESTED);
+export const DECODING_RETRIEVED = 'DECODING_RETRIEVED';
+export const decodingtRetrieved = createPayloadForwardingAction(DECODING_RETRIEVED);
+export const DECODING_FAILED = 'DECODING_FAILED';
+export const decodingFailed = createPayloadForwardingAction(DECODING_FAILED);
+
 export const FILTER_SPLIT_CHANGED = 'FILTER_SPLIT_CHANGED';
 export const PREDICTION_SPLIT_CHANGED = 'PREDICTION_SPLIT_CHANGED';
 export const REPLAY_SPLIT_CHANGED = 'REPLAY_SPLIT_CHANGED';
@@ -35,3 +43,5 @@ export const JOB_DELETED = 'JOB_DELETED';
 export const JOB_UPDATED = 'JOB_UPDATED';
 export const REPLAY_JOB_CHANGED = 'REPLAY_JOB_CHANGED';
 export const PREDICTION_JOB_CHANGED = 'PREDICTION_JOB_CHANGED';
+export const TRACE_CHANGED = 'TRACE_CHANGED';
+

@@ -159,6 +159,9 @@ const timeSeriesPredTableColumns = [
     },
 ];
 
+const radarChartClassificationHeaders = ['f1_score', 'accuracy', 'precision', 'recall', 'auc'];
+const radarChartRegressionHeaders = ['mae', 'rmse', 'mape', 'rscore'];
+
 export const getChartHeader = (predictionMethod) => {
   switch (predictionMethod) {
     case REGRESSION:
@@ -209,6 +212,19 @@ export const getTableHeader = (predictionMethod) => {
       return classTableColumns;
       case TIME_SERIES_PREDICTION:
           return timeSeriesPredTableColumns;
+    // no default
+  }
+};
+
+
+export const getRadarChartHeaders = (predictionMethod) => {
+  switch (predictionMethod) {
+    case REGRESSION:
+      return radarChartRegressionHeaders;
+    case CLASSIFICATION:
+      return radarChartClassificationHeaders;
+      case TIME_SERIES_PREDICTION:
+          return [];
     // no default
   }
 };

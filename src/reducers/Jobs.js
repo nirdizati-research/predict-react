@@ -14,7 +14,11 @@ import {
     JOB_DELETED,
     JOBS_FAILED,
     JOBS_REQUESTED,
-    JOBS_RETRIEVED
+    JOBS_RETRIEVED,
+    TRACE_CHANGED,
+    DECODING_REQUESTED,
+    DECODING_FAILED,
+    DECODING_RETRIEVED
 } from '../actions/JobActions';
 import {JOB_RUN_CHANGED} from '../actions/RuntimeActions';
 import {
@@ -45,7 +49,8 @@ import {
     SIMPLE_INDEX,
     THRESHOLD_MEAN,
     TIME_SERIES_PREDICTION,
-    XGBOOST, ZERO_PADDING
+    XGBOOST,
+    ZERO_PADDING
 } from '../reference';
 import {labelCompare} from '../util/labelCompare';
 import {addListToStore, removeFromStore} from './genericHelpers';
@@ -74,7 +79,13 @@ const initialState = {
     predictionJobId: [],
     thresholds: [],
     attributeNames: [],
-    splitId: -100
+    splitId: -100,
+    filteredJobs: [],
+    selectedTrace: '',
+    jobsById: {},
+    decodedDf: {},
+    isDecodingLoaded: true
+
 };
 
 const initialFilters = {
@@ -182,6 +193,12 @@ const checkboxChange = (target, state) => {
     }
     return state;
 };
+const getFilteredJobs =
+    ({byId, splitId}) => {
+        const commonJobs = Object.values(byId)
+            .filter(filterBySplit(splitId));
+            return commonJobs;
+    };
 
 const completedUniqueSplits = (jobsById) =>
     [...new Set(Object.values(jobsById).filter(job => job.status === 'completed').map((job => job.config.split.id)))];
@@ -234,8 +251,9 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
             const splitId = action.splitId;
             const filteredIds = applyFilters({...state, splitId});
             const prefixLengths = prefixSet(state.byId, filteredIds);
+            const filteredJobs = getFilteredJobs({...state, splitId});
             return {
-                ...state, filteredIds, prefixLengths, splitId, selectedPrefixes: prefixLengths
+                ...state, filteredIds, prefixLengths, splitId, selectedPrefixes: prefixLengths, filteredJobs: filteredJobs
             };
         }
         case PREDICTION_SPLIT_CHANGED: {
@@ -272,8 +290,9 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
         case FILTER_OPTION_CHANGED: {
             state = checkboxChange(action.payload, state);
             const filteredIds = applyFilters({...state});
+            const prefixLengths = prefixSet(state.byId, filteredIds);
             return {
-                ...state, filteredIds
+                ...state, filteredIds, prefixLengths, selectedPrefixes: prefixLengths
             };
         }
         case JOB_RUN_CHANGED: {
@@ -290,6 +309,12 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
                 predictionJobId,
             };
         }
+        case TRACE_CHANGED: {
+            const selectedTrace = action.trace;
+            return {
+                ...state, selectedTrace
+            };
+        }
 
         case FILTER_LABEL_CHANGED: {
             const modifiedState = advancedConfigChange(state, action.payload.config, action.payload.value);
@@ -297,6 +322,30 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
             const prefixLengths = prefixSet(state.byId, filteredIds);
             return {
                 ...modifiedState, filteredIds, prefixLengths, selectedPrefixes: prefixLengths
+            };
+        }
+
+        case DECODING_REQUESTED: {
+            return {
+                ...state,
+                isDecodingLoaded: false,
+                decodedDf: {}
+            };
+        }
+
+        case DECODING_FAILED: {
+            return {
+                ...state,
+                isDecodingLoaded: true,
+                decodedDf: initialState.decodedDf
+            };
+        }
+        case DECODING_RETRIEVED: {
+            const resultList = action.payload;
+            return {
+                ...state,
+                isDecodingLoaded: true,
+                decodedDf: resultList
             };
         }
 
