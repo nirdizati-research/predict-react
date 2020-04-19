@@ -12,7 +12,8 @@ import {
     TRACE_CHANGED,
     PREDICTION_JOB_CHANGED,
     decodingRequested,
-    decodingFailed
+    decodingFailed,
+    encodedUniqueValuesRequested,
 } from '../../actions/JobActions';
 import {fetchStatePropType, jobPropType, selectLabelProptype} from '../../propTypes';
 import {mapJobs, splitsToLabel} from '../../util/unNormalize';
@@ -21,13 +22,17 @@ import {splitsRequested} from '../../actions/SplitActions';
 import {traceListRequested} from '../../actions/TraceActions';
 import {limeValueListRequested, iceValueListRequested, shapValueListRequested,
     skaterValueListRequested, limeValueListFailed, shapValueListFailed, iceValueListFailed,
-    skaterValueListFailed} from '../../actions/ExplanationActions';
+    skaterValueListFailed, cffeedbackValueListFailed,
+    cffeedbackValueListRequested,
+    retrainValueListRequested,
+    retrainValueListFailed} from '../../actions/ExplanationActions';
 import ReactGA from 'react-ga';
 import ExplanationHeaderCard from '../../components/explanation/ExplanationHeaderCard';
 import PostHocExplanation from '../../components/explanation/post_hoc';
 import DecodedDFTable from '../../components/explanation/DecodedDFTable';
 import TraceExplanation from '../../components/explanation/TraceExplanation';
-import {getTraceIdsFromLogs, parseLimeResult, parseICEResult, getDecodedDFTable} from '../../util/dataReducers';
+import {getTraceIdsFromLogs, parseLimeResult, parseICEResult, getDecodedDFTable,
+    getFeatureNames, getUniqueFeatureValues, encodePatternsForDropdown} from '../../util/dataReducers';
 import JobModelsTable from '../../components/explanation/JobModelsTable';
 import TemporalStability from '../../components/explanation/TemporalStability';
 import {temporalPredictionListRequested, temporalLimePredictionListRequested,
@@ -36,17 +41,24 @@ import ShapResult from '../../components/explanation/ShapResult';
 import ICEResult from '../../components/explanation/ICEResult';
 import SkaterResult from '../../components/explanation/SkaterResult';
 import {Row} from 'react-grid-system';
+import CfFeedback from '../../components/explanation/CfFeedback';
 
 class Explanation extends Component {
     constructor(props) {
-        const selectedTrace = '';
-        const selectedAttribute = '';
+        let selectedTrace = '';
+        let selectedAttribute = '';
+        let selectedFeatureNames = [];
+        let selectedFeatureValues = [];
         const logName = 0;
+        let topK = -1;
         super(props);
         this.state = {
           selectedTrace,
           selectedAttribute,
-          logName
+          logName,
+          topK,
+          selectedFeatureNames,
+          selectedFeatureValues
         };
       }
     onChangePrefix(prefixLength) {
@@ -65,6 +77,9 @@ class Explanation extends Component {
         this.props.onRequestFailSkaterValues(null);
         this.props.onRequestFailIceValues(null, null);
         this.props.onRequestFailDecodeDF(null);
+        this.props.onRequestFailCfFeedbackValues(null);
+        this.props.onRequestFailRetrainValues(null);
+        this.props.onRequestFailEncodeUniqueValuesDF(null);
     }
 
     onChangeTrace(trace) {
@@ -83,17 +98,27 @@ class Explanation extends Component {
         this.props.onRequestIceValues(this.props.jobId, attribute);
     }
 
+    onSubmitFeatureNamesAndValues(data) {
+        this.props.onRequestRetrainValues(this.props.jobId, data);
+    }
+
+    onSubmitTopK(topK) {
+        this.setState({topK: topK});
+        this.props.onRequestCfFeedbackValues(this.props.jobId, topK);
+    }
+
     onChangeJob(id) {
         this.props.onJobChange(id);
         if (this.props.selectedTrace !== '') {
             this.props.onRequestLimeValues(id, this.props.selectedTrace);
             this.props.onRequestLimeTemporalList(id, this.props.selectedTrace);
             this.props.onRequestPredictionTemporalList(id, this.props.selectedTrace);
-            this.props.onRequestShapValues(this.props.jobId, this.props.selectedTrace);
+            this.props.onRequestShapValues(id, this.props.selectedTrace);
         }
         this.props.onRequestSkaterValues(id);
         this.props.onRequestDecoding(id);
-        this.props.onRequestIceValues(this.props.jobId, this.props.selectedAttribute);
+        this.props.onRequestEncodeUniqueValuesDF(id);
+        this.props.onRequestIceValues(id, this.state.selectedAttribute);
     }
 
     componentDidMount() {
@@ -131,9 +156,6 @@ class Explanation extends Component {
         return this.props.filteredJobs.filter(job => job.id==id)[0];
     }
     render() {
-        // eslint-disable-next-line max-len
-        // const iceResult = parseICEResult([{'label': 'First outpatient consultation', 'value': 1.25, 'count': 48}, {'label': 'aspiration cytology behalf by p', 'value': 1.6666666666666667, 'count': 3}, {'label': 'assumption laboratory', 'value': 1.6923076923076923, 'count': 130}, {'label': 'compartment for inspection', 'value': 1.6666666666666667, 'count': 12}, {'label': 'ct abdomen', 'value': 2.0, 'count': 2}, {'label': 'cytology - abdominal tumor puncture', 'value': 1.0, 'count': 1}, {'label': 'cytology - ectocervix -', 'value': 1.32, 'count': 25}, {'label': 'cytology - vagina -', 'value': 1.2222222222222223, 'count': 9}, {'label': 'day care - all spec.beh.kind.-rev.', 'value': 1.0, 'count': 2}, {'label': 'demurrage - all spec.beh.kinderg.-Reval.', 'value': 1.7142857142857142, 'count': 28}, {'label': 'e.c.g. - Electrocardiography', 'value': 1.5, 'count': 22}, {'label': 'histological examination - biopsies nno', 'value': 1.3076923076923077, 'count': 13}, {'label': 'immuno-pathology', 'value': 1.25, 'count': 4}, {'label': 'inwend.geneesk. Out-year card costs', 'value': 2.0, 'count': 1}, {'label': 'inwend.geneesk. short-out card cost', 'value': 1.375, 'count': 8}, {'label': 'mammography chest wall', 'value': 1.3333333333333333, 'count': 3}, {'label': 'outpatient follow-up consultation', 'value': 1.087719298245614, 'count': 228}, {'label': 'telephone consultation', 'value': 1.0769230769230769, 'count': 13}, {'label': 'thorax', 'value': 1.375, 'count': 8}, {'label': 'treatment time - Unit t2 - megavolt', 'value': 1.0, 'count': 1}, {'label': 'treatment time - Unit t3 - megavolt', 'value': 1.0, 'count': 1}, {'label': 'ultrasound - internal genitals', 'value': 1.6333333333333333, 'count': 30}]
-        // );
         let decodedDfTableResult = getDecodedDFTable(this.props.decodedDf);
         return (
             <div className="md-grid">
@@ -149,9 +171,6 @@ class Explanation extends Component {
                                            jobId={this.props.jobId}
                                           />
                 </div>
-                {/* <div className="md-cell md-cell--12">
-                    <DecisionTree></DecisionTree>
-                </div> */}
                  <div className="md-cell md-cell--12">
                     <JobModelsTable jobs={this.props.filteredJobs}
                                             fetchState={this.props.fetchState}
@@ -186,6 +205,37 @@ class Explanation extends Component {
                                       />
                 </div>
                 <div className="md-cell md-cell--12">
+                    <ICEResult
+                        jobs = {this.props.jobs}
+                        iceValueList = {parseICEResult(this.props.iceValueList)}
+                        originalList = {this.props.iceValueList}
+                        isIceValuesLoaded = {this.props.isIceValuesLoaded}
+                        selectedAttribute={this.state.selectedAttribute}
+                        attributes ={this.filterJobsById(this.props.jobId) != undefined ?
+                        this.filterJobsById(this.props.jobId).config.encoding.features: []}
+                        onChangeFeature = {this.onChangeFeature.bind(this)}
+                        >
+                    </ICEResult>
+                </div >
+                <div className="md-cell md-cell--12">
+                    <ShapResult
+                        jobs = {this.props.jobs}
+                        shapValueList = {this.props.shapValueList}
+                        isShapValuesLoaded = {this.props.isShapValuesLoaded}
+                        traceId={this.props.selectedTrace}
+                        jobId={this.props.jobId}
+                        />
+                </div>
+                <div className="md-cell md-cell--12">
+                    <TemporalStability
+                        limeTemporalChartData={this.props.limeTempStabilityList}
+                        predictionTemportalChartData={this.props.predictionTempStabilityList}
+                        traceId={this.props.selectedTrace}
+                        isLimeTempStabilityLoaded={this.props.isLimeTempStabilityLoaded}
+                        isPredictionTempStabilityLoaded={this.props.isPredictionTempStabilityLoaded}
+                        jobId={this.props.jobId}/>
+                </div>
+                <div className="md-cell md-cell--12">
                     <Row>
                         <div className="md-cell md-cell--6">
                             <PostHocExplanation
@@ -196,38 +246,21 @@ class Explanation extends Component {
                                 jobId={this.props.jobId}/>
                         </div>
                         <div className="md-cell md-cell--6">
-                            <ShapResult
-                                jobs = {this.props.jobs}
-                                shapValueList = {this.props.shapValueList}
-                                isShapValuesLoaded = {this.props.isShapValuesLoaded}
-                                traceId={this.props.selectedTrace}
+                            <CfFeedback
                                 jobId={this.props.jobId}
-                                />
+                                cfFeedbackValue={this.props.cfFeedbackValue}
+                                isCfFeedbackValuesLoaded={this.props.isCfFeedbackValuesLoaded}
+                                retrainValue={this.props.retrainValue}
+                                isRetrainValuesLoaded={this.props.isRetrainValuesLoaded}
+                                isEncodedUniqueValuesLoaded={this.props.isEncodedUniqueValuesLoaded}
+                                featureNames={getFeatureNames(this.props.encodedUniqueValues)}
+                                featureValues={getUniqueFeatureValues(this.props.encodedUniqueValues)}
+                                patterns={encodePatternsForDropdown(this.props.cfFeedbackValue)}
+                                onSubmitTopK={this.onSubmitTopK.bind(this)}
+                                onSubmitFeatureNamesAndValues = {this.onSubmitFeatureNamesAndValues.bind(this)}/>
                         </div>
                     </Row>
                 </div>
-                <div className="md-cell md-cell--12">
-                <TemporalStability
-                    limeTemporalChartData={this.props.limeTempStabilityList}
-                    predictionTemportalChartData={this.props.predictionTempStabilityList}
-                    traceId={this.props.selectedTrace}
-                    isLimeTempStabilityLoaded={this.props.isLimeTempStabilityLoaded}
-                    isPredictionTempStabilityLoaded={this.props.isPredictionTempStabilityLoaded}
-                    jobId={this.props.jobId}/>
-                </div>
-                <div className="md-cell md-cell--12">
-                    <ICEResult
-                        jobs = {this.props.jobs}
-                        iceValueList = {parseICEResult(this.props.iceValueList)}
-                        originalList = {this.props.iceValueList}
-                        isIceValuesLoaded = {this.props.isIceValuesLoaded}
-                        selectedAttribute={this.props.selectedAttribute}
-                        attributes ={this.filterJobsById(this.props.jobId) != undefined ?
-                        this.filterJobsById(this.props.jobId).config.encoding.features: []}
-                        onChangeFeature = {this.onChangeFeature.bind(this)}
-                        >
-                    </ICEResult>
-                </div >
             </div>
         );
     }
@@ -236,47 +269,53 @@ class Explanation extends Component {
 Explanation.propTypes = {
     fetchState: fetchStatePropType,
     splitLabels: selectLabelProptype,
-    onRequestLogList: PropTypes.func.isRequired,
-    onRequestSplitList: PropTypes.func.isRequired,
-    onRequestJobs: PropTypes.func.isRequired,
-    onRequestDecoding: PropTypes.func.isRequired,
-    onSplitChange: PropTypes.func.isRequired,
-    onMethodChange: PropTypes.func.isRequired,
-    onTraceChange: PropTypes.func.isRequired,
-    onPrefixChange: PropTypes.func.isRequired,
-    onRequestTraces: PropTypes.func.isRequired,
-    onJobChange: PropTypes.func.isRequired,
-    onRequestLimeValues: PropTypes.func.isRequired,
-    onRequestSkaterValues: PropTypes.func.isRequired,
-    onRequestShapValues: PropTypes.func.isRequired,
-    onRequestIceValues: PropTypes.func.isRequired,
-    onRequestPredictionTemporalList: PropTypes.func.isRequired,
-    onRequestLimeTemporalList: PropTypes.func.isRequired,
-    onRequestFailLimeValues: PropTypes.func.isRequired,
-    onRequestFailLimeTemporalList: PropTypes.func.isRequired,
-    onRequestFailPredictionTemporalList: PropTypes.func.isRequired,
-    onRequestFailShapValues: PropTypes.func.isRequired,
-    onRequestFailSkaterValues: PropTypes.func.isRequired,
-    onRequestFailIceValues: PropTypes.func.isRequired,
-    onRequestFailDecodeDF: PropTypes.func.isRequired,
-    filterOptionChange: PropTypes.func.isRequired,
-    labelTypeChange: PropTypes.func.isRequired,
-    jobs: PropTypes.arrayOf(jobPropType).isRequired,
-    predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION, LABELLING]).isRequired,
-    splitId: PropTypes.number.isRequired,
-    prefixLengths: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
-    selectedPrefixes: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+    onRequestLogList: PropTypes.func,
+    onRequestSplitList: PropTypes.func,
+    onRequestJobs: PropTypes.func,
+    onRequestDecoding: PropTypes.func,
+    onSplitChange: PropTypes.func,
+    onMethodChange: PropTypes.func,
+    onTraceChange: PropTypes.func,
+    onPrefixChange: PropTypes.func,
+    onRequestTraces: PropTypes.func,
+    onJobChange: PropTypes.func,
+    onRequestLimeValues: PropTypes.func,
+    onRequestSkaterValues: PropTypes.func,
+    onRequestShapValues: PropTypes.func,
+    onRequestIceValues: PropTypes.func,
+    onRequestPredictionTemporalList: PropTypes.func,
+    onRequestLimeTemporalList: PropTypes.func,
+    onRequestCfFeedbackValues: PropTypes.func,
+    onRequestRetrainValues: PropTypes.func,
+    onRequestEncodeUniqueValuesDF: PropTypes.func,
+    onRequestFailLimeValues: PropTypes.func,
+    onRequestFailLimeTemporalList: PropTypes.func,
+    onRequestFailPredictionTemporalList: PropTypes.func,
+    onRequestFailShapValues: PropTypes.func,
+    onRequestFailSkaterValues: PropTypes.func,
+    onRequestFailIceValues: PropTypes.func,
+    onRequestFailDecodeDF: PropTypes.func,
+    onRequestFailEncodeUniqueValuesDF: PropTypes.func,
+    onRequestFailCfFeedbackValues: PropTypes.func,
+    onRequestFailRetrainValues: PropTypes.func,
+    filterOptionChange: PropTypes.func,
+    labelTypeChange: PropTypes.func,
+    jobs: PropTypes.arrayOf(jobPropType),
+    predictionMethod: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION, LABELLING]),
+    splitId: PropTypes.number,
+    prefixLengths: PropTypes.arrayOf(PropTypes.number),
+    selectedPrefixes: PropTypes.arrayOf(PropTypes.number),
     filterOptions: PropTypes.shape({
-        encodings: PropTypes.arrayOf(PropTypes.string).isRequired,
-        clusterings: PropTypes.arrayOf(PropTypes.string).isRequired,
-        classification: PropTypes.arrayOf(PropTypes.string).isRequired,
-        regression: PropTypes.arrayOf(PropTypes.string).isRequired,
-        timeSeriesPrediction: PropTypes.arrayOf(PropTypes.string).isRequired,
-        labelling: PropTypes.any.isRequired,
-        padding: PropTypes.string.isRequired,
-        attributeNames: PropTypes.arrayOf(PropTypes.string).isRequired,
-        thresholds: PropTypes.arrayOf(PropTypes.number).isRequired
-    }).isRequired,
+        encodings: PropTypes.arrayOf(PropTypes.string),
+        clusterings: PropTypes.arrayOf(PropTypes.string),
+        classification: PropTypes.arrayOf(PropTypes.string),
+        regression: PropTypes.arrayOf(PropTypes.string),
+        timeSeriesPrediction: PropTypes.arrayOf(PropTypes.string),
+        labelling: PropTypes.any,
+        padding: PropTypes.string,
+        attributeNames: PropTypes.arrayOf(PropTypes.string),
+        thresholds: PropTypes.arrayOf(PropTypes.number)
+    }),
     clickedJobId: PropTypes.number,
     limeValueList: PropTypes.any,
     shapValueList: PropTypes.any,
@@ -290,14 +329,20 @@ Explanation.propTypes = {
     selectedAttribute: PropTypes.any,
     filteredJobs: PropTypes.any,
     decodedDf: PropTypes.any,
-    jobId: PropTypes.number.isRequired,
-    isLimeTempStabilityLoaded: PropTypes.bool.isRequired,
-    isPredictionTempStabilityLoaded: PropTypes.bool.isRequired,
-    isLimeValuesLoaded: PropTypes.bool.isRequired,
-    isShapValuesLoaded: PropTypes.bool.isRequired,
-    isSkaterValuesLoaded: PropTypes.bool.isRequired,
-    isIceValuesLoaded: PropTypes.bool.isRequired,
-    isDecodedValueLoaded: PropTypes.bool.isRequired,
+    encodedUniqueValues: PropTypes.any,
+    cfFeedbackValue: PropTypes.any,
+    retrainValue: PropTypes.any,
+    jobId: PropTypes.number,
+    isLimeTempStabilityLoaded: PropTypes.bool,
+    isPredictionTempStabilityLoaded: PropTypes.bool,
+    isLimeValuesLoaded: PropTypes.bool,
+    isShapValuesLoaded: PropTypes.bool,
+    isSkaterValuesLoaded: PropTypes.bool,
+    isIceValuesLoaded: PropTypes.bool,
+    isDecodedValueLoaded: PropTypes.bool,
+    isEncodedUniqueValuesLoaded: PropTypes.bool,
+    isCfFeedbackValuesLoaded: PropTypes.bool,
+    isRetrainValuesLoaded: PropTypes.bool,
     limeTempStabilityList: PropTypes.any,
     predictionTempStabilityList: PropTypes.any
 };
@@ -320,6 +365,12 @@ const mapStateToProps = (state) => ({
     isIceValuesLoaded: state.explanation.isIceValuesLoaded,
     skaterValueList: state.explanation.skaterValueList,
     isSkaterValuesLoaded: state.explanation.isSkaterValuesLoaded,
+    cfFeedbackValue: state.explanation.cfFeedbackValue,
+    isCfFeedbackValuesLoaded: state.explanation.isCfFeedbackLoaded,
+    retrainValue: state.explanation.retrainValue,
+    isRetrainValuesLoaded: state.explanation.isRetrainLoaded,
+    encodedUniqueValues: state.jobs.encodedUniqueValues,
+    isEncodedUniqueValuesLoaded: state.jobs.isEncodedUniqueValuesLoaded,
     traceList: state.traces.byId,
     predictionMethod: state.jobs.predictionMethod,
     prefixLengths: state.jobs.prefixLengths.sort((a, b) => (a - b)),
@@ -354,6 +405,7 @@ const mapDispatchToProps = (dispatch) => ({
     onRequestJobs: () => dispatch(jobsRequested()),
     onRequestTraces: (id) => dispatch(traceListRequested({id})),
     onRequestDecoding: (id) => dispatch(decodingRequested({id})),
+    onRequestEncodeUniqueValuesDF: (id) => dispatch(encodedUniqueValuesRequested({id})),
     onRequestLimeValues: (jobId, traceId) => dispatch(limeValueListRequested({jobId, traceId})),
     onRequestShapValues: (jobId, traceId) => dispatch(shapValueListRequested({jobId, traceId})),
     onRequestIceValues: (jobId, attribute) => dispatch(iceValueListRequested({jobId, attribute})),
@@ -362,6 +414,9 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(temporalPredictionListRequested({jobId, traceId})),
     onRequestLimeTemporalList: (jobId, traceId) =>
         dispatch(temporalLimePredictionListRequested({jobId, traceId})),
+    onRequestCfFeedbackValues: (jobId, attribute) => dispatch(cffeedbackValueListRequested({jobId, attribute})),
+    onRequestRetrainValues: (jobId, data) =>
+        dispatch(retrainValueListRequested({jobId, data})),
     onRequestFailLimeValues: () => dispatch(limeValueListFailed(null)),
     onRequestFailShapValues: () => dispatch(shapValueListFailed(null)),
     onRequestFailIceValues: () => dispatch(iceValueListFailed(null)),
@@ -372,6 +427,12 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(temporalLimePredictionListFailed(null)),
     onRequestFailDecodeDF: () =>
         dispatch(decodingFailed(null)),
+    onRequestFailCfFeedbackValues: () =>
+        dispatch(cffeedbackValueListFailed(null)),
+    onRequestFailRetrainValues: () =>
+        dispatch(retrainValueListFailed(null)),
+    onRequestFailEncodeUniqueValuesDF: () =>
+    dispatch(retrainValueListFailed(null)),
     filterOptionChange: (_, event) => dispatch({
         type: FILTER_OPTION_CHANGED,
         payload: {name: event.target.name, value: event.target.value}

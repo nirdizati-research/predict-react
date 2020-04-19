@@ -297,18 +297,6 @@ export const parseICEResult = (iceResult) => {
   return ({labels: labels, values: values, count: count});
 };
 
-export const parseFairMLResult = (iceResult) => {
-  let labels = [];
-  let values = [];
-  let count = [];
-    for (let j = 0; j < iceResult.length; j++) {
-        labels.push(iceResult[j].label);
-        values.push(iceResult[j].value).toFixed(2);
-        count.push(iceResult[j].count | 0);
-    }
-  return ({labels: labels, values: values, count: count});
-};
-
 export const parseTemporalStabilityLimeResultList = (predictionList, traceId) => {
   let data = [[]];
   let prefixs = [];
@@ -431,4 +419,212 @@ export const getDecodedDFTable = (dfResult) =>{
     keys = ['id'].concat(keys);
 }
   return {data: result, headers: keys};
+};
+
+export const getFeatureNames = (dfResult) =>{
+  let keys = Object.keys(dfResult);
+  return keys;
+};
+
+export const getUniqueFeatureValues = (dfResult) =>{
+  let i=0; let j=0;
+  let encodedResult = {};
+  let decodedResult = {};
+  let keys = Object.keys(dfResult);
+  if (keys.length>0) {
+    for (i = 0; i<keys.length; i++) {
+      let arr = [];
+      let key = keys[i];
+      let decodedKeys = Object.keys(dfResult[key]);
+      for (j = 0; j < decodedKeys.length; j++) {
+        arr.push(dfResult[key][decodedKeys[j]]);
+    }
+    encodedResult[key] = arr;
+    decodedResult[key] = decodedKeys;
+    }
+  }
+
+  return {'encodedResult': encodedResult, 'decodedResult': decodedResult};
+};
+
+export const parseCfFeedbackResult = (result) =>{
+  if (JSON.stringify(result) != '{}') {
+    let keys = Object.keys(result['freq_seqs_after_filter']);
+    if (keys.length>0) {
+      return {'tp': result['freq_seqs_after_filter']['tp'], 'tn': result['freq_seqs_after_filter']['tn'],
+        'fp': result['freq_seqs_after_filter']['fp'], 'fn': result['freq_seqs_after_filter']['fn']};
+    }
+  }
+  return {'tp': '', 'tn': '', 'fp': '', 'fn': ''};
+};
+
+export const getUniquePatterns = (result) =>{
+  let resultArray = new Set();
+  let i = 0;
+  let j = 0;
+  let k = 0;
+  if (result == null) return [];
+  else {
+    let keys = Object.keys(result['freq_seqs_after_filter']);
+    for (i=0; i<keys.length; i++) {
+      if (result['freq_seqs_after_filter'][keys[i]].length>0 ) {
+        for (j=0; j<result['freq_seqs_after_filter'][keys[i]].length; j++) {
+          let patterns = '';
+          for (k=0; k<result['freq_seqs_after_filter'][keys[i]][j][0].length; k++) {
+            if (k < result['freq_seqs_after_filter'][keys[i]][j][0].length-1) {
+              patterns+=result['freq_seqs_after_filter'][keys[i]][j][0][k]+'; ';
+            } else {
+              patterns+=result['freq_seqs_after_filter'][keys[i]][j][0][k];
+            }
+          }
+          resultArray = resultArray.add(patterns);
+        }
+      }
+    }
+  }
+  return Array.from(resultArray);
+};
+
+export const getPatternsForMatrix = (result, matrixName) =>{
+  let resultArray = [];
+  let i = 0;
+  let j = 0;
+  let k = 0;
+  if (JSON.stringify(result) != '{}') {
+    const uniquePatterns = encodePatternsForDropdown(result);
+    if (matrixName == 'All') {
+      let keys = Object.keys(result['freq_seqs_after_filter']);
+      for (i=0; i<keys.length; i++) {
+        if (result['freq_seqs_after_filter'][keys[i]].length>0 ) {
+          for (j=0; j<result['freq_seqs_after_filter'][keys[i]].length; j++) {
+            let arr = [];
+            let patterns = '';
+            arr.push(getConfusionMatrixName(keys[i]));
+            for (k=0; k<result['freq_seqs_after_filter'][keys[i]][j][0].length; k++) {
+              if (k < result['freq_seqs_after_filter'][keys[i]][j][0].length-1) {
+                patterns+= result['freq_seqs_after_filter'][keys[i]][j][0][k]+'; ';
+              } else {
+                patterns+= result['freq_seqs_after_filter'][keys[i]][j][0][k];
+                }
+             }
+             uniquePatterns.forEach(element => {
+              let split = element.split(':');
+               if (element.split(split[0]+':')[1]==patterns) {
+                  arr.push(element);
+                }
+             });
+              arr.push(result['freq_seqs_after_filter'][keys[i]][j][1]);
+              resultArray.push(arr);
+            }
+          }
+      }
+    } else {
+      matrixName = getAbrebiationConfusionMatrixName(matrixName);
+      if (result['freq_seqs_after_filter'][matrixName].length>0 ) {
+        for (j=0; j<result['freq_seqs_after_filter'][matrixName].length; j++) {
+          let arr = [];
+          arr.push(getConfusionMatrixName(matrixName));
+          let patterns = '';
+          for (k=0; k<result['freq_seqs_after_filter'][matrixName][j][0].length; k++) {
+             if (k < result['freq_seqs_after_filter'][matrixName][j][0].length-1) {
+              patterns+=result['freq_seqs_after_filter'][matrixName][j][0][k]+'; ';
+            } else {
+              patterns+= result['freq_seqs_after_filter'][matrixName][j][0][k];
+            }
+          }
+          uniquePatterns.forEach(element => {
+            if (element==patterns) {
+               arr.push(patterns);
+             }
+          });
+          arr.push(result['freq_seqs_after_filter'][matrixName][j][1]);
+          resultArray.push(arr);
+        }
+      }
+    }
+  }
+  return resultArray;
+};
+
+const getConfusionMatrixName = (key) => {
+  if (key == 'tp') return 'True Positive';
+  if (key == 'tn') return 'True Negative';
+  if (key == 'fp') return 'False Positive';
+  if (key == 'fn') return 'False Negative';
+  return null;
+};
+
+const getAbrebiationConfusionMatrixName = (key) => {
+  if (key == 'True Positive') return 'tp';
+  if (key == 'True Negative') return 'tn';
+  if (key == 'False Positive') return 'fp';
+  if (key == 'False Negative') return 'fn';
+  if (key == 'All') return 'All';
+  return null;
+};
+
+export const encodePatternsForDropdown = (result) =>{
+  let resultArray = [];
+  if (JSON.stringify(result) != '{}') {
+    const uniquePatterns = getUniquePatterns(result);
+    let i = 0;
+    for (i=0; i<uniquePatterns.length; i++) {
+      resultArray.push('Pattern_'+i+':'+uniquePatterns[i]);
+    }
+  }
+  return resultArray;
+};
+
+export const getConfusionMatrixLabels = (result) =>{
+  if (JSON.stringify(result) != '{}') {
+    let labels = [];
+    let keys = Object.keys(result['freq_seqs_after_filter']);
+    keys.forEach(element => {
+      labels.push(getConfusionMatrixName(element));
+    });
+    if (labels.length>0) return ['All'].concat(labels);
+  }
+  return [];
+};
+
+export const decodePatterns = (length, encodedPatternList) =>{
+  let i = 0;
+  let resultArray = [];
+  for (i=0; i<encodedPatternList.length; i++) {
+    const lst = encodedPatternList[i].split(':');
+    if (lst.length>=2) {
+      resultArray.push(encodedPatternList[i].split(lst[0])[1]);
+    }
+  }
+  return resultArray;
+};
+
+export const getFeatureNamesAndValueFromSelectedPatterns = (decodedSelectedPatterns, featureNames, featureValues) =>{
+  let i = 0;
+  let j = 0;
+  let k = 0;
+  let resultArray = [];
+  for (i=0; i<decodedSelectedPatterns.length; i++) {
+    let targets = [];
+    let splits = decodedSelectedPatterns[i].split('; ');
+    splits.forEach(element => {
+      A: {
+      for (j=0; j<featureNames.length; j++) {
+          if (element.includes(featureNames[j])) {
+            for (k=0; k<featureValues['decodedResult'][featureNames[j]].length; k++) {
+              if (element.includes(featureValues['decodedResult'][featureNames[j]][k])) {
+                let arr = [];
+                arr.push(featureNames[j]);
+                arr.push(featureValues['encodedResult'][featureNames[j]][k]);
+                targets.push(arr);
+                break A;
+              }
+            }
+          }
+        }
+      }
+    });
+   resultArray.push(targets);
+  }
+  return resultArray;
 };

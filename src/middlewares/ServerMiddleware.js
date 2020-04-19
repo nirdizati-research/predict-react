@@ -16,13 +16,18 @@ import {
     getShapValues,
     getIceValues,
     getSkaterValues,
-    getDecodingDf
+    getDecodingDf,
+    getCfFeedbackValues,
+    getRetrainValues,
+    getEncodedUniqueValues
 } from '../actions/ServerActions';
-import {JOB_DELETE_REQUESTED, JOBS_REQUESTED, TRAINING_SUBMITTED, DECODING_REQUESTED} from '../actions/JobActions';
+import {JOB_DELETE_REQUESTED, JOBS_REQUESTED, TRAINING_SUBMITTED,
+     DECODING_REQUESTED, ENCODED_UNIQUE_VALUES_REQUESTED} from '../actions/JobActions';
 import {TRACE_LIST_REQUESTED} from '../actions/TraceActions';
 import {LOG_INFO_REQUESTED, LOG_LIST_REQUESTED} from '../actions/LogActions';
 import {LIME_VALUE_LIST_REQUESTED, SHAP_VALUE_LIST_REQUESTED,
-     ICE_VALUE_LIST_REQUESTED, SKATER_VALUE_LIST_REQUESTED} from '../actions/ExplanationActions';
+     ICE_VALUE_LIST_REQUESTED, SKATER_VALUE_LIST_REQUESTED,
+     CFFEEDBACK_VALUE_LIST_REQUESTED, RETRAIN_VALUE_LIST_REQUESTED} from '../actions/ExplanationActions';
 import {SPLIT_SUBMITTED, SPLITS_REQUESTED} from '../actions/SplitActions';
 import {MODELS_REQUESTED} from '../actions/ModelActions';
 import {PREDICTION_SUBMITTED, REPLAY_SUBMITTED} from '../actions/RuntimeActions';
@@ -48,6 +53,9 @@ const ACTION_TYPE_TO_SERVER_ACTION = {
     [TEMPORAL_STABILITY_LIME_PREDICTION_LIST_REQUESTED]: getLimeTemporalStabilityValues,
     [TEMPORAL_STABILITY_PREDICTION_LIST_REQUESTED]: getPredictionTemporalStabilityValues,
     [DECODING_REQUESTED]: getDecodingDf,
+    [ENCODED_UNIQUE_VALUES_REQUESTED]: getEncodedUniqueValues,
+    [CFFEEDBACK_VALUE_LIST_REQUESTED]: getCfFeedbackValues,
+    [RETRAIN_VALUE_LIST_REQUESTED]: getRetrainValues,
 };
 
 const serverMiddleware = (store) => (next) => (action) => {

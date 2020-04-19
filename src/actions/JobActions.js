@@ -29,6 +29,13 @@ export const decodingtRetrieved = createPayloadForwardingAction(DECODING_RETRIEV
 export const DECODING_FAILED = 'DECODING_FAILED';
 export const decodingFailed = createPayloadForwardingAction(DECODING_FAILED);
 
+export const ENCODED_UNIQUE_VALUES_REQUESTED = 'ENCODED_UNIQUE_VALUES_REQUESTED';
+export const encodedUniqueValuesRequested = createPayloadForwardingAction(ENCODED_UNIQUE_VALUES_REQUESTED);
+export const ENCODED_UNIQUE_VALUES_RETRIEVED = 'ENCODED_UNIQUE_VALUES_RETRIEVED';
+export const encodedUniqueValuesRetrieved = createPayloadForwardingAction(ENCODED_UNIQUE_VALUES_RETRIEVED);
+export const ENCODED_UNIQUE_VALUES_FAILED = 'ENCODED_UNIQUE_VALUES_FAILED';
+export const encodedUniqueValuesFailed = createPayloadForwardingAction(ENCODED_UNIQUE_VALUES_FAILED);
+
 export const FILTER_SPLIT_CHANGED = 'FILTER_SPLIT_CHANGED';
 export const PREDICTION_SPLIT_CHANGED = 'PREDICTION_SPLIT_CHANGED';
 export const REPLAY_SPLIT_CHANGED = 'REPLAY_SPLIT_CHANGED';
@@ -44,4 +51,3 @@ export const JOB_UPDATED = 'JOB_UPDATED';
 export const REPLAY_JOB_CHANGED = 'REPLAY_JOB_CHANGED';
 export const PREDICTION_JOB_CHANGED = 'PREDICTION_JOB_CHANGED';
 export const TRACE_CHANGED = 'TRACE_CHANGED';
-

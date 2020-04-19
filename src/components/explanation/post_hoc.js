@@ -12,7 +12,7 @@ const PostHocExplanation = (props) => {
     const horizontalBarChart = <HorizontalBarChartCard
     data = {props.limeValueList.values}
     labels = {props.limeValueList.labels}/>;
-    return <Card className="md-block-centered">
+    return <Card className="md-cell md-cell--12">
         <CardTitle title="Graphs"/>
         <CardText>
         {props.traceId != '' && props.jobId != '' ?
