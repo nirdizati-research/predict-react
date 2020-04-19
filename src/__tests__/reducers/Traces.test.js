@@ -3,7 +3,8 @@
  */
 
 import traces from '../../reducers/Traces';
-import {traceListFailed, traceListRequested, traceListRetrieved} from '../../actions/TraceActions';
+import {traceListFailed, traceListRequested, traceListRetrieved,
+     TRACE_UPDATED, TRACE_COMPLETED} from '../../actions/TraceActions';
 
 const traceList = [{
     id: 5,
@@ -146,13 +147,38 @@ describe('TraceList', () => {
         expect(Object.keys(state2.byId).length).toEqual(1);
         expect(state2.byId[0].real_log).toBe(2);
     });
-
     it('stores error message', () => {
         const state = traces(undefined, traceListRequested());
         const state2 = traces(state, traceListFailed('error'));
         expect(state2).toEqual({
             byId: [], fetchState: {inFlight: false, error: 'error'},
             finalDiff: [], changed: 0, interResults: []
+        });
+    });
+    it('stores error message', () => {
+        const state = traces(undefined, traceListRequested());
+        const state2 = traces(state, traceListFailed('error'));
+        expect(state2).toEqual({
+            byId: [], fetchState: {inFlight: false, error: 'error'},
+            finalDiff: [], changed: 0, interResults: []
+        });
+    });
+
+    it('Trace update', () => {
+        const state = traces(undefined, traceListRequested());
+        const state2 = traces(state, {type: TRACE_UPDATED, byId: [], payload: traceList});
+        expect(state2).toEqual({
+            byId: [traceList], fetchState: {inFlight: true},
+            finalDiff: [], changed: 1, interResults: []
+        });
+    });
+
+    it('Trace completed', () => {
+        const state = traces(undefined, traceListRequested());
+        const state2 = traces(state, {type: TRACE_COMPLETED, byId: [], payload: traceList});
+        expect(state2).toEqual({
+            byId: [traceList], fetchState: {inFlight: true},
+            finalDiff: [{'class_actual': undefined, 'diff': undefined, 'id': undefined}], changed: 1, interResults: []
         });
     });
 });

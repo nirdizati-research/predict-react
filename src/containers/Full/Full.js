@@ -93,15 +93,14 @@ class Full extends Component {
           active: isActive('/validation', pathname),
           primaryText: 'Validation',
           leftIcon: <FontIcon>insert_chart</FontIcon>,
-        },
-        /*
-        {
+        }, {
           component: Link,
           to: '/explanation',
           active: isActive('/explanation', pathname),
           primaryText: 'explanation',
           leftIcon: <FontIcon>work</FontIcon>,
         },
+         /*
         ,
         {
           component: Link,

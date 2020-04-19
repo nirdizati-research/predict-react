@@ -57,3 +57,5 @@ export const TimeSeriesPredictionMethodsCard = () => { // TODO: update
         </CardText>
     </Card>;
 };
+export default TimeSeriesPredictionMethodsCard;
+

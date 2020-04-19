@@ -103,6 +103,7 @@ export const encodedUniqueDFResultList = {
             'inwend.geneesk. short-out card cost': 2,
             'cytology - ectocervix -': 3}            
 };
+
 export const iceResultList = [
         'False',
         [

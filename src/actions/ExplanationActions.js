@@ -27,7 +27,6 @@ export const skaterValueListRetrieved = createPayloadForwardingAction(SKATER_VAL
 export const SKATER_VALUE_LIST_FAILED = 'SKATER_VALUE_LIST_FAILED';
 export const skaterValueListFailed = createPayloadForwardingAction(SKATER_VALUE_LIST_FAILED);
 
-
 export const CFFEEDBACK_VALUE_LIST_REQUESTED = 'CFFEEFBACK_VALUE_LIST_REQUESTED';
 export const cffeedbackValueListRequested = createPayloadForwardingAction(CFFEEDBACK_VALUE_LIST_REQUESTED);
 export const CFFEEFBACK_VALUE_LIST_RETRIEVED = 'CFFEEFBACK_VALUE_LIST_RETRIEVED';

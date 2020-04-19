@@ -7,7 +7,8 @@ import {
     REGRESSION,
     REMAINING_TIME,
     THRESHOLD_CUSTOM,
-    THRESHOLD_MEAN
+    THRESHOLD_MEAN,
+    TIME_SERIES_PREDICTION
 } from '../../reference';
 import {labelCompare} from '../../util/labelCompare';
 
@@ -17,6 +18,7 @@ const atrNum = {type: ATTRIBUTE_NUMBER, attribute_name: 'name'};
 
 const regCompare = labelCompare(REGRESSION);
 const classCompare = labelCompare(CLASSIFICATION); // can also be labelling
+const timeSeriesCompare = labelCompare(TIME_SERIES_PREDICTION); // can also be labelling
 
 it('false if wrong type', () => {
     const result = regCompare(remainingTime, atrNum);
@@ -38,6 +40,26 @@ describe('Regression', () => {
         expect(result).toEqual(false);
     });
 });
+
+describe('TimeSeries', () => {
+    describe('Duration', () => {
+    const durMean = {type: DURATION, threshold_type: THRESHOLD_MEAN};
+    const durCustom = {type: DURATION, threshold_type: THRESHOLD_CUSTOM, threshold: 100};
+    it('true if both threshold mean', () => {
+        expect(timeSeriesCompare(durMean, durMean)).toEqual(true);
+    });
+    it('true if threshold custom with same threshold', () => {
+        expect(timeSeriesCompare(durCustom, durCustom)).toEqual(true);
+    });
+
+    it('false if different thresholds types or numbers', () => {
+        expect(timeSeriesCompare(durMean, durCustom)).toEqual(false);
+        const result = timeSeriesCompare(durCustom, {type: DURATION, threshold_type: THRESHOLD_CUSTOM, threshold: 2});
+        expect(result).toEqual(false);
+    });
+    });
+});
+
 
 describe('Classification', () => {
     describe('Duration', () => {
