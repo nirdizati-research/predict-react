@@ -143,7 +143,8 @@ export const uniqueEncodedDecodedValues = {
             'outpatient follow-up consultation': 0,
             'Milk acid dehydrogenase LDH kinetic': 1
         }
-}
+};
+
 export const cfFeedbackResult =[
     'False',
     {

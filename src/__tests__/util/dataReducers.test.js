@@ -1,9 +1,10 @@
 /**
  * Created by tonis.kasekamp on 10/17/17.
  */
-import {makeLabels, makeTable, parseLimeResult, getTraceAttributes, getTraceIdsFromLogs} from '../../util/dataReducers';
+import {makeLabels, makeTable, parseLimeResult, getTraceAttributes,
+     getTraceIdsFromLogs, getUniqueFeatureValues, getFeatureNames } from '../../util/dataReducers';
 import {regJobs} from '../../../stories/LineChart';
-import {limeList, traceList} from '../../../stories/Explanation';
+import {limeList, traceList, uniqueEncodedDecodedValues} from '../../../stories/Explanation';
 import {log} from '../../../stories/Logs';
 
 
@@ -63,4 +64,19 @@ describe('generates data for prefix chart', () => {
         const traceIds = getTraceIdsFromLogs({'1': log}, '1');
         expect(traceIds.length).toEqual(4);
     });
-});
+
+    it('getUniqueFeatureValues ', () => {
+        const uniqueValues = getUniqueFeatureValues(uniqueEncodedDecodedValues);
+        expect(uniqueValues['encodedResult']['prefix_1']).toEqual([0, 1]);
+        expect(uniqueValues['encodedResult']['prefix_2']).toEqual([0, 1]);
+        expect(uniqueValues['decodedResult']['prefix_1']).toEqual(['inwend.geneesk. Out-year card costs', 'outpatient follow-up consultation']);
+        expect(uniqueValues['decodedResult']['prefix_2']).toEqual(['outpatient follow-up consultation', 'Milk acid dehydrogenase LDH kinetic']);});
+    });
+
+    it('getFeatureNames', () => {
+        const featureNames = getFeatureNames(uniqueEncodedDecodedValues);
+        expect(featureNames.length).toEqual(2);
+        expect(featureNames.toString()).toEqual('prefix_1,prefix_2');
+    });
+
+
