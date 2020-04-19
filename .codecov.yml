@@ -4,6 +4,8 @@ ignore:
   - "src/actions/WebSocket.js"
   - "src/middlewares/WebSocketMiddleware.js"
   - "src/reducers/index.js"
+  - "src/views/Split.js"
+  - "src/views/Labelling.js"
   - "src/views/**/*.js"
   - "src/components/upload/ServerUpload.jsx"
   - "src/components/upload/UploadDouble.jsx"
