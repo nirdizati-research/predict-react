@@ -18,7 +18,10 @@ import {
     TRACE_CHANGED,
     DECODING_REQUESTED,
     DECODING_FAILED,
-    DECODING_RETRIEVED
+    DECODING_RETRIEVED,
+    ENCODED_UNIQUE_VALUES_REQUESTED,
+    ENCODED_UNIQUE_VALUES_RETRIEVED,
+    ENCODED_UNIQUE_VALUES_FAILED
 } from '../actions/JobActions';
 import {JOB_RUN_CHANGED} from '../actions/RuntimeActions';
 import {
@@ -84,7 +87,9 @@ const initialState = {
     selectedTrace: '',
     jobsById: {},
     decodedDf: {},
-    isDecodingLoaded: true
+    encodedUniqueValues: {},
+    isDecodingLoaded: true,
+    isEncodedUniqueValuesLoaded: true
 
 };
 
@@ -349,9 +354,34 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
             };
         }
 
+        case ENCODED_UNIQUE_VALUES_REQUESTED: {
+            return {
+                ...state,
+                isEncodedUniqueValuesLoaded: false,
+                decodedDf: {}
+            };
+        }
+
+        case ENCODED_UNIQUE_VALUES_FAILED: {
+            return {
+                ...state,
+                isEncodedUniqueValuesLoaded: true,
+                encodedUniqueValues: initialState.encodedUniqueValues
+            };
+        }
+        case ENCODED_UNIQUE_VALUES_RETRIEVED: {
+            const resultList = action.payload;
+            return {
+                ...state,
+                isEncodedUniqueValuesLoaded: true,
+                encodedUniqueValues: resultList
+            };
+        }
+
         default:
             return state;
     }
 };
 
 export default jobs;
+
