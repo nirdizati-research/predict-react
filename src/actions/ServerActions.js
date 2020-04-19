@@ -209,7 +209,7 @@ export const getIceValues = ({jobId, attribute}) => (dispatch) => {
 
 export const getCfFeedbackValues = ({jobId, attribute}) => (dispatch) => {
     jsonAjax(
-        SERVER_URL + `/explanation/cffeedback/${71}&${attribute}/`,
+        SERVER_URL + `/explanation/cffeedback/${jobId}&${attribute}/`,
         'GET',
         null,
         (resul) => {
@@ -221,7 +221,7 @@ export const getCfFeedbackValues = ({jobId, attribute}) => (dispatch) => {
 
 export const getRetrainValues = ({jobId, data}) => (dispatch) => {
     jsonAjax(
-        SERVER_URL + `/explanation/retrain/${71}/`,
+        SERVER_URL + `/explanation/retrain/${jobId}/`,
         'POST',
         data,
         (resul) => {

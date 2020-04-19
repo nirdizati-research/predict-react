@@ -9,7 +9,7 @@ ignore:
   - "src/views/Labelling.js"
   - "src/components/upload/ServerUpload.jsx"
   - "src/components/upload/UploadDouble.jsx"
-  - "src/components/advanced/Checkbox.js
-  - "src/components/advanced/Incremental.js
-  - "src/components/advanced/IncrementalTable.js
+  - "src/components/advanced/Checkbox.js"
+  - "src/components/advanced/Incremental.js"
+  - "src/components/advanced/IncrementalTable.js"
   - "src/components/prediction/**/*.js"
