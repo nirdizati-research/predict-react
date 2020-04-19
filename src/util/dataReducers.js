@@ -297,6 +297,18 @@ export const parseICEResult = (iceResult) => {
   return ({labels: labels, values: values, count: count});
 };
 
+export const parseFairMLResult = (iceResult) => {
+  let labels = [];
+  let values = [];
+  let count = [];
+    for (let j = 0; j < iceResult.length; j++) {
+        labels.push(iceResult[j].label);
+        values.push(iceResult[j].value).toFixed(2);
+        count.push(iceResult[j].count | 0);
+    }
+  return ({labels: labels, values: values, count: count});
+};
+
 export const parseTemporalStabilityLimeResultList = (predictionList, traceId) => {
   let data = [[]];
   let prefixs = [];

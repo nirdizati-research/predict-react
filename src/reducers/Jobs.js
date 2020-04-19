@@ -90,7 +90,6 @@ const initialState = {
     encodedUniqueValues: {},
     isDecodingLoaded: true,
     isEncodedUniqueValuesLoaded: true
-
 };
 
 const initialFilters = {
@@ -377,7 +376,6 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
                 encodedUniqueValues: resultList
             };
         }
-
         default:
             return state;
     }
