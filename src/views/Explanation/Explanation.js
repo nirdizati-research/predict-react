@@ -109,16 +109,16 @@ class Explanation extends Component {
 
     onChangeJob(id) {
         this.props.onJobChange(id);
-        // if (this.props.selectedTrace !== '') {
-        //     this.props.onRequestLimeValues(id, this.props.selectedTrace);
-        //     this.props.onRequestLimeTemporalList(id, this.props.selectedTrace);
-        //     this.props.onRequestPredictionTemporalList(id, this.props.selectedTrace);
-        //     this.props.onRequestShapValues(id, this.props.selectedTrace);
-        // }
-        // this.props.onRequestSkaterValues(id);
-        // this.props.onRequestDecoding(id);
+        if (this.props.selectedTrace !== '') {
+            this.props.onRequestLimeValues(id, this.props.selectedTrace);
+            this.props.onRequestLimeTemporalList(id, this.props.selectedTrace);
+            this.props.onRequestPredictionTemporalList(id, this.props.selectedTrace);
+            this.props.onRequestShapValues(id, this.props.selectedTrace);
+        }
+        this.props.onRequestSkaterValues(id);
+        this.props.onRequestDecoding(id);
         this.props.onRequestEncodeUniqueValuesDF(id);
-        // this.props.onRequestIceValues(id, this.state.selectedAttribute);
+        this.props.onRequestIceValues(id, this.state.selectedAttribute);
     }
 
     componentDidMount() {
