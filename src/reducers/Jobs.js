@@ -384,4 +384,3 @@ const jobs = (state = {...initialState, ...initialFilters}, action) => {
 };
 
 export default jobs;
-
