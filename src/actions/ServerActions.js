@@ -209,7 +209,7 @@ export const getIceValues = ({jobId, attribute}) => (dispatch) => {
 
 export const getCfFeedbackValues = ({jobId, attribute}) => (dispatch) => {
     jsonAjax(
-        SERVER_URL + `/explanation/cffeedback/${jobId}&${attribute}/`,
+        SERVER_URL + `/explanation/cffeedback/${71}&${attribute}/`,
         'GET',
         null,
         (resul) => {
@@ -219,11 +219,11 @@ export const getCfFeedbackValues = ({jobId, attribute}) => (dispatch) => {
     );
 };
 
-export const getRetrainValues = ({jobId, featureNames, featureValues}) => (dispatch) => {
+export const getRetrainValues = ({jobId, data}) => (dispatch) => {
     jsonAjax(
-        SERVER_URL + `/explanation/retrain/${jobId}&${featureNames}&${featureValues}/`,
-        'GET',
-        null,
+        SERVER_URL + `/explanation/retrain/${71}/`,
+        'POST',
+        data,
         (resul) => {
             dispatch(retrainValueListRetrieved(resul));
         },

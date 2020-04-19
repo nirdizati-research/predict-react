@@ -36,11 +36,11 @@ class Validation extends Component {
     }
 
     componentDidMount() {
-        if (this.props.jobs.length === 0) {
-            this.props.onRequestLogList();
-            this.props.onRequestSplitList();
-            this.props.onRequestJobs();
-        }
+        // if (this.props.jobs.length === 0) {
+        //     this.props.onRequestLogList();
+        //     this.props.onRequestSplitList();
+        //     this.props.onRequestJobs();
+        // }
         ReactGA.initialize('UA-143444044-1');
         ReactGA.pageview(window.location.hash);
     }

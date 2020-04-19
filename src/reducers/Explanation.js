@@ -120,7 +120,7 @@ const explanation = (state = initialState, action) => {
             }
 
             case SKATER_VALUE_LIST_FAILED: {
-                const skaterValueList = initialState.limeValueList;
+                const skaterValueList = initialState.skaterValueList;
                 return {
                     ...state,
                     fetchState: {inFlight: false, error: action.payload},
@@ -149,7 +149,7 @@ const explanation = (state = initialState, action) => {
             }
 
             case ICE_VALUE_LIST_FAILED: {
-                const iceValueList = initialState.limeValueList;
+                const iceValueList = initialState.iceValueList;
                 return {
                     ...state,
                     fetchState: {inFlight: false, error: action.payload},

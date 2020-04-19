@@ -494,7 +494,7 @@ describe('ServerActions', function () {
         it('dispatches RetrainValues on success', () => {
             mockXHR.responseText = JSON.stringify(retrainResult);
 
-            getRetrainValues({jobId: 1, featureNames: 'Age', featureValues: 23})(dispatch);
+            getRetrainValues({jobId: 1, data: []})(dispatch);
             mockXHR.onreadystatechange();
 
             expect(dispatch.mock.calls[0][0])

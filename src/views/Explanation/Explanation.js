@@ -32,7 +32,7 @@ import PostHocExplanation from '../../components/explanation/post_hoc';
 import DecodedDFTable from '../../components/explanation/DecodedDFTable';
 import TraceExplanation from '../../components/explanation/TraceExplanation';
 import {getTraceIdsFromLogs, parseLimeResult, parseICEResult, getDecodedDFTable,
-    getFeatureNames, getUniqueFeatureValues, parseCfFeedbackResult} from '../../util/dataReducers';
+    getFeatureNames, getUniqueFeatureValues, encodePatternsForDropdown} from '../../util/dataReducers';
 import JobModelsTable from '../../components/explanation/JobModelsTable';
 import TemporalStability from '../../components/explanation/TemporalStability';
 import {temporalPredictionListRequested, temporalLimePredictionListRequested,
@@ -98,10 +98,8 @@ class Explanation extends Component {
         this.props.onRequestIceValues(this.props.jobId, attribute);
     }
 
-    onSubmitFeatureNamesAndValues(featureNames, featureValues) {
-        this.setState({selectedFeatureNames: featureNames});
-        this.setState({selectedFeatureValues: featureValues});
-        this.props.onRequestRetrainValues(this.props.jobId, featureNames, featureValues);
+    onSubmitFeatureNamesAndValues(data) {
+        this.props.onRequestRetrainValues(this.props.jobId, data);
     }
 
     onSubmitTopK(topK) {
@@ -111,16 +109,16 @@ class Explanation extends Component {
 
     onChangeJob(id) {
         this.props.onJobChange(id);
-        if (this.props.selectedTrace !== '') {
-            this.props.onRequestLimeValues(id, this.props.selectedTrace);
-            this.props.onRequestLimeTemporalList(id, this.props.selectedTrace);
-            this.props.onRequestPredictionTemporalList(id, this.props.selectedTrace);
-            this.props.onRequestShapValues(id, this.props.selectedTrace);
-        }
-        this.props.onRequestSkaterValues(id);
-        this.props.onRequestDecoding(id);
+        // if (this.props.selectedTrace !== '') {
+        //     this.props.onRequestLimeValues(id, this.props.selectedTrace);
+        //     this.props.onRequestLimeTemporalList(id, this.props.selectedTrace);
+        //     this.props.onRequestPredictionTemporalList(id, this.props.selectedTrace);
+        //     this.props.onRequestShapValues(id, this.props.selectedTrace);
+        // }
+        // this.props.onRequestSkaterValues(id);
+        // this.props.onRequestDecoding(id);
         this.props.onRequestEncodeUniqueValuesDF(id);
-        this.props.onRequestIceValues(id, this.state.selectedAttribute);
+        // this.props.onRequestIceValues(id, this.state.selectedAttribute);
     }
 
     componentDidMount() {
@@ -250,13 +248,14 @@ class Explanation extends Component {
                         <div className="md-cell md-cell--6">
                             <CfFeedback
                                 jobId={this.props.jobId}
-                                cfFeedbackValue={parseCfFeedbackResult(this.props.cfFeedbackValue)}
+                                cfFeedbackValue={this.props.cfFeedbackValue}
                                 isCfFeedbackValuesLoaded={this.props.isCfFeedbackValuesLoaded}
                                 retrainValue={this.props.retrainValue}
                                 isRetrainValuesLoaded={this.props.isRetrainValuesLoaded}
                                 isEncodedUniqueValuesLoaded={this.props.isEncodedUniqueValuesLoaded}
                                 featureNames={getFeatureNames(this.props.encodedUniqueValues)}
                                 featureValues={getUniqueFeatureValues(this.props.encodedUniqueValues)}
+                                patterns={encodePatternsForDropdown(this.props.cfFeedbackValue)}
                                 onSubmitTopK={this.onSubmitTopK.bind(this)}
                                 onSubmitFeatureNamesAndValues = {this.onSubmitFeatureNamesAndValues.bind(this)}/>
                         </div>
@@ -416,8 +415,8 @@ const mapDispatchToProps = (dispatch) => ({
     onRequestLimeTemporalList: (jobId, traceId) =>
         dispatch(temporalLimePredictionListRequested({jobId, traceId})),
     onRequestCfFeedbackValues: (jobId, attribute) => dispatch(cffeedbackValueListRequested({jobId, attribute})),
-    onRequestRetrainValues: (jobId, featureNames, featureValues) =>
-        dispatch(retrainValueListRequested({jobId, featureNames, featureValues})),
+    onRequestRetrainValues: (jobId, data) =>
+        dispatch(retrainValueListRequested({jobId, data})),
     onRequestFailLimeValues: () => dispatch(limeValueListFailed(null)),
     onRequestFailShapValues: () => dispatch(shapValueListFailed(null)),
     onRequestFailIceValues: () => dispatch(iceValueListFailed(null)),

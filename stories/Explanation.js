@@ -134,6 +134,16 @@ export const skaterResult = [
     ''
 ];
 
+export const uniqueEncodedDecodedValues = {
+        'prefix_1': {
+            'inwend.geneesk. Out-year card costs': 0,
+            'outpatient follow-up consultation': 1
+        },
+        'prefix_2': {
+            'outpatient follow-up consultation': 0,
+            'Milk acid dehydrogenase LDH kinetic': 1
+        }
+}
 export const cfFeedbackResult =[
     'False',
     {

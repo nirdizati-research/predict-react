@@ -3,33 +3,58 @@ import {Card, CardTitle, CardText} from 'react-md/lib/Cards/index';
 import PropTypes from 'prop-types';
 import CircularProgress from 'react-md/lib/Progress/CircularProgress';
 import {TextField} from 'react-md';
-import CfFeedbackResultTable from './CfFeedbackResultTable';
+import CfFeedbackResulttTable from './CfFeedbackResulttTable';
 import SelectField from 'react-md/lib/SelectFields';
 import {Row} from 'react-grid-system';
 import RetrainResultTable from './RetrainResultTable';
+import {getFeatureNamesAndValueFromSelectedPatterns} from '../../util/dataReducers';
 
 class CfFeedback extends PureComponent {
     constructor(props) {
       super(props);
-      let removedIndex = [];
-      let numberOfDropdown = 0;
+      let removedIndexFeatures = [];
+      let removedIndexPatterns = [];
+      let numberOfDropdownFeatures = 0;
+      let numberOfDropdownPatterns = 0;
+      let shownDropdownsFeatures = 0;
+      let shownDropdownsPatterns = 0;
+      let selectedMatrix = 'All';
       let featureNames = [];
+      let patterns = [];
       this.state = {
-        numberOfDropdown,
-        removedIndex,
-        featureNames
+        numberOfDropdownFeatures,
+        numberOfDropdownPatterns,
+        shownDropdownsFeatures,
+        shownDropdownsPatterns,
+        removedIndexFeatures,
+        removedIndexPatterns,
+        featureNames,
+        patterns,
+        selectedMatrix
       };
     }
     onChangeFeatureName(value, index, event, data) {
       let i=0;
       let arr = this.state.featureNames;
-      for (i=0; i < this.state.numberOfDropdown; i++) {
+      for (i=0; i < this.state.numberOfDropdownFeatures; i++) {
         if (data.id == 'features_'+i) {
           arr[i] = data.value;
         }
       }
       this.setState({featureNames: arr});
-      this.setState({removedIndex: this.state.removedIndex.concat(-2)});
+      this.setState({removedIndexFeatures: this.state.removedIndexFeatures.concat(-2)});
+    }
+
+    onChangePattern(value, index, event, data) {
+      let i=0;
+      let arr = this.state.patterns;
+      for (i=0; i < this.state.numberOfDropdownPatterns; i++) {
+        if (data.id == 'patterns_'+i) {
+          arr[i] = data.value;
+        }
+      }
+      this.setState({patterns: arr});
+      this.setState({removedIndexPatterns: this.state.removedIndexPatterns.concat(-2)});
     }
 
     onChangeFeatureValue(id) {
@@ -40,7 +65,7 @@ class CfFeedback extends PureComponent {
           <SelectField
             id={'features_'+id}
             placeholder="Feature Name"
-            className="md-cell"
+            className="md-cell md-cell--3"
             value={this.state.featureNames[id]}
             menuItems={this.props.featureNames}
             position={SelectField.Positions.BELOW}
@@ -49,18 +74,28 @@ class CfFeedback extends PureComponent {
         );
       }
       getFeatureValuesSelector(id) {
-        // let arr = {'Age': [1, 2, 2121],
-        // 'CType': [11, 12, 34],
-        // 'PClaims': ['Yes', 'No']};
-        // console.log(this.state.featureNames[id]);
         return (
           <SelectField
+            className="md-cell md-cell--3"
             id={'value_'+id}
             placeholder="Feature values"
-            className="md-cell"
             menuItems={this.props.featureValues['decodedResult'][(this.state.featureNames[id])]}
             position={SelectField.Positions.BELOW}
             onChange={() => this.onChangeFeatureValue(id)}
+          />
+        );
+      }
+
+      getPatternSelector(id) {
+        return (
+          <SelectField
+            id={'patterns_'+id}
+            placeholder="Select pattern"
+            className="md-cell md-cell--7"
+            value={this.state.patterns[id]}
+            menuItems={this.props.patterns}
+            position={SelectField.Positions.BELOW}
+            onChange={this.onChangePattern.bind(this)}
           />
         );
       }
@@ -91,24 +126,48 @@ class CfFeedback extends PureComponent {
     />
       );
     }
-    plusButton(id) {
+    featureAddButton(id) {
       return (
       <button
-        style={{margin: '10px', padding: '10px 20px 10px 20px',
+      className="md-cell md-cell--2"
+        style={{marginLeft: 130, padding: '10px 20px 10px 20px',
          color: 'black', borderRadius: 5, borderWidth: 1,
          borderColor: '#fff'}}
-         onClick={() => this.onPlusClicked()}
-         >Add</button>);
+         onClick={() => this.onFeatureAddClicked()}
+         >ADD</button>);
     }
-    removeButton(id) {
+    featureRemoveButton(id) {
       return (
       <button
+      className="md-cell md-cell--2"
       id={'remove_'+id}
       style={{margin: '10px', padding: '10px 20px 10px 20px',
         color: 'red', borderRadius: 5, borderWidth: 1,
         borderColor: '#fff'}}
-        onClick={() => this.onRemoveClicked(id)}
-      >Remove</button>);
+        onClick={() => this.onFeatureRemoveClicked(id)}
+      >REMOVE</button>);
+    }
+
+    patternAddButton(id) {
+      return (
+      <button
+      className="md-cell md-cell--2"
+        style={{marginLeft: '10px', padding: '10px 20px 10px 20px',
+         color: 'black', borderRadius: 5, borderWidth: 1,
+         borderColor: '#fff'}}
+         onClick={() => this.onPatternAddClicked()}
+         >ADD</button>);
+    }
+    patternRemoveButton(id) {
+      return (
+      <button
+      className="md-cell md-cell--2"
+      id={'remove_'+id}
+      style={{margin: '10px', padding: '10px 20px 10px 20px',
+        color: 'red', borderRadius: 5, borderWidth: 1,
+        borderColor: '#fff'}}
+        onClick={() => this.onPatternRemoveClicked(id)}
+      >REMOVE</button>);
     }
     submitTopKButton() {
       return (
@@ -118,7 +177,7 @@ class CfFeedback extends PureComponent {
         color: 'darkblue', borderRadius: 5, borderWidth: 1,
         borderColor: '#fff'}}
         onClick={() => this.onSubmitTopKClicked()}
-      >Sumbit</button>);
+      >SUBMIT</button>);
     }
     evaluateFeatureButton() {
       return (
@@ -128,18 +187,18 @@ class CfFeedback extends PureComponent {
         color: 'darkblue', borderRadius: 5, borderWidth: 1,
         borderColor: '#fff'}}
         onClick={() => this.onEvaluateFeatureClicked()}
-      >Evaluate</button>);
+      >EVALUATE</button>);
     }
-    addNewDropdowns() {
+    addNewFeatureDropdowns() {
       let i =0;
       let arr = [];
-      for (i=0; i < this.state.numberOfDropdown; i++) {
-        if (!this.state.removedIndex.includes(i)) {
+      for (i=0; i < this.state.numberOfDropdownFeatures; i++) {
+        if (!this.state.removedIndexFeatures.includes(i)) {
           arr.push(<div>
           {this.getFeatureNamesSelector(i)}
           {this.getFeatureValuesSelector(i)}
-          {this.plusButton(i)}
-          {this.removeButton(i)}
+          {this.featureAddButton(i)}
+          {this.featureRemoveButton(i)}
           </div>
           );
         } else arr.push(null);
@@ -150,12 +209,42 @@ class CfFeedback extends PureComponent {
         </div>
       );
     }
-    onPlusClicked() {
-      this.setState({numberOfDropdown: this.state.numberOfDropdown+1});
-      this.setState({featureNames: this.state.featureNames.concat(null)});
+    addNewPatternDropdowns() {
+      let i =0;
+      let arr = [];
+      for (i=0; i < this.state.numberOfDropdownPatterns; i++) {
+        if (!this.state.removedIndexPatterns.includes(i)) {
+          arr.push(<div>
+          {this.getPatternSelector(i)}
+          {this.patternAddButton(i)}
+          {this.patternRemoveButton(i)}
+          </div>
+          );
+        } else arr.push(null);
+      }
+      return (
+        <div>
+          {arr}
+        </div>
+      );
     }
-    onRemoveClicked(index) {
-      this.setState({removedIndex: this.state.removedIndex.concat(index)});
+    onFeatureAddClicked() {
+      this.setState({numberOfDropdownFeatures: this.state.numberOfDropdownFeatures+1});
+      this.setState({featureNames: this.state.featureNames.concat(null)});
+      this.setState({shownDropdownsFeatures: this.state.shownDropdownsFeatures+1});
+    }
+    onFeatureRemoveClicked(index) {
+      this.setState({removedIndexFeatures: this.state.removedIndexFeatures.concat(index)});
+      this.setState({shownDropdownsFeatures: this.state.shownDropdownsFeatures-1});
+    }
+    onPatternAddClicked() {
+      this.setState({numberOfDropdownPatterns: this.state.numberOfDropdownPatterns+1});
+      this.setState({patterns: this.state.patterns.concat(null)});
+      this.setState({shownDropdownsPatterns: this.state.shownDropdownsPatterns+1});
+    }
+    onPatternRemoveClicked(index) {
+      this.setState({removedIndexPatterns: this.state.removedIndexPatterns.concat(index)});
+      this.setState({shownDropdownsPatterns: this.state.shownDropdownsPatterns-1});
     }
     onSubmitTopKClicked() {
       if (document.getElementById('topK') != null && (document.getElementById('topK')).value>0) {
@@ -164,18 +253,38 @@ class CfFeedback extends PureComponent {
     }
     onEvaluateFeatureClicked() {
       let i = 0;
-      let featureNames = [];
-      let featureValues = [];
-      for (i = 0; i<this.state.numberOfDropdown; i++) {
-        if (!this.state.removedIndex.includes(i) && document.getElementById('features_'+i) != null) {
-          featureNames.push((document.getElementById('features_'+i)).value);
-          let arr = this.props.featureValues['decodedResult'][(document.getElementById('features_'+i)).value];
-          const index = arr.indexOf((document.getElementById('value_'+i)).value);
-          featureValues.push(this.props.featureValues['encodedResult'][(document.getElementById('features_'+i))
-            .value][index]);
+      let prefixs = [];
+      let data = [];
+      for (i = 0; i<this.state.numberOfDropdownFeatures; i++) {
+        let feature = document.getElementById('features_'+i);
+        if (!this.state.removedIndexFeatures.includes(i)
+          && feature != null
+          && feature.value != '' ) {
+          let arr = this.props.featureValues['decodedResult'][feature.value];
+          if (document.getElementById('value_'+i) !=null && (document.getElementById('value_'+i)).value != '') {
+            const index = arr.indexOf((document.getElementById('value_'+i)).value);
+            let result = [];
+            result.push(feature.value);
+            result.push(this.props.featureValues['encodedResult'][feature.value][index]);
+            data.push([result]);
+          }
         }
       }
-      this.props.onSubmitFeatureNamesAndValues(featureNames, featureValues);
+      for (i = 0; i<this.state.numberOfDropdownPatterns; i++) {
+        if (!this.state.removedIndexPatterns.includes(i)
+          && document.getElementById('patterns_'+i) != null
+          && document.getElementById('patterns_'+i).value !='') {
+          prefixs.push((document.getElementById('patterns_'+i)).value);
+        }
+      }
+      if (prefixs.length>0) {
+        let mergedResult = getFeatureNamesAndValueFromSelectedPatterns(prefixs,
+        this.props.featureNames, this.props.featureValues);
+        mergedResult.forEach(element => {
+          data.push(element);
+        });
+      }
+      this.props.onSubmitFeatureNamesAndValues(data);
     }
     initialResult(result) {
       return (
@@ -191,14 +300,19 @@ class CfFeedback extends PureComponent {
         </h4>
       );
     }
+    onSelectedMatrixChange(matrix) {
+      this.setState({selectedMatrix: matrix});
+    }
     render() {
-      if (this.state.numberOfDropdown == 0) {
-        this.setState({numberOfDropdown: this.state.numberOfDropdown+1});
-        this.setState({featureNames: this.state.featureNames.concat(null)});
+      if (this.state.shownDropdownsFeatures == 0) {
+        this.onFeatureAddClicked();
+      }
+      if (this.state.shownDropdownsPatterns == 0) {
+        this.onPatternAddClicked();
       }
         return (
                <Card className="md-block-centered">
-                 <CardTitle title="CF Feedback result "></CardTitle>
+                 <CardTitle title="Confusion matrix classes with characterizing patterns"></CardTitle>
                 <CardText>
                   <div className="md-block-centered">
                     <Row style={{margin: '10px'}}>
@@ -207,14 +321,19 @@ class CfFeedback extends PureComponent {
                     </Row>
                  </div>
                  {!this.props.isCfFeedbackValuesLoaded ? <CircularProgress id="query-indeterminate-progress"/> : null}
-                 <CfFeedbackResultTable
+                 <CfFeedbackResulttTable
                    cfFeedbackResult={this.props.cfFeedbackValue}
+                   onSelectedMatrixChange={this.onSelectedMatrixChange.bind(this)}
+                   selectedMatrix={this.state.selectedMatrix}
                    />
                  {this.drawLine()}
-                 <h3>Patterns to randomise</h3>
+                 <h3>Features and Patterns to randomize</h3>
+                 <h4>Randomizing patterns that affect wrong predictions the accuracy of
+                    the classifier could improve</h4>
+                 {this.addNewPatternDropdowns()}
                  {!this.props.isEncodedUniqueValuesLoaded ?
                     <CircularProgress id="query-indeterminate-progress"/> : null}
-                  {this.addNewDropdowns()}
+                  {this.addNewFeatureDropdowns()}
                   {!this.props.isRetrainValuesLoaded ?
                     <CircularProgress id="query-indeterminate-progress"/> : null}
                   <div className="md-cell md-cell--12">{JSON.stringify(this.props.retrainValue) !='{}' ?
@@ -237,6 +356,7 @@ CfFeedback.propTypes = {
   isRetrainValuesLoaded: PropTypes.bool,
   isEncodedUniqueValuesLoaded: PropTypes.bool,
   featureNames: PropTypes.any,
+  patterns: PropTypes.any,
   featureValues: PropTypes.any,
   onSubmitTopK: PropTypes.func,
   onSubmitFeatureNamesAndValues: PropTypes.func,
