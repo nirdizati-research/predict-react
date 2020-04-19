@@ -227,7 +227,8 @@ export const getRadarChartValuesForAllColumns = (
   prefixLengthValue,
   columnNames
 ) => {
-  let i; let j;
+  let i;
+  let j;
   let allValues =[];
   for (j = 0; j < columnNames.length; j++) {
     if (columnNames[j] != 'All') {
@@ -235,13 +236,13 @@ export const getRadarChartValuesForAllColumns = (
       for (i = 0; i < radarCharLabels.length; i++) {
         const radarChartObject = radarChartObjects[i];
         if (isNaN(Number(prefixLengthValue))) {
-          radarChartDatas.push(getAverage(radarChartObject, j+1));
+          radarChartDatas.push(getAverage(radarChartObject, j + 1));
         } else {
           radarChartDatas.push(
             getValueForColumnName(
               radarChartObject,
               prefixLengthValue,
-              j+1
+              j + 1
             )
           );
         }
@@ -347,15 +348,14 @@ export const parseTemporalStabilityPredictionResultList = (predictionList, trace
 };
 
 export const getTraceAttributes = (traceList, selectedTrace) =>{
-  let i=0;
+  let i = 0;
   if (traceList === undefined) {
     traceList = [];
   }
   let traceAttributesHeader = getTraceAttributesHeader(traceList);
   let traceEventsHeaders = getTraceEventsHeader(traceList);
   let traceArr = {'attributes': [], 'events': []};
-  i=0;
-  for (i =0; i<traceList.length; i++) {
+  for (i = 0; i < traceList.length; i++) {
     if (traceList[i]['attributes']['concept:name'] == selectedTrace) {
       let attrValues = [];
       let traceEvents = [];
@@ -379,9 +379,9 @@ export const getTraceAttributes = (traceList, selectedTrace) =>{
 };
 
 const getTraceAttributesHeader = (traceList) =>{
-  let i=0;
+  let i = 0;
   let traceAttributesHeader = [];
-  for (i =0; i<traceList.length; i++) {
+  for (i = 0; i < traceList.length; i++) {
     traceAttributesHeader = Object.keys(traceList[0]['attributes']);
     break;
   }
@@ -390,9 +390,9 @@ const getTraceAttributesHeader = (traceList) =>{
 
 
 const getTraceEventsHeader = (traceList) =>{
-  let i=0;
+  let i = 0;
   let traceEventsHeaders = [];
-  for (i =0; i<traceList.length; i++) {
+  for (i = 0; i < traceList.length; i++) {
     traceEventsHeaders = Object.keys(traceList[0]['events'][0]);
     break;
   }
@@ -401,9 +401,9 @@ const getTraceEventsHeader = (traceList) =>{
 
 
 export const getIceResultListTable = (iceResultList) =>{
-  let i=0;
+  let i = 0;
   let result = [];
-  for (i = 0; i<iceResultList.length; i++) {
+  for (i = 0; i < iceResultList.length; i++) {
     let arr = [];
     arr.push(iceResultList[i]['label']);
     arr.push(iceResultList[i]['value']);
@@ -415,15 +415,16 @@ export const getIceResultListTable = (iceResultList) =>{
 };
 
 export const getDecodedDFTable = (dfResult) =>{
-  let i=0; let j=0;
+  let i = 0;
+  let j = 0;
   let result = [];
   let keys = Object.keys(dfResult);
-  if (keys.length>0) {
+  if (keys.length > 0) {
     for (j = 0; j < dfResult[keys[0]].length; j++) {
       let arr = [];
       arr.push(j+1);
 
-      for (i = 0; i<keys.length; i++) {
+      for (i = 0; i < keys.length; i++) {
           arr.push(dfResult[keys[i]][j]);
         }
         result.push(arr);
@@ -439,12 +440,13 @@ export const getFeatureNames = (dfResult) =>{
 };
 
 export const getUniqueFeatureValues = (dfResult) =>{
-  let i=0; let j=0;
+  let i = 0;
+  let j = 0;
   let encodedResult = {};
   let decodedResult = {};
   let keys = Object.keys(dfResult);
   if (keys.length>0) {
-    for (i = 0; i<keys.length; i++) {
+    for (i = 0; i < keys.length; i++) {
       let arr = [];
       let key = keys[i];
       let decodedKeys = Object.keys(dfResult[key]);
@@ -478,15 +480,15 @@ export const getUniquePatterns = (result) =>{
   if (result == null) return [];
   else {
     let keys = Object.keys(result['freq_seqs_after_filter']);
-    for (i=0; i<keys.length; i++) {
-      if (result['freq_seqs_after_filter'][keys[i]].length>0 ) {
-        for (j=0; j<result['freq_seqs_after_filter'][keys[i]].length; j++) {
+    for (i = 0; i < keys.length; i++) {
+      if (result['freq_seqs_after_filter'][keys[i]].length > 0 ) {
+        for (j = 0; j < result['freq_seqs_after_filter'][keys[i]].length; j++) {
           let patterns = '';
-          for (k=0; k<result['freq_seqs_after_filter'][keys[i]][j][0].length; k++) {
+          for (k = 0; k < result['freq_seqs_after_filter'][keys[i]][j][0].length; k++) {
             if (k < result['freq_seqs_after_filter'][keys[i]][j][0].length-1) {
-              patterns+=result['freq_seqs_after_filter'][keys[i]][j][0][k]+'; ';
+              patterns += result['freq_seqs_after_filter'][keys[i]][j][0][k] + '; ';
             } else {
-              patterns+=result['freq_seqs_after_filter'][keys[i]][j][0][k];
+              patterns += result['freq_seqs_after_filter'][keys[i]][j][0][k];
             }
           }
           resultArray = resultArray.add(patterns);
@@ -506,17 +508,17 @@ export const getPatternsForMatrix = (result, matrixName) =>{
     const uniquePatterns = encodePatternsForDropdown(result);
     if (matrixName == 'All') {
       let keys = Object.keys(result['freq_seqs_after_filter']);
-      for (i=0; i<keys.length; i++) {
+      for (i = 0; i < keys.length; i++) {
         if (result['freq_seqs_after_filter'][keys[i]].length>0 ) {
-          for (j=0; j<result['freq_seqs_after_filter'][keys[i]].length; j++) {
+          for (j = 0; j < result['freq_seqs_after_filter'][keys[i]].length; j++) {
             let arr = [];
             let patterns = '';
             arr.push(getConfusionMatrixName(keys[i]));
-            for (k=0; k<result['freq_seqs_after_filter'][keys[i]][j][0].length; k++) {
+            for (k = 0; k < result['freq_seqs_after_filter'][keys[i]][j][0].length; k++) {
               if (k < result['freq_seqs_after_filter'][keys[i]][j][0].length-1) {
-                patterns+= result['freq_seqs_after_filter'][keys[i]][j][0][k]+'; ';
+                patterns += result['freq_seqs_after_filter'][keys[i]][j][0][k] + '; ';
               } else {
-                patterns+= result['freq_seqs_after_filter'][keys[i]][j][0][k];
+                patterns += result['freq_seqs_after_filter'][keys[i]][j][0][k];
                 }
              }
              uniquePatterns.forEach(element => {
@@ -532,16 +534,16 @@ export const getPatternsForMatrix = (result, matrixName) =>{
       }
     } else {
       matrixName = getAbrebiationConfusionMatrixName(matrixName);
-      if (result['freq_seqs_after_filter'][matrixName].length>0 ) {
-        for (j=0; j<result['freq_seqs_after_filter'][matrixName].length; j++) {
+      if (result['freq_seqs_after_filter'][matrixName].length > 0 ) {
+        for (j = 0; j < result['freq_seqs_after_filter'][matrixName].length; j++) {
           let arr = [];
           arr.push(getConfusionMatrixName(matrixName));
           let patterns = '';
-          for (k=0; k<result['freq_seqs_after_filter'][matrixName][j][0].length; k++) {
+          for (k = 0; k < result['freq_seqs_after_filter'][matrixName][j][0].length; k++) {
              if (k < result['freq_seqs_after_filter'][matrixName][j][0].length-1) {
-              patterns+=result['freq_seqs_after_filter'][matrixName][j][0][k]+'; ';
+              patterns += result['freq_seqs_after_filter'][matrixName][j][0][k] + '; ';
             } else {
-              patterns+= result['freq_seqs_after_filter'][matrixName][j][0][k];
+              patterns += result['freq_seqs_after_filter'][matrixName][j][0][k];
             }
           }
           uniquePatterns.forEach(element => {
@@ -580,7 +582,7 @@ export const encodePatternsForDropdown = (result) =>{
   if (JSON.stringify(result) != '{}') {
     const uniquePatterns = getUniquePatterns(result);
     let i = 0;
-    for (i=0; i<uniquePatterns.length; i++) {
+    for (i = 0; i < uniquePatterns.length; i++) {
       resultArray.push('Pattern_'+i+':'+uniquePatterns[i]);
     }
   }
@@ -602,9 +604,9 @@ export const getConfusionMatrixLabels = (result) =>{
 export const decodePatterns = (length, encodedPatternList) =>{
   let i = 0;
   let resultArray = [];
-  for (i=0; i<encodedPatternList.length; i++) {
+  for (i = 0; i<encodedPatternList.length; i ++) {
     const lst = encodedPatternList[i].split(':');
-    if (lst.length>=2) {
+    if (lst.length >= 2) {
       resultArray.push(encodedPatternList[i].split(lst[0])[1]);
     }
   }
@@ -616,14 +618,14 @@ export const getFeatureNamesAndValueFromSelectedPatterns = (decodedSelectedPatte
   let j = 0;
   let k = 0;
   let resultArray = [];
-  for (i=0; i<decodedSelectedPatterns.length; i++) {
+  for (i = 0; i < decodedSelectedPatterns.length; i++) {
     let targets = [];
     let splits = decodedSelectedPatterns[i].split('; ');
     splits.forEach(element => {
       A: {
-      for (j=0; j<featureNames.length; j++) {
+      for (j = 0; j < featureNames.length; j++) {
           if (element.includes(featureNames[j])) {
-            for (k=0; k<featureValues['decodedResult'][featureNames[j]].length; k++) {
+            for (k = 0; k < featureValues['decodedResult'][featureNames[j]].length; k++) {
               if (element.includes(featureValues['decodedResult'][featureNames[j]][k])) {
                 let arr = [];
                 arr.push(featureNames[j]);

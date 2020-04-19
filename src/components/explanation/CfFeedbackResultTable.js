@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {getPatternsForMatrix, getConfusionMatrixLabels} from '../../util/dataReducers';
 import {SelectField} from 'react-md';
 
-class CfFeedbackResulttTable extends PureComponent {
+class CfFeedbackResultTable extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -105,10 +105,10 @@ class CfFeedbackResulttTable extends PureComponent {
     }
 }
 
-CfFeedbackResulttTable.propTypes = {
+CfFeedbackResultTable.propTypes = {
   cfFeedbackResult: PropTypes.array.isRequired,
   onSelectedMatrixChange: PropTypes.func,
   selectedMatrix: PropTypes.any,
 };
 
-export default CfFeedbackResulttTable;
+export default CfFeedbackResultTable;

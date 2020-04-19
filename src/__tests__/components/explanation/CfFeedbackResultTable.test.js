@@ -1,7 +1,7 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import {DataTable, TableBody, TableColumn, TableHeader, TablePagination, TableRow} from 'react-md/lib/DataTables/index';
-import CfFeedbackResulttTable from '../../../components/explanation/CfFeedbackResulttTable';
+import CfFeedbackResultTable from '../../../components/explanation/CfFeedbackResultTable';
 import {cfFeedbackResult} from '../../../../stories/Explanation';
 import {SelectField} from 'react-md';
 
@@ -9,7 +9,7 @@ const onSelectedMatrixChange = jest.fn();
 
 describe('Cf feedback result Table', () => {
     it('renders', () => {
-        const element = shallow(<CfFeedbackResulttTable
+        const element = shallow(<CfFeedbackResultTable
                                     cfFeedbackResult={cfFeedbackResult[1]}
                                     onSelectedMatrixChange={onSelectedMatrixChange}
                                     selectedMatrix={'All'}
