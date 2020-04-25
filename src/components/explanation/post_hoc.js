@@ -22,7 +22,7 @@ const PostHocExplanation = (props) => {
         {!props.isLimeValuesLoaded ? <CircularProgress id="query-indeterminate-progress"/> : null}
         <CardText>
             <div className="md-cell md-cell--12" key="1">
-                {props.limeValueList.values.length > 0 ? horizontalBarChart : null}
+                 {horizontalBarChart}
             </div>
         </CardText>
     </Card>;

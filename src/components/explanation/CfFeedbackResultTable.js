@@ -47,7 +47,7 @@ class CfFeedbackResultTable extends PureComponent {
       <DataTable baseId="simple-pagination" plain>
         <TableHeader>
           <TableRow selectable={false}>
-            {this.getHeaderColumns(['Matrix', 'Pattern', 'Value'])}
+            {this.getHeaderColumns(['Class', 'Pattern', 'Frequency'])}
           </TableRow>
         </TableHeader>
         <TableBody>

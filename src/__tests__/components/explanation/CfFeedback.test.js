@@ -5,7 +5,7 @@ import {retrainResult, cfFeedbackResult, uniqueEncodedDecodedValues} from '../..
 import CfFeedback from '../../../components/explanation/CfFeedback';
 import RetrainResultTable from '../../../components/explanation/RetrainResultTable';
 import {TextField, SelectField} from 'react-md';
-import CfFeedbackResulttTable from '../../../components/explanation/CfFeedbackResulttTable';
+import CfFeedbackResultTable from '../../../components/explanation/CfFeedbackResultTable';
 import {getUniqueFeatureValues, getFeatureNames, encodePatternsForDropdown} from '../../../util/dataReducers';
 
 const onSubmitTopK = jest.fn();
@@ -30,7 +30,7 @@ describe('CfFeedback result', () => {
         element.setState({numberOfDropdownPatterns: 1});
 
         expect(element.find(TextField).length).toBe(1);
-        expect(element.find(CfFeedbackResulttTable).length).toBe(1);
+        expect(element.find(CfFeedbackResultTable).length).toBe(1);
         expect(element.find(RetrainResultTable).length).toBe(1);
         expect(element.find(TextField).at(0).props().min).toBe(0);
         expect(element.find(SelectField).length).toBe(3);
@@ -56,7 +56,7 @@ describe('CfFeedback result', () => {
         element.setState({numberOfDropdownPatterns: 1});
 
         expect(element.find(TextField).length).toBe(1);
-        expect(element.find(CfFeedbackResulttTable).length).toBe(1);
+        expect(element.find(CfFeedbackResultTable).length).toBe(1);
         expect(element.find(RetrainResultTable).length).toBe(1);
         expect(element.find(TextField).at(0).props().min).toBe(0);
         expect(element.find(SelectField).length).toBe(3);

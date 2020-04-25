@@ -74,7 +74,7 @@ class HorizontalBarChartCard extends React.Component {
       />
     );
 
-    return <div id="chart">{this.props.data.length === 0 ? '' : chart}</div>;
+    return <div id="chart">{this.props.data.length === 0 || this.props.labels.length === 0 ? '' : chart}</div>;
   }
 }
 

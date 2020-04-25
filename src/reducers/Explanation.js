@@ -46,6 +46,7 @@ const explanation = (state = initialState, action) => {
             case LIME_VALUE_LIST_REQUESTED: {
                 return {
                     ...state,
+                    limeValueList: {},
                     fetchState: {inFlight: true},
                     isLimeValuesLoaded: false,
 
@@ -75,6 +76,7 @@ const explanation = (state = initialState, action) => {
             case SHAP_VALUE_LIST_REQUESTED: {
                 return {
                     ...state,
+                    shapValueList: {},
                     fetchState: {inFlight: true},
                     isShapValuesLoaded: false,
 
@@ -104,6 +106,7 @@ const explanation = (state = initialState, action) => {
             case SKATER_VALUE_LIST_REQUESTED: {
                 return {
                     ...state,
+                    skaterValueList: {},
                     fetchState: {inFlight: true},
                     isSkaterValuesLoaded: false,
 
@@ -133,6 +136,7 @@ const explanation = (state = initialState, action) => {
             case ICE_VALUE_LIST_REQUESTED: {
                 return {
                     ...state,
+                    iceValueList: {},
                     fetchState: {inFlight: true},
                     isIceValuesLoaded: false,
 
@@ -162,6 +166,7 @@ const explanation = (state = initialState, action) => {
             case CFFEEDBACK_VALUE_LIST_REQUESTED: {
                 return {
                     ...state,
+                    cfFeedbackValue: {},
                     fetchState: {inFlight: true},
                     isCfFeedbackLoaded: false,
 
@@ -191,6 +196,7 @@ const explanation = (state = initialState, action) => {
             case RETRAIN_VALUE_LIST_REQUESTED: {
                 return {
                     ...state,
+                    retrainValue: {},
                     fetchState: {inFlight: true},
                     isRetrainLoaded: false,
 
