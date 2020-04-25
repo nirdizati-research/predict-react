@@ -32,7 +32,6 @@ const initialState = {
     skaterValueList: {},
     cfFeedbackValue: {},
     retrainValue: {},
-
     isLimeValuesLoaded: true,
     isShapValuesLoaded: true,
     isSkaterValuesLoaded: true,
