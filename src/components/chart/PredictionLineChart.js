@@ -51,7 +51,7 @@ class PredictionLineChart extends React.Component {
               },
               labels: {
                 formatter: function (val, i) {
-                  return val;
+                  return val.toFixed(2);
                 }
               }
             },

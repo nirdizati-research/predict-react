@@ -16,11 +16,7 @@ describe('HorizontalBarChartCard', () => {
   it('renders with empty labels', () => {
     const element = shallow(<HorizontalBarChartCard data={values} labels={[]}/>);
     expect(element).toBeDefined();
-    expect(element.find(ReactApexChart).length).toBe(1);
-
-    const chartProps = element.find(ReactApexChart).props();
-    expect(chartProps.options.xaxis.categories.length).toBe(0);
-    expect(chartProps.series[0].data.length).toBe(5);
+    expect(element.find(ReactApexChart).length).toBe(0);
   });
 
   it('renders with non empty data and label', () => {

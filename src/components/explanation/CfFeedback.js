@@ -3,7 +3,7 @@ import {Card, CardTitle, CardText} from 'react-md/lib/Cards/index';
 import PropTypes from 'prop-types';
 import CircularProgress from 'react-md/lib/Progress/CircularProgress';
 import {TextField} from 'react-md';
-import CfFeedbackResulttTable from './CfFeedbackResulttTable';
+import CfFeedbackResultTable from './CfFeedbackResultTable';
 import SelectField from 'react-md/lib/SelectFields';
 import {Row} from 'react-grid-system';
 import RetrainResultTable from './RetrainResultTable';
@@ -321,7 +321,7 @@ class CfFeedback extends PureComponent {
                     </Row>
                  </div>
                  {!this.props.isCfFeedbackValuesLoaded ? <CircularProgress id="query-indeterminate-progress"/> : null}
-                 <CfFeedbackResulttTable
+                 <CfFeedbackResultTable
                    cfFeedbackResult={this.props.cfFeedbackValue}
                    onSelectedMatrixChange={this.onSelectedMatrixChange.bind(this)}
                    selectedMatrix={this.state.selectedMatrix}

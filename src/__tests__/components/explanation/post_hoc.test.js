@@ -13,7 +13,7 @@ describe('Lime result', () => {
                                     traceId={1}
                                     limeValueList={{labels: [], values: []}}/>);
         expect(element).toBeDefined();
-        expect(element.find(HorizontalBarChartCard).length).toBe(0);
+        expect(element.find(HorizontalBarChartCard).length).toBe(1);
     });
 
     it('renders with data', () => {
