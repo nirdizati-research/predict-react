@@ -50,6 +50,7 @@ export const BOOLEAN = 'boolean';
 export const FREQUENCY = 'frequency';
 export const COMPLEX = 'complex';
 export const LAST_PAYLOAD = 'lastPayload';
+export const DECLARE = 'declare';
 
 // incremental sets
 export const NUMBER_OF_INCREMENTS = 'incremental_trains';
@@ -154,6 +155,11 @@ export const encoding = [
         label: 'Last payload',
         value: LAST_PAYLOAD,
         message: 'Features represent the event attributes of the last event that occurred in the trace.'
+    },
+    {
+        label: 'Declare',
+        value: DECLARE,
+        message: 'Each feature is encoded as a constraint Declare.'
     }
 ];
 
