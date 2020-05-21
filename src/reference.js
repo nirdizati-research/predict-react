@@ -159,7 +159,7 @@ export const encoding = [
     {
         label: 'Declare',
         value: DECLARE,
-        message: 'Each feature is encoded as a constraint Declare.'
+        message: 'Each feature is encoded as a Declare constraint.'
     }
 ];
 
