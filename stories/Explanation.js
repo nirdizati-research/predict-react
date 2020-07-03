@@ -146,7 +146,7 @@ export const uniqueEncodedDecodedValues = {
         }
 };
 
-export const cfFeedbackResult =[
+export const cmFeedbackResult =[
     'False',
     {
         'confusion_matrix': {

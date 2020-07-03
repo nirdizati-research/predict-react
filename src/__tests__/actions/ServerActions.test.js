@@ -15,7 +15,7 @@ import {
     getDecodingDf,
     getEncodedUniqueValues,
     getRetrainValues,
-    getCfFeedbackValues,
+    getCmFeedbackValues,
     getModels,
     postPrediction,
     postReplay,
@@ -29,11 +29,11 @@ import {splitFailed, splitsFailed, splitsRetrieved, splitSucceeded} from '../../
 import {limeValueListFailed, limeValueListRetrieved, shapValueListRetrieved,
      shapValueListFailed, iceValueListRetrieved, iceValueListFailed,
       skaterValueListRetrieved, skaterValueListFailed, retrainValueListRetrieved,
-       retrainValueListFailed, cffeedbackValueListRetrieved,
-        cffeedbackValueListFailed} from '../../actions/ExplanationActions';
+       retrainValueListFailed, cmfeedbackValueListRetrieved,
+        cmfeedbackValueListFailed} from '../../actions/ExplanationActions';
 import {limeTemporalStabilityResult, encodedUniqueDFResultList, temporalStabilityResult,
     limeList, shapResult, iceResultList, skaterResult,
-    retrainResult, cfFeedbackResult, decodedDFResultList, traceList} from '../../../stories/Explanation';
+    retrainResult, cmFeedbackResult, decodedDFResultList, traceList} from '../../../stories/Explanation';
 import {temporalLimePredictionListRetrieved, temporalPredictionListRetrieved,
      temporalPredictionListFailed, temporalLimePredictionListFailed} from '../../actions/PredictionAction';
 import {modelsRetrieved, modelsFailed} from '../../actions/ModelActions';
@@ -511,24 +511,24 @@ describe('ServerActions', function () {
         });
     });
 
-    describe('getCfFeedbackValues', () => {
-        it('dispatches CfFeedbackValues on success', () => {
-            mockXHR.responseText = JSON.stringify(cfFeedbackResult);
+    describe('getCmFeedbackValues', () => {
+        it('dispatches CmFeedbackValues on success', () => {
+            mockXHR.responseText = JSON.stringify(cmFeedbackResult);
 
-            getCfFeedbackValues({jobId: 1, attribute: 'Age'})(dispatch);
+            getCmFeedbackValues({jobId: 1, attribute: 'Age'})(dispatch);
             mockXHR.onreadystatechange();
 
             expect(dispatch.mock.calls[0][0])
-            .toEqual(cffeedbackValueListRetrieved(cfFeedbackResult));
+            .toEqual(cmfeedbackValueListRetrieved(cmFeedbackResult));
         });
-        it('dispatches CfFeedbackValues on error', () => {
+        it('dispatches CmFeedbackValues on error', () => {
             standardError(mockXHR);
 
-            getCfFeedbackValues({jobId: 1, traceId: 1})(dispatch);
+            getCmFeedbackValues({jobId: 1, traceId: 1})(dispatch);
             mockXHR.onreadystatechange();
 
             expect(dispatch.mock.calls[0][0])
-                .toEqual(cffeedbackValueListFailed(error.error));
+                .toEqual(cmfeedbackValueListFailed(error.error));
         });
     });
 });

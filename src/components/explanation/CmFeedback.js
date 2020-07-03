@@ -9,7 +9,7 @@ import {Row} from 'react-grid-system';
 import RetrainResultTable from './RetrainResultTable';
 import {getFeatureNamesAndValueFromSelectedPatterns} from '../../util/dataReducers';
 
-class CfFeedback extends PureComponent {
+class CmFeedback extends PureComponent {
     constructor(props) {
       super(props);
       let removedIndexFeatures = [];
@@ -348,7 +348,7 @@ class CfFeedback extends PureComponent {
         );
     }
 }
-CfFeedback.propTypes = {
+CmFeedback.propTypes = {
   jobId: PropTypes.any,
   cfFeedbackValue: PropTypes.any,
   isCfFeedbackValuesLoaded: PropTypes.bool,
@@ -361,4 +361,4 @@ CfFeedback.propTypes = {
   onSubmitTopK: PropTypes.func,
   onSubmitFeatureNamesAndValues: PropTypes.func,
 };
-export default CfFeedback;
+export default CmFeedback;

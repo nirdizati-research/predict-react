@@ -3,11 +3,11 @@ import {limeValueListRequested, limeValueListRetrieved, limeValueListFailed,
     shapValueListFailed, shapValueListRequested, shapValueListRetrieved,
     iceValueListFailed, iceValueListRequested, iceValueListRetrieved,
     skaterValueListFailed, skaterValueListRequested, skaterValueListRetrieved,
-    cffeedbackValueListFailed, cffeedbackValueListRequested, cffeedbackValueListRetrieved,
+    cmfeedbackValueListFailed, cmfeedbackValueListRequested, cmfeedbackValueListRetrieved,
     retrainValueListFailed, retrainValueListRequested,
     retrainValueListRetrieved} from '../../actions/ExplanationActions';
 import {limeList, shapResult, iceResultList, skaterResult,
-     retrainResult, cfFeedbackResult} from '../../../stories/Explanation';
+     retrainResult, cmFeedbackResult} from '../../../stories/Explanation';
 
 
 const initialState = {
@@ -16,13 +16,13 @@ const initialState = {
     shapValueList: {},
     iceValueList: {},
     skaterValueList: {},
-    cfFeedbackValue: {},
+    cmFeedbackValue: {},
     retrainValue: {},
     isLimeValuesLoaded: true,
     isShapValuesLoaded: true,
     isSkaterValuesLoaded: true,
     isIceValuesLoaded: true,
-    isCfFeedbackLoaded: true,
+    isCmFeedbackLoaded: true,
     isRetrainLoaded: true,
 };
 
@@ -123,38 +123,38 @@ describe('Explanation reducer', () => {
         });
     });
 
-    describe('CfFeedback Value requested', () => {
-        const stateWithRequest = explanation(undefined, cffeedbackValueListRequested());
+    describe('CmFeedback Value requested', () => {
+        const stateWithRequest = explanation(undefined, cmfeedbackValueListRequested());
 
-        it('changes fetchState when CfFeedback requesting', () => {
+        it('changes fetchState when CmFeedback requesting', () => {
             expect(stateWithRequest.fetchState).toEqual({inFlight: true});
-            expect(stateWithRequest.isCfFeedbackLoaded).toEqual(false);
+            expect(stateWithRequest.isCmFeedbackLoaded).toEqual(false);
         });
 
-        it('changes fetchState when CfFeedback request completed', () => {
-            const state2 = explanation(stateWithRequest, cffeedbackValueListRetrieved(cfFeedbackResult));
+        it('changes fetchState when CmFeedback request completed', () => {
+            const state2 = explanation(stateWithRequest, cmfeedbackValueListRetrieved(cmFeedbackResult));
             expect(state2.fetchState).toEqual({inFlight: false});
-            expect(state2.isCfFeedbackLoaded).toEqual(true);
-            const {cfFeedbackValue} = state2;
-            expect(cfFeedbackValue).toEqual(cfFeedbackResult[1]);
+            expect(state2.isCmFeedbackLoaded).toEqual(true);
+            const {cmFeedbackValue} = state2;
+            expect(cmFeedbackValue).toEqual(cmFeedbackResult[1]);
         });
 
-        it('changes fetchState when CfFeedback request failed', () => {
-            const state2 = explanation(stateWithRequest, cffeedbackValueListFailed('error'));
+        it('changes fetchState when CmFeedback request failed', () => {
+            const state2 = explanation(stateWithRequest, cmfeedbackValueListFailed('error'));
             expect(state2.fetchState).toEqual({inFlight: false, error: 'error'});
-            expect(state2.isCfFeedbackLoaded).toEqual(true);
+            expect(state2.isCmFeedbackLoaded).toEqual(true);
         });
     });
 
     describe('Retrain Value requested', () => {
         const stateWithRequest = explanation(undefined, retrainValueListRequested());
 
-        it('changes fetchState when CfFeedback requesting', () => {
+        it('changes fetchState when CmFeedback requesting', () => {
             expect(stateWithRequest.fetchState).toEqual({inFlight: true});
             expect(stateWithRequest.isRetrainLoaded).toEqual(false);
         });
 
-        it('changes fetchState when CfFeedback request completed', () => {
+        it('changes fetchState when CmFeedback request completed', () => {
             const state2 = explanation(stateWithRequest, retrainValueListRetrieved(retrainResult));
             expect(state2.fetchState).toEqual({inFlight: false});
             expect(state2.isRetrainLoaded).toEqual(true);
@@ -162,7 +162,7 @@ describe('Explanation reducer', () => {
             expect(retrainValue).toEqual(retrainResult[1]);
         });
 
-        it('changes fetchState when CfFeedback request failed', () => {
+        it('changes fetchState when CmFeedback request failed', () => {
             const state2 = explanation(stateWithRequest, retrainValueListFailed('error'));
             expect(state2.fetchState).toEqual({inFlight: false, error: 'error'});
             expect(state2.isRetrainLoaded).toEqual(true);

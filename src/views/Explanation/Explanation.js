@@ -22,8 +22,8 @@ import {splitsRequested} from '../../actions/SplitActions';
 import {traceListRequested} from '../../actions/TraceActions';
 import {limeValueListRequested, iceValueListRequested, shapValueListRequested,
     skaterValueListRequested, limeValueListFailed, shapValueListFailed, iceValueListFailed,
-    skaterValueListFailed, cffeedbackValueListFailed,
-    cffeedbackValueListRequested,
+    skaterValueListFailed, cmfeedbackValueListFailed,
+    cmfeedbackValueListRequested,
     retrainValueListRequested,
     retrainValueListFailed} from '../../actions/ExplanationActions';
 import ReactGA from 'react-ga';
@@ -41,7 +41,7 @@ import ShapResult from '../../components/explanation/ShapResult';
 import ICEResult from '../../components/explanation/ICEResult';
 import SkaterResult from '../../components/explanation/SkaterResult';
 import {Row} from 'react-grid-system';
-import CfFeedback from '../../components/explanation/CfFeedback';
+import CmFeedback from '../../components/explanation/CmFeedback';
 
 class Explanation extends Component {
     constructor(props) {
@@ -77,7 +77,7 @@ class Explanation extends Component {
         this.props.onRequestFailSkaterValues(null);
         this.props.onRequestFailIceValues(null, null);
         this.props.onRequestFailDecodeDF(null);
-        this.props.onRequestFailCfFeedbackValues(null);
+        this.props.onRequestFailCmFeedbackValues(null);
         this.props.onRequestFailRetrainValues(null);
         this.props.onRequestFailEncodeUniqueValuesDF(null);
     }
@@ -104,7 +104,7 @@ class Explanation extends Component {
 
     onSubmitTopK(topK) {
         this.setState({topK: topK});
-        this.props.onRequestCfFeedbackValues(this.props.jobId, topK);
+        this.props.onRequestCmFeedbackValues(this.props.jobId, topK);
     }
 
     onChangeJob(id) {
@@ -246,16 +246,16 @@ class Explanation extends Component {
                                 jobId={this.props.jobId}/>
                         </div>
                         <div className="md-cell md-cell--6">
-                            <CfFeedback
+                            <CmFeedback
                                 jobId={this.props.jobId}
-                                cfFeedbackValue={this.props.cfFeedbackValue}
-                                isCfFeedbackValuesLoaded={this.props.isCfFeedbackValuesLoaded}
+                                cmFeedbackValue={this.props.cmFeedbackValue}
+                                isCmFeedbackValuesLoaded={this.props.isCmFeedbackValuesLoaded}
                                 retrainValue={this.props.retrainValue}
                                 isRetrainValuesLoaded={this.props.isRetrainValuesLoaded}
                                 isEncodedUniqueValuesLoaded={this.props.isEncodedUniqueValuesLoaded}
                                 featureNames={getFeatureNames(this.props.encodedUniqueValues)}
                                 featureValues={getUniqueFeatureValues(this.props.encodedUniqueValues)}
-                                patterns={encodePatternsForDropdown(this.props.cfFeedbackValue)}
+                                patterns={encodePatternsForDropdown(this.props.cmFeedbackValue)}
                                 onSubmitTopK={this.onSubmitTopK.bind(this)}
                                 onSubmitFeatureNamesAndValues = {this.onSubmitFeatureNamesAndValues.bind(this)}/>
                         </div>
@@ -285,7 +285,7 @@ Explanation.propTypes = {
     onRequestIceValues: PropTypes.func,
     onRequestPredictionTemporalList: PropTypes.func,
     onRequestLimeTemporalList: PropTypes.func,
-    onRequestCfFeedbackValues: PropTypes.func,
+    onRequestCmFeedbackValues: PropTypes.func,
     onRequestRetrainValues: PropTypes.func,
     onRequestEncodeUniqueValuesDF: PropTypes.func,
     onRequestFailLimeValues: PropTypes.func,
@@ -296,7 +296,7 @@ Explanation.propTypes = {
     onRequestFailIceValues: PropTypes.func,
     onRequestFailDecodeDF: PropTypes.func,
     onRequestFailEncodeUniqueValuesDF: PropTypes.func,
-    onRequestFailCfFeedbackValues: PropTypes.func,
+    onRequestFailCmFeedbackValues: PropTypes.func,
     onRequestFailRetrainValues: PropTypes.func,
     filterOptionChange: PropTypes.func,
     labelTypeChange: PropTypes.func,
@@ -330,7 +330,7 @@ Explanation.propTypes = {
     filteredJobs: PropTypes.any,
     decodedDf: PropTypes.any,
     encodedUniqueValues: PropTypes.any,
-    cfFeedbackValue: PropTypes.any,
+    cmFeedbackValue: PropTypes.any,
     retrainValue: PropTypes.any,
     jobId: PropTypes.number,
     isLimeTempStabilityLoaded: PropTypes.bool,
@@ -341,7 +341,7 @@ Explanation.propTypes = {
     isIceValuesLoaded: PropTypes.bool,
     isDecodedValueLoaded: PropTypes.bool,
     isEncodedUniqueValuesLoaded: PropTypes.bool,
-    isCfFeedbackValuesLoaded: PropTypes.bool,
+    isCmFeedbackValuesLoaded: PropTypes.bool,
     isRetrainValuesLoaded: PropTypes.bool,
     limeTempStabilityList: PropTypes.any,
     predictionTempStabilityList: PropTypes.any
@@ -365,8 +365,8 @@ const mapStateToProps = (state) => ({
     isIceValuesLoaded: state.explanation.isIceValuesLoaded,
     skaterValueList: state.explanation.skaterValueList,
     isSkaterValuesLoaded: state.explanation.isSkaterValuesLoaded,
-    cfFeedbackValue: state.explanation.cfFeedbackValue,
-    isCfFeedbackValuesLoaded: state.explanation.isCfFeedbackLoaded,
+    cmFeedbackValue: state.explanation.cmFeedbackValue,
+    isCmFeedbackValuesLoaded: state.explanation.isCmFeedbackLoaded,
     retrainValue: state.explanation.retrainValue,
     isRetrainValuesLoaded: state.explanation.isRetrainLoaded,
     encodedUniqueValues: state.jobs.encodedUniqueValues,
@@ -414,7 +414,7 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(temporalPredictionListRequested({jobId, traceId})),
     onRequestLimeTemporalList: (jobId, traceId) =>
         dispatch(temporalLimePredictionListRequested({jobId, traceId})),
-    onRequestCfFeedbackValues: (jobId, attribute) => dispatch(cffeedbackValueListRequested({jobId, attribute})),
+    onRequestCmFeedbackValues: (jobId, attribute) => dispatch(cmfeedbackValueListRequested({jobId, attribute})),
     onRequestRetrainValues: (jobId, data) =>
         dispatch(retrainValueListRequested({jobId, data})),
     onRequestFailLimeValues: () => dispatch(limeValueListFailed(null)),
@@ -427,8 +427,8 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(temporalLimePredictionListFailed(null)),
     onRequestFailDecodeDF: () =>
         dispatch(decodingFailed(null)),
-    onRequestFailCfFeedbackValues: () =>
-        dispatch(cffeedbackValueListFailed(null)),
+    onRequestFailCmFeedbackValues: () =>
+        dispatch(cmfeedbackValueListFailed(null)),
     onRequestFailRetrainValues: () =>
         dispatch(retrainValueListFailed(null)),
     onRequestFailEncodeUniqueValuesDF: () =>

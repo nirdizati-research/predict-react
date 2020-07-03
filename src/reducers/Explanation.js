@@ -15,9 +15,9 @@ import {
     ICE_VALUE_LIST_REQUESTED,
     ICE_VALUE_LIST_RETRIEVED,
 
-    CFFEEFBACK_VALUE_LIST_FAILED,
-    CFFEEDBACK_VALUE_LIST_REQUESTED,
-    CFFEEFBACK_VALUE_LIST_RETRIEVED,
+    CMFEEFBACK_VALUE_LIST_FAILED,
+    CMFEEDBACK_VALUE_LIST_REQUESTED,
+    CMFEEFBACK_VALUE_LIST_RETRIEVED,
 
     RETRAIN_VALUE_LIST_FAILED,
     RETRAIN_VALUE_LIST_REQUESTED,
@@ -30,13 +30,13 @@ const initialState = {
     shapValueList: {},
     iceValueList: {},
     skaterValueList: {},
-    cfFeedbackValue: {},
+    cmFeedbackValue: {},
     retrainValue: {},
     isLimeValuesLoaded: true,
     isShapValuesLoaded: true,
     isSkaterValuesLoaded: true,
     isIceValuesLoaded: true,
-    isCfFeedbackLoaded: true,
+    isCmFeedbackLoaded: true,
     isRetrainLoaded: true,
 };
 
@@ -158,32 +158,32 @@ const explanation = (state = initialState, action) => {
                 };
             }
 
-            case CFFEEDBACK_VALUE_LIST_REQUESTED: {
+            case CMFEEDBACK_VALUE_LIST_REQUESTED: {
                 return {
                     ...state,
                     fetchState: {inFlight: true},
-                    isCfFeedbackLoaded: false,
+                    isCmFeedbackLoaded: false,
 
                 };
             }
 
-            case CFFEEFBACK_VALUE_LIST_RETRIEVED: {
-                const cfFeedbackValue = action.payload[1];
+            case CMFEEFBACK_VALUE_LIST_RETRIEVED: {
+                const cmFeedbackValue = action.payload[1];
                 return {
                     ...state,
                     fetchState: {inFlight: false},
-                    cfFeedbackValue,
-                    isCfFeedbackLoaded: true
+                    cmFeedbackValue,
+                    isCmFeedbackLoaded: true
                 };
             }
 
-            case CFFEEFBACK_VALUE_LIST_FAILED: {
-                const cfFeedbackValue = initialState.cfFeedbackValue;
+            case CMFEEFBACK_VALUE_LIST_FAILED: {
+                const cmFeedbackValue = initialState.cmFeedbackValue;
                 return {
                     ...state,
                     fetchState: {inFlight: false, error: action.payload},
-                    cfFeedbackValue,
-                    isCfFeedbackLoaded: true
+                    cmFeedbackValue: cmFeedbackValue,
+                    isCmFeedbackLoaded: true
                 };
             }
 

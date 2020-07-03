@@ -27,12 +27,12 @@ export const skaterValueListRetrieved = createPayloadForwardingAction(SKATER_VAL
 export const SKATER_VALUE_LIST_FAILED = 'SKATER_VALUE_LIST_FAILED';
 export const skaterValueListFailed = createPayloadForwardingAction(SKATER_VALUE_LIST_FAILED);
 
-export const CFFEEDBACK_VALUE_LIST_REQUESTED = 'CFFEEFBACK_VALUE_LIST_REQUESTED';
-export const cffeedbackValueListRequested = createPayloadForwardingAction(CFFEEDBACK_VALUE_LIST_REQUESTED);
-export const CFFEEFBACK_VALUE_LIST_RETRIEVED = 'CFFEEFBACK_VALUE_LIST_RETRIEVED';
-export const cffeedbackValueListRetrieved = createPayloadForwardingAction(CFFEEFBACK_VALUE_LIST_RETRIEVED);
-export const CFFEEFBACK_VALUE_LIST_FAILED = 'CFFEEFBACK_VALUE_LIST_FAILED';
-export const cffeedbackValueListFailed = createPayloadForwardingAction(CFFEEFBACK_VALUE_LIST_FAILED);
+export const CMFEEDBACK_VALUE_LIST_REQUESTED = 'CMFEEFBACK_VALUE_LIST_REQUESTED';
+export const cmfeedbackValueListRequested = createPayloadForwardingAction(CMFEEDBACK_VALUE_LIST_REQUESTED);
+export const CMFEEFBACK_VALUE_LIST_RETRIEVED = 'CMFEEFBACK_VALUE_LIST_RETRIEVED';
+export const cmfeedbackValueListRetrieved = createPayloadForwardingAction(CMFEEFBACK_VALUE_LIST_RETRIEVED);
+export const CMFEEFBACK_VALUE_LIST_FAILED = 'CMFEEFBACK_VALUE_LIST_FAILED';
+export const cmfeedbackValueListFailed = createPayloadForwardingAction(CMFEEFBACK_VALUE_LIST_FAILED);
 
 
 export const RETRAIN_VALUE_LIST_REQUESTED = 'RETRAIN_VALUE_LIST_REQUESTED';

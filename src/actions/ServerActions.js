@@ -13,7 +13,7 @@ import {temporalLimePredictionListRetrieved, temporalLimePredictionListFailed,
     temporalPredictionListRetrieved, temporalPredictionListFailed} from './PredictionAction';
 import {shapValueListRetrieved, shapValueListFailed, skaterValueListRetrieved,
     skaterValueListFailed, iceValueListFailed, iceValueListRetrieved,
-    cffeedbackValueListRetrieved, cffeedbackValueListFailed, retrainValueListRetrieved,
+    cmfeedbackValueListRetrieved, cmfeedbackValueListFailed, retrainValueListRetrieved,
     retrainValueListFailed} from './ExplanationActions';
 
 export const getJobs = () => (dispatch) => {
@@ -207,15 +207,15 @@ export const getIceValues = ({jobId, attribute}) => (dispatch) => {
     );
 };
 
-export const getCfFeedbackValues = ({jobId, attribute}) => (dispatch) => {
+export const getCmFeedbackValues = ({jobId, attribute}) => (dispatch) => {
     jsonAjax(
-        SERVER_URL + `/explanation/cffeedback/${jobId}&${attribute}/`,
+        SERVER_URL + `/explanation/cmfeedback/${jobId}&${attribute}/`,
         'GET',
         null,
-        (resul) => {
-            dispatch(cffeedbackValueListRetrieved(resul));
+        (result) => {
+            dispatch(cmfeedbackValueListRetrieved(result));
         },
-        ({error}) => dispatch(cffeedbackValueListFailed(error))
+        ({error}) => dispatch(cmfeedbackValueListFailed(error))
     );
 };
 
@@ -224,8 +224,8 @@ export const getRetrainValues = ({jobId, data}) => (dispatch) => {
         SERVER_URL + `/explanation/retrain/${jobId}/`,
         'POST',
         data,
-        (resul) => {
-            dispatch(retrainValueListRetrieved(resul));
+        (result) => {
+            dispatch(retrainValueListRetrieved(result));
         },
         ({error}) => dispatch(retrainValueListFailed(error))
     );

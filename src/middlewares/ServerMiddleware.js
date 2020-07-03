@@ -17,7 +17,7 @@ import {
     getIceValues,
     getSkaterValues,
     getDecodingDf,
-    getCfFeedbackValues,
+    getCmFeedbackValues,
     getRetrainValues,
     getEncodedUniqueValues
 } from '../actions/ServerActions';
@@ -27,7 +27,7 @@ import {TRACE_LIST_REQUESTED} from '../actions/TraceActions';
 import {LOG_INFO_REQUESTED, LOG_LIST_REQUESTED} from '../actions/LogActions';
 import {LIME_VALUE_LIST_REQUESTED, SHAP_VALUE_LIST_REQUESTED,
      ICE_VALUE_LIST_REQUESTED, SKATER_VALUE_LIST_REQUESTED,
-     CFFEEDBACK_VALUE_LIST_REQUESTED, RETRAIN_VALUE_LIST_REQUESTED} from '../actions/ExplanationActions';
+     CMFEEDBACK_VALUE_LIST_REQUESTED, RETRAIN_VALUE_LIST_REQUESTED} from '../actions/ExplanationActions';
 import {SPLIT_SUBMITTED, SPLITS_REQUESTED} from '../actions/SplitActions';
 import {MODELS_REQUESTED} from '../actions/ModelActions';
 import {PREDICTION_SUBMITTED, REPLAY_SUBMITTED} from '../actions/RuntimeActions';
@@ -54,7 +54,7 @@ const ACTION_TYPE_TO_SERVER_ACTION = {
     [TEMPORAL_STABILITY_PREDICTION_LIST_REQUESTED]: getPredictionTemporalStabilityValues,
     [DECODING_REQUESTED]: getDecodingDf,
     [ENCODED_UNIQUE_VALUES_REQUESTED]: getEncodedUniqueValues,
-    [CFFEEDBACK_VALUE_LIST_REQUESTED]: getCfFeedbackValues,
+    [CMFEEDBACK_VALUE_LIST_REQUESTED]: getCmFeedbackValues,
     [RETRAIN_VALUE_LIST_REQUESTED]: getRetrainValues,
 };
 
