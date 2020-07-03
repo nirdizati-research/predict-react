@@ -98,7 +98,7 @@ class JobStatus extends Component {
                         checked={this.state.fetchJobs}
                         onChange={this.checkboxChange.bind(this)}/>
               <Checkbox id="showCompleted" name="showCompleted"
-                        label="Show completed tasks" inline
+                        label="Show also completed tasks" inline
                         checked={this.state.showCompleted}
                         onChange={this.checkboxChange.bind(this)}/>
               <Checkbox id="showDeleteButton" name="showDeleteButton"
