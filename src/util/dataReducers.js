@@ -504,7 +504,7 @@ export const getPatternsForMatrix = (result, matrixName) =>{
   let i = 0;
   let j = 0;
   let k = 0;
-  if (JSON.stringify(result) != '{}') {
+  if (JSON.stringify(result) != '{}' && result != null) {
     const uniquePatterns = encodePatternsForDropdown(result);
     if (matrixName == 'All') {
       let keys = Object.keys(result['freq_seqs_after_filter']);
@@ -590,7 +590,7 @@ export const encodePatternsForDropdown = (result) =>{
 };
 
 export const getConfusionMatrixLabels = (result) =>{
-  if (JSON.stringify(result) != '{}') {
+  if (JSON.stringify(result) != '{}' && result != null) {
     let labels = [];
     let keys = Object.keys(result['freq_seqs_after_filter']);
     keys.forEach(element => {
