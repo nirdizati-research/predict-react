@@ -127,6 +127,7 @@ class ControlledRadarChartCard extends Component {
       <RadarChartCard
         data={radarChartData}
         labels={this.state.radarCharLabels}
+        radarType={this.props.predictionMethod}
       />
     );
     const style = {

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactApexChart from 'react-apexcharts';
+import {CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION} from '../../reference';
 
 const RadarChartCard = props => {
   let radarstates = {
@@ -48,6 +49,11 @@ const RadarChartCard = props => {
     }
   };
 
+  if (props.radarType == REGRESSION) {
+    delete radarstates.options.yaxis['min'];
+    delete radarstates.options.yaxis['max'];
+  }
+
   return (
     <ReactApexChart
       options={radarstates.options}
@@ -60,7 +66,8 @@ const RadarChartCard = props => {
 
 RadarChartCard.propTypes = {
   data: PropTypes.arrayOf(PropTypes.any.isRequired).isRequired,
-  labels: PropTypes.arrayOf(PropTypes.any.isRequired).isRequired
+  labels: PropTypes.arrayOf(PropTypes.any.isRequired).isRequired,
+  radarType: PropTypes.oneOf([CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION]).isRequired,
 };
 
 export default RadarChartCard;

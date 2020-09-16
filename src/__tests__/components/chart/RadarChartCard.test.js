@@ -2,13 +2,14 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import RadarChartCard from '../../../components/chart/RadarChartCard';
 import ReactApexChart from 'react-apexcharts';
+import {CLASSIFICATION} from '../../../reference';
 
 const labels = ['f1_score', 'accuracy', 'precision', 'recall', 'auc'];
 const values = [1, 0.8, 0.1, 0.3, 0];
 
 describe('RadarChartCard', () => {
   it('renders with full data', () => {
-    const element = shallow(<RadarChartCard data={values} labels={labels}/>);
+    const element = shallow(<RadarChartCard data={values} labels={labels} radarType={CLASSIFICATION}/>);
     expect(element).toBeDefined();
     const chartProps = element.find(ReactApexChart).props();
     expect(element.find(ReactApexChart).length).toBe(1);
@@ -19,7 +20,7 @@ describe('RadarChartCard', () => {
   });
 
   it('renders without labels', () => {
-    const element = shallow(<RadarChartCard data={values} labels={[]}/>);
+    const element = shallow(<RadarChartCard data={values} labels={[]} radarType={CLASSIFICATION}/>);
     expect(element).toBeDefined();
     const chartProps = element.find(ReactApexChart).props();
     expect(element.find(ReactApexChart).length).toBe(1);
@@ -28,7 +29,7 @@ describe('RadarChartCard', () => {
   });
 
   it('renders without data', () => {
-    const element = shallow(<RadarChartCard data={[]} labels={[]}/>);
+    const element = shallow(<RadarChartCard data={[]} labels={[]} radarType={CLASSIFICATION}/>);
     expect(element).toBeDefined();
     const chartProps = element.find(ReactApexChart).props();
     expect(element.find(ReactApexChart).length).toBe(1);
