@@ -186,6 +186,10 @@ export const hyperparameterOptimizerAlgorithms = [
         label: 'Tree Parzen Estimator'
     },
     {
+        value: 'adaptive_tpe',
+        label: 'Adaptive Tree Parzen Estimator'
+    },
+    {
         value: 'random_search',
         label: 'Random Search'
     }
