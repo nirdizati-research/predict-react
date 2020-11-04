@@ -1,8 +1,4 @@
 import {
-    LIME_VALUE_LIST_FAILED,
-    LIME_VALUE_LIST_REQUESTED,
-    LIME_VALUE_LIST_RETRIEVED,
-
     SHAP_VALUE_LIST_FAILED,
     SHAP_VALUE_LIST_REQUESTED,
     SHAP_VALUE_LIST_RETRIEVED,
@@ -42,34 +38,6 @@ const initialState = {
 
 const explanation = (state = initialState, action) => {
         switch (action.type) {
-            case LIME_VALUE_LIST_REQUESTED: {
-                return {
-                    ...state,
-                    fetchState: {inFlight: true},
-                    isLimeValuesLoaded: false,
-
-                };
-            }
-
-            case LIME_VALUE_LIST_RETRIEVED: {
-                const limeValueList = action.payload;
-                return {
-                    ...state,
-                    fetchState: {inFlight: false},
-                    limeValueList,
-                    isLimeValuesLoaded: true
-                };
-            }
-
-            case LIME_VALUE_LIST_FAILED: {
-                const limeValueList = initialState.limeValueList;
-                return {
-                    ...state,
-                    fetchState: {inFlight: false, error: action.payload},
-                    limeValueList,
-                    isLimeValuesLoaded: true
-                };
-            }
 
             case SHAP_VALUE_LIST_REQUESTED: {
                 return {

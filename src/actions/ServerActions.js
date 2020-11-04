@@ -5,7 +5,6 @@ import {JOB_DELETED, jobsFailed, jobsRetrieved, trainingFailed,
     encodedUniqueValuesRetrieved, encodedUniqueValuesFailed} from './JobActions';
 import {logInfoFailed, logInfoRetrieved, logListFailed, logListsRetrieved} from './LogActions';
 import {traceListFailed, traceListRetrieved} from './TraceActions';
-import {limeValueListFailed, limeValueListRetrieved} from './LimeActions';
 import {splitFailed, splitsFailed, splitsRetrieved, splitSucceeded} from './SplitActions';
 import {modelsFailed, modelsRetrieved} from './ModelActions';
 import {predictionFailed, predictionSucceeded, replayFailed, replaySucceeded} from './RuntimeActions';
@@ -159,21 +158,9 @@ export const getTraceList = ({id}) => (dispatch) => {
     );
 };
 
-export const getLimeValues = ({jobId, traceId}) => (dispatch) => {
+export const getShapValues = ({jobId, traceId, attributeId}) => (dispatch) => {
     jsonAjax(
-        SERVER_URL + `/explanation/lime/${jobId}&${traceId}/`,
-        'GET',
-        null,
-        (limeList) => {
-            dispatch(limeValueListRetrieved(limeList));
-        },
-        ({error}) => dispatch(limeValueListFailed(error))
-    );
-};
-
-export const getShapValues = ({jobId, traceId}) => (dispatch) => {
-    jsonAjax(
-        SERVER_URL + `/explanation/shap/${jobId}&${traceId}/`,
+        SERVER_URL + `/explanation/shap/${jobId}&${traceId}&${attributeId}/`,
         'GET',
         null,
         (shapResult) => {

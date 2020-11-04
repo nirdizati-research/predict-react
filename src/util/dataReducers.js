@@ -268,18 +268,38 @@ export const getTraceIdsFromLogs = (logs, trainLogId) => {
   return traceIds;
 };
 
-export const parseLimeResult = (limeValueList) => {
+export const parseLimeResult = (limeValueList, traceId, prefix) => {
   let labels = [];
   let values = [];
-  let keys = Object.keys(limeValueList);
 
-  if (keys != null) {
-    for (let j = 0; j < keys.length; j++) {
-      if (limeValueList[keys[j]].length == 2) {
-        labels.push(keys[j] +' = '+ limeValueList[keys[j]][0]);
-        values.push(limeValueList[keys[j]][1]);
+  if (limeValueList[traceId] != null && limeValueList[traceId] != undefined && prefix.length != 0) {
+    limeValueList = limeValueList[traceId][prefix];
+
+    Object.keys(limeValueList).forEach(function(k){
+          labels.push(k);
+          values.push(limeValueList[k].importance);
+    });
+  }
+  return ({labels: labels, values: values});
+};
+
+export const parseShapResult = (shapValueList, traceId) => {
+  let labels = [];
+  let values = [];
+
+  if (shapValueList[traceId] != null && shapValueList[traceId] != undefined) {
+    shapValueList = shapValueList[traceId];
+    let keys = Object.keys(shapValueList);
+
+    if (keys != null) {
+      for (let j = 0; j < keys.length; j++) {
+        if (shapValueList[keys[j]].length == 2) {
+          labels.push(shapValueList[keys[j]][0]);
+          values.push(shapValueList[keys[j]][1]);
+        }
       }
     }
+    console.log({labels: labels, values: values});
   }
   return ({labels: labels, values: values});
 };
@@ -322,7 +342,7 @@ export const parseTemporalStabilityLimeResultList = (predictionList, traceId) =>
       const prefixValues = traceAttr[prefixs[j]];
       for (let k = 0; k <= Object.keys(prefixValues).length-1; k++) {
         const value = prefixValues[Object.keys(prefixValues)[k]];
-      if (j == 0) data.push({name: (Object.keys(prefixValues)[k].concat(' = ', value['value'])), data: []});
+      if (j == 0) data.push({name: (Object.keys(prefixValues)[k]), data: []});
       data[k]['data'].push(value['importance']);
       }
     }
