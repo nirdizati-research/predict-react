@@ -1,12 +1,11 @@
 import explanation from '../../reducers/Explanation';
-import {limeValueListRequested, limeValueListRetrieved, limeValueListFailed,
-    shapValueListFailed, shapValueListRequested, shapValueListRetrieved,
+import {shapValueListFailed, shapValueListRequested, shapValueListRetrieved,
     iceValueListFailed, iceValueListRequested, iceValueListRetrieved,
     skaterValueListFailed, skaterValueListRequested, skaterValueListRetrieved,
     cmfeedbackValueListFailed, cmfeedbackValueListRequested, cmfeedbackValueListRetrieved,
     retrainValueListFailed, retrainValueListRequested,
     retrainValueListRetrieved} from '../../actions/ExplanationActions';
-import {limeList, shapResult, iceResultList, skaterResult,
+import {shapResult, iceResultList, skaterResult,
      retrainResult, cmFeedbackResult} from '../../../stories/Explanation';
 
 
@@ -29,29 +28,6 @@ const initialState = {
 describe('Explanation reducer', () => {
     it('has nothing initially', () => {
         expect(explanation(undefined, {})).toEqual(initialState);
-    });
-
-    describe('LIME List requested', () => {
-        const stateWithRequest = explanation(undefined, limeValueListRequested());
-
-        it('changes fetchState when lime requesting', () => {
-            expect(stateWithRequest.fetchState).toEqual({inFlight: true});
-            expect(stateWithRequest.isLimeValuesLoaded).toEqual(false);
-        });
-
-        it('changes fetchState when lime request completed', () => {
-            const state2 = explanation(stateWithRequest, limeValueListRetrieved(limeList));
-            expect(state2.fetchState).toEqual({inFlight: false});
-            expect(state2.isLimeValuesLoaded).toEqual(true);
-            const {limeValueList} = state2;
-            expect(limeValueList).toEqual(limeList);
-        });
-
-        it('changes fetchState when lime request failed', () => {
-            const state2 = explanation(stateWithRequest, limeValueListFailed('error'));
-            expect(state2.fetchState).toEqual({inFlight: false, error: 'error'});
-            expect(state2.isLimeValuesLoaded).toEqual(true);
-        });
     });
 
     describe('SHAP List requested', () => {

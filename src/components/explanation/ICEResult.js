@@ -33,7 +33,7 @@ class ICEResult extends PureComponent {
                <Card className="md-block-centered">
                  <CardTitle title="ICE Result for a single attribute: "></CardTitle>
                  <CardText>
-                  <h4>Select the feature</h4>
+                  <h4>Select the feature for ICE, LIME and SHAP</h4>
                   {this.getTraceSelector()}
                 </CardText>
                 {!this.props.isIceValuesLoaded ? <CircularProgress id="query-indeterminate-progress"/> : null}

@@ -6,7 +6,6 @@ import {
     getSplits,
     postSplit,
     postTraining,
-    getLimeValues,
     getShapValues,
     getIceValues,
     getSkaterValues,
@@ -26,13 +25,13 @@ import {JOB_DELETED, jobsFailed, jobsRetrieved, trainingFailed,
       encodedUniqueValuesRetrieved, encodedUniqueValuesFailed} from '../../actions/JobActions';
 import {logInfoFailed, logInfoRetrieved, logListFailed, logListsRetrieved} from '../../actions/LogActions';
 import {splitFailed, splitsFailed, splitsRetrieved, splitSucceeded} from '../../actions/SplitActions';
-import {limeValueListFailed, limeValueListRetrieved, shapValueListRetrieved,
+import {shapValueListRetrieved,
      shapValueListFailed, iceValueListRetrieved, iceValueListFailed,
       skaterValueListRetrieved, skaterValueListFailed, retrainValueListRetrieved,
        retrainValueListFailed, cmfeedbackValueListRetrieved,
         cmfeedbackValueListFailed} from '../../actions/ExplanationActions';
 import {limeTemporalStabilityResult, encodedUniqueDFResultList, temporalStabilityResult,
-    limeList, shapResult, iceResultList, skaterResult,
+    shapResult, iceResultList, skaterResult,
     retrainResult, cmFeedbackResult, decodedDFResultList, traceList} from '../../../stories/Explanation';
 import {temporalLimePredictionListRetrieved, temporalPredictionListRetrieved,
      temporalPredictionListFailed, temporalLimePredictionListFailed} from '../../actions/PredictionAction';
@@ -319,27 +318,6 @@ describe('ServerActions', function () {
 
             expect(dispatch.mock.calls[0][0])
                 .toEqual(traceListFailed(error.error));
-        });
-    });
-
-    describe('getLime', () => {
-        it('dispatches limeRetrieved on success', () => {
-            mockXHR.responseText = JSON.stringify(limeList);
-
-            getLimeValues({jobId: 1, traceId: 1})(dispatch);
-            mockXHR.onreadystatechange();
-
-            expect(dispatch.mock.calls[0][0])
-            .toEqual(limeValueListRetrieved(limeList));
-        });
-        it('dispatches limeRetreived on error', () => {
-            standardError(mockXHR);
-
-            getLimeValues({jobId: 1, traceId: 1})(dispatch);
-            mockXHR.onreadystatechange();
-
-            expect(dispatch.mock.calls[0][0])
-                .toEqual(limeValueListFailed(error.error));
         });
     });
 

@@ -46,7 +46,7 @@ describe('generates data for prefix chart', () => {
     });
 
     it('parse lime values', () => {
-        const limeValues = parseLimeResult(limeList);
+        const limeValues = parseLimeResult(limeList, '2_100', 'prefix_5');
         expect(limeValues.labels.length).toEqual(5);
         expect(limeValues.values.length).toEqual(5);
     });

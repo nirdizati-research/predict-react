@@ -13,16 +13,16 @@ const PostHocExplanation = (props) => {
     data = {props.limeValueList.values}
     labels = {props.limeValueList.labels}/>;
     return <Card className="md-cell md-cell--12">
-        <CardTitle title="Graphs"/>
+        <CardTitle title="LIME Result for a single trace"/>
         <CardText>
         {props.traceId != '' && props.jobId != '' ?
                   'Lime result with trace id: '+ props.traceId
-                   +' and job id: '+ props.jobId: ''}
+                   +' and job id: '+ props.jobId + ' and prefix: ' + props.attributeId: ''}
         </CardText>
         {!props.isLimeValuesLoaded ? <CircularProgress id="query-indeterminate-progress"/> : null}
         <CardText>
             <div className="md-cell md-cell--12" key="1">
-                {props.limeValueList.values.length > 0 ? horizontalBarChart : null}
+                {props.limeValueList.values.length > 0 ? horizontalBarChart : null }
             </div>
         </CardText>
     </Card>;
@@ -34,7 +34,8 @@ PostHocExplanation.propTypes = {
     limeValueList: PropTypes.any.isRequired,
     isLimeValuesLoaded: PropTypes.bool.isRequired,
     traceId: PropTypes.any,
-    jobId: PropTypes.any
+    jobId: PropTypes.any,
+    attributeId: PropTypes.any
 
 };
 export default PostHocExplanation;

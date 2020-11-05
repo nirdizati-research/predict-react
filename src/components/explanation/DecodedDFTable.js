@@ -45,7 +45,7 @@ class DecodedDFTable extends PureComponent {
       <CardTitle title="Decoded dataframe result"></CardTitle>
       <CardText>
       {this.props.jobId != '' ?
-                  'Decoded dataframe result with job id: '+ this.props.jobId: ''}
+                  'First 100 lines of decoded dataframe for job ID: '+ this.props.jobId: ''}
       </CardText>
       {!this.props.isDecodedValueLoaded ? <CircularProgress id="query-indeterminate-progress"/> : null}
       <CardText>

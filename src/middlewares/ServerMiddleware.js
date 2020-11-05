@@ -10,7 +10,6 @@ import {
     getTraceList,
     postSplit,
     postTraining,
-    getLimeValues,
     getLimeTemporalStabilityValues,
     getPredictionTemporalStabilityValues,
     getShapValues,
@@ -25,7 +24,7 @@ import {JOB_DELETE_REQUESTED, JOBS_REQUESTED, TRAINING_SUBMITTED,
      DECODING_REQUESTED, ENCODED_UNIQUE_VALUES_REQUESTED} from '../actions/JobActions';
 import {TRACE_LIST_REQUESTED} from '../actions/TraceActions';
 import {LOG_INFO_REQUESTED, LOG_LIST_REQUESTED} from '../actions/LogActions';
-import {LIME_VALUE_LIST_REQUESTED, SHAP_VALUE_LIST_REQUESTED,
+import {SHAP_VALUE_LIST_REQUESTED,
      ICE_VALUE_LIST_REQUESTED, SKATER_VALUE_LIST_REQUESTED,
      CMFEEDBACK_VALUE_LIST_REQUESTED, RETRAIN_VALUE_LIST_REQUESTED} from '../actions/ExplanationActions';
 import {SPLIT_SUBMITTED, SPLITS_REQUESTED} from '../actions/SplitActions';
@@ -46,7 +45,6 @@ const ACTION_TYPE_TO_SERVER_ACTION = {
     [REPLAY_SUBMITTED]: postReplay,
     [MODELS_REQUESTED]: getModels,
     [JOB_DELETE_REQUESTED]: deleteJob,
-    [LIME_VALUE_LIST_REQUESTED]: getLimeValues,
     [SHAP_VALUE_LIST_REQUESTED]: getShapValues,
     [ICE_VALUE_LIST_REQUESTED]: getIceValues,
     [SKATER_VALUE_LIST_REQUESTED]: getSkaterValues,

@@ -16,7 +16,7 @@ const TemporalStability = (props) => {
   return <div className="md-cell md-cell--12">
         <Row>
              <Card className="md-cell md-cell--6">
-                <CardTitle title="Lime result with temporal stability"></CardTitle>
+                <CardTitle title="LIME result with temporal stability"></CardTitle>
                 <CardText>
                     { props.traceId != '' && props.jobId != '' ?
                         'Temporal stability result with trace id: '+ props.traceId +' and job id: '+ props.jobId: ''}
