@@ -9,8 +9,6 @@ import HorizontalBarChartCard from '../../components/chart/HorizontalBarChartCar
 import CircularProgress from 'react-md/lib/Progress/CircularProgress';
 
 const PostHocExplanation = (props) => {
-
-
     const horizontalBarChart = <HorizontalBarChartCard
     data = {props.limeValueList.values}
     labels = {props.limeValueList.labels}/>;

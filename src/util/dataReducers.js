@@ -275,7 +275,7 @@ export const parseLimeResult = (limeValueList, traceId, prefix) => {
   if (limeValueList[traceId] != null && limeValueList[traceId] != undefined && prefix.length != 0) {
     limeValueList = limeValueList[traceId][prefix];
 
-    Object.keys(limeValueList).forEach(function(k){
+    Object.keys(limeValueList).forEach(function (k) {
           labels.push(k);
           values.push(limeValueList[k].importance);
     });
@@ -299,7 +299,6 @@ export const parseShapResult = (shapValueList, traceId) => {
         }
       }
     }
-    console.log({labels: labels, values: values});
   }
   return ({labels: labels, values: values});
 };

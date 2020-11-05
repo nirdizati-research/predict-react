@@ -38,7 +38,6 @@ const initialState = {
 
 const explanation = (state = initialState, action) => {
         switch (action.type) {
-
             case SHAP_VALUE_LIST_REQUESTED: {
                 return {
                     ...state,

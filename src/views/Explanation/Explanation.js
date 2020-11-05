@@ -20,8 +20,8 @@ import {mapJobs, splitsToLabel} from '../../util/unNormalize';
 import {logListRequested} from '../../actions/LogActions';
 import {splitsRequested} from '../../actions/SplitActions';
 import {traceListRequested} from '../../actions/TraceActions';
-import {skaterValueListRequested, shapValueListRequested, iceValueListRequested, shapValueListFailed, iceValueListFailed,
-    skaterValueListFailed, cmfeedbackValueListFailed,
+import {skaterValueListRequested, shapValueListRequested, iceValueListRequested, shapValueListFailed,
+    iceValueListFailed, skaterValueListFailed, cmfeedbackValueListFailed,
     cmfeedbackValueListRequested,
     retrainValueListRequested,
     retrainValueListFailed} from '../../actions/ExplanationActions';
@@ -68,10 +68,9 @@ class Explanation extends Component {
         this.setState({logName: splitId});
         this.props.onRequestTraces(this.getTrainLogId(splitId));
         let traces = getTraceIdsFromLogs(this.props.logs, this.getTrainLogId(splitId));
-        //this.props.onRequestFailLimeValues();
-        //this.props.onRequestFailLimeTemporalList(null, null);
-        //this.props.onRequestFailPredictionTemporalList(null, null);
-        //this.props.onRequestFailShapValues(null, null);
+        this.props.onRequestFailLimeTemporalList(null, null);
+        this.props.onRequestFailPredictionTemporalList(null, null);
+        this.props.onRequestFailShapValues(null, null);
         this.props.onRequestFailSkaterValues(null);
         this.props.onRequestFailIceValues(null, null);
         this.props.onRequestFailDecodeDF(null);
@@ -85,10 +84,9 @@ class Explanation extends Component {
         this.props.onTraceChange(trace);
         this.setState({selectedTrace: trace});
         if (this.props.jobId.length != 0) {
-            //this.props.onRequestLimeValues(this.props.jobId, trace);
             this.props.onRequestLimeTemporalList(this.props.jobId, trace);
             this.props.onRequestPredictionTemporalList(this.props.jobId, trace);
-            if(this.props.selectedAttribute.length != 0){
+            if (this.props.selectedAttribute.length != 0) {
                 this.props.onRequestShapValues(this.props.jobId, trace, this.props.selectedAttribute);
             }
         }
@@ -98,10 +96,6 @@ class Explanation extends Component {
         this.setState({selectedAttribute: attribute});
         this.props.onRequestIceValues(this.props.jobId, attribute);
         this.props.onRequestShapValues(this.props.jobId, this.props.selectedTrace, attribute);
-    }
-
-    onChangePrefix(prefix){
-        this.setState({selectedPrefix: prefix});
     }
 
     onSubmitFeatureNamesAndValues(data) {
@@ -116,7 +110,6 @@ class Explanation extends Component {
     onChangeJob(id) {
         this.props.onJobChange(id);
         if (this.props.selectedTrace !== '') {
-            //this.props.onRequestLimeValues(id, this.props.selectedTrace);
             this.props.onRequestLimeTemporalList(id, this.props.selectedTrace);
             this.props.onRequestPredictionTemporalList(id, this.props.selectedTrace);
             this.props.onRequestShapValues(id, this.props.selectedTrace);
@@ -135,10 +128,6 @@ class Explanation extends Component {
         }
         ReactGA.initialize('UA-143444044-1');
         ReactGA.pageview(window.location.pathname + window.location.search);
-    }
-
-    onChangeMethod(method) {
-        this.props.onMethodChange(method);
     }
 
     onJobClick(id) {
@@ -238,7 +227,8 @@ class Explanation extends Component {
                         <div className="md-cell md-cell--6">
                             <PostHocExplanation
                                 jobs={this.props.jobs}
-                                limeValueList={parseLimeResult(this.props.limeTempStabilityList, this.props.selectedTrace, this.state.selectedAttribute)}
+                                limeValueList={parseLimeResult(this.props.limeTempStabilityList,
+                                    this.props.selectedTrace, this.state.selectedAttribute)}
                                 isLimeValuesLoaded={this.props.isLimeTempStabilityLoaded}
                                 traceId={this.props.selectedTrace}
                                 jobId={this.props.jobId}
@@ -415,7 +405,8 @@ const mapDispatchToProps = (dispatch) => ({
     onRequestTraces: (id) => dispatch(traceListRequested({id})),
     onRequestDecoding: (id) => dispatch(decodingRequested({id})),
     onRequestEncodeUniqueValuesDF: (id) => dispatch(encodedUniqueValuesRequested({id})),
-    onRequestShapValues: (jobId, traceId, attributeId) => dispatch(shapValueListRequested({jobId, traceId, attributeId})),
+    onRequestShapValues: (jobId, traceId, attributeId) => dispatch(shapValueListRequested({jobId,
+        traceId, attributeId})),
     onRequestIceValues: (jobId, attribute) => dispatch(iceValueListRequested({jobId, attribute})),
     onRequestSkaterValues: (jobId) => dispatch(skaterValueListRequested({jobId})),
     onRequestPredictionTemporalList: (jobId, traceId) =>

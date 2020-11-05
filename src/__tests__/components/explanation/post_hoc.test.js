@@ -21,7 +21,7 @@ describe('Lime result', () => {
                                     jobs={[]}
                                     isLimeValuesLoaded={true}
                                     traceId={1}
-                                    limeValueList={parseLimeResult(limeList)}/>);
+                                    limeValueList={parseLimeResult(limeList, '2_100', 'prefix_5')}/>);
         expect(element).toBeDefined();
         expect(element.find(HorizontalBarChartCard).length).toBe(1);
     });

@@ -1,41 +1,30 @@
 export const limeList =
-[
-    [
-        [
-            'prefix_1',
-            '0'
-        ],
-        -0.1116
-    ],
-    [
-        [
-            'prefix_2',
-            '0'
-        ],
-        0.0970
-    ],
-    [
-        [
-            'prefix_3',
-            '0'
-        ],
-        0.0262
-    ],
-    [
-        [
-            'prefix_4',
-            'administrative fee - the first pol'
-        ],
-        0.0262
-    ],
-    [
-        [
-            'prefix_5',
-            'outpatient follow-up consultation'
-        ],
-        0.0262
-    ]
-];
+    {
+        "2_100": {
+            "prefix_5": {
+                "prefix_1": {
+                    "value": "Register",
+                    "importance": 0.0000
+                },
+                "prefix_2": {
+                    "value": "Create Questionnaire",
+                    "importance": -0.0764
+                },
+                "prefix_3": {
+                    "value": "High Insurance Check",
+                    "importance": -0.1198
+                },
+                "prefix_4": {
+                    "value": "Contact Hospital",
+                    "importance": -0.0142
+                },
+                "prefix_5": {
+                    "value": "High Medical History",
+                    "importance": 0.0219
+                }
+            }
+        }
+    };
 
 export const traceList = [{
     'attributes': {
@@ -128,6 +117,17 @@ export const iceResultList = [
 export const shapResult = [
     'False',
     ''
+];
+
+export const shapData = [
+    {
+        labels: ['register'],
+        values: [1.12]
+    },
+    {
+        labels: [],
+        values: []
+    }
 ];
 
 export const skaterResult = [

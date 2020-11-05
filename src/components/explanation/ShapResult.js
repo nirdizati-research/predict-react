@@ -9,7 +9,6 @@ import HorizontalBarChartCard from '../../components/chart/HorizontalBarChartCar
 import CircularProgress from 'react-md/lib/Progress/CircularProgress';
 
 const ShapResult = (props) => {
-
     const horizontalBarChart = <HorizontalBarChartCard
     data = {props.shapValueList.values}
     labels = {props.shapValueList.labels}/>;
