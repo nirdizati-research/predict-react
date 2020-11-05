@@ -2,9 +2,7 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import ShapResult from '../../../components/explanation/ShapResult';
 import {shapData} from '../../../../stories/Explanation';
-import InlineSVG from 'svg-inline-react';
-import CircularProgress from 'react-md/lib/Progress/CircularProgress';
-import HorizontalBarChartCard from "../../../components/chart/HorizontalBarChartCard";
+import HorizontalBarChartCard from '../../../components/chart/HorizontalBarChartCard';
 
 describe('Shap result', () => {
     it('renders with data', () => {
