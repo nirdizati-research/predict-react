@@ -112,12 +112,16 @@ class Explanation extends Component {
         if (this.props.selectedTrace !== '') {
             this.props.onRequestLimeTemporalList(id, this.props.selectedTrace);
             this.props.onRequestPredictionTemporalList(id, this.props.selectedTrace);
-            this.props.onRequestShapValues(id, this.props.selectedTrace);
+            if (this.state.selectedAttribute.length > 0) {
+                this.props.onRequestShapValues(id, this.props.selectedTrace);
+            }
+        }
+        if (this.state.selectedAttribute.length > 0) {
+            this.props.onRequestIceValues(id, this.state.selectedAttribute);
         }
         this.props.onRequestSkaterValues(id);
         this.props.onRequestDecoding(id);
         this.props.onRequestEncodeUniqueValuesDF(id);
-        this.props.onRequestIceValues(id, this.state.selectedAttribute);
     }
 
     componentDidMount() {
