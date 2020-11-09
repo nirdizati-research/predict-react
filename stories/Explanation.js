@@ -260,6 +260,21 @@ export const limeTemporalStabilityResult = {
     }
 };
 
+export const shapTemporalStabilityResult = {
+    '2_3301': {
+        'prefix_1': {
+            'prefix_2': {
+                'value': 'High Insurance Check',
+                'importance': -35642.4310
+            },
+            'prefix_1': {
+                'value': 'Register',
+                'importance': 0.0000
+            }
+        }
+    }
+};
+
 export const temporalStabilityResult = {
     '2_3301': {
         'prefix_1': {

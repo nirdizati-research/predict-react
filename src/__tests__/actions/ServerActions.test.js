@@ -10,6 +10,7 @@ import {
     getIceValues,
     getSkaterValues,
     getLimeTemporalStabilityValues,
+    getShapTemporalStabilityValues,
     getPredictionTemporalStabilityValues,
     getDecodingDf,
     getEncodedUniqueValues,
@@ -31,9 +32,10 @@ import {shapValueListRetrieved,
        retrainValueListFailed, cmfeedbackValueListRetrieved,
         cmfeedbackValueListFailed} from '../../actions/ExplanationActions';
 import {limeTemporalStabilityResult, encodedUniqueDFResultList, temporalStabilityResult,
-    shapResult, iceResultList, skaterResult,
+    shapResult, iceResultList, skaterResult, shapTemporalStabilityResult,
     retrainResult, cmFeedbackResult, decodedDFResultList, traceList} from '../../../stories/Explanation';
 import {temporalLimePredictionListRetrieved, temporalPredictionListRetrieved,
+     temporalShapPredictionListRetrieved, temporalShapPredictionListFailed,
      temporalPredictionListFailed, temporalLimePredictionListFailed} from '../../actions/PredictionAction';
 import {modelsRetrieved, modelsFailed} from '../../actions/ModelActions';
 import {predictionSucceeded, predictionFailed, replaySucceeded, replayFailed} from '../../actions/RuntimeActions';
@@ -402,6 +404,27 @@ describe('ServerActions', function () {
 
             expect(dispatch.mock.calls[0][0])
                 .toEqual(temporalLimePredictionListFailed(error.error));
+        });
+    });
+
+    describe('getShapTemporalStabilityValues', () => {
+        it('dispatches ShapTemporalStabilityValues on success', () => {
+            mockXHR.responseText = JSON.stringify(shapTemporalStabilityResult);
+
+            getShapTemporalStabilityValues({jobId: 1, traceId: 1})(dispatch);
+            mockXHR.onreadystatechange();
+
+            expect(dispatch.mock.calls[0][0])
+            .toEqual(temporalShapPredictionListRetrieved(shapTemporalStabilityResult));
+        });
+        it('dispatches LimeTemporalStabilityValues on error', () => {
+            standardError(mockXHR);
+
+            getShapTemporalStabilityValues({jobId: 1, traceId: 1})(dispatch);
+            mockXHR.onreadystatechange();
+
+            expect(dispatch.mock.calls[0][0])
+                .toEqual(temporalShapPredictionListFailed(error.error));
         });
     });
 

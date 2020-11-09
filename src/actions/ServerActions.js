@@ -9,6 +9,7 @@ import {splitFailed, splitsFailed, splitsRetrieved, splitSucceeded} from './Spli
 import {modelsFailed, modelsRetrieved} from './ModelActions';
 import {predictionFailed, predictionSucceeded, replayFailed, replaySucceeded} from './RuntimeActions';
 import {temporalLimePredictionListRetrieved, temporalLimePredictionListFailed,
+    temporalShapPredictionListRetrieved, temporalShapPredictionListFailed,
     temporalPredictionListRetrieved, temporalPredictionListFailed} from './PredictionAction';
 import {shapValueListRetrieved, shapValueListFailed, skaterValueListRetrieved,
     skaterValueListFailed, iceValueListFailed, iceValueListRetrieved,
@@ -227,6 +228,18 @@ export const getLimeTemporalStabilityValues = ({jobId, traceId}) => (dispatch) =
             dispatch(temporalLimePredictionListRetrieved(predictionList));
         },
         ({error}) => dispatch(temporalLimePredictionListFailed(error))
+    );
+};
+
+export const getShapTemporalStabilityValues = ({jobId, traceId}) => (dispatch) => {
+    jsonAjax(
+        SERVER_URL + `/explanation/shap_temporal_stability/${jobId}&${traceId}/`,
+        'GET',
+        null,
+        (predictionList) => {
+            dispatch(temporalShapPredictionListRetrieved(predictionList));
+        },
+        ({error}) => dispatch(temporalShapPredictionListFailed(error))
     );
 };
 

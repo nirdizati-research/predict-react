@@ -2,6 +2,9 @@ import {
     TEMPORAL_STABILITY_LIME_PREDICTION_LIST_REQUESTED,
     TEMPORAL_STABILITY_LIME_PREDICTION_LIST_RETRIEVED,
     TEMPORAL_STABILITY_LIME_PREDICTION_LIST_FAILED,
+    TEMPORAL_STABILITY_SHAP_PREDICTION_LIST_REQUESTED,
+    TEMPORAL_STABILITY_SHAP_PREDICTION_LIST_RETRIEVED,
+    TEMPORAL_STABILITY_SHAP_PREDICTION_LIST_FAILED,
     TEMPORAL_STABILITY_PREDICTION_LIST_REQUESTED,
     TEMPORAL_STABILITY_PREDICTION_LIST_RETRIEVED,
     TEMPORAL_STABILITY_PREDICTION_LIST_FAILED
@@ -10,8 +13,10 @@ import {
 const initialState = {
     fetchState: {inFlight: false},
     limeTempStabilityList: {},
+    shapTempStabilityList: {},
     predictionTempStabilityList: {},
     isLimeTempStabilityLoaded: true,
+    isShapTempStabilityLoaded: true,
     isPredictionTempStabilityLoaded: true,
 
 };
@@ -44,6 +49,34 @@ const predictions = (state = initialState, action) => {
                     fetchState: {inFlight: false, error: action.payload},
                     limeTempStabilityList,
                     isLimeTempStabilityLoaded: true
+                };
+            }
+            case TEMPORAL_STABILITY_SHAP_PREDICTION_LIST_REQUESTED: {
+                return {
+                    ...state,
+                    fetchState: {inFlight: true},
+                    isShapTempStabilityLoaded: false,
+
+                };
+            }
+
+            case TEMPORAL_STABILITY_SHAP_PREDICTION_LIST_RETRIEVED: {
+                const shapTempStabilityList = action.payload;
+                return {
+                    ...state,
+                    fetchState: {inFlight: false},
+                    shapTempStabilityList,
+                    isShapTempStabilityLoaded: true
+                };
+            }
+
+            case TEMPORAL_STABILITY_SHAP_PREDICTION_LIST_FAILED: {
+                const shapTempStabilityList = initialState.limeTempStabilityList;
+                return {
+                    ...state,
+                    fetchState: {inFlight: false, error: action.payload},
+                    shapTempStabilityList,
+                    isShapTempStabilityLoaded: true
                 };
             }
 
