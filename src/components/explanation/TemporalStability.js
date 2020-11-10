@@ -2,19 +2,34 @@ import React from 'react';
 import {Card, CardTitle, CardText} from 'react-md/lib/Cards/index';
 import PredictionLineChart from '../chart/PredictionLineChart';
 import PropTypes from 'prop-types';
-import {parseTemporalStabilityLimeResultList, parseTemporalStabilityPredictionResultList}
+import {parseTemporalStabilityLimeShapResultList}
 from '../../util/dataReducers';
-import ScatterChartCard from '../chart/ScatterChartCard';
 import {Row} from 'react-grid-system';
 import CircularProgress from 'react-md/lib/Progress/CircularProgress';
 
 const TemporalStability = (props) => {
     const temporalStabilityLimeResult =
-        parseTemporalStabilityLimeResultList(props.limeTemporalChartData, props.traceId);
-    const temporalStabilityPredictionResult =
-        parseTemporalStabilityPredictionResultList(props.predictionTemportalChartData, props.traceId);
+        parseTemporalStabilityLimeShapResultList(props.limeTemporalChartData, props.traceId);
+    const temporalStabilityShapResult =
+        parseTemporalStabilityLimeShapResultList(props.shapTemporalChartData, props.traceId);
   return <div className="md-cell md-cell--12">
         <Row>
+            <Card className="md-cell md-cell--6">
+                <CardTitle title="SHAP result with temporal stability"></CardTitle>
+                <CardText>
+                    { props.traceId != '' && props.jobId != '' ?
+                        'Temporal stability result with trace id: '+ props.traceId +' and job id: '+ props.jobId: ''}
+                </CardText>
+                {!props.isShapTempStabilityLoaded ? <CircularProgress id="query-indeterminate-progress"/> : null}
+
+                <CardText>
+                    <div>
+                    <PredictionLineChart
+                    data = {temporalStabilityShapResult.data}
+                    categories = {temporalStabilityShapResult.categories}/>
+                    </div>
+            </CardText>
+        </Card>
              <Card className="md-cell md-cell--6">
                 <CardTitle title="LIME result with temporal stability"></CardTitle>
                 <CardText>
@@ -31,31 +46,16 @@ const TemporalStability = (props) => {
                     </div>
             </CardText>
         </Card>
-        <Card className="md-cell md-cell--6">
-            <CardTitle title="Prediction"></CardTitle>
-            <CardText>
-                { props.traceId != '' && props.jobId != '' ?
-                    'Temporal stability result with trace id: '+ props.traceId +' and job id: '+ props.jobId: ''}
-            </CardText>
-            {!props.isPredictionTempStabilityLoaded ? <CircularProgress id="query-indeterminate-progress"/> : null}
-
-            <CardText>
-                    <div>
-                    <ScatterChartCard
-                    data = {temporalStabilityPredictionResult}/>
-                    </div>
-            </CardText>
-        </Card>
     </Row>
     </div>
     ;
 };
 TemporalStability.propTypes = {
     limeTemporalChartData: PropTypes.any.isRequired,
-    predictionTemportalChartData: PropTypes.any.isRequired,
+    shapTemporalChartData: PropTypes.any.isRequired,
     traceId: PropTypes.any,
     jobId: PropTypes.any,
-    isPredictionTempStabilityLoaded: PropTypes.bool.isRequired,
-    isLimeTempStabilityLoaded: PropTypes.bool.isRequired
+    isLimeTempStabilityLoaded: PropTypes.bool.isRequired,
+    isShapTempStabilityLoaded: PropTypes.bool.isRequired
 };
 export default TemporalStability;

@@ -50,7 +50,7 @@ class HorizontalBarChartCard extends React.Component {
           },
           opposite: true,
           title: {
-            text: 'Label: 0 means False, 1 means True'
+            text: 'Label: 1 means False, 2 means True'
           }
         }],
         xaxis: {

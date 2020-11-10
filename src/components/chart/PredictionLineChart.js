@@ -50,9 +50,7 @@ class PredictionLineChart extends React.Component {
                 offsetY: 0
               },
               labels: {
-                formatter: function (val, i) {
-                  return val;
-                }
+                format: '{value:,.5f}'
               }
             },
             legend: {

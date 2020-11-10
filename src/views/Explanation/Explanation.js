@@ -28,6 +28,7 @@ import {skaterValueListRequested, shapValueListRequested, iceValueListRequested,
 import ReactGA from 'react-ga';
 import ExplanationHeaderCard from '../../components/explanation/ExplanationHeaderCard';
 import PostHocExplanation from '../../components/explanation/post_hoc';
+import Prediction from '../../components/explanation/Prediction';
 import DecodedDFTable from '../../components/explanation/DecodedDFTable';
 import TraceExplanation from '../../components/explanation/TraceExplanation';
 import {
@@ -36,7 +37,7 @@ import {
 } from '../../util/dataReducers';
 import JobModelsTable from '../../components/explanation/JobModelsTable';
 import TemporalStability from '../../components/explanation/TemporalStability';
-import {temporalPredictionListRequested, temporalLimePredictionListRequested,
+import {temporalPredictionListRequested, temporalLimePredictionListRequested, temporalShapPredictionListRequested,
     temporalLimePredictionListFailed, temporalPredictionListFailed} from '../../actions/PredictionAction';
 import ShapResult from '../../components/explanation/ShapResult';
 import ICEResult from '../../components/explanation/ICEResult';
@@ -85,6 +86,7 @@ class Explanation extends Component {
         this.setState({selectedTrace: trace});
         if (this.props.jobId.length != 0) {
             this.props.onRequestLimeTemporalList(this.props.jobId, trace);
+            this.props.onRequestShapTemporalList(this.props.jobId, trace);
             this.props.onRequestPredictionTemporalList(this.props.jobId, trace);
             if (this.props.selectedAttribute.length != 0) {
                 this.props.onRequestShapValues(this.props.jobId, trace, this.props.selectedAttribute);
@@ -111,13 +113,18 @@ class Explanation extends Component {
         this.props.onJobChange(id);
         if (this.props.selectedTrace !== '') {
             this.props.onRequestLimeTemporalList(id, this.props.selectedTrace);
+            this.props.onRequestShapTemporalList(id, this.props.selectedTrace);
             this.props.onRequestPredictionTemporalList(id, this.props.selectedTrace);
-            this.props.onRequestShapValues(id, this.props.selectedTrace);
+            if (this.state.selectedAttribute.length > 0) {
+                this.props.onRequestShapValues(id, this.props.selectedTrace);
+            }
+        }
+        if (this.state.selectedAttribute.length > 0) {
+            this.props.onRequestIceValues(id, this.state.selectedAttribute);
         }
         this.props.onRequestSkaterValues(id);
         this.props.onRequestDecoding(id);
         this.props.onRequestEncodeUniqueValuesDF(id);
-        this.props.onRequestIceValues(id, this.state.selectedAttribute);
     }
 
     componentDidMount() {
@@ -184,13 +191,6 @@ class Explanation extends Component {
                     />
                 </div>
                 <div className="md-cell md-cell--12">
-                    <SkaterResult
-                        jobs = {this.props.jobs}
-                        skaterValueList = {this.props.skaterValueList}
-                        isSkaterValuesLoaded = {this.props.isSkaterValuesLoaded}
-                    />
-                </div>
-                <div className="md-cell md-cell--12">
                     <TraceExplanation jobs={this.props.jobs}
                                       traceChange={this.onChangeTrace.bind(this)}
                                       traceIdList={
@@ -240,11 +240,25 @@ class Explanation extends Component {
                 <div className="md-cell md-cell--12">
                     <TemporalStability
                         limeTemporalChartData={this.props.limeTempStabilityList}
-                        predictionTemportalChartData={this.props.predictionTempStabilityList}
+                        shapTemporalChartData={this.props.shapTempStabilityList}
                         traceId={this.props.selectedTrace}
                         isLimeTempStabilityLoaded={this.props.isLimeTempStabilityLoaded}
+                        isShapTempStabilityLoaded={this.props.isShapTempStabilityLoaded}
+                        jobId={this.props.jobId}/>
+                </div>
+                <div className="md-cell md-cell--12">
+                    <Prediction
+                        predictionTemportalChartData={this.props.predictionTempStabilityList}
+                        traceId={this.props.selectedTrace}
                         isPredictionTempStabilityLoaded={this.props.isPredictionTempStabilityLoaded}
                         jobId={this.props.jobId}/>
+                </div>
+                <div className="md-cell md-cell--12">
+                    <SkaterResult
+                        jobs = {this.props.jobs}
+                        skaterValueList = {this.props.skaterValueList}
+                        isSkaterValuesLoaded = {this.props.isSkaterValuesLoaded}
+                    />
                 </div>
                 <div className="md-cell md-cell--12">
                     <CmFeedback
@@ -284,6 +298,7 @@ Explanation.propTypes = {
     onRequestIceValues: PropTypes.func,
     onRequestPredictionTemporalList: PropTypes.func,
     onRequestLimeTemporalList: PropTypes.func,
+    onRequestShapTemporalList: PropTypes.func,
     onRequestCmFeedbackValues: PropTypes.func,
     onRequestRetrainValues: PropTypes.func,
     onRequestEncodeUniqueValuesDF: PropTypes.func,
@@ -333,6 +348,7 @@ Explanation.propTypes = {
     retrainValue: PropTypes.any,
     jobId: PropTypes.number,
     isLimeTempStabilityLoaded: PropTypes.bool,
+    isShapTempStabilityLoaded: PropTypes.bool,
     isPredictionTempStabilityLoaded: PropTypes.bool,
     isLimeValuesLoaded: PropTypes.bool,
     isShapValuesLoaded: PropTypes.bool,
@@ -343,6 +359,7 @@ Explanation.propTypes = {
     isCmFeedbackValuesLoaded: PropTypes.bool,
     isRetrainValuesLoaded: PropTypes.bool,
     limeTempStabilityList: PropTypes.any,
+    shapTempStabilityList: PropTypes.any,
     predictionTempStabilityList: PropTypes.any
 };
 
@@ -379,8 +396,10 @@ const mapStateToProps = (state) => ({
     selectedTrace: state.jobs.selectedTrace,
     selectedAttribute: state.explanation.selectedAttribute,
     limeTempStabilityList: state.predictions.limeTempStabilityList,
+    shapTempStabilityList: state.predictions.shapTempStabilityList,
     predictionTempStabilityList: state.predictions.predictionTempStabilityList,
     isLimeTempStabilityLoaded: state.predictions.isLimeTempStabilityLoaded,
+    isShapTempStabilityLoaded: state.predictions.isShapTempStabilityLoaded,
     isPredictionTempStabilityLoaded: state.predictions.isPredictionTempStabilityLoaded,
     filterOptions: (
         ({
@@ -413,6 +432,8 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(temporalPredictionListRequested({jobId, traceId})),
     onRequestLimeTemporalList: (jobId, traceId) =>
         dispatch(temporalLimePredictionListRequested({jobId, traceId})),
+    onRequestShapTemporalList: (jobId, traceId) =>
+        dispatch(temporalShapPredictionListRequested({jobId, traceId})),
     onRequestCmFeedbackValues: (jobId, attribute) => dispatch(cmfeedbackValueListRequested({jobId, attribute})),
     onRequestRetrainValues: (jobId, data) =>
         dispatch(retrainValueListRequested({jobId, data})),

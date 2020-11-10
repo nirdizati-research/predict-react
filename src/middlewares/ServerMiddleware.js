@@ -11,6 +11,7 @@ import {
     postSplit,
     postTraining,
     getLimeTemporalStabilityValues,
+    getShapTemporalStabilityValues,
     getPredictionTemporalStabilityValues,
     getShapValues,
     getIceValues,
@@ -30,8 +31,8 @@ import {SHAP_VALUE_LIST_REQUESTED,
 import {SPLIT_SUBMITTED, SPLITS_REQUESTED} from '../actions/SplitActions';
 import {MODELS_REQUESTED} from '../actions/ModelActions';
 import {PREDICTION_SUBMITTED, REPLAY_SUBMITTED} from '../actions/RuntimeActions';
-import {TEMPORAL_STABILITY_LIME_PREDICTION_LIST_REQUESTED, TEMPORAL_STABILITY_PREDICTION_LIST_REQUESTED}
-    from '../actions/PredictionAction';
+import {TEMPORAL_STABILITY_LIME_PREDICTION_LIST_REQUESTED, TEMPORAL_STABILITY_SHAP_PREDICTION_LIST_REQUESTED,
+    TEMPORAL_STABILITY_PREDICTION_LIST_REQUESTED} from '../actions/PredictionAction';
 
 const ACTION_TYPE_TO_SERVER_ACTION = {
     [JOBS_REQUESTED]: getJobs,
@@ -49,6 +50,7 @@ const ACTION_TYPE_TO_SERVER_ACTION = {
     [ICE_VALUE_LIST_REQUESTED]: getIceValues,
     [SKATER_VALUE_LIST_REQUESTED]: getSkaterValues,
     [TEMPORAL_STABILITY_LIME_PREDICTION_LIST_REQUESTED]: getLimeTemporalStabilityValues,
+    [TEMPORAL_STABILITY_SHAP_PREDICTION_LIST_REQUESTED]: getShapTemporalStabilityValues,
     [TEMPORAL_STABILITY_PREDICTION_LIST_REQUESTED]: getPredictionTemporalStabilityValues,
     [DECODING_REQUESTED]: getDecodingDf,
     [ENCODED_UNIQUE_VALUES_REQUESTED]: getEncodedUniqueValues,

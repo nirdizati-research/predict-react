@@ -276,7 +276,7 @@ export const parseLimeResult = (limeValueList, traceId, prefix) => {
     limeValueList = limeValueList[traceId][prefix];
 
     Object.keys(limeValueList).forEach(function (k) {
-          labels.push(k);
+          labels.push(k + '= '+ [limeValueList[k].value != '' ? limeValueList[k].value : 0]);
           values.push(limeValueList[k].importance);
     });
   }
@@ -329,7 +329,7 @@ export const parseFairMLResult = (iceResult) => {
   return ({labels: labels, values: values, count: count});
 };
 
-export const parseTemporalStabilityLimeResultList = (predictionList, traceId) => {
+export const parseTemporalStabilityLimeShapResultList = (predictionList, traceId) => {
   let data = [[]];
   let prefixs = [];
 
