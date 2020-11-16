@@ -219,6 +219,7 @@ class Explanation extends Component {
                             jobs={this.props.jobs}
                             shapValueList={parseShapResult(this.props.shapValueList, this.props.selectedTrace)}
                             isShapValuesLoaded={this.props.isShapValuesLoaded}
+                            error={this.props.shapError}
                             traceId={this.props.selectedTrace}
                             jobId={this.props.jobId}
                             attributeId={this.state.selectedAttribute}
@@ -230,6 +231,7 @@ class Explanation extends Component {
                                 limeValueList={parseLimeResult(this.props.limeTempStabilityList,
                                     this.props.selectedTrace, this.state.selectedAttribute)}
                                 isLimeValuesLoaded={this.props.isLimeTempStabilityLoaded}
+                                error={this.props.limeError}
                                 traceId={this.props.selectedTrace}
                                 jobId={this.props.jobId}
                                 attributeId={this.state.selectedAttribute}
@@ -360,7 +362,9 @@ Explanation.propTypes = {
     isRetrainValuesLoaded: PropTypes.bool,
     limeTempStabilityList: PropTypes.any,
     shapTempStabilityList: PropTypes.any,
-    predictionTempStabilityList: PropTypes.any
+    predictionTempStabilityList: PropTypes.any,
+    limeError: PropTypes.string,
+    shapError: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
@@ -401,6 +405,8 @@ const mapStateToProps = (state) => ({
     isLimeTempStabilityLoaded: state.predictions.isLimeTempStabilityLoaded,
     isShapTempStabilityLoaded: state.predictions.isShapTempStabilityLoaded,
     isPredictionTempStabilityLoaded: state.predictions.isPredictionTempStabilityLoaded,
+    limeError: state.predictions.limeError,
+    shapError: state.predictions.shapError,
     filterOptions: (
         ({
              encodings, clusterings, classification, regression, timeSeriesPrediction,

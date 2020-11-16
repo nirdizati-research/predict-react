@@ -18,6 +18,8 @@ const initialState = {
     isLimeTempStabilityLoaded: true,
     isShapTempStabilityLoaded: true,
     isPredictionTempStabilityLoaded: true,
+    limeError: '',
+    shapError: '',
 
 };
 
@@ -48,6 +50,7 @@ const predictions = (state = initialState, action) => {
                     ...state,
                     fetchState: {inFlight: false, error: action.payload},
                     limeTempStabilityList,
+                    limeError: action.payload,
                     isLimeTempStabilityLoaded: true
                 };
             }
@@ -76,6 +79,7 @@ const predictions = (state = initialState, action) => {
                     ...state,
                     fetchState: {inFlight: false, error: action.payload},
                     shapTempStabilityList,
+                    shapError: action.payload,
                     isShapTempStabilityLoaded: true
                 };
             }
