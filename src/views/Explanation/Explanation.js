@@ -88,7 +88,7 @@ class Explanation extends Component {
             this.props.onRequestLimeTemporalList(this.props.jobId, trace);
             this.props.onRequestShapTemporalList(this.props.jobId, trace);
             this.props.onRequestPredictionTemporalList(this.props.jobId, trace);
-            if (this.props.selectedAttribute.length != 0) {
+            if (this.props.selectedAttribute != undefined && this.props.selectedAttribute.length != 0) {
                 this.props.onRequestShapValues(this.props.jobId, trace, this.props.selectedAttribute);
             }
         }
