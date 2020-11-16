@@ -29,6 +29,7 @@ const predictions = (state = initialState, action) => {
                 return {
                     ...state,
                     fetchState: {inFlight: true},
+                    limeError: '',
                     isLimeTempStabilityLoaded: false,
 
                 };
@@ -39,6 +40,7 @@ const predictions = (state = initialState, action) => {
                 return {
                     ...state,
                     fetchState: {inFlight: false},
+                    limeError: '',
                     limeTempStabilityList,
                     isLimeTempStabilityLoaded: true
                 };
@@ -58,6 +60,7 @@ const predictions = (state = initialState, action) => {
                 return {
                     ...state,
                     fetchState: {inFlight: true},
+                    shapError: '',
                     isShapTempStabilityLoaded: false,
 
                 };
@@ -68,6 +71,7 @@ const predictions = (state = initialState, action) => {
                 return {
                     ...state,
                     fetchState: {inFlight: false},
+                    shapError: '',
                     shapTempStabilityList,
                     isShapTempStabilityLoaded: true
                 };
