@@ -18,6 +18,8 @@ const initialState = {
     isLimeTempStabilityLoaded: true,
     isShapTempStabilityLoaded: true,
     isPredictionTempStabilityLoaded: true,
+    limeError: '',
+    shapError: '',
 
 };
 
@@ -27,6 +29,7 @@ const predictions = (state = initialState, action) => {
                 return {
                     ...state,
                     fetchState: {inFlight: true},
+                    limeError: '',
                     isLimeTempStabilityLoaded: false,
 
                 };
@@ -37,6 +40,7 @@ const predictions = (state = initialState, action) => {
                 return {
                     ...state,
                     fetchState: {inFlight: false},
+                    limeError: '',
                     limeTempStabilityList,
                     isLimeTempStabilityLoaded: true
                 };
@@ -48,6 +52,7 @@ const predictions = (state = initialState, action) => {
                     ...state,
                     fetchState: {inFlight: false, error: action.payload},
                     limeTempStabilityList,
+                    limeError: action.payload,
                     isLimeTempStabilityLoaded: true
                 };
             }
@@ -55,6 +60,7 @@ const predictions = (state = initialState, action) => {
                 return {
                     ...state,
                     fetchState: {inFlight: true},
+                    shapError: '',
                     isShapTempStabilityLoaded: false,
 
                 };
@@ -65,6 +71,7 @@ const predictions = (state = initialState, action) => {
                 return {
                     ...state,
                     fetchState: {inFlight: false},
+                    shapError: '',
                     shapTempStabilityList,
                     isShapTempStabilityLoaded: true
                 };
@@ -76,6 +83,7 @@ const predictions = (state = initialState, action) => {
                     ...state,
                     fetchState: {inFlight: false, error: action.payload},
                     shapTempStabilityList,
+                    shapError: action.payload,
                     isShapTempStabilityLoaded: true
                 };
             }

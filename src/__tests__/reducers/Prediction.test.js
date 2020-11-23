@@ -14,7 +14,9 @@ const initialState = {
     predictionTempStabilityList: {},
     isLimeTempStabilityLoaded: true,
     isShapTempStabilityLoaded: true,
-    isPredictionTempStabilityLoaded: true
+    isPredictionTempStabilityLoaded: true,
+    limeError: '',
+    shapError: ''
 };
 
 describe('Temporal stability reducer', () => {

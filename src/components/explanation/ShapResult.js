@@ -20,6 +20,7 @@ const ShapResult = (props) => {
                    +', job id: '+ props.jobId + ' and prefix: ' + props.attributeId: ''}
         </CardText>
         {!props.isShapValuesLoaded ? <CircularProgress id="query-indeterminate-progress"/> : null}
+        {props.error !== '' ? <div className="md-cell md-cell--12">{props.error}</div> : null}
         <CardText>
             <div className="md-cell md-cell--12" key="1">
                 {props.shapValueList.values.length > 0 ? horizontalBarChart : null }
@@ -33,6 +34,7 @@ ShapResult.propTypes = {
     jobs: PropTypes.arrayOf(jobPropType).isRequired,
     shapValueList: PropTypes.any.isRequired,
     isShapValuesLoaded: PropTypes.bool.isRequired,
+    error: PropTypes.string,
     traceId: PropTypes.any,
     jobId: PropTypes.any,
     attributeId: PropTypes.any
