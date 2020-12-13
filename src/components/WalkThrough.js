@@ -32,8 +32,8 @@ class WalkThrough extends PureComponent {
                 </div>
             </CardTitle>
             <CardText>
-                <p>Nirdizati Research is a <span onDoubleClick={this.otherClick.bind(this)}>tool</span> that aims at
-                    supporting
+                <p>Nirdizati Research is a <span onDoubleClick={this.otherClick.bind(this)}>tool</span> that aims to
+                    support
                     expert users in finding the best predictive models suitable for specific datasets and prediction
                     problems. The
                     predictive models can then be used to provide predictions at runtime on incomplete traces or streams
@@ -41,10 +41,10 @@ class WalkThrough extends PureComponent {
                     events.</p>
 
                 <p>The tool offers a wide selection of features ranging from event log preprocessing options to
-                    hyperparmeter
+                    hyperparameter
                     optimization as well as runtime feedback to the user.</p>
 
-                <p>The standard procedure to be followed to use the application is summarized in the steps below.</p>
+                <p>The standard procedure to use the application is summarized in the steps below.</p>
                 {rotate(this.state.other)}
                 <div className="md-grid">
                     <List className="md-cell md-cell--12 md-cell--8-tablet">
@@ -125,7 +125,7 @@ class WalkThrough extends PureComponent {
                             button={<Button flat primary href={'/#/explanation'}
                                             iconEl={<FontIcon>work</FontIcon>}>Explanation</Button>}
                              title="Explanation"
-                             text="Explanation"
+                             text="See explanations for model predictions"
                              threeLines
                         /> }
                     </List>

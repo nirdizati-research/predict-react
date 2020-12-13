@@ -36,7 +36,7 @@ class PredictionLineChart extends React.Component {
               max: this.props.data.length +1,
               tickAmount: this.props.data.length +1,
               title: {
-                text: 'Feature'
+                text: 'Prefix length'
               }
             },
             yaxis: {

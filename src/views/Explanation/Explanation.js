@@ -27,7 +27,7 @@ import {skaterValueListRequested, shapValueListRequested, iceValueListRequested,
     retrainValueListFailed} from '../../actions/ExplanationActions';
 import ReactGA from 'react-ga';
 import ExplanationHeaderCard from '../../components/explanation/ExplanationHeaderCard';
-import PostHocExplanation from '../../components/explanation/post_hoc';
+import LimeResult from '../../components/explanation/LimeResult';
 import Prediction from '../../components/explanation/Prediction';
 import DecodedDFTable from '../../components/explanation/DecodedDFTable';
 import TraceExplanation from '../../components/explanation/TraceExplanation';
@@ -215,18 +215,18 @@ class Explanation extends Component {
                 <div className="md-cell md-cell--12">
                     <Row>
                         <div className="md-cell md-cell--6">
-                        <ShapResult
-                            jobs={this.props.jobs}
-                            shapValueList={parseShapResult(this.props.shapValueList, this.props.selectedTrace)}
-                            isShapValuesLoaded={this.props.isShapValuesLoaded}
-                            error={this.props.shapError}
-                            traceId={this.props.selectedTrace}
-                            jobId={this.props.jobId}
-                            attributeId={this.state.selectedAttribute}
+                            <ShapResult
+                                jobs={this.props.jobs}
+                                shapValueList={parseShapResult(this.props.shapValueList, this.props.selectedTrace)}
+                                isShapValuesLoaded={this.props.isShapValuesLoaded}
+                                error={this.props.shapError}
+                                traceId={this.props.selectedTrace}
+                                jobId={this.props.jobId}
+                                attributeId={this.state.selectedAttribute}
                             />
                         </div>
                         <div className="md-cell md-cell--6">
-                            <PostHocExplanation
+                            <LimeResult
                                 jobs={this.props.jobs}
                                 limeValueList={parseLimeResult(this.props.limeTempStabilityList,
                                     this.props.selectedTrace, this.state.selectedAttribute)}

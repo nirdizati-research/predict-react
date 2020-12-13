@@ -148,27 +148,29 @@ export default class ServerUpload extends PureComponent {
         className="file-inputs__upload-form"
       >
         {progressBar}
-        <FileUpload
-          id="server-upload-file"
-          label="Choose file"
-          required
-          accept=".xes, .mxml"
-          onLoad={this.handleLoad}
-          onLoadStart={this.handleLoadStart}
-          onProgress={this.handleProgress}
-          name="single"
-          className="file-inputs__upload-form__file-upload"
-          primary
-          iconBefore
-        />
-        <TextField
-          id="server-upload-file-field"
-          placeholder="No file chosen"
-          value={fileName}
-          className="file-inputs__upload-form__file-field"
-          readOnly
-          fullWidth={false}
-        />
+        <CardActions className="md-full-width">
+          <FileUpload
+            id="server-upload-file"
+            label="Choose file"
+            required
+            accept=".xes, .mxml"
+            onLoad={this.handleLoad}
+            onLoadStart={this.handleLoadStart}
+            onProgress={this.handleProgress}
+            name="single"
+            className="file-inputs__upload-form__file-upload"
+            primary
+            iconBefore
+          />
+          <TextField
+            id="server-upload-file-field"
+            placeholder="No file chosen"
+            value={fileName}
+            className="file-inputs__upload-form__file-field"
+            readOnly
+            fullWidth={false}
+          />
+        </CardActions>
         <CardActions className="md-full-width">
           <Button type="reset" flat className="md-cell--right">Reset</Button>
           <Button type="submit" flat primary disabled={!fileName || sending}>Submit</Button>

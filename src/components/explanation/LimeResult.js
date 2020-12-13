@@ -5,17 +5,18 @@ import React from 'react';
 import {Card, CardText, CardTitle} from 'react-md/lib/Cards/index';
 import PropTypes from 'prop-types';
 import {jobPropType} from '../../propTypes';
-import HorizontalBarChartCard from '../../components/chart/HorizontalBarChartCard';
+import HorizontalBarChartCard from '../chart/HorizontalBarChartCard';
 import CircularProgress from 'react-md/lib/Progress/CircularProgress';
 
-const PostHocExplanation = (props) => {
+const LimeResult = (props) => {
     const horizontalBarChart = <HorizontalBarChartCard
     data = {props.limeValueList.values}
     labels = {props.limeValueList.labels}/>;
     return <Card className="md-cell md-cell--12">
         <CardTitle title="LIME Result for a single trace"/>
         <CardText>
-        {props.traceId != '' && props.jobId != '' ?
+            <p>LIME shows correlation of each feature with the prediction.</p>
+            {props.traceId != '' && props.jobId != '' ?
                   'Lime result with trace id: '+ props.traceId
                    +' and job id: '+ props.jobId + ' and prefix: ' + props.attributeId: ''}
         </CardText>
@@ -30,7 +31,7 @@ const PostHocExplanation = (props) => {
 };
 
 
-PostHocExplanation.propTypes = {
+LimeResult.propTypes = {
     jobs: PropTypes.arrayOf(jobPropType).isRequired,
     limeValueList: PropTypes.any.isRequired,
     isLimeValuesLoaded: PropTypes.bool.isRequired,
@@ -40,4 +41,4 @@ PostHocExplanation.propTypes = {
     attributeId: PropTypes.any
 
 };
-export default PostHocExplanation;
+export default LimeResult;

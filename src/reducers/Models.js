@@ -1,7 +1,7 @@
 import {MODELS_FAILED, MODELS_REQUESTED, MODELS_RETRIEVED} from '../actions/ModelActions';
 import {REPLAY_JOB_CHANGED} from '../actions/JobActions';
 import {LOG_CHANGED} from '../actions/LogActions';
-import {CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION} from '../reference';
+import {CLASSIFICATION, REGRESSION, TIME_SERIES_PREDICTION, ZERO_PADDING, UP_TO_SEPARATE_TASKS} from '../reference';
 
 const initialState = {
     fetchState: {inFlight: false},
@@ -17,7 +17,7 @@ const initialState = {
 const filterModels = (modelstmp, plength, method) => {
     const models = modelstmp.filter((model) => (model.type === method));
     return models.filter((model) => (model.config.encoding.prefix_length === plength)
-        || (((model.config.padding === 'all_in_one') || (model.config.padding === 'zero_padding')) &&
+        || (((model.config.padding === UP_TO_SEPARATE_TASKS) || (model.config.padding === ZERO_PADDING)) &&
             (model.config.encoding.prefix_length >= plength)));
 };
 

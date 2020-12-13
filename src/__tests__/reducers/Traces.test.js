@@ -88,7 +88,7 @@ const traceList = [{
         config: {
             'encoding': {
                 padding: 'zero_padding',
-                generation_type: 'up_to',
+                generation_type: 'up_to_single_task',
                 prefix_length: 13,
                 method: 'simpleIndex'
             },
