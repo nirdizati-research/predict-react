@@ -1,13 +1,13 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import PostHocExplanation from '../../../components/explanation/post_hoc';
+import LimeResult from '../../../components/explanation/LimeResult';
 import HorizontalBarChartCard from '../../../components/chart/HorizontalBarChartCard';
 import {parseLimeResult} from '../../../util/dataReducers';
 import {limeList} from '../../../../stories/Explanation';
 
 describe('Lime result', () => {
     it('renders without data', () => {
-        const element = shallow(<PostHocExplanation
+        const element = shallow(<LimeResult
                                     jobs={[]}
                                     isLimeValuesLoaded={true}
                                     traceId={1}
@@ -17,7 +17,7 @@ describe('Lime result', () => {
     });
 
     it('renders with data', () => {
-        const element = shallow(<PostHocExplanation
+        const element = shallow(<LimeResult
                                     jobs={[]}
                                     isLimeValuesLoaded={true}
                                     traceId={1}
