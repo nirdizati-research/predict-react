@@ -69,8 +69,8 @@ export const ZERO_PADDING = 'zero_padding';
 export const NO_PADDING = 'no_padding';
 // task generation type
 export const ONLY_THIS = 'only';
-export const UP_TO_SINGLE_TASK = 'up_to_single_task';
-export const UP_TO_SEPARATE_TASKS = 'up_to_separate_tasks';
+export const UP_TO_SINGLE_TASK = 'up_to';
+export const UP_TO_SEPARATE_TASKS = 'all_in_one';
 
 
 // Using these options directly means the message is not shown
