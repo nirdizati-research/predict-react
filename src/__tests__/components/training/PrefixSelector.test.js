@@ -9,7 +9,11 @@ let onChange;
 beforeEach(() => {
     onChange = jest.fn();
     element = shallow(<PrefixSelector onChange={onChange} maxEventsInLog={123} predictionMethod={REGRESSION}
-                                      encoding={{prefix_length: 1, padding: 'no_padding', generation_type: 'up_to_single_task'}}
+                                      encoding={{
+                                          prefix_length: 1,
+                                          padding: 'no_padding',
+                                          generation_type: 'up_to_single_task'
+                                        }}
                                       classification={[]} regression={[]}/>);
 });
 
