@@ -68,9 +68,9 @@ export const THRESHOLD_CUSTOM = 'threshold_custom';
 export const ZERO_PADDING = 'zero_padding';
 export const NO_PADDING = 'no_padding';
 // task generation type
-export const UP_TO = 'up_to';
 export const ONLY_THIS = 'only';
-export const ALL_IN_ONE = 'all_in_one';
+export const UP_TO_SINGLE_TASK = 'up_to';
+export const UP_TO_SEPARATE_TASKS = 'all_in_one';
 
 
 // Using these options directly means the message is not shown
@@ -154,7 +154,7 @@ export const encoding = [
     {
         label: 'Last payload',
         value: LAST_PAYLOAD,
-        message: 'Features represent the event attributes of the last event that occurred in the trace.'
+        message: 'Features represent event names for all events in the trace and additionally event attributes for the last event in the trace.'
     },
     {
         label: 'Declare',
@@ -220,7 +220,7 @@ const threshold = [
     {
         label: 'Custom',
         value: THRESHOLD_CUSTOM,
-        message: 'Use the threshold value nearby'
+        message: 'Custom threshold value'
     }
 ];
 
@@ -242,7 +242,7 @@ const regressionLabelTypes = [
     },
     {
         value: ATTRIBUTE_NUMBER,
-        label: 'Trace numerical attributes',
+        label: 'Trace numerical attribute',
     }
 ];
 
@@ -259,12 +259,12 @@ const classificationLabelTypes = [
     },
     {
         value: ATTRIBUTE_NUMBER,
-        label: 'Trace numerical attributes',
+        label: 'Trace numerical attribute',
         message: 'Binary classification'
     },
     {
         value: ATTRIBUTE_STRING,
-        label: 'Trace string attribute',
+        label: 'Trace categorical attribute',
         message: 'Multiclass classification'
     },
 ];
@@ -294,12 +294,12 @@ export const padding = [
     {
         label: 'No padding',
         value: NO_PADDING,
-        message: 'Traces with length lower than the specified prefix length will be discarded'
+        message: 'Traces with length shorter than the specified prefix length will be discarded'
     },
     {
-        label: 'With 0 padding',
+        label: 'With "0" padding',
         value: ZERO_PADDING,
-        message: 'Traces with length lower than the specified prefix length will be padded with 0'
+        message: 'Traces with length shorter than the specified prefix length will be padded with "0"'
     }
 ];
 
@@ -309,13 +309,13 @@ const prefixTypes = [
         value: ONLY_THIS
     },
     {
-        label: 'Up to the prefix length',
-        value: UP_TO,
-        message: 'A different task per prefix length: from prefix length 1 up to the specified prefix length'
+        label: 'Up to the prefix length in separate models',
+        value: UP_TO_SINGLE_TASK,
+        message: 'A separate task per prefix length: from prefix length 1 up to the specified prefix length'
     },
     {
-        label: 'All in one dataset',
-        value: ALL_IN_ONE,
+        label: 'Up to the prefix length in one model',
+        value: UP_TO_SEPARATE_TASKS,
         message: 'A single task for all the prefix lengths: from prefix length 1 up to the specified prefix length'
     }
 ];

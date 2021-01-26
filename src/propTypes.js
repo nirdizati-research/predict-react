@@ -1,5 +1,4 @@
 import {
-    ALL_IN_ONE,
     ATTRIBUTE_NUMBER,
     ATTRIBUTE_STRING,
     BOOLEAN,
@@ -11,14 +10,15 @@ import {
     LAST_PAYLOAD,
     NEXT_ACTIVITY,
     NO_PADDING,
-    ONLY_THIS,
     REGRESSION,
     REMAINING_TIME,
     SIMPLE_INDEX,
     THRESHOLD_CUSTOM,
     THRESHOLD_MEAN,
     TIME_SERIES_PREDICTION,
-    UP_TO,
+    ONLY_THIS,
+    UP_TO_SINGLE_TASK,
+    UP_TO_SEPARATE_TASKS,
     ZERO_PADDING
 } from './reference';
 import PropTypes from 'prop-types';
@@ -64,7 +64,7 @@ export const splitPropType = PropTypes.shape({
 export const encodingPropType = {
     method: PropTypes.oneOf([SIMPLE_INDEX, BOOLEAN, FREQUENCY, COMPLEX, LAST_PAYLOAD]),
     padding: PropTypes.oneOf([ZERO_PADDING, NO_PADDING]).isRequired,
-    generation_type: PropTypes.oneOf([UP_TO, ONLY_THIS, ALL_IN_ONE]).isRequired,
+    generation_type: PropTypes.oneOf([UP_TO_SINGLE_TASK, ONLY_THIS, UP_TO_SEPARATE_TASKS]).isRequired,
     prefix_length: PropTypes.number.isRequired,
     add_remaining_time: PropTypes.bool.isRequired,
     add_elapsed_time: PropTypes.bool.isRequired,

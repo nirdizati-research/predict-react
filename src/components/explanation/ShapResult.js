@@ -15,7 +15,8 @@ const ShapResult = (props) => {
     return <Card className="md-cell md-cell--12">
         <CardTitle title="SHAP Result for a single trace"/>
         <CardText>
-        {props.traceId != '' && props.jobId != '' ?
+            <p>SHAP shows correlation of each feature with the prediction.</p>
+            {props.traceId != '' && props.jobId != '' ?
                   'Shap result with trace id: '+ props.traceId
                    +', job id: '+ props.jobId + ' and prefix: ' + props.attributeId: ''}
         </CardText>

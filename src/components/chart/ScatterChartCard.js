@@ -40,7 +40,7 @@ const ScatterChartCard = props => {
             max: props.data.length + 1,
             tickAmount: props.data.length + 1,
             title: {
-               text: 'Time',
+               text: 'Prefix length',
              },
         }
       }

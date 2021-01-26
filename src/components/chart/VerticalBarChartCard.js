@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactApexChart from 'react-apexcharts';
 
-class HorizontalBarChartCard extends React.Component {
+class VerticalBarChartCard extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -40,7 +40,7 @@ class HorizontalBarChartCard extends React.Component {
             }
           },
           title: {
-            text: 'Count',
+            text: 'Number of traces',
           },
         }, {
           labels: {
@@ -50,7 +50,7 @@ class HorizontalBarChartCard extends React.Component {
           },
           opposite: true,
           title: {
-            text: 'Label: 1 means False, 2 means True'
+            text: 'Label'
           }
         }],
         xaxis: {
@@ -68,7 +68,7 @@ class HorizontalBarChartCard extends React.Component {
       },
       series: [
         {
-          name: 'Count',
+          name: 'Feature value',
           type: 'column',
           data: this.props.count
         },
@@ -92,9 +92,9 @@ class HorizontalBarChartCard extends React.Component {
   }
 }
 
-HorizontalBarChartCard.propTypes = {
+VerticalBarChartCard.propTypes = {
   data: PropTypes.any.isRequired,
   labels: PropTypes.any.isRequired,
   count: PropTypes.any.isRequired
 };
-export default HorizontalBarChartCard;
+export default VerticalBarChartCard;

@@ -46,13 +46,12 @@ class TraceExplanation extends PureComponent {
     const attrs = getTraceAttributes(this.props.traceList, this.props.selectedTrace);
     return (
       <Card className="md-block-centered">
-        <CardTitle title="Trace Explanation" />
+        <CardTitle title="Trace table" />
         <CardText>
           <h4>Select the trace composition</h4>
           {this.getTraceSelector()}
         </CardText>
         <CardText>
-          <h2>Trace table</h2>
           <TraceTable
             traceAttributesHeader={attrs.traceAttributesHeader}
             traceEventsHeaders={attrs.traceEventsHeaders}

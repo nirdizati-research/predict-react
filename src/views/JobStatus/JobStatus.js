@@ -90,7 +90,7 @@ class JobStatus extends Component {
             <CardTitle title="Task status"/>
             <CardText>
               <p>
-                There are {this.props.jobs.length} tasks in the front-end application.
+                There are {this.props.jobs.length} tasks. By default only running tasks are shown.
               </p>
               <Button raised onClick={this.props.onRequestJobs}>Refresh list</Button>
               <Checkbox id="fetchJobs" name="fetchJobs"

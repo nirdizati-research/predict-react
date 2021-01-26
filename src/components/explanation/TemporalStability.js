@@ -17,6 +17,7 @@ const TemporalStability = (props) => {
             <Card className="md-cell md-cell--6">
                 <CardTitle title="SHAP result with temporal stability"></CardTitle>
                 <CardText>
+                    <p>The graph shows the dependence of trace feature importance on the prefix length.</p>
                     { props.traceId != '' && props.jobId != '' ?
                         'Temporal stability result with trace id: '+ props.traceId +' and job id: '+ props.jobId: ''}
                 </CardText>
@@ -24,15 +25,16 @@ const TemporalStability = (props) => {
 
                 <CardText>
                     <div>
-                    <PredictionLineChart
-                    data = {temporalStabilityShapResult.data}
-                    categories = {temporalStabilityShapResult.categories}/>
+                        <PredictionLineChart
+                        data = {temporalStabilityShapResult.data}
+                        categories = {temporalStabilityShapResult.categories}/>
                     </div>
-            </CardText>
-        </Card>
-             <Card className="md-cell md-cell--6">
+                </CardText>
+            </Card>
+            <Card className="md-cell md-cell--6">
                 <CardTitle title="LIME result with temporal stability"></CardTitle>
                 <CardText>
+                    <p>The graph shows the dependence of trace feature importance on the prefix length.</p>
                     { props.traceId != '' && props.jobId != '' ?
                         'Temporal stability result with trace id: '+ props.traceId +' and job id: '+ props.jobId: ''}
                 </CardText>
@@ -40,13 +42,13 @@ const TemporalStability = (props) => {
 
                 <CardText>
                     <div>
-                    <PredictionLineChart
-                    data = {temporalStabilityLimeResult.data}
-                    categories = {temporalStabilityLimeResult.categories}/>
+                        <PredictionLineChart
+                        data = {temporalStabilityLimeResult.data}
+                        categories = {temporalStabilityLimeResult.categories}/>
                     </div>
-            </CardText>
-        </Card>
-    </Row>
+                </CardText>
+            </Card>
+        </Row>
     </div>
     ;
 };

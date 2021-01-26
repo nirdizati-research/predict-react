@@ -47,6 +47,9 @@ class HorizontalBarChartCard extends React.Component {
         xaxis: {
           min: -1,
           max: 1,
+          title: {
+            text: 'Correlation'
+          },
           labels: {
             show: true
           },
